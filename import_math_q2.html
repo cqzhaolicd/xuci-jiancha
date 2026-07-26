@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>📝 数学小测 · 错题导入</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:#f0f2f5;color:#1a202c;line-height:1.7;min-height:100vh}
+.container{max-width:700px;margin:0 auto;padding:1rem}
+.card{background:#fff;border-radius:16px;padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+h1{font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem}
+.meta{color:#718096;font-size:.85rem;margin-bottom:1rem}
+img{width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.q-item{border-radius:10px;padding:1rem;margin:.8rem 0;border-left:4px solid #e74c3c;background:#f7fafc}
+.q-item .num{font-weight:700;color:#e74c3c;font-size:.88rem}
+.q-item .desc{margin:.3rem 0;font-size:.9rem}
+.q-item .wrong{background:#f5656515;border-left:3px solid #f56565;padding:.4rem .7rem;border-radius:6px;font-size:.84rem;margin-top:.3rem;color:#c53030}
+.q-item .right{background:#48bb7815;border-left:3px solid #48bb78;padding:.4rem .7rem;border-radius:6px;font-size:.84rem;margin-top:.3rem;color:#276749}
+.btn{padding:.5rem 1.2rem;border:none;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;text-decoration:none;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-success{background:#48bb78;color:#fff}
+.btn-outline{background:0 0;border:2px solid #e2e8f0;color:#1a202c}
+.btn-outline:hover{border-color:#667eea}
+.spinner{animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.footer{text-align:center;padding:1.5rem;color:#718096;font-size:.82rem}
+p#msg{font-size:.85rem;color:#718096;margin-top:.8rem}
+</style></head><body>
+<div class="container">
+  <div class="card">
+    <h1><i class="fas fa-calculator" style="color:#e74c3c"></i> 数学小测 · 第1讲</h1>
+    <div class="meta">暑假初二博学班 · 二次根式（一） · 2026-07-26</div>
+    <img src="uploads/math_test1_q2.jpg" alt="数学小测试卷" loading="lazy">
+
+    <div class="q-item">
+      <div class="num">❌ 第2题(2) — 代数式有意义条件</div>
+      <div class="desc">(a-9)⁰ / √(a-2) 在实数范围内有意义，求 a 取值范围</div>
+      <div class="wrong">学生答案：a≠9 且 a≥2</div>
+      <div class="right">正确答案：a>2 且 a≠9（忽略√(a-2)在分母中，a-2必须>0不能等于0）</div>
+    </div>
+
+    <div class="q-item">
+      <div class="num">❌ 第2题(3) — 代数式有意义条件</div>
+      <div class="desc">√(3-x) / (2x-1) 在实数范围内有意义，求 x 取值范围</div>
+      <div class="wrong">学生答案：x≤3</div>
+      <div class="right">正确答案：x≤3 且 x≠½（忽略分母2x-1≠0的条件）</div>
+    </div>
+
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+      <a href="wrong_bank.html" class="btn btn-success"><i class="fas fa-database"></i> 打开错题库查看</a>
+      <a href="index.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> 回学习中心</a>
+    </div>
+    <p id="msg"><i class="fas fa-check-circle" style="color:#48bb78"></i> 已自动导入错题库！</p>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 持续更新中</div>
+
+<script>
+(function(){
+  const items = [
+    { subject:'数学', chapter:'二次根式（一）', content:'代数式 (a-9)⁰/√(a-2) 在实数范围内有意义，求 a 的取值范围', correct_answer:'a>2 且 a≠9（被开方数≥0、分母≠0、零指数幂底数≠0）', my_answer:'a≠9 且 a≥2（忽略分母√不为0）', error_reason:'审题粗心', source:'考试', difficulty:3, tags:'二次根式,有意义条件,分母非零,数学' },
+    { subject:'数学', chapter:'二次根式（一）', content:'代数式 √(3-x)/(2x-1) 在实数范围内有意义，求 x 的取值范围', correct_answer:'x≤3 且 x≠½（被开方数≥0、分母≠0）', my_answer:'x≤3（忽略分母2x-1≠0的条件）', error_reason:'审题粗心', source:'考试', difficulty:2, tags:'二次根式,有意义条件,分母非零,数学' }
+  ];
+  try {
+    const ex = JSON.parse(localStorage.getItem('wrong_bank_import') || '[]');
+    let added = 0;
+    items.forEach(item => {
+      if(!ex.some(e => e.content === item.content)){ ex.push(item); added++; }
+    });
+    if(added) localStorage.setItem('wrong_bank_import', JSON.stringify(ex));
+  } catch(e){ console.error(e); }
+})();
+</script>
+</body></html>
