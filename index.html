@@ -60,8 +60,9 @@ body {
   font-size: 0.7rem; font-weight: 600; padding: 0.1rem 0.6rem;
   border-radius: 10px; color: #fff; margin-left: auto;
 }
-.badge-tools { background: var(--danger); }
 .badge-study { background: var(--success); }
+.badge-training { background: #e67e22; }
+.badge-tools { background: var(--danger); }
 
 /* Tool cards */
 .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; }
@@ -173,26 +174,37 @@ const tools = [
   { name: '数据分析', icon: 'fa-chart-pie', desc: '错题统计分析', cls: 't-analysis', url: 'wrong_bank.html#analysis' },
 ];
 
-// 🔵 新增讲次：在对应科目的 lectures 数组里添加一条即可
-const subjects = [
+// 🔵 学校学习 — 按学校教学进度，分科目存放，有内容时添加讲次
+const schoolSubjects = [
+  { id: 'sch-math', name: '数学', icon: 'fa-calculator', cls: 'subject-math', lectures: [] },
+  { id: 'sch-physics', name: '物理', icon: 'fa-flask', cls: 'subject-physics', lectures: [] },
+  { id: 'sch-english', name: '英语', icon: 'fa-language', cls: 'subject-math', lectures: [] },
+  { id: 'sch-chemistry', name: '化学', icon: 'fa-flask', cls: 'subject-physics', lectures: [] },
+  { id: 'sch-biology', name: '生物', icon: 'fa-leaf', cls: 'subject-physics', lectures: [] },
+  { id: 'sch-history', name: '历史', icon: 'fa-history', cls: 'subject-math', lectures: [] },
+  { id: 'sch-geography', name: '地理', icon: 'fa-globe', cls: 'subject-physics', lectures: [] },
+  { id: 'sch-daofa', name: '道法', icon: 'fa-gavel', cls: 'subject-math', lectures: [] },
+];
+
+// 🔵 暑期培训 — 互动学习（已有讲次）
+const trainingSubjects = [
   {
     id: 'math', name: '数学', icon: 'fa-calculator', cls: 'subject-math',
     lectures: [
       { num: '01', title: '二次根式（一）', url: 'math_surd_interactive.html', date: '2026-07-25', tags: ['概念', '公式'], new: false },
-      // 🔜 数学后续讲次在此添加
     ]
   },
   {
     id: 'physics', name: '物理', icon: 'fa-flask', cls: 'subject-physics',
     lectures: [
       { num: '01', title: '声现象', url: 'physics_sound_interactive.html', date: '2026-07-25', tags: ['声学'], new: false },
-      // 🔜 物理后续讲次在此添加
     ]
   },
-  // 🔜 新增科目在此添加
 ];
 
 const numColors = ['#e74c3c','#3498db','#2ecc71','#e67e22','#9b59b6','#1abc9c'];
+const schoolIcons = ['fa-calculator','fa-flask','fa-language','fa-flask','fa-leaf','fa-history','fa-globe','fa-gavel'];
+const schoolColors = ['#e74c3c','#667eea','#2ecc71','#9b59b6','#27ae60','#f39c12','#1abc9c','#34495e'];
 
 function render() {
   let html = '';
@@ -214,44 +226,49 @@ function render() {
     </div>
   </div>`;
 
-  // === 互动学习标题 ===
-  html += `<div class="section fade-in-up" style="animation-delay:0.1s">
-    <div class="section-title"><i class="fas fa-graduation-cap" style="color:var(--success)"></i> 互动学习 <span class="badge badge-study">${subjects.reduce((s, sub) => s + sub.lectures.length, 0)} 讲</span></div>
-  `;
+  // === 学校学习 标题 ===
+  html += renderSubjectSection('学校学习', 'fa-school', '#2ecc71', 'badge-study', schoolSubjects);
+  
+  // === 暑期培训 标题 ===
+  html += renderSubjectSection('暑期培训 · 互动学习', 'fa-graduation-cap', '#e67e22', 'badge-training', trainingSubjects);
 
+  document.getElementById('app').innerHTML = html;
+}
+
+function renderSubjectSection(title, icon, color, badgeClass, subjects) {
+  const total = subjects.reduce((s, sub) => s + sub.lectures.length, 0);
+  let html = `<div class="section fade-in-up">
+    <div class="section-title"><i class="fas ${icon}" style="color:${color}"></i> ${title} <span class="badge ${badgeClass}">${total} 讲</span></div>
+  `;
   subjects.forEach((subj, si) => {
-    const total = subj.lectures.length;
+    const cnt = subj.lectures.length;
     html += `
-    <div class="subject-section fade-in-up" style="animation-delay:${0.15 + si * 0.08}s">
+    <div class="subject-section fade-in-up" style="animation-delay:${0.1 + si * 0.06}s">
       <div class="subject-header ${subj.cls}">
         <div class="icon"><i class="fas ${subj.icon}"></i></div>
         <h3>${subj.name}</h3>
-        <span class="count">${total} 讲</span>
+        <span class="count">${cnt} 讲</span>
       </div>
       <div class="lecture-grid">
         ${subj.lectures.map((lec, li) => `
-        <a href="${lec.url}" class="lecture-card" style="animation-delay:${(si * 0.08 + li * 0.05)}s">
+        <a href="${lec.url}" class="lecture-card">
           ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
           <div class="lnum" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
           <div class="info">
             <h4>${lec.title}</h4>
-            <div class="meta">
-              <span>${lec.date}</span>
-              ${lec.tags.map(t => `<span class="tag">${t}</span>`).join('')}
-            </div>
+            <div class="meta"><span>${lec.date}</span>${lec.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
           </div>
           <div class="arrow"><i class="fas fa-chevron-right"></i></div>
         </a>`).join('')}
         <div class="lecture-card empty">
           <div class="lnum" style="background:var(--border);color:var(--text-light)">+</div>
-          <div class="info"><h4>更多讲次即将上线</h4></div>
+          <div class="info"><h4>暂无内容</h4><div class="meta"><span>后续增加</span></div></div>
         </div>
       </div>
     </div>`;
   });
-
   html += '</div>';
-  document.getElementById('app').innerHTML = html;
+  return html;
 }
 
 render();
