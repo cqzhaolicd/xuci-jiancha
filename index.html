@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📚 若琳 · 互动学习中心</title>
+<title>📚 若琳 · 学习中心</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
@@ -31,100 +31,126 @@ body {
 }
 .header {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
-  padding: 2.5rem 1rem 2rem;
+  padding: 2rem 1rem 1.5rem;
   text-align: center;
   color: #fff;
   box-shadow: 0 2px 20px rgba(102,126,234,0.3);
 }
-.header h1 { font-size: 1.8rem; font-weight: 900; }
-.header p { opacity: 0.85; margin-top: 0.5rem; font-size: 0.95rem; }
-.header .tagline { margin-top: 1rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size: 0.85rem; opacity: 0.75; }
-.container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; }
+.header h1 { font-size: 1.6rem; font-weight: 900; }
+.header p { opacity: 0.85; margin-top: 0.3rem; font-size: 0.9rem; }
+.container { max-width: 920px; margin: 0 auto; padding: 1.2rem 1rem; }
+
+/* Toolbar */
+.toolbar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; justify-content: center; }
+.toolbar a {
+  text-decoration: none; color: #fff; padding: 0.5rem 1rem; border-radius: var(--radius-sm);
+  font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 0.4rem;
+  transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.toolbar a:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+/* Section */
+.section { margin-bottom: 2rem; }
+.section-title {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem; border-bottom: 2px solid var(--border);
+}
+.section-title .badge {
+  font-size: 0.7rem; font-weight: 600; padding: 0.1rem 0.6rem;
+  border-radius: 10px; color: #fff; margin-left: auto;
+}
+.badge-tools { background: var(--danger); }
+.badge-study { background: var(--success); }
+
+/* Tool cards */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; }
+.tool-card {
+  background: var(--card-bg); border-radius: var(--radius-sm);
+  padding: 0.8rem; text-decoration: none; color: var(--text);
+  text-align: center; border: 2px solid var(--border);
+  transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+}
+.tool-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.tool-card .t-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; }
+.tool-card .t-name { font-size: 0.85rem; font-weight: 600; }
+.tool-card .t-desc { font-size: 0.7rem; color: var(--text-light); }
+.tool-card.t-add .t-icon { background: #e74c3c; }
+.tool-card.t-list .t-icon { background: #3498db; }
+.tool-card.t-review .t-icon { background: #2ecc71; }
+.tool-card.t-training .t-icon { background: #e67e22; }
+.tool-card.t-print .t-icon { background: #9b59b6; }
+.tool-card.t-analysis .t-icon { background: #1abc9c; }
 
 /* Subject section */
-.subject-section { margin-bottom: 2rem; }
+.subject-section { margin-bottom: 1.5rem; }
 .subject-header {
-  display: flex; align-items: center; gap: 0.8rem;
-  padding: 1rem 1.2rem; border-radius: var(--radius);
-  color: #fff; margin-bottom: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.7rem 1rem; border-radius: var(--radius);
+  color: #fff; margin-bottom: 0.8rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-.subject-header .icon { font-size: 1.8rem; }
-.subject-header h2 { font-size: 1.2rem; font-weight: 700; flex: 1; }
-.subject-header .count { font-size: 0.8rem; opacity: 0.8; background: rgba(255,255,255,0.2); padding: 0.2rem 0.8rem; border-radius: 12px; }
+.subject-header .icon { font-size: 1.4rem; }
+.subject-header h3 { font-size: 1rem; font-weight: 700; flex: 1; }
+.subject-header .count { font-size: 0.75rem; opacity: 0.8; background: rgba(255,255,255,0.2); padding: 0.15rem 0.6rem; border-radius: 10px; }
 .subject-math { background: linear-gradient(135deg, #e74c3c, #c0392b); }
 .subject-physics { background: linear-gradient(135deg, #667eea, #764ba2); }
 .subject-chinese { background: linear-gradient(135deg, #2ecc71, #27ae60); }
-.subject-english { background: linear-gradient(135deg, #f39c12, #e67e22); }
 
-/* Lecture cards */
-.lecture-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.8rem; }
+.lecture-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.6rem; }
 .lecture-card {
   background: var(--card-bg); border-radius: var(--radius-sm);
-  padding: 1rem 1.2rem; text-decoration: none; color: var(--text);
-  display: flex; align-items: center; gap: 1rem;
+  padding: 0.8rem 1rem; text-decoration: none; color: var(--text);
+  display: flex; align-items: center; gap: 0.8rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   border: 2px solid var(--border);
-  transition: all 0.2s;
-  position: relative;
+  transition: all 0.2s; position: relative;
 }
-.lecture-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.lecture-card .lecture-num {
-  width: 44px; height: 44px; border-radius: 12px;
+.lecture-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.lecture-card .lnum {
+  width: 38px; height: 38px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem; font-weight: 800; color: #fff;
-  flex-shrink: 0;
+  font-size: 0.95rem; font-weight: 800; color: #fff; flex-shrink: 0;
 }
 .lecture-card .info { flex: 1; }
-.lecture-card .info h4 { font-size: 0.95rem; font-weight: 600; }
-.lecture-card .info .meta { font-size: 0.78rem; color: var(--text-light); margin-top: 0.2rem; display: flex; gap: 0.5rem; align-items: center; }
-.lecture-card .info .meta .tag { background: var(--bg); padding: 0.05rem 0.4rem; border-radius: 4px; font-size: 0.72rem; }
-.lecture-card .arrow { color: var(--text-light); font-size: 0.9rem; opacity: 0.5; transition: all 0.2s; }
+.lecture-card .info h4 { font-size: 0.88rem; font-weight: 600; }
+.lecture-card .info .meta { font-size: 0.72rem; color: var(--text-light); margin-top: 0.15rem; display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+.lecture-card .info .meta .tag { background: var(--bg); padding: 0.05rem 0.35rem; border-radius: 4px; font-size: 0.65rem; }
+.lecture-card .arrow { color: var(--text-light); font-size: 0.8rem; opacity: 0.5; transition: all 0.2s; }
 .lecture-card:hover .arrow { opacity: 1; transform: translateX(3px); }
 .lecture-card .badge-new {
-  position: absolute; top: -6px; right: -6px;
+  position: absolute; top: -5px; right: -5px;
   background: var(--danger); color: #fff;
-  font-size: 0.65rem; font-weight: 700;
-  padding: 0.15rem 0.5rem; border-radius: 8px;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 0.1rem 0.4rem; border-radius: 7px;
 }
 .lecture-card.empty {
   opacity: 0.5; cursor: default; border-style: dashed;
   justify-content: center; pointer-events: none;
 }
 .lecture-card.empty:hover { transform: none; box-shadow: none; }
-.lecture-card.empty .lecture-num { background: var(--border); color: var(--text-light); }
+.lecture-card.empty .lnum { background: var(--border) !important; color: var(--text-light); }
 .lecture-card.empty .info h4 { color: var(--text-light); }
 
 /* Footer */
-.footer { text-align: center; padding: 2rem; color: var(--text-light); font-size: 0.85rem; }
+.footer { text-align: center; padding: 1.5rem; color: var(--text-light); font-size: 0.82rem; }
 
 /* Animations */
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.fade-in-up { animation: fadeInUp 0.4s ease; }
-@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-.slide-down { animation: slideDown 0.3s ease; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in-up { animation: fadeInUp 0.35s ease; }
 
 @media (max-width: 600px) {
-  .header h1 { font-size: 1.3rem; }
+  .header h1 { font-size: 1.2rem; }
+  .tool-grid { grid-template-columns: repeat(3, 1fr); }
   .lecture-grid { grid-template-columns: 1fr; }
-  .lecture-card { padding: 0.8rem 1rem; }
+  .toolbar a { font-size: 0.78rem; padding: 0.4rem 0.7rem; }
 }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1><i class="fas fa-graduation-cap"></i> 若琳 · 互动学习中心</h1>
-  <p>初二暑假博学班 · 各科互动学习入口</p>
-  <div class="tagline">
-    <span><i class="fas fa-pen"></i> 闯关测验</span>
-    <span><i class="fas fa-layer-group"></i> 知识卡牌</span>
-    <span><i class="fas fa-exclamation-triangle"></i> 易错自检</span>
-    <span><i class="fas fa-database"></i> 错题导入</span>
-  </div>
+  <h1><i class="fas fa-graduation-cap"></i> 若琳 · 学习中心</h1>
+  <p>初二暑假博学班 · 暑期培训 · 互动学习 &amp; 错题库</p>
 </div>
 
 <div class="container" id="app">
@@ -132,66 +158,83 @@ body {
 </div>
 
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> 为若琳定制的互动学习工具 &nbsp;|&nbsp; 持续更新中
+  <i class="fas fa-heart" style="color:var(--danger)"></i> 为若琳定制的暑期培训学习工具 &nbsp;|&nbsp; 持续更新中
 </div>
 
 <script>
-// ===================== DATA: Add new lectures here =====================
-const subjects = [
-  {
-    id: 'math',
-    name: '数学',
-    icon: 'fa-calculator',
-    color: 'subject-math',
-    lectures: [
-      { num: '01', title: '二次根式（一）', url: 'math_surd_interactive.html', date: '2026-07-25', tags: ['概念', '公式'], new: true },
-      // 🔜 后续讲次在此添加
-      // { num: '02', title: '二次根式（二）', url: 'math_lecture2.html', date: '2026-07-27', tags: ['计算'], new: true },
-    ]
-  },
-  {
-    id: 'physics',
-    name: '物理',
-    icon: 'fa-flask',
-    color: 'subject-physics',
-    lectures: [
-      { num: '01', title: '声现象', url: 'physics_sound_interactive.html', date: '2026-07-25', tags: ['声学'], new: false },
-      // 🔜 后续讲次在此添加
-      // { num: '02', title: '光现象', url: 'physics_light.html', date: '2026-07-28', tags: ['光学'], new: true },
-    ]
-  },
-  // 🔜 后续科目在此添加
-  // {
-  //   id: 'chinese',
-  //   name: '语文',
-  //   icon: 'fa-book',
-  //   color: 'subject-chinese',
-  //   lectures: [
-  //     { num: '01', title: '文言文虚实词', url: '...', date: '...', tags: ['文言文'], new: false },
-  //   ]
-  // },
+// ===================== CONFIG =====================
+const BANK_BASE = 'https://recipients-rapidly-breed-commodities.trycloudflare.com';
+
+const tools = [
+  { name: '录入错题', icon: 'fa-plus-circle', desc: '添加新错题', cls: 't-add', url: '/add' },
+  { name: '错题本', icon: 'fa-list', desc: '浏览筛选错题', cls: 't-list', url: '/list' },
+  { name: '复习模式', icon: 'fa-redo', desc: '循环复习巩固', cls: 't-review', url: '/review' },
+  { name: '三层训练', icon: 'fa-layer-group', desc: '数学三层训练', cls: 't-training', url: '/math-training' },
+  { name: '打印试卷', icon: 'fa-print', desc: '组卷打印', cls: 't-print', url: '/print' },
+  { name: '数据分析', icon: 'fa-chart-pie', desc: '错题统计分析', cls: 't-analysis', url: '/analysis' },
 ];
 
-// Subject colors for lecture numbers
-const numColors = ['#e74c3c','#3498db','#2ecc71','#e67e22','#9b59b6','#1abc9c','#34495e'];
+// 🔵 新增讲次：在对应科目的 lectures 数组里添加一条即可
+const subjects = [
+  {
+    id: 'math', name: '数学', icon: 'fa-calculator', cls: 'subject-math',
+    lectures: [
+      { num: '01', title: '二次根式（一）', url: 'math_surd_interactive.html', date: '2026-07-25', tags: ['概念', '公式'], new: false },
+      // 🔜 数学后续讲次在此添加
+    ]
+  },
+  {
+    id: 'physics', name: '物理', icon: 'fa-flask', cls: 'subject-physics',
+    lectures: [
+      { num: '01', title: '声现象', url: 'physics_sound_interactive.html', date: '2026-07-25', tags: ['声学'], new: false },
+      // 🔜 物理后续讲次在此添加
+    ]
+  },
+  // 🔜 新增科目在此添加
+];
 
-// ===================== RENDER =====================
+const numColors = ['#e74c3c','#3498db','#2ecc71','#e67e22','#9b59b6','#1abc9c'];
+
 function render() {
   let html = '';
+
+  // === 快捷工具栏 ===
+  html += `<div class="toolbar fade-in-up">
+    ${tools.map(t => `<a href="${BANK_BASE}${t.url}" target="_blank" class="${t.cls}" style="background:var(--${t.cls.startsWith('t-') ? t.cls.replace('t-','') : 'primary'});"><i class="fas ${t.icon}"></i> ${t.name}</a>`).join('')}
+  </div>`;
+
+  // === 错题库标题 ===
+  html += `<div class="section fade-in-up">
+    <div class="section-title"><i class="fas fa-database" style="color:var(--danger)"></i> 错题库工具 <span class="badge badge-tools">${tools.length} 项</span></div>
+    <div class="tool-grid">
+      ${tools.map(t => `
+      <a href="${BANK_BASE}${t.url}" target="_blank" class="tool-card ${t.cls}">
+        <div class="t-icon"><i class="fas ${t.icon}"></i></div>
+        <div class="t-name">${t.name}</div>
+        <div class="t-desc">${t.desc}</div>
+      </a>`).join('')}
+    </div>
+  </div>`;
+
+  // === 互动学习标题 ===
+  html += `<div class="section fade-in-up" style="animation-delay:0.1s">
+    <div class="section-title"><i class="fas fa-graduation-cap" style="color:var(--success)"></i> 互动学习 <span class="badge badge-study">${subjects.reduce((s, sub) => s + sub.lectures.length, 0)} 讲</span></div>
+  `;
+
   subjects.forEach((subj, si) => {
     const total = subj.lectures.length;
     html += `
-    <div class="subject-section fade-in-up" style="animation-delay:${si * 0.1}s">
-      <div class="subject-header ${subj.color}">
+    <div class="subject-section fade-in-up" style="animation-delay:${0.15 + si * 0.08}s">
+      <div class="subject-header ${subj.cls}">
         <div class="icon"><i class="fas ${subj.icon}"></i></div>
-        <h2>${subj.name}</h2>
+        <h3>${subj.name}</h3>
         <span class="count">${total} 讲</span>
       </div>
       <div class="lecture-grid">
         ${subj.lectures.map((lec, li) => `
-        <a href="${lec.url}" class="lecture-card slide-down" style="animation-delay:${(si * 0.1 + li * 0.05)}s">
+        <a href="${lec.url}" class="lecture-card" style="animation-delay:${(si * 0.08 + li * 0.05)}s">
           ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
-          <div class="lecture-num" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
+          <div class="lnum" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
           <div class="info">
             <h4>${lec.title}</h4>
             <div class="meta">
@@ -200,16 +243,16 @@ function render() {
             </div>
           </div>
           <div class="arrow"><i class="fas fa-chevron-right"></i></div>
-        </a>
-        `).join('')}
-        <!-- Placeholder for future lectures -->
+        </a>`).join('')}
         <div class="lecture-card empty">
-          <div class="lecture-num" style="background:var(--border);color:var(--text-light)">+</div>
+          <div class="lnum" style="background:var(--border);color:var(--text-light)">+</div>
           <div class="info"><h4>更多讲次即将上线</h4></div>
         </div>
       </div>
     </div>`;
   });
+
+  html += '</div>';
   document.getElementById('app').innerHTML = html;
 }
 
