@@ -88,16 +88,33 @@ body {
 .subject-header {
   display: flex; align-items: center; gap: 0.6rem;
   padding: 0.7rem 1rem; border-radius: var(--radius);
-  color: #fff; margin-bottom: 0.8rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  color: #fff; margin-bottom: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer; user-select: none; transition: all 0.2s;
 }
+.subject-header:hover { filter: brightness(1.1); }
 .subject-header .icon { font-size: 1.4rem; }
 .subject-header h3 { font-size: 1rem; font-weight: 700; flex: 1; }
 .subject-header .count { font-size: 0.75rem; opacity: 0.8; background: rgba(255,255,255,0.2); padding: 0.15rem 0.6rem; border-radius: 10px; }
-.subject-math { background: linear-gradient(135deg, #e74c3c, #c0392b); }
-.subject-physics { background: linear-gradient(135deg, #667eea, #764ba2); }
+.subject-header .toggle-icon { font-size: 0.8rem; opacity: 0.7; transition: transform 0.3s ease; }
+.subject-header .toggle-icon.open { transform: rotate(180deg); }
+
+.lecture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.6rem;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
+  opacity: 0;
+  margin-top: 0;
+}
+.lecture-grid.open {
+  max-height: 2000px;
+  opacity: 1;
+  margin-top: 0.6rem;
+}
 .subject-chinese { background: linear-gradient(135deg, #2ecc71, #27ae60); }
 
-.lecture-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.6rem; }
 .lecture-card {
   background: var(--card-bg); border-radius: var(--radius-sm);
   padding: 0.8rem 1rem; text-decoration: none; color: var(--text);
@@ -244,10 +261,11 @@ function renderSubjectSection(title, icon, color, badgeClass, subjects) {
     const cnt = subj.lectures.length;
     html += `
     <div class="subject-section fade-in-up" style="animation-delay:${0.1 + si * 0.06}s">
-      <div class="subject-header ${subj.cls}">
+      <div class="subject-header ${subj.cls}" onclick="toggleSubject(this)">
         <div class="icon"><i class="fas ${subj.icon}"></i></div>
         <h3>${subj.name}</h3>
         <span class="count">${cnt} 讲</span>
+        <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
       </div>
       <div class="lecture-grid">
         ${subj.lectures.map((lec, li) => `
@@ -269,6 +287,31 @@ function renderSubjectSection(title, icon, color, badgeClass, subjects) {
   });
   html += '</div>';
   return html;
+}
+
+function toggleSubject(header) {
+  const grid = header.nextElementSibling;
+  const icon = header.querySelector('.toggle-icon');
+  if (!grid) return;
+  
+  // Close all other subjects in the same section
+  const section = header.closest('.subject-section');
+  if (section) {
+    const siblings = section.parentElement.querySelectorAll('.subject-section .lecture-grid.open');
+    siblings.forEach(el => {
+      if (el !== grid) {
+        el.classList.remove('open');
+        const h = el.previousElementSibling;
+        if (h) {
+          const ic = h.querySelector('.toggle-icon');
+          if (ic) ic.classList.remove('open');
+        }
+      }
+    });
+  }
+  
+  grid.classList.toggle('open');
+  if (icon) icon.classList.toggle('open');
 }
 
 render();
