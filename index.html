@@ -234,7 +234,7 @@ const schoolSubjects = [
   { id: 'sch-daofa', name: '道法', icon: 'fa-gavel', cls: 'subject-math', lectures: [] },
 ];
 
-// 🔵 暑期培训 — 互动学习（已有讲次）
+// 🔵 课外培训 — 互动学习（已有讲次）
 const trainingSubjects = [
   {
     id: 'math', name: '数学', icon: 'fa-calculator', cls: 'subject-math',
@@ -279,8 +279,8 @@ function render() {
       return renderSubject(subj, si, cnt);
     }).join(''));
 
-  // === 暑期培训 ===
-  html += renderSection('暑期培训 · 互动学习', 'fa-graduation-cap', '#e67e22', 'badge-training',
+  // === 课外培训 ===
+  html += renderSection('课外培训 · 互动学习', 'fa-graduation-cap', '#e67e22', 'badge-training',
     trainingSubjects.map((subj, si) => {
       const cnt = subj.lectures.length;
       return renderSubject(subj, si, cnt);
