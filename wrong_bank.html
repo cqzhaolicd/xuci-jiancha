@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>错题库 · 学习工具</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+/* Navbar */
+.navbar{background:linear-gradient(135deg,var(--primary),var(--secondary));padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.4rem}
+.navbar-nav{display:flex;gap:.2rem;flex-wrap:wrap}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .6rem;border-radius:8px;font-size:.82rem;transition:all .2s;display:flex;align-items:center;gap:.3rem;cursor:pointer}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.page{display:none}.page.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+/* Dashboard */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-bottom:1.5rem}
+.stat-card{border-radius:var(--radius);padding:1.2rem;color:#fff;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:-40%;right:-20%;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.1)}
+.stat-card .num{font-size:2rem;font-weight:900}
+.stat-card .label{font-size:.8rem;opacity:.85}
+.stat-card .icon{position:absolute;right:1rem;bottom:.8rem;font-size:1.8rem;opacity:.2}
+.bg-g1{background:linear-gradient(135deg,#667eea,#764ba2)}
+.bg-g2{background:linear-gradient(135deg,#e74c3c,#c0392b)}
+.bg-g3{background:linear-gradient(135deg,#2ecc71,#27ae60)}
+.bg-g4{background:linear-gradient(135deg,#f39c12,#e67e22)}
+/* Subject grid */
+.subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem}
+.subject-card{background:var(--card-bg);border-radius:var(--radius-sm);padding:.8rem;text-align:center;text-decoration:none;color:var(--text);border:2px solid var(--border);transition:all .2s;cursor:pointer}
+.subject-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.subject-card .s-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto .4rem;font-size:1rem;color:#fff}
+.subject-card .s-name{font-size:.82rem;font-weight:600}
+.subject-card .s-count{font-size:.7rem;color:var(--text-light)}
+/* Form */
+.form-section{margin-bottom:1.2rem}
+.form-section h6{font-size:.82rem;font-weight:700;color:var(--text-light);margin-bottom:.6rem;letter-spacing:.5px}
+.form-section h6 i{margin-right:.3rem}
+.form-label{font-size:.85rem;font-weight:500;margin-bottom:.3rem;display:block}
+.form-label .req{color:var(--danger)}
+.form-control,.form-select{width:100%;padding:.5rem .7rem;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:.9rem;font-family:inherit;transition:border-color .2s;background:#fff}
+.form-control:focus,.form-select:focus{outline:none;border-color:var(--primary)}
+textarea.form-control{resize:vertical;min-height:70px}
+.row{display:flex;flex-wrap:wrap;gap:.8rem}.row>*{flex:1 1 200px}
+.btn{padding:.5rem 1.2rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+.btn-sm{padding:.35rem .8rem;font-size:.8rem}
+.btn-group{display:flex;gap:.5rem;flex-wrap:wrap}
+/* List */
+.filter-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.filter-bar .form-select,.filter-bar .form-control{width:auto;min-width:120px;flex:1}
+.question-item{padding:.8rem;border-bottom:1px solid var(--border);transition:background .2s;cursor:pointer}
+.question-item:hover{background:var(--bg)}
+.question-item:last-child{border-bottom:none}
+.question-item .q-header{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.3rem}
+.question-item .q-content{font-size:.9rem;color:#4a5568}
+.question-item .q-meta{font-size:.78rem;color:var(--text-light);margin-top:.3rem;display:flex;gap:.5rem;flex-wrap:wrap}
+.q-badge{font-size:.7rem;padding:.05rem .4rem;border-radius:4px;font-weight:500}
+.badge-subject{background:var(--primary);color:#fff}
+.badge-chapter{background:var(--bg);color:var(--text-light)}
+.badge-reason{background:#f5656515;color:var(--danger)}
+.badge-source{background:#48bb7815;color:#276749}
+.badge-mastery{background:#667eea15;color:var(--primary)}
+/* Detail */
+.detail-field{margin-bottom:.8rem}.detail-field .label{font-size:.8rem;color:var(--text-light);font-weight:600}
+.detail-field .value{font-size:.95rem}
+/* Review */
+.review-card{text-align:center;padding:2rem}
+.review-card .q-text{font-size:1.1rem;font-weight:600;margin-bottom:1.5rem}
+.review-btns{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}
+.review-meta{font-size:.8rem;color:var(--text-light);margin-top:1rem}
+.review-progress{margin-bottom:1rem}
+/* Training */
+.training-layout{display:grid;grid-template-columns:1fr;gap:1rem}
+.training-panel{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem}
+.layer-tabs{display:flex;gap:.4rem;margin-bottom:1rem}
+.layer-tab{padding:.4rem 1rem;border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.layer-tab.l1{background:#667eea20;color:var(--primary)}.layer-tab.l1.active{background:var(--primary);color:#fff}
+.layer-tab.l2{background:#e67e2220;color:#e67e22}.layer-tab.l2.active{background:#e67e22;color:#fff}
+.layer-tab.l3{background:#e74c3c20;color:var(--danger)}.layer-tab.l3.active{background:var(--danger);color:#fff}
+/* Print */
+.print-layout{display:grid;gap:1.5rem}
+.print-q{padding:1rem;border:1px dashed var(--border);border-radius:8px;min-height:120px;page-break-inside:avoid}
+.print-q .pq-num{font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.print-q .pq-answer{border-top:1px dashed var(--border);margin-top:.5rem;padding-top:.5rem;font-size:.9rem}
+/* Analysis */
+.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.chart-box{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.chart-box h4{font-size:.9rem;margin-bottom:.8rem;text-align:center}
+.analysis-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.analysis-table th,.analysis-table td{padding:.4rem .6rem;text-align:left;border-bottom:1px solid var(--border)}
+.analysis-table th{color:var(--text-light);font-weight:600;font-size:.78rem}
+/* Pagination */
+.pagination{display:flex;justify-content:center;gap:.3rem;margin-top:1rem}
+.pagination a{padding:.3rem .7rem;border:1px solid var(--border);border-radius:6px;text-decoration:none;color:var(--text);font-size:.82rem}
+.pagination a.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+/* Toast */
+.toast{position:fixed;top:20px;right:20px;padding:.8rem 1.2rem;border-radius:var(--radius-sm);color:#fff;font-size:.85rem;z-index:9999;animation:fadeInUp .3s ease;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.toast-success{background:var(--success)}
+.toast-error{background:var(--danger)}
+.toast-info{background:var(--info)}
+/* Misc */
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--text-light)}
+.empty-state i{font-size:3rem;opacity:.3;margin-bottom:1rem}
+.empty-state h5{font-size:1rem;margin-bottom:.3rem}
+.footer{text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@media(max-width:768px){.navbar-nav a span{display:none}.stat-grid{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(3,1fr)}.filter-bar .form-select,.filter-bar .form-control{min-width:100px}}
+</style>
+</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="#"><i class="fas fa-database"></i> 错题库</a>
+  <div class="navbar-nav" id="mainNav">
+    <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
+    <a data-page="add"><i class="fas fa-plus-circle"></i><span>录入</span></a>
+    <a data-page="list"><i class="fas fa-list"></i><span>错题本</span></a>
+    <a data-page="review"><i class="fas fa-redo"></i><span>复习</span></a>
+    <a data-page="training"><i class="fas fa-layer-group"></i><span>三层练</span></a>
+    <a data-page="print-page"><i class="fas fa-print"></i><span>打印</span></a>
+    <a data-page="analysis"><i class="fas fa-chart-pie"></i><span>分析</span></a>
+  </div>
+</div></nav>
+
+<div class="container" id="app"></div>
+<div class="footer"><i class="fas fa-heart" style="color:var(--danger)"></i> 错题库 · 浏览器本地存储 &nbsp;|&nbsp; 数据自动保存在本机</div>
+
+<script>
+// ===================== DATA LAYER =====================
+const LS_KEY = 'wrong_bank_data';
+const IMPORT_KEY = 'wrong_bank_import';
+const SUBJECTS_DEFAULT = ['数学','语文','英语','物理','化学','历史','地理','生物','道法'];
+const SUBJECT_ICONS = ['fa-calculator','fa-book','fa-language','fa-flask','fa-flask','fa-history','fa-globe','fa-leaf','fa-gavel'];
+const SUBJECT_COLORS = ['#e74c3c','#3498db','#2ecc71','#667eea','#9b59b6','#f39c12','#1abc9c','#2ecc71','#34495e'];
+const ERROR_REASONS = ['概念不清','计算失误','审题不清','思路错误','公式记错','其他'];
+const SOURCES = ['考试','作业','练习','课外题','其他'];
+const REVIEW_INTERVALS = [1,3,7,15,30];
+
+function loadData() {
+  let d = JSON.parse(localStorage.getItem(LS_KEY)||'null');
+  if(!d||!d.subjects){
+    d={subjects:SUBJECTS_DEFAULT.map((n,i)=>({id:i+1,name:n,sort_order:i})),chapters:[],questions:[],nextQId:1,nextChapId:1};
+    saveData(d);
+  }
+  return d;
+}
+function saveData(d){localStorage.setItem(LS_KEY,JSON.stringify(d));}
+
+function genId(){const d=loadData();d.nextQId++;saveData(d);return d.nextQId-1;}
+function genChapId(){const d=loadData();d.nextChapId++;saveData(d);return d.nextChapId-1;}
+function now(){return new Date().toLocaleString('zh-CN',{hour12:false}).replace(/\//g,'-');}
+function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function calcNextReview(mastery){if(mastery>=REVIEW_INTERVALS.length)return null;const d=new Date();d.setDate(d.getDate()+REVIEW_INTERVALS[mastery]);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+
+// ===================== IMPORT FROM LEARNING PAGES =====================
+function checkImport(){try{
+  const data=localStorage.getItem(IMPORT_KEY);
+  if(!data)return;
+  const items=JSON.parse(data);
+  if(!items.length)return;
+  const d=loadData();
+  let imported=0;
+  for(const item of items){
+    const subj=d.subjects.find(s=>s.name===item.subject);
+    if(!subj)continue;
+    let chap=null;
+    if(item.chapter){
+      chap=d.chapters.find(c=>c.subject_id===subj.id&&c.name===item.chapter);
+      if(!chap){chap={id:genChapId(),subject_id:subj.id,name:item.chapter,sort_order:0};d.chapters.push(chap);}
+    }
+    d.questions.push({
+      id:genId(),subject_id:subj.id,chapter_id:chap?chap.id:null,
+      content:item.content,correct_answer:item.correct_answer||'',my_answer:item.my_answer||'',
+      error_reason:item.error_reason||'概念不清',tags:item.tags||'',source:item.source||'练习',
+      difficulty:item.difficulty||3,mastery:0,created_at:now(),updated_at:now(),
+      next_review:today(),review_count:0,image_path:'',answer_image_path:''
+    });
+    imported++;
+  }
+  saveData(d);
+  localStorage.removeItem(IMPORT_KEY);
+  if(imported>0)toast(`📥 成功导入 ${imported} 道错题！`,'success');
+}catch(e){console.error('Import error:',e);}}
+
+// ===================== ROUTER =====================
+let currentPage='dashboard';
+function navigate(page,data){
+  currentPage=page;
+  document.querySelectorAll('.navbar-nav a').forEach(a=>a.classList.toggle('active',a.dataset.page===page));
+  render(page,data);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.navbar-nav a').forEach(a=>a.addEventListener('click',()=>navigate(a.dataset.page)));
+
+// ===================== TOAST =====================
+function toast(msg,type='info'){
+  const el=document.createElement('div');
+  el.className=`toast toast-${type}`;
+  el.textContent=msg;
+  document.body.appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300);},2500);
+}
+
+// ===================== RENDER =====================
+function render(page,data){
+  const app=document.getElementById('app');
+  if(page==='dashboard') app.innerHTML=renderDashboard();
+  else if(page==='add') app.innerHTML=renderAdd();
+  else if(page==='list') app.innerHTML=renderList();
+  else if(page==='detail') app.innerHTML=renderDetail(data);
+  else if(page==='review') app.innerHTML=renderReview();
+  else if(page==='training') app.innerHTML=renderTraining();
+  else if(page==='print-page') app.innerHTML=renderPrint();
+  else if(page==='analysis') app.innerHTML=renderAnalysis();
+}
+
+// ===================== DASHBOARD =====================
+function renderDashboard(){
+  const d=loadData();
+  const total=d.questions.length;
+  const needReview=d.questions.filter(q=>q.next_review&&q.next_review<=today()).length;
+  const mastered=d.questions.filter(q=>q.mastery>=5).length;
+  const weak=d.questions.filter(q=>q.mastery===0&&q.next_review).length;
+  // Subject counts
+  const subjCounts={};
+  d.subjects.forEach(s=>subjCounts[s.id]=0);
+  d.questions.forEach(q=>{if(subjCounts[q.subject_id]!==undefined)subjCounts[q.subject_id]++;});
+  // Recent questions
+  const recent=[...d.questions].sort((a,b)=>b.id-a.id).slice(0,5);
+  return`
+  <div class="stat-grid">
+    <div class="stat-card bg-g1"><div class="num">${total}</div><div class="label">总错题</div><div class="icon"><i class="fas fa-database"></i></div></div>
+    <div class="stat-card bg-g2"><div class="num">${needReview}</div><div class="label">待复习</div><div class="icon"><i class="fas fa-redo"></i></div></div>
+    <div class="stat-card bg-g3"><div class="num">${mastered}</div><div class="label">已掌握</div><div class="icon"><i class="fas fa-check-circle"></i></div></div>
+    <div class="stat-card bg-g4"><div class="num">${weak}</div><div class="label">薄弱点</div><div class="icon"><i class="fas fa-exclamation-triangle"></i></div></div>
+  </div>
+  <div class="card"><div class="card-title"><i class="fas fa-book"></i> 科目概览</div>
+    <div class="subject-grid">${d.subjects.map((s,i)=>{
+      const cnt=subjCounts[s.id]||0;
+      return `<div class="subject-card" onclick="navigate('list',{subject_id:${s.id}})">
+        <div class="s-icon" style="background:${SUBJECT_COLORS[i%SUBJECT_COLORS.length]}"><i class="fas ${SUBJECT_ICONS[i%SUBJECT_ICONS.length]}"></i></div>
+        <div class="s-name">${s.name}</div><div class="s-count">${cnt}题</div></div>`;
+    }).join('')}</div></div>
+  ${recent.length?`<div class="card"><div class="card-title"><i class="fas fa-history"></i> 最近录入</div>
+    ${recent.map(q=>{
+      const subj=d.subjects.find(s=>s.id===q.subject_id);
+      return `<div class="question-item" onclick="navigate('detail',{qid:${q.id}})">
+        <div class="q-header"><span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+        ${q.chapter_id?`<span class="q-badge badge-chapter">${(d.chapters.find(c=>c.id===q.chapter_id)||{}).name||''}</span>`:''}
+        <span class="q-badge badge-reason">${q.error_reason}</span>
+        <span class="q-badge badge-mastery">掌握 ${q.mastery}/5</span></div>
+        <div class="q-content">${q.content.substring(0,100)}${q.content.length>100?'…':''}</div>
+        <div class="q-meta">${q.created_at}</div></div>`;
+    }).join('')}</div>`:''}
+  ${!total?'<div class="empty-state"><i class="fas fa-inbox"></i><h5>还没有错题记录</h5><p class="text-muted">去录入第一道错题吧！</p><button class="btn btn-primary mt-2" onclick="navigate(\'add\')"><i class="fas fa-plus-circle"></i> 录入错题</button></div>':''}
+  `;
+}
+
+// ===================== ADD =====================
+let addForm={subject_id:1,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3};
+
+function renderAdd(){
+  const d=loadData();
+  const chapters=d.chapters.filter(c=>c.subject_id===addForm.subject_id);
+  return`<div class="card">
+    <div class="card-title"><i class="fas fa-plus-circle" style="color:var(--primary)"></i> 录入新错题</div>
+    <form onsubmit="event.preventDefault();submitAdd()">
+      <div class="form-section"><h6><i class="fas fa-info-circle"></i> 基本信息</h6>
+        <div class="row">
+          <div><label class="form-label">科目 <span class="req">*</span></label>
+            <select class="form-select" id="af_subject" onchange="addForm.subject_id=+this.value;renderAdd()">
+              ${d.subjects.map(s=>`<option value="${s.id}" ${s.id===addForm.subject_id?'selected':''}>${s.name}</option>`).join('')}
+            </select></div>
+          <div><label class="form-label">章节</label>
+            <div style="display:flex;gap:.3rem"><select class="form-select" id="af_chapter" onchange="addForm.chapter_id=this.value||''">
+              <option value="">选择章节…</option>
+              ${chapters.map(c=>`<option value="${c.id}" ${String(c.id)===addForm.chapter_id?'selected':''}>${c.name}</option>`).join('')}
+            </select><button class="btn btn-outline btn-sm" onclick="addChapter()"><i class="fas fa-plus"></i></button></div></div>
+          <div><label class="form-label">来源</label>
+            <select class="form-select" id="af_source" onchange="addForm.source=this.value">
+              ${SOURCES.map(s=>`<option value="${s}" ${s===addForm.source?'selected':''}>${s}</option>`).join('')}
+            </select></div>
+          <div><label class="form-label">难度</label>
+            <select class="form-select" id="af_difficulty" onchange="addForm.difficulty=+this.value">
+              ${[1,2,3,4,5].map(i=>`<option value="${i}" ${i===addForm.difficulty?'selected':''}>${'⭐'.repeat(i)}</option>`).join('')}
+            </select></div></div></div>
+      <div class="form-section"><h6><i class="fas fa-question-circle" style="color:var(--info)"></i> 题目</h6>
+        <label class="form-label">题目内容 <span class="req">*</span></label>
+        <textarea class="form-control" rows="3" id="af_content" placeholder="输入题目内容…" onchange="addForm.content=this.value">${addForm.content}</textarea></div>
+      <div class="form-section"><h6><i class="fas fa-check-circle" style="color:var(--success)"></i> 答案</h6>
+        <div class="row">
+          <div><label class="form-label" style="color:var(--success)">正确答案</label>
+            <textarea class="form-control" rows="2" id="af_correct" placeholder="正确答案…" onchange="addForm.correct_answer=this.value">${addForm.correct_answer}</textarea></div>
+          <div><label class="form-label" style="color:var(--danger)">我的错误答案</label>
+            <textarea class="form-control" rows="2" id="af_wrong" placeholder="当时写的错误答案…" onchange="addForm.my_answer=this.value">${addForm.my_answer}</textarea></div></div></div>
+      <div class="form-section"><h6><i class="fas fa-search" style="color:var(--warning)"></i> 错因分析</h6>
+        <div class="row">
+          <div><label class="form-label">错误原因</label>
+            <select class="form-select" id="af_reason" onchange="addForm.error_reason=this.value">
+              ${ERROR_REASONS.map(r=>`<option value="${r}" ${r===addForm.error_reason?'selected':''}>${r}</option>`).join('')}
+            </select></div>
+          <div><label class="form-label">知识点标签</label>
+            <input class="form-control" id="af_tags" placeholder="逗号分隔" value="${addForm.tags}" onchange="addForm.tags=this.value"></div></div></div>
+      <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
+        <button class="btn btn-primary px-4"><i class="fas fa-save"></i> 保存错题</button>
+        <button class="btn btn-outline px-4 ms-2" type="button" onclick="addForm={subject_id:1,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3};renderAdd()">重置</button></div>
+    </form></div>`;
+}
+
+function submitAdd(){
+  const d=loadData();
+  const content=document.getElementById('af_content').value.trim();
+  if(!content){toast('请输入题目内容','error');return;}
+  const qid=genId();
+  const chapId=addForm.chapter_id?parseInt(addForm.chapter_id):null;
+  d.questions.push({
+    id:qid,subject_id:addForm.subject_id,chapter_id:chapId,
+    content,correct_answer:addForm.correct_answer,my_answer:addForm.my_answer,
+    error_reason:addForm.error_reason,tags:addForm.tags,source:addForm.source,
+    difficulty:addForm.difficulty,mastery:0,created_at:now(),updated_at:now(),
+    next_review:today(),review_count:0,image_path:'',answer_image_path:''
+  });
+  saveData(d);
+  addForm={subject_id:addForm.subject_id,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3};
+  toast('✅ 错题已保存','success');
+  navigate('detail',{qid});
+}
+
+function addChapter(){
+  const name=prompt('新章节名称：');
+  if(!name)return;
+  const d=loadData();
+  d.chapters.push({id:genChapId(),subject_id:addForm.subject_id,name,sort_order:0});
+  saveData(d);
+  renderAdd();
+}
+
+// ===================== LIST =====================
+let listFilter={subject_id:'',error_reason:'',mastery:'',search:'',page:1};
+const PER_PAGE=15;
+
+function renderList(){
+  const d=loadData();
+  let filtered=[...d.questions];
+  if(listFilter.subject_id) filtered=filtered.filter(q=>q.subject_id===parseInt(listFilter.subject_id));
+  if(listFilter.error_reason) filtered=filtered.filter(q=>q.error_reason===listFilter.error_reason);
+  if(listFilter.mastery!=='') filtered=filtered.filter(q=>q.mastery===parseInt(listFilter.mastery));
+  if(listFilter.search) {const s=listFilter.search.toLowerCase();filtered=filtered.filter(q=>q.content.toLowerCase().includes(s)||q.tags.toLowerCase().includes(s));}
+  filtered.sort((a,b)=>b.id-a.id);
+  const totalPages=Math.max(1,Math.ceil(filtered.length/PER_PAGE));
+  const page=Math.min(listFilter.page,totalPages);
+  const paged=filtered.slice((page-1)*PER_PAGE,page*PER_PAGE);
+  return`<div class="card">
+    <div class="card-title"><i class="fas fa-filter"></i> 筛选</div>
+    <div class="filter-bar">
+      <select class="form-select" id="lf_subject" onchange="listFilter.subject_id=this.value;listFilter.page=1;renderList()">
+        <option value="">📚 全部科目</option>${d.subjects.map(s=>`<option value="${s.id}" ${listFilter.subject_id==String(s.id)?'selected':''}>${s.name}</option>`).join('')}
+      </select>
+      <select class="form-select" onchange="listFilter.error_reason=this.value;listFilter.page=1;renderList()">
+        <option value="">📌 全部原因</option>${ERROR_REASONS.map(r=>`<option value="${r}" ${listFilter.error_reason===r?'selected':''}>${r}</option>`).join('')}
+      </select>
+      <select class="form-select" onchange="listFilter.mastery=this.value;listFilter.page=1;renderList()">
+        <option value="">🎯 掌握度</option><option value="0" ${listFilter.mastery==='0'?'selected':''}>未掌握</option>
+        <option value="1" ${listFilter.mastery==='1'?'selected':''}>待复习</option><option value="5" ${listFilter.mastery==='5'?'selected':''}>已掌握</option>
+      </select>
+      <input class="form-control" placeholder="🔍 搜索题目…" value="${listFilter.search}" onchange="listFilter.search=this.value;listFilter.page=1;renderList()" style="min-width:150px">
+      <button class="btn btn-outline btn-sm" onclick="listFilter={subject_id:'',error_reason:'',mastery:'',search:'',page:1};renderList()"><i class="fas fa-undo"></i> 重置</button>
+    </div>
+    <div>${paged.length?paged.map(q=>{
+      const subj=d.subjects.find(s=>s.id===q.subject_id);
+      const chap=d.chapters.find(c=>c.id===q.chapter_id);
+      return`<div class="question-item" onclick="navigate('detail',{qid:${q.id}})">
+        <div class="q-header"><span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+        ${chap?`<span class="q-badge badge-chapter">${chap.name}</span>`:''}
+        <span class="q-badge badge-reason">${q.error_reason}</span>
+        <span class="q-badge badge-source">${q.source}</span>
+        <span class="q-badge badge-mastery">${q.mastery}/5</span></div>
+        <div class="q-content">${q.content.substring(0,200)}${q.content.length>200?'…':''}</div>
+        <div class="q-meta">${q.created_at} ${q.tags?'🏷️ '+q.tags:''}</div></div>`;
+    }).join(''):'<div class="empty-state"><i class="fas fa-inbox"></i><h5>没有匹配的错题</h5></div>'}
+    ${totalPages>1?`<div class="pagination">${[...Array(totalPages).keys()].map(i=>`<a class="${i+1===page?'active':''}" onclick="listFilter.page=${i+1};renderList()">${i+1}</a>`).join('')}</div>`:''}
+  </div>`;
+}
+
+// ===================== DETAIL =====================
+let detailEditMode=false;
+function renderDetail(data){
+  const d=loadData();
+  const q=d.questions.find(x=>x.id===data.qid);
+  if(!q)return'<div class="empty-state"><i class="fas fa-question-circle"></i><h5>题目不存在</h5></div>';
+  const subj=d.subjects.find(s=>s.id===q.subject_id);
+  const chap=d.chapters.find(c=>c.id===q.chapter_id);
+  const chapters=d.chapters.filter(c=>c.subject_id===q.subject_id);
+  if(detailEditMode){
+    const ef={...q};
+    return`<div class="card"><div class="card-title"><i class="fas fa-edit"></i> 编辑错题</div>
+      <form onsubmit="event.preventDefault();saveEdit(${q.id})">
+        <div class="form-section"><h6>基本信息</h6>
+          <div class="row">
+            <div><label class="form-label">科目</label><select class="form-select" id="ed_subject" onchange="loadEditChapters(+this.value)">
+              ${d.subjects.map(s=>`<option value="${s.id}" ${s.id===q.subject_id?'selected':''}>${s.name}</option>`).join('')}
+            </select></div>
+            <div><label class="form-label">章节</label><select class="form-select" id="ed_chapter">
+              <option value="">无</option>${chapters.map(c=>`<option value="${c.id}" ${c.id===q.chapter_id?'selected':''}>${c.name}</option>`).join('')}
+            </select></div>
+            <div><label class="form-label">来源</label><select class="form-select" id="ed_source">${SOURCES.map(s=>`<option value="${s}" ${s===q.source?'selected':''}>${s}</option>`).join('')}</select></div>
+            <div><label class="form-label">难度</label><select class="form-select" id="ed_diff">${[1,2,3,4,5].map(i=>`<option value="${i}" ${i===q.difficulty?'selected':''}>${'⭐'.repeat(i)}</option>`).join('')}</select></div></div></div>
+        <div class="form-section"><label class="form-label">题目内容</label><textarea class="form-control" rows="3" id="ed_content">${q.content}</textarea></div>
+        <div class="form-section"><div class="row">
+          <div><label class="form-label" style="color:var(--success)">正确答案</label><textarea class="form-control" rows="2" id="ed_correct">${q.correct_answer}</textarea></div>
+          <div><label class="form-label" style="color:var(--danger)">我的错误答案</label><textarea class="form-control" rows="2" id="ed_wrong">${q.my_answer}</textarea></div></div></div>
+        <div class="form-section"><div class="row">
+          <div><label class="form-label">错误原因</label><select class="form-select" id="ed_reason">${ERROR_REASONS.map(r=>`<option value="${r}" ${r===q.error_reason?'selected':''}>${r}</option>`).join('')}</select></div>
+          <div><label class="form-label">标签</label><input class="form-control" id="ed_tags" value="${q.tags}"></div></div></div>
+        <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
+          <button class="btn btn-primary px-4"><i class="fas fa-save"></i> 保存修改</button>
+          <button class="btn btn-outline px-4 ms-2" type="button" onclick="detailEditMode=false;renderDetail({qid:${q.id}})">取消</button></div>
+      </form></div>`;
+  }
+  return`<div class="card"><div class="card-title"><i class="fas fa-file-alt"></i> 错题详情</div>
+    <div class="detail-field"><div class="label">科目 / 章节</div><div class="value">
+      <span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+      ${chap?`<span class="q-badge badge-chapter">${chap.name}</span>`:''}
+      <span class="q-badge badge-source">${q.source}</span>
+      <span class="q-badge badge-mastery">掌握 ${q.mastery}/5</span>
+      ${'⭐'.repeat(q.difficulty)}</div></div>
+    <div class="detail-field"><div class="label">题目</div><div class="value" style="background:var(--bg);padding:.8rem;border-radius:var(--radius-sm);line-height:1.8">${q.content}</div></div>
+    ${q.correct_answer?`<div class="detail-field"><div class="label" style="color:var(--success)">✅ 正确答案</div><div class="value" style="background:#48bb7810;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--success)">${q.correct_answer}</div></div>`:''}
+    ${q.my_answer?`<div class="detail-field"><div class="label" style="color:var(--danger)">❌ 我的错误答案</div><div class="value" style="background:#f5656510;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger)">${q.my_answer}</div></div>`:''}
+    <div class="detail-field"><div class="label">错因分析</div><div class="value"><span class="q-badge badge-reason">${q.error_reason}</span> ${q.tags?'🏷️ '+q.tags:''}</div></div>
+    <div class="detail-field"><div class="label">时间</div><div class="value" style="color:var(--text-light);font-size:.85rem">录入: ${q.created_at} | 复习: ${q.review_count}次 | 下次复习: ${q.next_review||'无需'}</div></div>
+    <div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+      <button class="btn btn-primary btn-sm" onclick="detailEditMode=true;renderDetail({qid:${q.id}})"><i class="fas fa-edit"></i> 编辑</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteQ(${q.id})"><i class="fas fa-trash"></i> 删除</button>
+      <button class="btn btn-outline btn-sm" onclick="navigate('list',{})"><i class="fas fa-arrow-left"></i> 返回列表</button>
+    </div></div>`;
+}
+function loadEditChapters(sid){
+  const d=loadData();
+  const sel=document.getElementById('ed_chapter');
+  sel.innerHTML='<option value="">无</option>'+d.chapters.filter(c=>c.subject_id===sid).map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+}
+function saveEdit(qid){
+  const d=loadData();
+  const q=d.questions.find(x=>x.id===qid);
+  if(!q)return;
+  q.subject_id=parseInt(document.getElementById('ed_subject').value);
+  q.chapter_id=parseInt(document.getElementById('ed_chapter').value)||null;
+  q.content=document.getElementById('ed_content').value;
+  q.correct_answer=document.getElementById('ed_correct').value;
+  q.my_answer=document.getElementById('ed_wrong').value;
+  q.error_reason=document.getElementById('ed_reason').value;
+  q.tags=document.getElementById('ed_tags').value;
+  q.source=document.getElementById('ed_source').value;
+  q.difficulty=parseInt(document.getElementById('ed_diff').value);
+  q.updated_at=now();
+  saveData(d);
+  detailEditMode=false;
+  toast('✅ 已保存','success');
+  navigate('detail',{qid});
+}
+function deleteQ(qid){
+  if(!confirm('确定删除这道错题？'))return;
+  const d=loadData();
+  d.questions=d.questions.filter(q=>q.id!==qid);
+  saveData(d);
+  toast('已删除','info');
+  navigate('list',{});
+}
+
+// ===================== REVIEW =====================
+let reviewList=[],reviewIdx=0,reviewAnswered=false,reviewFilter='all';
+
+function renderReview(){
+  const d=loadData();
+  let qs;
+  if(reviewFilter==='need'){
+    qs=d.questions.filter(q=>q.next_review&&q.next_review<=today());
+    if(!qs.length)qs=d.questions.filter(q=>q.mastery<5);
+    if(!qs.length)qs=[...d.questions];
+  }else qs=[...d.questions];
+  if(!qs.length)return'<div class="empty-state"><i class="fas fa-check-circle" style="color:var(--success)"></i><h5>没有错题需要复习</h5><p>先录入一些错题吧！</p></div>';
+  reviewList=qs.sort(()=>Math.random()-.5);
+  reviewIdx=0;reviewAnswered=false;
+  return reviewCard();
+}
+function reviewCard(){
+  if(reviewIdx>=reviewList.length)return`<div class="card review-card"><div class="big-icon" style="font-size:3rem">🎉</div><h2>复习完成！</h2>
+    <p style="color:var(--text-light);margin:.5rem 0">共复习了 ${reviewList.length} 道题</p>
+    <button class="btn btn-primary" onclick="renderReview()"><i class="fas fa-redo"></i> 再来一轮</button></div>`;
+  const q=reviewList[reviewIdx];
+  const d=loadData();
+  const subj=d.subjects.find(s=>s.id===q.subject_id);
+  const progress=Math.round(reviewIdx/reviewList.length*100);
+  return`<div class="card"><div class="review-progress"><div class="progress-bar" style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+    <div style="height:100%;width:${progress}%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:3px;transition:width .3s"></div></div></div>
+    <div class="review-card fade-in-up">
+    <div style="display:flex;gap:.3rem;justify-content:center;flex-wrap:wrap;margin-bottom:.8rem">
+      <span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+      <span class="q-badge badge-reason">${q.error_reason}</span>
+      <span class="q-badge badge-mastery">${'⭐'.repeat(q.difficulty)}</span>
+    </div>
+    <div class="q-text">${q.content}</div>
+    ${reviewAnswered?`
+      <div style="margin:1rem 0;padding:1rem;border-radius:var(--radius-sm);background:#48bb7810;border-left:4px solid var(--success);text-align:left">
+        <strong style="color:var(--success)">✅ 正确答案：</strong> ${q.correct_answer||'（无）'}
+      </div>
+      ${q.my_answer?`<div style="margin:.5rem 0;padding:.5rem .8rem;border-radius:var(--radius-sm);background:#f5656510;border-left:3px solid var(--danger);text-align:left;font-size:.85rem">
+        <strong style="color:var(--danger)">❌ 你的答案：</strong> ${q.my_answer}</div>`:''}
+      <div class="review-btns" style="margin-top:1rem">
+        <button class="btn btn-danger" onclick="reviewResult(0)"><i class="fas fa-times"></i> 还不会</button>
+        <button class="btn btn-warning" style="background:var(--warning);color:#fff" onclick="reviewResult(1)"><i class="fas fa-minus"></i> 有点印象</button>
+        <button class="btn btn-success" onclick="reviewResult(2)"><i class="fas fa-check"></i> 已掌握</button>
+      </div>
+    `:`<button class="btn btn-primary" onclick="reviewShowAnswer()"><i class="fas fa-eye"></i> 看答案</button>`}
+    <div class="review-meta">${reviewIdx+1} / ${reviewList.length}</div></div></div>`;
+}
+function reviewShowAnswer(){reviewAnswered=true;document.querySelector('#app').innerHTML=reviewCard();}
+function reviewResult(r){
+  const q=reviewList[reviewIdx];
+  const d=loadData();
+  const qq=d.questions.find(x=>x.id===q.id);
+  if(qq){
+    if(r===2)qq.mastery=Math.min(qq.mastery+1,REVIEW_INTERVALS.length);
+    else if(r===0)qq.mastery=0;
+    qq.next_review=calcNextReview(qq.mastery);
+    qq.review_count++;
+    qq.updated_at=now();
+    saveData(d);
+  }
+  reviewIdx++;reviewAnswered=false;
+  document.querySelector('#app').innerHTML=reviewCard();
+}
+
+// ===================== TRAINING =====================
+let trainingLayer=1,trainingQIdx=0,trainingQs=[],trainingMode=false;
+
+function renderTraining(){
+  const d=loadData();
+  const mathQs=d.questions.filter(q=>{
+    const subj=d.subjects.find(s=>s.id===q.subject_id);
+    return subj&&subj.name==='数学';
+  });
+  if(!mathQs.length)return`<div class="card"><div class="empty-state"><i class="fas fa-layer-group"></i><h5>还没有数学错题</h5>
+    <p>先录入数学错题，再用三层训练系统强化</p></div></div>`;
+  if(trainingMode)return trainingSession(mathQs);
+  return`<div class="training-layout">
+    <div class="training-panel"><h4 style="margin-bottom:.8rem"><i class="fas fa-layer-group" style="color:var(--primary)"></i> 数学三层训练</h4>
+      <p style="font-size:.9rem;color:var(--text-light);margin-bottom:1rem">对数学错题进行三层递进训练：<br>
+      <strong>1️⃣ 基础同构</strong> → 原题重做，巩固基础<br>
+      <strong>2️⃣ 条件变化</strong> → 改编条件，灵活应变<br>
+      <strong>3️⃣ 反向综合</strong> → 综合应用，提升思维</p>
+      <p style="font-size:.85rem;margin-bottom:.8rem">📊 共有 <strong>${mathQs.length}</strong> 道数学错题可用</p>
+      <button class="btn btn-primary" onclick="trainingMode=true;renderTraining()"><i class="fas fa-play"></i> 开始训练</button>
+    </div></div>`;
+}
+function trainingSession(questions){
+  if(!trainingQs.length)trainingQs=questions.sort(()=>Math.random()-.5);
+  const q=trainingQs[trainingQIdx%trainingQs.length];
+  const d=loadData();
+  trainingLayer=trainingLayer||1;
+  const layerNames=['','基础同构 · 原题重现','条件变化 · 灵活应变','反向综合 · 思维提升'];
+  const layerHints=['按原题做一遍，回忆解题思路','尝试改变条件，题目会怎么变？','从答案反推条件，综合运用知识'];
+  return`<div class="training-panel">
+    <div class="layer-tabs">
+      ${[1,2,3].map(l=>`<button class="layer-tab l${l} ${l===trainingLayer?'active':''}" onclick="trainingLayer=${l};renderTraining()">${l===1?'🔵':l===2?'🟠':'🔴'} 第${l}层</button>`).join('')}
+    </div>
+    <div style="font-size:.78rem;color:var(--text-light);margin-bottom:.5rem">${layerNames[trainingLayer]} · ${trainingQIdx+1}/${trainingQs.length}</div>
+    <div style="padding:1rem;background:var(--bg);border-radius:var(--radius-sm);margin-bottom:1rem;font-size:.95rem;line-height:1.8">${q.content}</div>
+    <div style="padding:.8rem;background:#667eea10;border-radius:var(--radius-sm);margin-bottom:1rem;font-size:.85rem;border-left:3px solid var(--primary)">
+      <strong>💡 ${layerNames[trainingLayer]}提示：</strong> ${layerHints[trainingLayer-1]}
+    </div>
+    <textarea class="form-control" rows="3" placeholder="写下你的解答过程…" style="margin-bottom:1rem"></textarea>
+    <div style="margin-bottom:1rem;padding:.8rem;background:#48bb7810;border-radius:var(--radius-sm);display:${trainingLayer>1?'block':'none'};border-left:3px solid var(--success);font-size:.85rem">
+      <strong>✅ 原题答案：</strong> ${q.correct_answer||'（无）'}</div>
+    <div class="btn-group" style="justify-content:center">
+      <button class="btn btn-outline btn-sm" onclick="trainingQIdx=Math.max(0,trainingQIdx-1);renderTraining()" ${trainingQIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+      <button class="btn btn-success btn-sm" onclick="trainingLayer=Math.min(3,trainingLayer+1);toast('进入第'+(trainingLayer+1)+'层训练','info');renderTraining()" ${trainingLayer>=3?'disabled':''}>进入下一层 <i class="fas fa-arrow-right"></i></button>
+      <button class="btn btn-primary btn-sm" onclick="trainingQIdx++;renderTraining()"><i class="fas fa-forward"></i> 下一题</button>
+      <button class="btn btn-outline btn-sm" onclick="trainingMode=false;trainingQs=[];trainingLayer=1;trainingQIdx=0;renderTraining()"><i class="fas fa-times"></i> 退出</button>
+    </div></div>`;
+}
+
+// ===================== PRINT =====================
+function renderPrint(){
+  const d=loadData();
+  const qs=d.questions;
+  if(!qs.length)return'<div class="empty-state"><i class="fas fa-print"></i><h5>没有可打印的错题</h5></div>';
+  return`<div class="card"><div class="card-title"><i class="fas fa-print"></i> 打印预览</div>
+    <div class="print-layout">${qs.map((q,i)=>{
+      const subj=d.subjects.find(s=>s.id===q.subject_id);
+      return`<div class="print-q">
+        <div class="pq-num">${i+1}. [${subj?subj.name:'?'}]</div>
+        <div>${q.content}</div>
+        <div class="pq-answer" style="color:var(--success)"><strong>答案：</strong>${q.correct_answer||'（无）'}</div>
+      </div>`;
+    }).join('')}</div>
+    <div style="text-align:center;margin-top:1rem">
+      <button class="btn btn-primary" onclick="window.print()"><i class="fas fa-print"></i> 打印</button>
+    </div></div>`;
+}
+
+// ===================== ANALYSIS =====================
+let analysisChart=null;
+
+function renderAnalysis(){
+  const d=loadData();
+  const qs=d.questions;
+  if(!qs.length)return'<div class="empty-state"><i class="fas fa-chart-pie"></i><h5>还没有数据</h5><p>录入错题后查看分析报告</p></div>';
+  
+  // By error reason
+  const reasonCount={};ERROR_REASONS.forEach(r=>reasonCount[r]=0);
+  qs.forEach(q=>{if(reasonCount[q.error_reason]!==undefined)reasonCount[q.error_reason]++;});
+  
+  // By subject
+  const subjCount={},subjMastered={};d.subjects.forEach(s=>{subjCount[s.id]=0;subjMastered[s.id]=0;});
+  qs.forEach(q=>{if(subjCount[q.subject_id]!==undefined){subjCount[q.subject_id]++;if(q.mastery>=5)subjMastered[q.subject_id]++;}});
+  
+  // By chapter
+  const chapWeak={};
+  d.chapters.forEach(c=>chapWeak[c.id]=0);
+  qs.forEach(q=>{if(q.chapter_id&&chapWeak[q.chapter_id]!==undefined&&q.mastery===0)chapWeak[q.chapter_id]++;});
+  const weakChaps=Object.entries(chapWeak).filter(([_,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,8);
+
+  setTimeout(()=>{
+    const canvas=document.getElementById('chartReason');
+    if(!canvas)return;
+    if(analysisChart)analysisChart.destroy();
+    const ctx=canvas.getContext('2d');
+    const labels=Object.keys(reasonCount).filter(k=>reasonCount[k]>0);
+    const data=labels.map(k=>reasonCount[k]);
+    const colors=['#f56565','#ecc94b','#4299e1','#9b59b6','#e67e22','#a0aec0'];
+    analysisChart=new Chart(ctx,{type:'doughnut',data:{labels:labels.map(l=>l+`(${reasonCount[l]})`),datasets:[{data,backgroundColor:colors.slice(0,labels.length),borderWidth:0}]},
+      options:{responsive:true,cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:{size:11}}}}}});
+  },50);
+
+  return`<div class="chart-grid">
+    <div class="chart-box"><h4>错因分布</h4><canvas id="chartReason" style="max-height:250px"></canvas></div>
+    <div class="chart-box"><h4>科目统计</h4>
+      <table class="analysis-table"><thead><tr><th>科目</th><th>错题</th><th>已掌握</th><th>掌握率</th></tr></thead>
+      <tbody>${d.subjects.map(s=>{
+        const total=subjCount[s.id]||0;
+        const mastered=subjMastered[s.id]||0;
+        return`<tr><td>${s.name}</td><td>${total}</td><td>${mastered}</td><td>${total?Math.round(mastered/total*100)+'%':'-'}</td></tr>`;
+      }).join('')}</tbody></table></div>
+  </div>
+  <div class="card" style="margin-top:1rem">
+    <div class="card-title"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 薄弱章节 TOP</div>
+    ${weakChaps.length?`<table class="analysis-table"><thead><tr><th>章节</th><th>未掌握题数</th></tr></thead>
+      <tbody>${weakChaps.map(([cid,cnt])=>{
+        const chap=d.chapters.find(c=>c.id===parseInt(cid));
+        const subj=chap?d.subjects.find(s=>s.id===chap.subject_id):null;
+        return`<tr><td>${subj?subj.name+' · ':''}${chap?chap.name:'?'}</td><td><span style="color:var(--danger);font-weight:600">${cnt}</span></td></tr>`;
+      }).join('')}</tbody></table>`:'<p style="color:var(--text-light)">暂无薄弱章节数据</p>'}
+  </div>`;
+}
+
+// ===================== INIT =====================
+checkImport();
+navigate('dashboard');
+</script>
+</body></html>
