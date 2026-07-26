@@ -224,14 +224,26 @@ const tools = [
 
 // 🔵 学校学习 — 按学校教学进度，分科目存放，有内容时添加讲次
 const schoolSubjects = [
-  { id: 'sch-math', name: '数学', icon: 'fa-calculator', cls: 'subject-math', lectures: [] },
-  { id: 'sch-physics', name: '物理', icon: 'fa-flask', cls: 'subject-physics', lectures: [] },
-  { id: 'sch-english', name: '英语', icon: 'fa-language', cls: 'subject-math', lectures: [] },
-  { id: 'sch-chemistry', name: '化学', icon: 'fa-flask', cls: 'subject-physics', lectures: [] },
-  { id: 'sch-biology', name: '生物', icon: 'fa-leaf', cls: 'subject-physics', lectures: [] },
-  { id: 'sch-history', name: '历史', icon: 'fa-history', cls: 'subject-math', lectures: [] },
-  { id: 'sch-geography', name: '地理', icon: 'fa-globe', cls: 'subject-physics', lectures: [] },
-  { id: 'sch-daofa', name: '道法', icon: 'fa-gavel', cls: 'subject-math', lectures: [] },
+  {
+    id: 'cz-rc', name: '初中 · 日常学习', icon: 'fa-book-open', cls: 'subject-math',
+    lectures: [
+      // { num: '01', title: '数学 · 有理数', url: '...', date: '...', tags: ['数学'], new: false },
+    ]
+  },
+  {
+    id: 'cz-holiday', name: '初中 · 假期学习', icon: 'fa-calendar-alt', cls: 'subject-physics',
+    lectures: [
+      // { num: '01', title: '物理 · 声现象复习', url: '...', date: '...', tags: ['物理'], new: false },
+    ]
+  },
+  {
+    id: 'gz-rc', name: '高中 · 日常学习', icon: 'fa-graduation-cap', cls: 'subject-math',
+    lectures: []
+  },
+  {
+    id: 'gz-holiday', name: '高中 · 假期学习', icon: 'fa-calendar-check', cls: 'subject-physics',
+    lectures: []
+  },
 ];
 
 // 🔵 课外培训 — 互动学习（已有讲次）
