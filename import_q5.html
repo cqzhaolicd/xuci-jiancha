@@ -42,21 +42,17 @@ img{width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
     </div>
 
     <div style="display:flex;gap:.5rem;flex-wrap:wrap">
-      <button class="btn btn-success" onclick="importToBank()"><i class="fas fa-database"></i> 导入错题库</button>
-      <a href="wrong_bank.html#add" class="btn btn-outline"><i class="fas fa-plus-circle"></i> 手动录入</a>
+      <a href="wrong_bank.html" class="btn btn-success"><i class="fas fa-database"></i> 打开错题库查看</a>
       <a href="index.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> 回学习中心</a>
     </div>
-    <p id="importMsg" style="margin-top:.8rem;font-size:.85rem;color:#718096"></p>
+    <p id="importMsg" style="margin-top:.8rem;font-size:.85rem;color:#48bb78"><i class="fas fa-check-circle"></i> 已自动导入错题库！</p>
   </div>
 </div>
 <div class="footer">为若琳定制的学习工具 | 持续更新中</div>
 
 <script>
-function importToBank() {
-  const btn = document.querySelector('.btn-success');
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner spinner"></i> 导入中...';
-
+// 自动导入错题库
+(function() {
   const item = {
     subject: '物理',
     chapter: '声现象',
@@ -68,19 +64,15 @@ function importToBank() {
     difficulty: 3,
     tags: '声现象,音调,响度,物理'
   };
-
   try {
     const existing = JSON.parse(localStorage.getItem('wrong_bank_import') || '[]');
-    existing.push(item);
-    localStorage.setItem('wrong_bank_import', JSON.stringify(existing));
-    document.getElementById('importMsg').innerHTML = '✅ 已加入导入队列！<a href="wrong_bank.html" style="color:#667eea">打开错题库查看 →</a>';
-    btn.innerHTML = '<i class="fas fa-check-circle"></i> 已导入';
-    setTimeout(() => { if (confirm('打开错题库查看？')) window.open('wrong_bank.html', '_blank'); }, 500);
-  } catch(e) {
-    document.getElementById('importMsg').textContent = '❌ 导入失败：' + e.message;
-    btn.disabled = false;
-    btn.innerHTML = '<i class="fas fa-database"></i> 导入错题库';
-  }
-}
+    // 去重：检查是否已导入相同题目
+    const dup = existing.some(e => e.content === item.content);
+    if (!dup) {
+      existing.push(item);
+      localStorage.setItem('wrong_bank_import', JSON.stringify(existing));
+    }
+  } catch(e) { console.error(e); }
+})();
 </script>
 </body></html>
