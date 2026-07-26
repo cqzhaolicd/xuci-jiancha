@@ -259,14 +259,18 @@ const schoolSubjectsData = buildSchoolData();
 // 🔵 课外培训 — 互动学习（已有讲次）
 const trainingSubjects = [
   {
-    id: 'tyjy', name: '天元教育', icon: 'fa-school', cls: 'subject-math',
+    id: 'tyjy-math', name: '数学', icon: 'fa-calculator', cls: 'subject-math',
     lectures: [
-      { num: '01', title: '数学 · 二次根式（一）', url: 'math_surd_interactive.html', date: '2026-07-25', tags: ['数学'], new: false },
-      { num: '02', title: '物理 · 声现象（一）', url: 'physics_sound_interactive.html', date: '2026-07-25', tags: ['物理'], new: false },
-      { num: '03', title: '物理 · 声现象（二）', url: 'physics_sound2_interactive.html', date: '2026-07-26', tags: ['物理'], new: true },
+      { num: '01', title: '二次根式（一）', url: 'math_surd_interactive.html', date: '2026-07-25', tags: ['数学'], new: false },
     ]
   },
-  { id: 'szjy', name: '术质教育', icon: 'fa-school', cls: 'subject-physics', lectures: [] },
+  {
+    id: 'tyjy-physics', name: '物理', icon: 'fa-flask', cls: 'subject-physics',
+    lectures: [
+      { num: '01', title: '声现象（一）', url: 'physics_sound_interactive.html', date: '2026-07-25', tags: ['物理'], new: false },
+      { num: '02', title: '声现象（二）', url: 'physics_sound2_interactive.html', date: '2026-07-26', tags: ['物理'], new: true },
+    ]
+  },
 ];
 
 const numColors = ['#e74c3c','#3498db','#2ecc71','#e67e22','#9b59b6','#1abc9c'];
