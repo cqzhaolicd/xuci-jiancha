@@ -32,13 +32,13 @@ img{width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 
     <div class="q-detail">
       <div class="label"><i class="fas fa-question-circle" style="color:#667eea"></i> 题目</div>
-      <div class="value">如图所示，小王同学用中国古代乐器马头琴演奏《远古的梦》。下列说法错误的是（ ）</div>
+      <div class="value">如图所示，小王同学用中国古代乐器马头琴演奏《远古的梦》。下列说法错误的是（ ）<br><br>A. 他将左右的轴前后拧，可以改变音调<br>B. 马头琴声只能在空气中传播<br>C. 马头琴音量大小与演奏时所用的力度有关<br>D. 马头琴是拉弦乐器</div>
       <div class="label" style="color:#e74c3c">❌ 我的答案</div>
-      <div class="value">C. 马头琴音量大小与演奏时所用的力度有关</div>
+      <div class="value">C（以为"音量与力度有关"是错的）</div>
       <div class="label" style="color:#48bb78">✅ 正确答案</div>
-      <div class="value">C. 马头琴音量大小与演奏时所用的力度有关 <span style="color:#48bb78">（此题选"错误"项，老师判定C为答案）</span></div>
+      <div class="value">B（声音可以在固体、液体、气体中传播，不限于空气）</div>
       <div class="label">📌 错因</div>
-      <div class="value">概念不清 — 音调（频率）与响度（振幅）混淆</div>
+      <div class="value">概念不清 — 音调与响度概念混淆 + 审题"选错误项"</div>
     </div>
 
     <div style="display:flex;gap:.5rem;flex-wrap:wrap">
@@ -57,12 +57,12 @@ img{width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
     subject: '物理',
     chapter: '声现象',
     content: '马头琴演奏《远古的梦》。下列说法错误的是（ ）\nA. 他将左右的轴前后拧，可以改变音调\nB. 马头琴声只能在空气中传播\nC. 马头琴音量大小与演奏时所用的力度有关\nD. 马头琴是拉弦乐器',
-    correct_answer: 'C',
-    my_answer: 'C（此题选错误项，误以为C是错的）',
+    correct_answer: 'B（声音可在固液气中传播，不限于空气）',
+    my_answer: 'C（误以为音量与力度无关）',
     error_reason: '概念不清',
     source: '考试',
     difficulty: 3,
-    tags: '声现象,音调,响度,物理'
+    tags: '声现象,声音传播,音调,响度,物理'
   };
   try {
     const existing = JSON.parse(localStorage.getItem('wrong_bank_import') || '[]');
