@@ -108,15 +108,26 @@ body {
 .subject-header {
   display: flex; align-items: center; gap: 0.6rem;
   padding: 0.7rem 1rem; border-radius: var(--radius);
-  color: #fff; margin-bottom: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  color: var(--text); margin-bottom: 0;
+  background: var(--card-bg); border: 2px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   cursor: pointer; user-select: none; transition: all 0.2s;
 }
-.subject-header:hover { filter: brightness(1.1); }
+.subject-header:hover { border-color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 .subject-header .icon { font-size: 1.4rem; }
+.subject-header .icon i { color: var(--primary); }
 .subject-header h3 { font-size: 1rem; font-weight: 700; flex: 1; }
-.subject-header .count { font-size: 0.75rem; opacity: 0.8; background: rgba(255,255,255,0.2); padding: 0.15rem 0.6rem; border-radius: 10px; }
-.subject-header .toggle-icon { font-size: 0.8rem; opacity: 0.7; transition: transform 0.3s ease; }
+.subject-header .count { font-size: 0.75rem; color: var(--text-light); background: var(--bg); padding: 0.15rem 0.6rem; border-radius: 10px; }
+.subject-header .toggle-icon { font-size: 0.8rem; opacity: 0.5; color: var(--text-light); transition: transform 0.3s ease; }
 .subject-header .toggle-icon.open { transform: rotate(180deg); }
+
+/* Subject header color accents */
+.subject-math { border-left: 4px solid #e74c3c; }
+.subject-math .icon i { color: #e74c3c; }
+.subject-physics { border-left: 4px solid #667eea; }
+.subject-physics .icon i { color: #667eea; }
+.subject-chinese { border-left: 4px solid #2ecc71; }
+.subject-chinese .icon i { color: #2ecc71; }
 
 .lecture-grid {
   display: grid;
