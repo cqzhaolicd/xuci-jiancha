@@ -224,26 +224,8 @@ const tools = [
 
 // 🔵 学校学习 — 按学校教学进度，分科目存放，有内容时添加讲次
 const schoolSubjects = [
-  {
-    id: 'cz-rc', name: '初中 · 日常学习', icon: 'fa-book-open', cls: 'subject-math',
-    lectures: [
-      // { num: '01', title: '数学 · 有理数', url: '...', date: '...', tags: ['数学'], new: false },
-    ]
-  },
-  {
-    id: 'cz-holiday', name: '初中 · 假期学习', icon: 'fa-calendar-alt', cls: 'subject-physics',
-    lectures: [
-      // { num: '01', title: '物理 · 声现象复习', url: '...', date: '...', tags: ['物理'], new: false },
-    ]
-  },
-  {
-    id: 'gz-rc', name: '高中 · 日常学习', icon: 'fa-graduation-cap', cls: 'subject-math',
-    lectures: []
-  },
-  {
-    id: 'gz-holiday', name: '高中 · 假期学习', icon: 'fa-calendar-check', cls: 'subject-physics',
-    lectures: []
-  },
+  { id: 'cz', name: '初中学习', icon: 'fa-book', cls: 'subject-math', lectures: [] },
+  { id: 'gz', name: '高中学习', icon: 'fa-graduation-cap', cls: 'subject-physics', lectures: [] },
 ];
 
 // 🔵 课外培训 — 互动学习（已有讲次）
