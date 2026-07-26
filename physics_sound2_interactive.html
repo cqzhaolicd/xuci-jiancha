@@ -1,0 +1,313 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔊 声现象（二）· 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem}
+.formula-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.05);border-top:4px solid #667eea}
+.formula-card .formula{font-size:1.2rem;font-weight:700;color:#667eea;margin:.3rem 0;font-family:'Times New Roman',serif}
+.formula-card .note{font-size:.82rem;color:var(--text-light)}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+</style>
+</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 声现象（二）</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-volume-up"></i> 声现象（二）· 互动学习</h1>
+    <p>初二暑假博学班 · 天元教育 | 噪声 &amp; 声音的利用</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 24道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 24张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 4大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第二讲 · 声现象（二）</div>
+    <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-bolt" style="color:#667eea"></i> 噪声的定义</h3><ul>
+        <li><strong>物理学</strong>：发声体<strong class="hl">无规则振动</strong>发出的声音</li>
+        <li><strong>环境学</strong>：妨碍人们<strong class="hl">工作、学习、休息</strong>以及干扰要听声音的声音</li>
+        <li>⚠️ 规则的琴声在特定场合也可能是噪声（环境学角度）</li></ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-chart-bar" style="color:#e74c3c"></i> 噪声等级</h3><ul>
+        <li>单位：<strong class="hl">分贝（dB）</strong>— 响度单位</li>
+        <li><strong>0 dB</strong>：刚好引起听觉（<em>不是</em>没有声音）</li>
+        <li><strong>50 dB</strong>：休息标准</li>
+        <li><strong>70 dB</strong>：工作学习上限</li>
+        <li><strong>90 dB</strong>：损伤听力</li></ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-shield-alt" style="color:#2ecc71"></i> 减弱噪声3途径</h3><ul>
+        <li><strong>① 声源处</strong>：禁止鸣笛、消音器、关手机</li>
+        <li><strong>② 传播过程中</strong>：隔音板、绿化带、双层玻璃、真空</li>
+        <li><strong>③ 人耳处</strong>：耳塞、耳罩、降噪耳机</li>
+        <li>⚠️ 噪声监测仪只能监测，不能减弱噪声</li></ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-info-circle" style="color:#667eea"></i> 声音传递信息</h3><ul>
+        <li><strong>回声</strong>：声音遇障碍物反射</li>
+        <li>分辨原声与回声：时间差 <strong class="hl">≥ 0.1s</strong></li>
+        <li>最小距离：<strong class="hl">S = vt/2 = 340×0.1÷2 = 17m</strong></li>
+        <li>应用：<strong>声呐</strong>、B超、倒车雷达、蝙蝠回声定位</li></ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-bolt" style="color:#e74c3c"></i> 声音传递能量</h3><ul>
+        <li><strong>超声波碎结石</strong>、洗牙、洗眼镜</li>
+        <li><strong>共振</strong>现象（共振音叉、雪崩）</li>
+        <li>⚠️ 倒车雷达传递的是<strong class="hl">信息</strong>，<em>不是</em>能量</li></ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-flask" style="color:#2ecc71"></i> 声学实验方法</h3><ul>
+        <li><strong>转换法</strong>：不易观察的声现象→易观察的现象</li>
+        <li><strong>控制变量法</strong>：多个影响因素，逐一控制</li>
+        <li><strong>理想实验法</strong>：真空不能传声实验（推理）</li></ul></div>
+    </div>
+
+    <div class="card"><div class="card-title"><i class="fas fa-star" style="color:var(--warning)"></i> 教师寄语</div>
+    <p style="font-size:.9rem;background:linear-gradient(135deg,#667eea10,#764ba210);padding:1rem;border-radius:var(--radius-sm);line-height:1.9">
+    清晨，鸟儿的啼鸣声成为了一天的序曲。课堂上，老师的讲解声如涓涓细流。午后，翻书"沙沙"声如同时间的低语。傍晚，家人的欢声笑语。夜晚，虫鸣是大自然的安眠曲。<br><br>
+    声音，是生活中不可或缺的一部分。它们或大或小，或远或近，或高或低，构成了丰富多彩的交响乐。让我们用心去聆听，去感受声音的魅力，去发现物理中声音的美好。</p></div>
+  </div>
+
+  <div id="tab-quiz" class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 24</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共24张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 声现象（二）互动学习 | 天元教育 · 初二暑假博学班</div>
+
+<script>
+const questions=[
+{q:'噪声的物理学定义是发声体_____时发出的声音',opts:['A. 有规则振动','B. 无规则振动','C. 振动频率高','D. 振动幅度大'],ans:1,exp:'物理学中，噪声是指发声体做无规则振动时发出的声音。'},
+{q:'从环境保护角度看，下列属于噪声的是',opts:['A. 工厂车间的轰鸣声','B. 剧场里的演奏声','C. 公园里的鸟鸣声','D. 溪水的流水声'],ans:0,exp:'从环境学角度，凡是妨碍人们工作、学习、休息的声音都是噪声。工厂车间的轰鸣声会影响正常工作。'},
+{q:'下列声音中属于噪声的是：①工厂机器轰鸣 ②京剧演奏 ③小鸟鸣叫 ④电钻声 ⑤歌舞厅音乐 ⑥溪水声',opts:['A. ①③④','B. ①②⑤','C. ①④⑤','D. ①④⑤⑥'],ans:2,exp:'①工厂机器、④电钻、⑤歌舞厅音乐都是干扰正常活动的噪声。②③⑥在相应场合是悦耳的乐音。'},
+{q:'噪声等级的单位是',opts:['A. Hz','B. dB','C. m/s','D. N'],ans:1,exp:'噪声等级的计量单位是分贝（dB），它是响度的单位。Hz是频率单位，m/s是速度单位。'},
+{q:'为保护听力，声音不得超过',opts:['A. 50 dB','B. 70 dB','C. 90 dB','D. 130 dB'],ans:2,exp:'为保护听力，声音不得超过90dB。为保障工作和学习不得超过70dB，为保障休息和睡眠不得超过50dB。'},
+{q:'下列措施中，属于在声源处减弱噪声的是',opts:['A. 戴耳塞','B. 安装隔音板','C. 禁止鸣笛','D. 种树'],ans:2,exp:'禁止鸣笛是在声源处阻止噪声产生。戴耳塞是在人耳处，隔音板和种树是在传播过程中减弱。'},
+{q:'下列属于在传播过程中减弱噪声的是',opts:['A. 关手机','B. 安装双层玻璃','C. 戴耳罩','D. 消音器'],ans:1,exp:'安装双层中空玻璃窗是在传播过程中减弱噪声。关手机和消音器是在声源处，戴耳罩是在人耳处。'},
+{q:'噪声监测仪的作用是',opts:['A. 减弱噪声','B. 监测噪声','C. 阻断噪声传播','D. 吸收噪声'],ans:1,exp:'噪声监测仪只能监测噪声的大小（显示分贝数），不能减弱、阻断或吸收噪声。'},
+{q:'下列关于乐音和噪声的说法，错误的是',opts:['A. 乐音悦耳动听','B. 乐音是乐器发出的，噪声是机器发出的','C. 噪声影响健康','D. 乐音振动有规律，噪声振动无规律'],ans:1,exp:'选项B错误。乐音也可以是人声、自然声；噪声也可以是机器以外发出的声音。区别在于振动是否规则，而非发声体类型。'},
+{q:'人耳能分辨原声和回声的最短时间间隔是',opts:['A. 0.01s','B. 0.05s','C. 0.1s','D. 1s'],ans:2,exp:'人耳只能区分时间间隔0.1s以上的两个声音。小于0.1s时，回声与原声混合，会使声音更响亮。'},
+{q:'听到回声需要与障碍物至少相距多远？（声速340m/s）',opts:['A. 34m','B. 17m','C. 68m','D. 8.5m'],ans:1,exp:'S = vt/2 = 340m/s × 0.1s ÷ 2 = 17m。声音往返一次，所以单程距离需除以2。'},
+{q:'在房间里唱歌比在旷野里响亮，主要原因是',opts:['A. 房间空气更稠密','B. 原声和回声混合加强','C. 房间温度更高','D. 房间空气不流动'],ans:1,exp:'在房间里，声音遇到墙壁反射形成回声，回声与原声混合在一起，使原声听起来更响亮。'},
+{q:'蝙蝠在飞行时发出_____来定位',opts:['A. 次声波','B. 超声波','C. 可听声','D. 电磁波'],ans:1,exp:'蝙蝠发出超声波，利用回声定位来判断目标的位置和距离。科学家根据此原理发明了声呐。'},
+{q:'声呐主要用于测量',opts:['A. 温度','B. 距离','C. 速度','D. 方向'],ans:1,exp:'声呐通过发射声波并接收反射波，计算时间差来探测水下物体的距离和位置。'},
+{q:'下列利用超声波传递信息的是',opts:['A. 超声波碎结石','B. 超声波洗牙','C. B超检查','D. 超声波清洗眼镜'],ans:2,exp:'B超利用超声波检查人体健康状况，属于传递信息。其他三项都是利用超声波传递能量。'},
+{q:'下列利用超声波传递能量的是',opts:['A. 声呐探测鱼群','B. 倒车雷达','C. 超声波牙刷洁牙','D. 核爆检测'],ans:2,exp:'超声波牙刷利用高频声波振动清洁牙齿，是传递能量。声呐、倒车雷达、核爆检测都是传递信息。'},
+{q:'下列说法错误的是',opts:['A. 两个音叉共鸣时频率相同','B. 倒车雷达利用声波传递能量','C. 次声可以预报灾害','D. 人体微弱噪声可探测病灶'],ans:1,exp:'倒车雷达利用超声波反射探测障碍物，属于传递信息，不是传递能量。'},
+{q:'关于声音，下列说法正确的是',opts:['A. 语音助手靠辨别音调工作','B. 语音助手发出次声','C. 关闭车窗是在声源处减弱噪声','D. 声音可以传递信息'],ans:3,exp:'D正确。A靠音色识别；B语音助手发出可听声；C关闭车窗是在传播过程中减弱噪声。'},
+{q:'銮铃"响亮"说明',opts:['A. 音调高','B. 响度大','C. 频率高','D. 音色好'],ans:1,exp:'"响亮"描述的是声音的大小强弱，即响度大，不是音调高。'},
+{q:'昆虫翅膀10s振动3500次，人耳能听到吗？',opts:['A. 能，频率350Hz在可听范围','B. 不能，频率太高','C. 不能，频率太低','D. 无法判断'],ans:0,exp:'频率 = 3500÷10 = 350Hz，在20Hz-20000Hz可听声范围内，人耳可以听到。'},
+{q:'下列关于噪声的说法正确的是',opts:['A. 0dB是没有声音','B. 噪声监测仪可以减弱噪声','C. 0Hz是没有振动','D. 规则的琴声一定是乐音'],ans:2,exp:'0Hz表示没有振动（没有声音）。0dB是刚引起听觉，不是没有声音。噪声监测仪只监测不减弱。规则的琴声在环境学角度也可能是噪声。'},
+{q:'用声呐测海水深度，声速1500m/s，发出到收到回声4s，深度是？',opts:['A. 6000m','B. 3000m','C. 1500m','D. 340m'],ans:1,exp:'深度 = vt/2 = 1500×4÷2 = 3000m。注意这是往返时间，要除以2。'},
+{q:'降噪耳机的工作原理是',opts:['A. 声源处控制','B. 人耳处减弱','C. 传播过程减弱','D. 监测噪声'],ans:1,exp:'降噪耳机通过产生反向声波中和噪声，属于在人耳处减弱噪声。'},
+{q:'关于变声钟，钟下香火越旺声音越高昂的原因是',opts:['A. 空气温度升高传声更好','B. 任何物体温度升高音调都变高','C. 频率提高使响度变大','D. 温度改变钟的材料结构，频率改变'],ans:3,exp:'温度升高导致钟的材料微观结构改变，从而改变其固有振动频率，使音调变高。'}
+];
+
+const flashcards=[
+{front:'噪声的物理学定义',back:'发声体做<strong>无规则振动</strong>时发出的声音。<br>波形杂乱无章、无规律可循。'},
+{front:'噪声的环境学定义',back:'凡是妨碍人们<strong>工作、学习、休息</strong><br>以及对人们要听声音造成干扰的声音。'},
+{front:'0dB vs 0Hz',back:'<strong>0dB</strong>：刚好引起听觉（不是没有声音）<br><strong>0Hz</strong>：没有振动（没有声音）<br>两者完全不同！'},
+{front:'噪声的3种减弱途径',back:'① <strong>声源处</strong>：禁止鸣笛、消音器<br>② <strong>传播过程中</strong>：隔音板、绿化带<br>③ <strong>人耳处</strong>：耳塞、耳罩'},
+{front:'噪声监测仪',back:'只能<strong>监测</strong>噪声（显示分贝数）<br>不能减弱、阻断或吸收噪声！'},
+{front:'dB等级速记',back:'<strong>0dB</strong> 刚引起听觉<br><strong>50dB</strong> 休息标准<br><strong>70dB</strong> 工作学习上限<br><strong>90dB</strong> 损伤听力'},
+{front:'回声的定义',back:'声音在传播过程中遇到<strong>较大障碍物</strong>返回的现象。<br>应用：声呐、B超、蝙蝠定位。'},
+{front:'回声的最小时间差',back:'人耳分辨原声和回声：<strong>≥ 0.1秒</strong><br>小于0.1s时回声加强原声。'},
+{front:'回声的最小距离',back:'S = vt/2<br>= 340m/s × 0.1s ÷ 2<br>= <strong>17米</strong><br>注意：声音是往返路程！'},
+{front:'声音传递信息',back:'语言交流、回声定位、声呐、<br>B超、倒车雷达、超声测速<br>→ 获取信息，<strong>判断物体存在与否</strong>'},
+{front:'声音传递能量',back:'超声波碎结石、洗牙、洗眼镜、<br>共振、雪崩<br>→ 产生<strong>物理效应</strong>，做功'},
+{front:'超声波的应用',back:'<strong>传递信息</strong>：B超、声呐、倒车雷达<br><strong>传递能量</strong>：碎结石、洗牙、洗眼镜<br>注意区分两类应用！'},
+{front:'蝙蝠的回声定位',back:'蝙蝠飞行时发出<strong>超声波</strong>，<br>声波碰到障碍物被反射回来，<br>根据回声的方位和时间确定位置。'},
+{front:'声呐原理',back:'发射声波/超声波 → 接收反射波<br>比较时间间隔 → 计算距离<br>用于探测鱼群、海底地形、沉船。'},
+{front:'B超原理',back:'B型超声波检查人体<br>不同组织反射回波不同 → 成像<br>属于声音传递<strong>信息</strong>。'},
+{front:'共鸣的条件',back:'两个音叉发生共鸣时，<br>它们的<strong>振动频率必须相同</strong>。'},
+{front:'次声波的特点',back:'频率低于20Hz<br>自然灾害（海啸、地震）常伴随次声<br>能量大、传播远'},
+{front:'乐音与噪声的区别',back:'<strong>乐音</strong>：振动有规律，波形规则<br><strong>噪声</strong>：振动无规律，波形杂乱<br>⚠ 不是按发声体区分！'},
+{front:'声学实验方法',back:'<strong>转换法</strong>：微小振动→放大观察<br><strong>控制变量法</strong>：逐个因素研究<br><strong>理想实验法</strong>：真空不能传声（推理）'},
+{front:'降噪耳机原理',back:'产生与外界噪声<strong>等幅反相</strong>的声波<br>波峰与波谷叠加 → 中和抵消<br>属于<strong>人耳处</strong>减弱噪声'},
+{front:'声音三要素',back:'<strong>音调</strong>：频率决定（高低）<br><strong>响度</strong>：振幅决定（大小）<br><strong>音色</strong>：材料结构决定（特色）'},
+{front:'"响亮"描述什么',back:'"响亮"描述的是<strong>响度</strong>（振幅大），<br>不是音调高！<br>音调高→"尖细" '},
+{front:'声音传播需要介质',back:'声音可以在<strong>固体、液体、气体</strong>中传播<br>不能在真空中传播<br>马头琴声不限于空气传播！'},
+{front:'振动频率计算',back:'频率 = 振动次数 ÷ 时间<br>单位：赫兹（Hz）<br>可听声范围：20Hz ~ 20000Hz'}
+];
+
+const errors=[
+{title:'0dB = 没有声音 ❌',wrong:'认为0分贝就是没有声音，听不见。',right:'<strong>0dB</strong> 是刚引起听觉的阈值，<strong>不是没有声音</strong>。<br><strong>0Hz</strong> 才是没有振动（没有声音）。两者区别很大！'},
+{title:'噪声只按物理学定义 ❌',wrong:'只记得"无规则振动"是噪声，忽略环境学定义。',right:'环境学定义更重要：<strong>妨碍工作、学习、休息的声音</strong>都是噪声。规则的琴声如果是深夜弹奏，也是噪声！'},
+{title:'噪声监测仪能减弱噪声 ❌',wrong:'以为安装噪声监测仪是在减弱噪声。',right:'监测仪只能<strong>监测</strong>显示分贝数，不能减弱、阻断或吸收噪声。减弱需要从声源、传播、人耳三途径入手。'},
+{title:'"响亮" = 音调高 ❌',wrong:'"响亮""声音大"认为是音调高。',right:'<strong>"响亮"</strong>描述的是<strong>响度</strong>（振幅大），不是音调。<br>音调高形容"尖锐""尖细"。响度大形容"响亮""震耳"。'},
+{title:'声音传播介质混淆 ❌',wrong:'认为马头琴声只能在空气中传播。',right:'声音可以在<strong>固体、液体、气体</strong>中传播。马头琴声通过弦（固体）传播到空气中，不限于空气！'},
+{title:'回声距离忘记除2 ❌',wrong:'声呐测距直接用 vt 得到深度。',right:'声音是<strong>往返路程</strong>！<br>正确公式：<strong>S = vt/2</strong><br>总路程 = 2×深度，所以单程距离要除以2。'},
+{title:'混淆传递信息与能量 ❌',wrong:'分不清哪些应用是传递信息，哪些是传递能量。',right:'<strong>传递信息</strong>：B超、声呐、倒车雷达、语音（获取信息）<br><strong>传递能量</strong>：碎结石、洗牙、洗眼镜（做功、产生效果）'},
+{title:'乐音与噪声按发声体区分 ❌',wrong:'认为乐器发出的就是乐音，机器发出的就是噪声。',right:'区分在于<strong>振动是否有规则</strong>，不是发声体本身！乐器演奏在深夜对想睡觉的人来说就是噪声。'}
+];
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=questions.length;const ansd=quizAns.filter(a=>a>=0).length;if(ansd===total){document.getElementById('quizArea').innerHTML=showResult();return;}
+let h=`<div class="question-card fade-in-up"><div class="q-num">${curQ+1}</div><div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${curQ===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${curQ===total-1?'disabled':''}>下一题 <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;renderQ();if(curQ<questions.length-1)setTimeout(()=>nextQ(),1000);}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}}
+function showResult(){const total=questions.length;let correct=0;const wl=[];questions.forEach((qq,i)=>{if(quizAns[shuffled.indexOf(i)]===qq.ans)correct++;else wl.push({idx:i,q:qq});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习';
+return `<div class="question-card result-card fade-in-up"><div class="big-icon">${face}</div><h2>${msg}</h2><div class="score">${correct}/${total}</div>
+<div><span class="result-stat"><i class="fas fa-check-circle" style="color:var(--success)"></i> 正确 ${correct} 题</span>
+<span class="result-stat"><i class="fas fa-times-circle" style="color:var(--danger)"></i> 错误 ${total-correct} 题</span></div>
+${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)"><p style="font-weight:600;margin-bottom:.5rem;font-size:.85rem">📝 需要复习：</p>${wl.map(w=>`<div style="padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)">✗ ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+<div style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+<button class="btn btn-primary" onclick="initQ();renderQ();"><i class="fas fa-redo"></i> 重新测验</button>
+<button class="btn btn-success" onclick="importWB()"><i class="fas fa-database"></i> 导入错题到错题库</button>
+<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button></div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'声现象(二)',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'声现象,噪声,回声,物理'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库？'))window.open('wrong_bank.html','_blank');}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('phy_sound2_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('phy_sound2_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('phy_sound2_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('phy_sound2_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('phy_sound2_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+</body></html>
