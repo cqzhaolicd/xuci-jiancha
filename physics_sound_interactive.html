@@ -1012,13 +1012,11 @@ function showResultHTML() {
 }
 
 // ===================== IMPORT WRONG QUESTIONS TO BANK =====================
-const SUBJECT_ID_PHYSICS = 4; // 物理
-const CHAPTER_ID_PHYSICS = 2; // 声现象
-const BANK_URL = 'https://recipients-rapidly-breed-commodities.trycloudflare.com/add';
+const IMPORT_KEY = 'wrong_bank_import';
 
 function importWrongToBank() {
   const wrongList = [];
-  shuffledIndices.forEach((origIdx, quizIdx) => {
+  shuffledIndices.forEach((origIdx) => {
     const userAns = quizAnswers[origIdx];
     if (userAns >= 0 && userAns !== questions[origIdx].ans) {
       wrongList.push({ idx: origIdx, q: questions[origIdx], userChoice: userAns });
@@ -1032,31 +1030,27 @@ function importWrongToBank() {
 
   if (!confirm(`确定将 ${wrongList.length} 道错题导入错题库？`)) return;
 
-  let success = 0, fail = 0;
-  const btn = event?.target || document.querySelector('.btn-success');
-  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 导入中...'; }
+  const items = wrongList.map(w => ({
+    subject: '物理',
+    chapter: '声现象',
+    content: w.q.q,
+    correct_answer: w.q.opts[w.q.ans],
+    my_answer: w.q.opts[w.userChoice] || '未作答',
+    error_reason: '概念不清',
+    source: '练习',
+    difficulty: 3,
+    tags: '声现象,物理'
+  }));
 
-  const promises = wrongList.map((w, i) => {
-    const formData = new FormData();
-    formData.append('subject_id', SUBJECT_ID_PHYSICS);
-    formData.append('chapter_id', CHAPTER_ID_PHYSICS);
-    formData.append('content', w.q.q);
-    formData.append('correct_answer', w.q.opts[w.q.ans]);
-    formData.append('my_answer', w.q.opts[w.userChoice] || '未作答');
-    formData.append('error_reason', '概念不清');
-    formData.append('source', '练习');
-    formData.append('difficulty', '3');
-    formData.append('tags', '声现象,物理');
+  // Merge with existing import data
+  const existing = JSON.parse(localStorage.getItem(IMPORT_KEY) || '[]');
+  const merged = [...existing, ...items];
+  localStorage.setItem(IMPORT_KEY, JSON.stringify(merged));
 
-    return fetch(BANK_URL, { method: 'POST', body: formData })
-      .then(r => { if (r.ok || r.status === 302) success++; else fail++; })
-      .catch(() => fail++);
-  });
-
-  Promise.all(promises).then(() => {
-    alert(`✅ 导入完成！成功 ${success} 题${fail ? '，失败 ' + fail + ' 题' : ''}`);
-    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-database"></i> 导入错题到错题库'; }
-  });
+  alert(`✅ 已准备 ${items.length} 道错题！\n打开错题库即可自动导入。`);
+  if (confirm('现在打开错题库查看？')) {
+    window.open('wrong_bank.html', '_blank');
+  }
 }
 
 // ===================== FLASHCARDS =====================
