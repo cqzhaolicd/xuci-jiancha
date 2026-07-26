@@ -297,13 +297,25 @@ function renderAdd(){
             </select></div></div></div>
       <div class="form-section"><h6><i class="fas fa-question-circle" style="color:var(--info)"></i> 题目</h6>
         <label class="form-label">题目内容 <span class="req">*</span></label>
-        <textarea class="form-control" rows="3" id="af_content" placeholder="输入题目内容…" onchange="addForm.content=this.value">${addForm.content}</textarea></div>
+        <textarea class="form-control" rows="3" id="af_content" placeholder="输入题目内容…" onchange="addForm.content=this.value">${addForm.content}</textarea>
+        <label class="form-label" style="margin-top:.5rem"><i class="fas fa-image"></i> 题目图片（选填，自动缩放）</label>
+        <input type="file" class="form-control" id="af_image" accept="image/*" onchange="handleFile(this, 'image_path')">
+        <div id="af_image_preview" style="margin-top:.3rem;max-width:200px;border-radius:8px;overflow:hidden;display:${addForm.image_path?'block':'none'}">
+          ${addForm.image_path ? `<img src="${addForm.image_path}" style="width:100%;border-radius:6px">` : ''}
+          <span style="font-size:.75rem;color:var(--text-light);cursor:pointer" onclick="clearFile('image_path','af_image','af_image_preview')">✕ 删除</span>
+        </div></div>
       <div class="form-section"><h6><i class="fas fa-check-circle" style="color:var(--success)"></i> 答案</h6>
         <div class="row">
           <div><label class="form-label" style="color:var(--success)">正确答案</label>
             <textarea class="form-control" rows="2" id="af_correct" placeholder="正确答案…" onchange="addForm.correct_answer=this.value">${addForm.correct_answer}</textarea></div>
           <div><label class="form-label" style="color:var(--danger)">我的错误答案</label>
-            <textarea class="form-control" rows="2" id="af_wrong" placeholder="当时写的错误答案…" onchange="addForm.my_answer=this.value">${addForm.my_answer}</textarea></div></div></div>
+            <textarea class="form-control" rows="2" id="af_wrong" placeholder="当时写的错误答案…" onchange="addForm.my_answer=this.value">${addForm.my_answer}</textarea></div></div>
+        <label class="form-label" style="margin-top:.5rem"><i class="fas fa-image"></i> 答案图片（选填，自动缩放）</label>
+        <input type="file" class="form-control" id="af_answer_image" accept="image/*" onchange="handleFile(this, 'answer_image_path')">
+        <div id="af_answer_image_preview" style="margin-top:.3rem;max-width:200px;border-radius:8px;overflow:hidden;display:${addForm.answer_image_path?'block':'none'}">
+          ${addForm.answer_image_path ? `<img src="${addForm.answer_image_path}" style="width:100%;border-radius:6px">` : ''}
+          <span style="font-size:.75rem;color:var(--text-light);cursor:pointer" onclick="clearFile('answer_image_path','af_answer_image','af_answer_image_preview')">✕ 删除</span>
+        </div></div>
       <div class="form-section"><h6><i class="fas fa-search" style="color:var(--warning)"></i> 错因分析</h6>
         <div class="row">
           <div><label class="form-label">错误原因</label>
@@ -318,6 +330,31 @@ function renderAdd(){
     </form></div>`;
 }
 
+// ===================== FILE UPLOAD HELPERS =====================
+function handleFile(input, field) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) { toast('图片不能超过2MB','error'); input.value = ''; return; }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    addForm[field] = e.target.result;
+    const preview = document.getElementById(field === 'image_path' ? 'af_image_preview' : 'af_answer_image_preview');
+    if (preview) {
+      preview.style.display = 'block';
+      preview.innerHTML = `<img src="${e.target.result}" style="width:100%;border-radius:6px">
+        <span style="font-size:.75rem;color:var(--text-light);cursor:pointer" onclick="clearFile('${field}','${input.id}','${preview.id}')">✕ 删除</span>`;
+    }
+  };
+  reader.readAsDataURL(file);
+}
+function clearFile(field, inputId, previewId) {
+  addForm[field] = '';
+  const inp = document.getElementById(inputId);
+  if (inp) inp.value = '';
+  const pre = document.getElementById(previewId);
+  if (pre) pre.style.display = 'none';
+}
+
 function submitAdd(){
   const d=loadData();
   const content=document.getElementById('af_content').value.trim();
@@ -329,10 +366,10 @@ function submitAdd(){
     content,correct_answer:addForm.correct_answer,my_answer:addForm.my_answer,
     error_reason:addForm.error_reason,tags:addForm.tags,source:addForm.source,
     difficulty:addForm.difficulty,mastery:0,created_at:now(),updated_at:now(),
-    next_review:today(),review_count:0,image_path:'',answer_image_path:''
+    next_review:today(),review_count:0,image_path:addForm.image_path||'',answer_image_path:addForm.answer_image_path||''
   });
   saveData(d);
-  addForm={subject_id:addForm.subject_id,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3};
+  addForm={subject_id:addForm.subject_id,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,image_path:'',answer_image_path:''};
   toast('✅ 错题已保存','success');
   navigate('detail',{qid});
 }
@@ -436,8 +473,10 @@ function renderDetail(data){
       <span class="q-badge badge-mastery">掌握 ${q.mastery}/5</span>
       ${'⭐'.repeat(q.difficulty)}</div></div>
     <div class="detail-field"><div class="label">题目</div><div class="value" style="background:var(--bg);padding:.8rem;border-radius:var(--radius-sm);line-height:1.8">${q.content}</div></div>
+    ${q.image_path?`<div class="detail-field"><div class="label">📷 题目图片</div><div style="max-width:400px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="${q.image_path}" style="width:100%"></div></div>`:''}
     ${q.correct_answer?`<div class="detail-field"><div class="label" style="color:var(--success)">✅ 正确答案</div><div class="value" style="background:#48bb7810;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--success)">${q.correct_answer}</div></div>`:''}
     ${q.my_answer?`<div class="detail-field"><div class="label" style="color:var(--danger)">❌ 我的错误答案</div><div class="value" style="background:#f5656510;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger)">${q.my_answer}</div></div>`:''}
+    ${q.answer_image_path?`<div class="detail-field"><div class="label">📷 答案图片</div><div style="max-width:400px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="${q.answer_image_path}" style="width:100%"></div></div>`:''}
     <div class="detail-field"><div class="label">错因分析</div><div class="value"><span class="q-badge badge-reason">${q.error_reason}</span> ${q.tags?'🏷️ '+q.tags:''}</div></div>
     <div class="detail-field"><div class="label">时间</div><div class="value" style="color:var(--text-light);font-size:.85rem">录入: ${q.created_at} | 复习: ${q.review_count}次 | 下次复习: ${q.next_review||'无需'}</div></div>
     <div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
