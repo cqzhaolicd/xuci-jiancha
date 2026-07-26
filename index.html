@@ -163,15 +163,14 @@ body {
 
 <script>
 // ===================== CONFIG =====================
-const BANK_BASE = 'https://recipients-rapidly-breed-commodities.trycloudflare.com';
-
+const BANK_BASE = ''; // 同域名，直接使用相对路径
 const tools = [
-  { name: '录入错题', icon: 'fa-plus-circle', desc: '添加新错题', cls: 't-add', url: '/add' },
-  { name: '错题本', icon: 'fa-list', desc: '浏览筛选错题', cls: 't-list', url: '/list' },
-  { name: '复习模式', icon: 'fa-redo', desc: '循环复习巩固', cls: 't-review', url: '/review' },
-  { name: '三层训练', icon: 'fa-layer-group', desc: '数学三层训练', cls: 't-training', url: '/math-training' },
-  { name: '打印试卷', icon: 'fa-print', desc: '组卷打印', cls: 't-print', url: '/print' },
-  { name: '数据分析', icon: 'fa-chart-pie', desc: '错题统计分析', cls: 't-analysis', url: '/analysis' },
+  { name: '录入错题', icon: 'fa-plus-circle', desc: '添加新错题', cls: 't-add', url: 'wrong_bank.html#add' },
+  { name: '错题本', icon: 'fa-list', desc: '浏览筛选错题', cls: 't-list', url: 'wrong_bank.html#list' },
+  { name: '复习模式', icon: 'fa-redo', desc: '循环复习巩固', cls: 't-review', url: 'wrong_bank.html#review' },
+  { name: '三层训练', icon: 'fa-layer-group', desc: '数学三层训练', cls: 't-training', url: 'wrong_bank.html#training' },
+  { name: '打印试卷', icon: 'fa-print', desc: '组卷打印', cls: 't-print', url: 'wrong_bank.html#print-page' },
+  { name: '数据分析', icon: 'fa-chart-pie', desc: '错题统计分析', cls: 't-analysis', url: 'wrong_bank.html#analysis' },
 ];
 
 // 🔵 新增讲次：在对应科目的 lectures 数组里添加一条即可
@@ -200,15 +199,14 @@ function render() {
 
   // === 快捷工具栏 ===
   html += `<div class="toolbar fade-in-up">
-    ${tools.map(t => `<a href="${BANK_BASE}${t.url}" target="_blank" class="${t.cls}" style="background:var(--${t.cls.startsWith('t-') ? t.cls.replace('t-','') : 'primary'});"><i class="fas ${t.icon}"></i> ${t.name}</a>`).join('')}
+    ${tools.map(t => `<a href="${BANK_BASE}${t.url}" class="${t.cls}" style="background:var(--${t.cls.startsWith('t-') ? t.cls.replace('t-','') : 'primary'});"><i class="fas ${t.icon}"></i> ${t.name}</a>`).join('')}
   </div>`;
 
   // === 错题库标题 ===
   html += `<div class="section fade-in-up">
     <div class="section-title"><i class="fas fa-database" style="color:var(--danger)"></i> 错题库工具 <span class="badge badge-tools">${tools.length} 项</span></div>
     <div class="tool-grid">
-      ${tools.map(t => `
-      <a href="${BANK_BASE}${t.url}" target="_blank" class="tool-card ${t.cls}">
+      ${tools.map(t => `<a href="${BANK_BASE}${t.url}" class="tool-card ${t.cls}">
         <div class="t-icon"><i class="fas ${t.icon}"></i></div>
         <div class="t-name">${t.name}</div>
         <div class="t-desc">${t.desc}</div>
