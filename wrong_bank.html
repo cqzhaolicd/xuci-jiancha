@@ -640,33 +640,154 @@ function startSubjectTraining(subjName){
 function renderQTraining(q){
   const d=loadData();
   const subj=d.subjects.find(s=>s.id===q.subject_id);
-  const layerNames=['','基础同构 · 原题重现','条件变化 · 灵活应变','反向综合 · 思维提升'];
-  const layerIcons=['','🔵','🟠','🔴'];
-  const hints={
-    1:'按原题做一遍，回忆解题思路。做完点击"下一层"看看变化题。',
-    2:'<strong>改编条件：</strong>想一想题目条件变一下会怎样？比如换个数据、换个场景。把改编后的题目和解答写下来。',
-    3:'<strong>反向思考：</strong>从答案反推条件，或者把这题和同类知识点综合起来。你能自己编一道类似的题吗？'
-  };
-  return`<div class="training-panel">
-    <div style="display:flex;gap:.5rem;margin-bottom:.8rem;flex-wrap:wrap">
-      ${[1,2,3].map(l=>`<button class="layer-tab l${l} ${l===trainingLayer?'active':''}" onclick="trainingLayer=${l};document.querySelector('#app').innerHTML=renderQTraining(qData)">${layerIcons[l]} 第${l}层</button>`).join('')}
+  const layers=getOrGenLayers(q);
+  const layerNames=['','🔵 基础同构 · 原题重现','🟠 条件变化 · 灵活应变','🔴 反向综合 · 思维提升'];
+  const layerCols=['','#667eea','#e67e22','#e74c3c'];
+  const layerBg=['','#667eea10','#e67e2210','#e74c3c10'];
+  const l=layers[trainingLayer-1];
+  return`<div class="training-panel fade-in-up">
+    <div style="display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap">
+      ${[0,1,2].map((li,i)=>{
+        const ln=i+1;
+        return`<button class="btn btn-sm ${ln===trainingLayer?'btn-primary':'btn-outline'}" onclick="trainingLayer=${ln};document.querySelector('#app').innerHTML=renderQTraining(trainingQ)">
+          ${['🔵','🟠','🔴'][i]} 第${ln}层</button>`;
+      }).join('')}
       <span style="font-size:.78rem;color:var(--text-light);align-self:center;margin-left:auto">${subj?subj.name:''}</span>
     </div>
-    <div style="padding:.8rem;background:var(--bg);border-radius:var(--radius-sm);margin-bottom:1rem;min-height:60px;font-size:.92rem;line-height:1.8">
-      <strong>📝 原题：</strong>${q.content}
-      ${trainingLayer>1?`<br><br><strong style="color:var(--success)">✅ 原题答案：</strong>${q.correct_answer||'（无）'}`:''}
+    <div style="padding:.8rem;background:var(--bg);border-radius:var(--radius-sm);margin-bottom:.8rem;font-size:.92rem;line-height:1.8">
+      <strong>📝 ${l.title}</strong>
     </div>
-    <div style="padding:.8rem;background:${['','#667eea10','#e67e2210','#e74c3c10'][trainingLayer]};border-radius:var(--radius-sm);margin-bottom:1rem;border-left:4px solid ${['','#667eea','#e67e22','#e74c3c'][trainingLayer]};font-size:.88rem">
-      <strong>💡 ${layerNames[trainingLayer]}提示：</strong><br>${hints[trainingLayer]}
+    <div style="padding:.8rem;background:${layerBg[trainingLayer]};border-radius:var(--radius-sm);margin-bottom:.8rem;border-left:4px solid ${layerCols[trainingLayer]};font-size:.9rem">
+      ${l.content}
     </div>
-    <textarea class="form-control" rows="4" placeholder="写下你的思考过程和解答…" style="margin-bottom:1rem"></textarea>
+    <textarea class="form-control" rows="${trainingLayer===3?'5':'4'}" placeholder="${l.placeholder}" style="margin-bottom:.8rem">${l.savedAnswer||''}</textarea>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem">
+      <button class="btn btn-outline btn-sm" onclick="showLayerAns()"><i class="fas fa-eye"></i> 查看参考答案</button>
+    </div>
+    <div id="layerAns" style="display:none;padding:.8rem;background:#48bb7810;border-radius:var(--radius-sm);margin-bottom:.8rem;border-left:4px solid var(--success);font-size:.88rem">
+      <strong style="color:var(--success)">✅ 参考答案：</strong><br>${l.answer}
+    </div>
     <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center">
-      <button class="btn btn-outline btn-sm" onclick="trainingLayer=Math.max(1,trainingLayer-1);document.querySelector('#app').innerHTML=renderQTraining(qData)" ${trainingLayer<=1?'disabled':''}><i class="fas fa-arrow-left"></i> 上一层</button>
-      <button class="btn btn-primary btn-sm" onclick="trainingLayer=Math.min(3,trainingLayer+1);toast('进入第'+(trainingLayer+1)+'层训练','info');document.querySelector('#app').innerHTML=renderQTraining(qData)" ${trainingLayer>=3?'disabled':''}>下一层 <i class="fas fa-arrow-right"></i></button>
-      <button class="btn btn-success btn-sm" onclick="nextTrainingQ()"><i class="fas fa-random"></i> 换一题</button>
-      <button class="btn btn-outline btn-sm" onclick="trainingQ=null;navigate('training',{})"><i class="fas fa-times"></i> 返回选择</button>
+      <button class="btn btn-outline btn-sm" onclick="trainingLayer=Math.max(1,trainingLayer-1);document.querySelector('#app').innerHTML=renderQTraining(trainingQ)" ${trainingLayer<=1?'disabled':''}><i class="fas fa-arrow-left"></i> 上一层</button>
+      <button class="btn btn-primary btn-sm" onclick="trainingLayer=Math.min(3,trainingLayer+1);document.querySelector('#app').innerHTML=renderQTraining(trainingQ)" ${trainingLayer>=3?'disabled':''}>下一层 <i class="fas fa-arrow-right"></i></button>
+      <button class="btn btn-success btn-sm" onclick="saveLayerAns()"><i class="fas fa-save"></i> 保存作答</button>
+      <button class="btn btn-outline btn-sm" onclick="nextTrainingQ()"><i class="fas fa-random"></i> 换一题</button>
+      <button class="btn btn-outline btn-sm" onclick="trainingQ=null;navigate('training',{})"><i class="fas fa-times"></i> 返回</button>
     </div>
   </div>`;
+}
+
+function showLayerAns(){
+  const el=document.getElementById('layerAns');
+  if(el)el.style.display=el.style.display==='none'?'block':'none';
+}
+
+function saveLayerAns(){
+  const d=loadData();
+  const q=d.questions.find(x=>x.id===trainingQ.id);
+  if(!q)return;
+  if(!q._layers)q._layers={answers:[]};
+  const ta=document.querySelector('.training-panel textarea');
+  if(!q._layers.answers)q._layers.answers=[];
+  q._layers.answers[trainingLayer-1]=ta?ta.value:'';
+  saveData(d);
+  toast('✅ 作答已保存','success');
+}
+
+function getOrGenLayers(q){
+  const d=loadData();
+  const fq=d.questions.find(x=>x.id===q.id);
+  if(fq&&fq._layers&&fq._layers.data)return fq._layers.data;
+  const layers=genLayers(q);
+  if(fq){if(!fq._layers)fq._layers={};fq._layers.data=layers;saveData(d);}
+  return layers;
+}
+
+function genLayers(q){
+  const content=q.content||'';
+  const answer=q.correct_answer||'';
+  const isMath=/\d+/.test(content);
+  const hasChoice=/[A-D]\)/.test(content)||/A\./.test(content);
+  
+  // Layer 1: 原题重现
+  const l1={
+    title:'基础同构 · 原题重做',
+    content:`<strong>原题：</strong>${content}<br><br><strong style="color:var(--success)">✅ 原题正确答案：</strong>${answer||'（见下方）'}`,
+    placeholder:'请重新解答这道题，检验是否真正掌握…',
+    answer:`原题正确答案：${answer||'（未记录）'}<br>重新做一遍，看是否和正确答案一致。`,
+    savedAnswer:''
+  };
+
+  // Layer 2: 生成变式
+  let l2Content,l2Ans,l2Place;
+  if(isMath&&!/[A-D]\)/.test(content)){
+    // 数学计算题 → 换数字
+    const nums=content.match(/\d+(\.\d+)?/g);
+    if(nums&&nums.length){
+      const newNums=nums.map(n=>String(Math.floor(parseFloat(n)*(0.5+Math.random()*0.8)+1)));
+      let v=content;nums.forEach((n,i)=>{v=v.replace(n,newNums[i%newNums.length]);});
+      l2Content=`<strong>变式题（换数）：</strong>${v}`;
+      l2Ans=`题目变了数字，但解题方法相同。按照原题思路，代入新数据重新计算。`;
+      l2Place='按照原题解题方法，代入新的数据计算…';
+    }else{
+      l2Content=`<strong>变式题：</strong>改变题目中的一个条件，自己编一道类似的题并解答。`;
+      l2Ans=`变式练习的关键是找出题目的核心条件，改变其中一个，看解题思路是否变化。`;
+      l2Place='尝试改变条件，题目会怎么变？写出变式题和解答…';
+    }
+  }else if(hasChoice){
+    // 选择题 → 改选项/改情景
+    const opts=content.match(/[A-D][.）][^A-D]*/g);
+    if(opts&&opts.length>=2){
+      l2Content=`<strong>变式题（改选项/改情景）：</strong><br>把题目中的核心条件改一下，看看正确答案变不变？<br><br>`+
+        `<div style="background:var(--card-bg);padding:.6rem .8rem;border-radius:8px;border-left:3px solid #e67e22">`+
+        `💡 提示：想一下如果改变题目中的某个关键词，<br>比如"音调"改成"响度"、"声源处"改成"传播过程中"，<br>答案会怎么变？</div>`;
+      l2Ans=`变式练习答案取决于具体改动。关键思路：<br>1. 找出题目考查的核心知识点<br>2. 改变条件后重新分析哪个选项正确<br>3. 验证原答案是否仍然成立`;
+      l2Place='写出你改编的题目，以及改编后的正确答案…';
+    }else{
+      l2Content=`<strong>变式题：</strong>自己出一道与本题考查相同知识点的选择题，并给出答案。`;
+      l2Ans=`编题思路：确定考查的知识点 → 设计题干 → 设计4个选项（1正确3干扰）<br>确保干扰项来自常见的概念混淆。`;
+      l2Place='请编一道相似的选择题并给出答案…';
+    }
+  }else{
+    // 其他题型
+    l2Content=`<strong>变式题：</strong>改变题目的某个条件或数据，重新解答。看看条件变了以后，答案有什么不同？`;
+    l2Ans=`变式练习的关键：<br>1. 找出题目的可变条件<br>2. 改变一个条件后重新分析<br>3. 对比原题答案，理解条件变化对结果的影响`;
+    l2Place='写出你改编后的题目和解答过程…';
+  }
+  const l2={
+    title:'条件变化 · 灵活应变',
+    content:l2Content,
+    placeholder:l2Place||'思考条件变化后的新解法…',
+    answer:l2Ans||'条件变化训练的是你灵活运用知识的能力。尝试改变题目条件，看解题思路的变化。',
+    savedAnswer:''
+  };
+
+  // Layer 3: 反向综合
+  let l3Content,l3Ans,l3Place;
+  if(answer){
+    l3Content=`<strong>反向综合题：</strong>根据答案<strong>"${answer.length>50?answer.substring(0,50)+'…':answer}"</strong>反推，<br>`+
+      `你能编出一道能得到这个答案的题目吗？<br><br>`+
+      `<div style="background:var(--card-bg);padding:.6rem .8rem;border-radius:8px;border-left:3px solid #e74c3c">`+
+      `💡 提示：从答案出发，想想什么样的题目条件或场景能得出这个答案。`+
+      `这是从"解题"到"出题"的思维转换，最能检验是否真正理解。</div>`;
+    l3Ans=`反向综合示范：<br>原题问的是"${content.length>80?content.substring(0,80)+'…':content}"<br>从答案"${answer.length>60?answer.substring(0,60)+'…':answer}"反推，<br>可以编一道：保持核心知识点不变，换一个生活场景来出题。`;
+    l3Place='从答案反推，编一道新题…';
+  }else{
+    l3Content=`<strong>反向综合题：</strong>请自己出一道与本题知识点相同的题目，<br>`+
+      `并解释你的出题思路。<br><br>`+
+      `<div style="background:var(--card-bg);padding:.6rem .8rem;border-radius:8px;border-left:3px solid #e74c3c">`+
+      `💡 从"做题者"变成"出题者"，把这道题的知识点用你自己的方式再表达一次。</div>`;
+    l3Ans=`出题思路：<br>1. 确定核心知识点<br>2. 设计一个应用场景<br>3. 设置条件和问题<br>4. 制定评分标准`;
+    l3Place='编一道新题并写出出题思路…';
+  }
+  const l3={
+    title:'反向综合 · 思维提升',
+    content:l3Content,
+    placeholder:l3Place,
+    answer:l3Ans,
+    savedAnswer:''
+  };
+  return[l1,l2,l3];
 }
 
 function nextTrainingQ(){
