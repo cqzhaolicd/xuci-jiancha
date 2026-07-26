@@ -43,11 +43,13 @@ body {
 /* Toolbar */
 .toolbar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; justify-content: center; }
 .toolbar a {
-  text-decoration: none; color: #fff; padding: 0.5rem 1rem; border-radius: var(--radius-sm);
+  text-decoration: none; color: var(--text); padding: 0.5rem 1rem; border-radius: var(--radius-sm);
   font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 0.4rem;
-  transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.2s; background: var(--card-bg); border: 2px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-.toolbar a:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.toolbar a:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: var(--primary); color: var(--primary); }
+.toolbar a i { color: var(--primary); }
 
 /* Section */
 .section { margin-bottom: 2rem; }
@@ -246,7 +248,7 @@ function render() {
 
   // === 快捷工具栏 ===
   html += `<div class="toolbar fade-in-up">
-    ${tools.map(t => `<a href="${BANK_BASE}${t.url}" class="${t.cls}" style="background:var(--${t.cls.startsWith('t-') ? t.cls.replace('t-','') : 'primary'});"><i class="fas ${t.icon}"></i> ${t.name}</a>`).join('')}
+    ${tools.map(t => `<a href="${BANK_BASE}${t.url}"><i class="fas ${t.icon}"></i> ${t.name}</a>`).join('')}
   </div>`;
 
   // === 错题库工具 ===
