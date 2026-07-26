@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📐 二次根式（一）· 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --primary: #667eea;
+  --secondary: #764ba2;
+  --success: #48bb78;
+  --warning: #ecc94b;
+  --danger: #f56565;
+  --info: #4299e1;
+  --bg: #f0f2f5;
+  --card-bg: #ffffff;
+  --text: #1a202c;
+  --text-light: #718096;
+  --border: #e2e8f0;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+.navbar {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  padding: 0.8rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 20px rgba(231,76,60,0.3);
+}
+.navbar .container {
+  max-width: 1100px; margin: 0 auto; padding: 0 1rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.navbar-brand { color: #fff; text-decoration: none; font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+.navbar-brand i { font-size: 1.3rem; }
+.navbar-nav { display: flex; gap: 0.3rem; }
+.navbar-nav a {
+  color: rgba(255,255,255,0.85); text-decoration: none; padding: 0.4rem 0.7rem;
+  border-radius: 8px; font-size: 0.88rem; transition: all 0.2s;
+  display: flex; align-items: center; gap: 0.35rem;
+}
+.navbar-nav a:hover, .navbar-nav a.active { background: rgba(255,255,255,0.2); color: #fff; }
+.container { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+.hero {
+  background: linear-gradient(135deg, #e74c3c20, #c0392b20);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.hero h1 { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #e74c3c, #c0392b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero p { color: var(--text-light); margin-top: 0.5rem; font-size: 0.95rem; }
+.hero .meta { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.hero .meta span { background: var(--card-bg); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; color: var(--text-light); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.tab-nav { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.tab-btn {
+  padding: 0.6rem 1.2rem; border: 2px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--card-bg); cursor: pointer; font-size: 0.9rem; font-weight: 500;
+  transition: all 0.2s; color: var(--text-light); display: flex; align-items: center; gap: 0.4rem;
+}
+.tab-btn:hover { border-color: #e74c3c; color: #e74c3c; }
+.tab-btn.active { border-color: #e74c3c; background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.card { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.knowledge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.knowledge-card { background: var(--card-bg); border-radius: var(--radius); padding: 1.2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-left: 4px solid var(--primary); transition: transform 0.2s; }
+.knowledge-card:hover { transform: translateY(-2px); }
+.knowledge-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+.knowledge-card ul { list-style: none; font-size: 0.9rem; color: #4a5568; }
+.knowledge-card ul li { padding: 0.2rem 0; padding-left: 1.2rem; position: relative; }
+.knowledge-card ul li::before { content: '·'; position: absolute; left: 0; font-weight: 700; color: var(--primary); }
+.knowledge-card .highlight { background: #fefcbf; padding: 0.1rem 0.3rem; border-radius: 3px; font-weight: 600; }
+.knowledge-card .tag { display: inline-block; font-size: 0.75rem; background: var(--primary); color: #fff; padding: 0.1rem 0.5rem; border-radius: 10px; margin-top: 0.4rem; }
+.knowledge-card.c1 { border-color: #e74c3c; }
+.knowledge-card.c2 { border-color: #3498db; }
+.knowledge-card.c3 { border-color: #2ecc71; }
+.knowledge-card.c4 { border-color: #e67e22; }
+.knowledge-card.c5 { border-color: #9b59b6; }
+.quiz-progress { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.progress-bar { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, #e74c3c, #c0392b); border-radius: 4px; transition: width 0.5s ease; }
+.quiz-stats { font-size: 0.9rem; color: var(--text-light); white-space: nowrap; }
+.question-card { background: var(--card-bg); border-radius: var(--radius); padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.question-number { display: inline-block; background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; width: 32px; height: 32px; border-radius: 50%; text-align: center; line-height: 32px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; }
+.question-text { font-size: 1.05rem; font-weight: 600; margin-bottom: 1.2rem; line-height: 1.8; }
+.question-text .math { font-family: 'Times New Roman', serif; }
+.options { display: flex; flex-direction: column; gap: 0.7rem; }
+.option { padding: 0.8rem 1.2rem; border: 2px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.2s; font-size: 0.95rem; display: flex; align-items: center; gap: 0.6rem; }
+.option:hover:not(.disabled) { border-color: #e74c3c; background: #e74c3c10; }
+.option .letter { width: 26px; height: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; flex-shrink: 0; }
+.option.correct { border-color: var(--success); background: #48bb7815; }
+.option.correct .letter { background: var(--success); color: #fff; }
+.option.wrong { border-color: var(--danger); background: #f5656515; }
+.option.wrong .letter { background: var(--danger); color: #fff; }
+.option.disabled { cursor: default; opacity: 0.7; }
+.option.disabled.correct { opacity: 1; }
+.option.show-correct { border-color: var(--success); background: #48bb7810; }
+.option.show-correct .letter { background: var(--success); color: #fff; }
+.explanation { margin-top: 1rem; padding: 1rem; border-radius: var(--radius-sm); background: #ebf8ff; border-left: 4px solid var(--info); font-size: 0.9rem; display: none; }
+.explanation.show { display: block; }
+.explanation strong { color: var(--info); }
+.quiz-nav { display: flex; justify-content: space-between; margin-top: 1.5rem; gap: 1rem; }
+.btn { padding: 0.6rem 1.5rem; border: none; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem; }
+.btn-primary { background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(231,76,60,0.4); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text); }
+.btn-outline:hover { border-color: #e74c3c; color: #e74c3c; }
+.btn-success { background: var(--success); color: #fff; }
+.btn-success:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(72,187,120,0.4); }
+.result-card { text-align: center; padding: 3rem 2rem; }
+.result-card .big-icon { font-size: 4rem; margin-bottom: 1rem; }
+.result-card h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.result-card .score { font-size: 3rem; font-weight: 900; background: linear-gradient(135deg, #e74c3c, #c0392b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 1rem 0; }
+.result-card .detail { color: var(--text-light); margin-bottom: 1.5rem; }
+.result-stat { display: inline-block; background: var(--card-bg); padding: 0.5rem 1.2rem; border-radius: 20px; margin: 0.3rem; font-size: 0.9rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.flashcard-container { perspective: 1000px; margin-bottom: 1.5rem; }
+.flashcard { position: relative; width: 100%; min-height: 240px; cursor: pointer; transition: transform 0.6s; transform-style: preserve-3d; }
+.flashcard.flipped { transform: rotateY(180deg); }
+.flashcard-face { position: absolute; width: 100%; min-height: 240px; backface-visibility: hidden; border-radius: var(--radius); padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.flashcard-front { background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; }
+.flashcard-front h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.flashcard-front p { opacity: 0.8; font-size: 0.9rem; }
+.flashcard-back { background: var(--card-bg); transform: rotateY(180deg); border: 2px solid var(--border); }
+.flashcard-back h4 { color: #e74c3c; margin-bottom: 0.8rem; }
+.flashcard-back p { font-size: 1rem; line-height: 1.8; color: var(--text); text-align: center; }
+.flashcard-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+.flashcard-counter { font-size: 0.9rem; color: var(--text-light); }
+.flashcard-hint { text-align: center; font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem; }
+.error-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+.error-card { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-left: 4px solid var(--danger); transition: transform 0.2s; }
+.error-card:hover { transform: translateY(-2px); }
+.error-card .num { display: inline-block; background: var(--danger); color: #fff; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+.error-card h4 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+.error-card .wrong-example { background: #f5656515; border-left: 3px solid var(--danger); padding: 0.5rem 0.8rem; border-radius: 6px; font-size: 0.85rem; margin-top: 0.5rem; color: var(--danger); }
+.error-card .right-example { background: #48bb7815; border-left: 3px solid var(--success); padding: 0.5rem 0.8rem; border-radius: 6px; font-size: 0.85rem; margin-top: 0.3rem; color: #276749; }
+.section-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700; color: var(--text); }
+.section-header i { color: #e74c3c; }
+.formula-card { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center; border-top: 4px solid #e74c3c; }
+.formula-card .formula { font-size: 1.3rem; font-weight: 700; color: #e74c3c; margin: 0.5rem 0; font-family: 'Times New Roman', serif; }
+.formula-card .note { font-size: 0.85rem; color: var(--text-light); }
+.formula-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.8rem; }
+.check-item { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.8rem; border-radius: var(--radius-sm); transition: background 0.2s; cursor: pointer; }
+.check-item:hover { background: var(--bg); }
+.check-item.checked .check-text { text-decoration: line-through; opacity: 0.5; }
+.check-box { width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; margin-top: 2px; }
+.check-item.checked .check-box { background: var(--success); border-color: var(--success); color: #fff; }
+.footer { text-align: center; padding: 2rem; color: var(--text-light); font-size: 0.85rem; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in-up { animation: fadeInUp 0.4s ease; }
+@media (max-width: 768px) { .hero h1 { font-size: 1.3rem; } .navbar-nav a span { display: none; } .question-card { padding: 1.2rem; } .knowledge-grid { grid-template-columns: 1fr; } .error-grid { grid-template-columns: 1fr; } .flashcard-face { min-height: 200px; padding: 1.5rem; } .formula-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a class="navbar-brand" href="#"><i class="fas fa-calculator"></i> 数学 · 二次根式（一）</a>
+    <div class="navbar-nav">
+      <a href="#" class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+      <a href="#" onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+      <a href="#" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+      <a href="#" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-square-root-alt"></i> 二次根式（一）· 互动学习</h1>
+    <p>初二暑假博学班 · 第一讲 | 2026-07-25</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle text-success"></i> 20道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 28张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle text-danger"></i> 5大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片可翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- Tab 1: Knowledge -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap"></i> 知识点全览</div>
+    <div class="knowledge-grid">
+      <div class="knowledge-card c1">
+        <h3><i class="fas fa-bolt" style="color:#e74c3c"></i> 二次根式定义</h3>
+        <ul>
+          <li>形如 <span class="highlight">√a (a ≥ 0)</span> 的式子</li>
+          <li>两个条件：① 根指数为2 ② 被开方数 ≥ 0</li>
+          <li>例：√2、√5、√0 是二次根式</li>
+          <li>∛2（立方根）<strong>不是</strong>二次根式</li>
+        </ul>
+      </div>
+      <div class="knowledge-card c2">
+        <h3><i class="fas fa-rss" style="color:#3498db"></i> 有意义的条件</h3>
+        <ul>
+          <li><span class="highlight">被开方数 ≥ 0</span></li>
+          <li>多个根式：每个都要满足</li>
+          <li>含分母：分母 ≠ 0</li>
+          <li>含零次幂：底数 ≠ 0</li>
+          <li>含负指数幂：底数 ≠ 0</li>
+          <li>取所有条件的<span class="highlight">交集</span></li>
+        </ul>
+      </div>
+      <div class="knowledge-card c3">
+        <h3><i class="fas fa-star" style="color:#2ecc71"></i> 双重非负性</h3>
+        <ul>
+          <li>对于 √a，必有：</li>
+          <li>① <span class="highlight">a ≥ 0</span>（被开方数非负）</li>
+          <li>② <span class="highlight">√a ≥ 0</span>（结果非负）</li>
+          <li>应用：非负项之和=0 → 每项=0</li>
+          <li>常见非负项：|A|、A²、√A</li>
+        </ul>
+      </div>
+      <div class="knowledge-card c4">
+        <h3><i class="fas fa-flask" style="color:#e67e22"></i> 重要公式</h3>
+        <ul>
+          <li><strong>①</strong> (√a)² = a (a ≥ 0)</li>
+          <li><strong>②</strong> √a² = <span class="highlight">|a|</span></li>
+          <li><strong>③</strong> (∛a)³ = a</li>
+          <li><strong>④</strong> ∛a³ = a</li>
+          <li><strong>⑤</strong> ⁿ√aⁿ = |a|(n偶) 或 a(n奇)</li>
+        </ul>
+      </div>
+      <div class="knowledge-card c5">
+        <h3><i class="fas fa-chart-bar" style="color:#9b59b6"></i> 数轴化简</h3>
+        <ul>
+          <li>根据数轴判断<span class="highlight">符号</span></li>
+          <li>√(x)² = <span class="highlight">|x|</span></li>
+          <li>x > 0 → |x| = x</li>
+          <li>x < 0 → |x| = -x</li>
+          <li>注意：-x 当 x<0 时是<span class="highlight">正数</span>！</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-top:1.5rem"><i class="fas fa-square-root-alt"></i> 核心公式一览</div>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="formula">(√a)² = a</div><div class="note">a ≥ 0</div></div>
+      <div class="formula-card"><div class="formula">√a² = |a|</div><div class="note">先平方再开方 → 绝对值</div></div>
+      <div class="formula-card"><div class="formula">(∛a)³ = a</div><div class="note">a 为任意实数</div></div>
+      <div class="formula-card"><div class="formula">∛a³ = a</div><div class="note">奇次根式结果同号</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i class="fas fa-star" style="color:var(--warning)"></i> 教师寄语</div>
+      <p style="font-size:0.92rem;background:linear-gradient(135deg,#667eea10,#764ba210);padding:1rem;border-radius:var(--radius-sm);line-height:1.9">
+        <i class="fas fa-quote-left" style="color:var(--primary);opacity:0.5"></i><br>
+        同学们，二次根式的探索之旅已圆满落幕！从牢记<strong>双重非负性</strong>的核心准则，到熟练运用性质化简各式，你们在根号的世界里找到了逻辑与规律的密码。<br><br>
+        这段旅程中，你们学会用严谨思维把控每一个细节，用灵活方法化解化简难题，在"被开方数非负、结果非负"的底线中坚守准则。愿你们带着这份严谨与灵活，继续驰骋数学天地。<br>
+        <i class="fas fa-quote-right" style="color:var(--primary);opacity:0.5;display:block;text-align:right"></i>
+      </p>
+    </div>
+  </div>
+
+  <!-- Tab 2: Quiz -->
+  <div id="tab-quiz" class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 20</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- Tab 3: Flashcards -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:1rem"><i class="fas fa-lightbulb text-warning"></i> 点击卡片翻转查看答案 · 共28张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- Tab 4: Errors -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:1rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1.5rem">
+      <button class="btn btn-outline" onclick="resetChecklist()"><i class="fas fa-undo"></i> 重置自检</button>
+      <span id="checkProgress" style="margin-left:1rem;font-size:0.9rem;color:var(--text-light)"></span>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <i class="fas fa-calculator me-1"></i> 数学 · 二次根式（一）互动学习 &nbsp;|&nbsp; 赵若琳 · 初二暑假博学班 &nbsp;|&nbsp; 2026-07-25
+</div>
+
+<script>
+const questions = [
+  { q: '下列各式中，一定是二次根式的是？', opts: ['A. √-1', 'B. √a', 'C. √a+b', 'D. √5'], ans: 3, exp: '√5 的被开方数5>0，一定是二次根式。√-1的被开方数为负数，无意义。√a和√a+b中a、a+b可能为负数。' },
+  { q: '下列各式中，一定是二次根式的是？', opts: ['A. √(a+2026)', 'B. √(a²+2026)', 'C. √(3-π)', 'D. ∛2'], ans: 1, exp: 'a² ≥ 0，所以 a²+2026 ≥ 2026 > 0，√(a²+2026) 恒有意义。∛2 是立方根，不是二次根式。' },
+  { q: '√x 在实数范围内有意义，则 x 的取值范围是？', opts: ['A. x > 0', 'B. x ≥ 0', 'C. x ≤ 0', 'D. x 为任意实数'], ans: 1, exp: '二次根式有意义的条件：被开方数 ≥ 0。所以 x ≥ 0。' },
+  { q: '(√3)² 等于多少？', opts: ['A. 3', 'B. 9', 'C. √3', 'D. ±3'], ans: 0, exp: '重要公式①：(√a)² = a（a ≥ 0）。所以 (√3)² = 3。' },
+  { q: '√(-6)² 等于多少？', opts: ['A. -6', 'B. 6', 'C. 36', 'D. ±6'], ans: 1, exp: '重要公式②：√a² = |a|。√(-6)² = √36 = | -6 | = 6。' },
+  { q: '√(π-4)² 等于多少？', opts: ['A. π-4', 'B. 4-π', 'C. π+4', 'D. 无法确定'], ans: 1, exp: 'π ≈ 3.14 < 4，π-4 < 0。√(π-4)² = |π-4| = -(π-4) = 4-π。' },
+  { q: '若 |x+2| + √(y-3) = 0，则 xy 的值为？', opts: ['A. 6', 'B. -6', 'C. 5', 'D. -5'], ans: 1, exp: '双重非负性：|x+2| ≥ 0，√(y-3) ≥ 0。两非负数和=0 → 各为0。x = -2，y = 3，xy = -6。' },
+  { q: '√(3-x) + |2x-y| = 0，则 x+y 的立方根是？', opts: ['A. ∛6', 'B. ∛9', 'C. ∛8', 'D. 2'], ans: 1, exp: 'x=3，2×3-y=0 → y=6。x+y=9，立方根为 ∛9。' },
+  { q: '(√(a-1))² + √(b+2)² = 0，则 ab 的值？', opts: ['A. 2', 'B. -2', 'C. 3', 'D. 0'], ans: 1, exp: '(√(a-1))² = a-1 (a≥1)，√(b+2)² = |b+2| ≥ 0。a=1，b=-2，ab=-2。' },
+  { q: '√(2x-1) 有意义，则 x 的范围是？', opts: ['A. x > 1/2', 'B. x ≥ 1/2', 'C. x ≥ 0', 'D. x > 0'], ans: 1, exp: '2x-1 ≥ 0 → x ≥ 1/2。' },
+  { q: '√(x-3)/(x-4) 有意义，x 的范围是？', opts: ['A. x ≥ 3', 'B. x ≥ 3 且 x ≠ 4', 'C. x > 3 且 x ≠ 4', 'D. x ≠ 4'], ans: 1, exp: '被开方数 x-3 ≥ 0 → x ≥ 3；分母 x-4 ≠ 0 → x ≠ 4。取交集。' },
+  { q: '√(2-x) + √(x+1) 有意义，x 的范围是？', opts: ['A. -1 ≤ x ≤ 2', 'B. x ≥ -1', 'C. x ≤ 2', 'D. x ≥ 2 或 x ≤ -1'], ans: 0, exp: '两个根式都要有意义：2-x ≥ 0 → x ≤ 2；x+1 ≥ 0 → x ≥ -1。交集：-1 ≤ x ≤ 2。' },
+  { q: '(-√2)² 等于？', opts: ['A. -2', 'B. 2', 'C. -√2', 'D. 无法确定'], ans: 1, exp: '(-√2)² = (-1)² × (√2)² = 1 × 2 = 2。负号在根号外，平方后消失。' },
+  { q: '若 x < 2，则 √(x-2)² + |3-x| = ?', opts: ['A. 1', 'B. 5-2x', 'C. 2x-5', 'D. -1'], ans: 1, exp: 'x<2 → x-2<0 → √(x-2)² = |x-2| = 2-x。3-x > 0 → |3-x| = 3-x。原式=2-x+3-x=5-2x。' },
+  { q: '∛(-8) + √144 = ?', opts: ['A. 10', 'B. 4', 'C. 16', 'D. -4'], ans: 0, exp: '∛(-8) = -2，√144 = 12。-2 + 12 = 10。' },
+  { q: '√(1-π)² = ?', opts: ['A. 1-π', 'B. π-1', 'C. 1', 'D. π'], ans: 1, exp: 'π ≈ 3.14 > 1，所以 1-π < 0。√(1-π)² = |1-π| = π-1。' },
+  { q: '若 √(2x+5) - √(3-2x) 有意义，x 的范围？', opts: ['A. -5/2 ≤ x ≤ 3/2', 'B. x ≥ -5/2', 'C. x ≤ 3/2', 'D. x ≥ 5/2'], ans: 0, exp: '2x+5 ≥ 0 → x ≥ -5/2；3-2x ≥ 0 → x ≤ 3/2。交集：-5/2 ≤ x ≤ 3/2。' },
+  { q: '在 √a² = |a| 中，当 a < 0 时，√a² = ?', opts: ['A. a', 'B. -a', 'C. 0', 'D. 无法确定'], ans: 1, exp: 'a < 0，则 |a| = -a，所以 √a² = -a。例如 a = -3，√(-3)² = √9 = 3 = -(-3) = -a。' },
+  { q: '∛(-a³) 等于？', opts: ['A. a', 'B. -a', 'C. |a|', 'D. 无法确定'], ans: 1, exp: '奇次根式的"奇负偶正"：∛(-a³) = ∛[(-a)³] = -a。' },
+  { q: '若 √(x²-9) + √(9-x²) = 0，则 x = ?', opts: ['A. 3', 'B. -3', 'C. ±3', 'D. 3 或 9'], ans: 2, exp: 'x²-9 ≥ 0 且 9-x² ≥ 0 → x² = 9 → x = ±3。代入验证均成立。' }
+];
+
+const flashcards = [
+  { front: '二次根式定义', back: '形如 <strong>√a (a ≥ 0)</strong> 的式子。<br>两个条件：<br>① 根指数为2（√）<br>② 被开方数 ≥ 0' },
+  { front: '二次根式有意义条件', back: '<strong>被开方数 ≥ 0</strong><br>即 √a 中 a ≥ 0<br>多个根式时，每个都要满足' },
+  { front: '综合有意义条件', back: '考虑所有限制：<br>① 被开方数 ≥ 0<br>② 分母 ≠ 0<br>③ 零次幂 底数 ≠ 0<br>④ 负指数幂 底数 ≠ 0<br>取所有条件的<strong>交集</strong>' },
+  { front: '双重非负性（核心）', back: '对于 √a：<br>① <strong>a ≥ 0</strong>（被开方数非负）<br>② <strong>√a ≥ 0</strong>（结果非负）<br>这是本讲最核心的性质！' },
+  { front: '非负项之和为0', back: '若 |A| + B² + √C = 0<br>则 A = 0, B = 0, C = 0<br>常见非负项：<br>| |、²、√、偶次方≥0' },
+  { front: '公式①：先开方再平方', back: '<strong>(√a)² = a</strong>（a ≥ 0）<br>例：(√3)² = 3<br>(-√2)² = 2（负号平方后消失）' },
+  { front: '公式②：先平方再开方', back: '<strong>√a² = |a|</strong><br>这是最容易被忽略的公式！<br>√3² = 3，√(-3)² = 3<br>结果永远是<strong>非负</strong>的' },
+  { front: '立方根公式', back: '<strong>(∛a)³ = a</strong><br><strong>∛a³ = a</strong><br>a 取任意实数<br>立方根与开立方互逆' },
+  { front: '奇负偶正原则', back: '<strong>ⁿ√aⁿ = </strong><br><strong>|a|</strong>（n为偶数）<br><strong>a</strong>（n为奇数）<br>偶次→绝对值，奇次→本身' },
+  { front: '求参数范围 例题', back: '√(x+4) 有意义 → x ≥ -4<br>√(m-20)/(m-40) 有意义<br>→ m ≥ 20 且 m ≠ 40<br>（同时考虑根式和分母）' },
+  { front: '解不定方程 例题', back: '|x-2| + (y-3)² + √(z-4) = 0<br>→ x=2, y=3, z=4<br>利用非负性，各项分别=0' },
+  { front: '数轴化简 两步法', back: 'Step 1：判断正负<br>Step 2：去绝对值<br>① 正数 → 直接去<br>② 负数 → 前面加负号' },
+  { front: '数轴化简 例题', back: 'x < 2 时，√(x-2)² + |3-x|<br>= |x-2| + |3-x|<br>= (2-x) + (3-x) = 5-2x' },
+  { front: '√(-5)² = ?', back: '√(-5)² = √25 = 5<br>不是 -5！<br>因为 √a² = |a| = 5' },
+  { front: '√0.7² = ?', back: '√0.7² = 0.7<br>0.7是正数，|0.7| = 0.7' },
+  { front: '√(π-3.2)² = ?', back: 'π ≈ 3.14 < 3.2<br>π-3.2 < 0<br>√(π-3.2)² = |π-3.2| = 3.2-π' },
+  { front: '判别二次根式', back: '√3 → ✅ 二次根式<br>∛(-27) → ❌ 立方根<br>√(a²+6) → ✅ 恒≥0<br>关键是：根指数2 + 被开方数≥0' },
+  { front: '双重非负性 综合题', back: '若 √(a+b-8) + |b+3| = b+3<br>|b+3| = b+3 → b ≥ -3<br>→ √(a+b-8) = 0<br>a+b-8 = 0 → a+b=8' },
+  { front: '分式根式综合', back: 'y = [√(x²-9) - √(9-x²) + 1]/(x-3)<br>由被开方数得 x = ±3<br>分母 x-3 ≠ 0 → x = -3<br>代入得 y = -1/6' },
+  { front: '巅峰拓展 配方法', back: '√(a²+4a+4) = √(a+2)² = |a+2|<br>当 a < -2：<br>= -(a+2) = -a-2<br>配方法常用于复杂根式化简' },
+  { front: '巅峰拓展 取值范围', back: '√(x²+2x+1) + √(x²-4x+4) = 3<br>→ |x+1| + |x-2| = 3<br>数轴分段讨论<br>→ -1 ≤ x ≤ 2' },
+  { front: '二次根式的判断', back: '一定是二次根式 ↔ 恒满足 a≥0<br>√5 → 一定（5>0恒成立）<br>√a → 不一定（a可能<0）<br>√(a²+1) → 一定（a²+1≥1>0）' },
+  { front: '含参数根式有意义', back: '√x/(x-1) 有意义<br>① x ≥ 0（根式）<br>② x ≠ 1（分母）<br>结果：x ≥ 0 且 x ≠ 1' },
+  { front: '多个根式有意义', back: '√(2x+1) + √(3-x) 有意义<br>① 2x+1 ≥ 0 → x ≥ -1/2<br>② 3-x ≥ 0 → x ≤ 3<br>结果：-1/2 ≤ x ≤ 3' },
+  { front: '含零次幂有意义', back: '√(1-x) + (x+3)⁰ 有意义<br>① 1-x ≥ 0 → x ≤ 1<br>② x+3 ≠ 0 → x ≠ -3<br>结果：x ≤ 1 且 x ≠ -3' },
+  { front: '完全平方配方法', back: 'x²-6x+m = (x-3)² + m-9<br>要使 √(x²-6x+m) 恒有意义<br>需 m-9 ≥ 0 → m ≥ 9<br>配方法找最小值是关键' },
+  { front: '奇次根式符号', back: '∛(-2)³ = -2（同号）<br>∛(-8) = -2<br>奇次根式的结果与原数<strong>同号</strong><br>与偶次根式（取绝对值）不同' },
+  { front: '易错：√a² ≠ a', back: '√a² = |a|，不是 a！<br>当 a < 0 时，√a² = -a<br>例：√(-3)² = 3 = -(-3)' }
+];
+
+const errors = [
+  { title: '√a² = a ❌（忘记绝对值）', wrong: '认为 √a² 直接等于 a。<br>例如：√(-5)² = -5 ❌', right: '√a² = <strong>|a|</strong>，不是 a。<br>√(-5)² = √25 = 5 = |-5|。<br>结果永远是<strong>非负</strong>的！' },
+  { title: '忽略被开方数非负 ❌', wrong: '认为 √(x-3) 对任意 x 都有意义。<br>或者解参数范围时只考虑分母≠0，忘了根式条件。', right: '根式有意义 → 被开方数 ≥ 0。<br>多个条件时需取<strong>所有条件的交集</strong>。<br>含√、分母、零次幂的每一步都要考虑。' },
+  { title: '双重非负性不会用 ❌', wrong: '看到 |x-2| + √(y-3) = 0 不知道怎么做。', right: '|x-2| ≥ 0，√(y-3) ≥ 0。<br>非负项之和 = 0 → <strong>每项 = 0</strong><br>→ x = 2, y = 3。这是经典思路！' },
+  { title: '奇负偶正搞混 ❌', wrong: '√(-2)² = -2，而 ∛(-2)³ = 2。<br>偶次和奇次根式的结果搞反。', right: '<strong>偶次</strong>（√、∜）：结果 = |a|<br><strong>奇次</strong>（∛、⁵√）：结果 = a<br>√(-2)² = 2，∛(-2)³ = -2' },
+  { title: '数轴化简符号判断错 ❌', wrong: 'x < 0 时，|x-2| 直接写 x-2。<br>或者不知道 x < 0 时 -x 是正数。', right: '① 判断正负（代入特值验证）<br>② 正 → 直接去，负 → 加负号<br>③ √(x)² = |x| → 再按正负去绝对值<br>④ x < 0 时 |x| = -x（-x 是正数！）' }
+];
+
+let currentQuiz = 0;
+let quizAnswers = new Array(questions.length).fill(-1);
+const shuffledIndices = [];
+
+function shuffle(arr) { for (let i = arr.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
+
+function initQuiz() {
+  currentQuiz = 0;
+  quizAnswers = new Array(questions.length).fill(-1);
+  shuffledIndices.length = 0;
+  shuffledIndices.push(...shuffle([...Array(questions.length).keys()]));
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  const icons = {knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};
+  document.querySelectorAll('.tab-btn').forEach(el => { if (el.innerHTML.includes(icons[name])) el.classList.add('active'); });
+}
+
+function renderQuestion() {
+  const idx = shuffledIndices[currentQuiz];
+  const q = questions[idx];
+  const total = questions.length;
+  const answered = quizAnswers.filter(a => a >= 0).length;
+  if (answered === total) { document.getElementById('quizArea').innerHTML = showResultHTML(); return; }
+  let html = `<div class="question-card fade-in-up"><div class="question-number">${currentQuiz+1}</div>
+    <div class="question-text">${q.q}</div><div class="options">`;
+  q.opts.forEach((opt, oi) => {
+    let cls = [];
+    if (quizAnswers[idx] >= 0) {
+      cls.push('disabled');
+      if (oi === q.ans) cls.push('correct');
+      if (oi === quizAnswers[idx] && oi !== q.ans) cls.push('wrong');
+      if (oi === q.ans && quizAnswers[idx] !== q.ans && quizAnswers[idx] >= 0) cls.push('show-correct');
+    }
+    html += `<div class="option ${cls.join(' ')}" onclick="selectAnswer(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${opt.substring(2)}</span></div>`;
+  });
+  html += `</div><div class="explanation ${quizAnswers[idx] >= 0 ? 'show' : ''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+    <div class="quiz-nav"><button class="btn btn-outline" onclick="prevQuestion()" ${currentQuiz===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+    <span style="font-size:0.9rem;color:var(--text-light);align-self:center">已完成 ${answered}/${total}</span>
+    <button class="btn btn-primary" onclick="nextQuestion()" ${currentQuiz===total-1?'disabled':''}>下一题 <i class="fas fa-arrow-right"></i></button></div></div>`;
+  document.getElementById('quizArea').innerHTML = html;
+  document.getElementById('progressFill').style.width = `${(answered/total)*100}%`;
+  document.getElementById('quizStats').textContent = `已完成 ${answered} / ${total}`;
+}
+
+function selectAnswer(oi) {
+  const idx = shuffledIndices[currentQuiz];
+  if (quizAnswers[idx] >= 0) return;
+  quizAnswers[idx] = oi;
+  renderQuestion();
+  if (currentQuiz < questions.length - 1) setTimeout(() => nextQuestion(), 1200);
+}
+
+function prevQuestion() { if (currentQuiz > 0) { currentQuiz--; renderQuestion(); } }
+function nextQuestion() { if (currentQuiz < questions.length-1) { currentQuiz++; renderQuestion(); } }
+
+function showResultHTML() {
+  const total = questions.length;
+  let correct = 0;
+  const wrongList = [];
+  questions.forEach((q, i) => { if (quizAnswers[shuffledIndices.indexOf(i)] === q.ans) correct++; else wrongList.push({idx:i,q}); });
+  const pct = Math.round(correct/total*100);
+  const faces = pct>=90?['🎉','太棒了！']:pct>=70?['👍','不错！']:pct>=50?['💪','继续加油']:['📚','需要多复习'];
+  return `<div class="question-card result-card fade-in-up"><div class="big-icon">${faces[0]}</div><h2>${faces[1]}</h2>
+    <div class="score">${correct}/${total}</div><div class="detail">正确率 ${pct}%</div>
+    <div><span class="result-stat"><i class="fas fa-check-circle text-success"></i> 正确 ${correct} 题</span>
+    <span class="result-stat"><i class="fas fa-times-circle text-danger"></i> 错误 ${total-correct} 题</span></div>
+    ${wrongList.length>0?`<div style="text-align:left;margin-top:1.5rem;padding:1rem;background:var(--bg);border-radius:var(--radius-sm)">
+    <p style="font-weight:600;margin-bottom:0.8rem;font-size:0.9rem">📝 需要复习的题目：</p>
+    ${wrongList.map(w=>`<div style="padding:0.3rem 0;border-bottom:1px solid var(--border);font-size:0.85rem"><span class="text-danger">✗</span> ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+    <div style="margin-top:1.5rem;display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap">
+    <button class="btn btn-primary" onclick="initQuiz();renderQuestion();"><i class="fas fa-redo"></i> 重新测验</button>
+    <button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+    <button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button></div></div>`;
+}
+
+let flashcardIdx = 0, flashcardFlipped = false;
+
+function renderFlashcard(direction) {
+  if (direction==='next'&&flashcardIdx<flashcards.length-1) flashcardIdx++;
+  else if (direction==='prev'&&flashcardIdx>0) flashcardIdx--;
+  flashcardFlipped = false;
+  const fc = flashcards[flashcardIdx];
+  document.getElementById('flashcardArea').innerHTML = `
+    <div class="flashcard-container fade-in-up">
+      <div class="flashcard" id="flashcard" onclick="toggleFlashcard()">
+        <div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:2rem;opacity:0.5;margin-bottom:1rem"></i>
+          <h3>${fc.front}</h3><p>👆 点击翻转查看答案</p></div>
+        <div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.5rem;color:var(--warning);margin-bottom:0.5rem"></i>
+          <h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+    <div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFlashcard('prev')" ${flashcardIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button>
+    <span class="flashcard-counter">${flashcardIdx+1} / ${flashcards.length}</span>
+    <button class="btn btn-primary" onclick="renderFlashcard('next')" ${flashcardIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>
+    <div class="flashcard-hint"><i class="fas fa-hand-pointer"></i> 点击卡片翻转查看答案</div>`;
+}
+
+function toggleFlashcard() { const el=document.getElementById('flashcard'); if(el) { flashcardFlipped=!flashcardFlipped; el.classList.toggle('flipped'); } }
+
+function renderErrors() {
+  let saved = localStorage.getItem('math_surd_check');
+  let checked = saved ? JSON.parse(saved) : new Array(errors.length).fill(false);
+  let html = '<div class="error-grid">';
+  errors.forEach((e, i) => {
+    html += `<div class="error-card fade-in-up" style="animation-delay:${i*0.1}s"><div class="num">${i+1}</div>
+      <h4>${e.title}</h4><div class="wrong-example">❌ 常见错误：${e.wrong}</div>
+      <div class="right-example">✅ 正确理解：${e.right}</div>
+      <div class="check-item ${checked[i]?'checked':''}" onclick="toggleCheck(${i})" style="margin-top:0.8rem;border-top:1px solid var(--border);padding-top:0.8rem">
+      <div class="check-box">${checked[i]?'<i class="fas fa-check" style="font-size:12px"></i>':''}</div>
+      <span class="check-text" style="font-size:0.85rem">我已掌握这个易错点</span></div></div>`;
+  });
+  html += '</div>';
+  document.getElementById('errorChecklist').innerHTML = html;
+  updateCheckProgress();
+}
+
+function toggleCheck(i) {
+  let saved = localStorage.getItem('math_surd_check');
+  let checked = saved ? JSON.parse(saved) : new Array(errors.length).fill(false);
+  checked[i] = !checked[i];
+  localStorage.setItem('math_surd_check', JSON.stringify(checked));
+  renderErrors();
+}
+
+function resetChecklist() { if(confirm('确定重置所有自检记录？')) { localStorage.removeItem('math_surd_check'); renderErrors(); } }
+
+function updateCheckProgress() {
+  let saved = localStorage.getItem('math_surd_check');
+  let checked = saved ? JSON.parse(saved) : new Array(errors.length).fill(false);
+  document.getElementById('checkProgress').textContent = `✅ ${checked.filter(c=>c).length}/${errors.length} 已掌握`;
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') { e.preventDefault(); const active=document.querySelector('.tab-content.active'); if(active&&active.id==='tab-quiz') nextQuestion(); else if(active&&active.id==='tab-flashcard') renderFlashcard('next'); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); const active=document.querySelector('.tab-content.active'); if(active&&active.id==='tab-quiz') prevQuestion(); else if(active&&active.id==='tab-flashcard') renderFlashcard('prev'); }
+  if ((e.key==='f'||e.key==='F')&&document.querySelector('.tab-content.active')?.id==='tab-flashcard') toggleFlashcard();
+});
+
+renderErrors();
+initQuiz();
+renderFlashcard();
+renderQuestion();
+</script>
+</body>
+</html>
