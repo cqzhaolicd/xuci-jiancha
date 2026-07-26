@@ -53,12 +53,30 @@ body {
 .section { margin-bottom: 2rem; }
 .section-title {
   display: flex; align-items: center; gap: 0.6rem;
-  font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem;
-  padding-bottom: 0.5rem; border-bottom: 2px solid var(--border);
+  font-size: 1rem; font-weight: 700; margin-bottom: 0;
+  padding: 0.6rem 0.8rem; border-radius: var(--radius-sm);
+  cursor: pointer; user-select: none; transition: all 0.2s;
+  background: var(--bg); color: var(--text);
+  border: 2px solid var(--border);
 }
-.section-title .badge {
+.section-title:hover { border-color: var(--primary); }
+.section-title .s-toggle { font-size: 0.75rem; opacity: 0.5; transition: transform 0.3s ease; }
+.section-title .s-toggle.open { transform: rotate(180deg); }
+.section-title .s-badge {
   font-size: 0.7rem; font-weight: 600; padding: 0.1rem 0.6rem;
   border-radius: 10px; color: #fff; margin-left: auto;
+}
+.section-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
+  opacity: 0;
+  margin-top: 0;
+}
+.section-content.open {
+  max-height: 10000px;
+  opacity: 1;
+  margin-top: 0.8rem;
 }
 .badge-study { background: var(--success); }
 .badge-training { background: #e67e22; }
@@ -231,35 +249,48 @@ function render() {
     ${tools.map(t => `<a href="${BANK_BASE}${t.url}" class="${t.cls}" style="background:var(--${t.cls.startsWith('t-') ? t.cls.replace('t-','') : 'primary'});"><i class="fas ${t.icon}"></i> ${t.name}</a>`).join('')}
   </div>`;
 
-  // === 错题库标题 ===
-  html += `<div class="section fade-in-up">
-    <div class="section-title"><i class="fas fa-database" style="color:var(--danger)"></i> 错题库工具 <span class="badge badge-tools">${tools.length} 项</span></div>
+  // === 错题库工具 ===
+  html += renderSection('错题库工具', 'fa-database', '#e74c3c', 'badge-tools', `
     <div class="tool-grid">
       ${tools.map(t => `<a href="${BANK_BASE}${t.url}" class="tool-card ${t.cls}">
         <div class="t-icon"><i class="fas ${t.icon}"></i></div>
         <div class="t-name">${t.name}</div>
         <div class="t-desc">${t.desc}</div>
       </a>`).join('')}
-    </div>
-  </div>`;
+    </div>`);
 
-  // === 学校学习 标题 ===
-  html += renderSubjectSection('学校学习', 'fa-school', '#2ecc71', 'badge-study', schoolSubjects);
-  
-  // === 暑期培训 标题 ===
-  html += renderSubjectSection('暑期培训 · 互动学习', 'fa-graduation-cap', '#e67e22', 'badge-training', trainingSubjects);
+  // === 学校学习 ===
+  html += renderSection('学校学习', 'fa-school', '#2ecc71', 'badge-study',
+    schoolSubjects.map((subj, si) => {
+      const cnt = subj.lectures.length;
+      return renderSubject(subj, si, cnt);
+    }).join(''));
+
+  // === 暑期培训 ===
+  html += renderSection('暑期培训 · 互动学习', 'fa-graduation-cap', '#e67e22', 'badge-training',
+    trainingSubjects.map((subj, si) => {
+      const cnt = subj.lectures.length;
+      return renderSubject(subj, si, cnt);
+    }).join(''));
 
   document.getElementById('app').innerHTML = html;
 }
 
-function renderSubjectSection(title, icon, color, badgeClass, subjects) {
-  const total = subjects.reduce((s, sub) => s + sub.lectures.length, 0);
-  let html = `<div class="section fade-in-up">
-    <div class="section-title"><i class="fas ${icon}" style="color:${color}"></i> ${title} <span class="badge ${badgeClass}">${total} 讲</span></div>
-  `;
-  subjects.forEach((subj, si) => {
-    const cnt = subj.lectures.length;
-    html += `
+function renderSection(title, icon, color, badgeClass, content) {
+  const key = 'sec_' + title;
+  const isOpen = localStorage.getItem(key) !== 'closed';
+  return `<div class="section fade-in-up">
+    <div class="section-title" onclick="toggleSection('${key}', this)">
+      <i class="fas ${icon}" style="color:${color}"></i> ${title}
+      <span class="s-badge ${badgeClass}">${content.split('subject-section').length - 1 || tools.length} 项</span>
+      <span class="s-toggle ${isOpen ? 'open' : ''}"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content ${isOpen ? 'open' : ''}">${content}</div>
+  </div>`;
+}
+
+function renderSubject(subj, si, cnt) {
+  return `
     <div class="subject-section fade-in-up" style="animation-delay:${0.1 + si * 0.06}s">
       <div class="subject-header ${subj.cls}" onclick="toggleSubject(this)">
         <div class="icon"><i class="fas ${subj.icon}"></i></div>
@@ -284,9 +315,6 @@ function renderSubjectSection(title, icon, color, badgeClass, subjects) {
         </div>
       </div>
     </div>`;
-  });
-  html += '</div>';
-  return html;
 }
 
 function toggleSubject(header) {
@@ -294,11 +322,10 @@ function toggleSubject(header) {
   const icon = header.querySelector('.toggle-icon');
   if (!grid) return;
   
-  // Close all other subjects in the same section
-  const section = header.closest('.subject-section');
-  if (section) {
-    const siblings = section.parentElement.querySelectorAll('.subject-section .lecture-grid.open');
-    siblings.forEach(el => {
+  // Close all other subjects in the same section-content
+  const content = header.closest('.section-content');
+  if (content) {
+    content.querySelectorAll('.lecture-grid.open').forEach(el => {
       if (el !== grid) {
         el.classList.remove('open');
         const h = el.previousElementSibling;
@@ -312,6 +339,22 @@ function toggleSubject(header) {
   
   grid.classList.toggle('open');
   if (icon) icon.classList.toggle('open');
+}
+
+function toggleSection(key, el) {
+  const content = el.nextElementSibling;
+  const icon = el.querySelector('.s-toggle');
+  if (!content) return;
+  const isOpen = content.classList.contains('open');
+  if (isOpen) {
+    content.classList.remove('open');
+    if (icon) icon.classList.remove('open');
+    localStorage.setItem(key, 'closed');
+  } else {
+    content.classList.add('open');
+    if (icon) icon.classList.add('open');
+    localStorage.setItem(key, 'open');
+  }
 }
 
 render();
