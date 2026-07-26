@@ -442,8 +442,58 @@ function showResultHTML() {
     ${wrongList.map(w=>`<div style="padding:0.3rem 0;border-bottom:1px solid var(--border);font-size:0.85rem"><span class="text-danger">✗</span> ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
     <div style="margin-top:1.5rem;display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap">
     <button class="btn btn-primary" onclick="initQuiz();renderQuestion();"><i class="fas fa-redo"></i> 重新测验</button>
+    <button class="btn btn-success" onclick="importWrongToBank()"><i class="fas fa-database"></i> 导入错题到错题库</button>
     <button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
     <button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button></div></div>`;
+}
+
+// ===================== IMPORT WRONG QUESTIONS TO BANK =====================
+const SUBJECT_ID_MATH = 1; // 数学
+const CHAPTER_ID_MATH = 1; // 二次根式(一)
+const BANK_URL = 'https://recipients-rapidly-breed-commodities.trycloudflare.com/add';
+
+function importWrongToBank() {
+  const wrongList = [];
+  shuffledIndices.forEach((origIdx) => {
+    const userAns = quizAnswers[origIdx];
+    if (userAns >= 0 && userAns !== questions[origIdx].ans) {
+      wrongList.push({ idx: origIdx, q: questions[origIdx], userChoice: userAns });
+    }
+  });
+
+  if (wrongList.length === 0) {
+    alert('🎉 没有错题，不需要导入！');
+    return;
+  }
+
+  if (!confirm(`确定将 ${wrongList.length} 道错题导入错题库？`)) return;
+
+  let success = 0, fail = 0;
+  const btn = event?.target || document.querySelector('.btn-success');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 导入中...'; }
+
+  const promises = wrongList.map((w) => {
+    const formData = new FormData();
+    formData.append('subject_id', SUBJECT_ID_MATH);
+    formData.append('chapter_id', CHAPTER_ID_MATH);
+    formData.append('content', w.q.q);
+    formData.append('correct_answer', w.q.opts[w.q.ans]);
+    formData.append('my_answer', w.q.opts[w.userChoice] || '未作答');
+    formData.append('error_reason', '概念不清');
+    formData.append('source', '练习');
+    formData.append('difficulty', '3');
+    formData.append('tags', '二次根式,数学');
+
+    return fetch(BANK_URL, { method: 'POST', body: formData })
+      .then(r => { if (r.ok || r.status === 302) success++; else fail++; })
+      .catch(() => fail++);
+  });
+
+  Promise.all(promises).then(() => {
+    alert(`✅ 导入完成！成功 ${success} 题${fail ? '，失败 ' + fail + ' 题' : ''}`);
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-database"></i> 导入错题到错题库'; }
+  });
+}
 }
 
 let flashcardIdx = 0, flashcardFlipped = false;
