@@ -202,7 +202,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
   <div id="tab-quiz" class="tab-content">
     <div class="quiz-progress">
       <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
-      <div class="quiz-stats" id="quizStats">0 / 36</div>
+      <div class="quiz-stats" id="quizStats">0 / 30</div>
     </div>
     <div id="quizArea"></div>
   </div>
@@ -328,7 +328,7 @@ ${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;backgroun
 <button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button></div></div>`;}
 const IMPORT_KEY='wrong_bank_import';
 function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
-const items=w.map(w=>({subject:'数学',chapter:'二次根式（二）',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'二次根式,最简,同类,计算,数学'}));
+const items=w.map(w=>({subject:'数学',chapter:'二次根式（三）',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'二次根式,最简,同类,计算,数学'}));
 const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
 alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库？'))window.open('wrong_bank.html','_blank');}
 let fIdx=0;
