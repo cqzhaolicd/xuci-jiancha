@@ -235,21 +235,34 @@ const schoolColorsMap = {
 };
 
 function buildSchoolData() {
+  const extraLectures = {
+    '初中学习': {
+      '语文': [
+        { num: 'S1', title: '虚实词逐义检查（138词）', url: '虚实词逐义检查卷.html', date: '2026-07-27', tags: ['语文'], new: true }
+      ]
+    }
+  };
   const result = [];
   schoolLevels.forEach((level, li) => {
-    result.push({
-      id: level === '初中学习' ? 'cz' : 'gz',
-      name: level,
-      icon: level === '初中学习' ? 'fa-book' : 'fa-graduation-cap',
-      cls: li % 2 === 0 ? 'subject-math' : 'subject-physics',
-      lectures: schoolSubjects.map((subj, si) => ({
+    const lectures = [];
+    schoolSubjects.forEach((subj, si) => {
+      const extras = (extraLectures[level] && extraLectures[level][subj]) || [];
+      extras.forEach(e => lectures.push(e));
+      lectures.push({
         num: String(si + 1).padStart(2, '0'),
         title: subj,
         url: `school_interactive.html?level=${encodeURIComponent(level)}&subject=${encodeURIComponent(subj)}`,
         date: '',
         tags: [subj],
         new: false
-      }))
+      });
+    });
+    result.push({
+      id: level === '初中学习' ? 'cz' : 'gz',
+      name: level,
+      icon: level === '初中学习' ? 'fa-book' : 'fa-graduation-cap',
+      cls: li % 2 === 0 ? 'subject-math' : 'subject-physics',
+      lectures: lectures
     });
   });
   return result;
