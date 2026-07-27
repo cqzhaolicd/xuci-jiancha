@@ -22,7 +22,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap;overflow-x:auto}
 .tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem;white-space:nowrap}
 .tab-btn:hover,.tab-btn.active{border-color:#e74c3c;color:#e74c3c}
-.tab-content{display:none}.tab-content.active{display:block}@keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.tab-content{display:none}.tab-content.active{display:block}
 .card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
 .card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
 .knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
@@ -99,7 +99,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 </head><body>
 
 <nav class="navbar"><div class="container">
-  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 数学 · 二次根式（三）</a>
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 数学 · 二次根式（二）</a>
   <div class="navbar-nav">
     <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
     <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
@@ -132,14 +132,13 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
     
     <div class="teacher-talk">
       <h4><i class="fas fa-chalkboard-teacher"></i> 教师寄语</h4>
-      <p>从识别同类二次根式到灵活运用分母有理化、从平方差公式到知二推二的共轭根式求值——你们在根号的世界里完成了从基础运算到高阶技巧的跨越。同类根式的合并巩固了化简基本功，分母有理化扫清了运算障碍，而知二推二则让你们掌握了共轭根式对称性的奥秘。</p>
-      <p style="margin-top:.5rem">⚠️ <strong>本讲主要是二次根式的计算，重在理解计算规则以及计算技巧，不按照上课说的步骤操作计算量会非常大，所以做之前一定要复习！</strong></p>
+      <p>从坚守"被开方数非负、结果非负"的双重非负性前提，到熟练识别同类二次根式、掌握分母有理化和共轭根式知二推二的运算技巧——你们在根号的世界里完成了从基础运算到高阶技巧的跨越。</p>
+      <p style="margin-top:.5rem"><strong>⚠️ 本讲主要是二次根式的计算，重在理解计算规则以及计算技巧，不按照上课说的步骤操作计算量会非常大，所以做之前一定要复习！</strong></p>
     </div>
 
     <div class="knowledge-grid">
       <div class="knowledge-card c1"><h3><i class="fas fa-object-group" style="color:#e74c3c"></i> 同类二次根式</h3><ul>
-        <li><strong>定义</strong>：化成最简二次根式后</li>
-        <li><strong class="hl">被开方数相同</strong> 则为同类</li>
+        <li><strong>定义</strong>：化成最简二次根式后<strong class="hl">被开方数相同</strong></li>
         <li>合并规则：<strong class="hl">系数相加减，根式不变</strong></li>
         <li>【例】√8=2√2 与 √32=4√2 → 同类</li>
         <li>【例】2√3+5√3=7√3</li>
@@ -165,18 +164,13 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
         <li><strong>核心裂项公式</strong>：</li>
         <li>1/(√n+√(n+1)) = √(n+1)-√n</li>
         <li>1/(√n+√(n+2)) = (√(n+2)-√n)/2</li>
-        <li>复杂裂项：通项化简后望远镜抵消</li>
-        <li><strong>关键</strong>：中间项全部抵消</li>
-        <li>只剩首尾两项 → 直接出答案</li>
+        <li><strong>关键</strong>：中间项全部抵消，只剩首尾</li>
       </ul></div>
       <div class="knowledge-card c1"><h3><i class="fas fa-calculator" style="color:#e74c3c"></i> 计算：重要公式</h3><ul>
         <li><strong>平方差</strong>：(√a+√b)(√a-√b)=a-b</li>
         <li><strong>完全平方</strong>：(√a±√b)²=a+b±2√(ab)</li>
         <li><strong>先化简再运算</strong>（黄金法则）</li>
-        <li><strong>大指数技巧</strong>：</li>
-        <li>(a-√b)ⁿ(a+√b)ⁿ⁺¹</li>
-        <li>= (a²-b)ⁿ·(a+√b)</li>
-        <li>先凑平方差消去根号</li>
+        <li><strong>大指数技巧</strong>：(a-√b)ⁿ(a+√b)ⁿ⁺¹ = (a²-b)ⁿ·(a+√b)</li>
       </ul></div>
       <div class="knowledge-card c2"><h3><i class="fas fa-star" style="color:#e67e22"></i> 解题策略</h3><ul>
         <li><strong class="hl">① 先化简每个根式</strong></li>
@@ -184,13 +178,12 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
         <li>③ 分母有理化要熟练</li>
         <li>④ 知二推二先求 x+y 和 xy</li>
         <li>⑤ 大指数凑平方差</li>
-        <li>⑥ 结果化为最简形式</li>
       </ul></div>
     </div>
 
     <div class="card"><div class="card-title"><i class="fas fa-star" style="color:var(--warning)"></i> 本讲重点复习提示</div>
       <p style="font-size:.9rem;line-height:2;background:#fff5f5;padding:1rem;border-radius:var(--radius-sm)">
-        <strong>1️⃣ 同类二次根式识别</strong> — 必须先化简再判断被开方数是否相同<br>
+        <strong>1️⃣ 同类二次根式识别</strong> — 先化简再判断被开方数是否相同<br>
         <strong>2️⃣ 分母有理化</strong> — 单项同乘分母、和差同乘共轭因式<br>
         <strong>3️⃣ 知二推二</strong> — 先求 x+y 和 xy，再代入公式求值<br>
         <strong>4️⃣ 裂项求和</strong> — 利用平方差公式拆分，望远镜抵消<br>
@@ -224,78 +217,66 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <script>
 const questions=[
-// === 模块一：同类二次根式 ===
+// === 同类二次根式 ===
 {q:'下列各组中是同类二次根式的是',opts:['A. √8和√18','B. √7和√12','C. √2和√3','D. √50和√75'],ans:0,exp:'A: √8=2√2, √18=3√2，被开方数都是2。B: √7和2√3不同；C: √2和√3不同；D: 5√2和5√3不同。'},
 {q:'√12与下列哪个是同类二次根式',opts:['A. √48','B. √50','C. √8','D. √6'],ans:0,exp:'√12=2√3。√48=4√3，被开方数都是3，同类。√50=5√2，√8=2√2，√6=√6，都不是。'},
 {q:'最简根式 √(2a-1) 与 √(a+5) 能合并，a=?',opts:['A. 2','B. 4','C. 6','D. 8'],ans:2,exp:'能合并→被开方数相同：2a-1=a+5，解得a=6。'},
 {q:'在 √2、√8、√12、√18 中，与√2同类的有几个',opts:['A. 1个','B. 2个','C. 3个','D. 4个'],ans:2,exp:'√2本身；√8=2√2同类；√12=2√3不同类；√18=3√2同类。共3个。'},
-{q:'√24 - √6 + √54 = ?',opts:['A. 2√6','B. 4√6','C. 6√6','D. 8√6'],ans:1,exp:'√24=2√6, √54=3√6。原式=2√6-√6+3√6=4√6。先化简，再合并同类。'},
+{q:'√24 - √6 + √54 = ?',opts:['A. 2√6','B. 4√6','C. 6√6','D. 8√6'],ans:1,exp:'√24=2√6, √54=3√6。原式=2√6-√6+3√6=4√6。'},
 {q:'√48 - √12 + √75 = ?',opts:['A. 5√3','B. 7√3','C. 9√3','D. 3√3'],ans:1,exp:'√48=4√3, √12=2√3, √75=5√3。原式=4√3-2√3+5√3=7√3。'},
-
-// === 模块二：分母有理化 ===
+// === 分母有理化 ===
 {q:'1/√7 分母有理化后是',opts:['A. √7/7','B. 7/√7','C. 1/7','D. √7'],ans:0,exp:'1/√7=√7/(√7×√7)=√7/7。分子分母同乘√7。'},
-{q:'3/√5 分母有理化后是',opts:['A. 3√5/5','B. 3√5','C. √5/3','D. 3/5√5'],ans:0,exp:'3/√5=3√5/(5)=3√5/5。系数3也要跟着乘。'},
-{q:'1/(√3+√2) = ?',opts:['A. √3-√2','B. √3+√2','C. 1/√3+√2','D. √2-√3'],ans:0,exp:'1/(√3+√2)=(√3-√2)/(3-2)=√3-√2。同乘分母的共轭因式(√3-√2)。'},
-{q:'2/(3+√5) 化简后是',opts:['A. (3-√5)/2','B. 2(3-√5)/4','C. (3+√5)/2','D. 6-2√5'],ans:0,exp:'2/(3+√5)=2(3-√5)/(9-5)=2(3-√5)/4=(3-√5)/2。分子分母同乘(3-√5)。'},
-{q:'(√3-√2)/(√3+√2) = ?',opts:['A. 5-2√6','B. 5+2√6','C. 1','D. 2√6-5'],ans:0,exp:'(√3-√2)/(√3+√2)=(√3-√2)²/(3-2)=3-2√6+2=5-2√6。分母有理化后得到完全平方形式。'},
-{q:'1/(√5-2) = ?',opts:['A. √5+2','B. √5-2','C. 2-√5','D. -√5-2'],ans:0,exp:'1/(√5-2)=(√5+2)/(5-4)=√5+2。同乘(√5+2)。注意分母是(√5-2)，共轭因式是(√5+2)。'},
-
-// === 模块三：共轭二次根式（知二推二） ===
+{q:'3/√5 分母有理化后是',opts:['A. 3√5/5','B. 3√5','C. √5/3','D. 3/5√5'],ans:0,exp:'3/√5=3√5/(5)=3√5/5。'},
+{q:'1/(√3+√2) = ?',opts:['A. √3-√2','B. √3+√2','C. 1/√3+√2','D. √2-√3'],ans:0,exp:'1/(√3+√2)=(√3-√2)/(3-2)=√3-√2。同乘分母共轭因式(√3-√2)。'},
+{q:'2/(3+√5) 化简后是',opts:['A. (3-√5)/2','B. 2(3-√5)/4','C. (3+√5)/2','D. 6-2√5'],ans:0,exp:'2/(3+√5)=2(3-√5)/(9-5)=2(3-√5)/4=(3-√5)/2。'},
+{q:'1/(√5-2) = ?',opts:['A. √5+2','B. √5-2','C. 2-√5','D. -√5-2'],ans:0,exp:'1/(√5-2)=(√5+2)/(5-4)=√5+2。'},
+{q:'(√3-√2)/(√3+√2) = ?',opts:['A. 5-2√6','B. 5+2√6','C. 1','D. 2√6-5'],ans:0,exp:'(√3-√2)/(√3+√2)=(√3-√2)²/(3-2)=3-2√6+2=5-2√6。'},
+// === 知二推二 ===
 {q:'已知 x=√6+1, y=√6-1，求 x²+y²+xy',opts:['A. 19','B. 23','C. 25','D. 17'],ans:0,exp:'x+y=2√6, xy=5。x²+y²+xy=(x+y)²-xy=24-5=19。'},
-{q:'已知 x+y=2√3, xy=-2，求 x³y+2x²y²+xy³',opts:['A. -12','B. -24','C. 24','D. 12'],ans:1,exp:'原式=xy(x²+2xy+y²)=xy(x+y)²=(-2)×(2√3)²=(-2)×12=-24。'},
-{q:'已知 x=1/(2+√3), y=1/(2-√3)，求 (x+y)/(x-y)',opts:['A. -2√3/3','B. 2√3/3','C. -√3/3','D. √3/3'],ans:0,exp:'x=2-√3, y=2+√3。x+y=4, x-y=-2√3。(x+y)/(x-y)=4/(-2√3)=-2√3/3。'},
-{q:'已知 x=√6+√3/2, y=√6-√3/2，求 x²+y²',opts:['A. 6','B. 7.5','C. 9','D. 12'],ans:1,exp:'x+y=√6, xy=(6-3)/4=3/4。x²+y²=(x+y)²-2xy=6-1.5=4.5=7.5。'},
+{q:'已知 x+y=2√3, xy=-2，求 x³y+2x²y²+xy³',opts:['A. -12','B. -24','C. 24','D. 12'],ans:1,exp:'原式=xy(x+y)²=(-2)×(2√3)²=-24。'},
+{q:'已知 x=1/(2+√3), y=1/(2-√3)，求 (x+y)/(x-y)',opts:['A. -2√3/3','B. 2√3/3','C. -√3/3','D. √3/3'],ans:0,exp:'x=2-√3, y=2+√3。x+y=4, x-y=-2√3。值=4/(-2√3)=-2√3/3。'},
+{q:'已知 a+b=√(√2025+√2024), a-b=√(√2025-√2024)，求 a⁴-b⁴',opts:['A. 45','B. 2025','C. 89','D. 90'],ans:0,exp:'(a+b)(a-b)=1→a²-b²=1。a²+b²=√2025=45。a⁴-b⁴=45×1=45。'},
 {q:'已知 x=5-2√6, y=5+2√6，求 x²+y²',opts:['A. 48','B. 49','C. 50','D. 74'],ans:1,exp:'x+y=10, xy=25-24=1。x²+y²=(x+y)²-2xy=100-2=98。'},
-{q:'已知 a+b=√(√2025+√2024), a-b=√(√2025-√2024)，求 a⁴-b⁴',opts:['A. 35','B. 45','C. 55','D. 2025'],ans:1,exp:'(a+b)(a-b)=1→a²-b²=1。a²+b²=√2025=45。a⁴-b⁴=(a²+b²)(a²-b²)=45×1=45。'},
-
-// === 模块四：裂项求和 ===
-{q:'1/(1+√2) + 1/(√2+√3) + ... + 1/(√99+√100) = ?',opts:['A. 9','B. 10','C. 99','D. 100'],ans:0,exp:'裂项：1/(√n+√(n+1))=√(n+1)-√n。原式=√100-1=10-1=9。'},
-{q:'1/(1+√3) + 1/(√3+√5) + ... + 1/(√99+√101) = ?',opts:['A. (√101-1)/2','B. (√101+1)/2','C. √101-1','D. (√101-1)/2'],ans:0,exp:'裂项：1/(√n+√(n+2))=(√(n+2)-√n)/2。原式=(√101-1)/2。'},
-{q:'1/(2√1+√2) + 1/(3√2+2√3) + ... + 1/(100√99+99√100) = ?',opts:['A. 9/10','B. 1/10','C. 99/100','D. 1/100'],ans:0,exp:'通项化简：1/[(n+1)√n+n√(n+1)]=√n/n-√(n+1)/(n+1)。原式=1-√100/100=1-10/100=9/10。'},
-
-// === 模块五：综合计算 ===
-{q:'(2-√5)²⁰²⁵ × (2+√5)²⁰²⁶ = ?',opts:['A. -2-√5','B. 2+√5','C. -2+√5','D. 2-√5'],ans:0,exp:'=[(2-√5)(2+√5)]²⁰²⁵×(2+√5)=(4-5)²⁰²⁵×(2+√5)=(-1)×(2+√5)=-2-√5。'},
-{q:'(2√3+3√2)² - (2√3-3√2)² = ?',opts:['A. 24√6','B. 48√6','C. 12√6','D. 36√6'],ans:0,exp:'用平方差：(a+b)²-(a-b)²=4ab。=4×(2√3)×(3√2)=24√6。'},
-{q:'(√3+√5-√2)(√3+√5+√2) = ?',opts:['A. 6+2√15','B. 6-2√15','C. 8+2√15','D. 8-2√15'],ans:0,exp:'看成[(√3+√5)-√2][(√3+√5)+√2]=(√3+√5)²-2=3+5+2√15-2=6+2√15。'},
-{q:'(√3+1)(√3-1) - ∛(-27)³ - √(√3-2)² = ?',opts:['A. 27+√3','B. 27√3','C. 30','D. 27'],ans:0,exp:'=(3-1)-(-27)-(2-√3)=2+27-2+√3=27+√3。注意√(√3-2)²=|√3-2|=2-√3。'},
-{q:'√24 × √3 - √8 = ?',opts:['A. 4√2','B. 6√2','C. 2√3','D. 8√2'],ans:0,exp:'√24=2√6, √8=2√2。原式=2√6×√3-2√2=2√18-2√2=6√2-2√2=4√2。'},
-{q:'√75 - √12 + √27 = ?',opts:['A. 6√3','B. 8√3','C. 4√3','D. 10√3'],ans:0,exp:'√75=5√3, √12=2√3, √27=3√3。原式=5√3-2√3+3√3=6√3。'},
+{q:'已知 x=√6+√3/2, y=√6-√3/2，求 x²+y²',opts:['A. 6','B. 7.5','C. 9','D. 12'],ans:1,exp:'x+y=√6, xy=3/4。x²+y²=6-1.5=4.5=7.5。'},
+// === 裂项 ===
+{q:'1/(1+√2)+1/(√2+√3)+...+1/(√99+√100)=?',opts:['A. 9','B. 10','C. 99','D. 100'],ans:0,exp:'裂项公式：1/(√n+√(n+1))=√(n+1)-√n。原式=√100-1=9。'},
+{q:'1/(1+√3)+1/(√3+√5)+...+1/(√99+√101)=?',opts:['A. (√101-1)/2','B. (√101+1)/2','C. √101-1','D. (√101-1)/2'],ans:0,exp:'裂项：1/(√n+√(n+2))=(√(n+2)-√n)/2。原式=(√101-1)/2。'},
+{q:'1/(2√1+√2)+1/(3√2+2√3)+...+1/(100√99+99√100)=?',opts:['A. 9/10','B. 1/10','C. 99/100','D. 1/100'],ans:0,exp:'通项：1/[(n+1)√n+n√(n+1)]=√n/n-√(n+1)/(n+1)。原式=1-1/10=9/10。'},
+// === 综合计算 ===
+{q:'(2-√5)²⁰²⁵×(2+√5)²⁰²⁶=?',opts:['A. -2-√5','B. 2+√5','C. -2+√5','D. 2-√5'],ans:0,exp:'=[(2-√5)(2+√5)]²⁰²⁵×(2+√5)=(4-5)²⁰²⁵×(2+√5)=-2-√5。'},
+{q:'(2√3+3√2)²-(2√3-3√2)²=?',opts:['A. 24√6','B. 48√6','C. 12√6','D. 36√6'],ans:0,exp:'(a+b)²-(a-b)²=4ab。=4×(2√3)×(3√2)=24√6。'},
+{q:'(√3+√5-√2)(√3+√5+√2)=?',opts:['A. 6+2√15','B. 6-2√15','C. 8+2√15','D. 8-2√15'],ans:0,exp:'=[(√3+√5)-√2][(√3+√5)+√2]=(√3+√5)²-2=6+2√15。'},
 ];
 
 const flashcards=[
-{front:'同类二次根式的定义',back:'几个二次根式化成<strong>最简二次根式</strong>后<br>如果<strong>被开方数相同</strong><br>则它们为同类二次根式'},
-{front:'同类二次根式判断流程',back:'<strong>①</strong> 先化简成最简形式<br><strong>②</strong> 看被开方数是否相同<br><strong>③</strong> 相同→可合并；不同→不可合并'},
-{front:'同类合并规则',back:'<span class="f-formula">a√m + b√m = (a+b)√m</span><br><strong>只合并系数</strong><br>根号部分（被开方数）不变'},
-{front:'平方有理化',back:'<span class="f-formula">(√a)² = a</span><br>适用于单项根式<br>一个根式平方消去根号'},
-{front:'平方差有理化',back:'<span class="f-formula">(√a+√b)(√a-√b) = a-b</span><br>适用于和差根式<br>完全消去根号！'},
-{front:'分母有理化：单项根式',back:'同乘以分母本身<br><span class="f-formula">1/√5 = √5/(√5×√5) = √5/5</span><br>分子分母同乘根号部分'},
-{front:'分母有理化：和差根式',back:'同乘使分母构成平方差的因式<br><span class="f-formula">1/(√a+√b) = (√a-√b)/(a-b)</span><br>同乘分母的共轭因式'},
-{front:'共轭二次根式定义',back:'<strong>共轭式</strong>：m√a+n√b 与 m√a-n√b<br>乘积为有理数<br>互为有理化因式'},
-{front:'知二推二：核心公式①',back:'已知 x+y 和 xy<br><span class="f-formula">x²+y² = (x+y)² - 2xy</span><br>平方和公式'},
-{front:'知二推二：核心公式②',back:'<span class="f-formula">(x-y)² = (x+y)² - 4xy</span><br>平方差公式<br>可求 x-y 的值'},
-{front:'知二推二：核心公式③',back:'<span class="f-formula">x/y + y/x = (x²+y²)/(xy)</span><br>通分后代入已知量<br>常用于分式求值'},
-{front:'知二推二：核心公式④',back:'<span class="f-formula">x³+y³ = (x+y)(x²-xy+y²)</span><br>立方和公式<br>可分解为已知量的组合'},
-{front:'知二推二解法步骤',back:'<strong>①</strong> 先分母有理化化简 x、y<br><strong>②</strong> 计算 x+y 和 xy<br><strong>③</strong> 代入公式求目标值<br><strong>④</strong> 结果为最简形式'},
-{front:'裂项核心公式①',back:'<span class="f-formula">1/(√n+√(n+1)) = √(n+1)-√n</span><br>相邻根式差<br>最常见裂项形式'},
-{front:'裂项核心公式②',back:'<span class="f-formula">1/(√n+√(n+2)) = (√(n+2)-√n)/2</span><br>间距为2的裂项<br>分母多一个2'},
-{front:'望远镜求和原理',back:'<strong>中间项全部抵消</strong><br>只剩首项和末项<br>裂项求和的精髓！'},
-{front:'大指数计算技巧',back:'<span class="f-formula">(a-√b)ⁿ(a+√b)ⁿ⁺¹ = [(a-√b)(a+√b)]ⁿ·(a+√b)</span><br>= (a²-b)ⁿ·(a+√b)<br>先凑平方差消去根号'},
-{front:'重要公式：平方差',back:'<span class="f-formula">(√a+√b)(√a-√b) = a-b</span><br>完全消去根号<br>大指数计算的关键工具'},
-{front:'重要公式：完全平方',back:'<span class="f-formula">(√a±√b)² = a+b ± 2√(ab)</span><br>注意中间的2倍根号积<br>展开时不要漏项'},
-{front:'化简原理：√(ab)',back:'<span class="f-formula">√(ab) = √a · √b</span><br>(a≥0, b≥0)<br>把完全平方因数提出来'},
-{front:'化简原理：√(a/b)',back:'<span class="f-formula">√(a/b) = √a / √b</span><br>(a≥0, b>0)<br>分母有理化后再化简'},
-{front:'先化简再运算',back:'二次根式计算的<strong>黄金法则</strong>！<br>不先化简直接算 → 计算量巨大<br>先化简再合并 → 简单快捷无误'},
-{front:'整数开方速记',back:'√8=2√2 √18=3√2<br>√12=2√3 √24=2√6<br>√20=2√5 √45=3√5<br>√50=5√2 √75=5√3'},
-{front:'双重非负性',back:'二次根式的<strong>双重非负性</strong><br>① 被开方数 ≥ 0<br>② 结果 ≥ 0<br>这是所有运算的前提！'},
+{front:'同类二次根式定义',back:'几个二次根式化成<strong>最简二次根式</strong>后<br>如果<strong>被开方数相同</strong><br>则它们为同类二次根式'},
+{front:'同类合并规则',back:'<span class="f-formula">a√m + b√m = (a+b)√m</span><br><strong>只合并系数</strong><br>根号部分不变'},
+{front:'平方有理化',back:'<span class="f-formula">(√a)² = a</span><br>一个根式平方消去根号'},
+{front:'平方差有理化',back:'<span class="f-formula">(√a+√b)(√a-√b) = a-b</span><br>完全消去根号'},
+{front:'分母有理化：单项',back:'同乘以分母本身<br><span class="f-formula">1/√5 = √5/5</span>'},
+{front:'分母有理化：和差',back:'同乘共轭因式<br><span class="f-formula">1/(√a+√b) = (√a-√b)/(a-b)</span>'},
+{front:'共轭二次根式',back:'<strong>共轭式</strong>：m√a+n√b 与 m√a-n√b<br>乘积为有理数'},
+{front:'知二推二：平方和',back:'<span class="f-formula">x²+y² = (x+y)² - 2xy</span>'},
+{front:'知二推二：平方差',back:'<span class="f-formula">(x-y)² = (x+y)² - 4xy</span>'},
+{front:'知二推二：立方和',back:'<span class="f-formula">x³+y³ = (x+y)(x²-xy+y²)</span>'},
+{front:'知二推二解法步骤',back:'<strong>①</strong> 先化简 x、y<br><strong>②</strong> 求 x+y 和 xy<br><strong>③</strong> 代入公式'},
+{front:'裂项核心公式',back:'<span class="f-formula">1/(√n+√(n+1)) = √(n+1)-√n</span><br>相邻根式差'},
+{front:'裂项：间距为2',back:'<span class="f-formula">1/(√n+√(n+2)) = (√(n+2)-√n)/2</span>'},
+{front:'望远镜求和',back:'<strong>中间项全部抵消</strong><br>只剩首项和末项'},
+{front:'大指数计算技巧',back:'<span class="f-formula">(a-√b)ⁿ(a+√b)ⁿ⁺¹ = (a²-b)ⁿ·(a+√b)</span>'},
+{front:'完全平方公式',back:'<span class="f-formula">(√a±√b)² = a+b ± 2√(ab)</span>'},
+{front:'先化简再运算',back:'二次根式计算的<strong>黄金法则</strong>！'},
+{front:'整数开方速记',back:'√8=2√2 √12=2√3 √18=3√2<br>√20=2√5 √24=2√6 √45=3√5'},
+{front:'双重非负性',back:'① 被开方数 ≥ 0 ② 结果 ≥ 0'},
 ];
 
 const errors=[
-{title:'同类合并漏掉系数 ❌',wrong:'合并同类二次根式时只合并了根号部分，忘了系数也要合并。',right:'系数相加减，根式不变。<span class="hl">2√3+3√3=5√3</span>，系数2+3=5。'},
-{title:'分母有理化只乘分母 ❌',wrong:'只在分母乘根号，分子不变，破坏了等式的值。',right:'分子分母<strong>同乘</strong>有理化因式。1/√5 = √5/5，不是1×√5/5。'},
-{title:'(√a+√b)²直接展开 ❌',wrong:'忘记完全平方公式中间有2倍乘积项。',right:'(√a+√b)² = a + b + 2√(ab)。<span class="hl">(2√3+3√2)²=12+12√6+18=30+12√6</span>。'},
-{title:'知二推二：先化简再代入 ❌',wrong:'不先化简 x、y（分母有理化），直接代入原式算到崩溃。',right:'先化简 x、y 为最简形式→求 x+y和xy→代入公式。步骤不能省！'},
-{title:'大指数不凑平方差 ❌',wrong:'直接展开大指数，算到崩溃。',right:'<span class="hl">(2-√5)²⁰²⁵×(2+√5)²⁰²⁶=[(2-√5)(2+√5)]²⁰²⁵×(2+√5)</span><br>=(4-5)²⁰²⁵×(2+√5)=-2-√5。用平方差一步搞定！'},
-{title:'裂项忘记除以系数 ❌',wrong:'1/(√n+√(n+2))直接等于√(n+2)-√n，忘了分母多一个2。',right:'1/(√n+√(n+2)) = <span class="hl">(√(n+2)-√n)/2</span>，分母间距为2时结果要除以2。'},
+{title:'同类合并漏掉系数 ❌',wrong:'只合并根号部分，忘了系数也要合并。',right:'系数相加减，根式不变。<span class="hl">2√3+3√3=5√3</span>。'},
+{title:'分母有理化只乘分母 ❌',wrong:'只在分母乘根号，分子不变。',right:'分子分母<strong>同乘</strong>有理化因式。1/√5=√5/5。'},
+{title:'完全平方忘2倍乘积 ❌',wrong:'(√a+√b)²直接等于a+b，漏了中间项。',right:'<span class="hl">(√a+√b)²=a+b+2√(ab)</span>。有2倍根号积！'},
+{title:'知二推二不先化简 ❌',wrong:'不化简 x、y 直接代入。',right:'先化简→求x+y和xy→代入公式。步骤不能省！'},
+{title:'大指数不凑平方差 ❌',wrong:'直接展开大指数。',right:'<span class="hl">(2-√5)²⁰²⁵×(2+√5)²⁰²⁶=-2-√5</span>，用平方差一步搞定。'},
+{title:'裂项忘记除以系数 ❌',wrong:'1/(√n+√(n+2))=√(n+2)-√n，忘了除2。',right:'<span class="hl">1/(√n+√(n+2))=(√(n+2)-√n)/2</span>。分母间距2→结果要除以2。'},
 ];
 
 let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
@@ -354,4 +335,5 @@ renderEC();initQ();renderFC();renderQ();
 (function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
 </script>
 
+</div>
 </body></html>
