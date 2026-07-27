@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📖 若琳 · 物理第三讲 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --primary: #667eea;
+  --secondary: #764ba2;
+  --success: #48bb78;
+  --warning: #ecc94b;
+  --danger: #f56565;
+  --info: #4299e1;
+  --bg: #f0f2f5;
+  --card-bg: #ffffff;
+  --text: #1a202c;
+  --text-light: #718096;
+  --border: #e2e8f0;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --acoustics: #e74c3c;
+  --stopwatch: #3498db;
+  --ruler: #2ecc71;
+  --convert: #e67e22;
+  --error: #9b59b6;
+  --review: #1abc9c;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
+.header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 1.8rem 1rem 1.2rem;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 2px 20px rgba(102,126,234,0.3);
+}
+.header h1 { font-size: 1.4rem; font-weight: 900; }
+.header p { opacity: 0.85; margin-top: 0.3rem; font-size: 0.85rem; }
+.header .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 0.15rem 0.6rem; border-radius: 8px; font-size: 0.75rem; margin-top: 0.4rem; }
+
+.container { max-width: 860px; margin: 0 auto; padding: 1rem; }
+
+/* Teacher Tip Banner */
+.tip-banner {
+  background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.2rem;
+  border-left: 4px solid #e17055;
+  color: #2d3436;
+}
+.tip-banner h3 { font-size: 0.95rem; margin-bottom: 0.4rem; }
+.tip-banner p { font-size: 0.82rem; opacity: 0.9; line-height: 1.6; }
+.tip-banner .tag { display: inline-block; background: #e17055; color: #fff; padding: 0.05rem 0.5rem; border-radius: 6px; font-size: 0.7rem; margin-right: 0.3rem; }
+
+/* Section */
+.section { margin-bottom: 1.2rem; }
+.section-title {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.95rem; font-weight: 700; margin-bottom: 0;
+  padding: 0.7rem 0.9rem; border-radius: var(--radius-sm);
+  cursor: pointer; user-select: none;
+  background: var(--card-bg); color: var(--text);
+  border: 2px solid var(--border);
+  transition: all 0.2s;
+}
+.section-title:hover { border-color: var(--primary); }
+.section-title .s-icon { font-size: 1.1rem; }
+.section-title .s-toggle { margin-left: auto; font-size: 0.75rem; opacity: 0.5; transition: transform 0.3s; }
+.section-title .s-toggle.open { transform: rotate(180deg); }
+
+.section-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s;
+  opacity: 0;
+  margin-top: 0;
+}
+.section-content.open {
+  max-height: 10000px;
+  opacity: 1;
+  margin-top: 0.6rem;
+}
+
+/* Color accents */
+.s-acoustics { border-left: 4px solid var(--acoustics); }
+.s-acoustics .s-icon { color: var(--acoustics); }
+.s-stopwatch { border-left: 4px solid var(--stopwatch); }
+.s-stopwatch .s-icon { color: var(--stopwatch); }
+.s-ruler { border-left: 4px solid var(--ruler); }
+.s-ruler .s-icon { color: var(--ruler); }
+.s-convert { border-left: 4px solid var(--convert); }
+.s-convert .s-icon { color: var(--convert); }
+.s-error { border-left: 4px solid var(--error); }
+.s-error .s-icon { color: var(--error); }
+.s-review { border-left: 4px solid var(--review); }
+.s-review .s-icon { color: var(--review); }
+
+/* Knowledge Card */
+.knowledge-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.2rem;
+  border: 2px solid var(--border);
+  margin-bottom: 0.7rem;
+}
+.knowledge-card .kc-title {
+  font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.knowledge-card .kc-title .emoji { font-size: 1rem; }
+.knowledge-card .kc-body { font-size: 0.83rem; line-height: 1.7; color: #2d3436; }
+.knowledge-card .kc-body .highlight { background: #ffeaa7; padding: 0.05rem 0.25rem; border-radius: 3px; font-weight: 600; }
+.knowledge-card .kc-body .formula {
+  display: inline-block; background: #dfe6e9; padding: 0.1rem 0.5rem; border-radius: 5px;
+  font-family: 'Courier New', monospace; font-weight: 700; font-size: 0.85rem;
+}
+.knowledge-card .kc-body ul { padding-left: 1.2rem; margin: 0.3rem 0; }
+.knowledge-card .kc-body ul li { margin-bottom: 0.2rem; }
+
+/* Steps */
+.steps { display: flex; flex-direction: column; gap: 0.5rem; margin: 0.5rem 0; }
+.step {
+  display: flex; align-items: flex-start; gap: 0.6rem;
+  padding: 0.6rem 0.8rem; border-radius: var(--radius-sm);
+  background: #f8f9fa; border: 1px solid var(--border);
+}
+.step .snum {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.step .stxt { font-size: 0.82rem; line-height: 1.5; }
+
+/* Table styles */
+.data-table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; font-size: 0.82rem; }
+.data-table th, .data-table td { border: 1px solid var(--border); padding: 0.4rem 0.6rem; text-align: left; }
+.data-table th { background: #f1f3f5; font-weight: 700; }
+
+/* Example box */
+.example-box {
+  background: #ebfbee; border: 1px solid #b2f2bb; border-radius: var(--radius-sm);
+  padding: 0.8rem 1rem; margin: 0.5rem 0;
+}
+.example-box .ex-title { font-weight: 700; color: #2b8a3e; font-size: 0.82rem; margin-bottom: 0.3rem; }
+.example-box .ex-body { font-size: 0.82rem; line-height: 1.6; }
+
+.warning-box {
+  background: #fff5f5; border: 1px solid #ffc9c9; border-radius: var(--radius-sm);
+  padding: 0.6rem 0.8rem; margin: 0.5rem 0; font-size: 0.82rem; display: flex; align-items: flex-start; gap: 0.4rem;
+}
+.warning-box .w-icon { color: #e03131; flex-shrink: 0; margin-top: 0.1rem; }
+
+/* Practice quiz */
+.quiz-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  border: 2px solid var(--border);
+  margin-bottom: 0.7rem;
+}
+.quiz-card .q-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.5rem; color: var(--primary); }
+.quiz-card .q-text { font-size: 0.83rem; line-height: 1.6; margin-bottom: 0.5rem; }
+.quiz-options { display: flex; flex-direction: column; gap: 0.4rem; margin: 0.5rem 0; }
+.quiz-option {
+  padding: 0.5rem 0.8rem; border-radius: var(--radius-sm);
+  border: 2px solid var(--border); cursor: pointer;
+  font-size: 0.82rem; transition: all 0.2s;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.quiz-option:hover { border-color: var(--primary); background: #f0f4ff; }
+.quiz-option .o-letter {
+  width: 24px; height: 24px; border-radius: 50%; background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.75rem; flex-shrink: 0;
+}
+.quiz-option.selected { border-color: var(--primary); background: #eef2ff; }
+.quiz-option.correct { border-color: var(--success); background: #f0fff4; }
+.quiz-option.correct .o-letter { background: var(--success); color: #fff; }
+.quiz-option.wrong { border-color: var(--danger); background: #fff5f5; }
+.quiz-option.wrong .o-letter { background: var(--danger); color: #fff; }
+.quiz-result { font-size: 0.82rem; padding: 0.4rem 0; margin-top: 0.3rem; font-weight: 600; }
+.quiz-result .qr-correct { color: var(--success); }
+.quiz-result .qr-wrong { color: var(--danger); }
+.quiz-result .qr-hint { font-weight: 400; color: var(--text-light); font-size: 0.78rem; margin-top: 0.2rem; }
+
+/* Interactive ruler page */
+.interactive-box {
+  background: var(--card-bg); border-radius: var(--radius-sm);
+  padding: 0.8rem; border: 2px solid var(--border); margin: 0.5rem 0;
+  text-align: center;
+}
+.interactive-box .ruler-display {
+  font-family: 'Courier New', monospace;
+  background: #ffeaa7; border-radius: 6px;
+  padding: 1rem 0.5rem; margin: 0.5rem 0;
+  font-size: 0.9rem; font-weight: 700; letter-spacing: 2px;
+  overflow-x: auto; white-space: nowrap;
+}
+.interactive-box .input-group {
+  display: flex; gap: 0.5rem; justify-content: center; align-items: center; flex-wrap: wrap;
+  margin: 0.5rem 0;
+}
+.interactive-box .input-group input {
+  padding: 0.4rem 0.6rem; border: 2px solid var(--border); border-radius: 6px;
+  font-size: 0.9rem; width: 120px; text-align: center;
+  font-family: 'Courier New', monospace;
+}
+.interactive-box .input-group button {
+  padding: 0.4rem 1rem; border: none; border-radius: 6px;
+  background: var(--primary); color: #fff; font-weight: 600;
+  cursor: pointer; font-size: 0.82rem;
+}
+
+/* Feedback */
+.feedback { font-size: 0.82rem; margin-top: 0.4rem; font-weight: 600; min-height: 1.4em; }
+.feedback.ok { color: var(--success); }
+.feedback.fail { color: var(--danger); }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: var(--text-light); font-size: 0.82rem; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.1rem; }
+  .knowledge-card { padding: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><i class="fas fa-microscope"></i> 物理第三讲 · 互动学习</h1>
+  <p>声学计算 + 测量（秒表 / 刻度尺 / 单位换算）</p>
+  <span class="badge">初二暑假</span>
+</div>
+
+<div class="container">
+
+  <!-- 老师提示 -->
+  <div class="tip-banner">
+    <h3><i class="fas fa-bullhorn"></i> 老师要求</h3>
+    <p>
+      <span class="tag">1️⃣</span> <strong>声学的计算</strong> — 一定要掌握画图列式子的方法<br>
+      <span class="tag">2️⃣</span> <strong>新的内容</strong> — 秒表读数和刻度尺的使用，其中单位换算的关系需要熟练掌握，计算不要出错<br>
+      <span class="tag">💡</span> <strong>温馨提示：</strong>每天要保证做作业前复习一遍当天的内容和课堂上的例题，总结一下自己的作业和小测错题！
+    </p>
+  </div>
+
+  <!-- ======== 1. 声学计算 ======== -->
+  <div class="section">
+    <div class="section-title s-acoustics" onclick="toggleSection(this)">
+      <span class="s-icon"><i class="fas fa-volume-up"></i></span>
+      声学的计算 · 画图列式子
+      <span class="s-toggle"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content open">
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">🎯</span> 核心公式</div>
+        <div class="kc-body">
+          <p><span class="formula">v = s / t</span>  （速度 = 路程 ÷ 时间）</p>
+          <p>声速在空气中的典型值：<span class="highlight">340 m/s</span></p>
+          <p>回声问题关键：<span class="highlight">声音走一个来回</span>，路程要乘以 2</p>
+        </div>
+      </div>
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">📝</span> 画图列式子法（三步走）</div>
+        <div class="kc-body">
+          <div class="steps">
+            <div class="step">
+              <div class="snum" style="background:#e74c3c">1</div>
+              <div class="stxt"><strong>画示意图：</strong>画出声音传播路径，标出已知量（速度、时间、距离），标出未知数（问号）</div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#e74c3c">2</div>
+              <div class="stxt"><strong>列式子：</strong>根据图示写出公式 <span class="formula">s = vt</span>，注意回声问题的路程是 <span class="formula">2s = vt</span></div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#e74c3c">3</div>
+              <div class="stxt"><strong>代入计算：</strong>代入已知数值，注意单位统一（m/s 对应 m, s），算出答案后写单位</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">📖</span> 常见题型</div>
+        <div class="kc-body">
+          <table class="data-table">
+            <tr><th>类型</th><th>特点</th><th>公式要点</th></tr>
+            <tr><td>🚗 汽车鸣笛</td><td>声音去 + 回声回</td><td><span class="formula">2s = v声 × t总</span></td></tr>
+            <tr><td>🏔️ 山崖回声</td><td>人对山喊，听到回声</td><td><span class="formula">2s = v × t</span></td></tr>
+            <tr><td>👂 测距</td><td>已知声速和时间求距离</td><td><span class="formula">s = v × t</span></td></tr>
+            <tr><td>⚡ 声光差</td><td>看到闪电到听到雷声</td><td><span class="formula">s = 340 × t</span></td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">✏️</span> 例题练习</div>
+        <div class="kc-body">
+          <p><strong>例1：</strong>小明面对山崖喊话，经过 2s 后听到回声，求小明距离山崖多远？（声速 340m/s）</p>
+          <div class="example-box">
+            <div class="ex-title">✅ 解题</div>
+            <div class="ex-body">
+              <strong>画图：</strong>小明 →→→→→→→→ 山崖（声音去）<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 山崖 →→→→→→→→ 小明（回声回）<br>
+              <strong>列式：</strong>声音走的是来回，所以 <span class="formula">2s = v × t</span><br>
+              <strong>计算：</strong>2s = 340 × 2 = 680 → s = 340m<br>
+              <strong>答案：</strong>小明距离山崖 <span class="highlight">340m</span>
+            </div>
+          </div>
+          <p style="margin-top:0.5rem;"><strong>例2：</strong>汽车以 15m/s 的速度驶向一座山崖，鸣笛 4s 后听到回声，求鸣笛时汽车距离山崖多远？（声速 340m/s）</p>
+          <div class="example-box">
+            <div class="ex-title">✅ 解题</div>
+            <div class="ex-body">
+              <strong>画图：</strong>汽车→→(4s走的距离)→→山崖<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ←←(回声4s走的距离)←←<br>
+              <strong>关键：</strong>声音走的总路程 + 汽车走的路程 = 2倍鸣笛时距离<br>
+              <span class="formula">s声 = 340 × 4 = 1360m</span>&nbsp;&nbsp;<span class="formula">s车 = 15 × 4 = 60m</span><br>
+              <span class="formula">2s = 1360 + 60 = 1420m</span> → <span class="formula">s = 710m</span><br>
+              <strong>答案：</strong>鸣笛时距离山崖 <span class="highlight">710m</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== 2. 秒表读数 ======== -->
+  <div class="section">
+    <div class="section-title s-stopwatch" onclick="toggleSection(this)">
+      <span class="s-icon"><i class="fas fa-stopwatch"></i></span>
+      秒表（停表）读数
+      <span class="s-toggle"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">🔍</span> 秒表结构</div>
+        <div class="kc-body">
+          <table class="data-table">
+            <tr><th>表盘</th><th>范围</th><th>一大格</th><th>一小格</th></tr>
+            <tr><td>大圈（秒针）</td><td>0~30s</td><td>1s</td><td>0.1s</td></tr>
+            <tr><td>小圈（分针）</td><td>0~15min</td><td>1min</td><td>0.5min</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">📝</span> 读数方法</div>
+        <div class="kc-body">
+          <div class="steps">
+            <div class="step">
+              <div class="snum" style="background:#3498db">1</div>
+              <div class="stxt"><strong>先读小盘（分钟）</strong> — 看分针指向的数字</div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#3498db">2</div>
+              <div class="stxt"><strong>再读大盘（秒）</strong> — 注意分针是否过半格：
+                <br>• 不到半格 → 秒针读 <span class="highlight">0~30s</span>
+                <br>• 超过半格 → 秒针读 <span class="highlight">30~60s</span></div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#3498db">3</div>
+              <div class="stxt"><strong>合起来</strong> — 结果 = X分 + Y秒，换算成秒：<span class="formula">总秒数 = 分×60 + 秒</span></div>
+            </div>
+          </div>
+          <div class="example-box">
+            <div class="ex-title">📌 示例</div>
+            <div class="ex-body">
+              小圈指针在 2min 和 3min 之间，且超过半格 → 读 2min<br>
+              大圈指针在 13 处 → 读 13s（因为超过半格，实际是 30+13=43s？不对，再看规则）<br>
+              所以 <span class="formula">2min13s = 2×60 + 13 = 133s</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== 3. 刻度尺的使用 ======== -->
+  <div class="section">
+    <div class="section-title s-ruler" onclick="toggleSection(this)">
+      <span class="s-icon"><i class="fas fa-ruler"></i></span>
+      刻度尺的使用 · 选放看读记
+      <span class="s-toggle"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">📏</span> 五字口诀：选放看读记</div>
+        <div class="kc-body">
+          <div class="steps">
+            <div class="step">
+              <div class="snum" style="background:#2ecc71">选</div>
+              <div class="stxt"><strong>选合适量程和分度值的刻度尺</strong><br>量程=测量范围，分度值=最小刻度长度</div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#2ecc71">放</div>
+              <div class="stxt"><strong>正确放置：</strong>零刻度线（或整刻度线）对齐；刻度紧贴被测物；有刻度的边与被测边平行</div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#2ecc71">看</div>
+              <div class="stxt"><strong>视线与尺面垂直</strong>，避免视差</div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#2ecc71">读</div>
+              <div class="stxt"><strong>估读到分度值的下一位 ⭐</strong><br>测量值 = 准确值 + 估读值<br>例：分度值0.1cm，读数3.44cm = 3.4cm(准确) + 0.04cm(估读)</div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#2ecc71">记</div>
+              <div class="stxt"><strong>记录 = 数值 + 单位</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">🔄</span> 根据读数反推分度值</div>
+        <div class="kc-body">
+          <div class="steps">
+            <div class="step">
+              <div class="snum" style="background:#00b894">1</div>
+              <div class="stxt">先找估读位（最后一位数字）</div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#00b894">2</div>
+              <div class="stxt">估读位的前一位写 1</div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#00b894">3</div>
+              <div class="stxt">添零 + 单位</div>
+            </div>
+          </div>
+          <div class="example-box">
+            <div class="ex-title">📌 示例</div>
+            <div class="ex-body">
+              • 7.6m → 分度值 <span class="formula">1m</span>（估读位"6"，前一位"7"→1m）<br>
+              • 165cm → 分度值 <span class="formula">10cm / 1dm</span>（估读位"5"，前一位"6"→10cm）<br>
+              • 20.26mm → 分度值 <span class="formula">0.1mm</span>（估读位"6"，前一位"2"→0.1mm）
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">✏️</span> 读数练习</div>
+        <div class="kc-body">
+          <p>已知刻度尺分度值为 0.1cm（1mm），物体右端对齐位置如图估算：</p>
+          <div class="interactive-box">
+            <div class="ruler-display" id="rulerDisplay">0cm |....|....|1cm |....|....|2cm |....|....|3cm |....|....|4cm</div>
+            <div style="font-size:0.78rem;color:var(--text-light);margin-bottom:0.3rem;">↑ 物体右端在 3.4cm ~ 3.5cm 之间</div>
+            <div class="input-group">
+              <span>读数 =</span>
+              <input type="text" id="rulerAnswer" placeholder="如 3.44" maxlength="6">
+              <span>cm</span>
+              <button onclick="checkRuler()">检查</button>
+            </div>
+            <div class="feedback" id="rulerFeedback"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== 4. 单位换算 ======== -->
+  <div class="section">
+    <div class="section-title s-convert" onclick="toggleSection(this)">
+      <span class="s-icon"><i class="fas fa-exchange-alt"></i></span>
+      单位换算
+      <span class="s-toggle"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">📊</span> 长度单位换算阶梯</div>
+        <div class="kc-body" style="text-align:center;">
+          <div style="background:#f1f3f5;border-radius:10px;padding:0.8rem;font-size:0.85rem;font-weight:700;font-family:'Courier New',monospace;margin:0.3rem 0;line-height:2;">
+            km <span style="color:var(--danger);">×10³</span> → m <span style="color:var(--danger);">×10</span> → dm <span style="color:var(--danger);">×10</span> → cm <span style="color:var(--danger);">×10</span> → mm <span style="color:var(--danger);">×10³</span> → μm <span style="color:var(--danger);">×10³</span> → nm
+          </div>
+          <div style="font-size:0.72rem;color:var(--text-light);margin-top:0.3rem;">← 每进一位×10（或×10³），退一位÷10（或÷10³） →</div>
+        </div>
+      </div>
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">📝</span> 换算三步法</div>
+        <div class="kc-body">
+          <div class="steps">
+            <div class="step">
+              <div class="snum" style="background:#e67e22">1</div>
+              <div class="stxt"><strong>数值照抄</strong> — 数字部分保持不变</div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#e67e22">2</div>
+              <div class="stxt"><strong>单位换算</strong> — 根据换算关系，将原单位换算成目标单位（带单位）</div>
+            </div>
+            <div class="step">
+              <div class="snum" style="background:#e67e22">3</div>
+              <div class="stxt"><strong>科学计数法</strong> — 必要时用科学计数法表示结果</div>
+            </div>
+          </div>
+          <div class="example-box">
+            <div class="ex-title">📌 示例</div>
+            <div class="ex-body">
+              • 2026 nm = 2026 × 10⁻⁶ dm = <span class="formula">2.026 × 10⁻⁵ dm</span><br>
+              • 2026 μm = 2026 × 10⁻⁶ m = <span class="formula">2.026 × 10⁻³ m</span><br>
+              • 7.06 × 10⁻⁴ m = 7.06 × 10⁻⁴ × 10³ mm = <span class="formula">0.706 mm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">✏️</span> 换算练习</div>
+        <div class="kc-body">
+          <div class="interactive-box">
+            <p style="font-size:0.85rem;margin-bottom:0.4rem;" id="convertQuestion">0.05 km = ______ m</p>
+            <div class="input-group">
+              <input type="text" id="convertAnswer" placeholder="输入答案" maxlength="20" style="width:150px;">
+              <button onclick="checkConvert()">检查</button>
+            </div>
+            <div class="feedback" id="convertFeedback"></div>
+            <button onclick="newConvertQuestion()" style="margin-top:0.4rem;padding:0.3rem 0.8rem;border:2px solid var(--border);border-radius:6px;background:var(--card-bg);cursor:pointer;font-size:0.78rem;color:var(--text);">换一题 🔄</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== 5. 误差与特殊测量 ======== -->
+  <div class="section">
+    <div class="section-title s-error" onclick="toggleSection(this)">
+      <span class="s-icon"><i class="fas fa-balance-scale"></i></span>
+      误差 · 错误 · 特殊测量方法
+      <span class="s-toggle"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">⚖️</span> 误差 vs 错误</div>
+        <div class="kc-body">
+          <table class="data-table">
+            <tr><th></th><th>误差</th><th>错误</th></tr>
+            <tr><td><strong>定义</strong></td><td>测量值与真实值的差异</td><td>不遵守规则、粗心导致</td></tr>
+            <tr><td><strong>可否避免</strong></td><td><span style="color:var(--danger);font-weight:700;">不可避免</span></td><td><span style="color:var(--success);font-weight:700;">可以避免</span></td></tr>
+          </table>
+          <div style="margin-top:0.5rem;">
+            <p><strong>误差分类：</strong></p>
+            <ul>
+              <li><strong>系统误差</strong> — 方法不够科学、工具不够精确</li>
+              <li><strong>偶然误差</strong> — 估测水平/观察力不足</li>
+            </ul>
+            <p style="margin-top:0.3rem;"><strong>减小误差方法：</strong></p>
+            <ul>
+              <li>系统误差 → 更科学的方法、更精确的仪器</li>
+              <li>偶然误差 → <span class="highlight">多次测量取平均值 ⭐</span></li>
+            </ul>
+          </div>
+          <div class="example-box" style="margin-top:0.5rem;">
+            <div class="ex-title">📌 求平均值例题</div>
+            <div class="ex-body">
+              一组数据：5.37cm, 5.38cm, <span style="color:var(--danger);text-decoration:line-through;">5.49cm</span>, 5.38cm, 5.37cm<br>
+              <strong>第1步：</strong>去掉错误数据（5.49cm 与其他准确值不同）<br>
+              <strong>第2步：</strong>剩余求平均 (5.37+5.38+5.38+5.37)÷4 = 5.375cm<br>
+              <strong>第3步：</strong>四舍五入保留相同数位 → <span class="formula">5.38cm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="knowledge-card">
+        <div class="kc-title"><span class="emoji">🔧</span> 特殊测量方法</div>
+        <div class="kc-body">
+          <table class="data-table">
+            <tr><th>方法</th><th>用途</th><th>要点</th></tr>
+            <tr><td><strong>累积法</strong></td><td>测纸厚、铜线直径</td><td>d = D/n，绕太紧偏小，绕太松偏大，线圈长度≠铜线长度</td></tr>
+            <tr><td><strong>曲直互化</strong></td><td>测地图轮廓、操场周长</td><td>化曲线为直线</td></tr>
+            <tr><td><strong>比例法</strong></td><td>测树高</td><td>相似三角形原理</td></tr>
+            <tr><td><strong>化内为外</strong></td><td>测硬币直径</td><td>内部转外部测量</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== 6. 复习提示 ======== -->
+  <div class="section">
+    <div class="section-title s-review" onclick="toggleSection(this)">
+      <span class="s-icon"><i class="fas fa-book-open"></i></span>
+      每日复习 · 错题总结
+      <span class="s-toggle"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <div class="knowledge-card">
+        <div class="kc-body">
+          <p style="font-size:0.85rem;line-height:1.8;">
+            <i class="fas fa-check-circle" style="color:var(--success);"></i> <strong>复习步骤：</strong><br>
+            &nbsp;&nbsp;① 做作业前先复习当天内容 + 课堂例题<br>
+            &nbsp;&nbsp;② 总结作业和小测的错题<br>
+            &nbsp;&nbsp;③ 不会的题画图列式子，不要空想<br>
+            &nbsp;&nbsp;④ 单位换算一定要细心，每一步写清楚
+          </p>
+          <div class="warning-box">
+            <span class="w-icon"><i class="fas fa-exclamation-triangle"></i></span>
+            <span><strong>计算不要出错！</strong> 尤其是单位换算中的 10 的幂次，每进一位退一位要数清楚。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 错题链接 -->
+  <div style="text-align:center;margin:1rem 0;">
+    <a href="wrong_bank.html#add" style="display:inline-block;padding:0.6rem 1.5rem;border-radius:var(--radius-sm);background:var(--primary);color:#fff;text-decoration:none;font-weight:600;font-size:0.85rem;">
+      <i class="fas fa-plus-circle"></i> 录入错题
+    </a>
+    <a href="wrong_bank.html#list" style="display:inline-block;padding:0.6rem 1.5rem;border-radius:var(--radius-sm);background:var(--card-bg);color:var(--text);text-decoration:none;font-weight:600;font-size:0.85rem;border:2px solid var(--border);margin-left:0.5rem;">
+      <i class="fas fa-list"></i> 错题本
+    </a>
+  </div>
+
+</div>
+
+<div class="footer">
+  <i class="fas fa-heart" style="color:var(--danger)"></i> 为若琳定制的物理第三讲互动学习 &nbsp;|&nbsp; 每天复习，每天进步
+</div>
+
+<script>
+// ==================== 刻度尺读数练习 ====================
+function checkRuler() {
+  const val = document.getElementById('rulerAnswer').value.trim();
+  const fb = document.getElementById('rulerFeedback');
+  // Accept answers around 3.44cm (between 3.40 and 3.49)
+  const num = parseFloat(val);
+  if (isNaN(num)) {
+    fb.className = 'feedback fail'; fb.textContent = '请输入数字';
+    return;
+  }
+  if (num >= 3.40 && num <= 3.49) {
+    fb.className = 'feedback ok'; fb.textContent = '✅ 正确！测量值 = 准确值(3.4cm) + 估读值(0.04cm)';
+  } else if (num >= 3.0 && num < 3.4) {
+    fb.className = 'feedback fail'; fb.textContent = '❌ 偏小了，估读偏小，再试试！';
+  } else if (num > 3.49 && num <= 4.0) {
+    fb.className = 'feedback fail'; fb.textContent = '❌ 偏大了，注意估读到分度值的下一位即可';
+  } else {
+    fb.className = 'feedback fail'; fb.textContent = '❌ 不对，提示：物体右端在3.4cm~3.5cm之间，估读一位';
+  }
+}
+
+// ==================== 单位换算练习 ====================
+const convertQuestions = [
+  { q: '0.05 km = ______ m', a: '50', hint: 'km→m: ×10³' },
+  { q: '250 cm = ______ m', a: '2.5', hint: 'cm→m: ÷10²' },
+  { q: '3.6 mm = ______ m', a: '0.0036', hint: 'mm→m: ÷10³' },
+  { q: '0.0005 m = ______ μm', a: '500', hint: 'm→μm: ×10⁶' },
+  { q: '7.5 × 10⁻⁴ m = ______ mm', a: '0.75', hint: 'm→mm: ×10³' },
+  { q: '0.02 m = ______ cm', a: '2', hint: 'm→cm: ×10²' },
+  { q: '1500 μm = ______ cm', a: '0.15', hint: 'μm→cm: ÷10⁴' },
+  { q: '5 km = ______ m', a: '5000', hint: 'km→m: ×10³' },
+];
+
+let currentQ = 0;
+
+function newConvertQuestion() {
+  currentQ = Math.floor(Math.random() * convertQuestions.length);
+  document.getElementById('convertQuestion').textContent = convertQuestions[currentQ].q;
+  document.getElementById('convertAnswer').value = '';
+  document.getElementById('convertFeedback').className = 'feedback';
+  document.getElementById('convertFeedback').textContent = '';
+}
+
+function checkConvert() {
+  const val = document.getElementById('convertAnswer').value.trim();
+  const fb = document.getElementById('convertFeedback');
+  const q = convertQuestions[currentQ];
+  
+  const num = parseFloat(val);
+  const expected = parseFloat(q.a);
+  
+  if (isNaN(num)) {
+    fb.className = 'feedback fail'; fb.textContent = '请输入数字';
+    return;
+  }
+  
+  // Allow small tolerance for floating point
+  if (Math.abs(num - expected) < 0.00001) {
+    fb.className = 'feedback ok'; fb.textContent = '✅ 正确！' + (q.hint ? '提示：' + q.hint : '');
+  } else if (num === expected * 1000 || num === expected / 1000) {
+    fb.className = 'feedback fail'; fb.textContent = '❌ 差了一个数量级，注意幂次：' + q.hint;
+  } else {
+    fb.className = 'feedback fail'; fb.textContent = '❌ 不对。提示：' + q.hint;
+  }
+}
+
+// Initialize first question
+newConvertQuestion();
+
+// ==================== 折叠切换 ====================
+function toggleSection(el) {
+  const content = el.nextElementSibling;
+  const toggle = el.querySelector('.s-toggle');
+  if (!content) return;
+  content.classList.toggle('open');
+  if (toggle) toggle.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
