@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📖 若琳 · 数学第三讲 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --primary: #e74c3c;
+  --secondary: #c0392b;
+  --success: #48bb78;
+  --warning: #ecc94b;
+  --danger: #f56565;
+  --info: #4299e1;
+  --bg: #f0f2f5;
+  --card-bg: #ffffff;
+  --text: #1a202c;
+  --text-light: #718096;
+  --border: #e2e8f0;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --m1: #e74c3c;
+  --m2: #e67e22;
+  --m3: #2ecc71;
+  --m4: #3498db;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
+.header {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  padding: 1.8rem 1rem 1.2rem;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 2px 20px rgba(231,76,60,0.3);
+}
+.header h1 { font-size: 1.4rem; font-weight: 900; }
+.header p { opacity: 0.85; margin-top: 0.3rem; font-size: 0.85rem; }
+.header .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 0.15rem 0.6rem; border-radius: 8px; font-size: 0.75rem; margin-top: 0.4rem; }
+
+.container { max-width: 860px; margin: 0 auto; padding: 1rem; }
+
+/* Section */
+.section { margin-bottom: 1rem; }
+.section-title {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.93rem; font-weight: 700; margin-bottom: 0;
+  padding: 0.7rem 0.9rem; border-radius: var(--radius-sm);
+  cursor: pointer; user-select: none;
+  background: var(--card-bg); color: var(--text);
+  border: 2px solid var(--border);
+  transition: all 0.2s;
+}
+.section-title:hover { border-color: var(--primary); }
+.section-title .s-icon { font-size: 1.1rem; }
+.section-title .s-toggle { margin-left: auto; font-size: 0.75rem; opacity: 0.5; transition: transform 0.3s; }
+.section-title .s-toggle.open { transform: rotate(180deg); }
+.section-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s;
+  opacity: 0;
+  margin-top: 0;
+}
+.section-content.open { max-height: 20000px; opacity: 1; margin-top: 0.6rem; }
+
+.s-m1 { border-left: 4px solid var(--m1); }
+.s-m1 .s-icon { color: var(--m1); }
+.s-m2 { border-left: 4px solid var(--m2); }
+.s-m2 .s-icon { color: var(--m2); }
+.s-m3 { border-left: 4px solid var(--m3); }
+.s-m3 .s-icon { color: var(--m3); }
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1.1rem;
+  border: 2px solid var(--border);
+  margin-bottom: 0.6rem;
+}
+.card .c-title { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text); }
+.card .c-body { font-size: 0.82rem; line-height: 1.7; color: #2d3436; }
+.card .c-body .hl { background: #ffeaa7; padding: 0.05rem 0.25rem; border-radius: 3px; font-weight: 600; }
+.card .c-body .fm { display: inline-block; background: #dfe6e9; padding: 0.1rem 0.5rem; border-radius: 5px; font-family: 'Courier New', monospace; font-weight: 700; font-size: 0.83rem; }
+.card .c-body ul { padding-left: 1.2rem; margin: 0.3rem 0; }
+.card .c-body ul li { margin-bottom: 0.15rem; }
+
+/* Example */
+.ex-box {
+  background: #ebfbee; border: 1px solid #b2f2bb; border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem; margin: 0.4rem 0;
+}
+.ex-box .ex-tag { font-weight: 700; color: #2b8a3e; font-size: 0.78rem; margin-bottom: 0.2rem; }
+.ex-box .ex-body { font-size: 0.8rem; line-height: 1.55; font-family: 'Courier New', monospace; white-space: pre-wrap; word-break: break-all; }
+
+.warn-box {
+  background: #fff5f5; border: 1px solid #ffc9c9; border-radius: var(--radius-sm);
+  padding: 0.5rem 0.7rem; margin: 0.4rem 0; font-size: 0.8rem; display: flex; gap: 0.4rem;
+}
+.warn-box .w-icon { color: #e03131; flex-shrink: 0; }
+
+.steps { display: flex; flex-direction: column; gap: 0.4rem; margin: 0.4rem 0; }
+.step { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.5rem 0.7rem; border-radius: var(--radius-sm); background: #f8f9fa; border: 1px solid var(--border); }
+.step .sn { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; color: #fff; flex-shrink: 0; }
+.step .st { font-size: 0.8rem; line-height: 1.45; }
+
+/* Practice quiz */
+.quiz-card {
+  background: var(--card-bg); border-radius: var(--radius-sm);
+  padding: 0.9rem; border: 2px solid var(--border); margin-bottom: 0.6rem;
+}
+.quiz-card .q-top { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--primary); }
+.quiz-card .q-text { font-size: 0.82rem; line-height: 1.55; margin-bottom: 0.4rem; font-family: 'Courier New', monospace; white-space: pre-wrap; }
+.quiz-card .q-ans {
+  background: #f1f3f5; border-radius: 6px; padding: 0.4rem 0.6rem;
+  font-size: 0.78rem; color: var(--text-light); display: none;
+}
+.quiz-card .q-ans.show { display: block; }
+.quiz-card .q-btn {
+  padding: 0.3rem 0.8rem; border: 2px solid var(--border); border-radius: 6px;
+  background: var(--card-bg); cursor: pointer; font-size: 0.78rem; color: var(--text);
+  transition: all 0.2s;
+}
+.quiz-card .q-btn:hover { border-color: var(--primary); color: var(--primary); }
+.quiz-card .q-btn .show-ans { color: var(--success); }
+
+/* Steps table */
+.step-table { width: 100%; border-collapse: collapse; margin: 0.4rem 0; font-size: 0.8rem; }
+.step-table td { border: 1px solid var(--border); padding: 0.3rem 0.5rem; vertical-align: top; }
+.step-table .snum { background: var(--bg); font-weight: 700; text-align: center; width: 28px; }
+
+.footer { text-align: center; padding: 1.5rem; color: var(--text-light); font-size: 0.82rem; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.1rem; }
+  .card { padding: 0.7rem; }
+  .quiz-card { padding: 0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><i class="fas fa-square-root-alt"></i> 数学第三讲 · 互动学习</h1>
+  <p>二次根式（三）：分母有理化 · 裂项 · 共轭二次根式</p>
+  <span class="badge">初二暑假 · 博学班</span>
+</div>
+
+<div class="container">
+
+  <!-- ======== 模块一：分母有理化 ======== -->
+  <div class="section">
+    <div class="section-title s-m1" onclick="toggleSec(this)">
+      <span class="s-icon"><i class="fas fa-divide"></i></span>
+      模块一：分母有理化
+      <span class="s-toggle"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content open">
+      <div class="card">
+        <div class="c-title">📐 有理化的基本方法</div>
+        <div class="c-body">
+          <div class="steps">
+            <div class="step">
+              <div class="sn" style="background:#e74c3c">1</div>
+              <div class="st"><strong>平方有理化</strong>（单项根式）：<span class="fm">(√a)² = a</span></div>
+            </div>
+            <div class="step">
+              <div class="sn" style="background:#e74c3c">2</div>
+              <div class="st"><strong>平方差有理化</strong>（和差根式）：<span class="fm">(√a+√b)(√a-√b) = a-b</span></div>
+            </div>
+          </div>
+          <div class="warn-box">
+            <span class="w-icon"><i class="fas fa-lightbulb"></i></span>
+            <span><strong>注：</strong>(√a+√b)² = a+b+2√ab，若 √ab 为有理数，完全平方也可以实现有理化。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="c-title">📐 分母有理化方法</div>
+        <div class="c-body">
+          <table class="step-table">
+            <tr><td class="snum">①</td><td><strong>单项根式</strong>：同乘以分母本身<br><span class="fm">1/√a = √a / a</span></td></tr>
+            <tr><td class="snum">②</td><td><strong>和差根式</strong>：同乘以使分母构​​成平方差公式的因式<br><span class="fm">1/(√a+√b) = (√a-√b)/(a-b)</span><br><span class="fm">1/(√a-√b) = (√a+√b)/(a-b)</span></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- 例题1 -->
+      <div class="quiz-card">
+        <div class="q-top">例题1 · 分母有理化化简</div>
+        <div class="q-text">1/(1+√2) = ?
+1/(1+√3) = ?
+1/(2+√3) = ?
+(3√2-2√3)/(3√5-4√3) = ?</div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">
+          = √2-1<br>
+          = 2-√3<br>
+          = (3-√6)/3<br>
+          = -3√10 - 4√6 + 2√15 + 8
+        </div>
+      </div>
+
+      <!-- 例题2 计算 -->
+      <div class="quiz-card">
+        <div class="q-top">例题2 · 综合计算</div>
+        <div class="q-text">(1) √((√5-3)²) + 2/(√5+2) + (π-2025)⁰</div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">解：原式 = 3-√5 + 2(√5-2) + 1 = √5</div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="q-top">例题2 · 比大小</div>
+        <div class="q-text">比较：√2020 - √2019 ___ √2019 - √2018</div>
+        <div class="c-body" style="margin-top:0.3rem;font-size:0.8rem;">
+          <strong>方法</strong>：利用 <span class="fm">√a - √b = (a-b)/(√a+√b)</span>
+        </div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">
+          √2020-√2019 = 1/(√2020+√2019)<br>
+          √2019-√2018 = 1/(√2019+√2018)<br>
+          ∵ √2020+√2019 > √2019+√2018<br>
+          ∴ √2020-√2019 < √2019-√2018
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== 模块二：二次根式裂项 ======== -->
+  <div class="section">
+    <div class="section-title s-m2" onclick="toggleSec(this)">
+      <span class="s-icon"><i class="fas fa-layer-group"></i></span>
+      模块二：二次根式裂项
+      <span class="s-toggle"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <div class="card">
+        <div class="c-title">🔑 核心裂项公式</div>
+        <div class="c-body">
+          <p><span class="fm">1/(√n + √(n+1)) = √(n+1) - √n</span></p>
+          <p><span class="fm">1/(√n + √(n+2)) = (√(n+2) - √n) / 2</span></p>
+          <div class="warn-box" style="margin-top:0.3rem;">
+            <span class="w-icon"><i class="fas fa-magic"></i></span>
+            <span><strong>望远镜求和</strong>：中间项全部抵消，只剩首尾两项</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="q-top">例题3 · 裂项求和</div>
+        <div class="q-text">1/(1+√2) + 1/(√2+√3) + 1/(√3+√4) + ... + 1/(√2024+√2025)</div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">
+          原式 = (√2-1)+(√3-√2)+(√4-√3)+...+(√2025-√2024)<br>
+          = √2025 - 1<br>
+          = 45 - 1 = <strong>44</strong>
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="q-top">例题3 · 间距为2的裂项</div>
+        <div class="q-text">1/(1+√3) + 1/(√3+√5) + 1/(√5+√7) + ... + 1/(√99+√101)</div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">
+          原式 = (√3-1 + √5-√3 + √7-√5 + ... + √101-√99)/2<br>
+          = (√101 - 1)/2
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="q-top">例题3 · 较复杂裂项</div>
+        <div class="q-text">1/(2√1+√2) + 1/(3√2+2√3) + 1/(4√3+3√4) + ... + 1/(100√99+99√100)</div>
+        <div class="c-body" style="margin-top:0.3rem;font-size:0.8rem;">
+          <strong>通项公式</strong>：<span class="fm">1/[(n+1)√n + n√(n+1)] = √n/n - √(n+1)/(n+1)</span>
+        </div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">
+          原式 = 1 - √2/2 + √2/2 - √3/3 + ... + √99/99 - √100/100<br>
+          = 1 - √100/100 = 1 - 10/100 = <strong>9/10</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== 模块三：共轭二次根式 ======== -->
+  <div class="section">
+    <div class="section-title s-m3" onclick="toggleSec(this)">
+      <span class="s-icon"><i class="fas fa-link"></i></span>
+      模块三：共轭二次根式 · 知二求二
+      <span class="s-toggle"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <div class="card">
+        <div class="c-title">💡 核心方法</div>
+        <div class="c-body">
+          <p>已知 <span class="fm">x+y</span> 和 <span class="fm">xy</span>，可求：</p>
+          <ul>
+            <li><span class="fm">x² + y² = (x+y)² - 2xy</span></li>
+            <li><span class="fm">(x-y)² = (x+y)² - 4xy</span></li>
+            <li><span class="fm">x³ + y³ = (x+y)(x² - xy + y²)</span></li>
+            <li><span class="fm">x/y + y/x = (x²+y²)/(xy)</span></li>
+          </ul>
+          <div class="warn-box" style="margin-top:0.3rem;">
+            <span class="w-icon"><i class="fas fa-star"></i></span>
+            <span><strong>关键：</strong>先分母有理化化简 x、y，再算 x+y 和 xy</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="q-top">例题4 · 共轭求值</div>
+        <div class="q-text">(1) 已知 x=√6+1, y=√6-1，求 x²+y²+xy</div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">
+          x+y=2√6, xy=5<br>
+          x²+y²+xy = (x+y)² - xy = 24-5 = <strong>19</strong>
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="q-top">例题4 · 共轭求值</div>
+        <div class="q-text">(2) 已知 x=1/(2+√3), y=1/(2-√3)，
+        求 ① (x+y)/(x-y)  ② x²-3xy+y²</div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">
+          先分母有理化：x=2-√3, y=2+√3<br>
+          x+y=4, x-y=-2√3, xy=1<br>
+          ① (x+y)/(x-y) = 4/(-2√3) = <strong>-2√3/3</strong><br>
+          ② x²-3xy+y² = (x-y)² - xy = 12-1 = <strong>11</strong>
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="q-top">例题4 · 带根号求值</div>
+        <div class="q-text">(3) 已知 x+y=2√3, xy=-2，求 x³y+2x²y²+xy³</div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">
+          原式 = xy(x²+2xy+y²) = xy(x+y)²<br>
+          = -2 × (2√3)² = -2 × 12 = <strong>-24</strong>
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="q-top">例题4 · 双重二次根式</div>
+        <div class="q-text">(4) 已知 a+b=√(√2025+√2024), a-b=√(√2025-√2024)，求 a⁴-b⁴</div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">
+          (a+b)(a-b)=√((√2025+√2024)(√2025-√2024))=√1=1<br>
+          ∴ a²-b²=1<br>
+          (a+b)²+(a-b)²=2√2025, ∴ a²+b²=√2025=45<br>
+          a⁴-b⁴ = (a²+b²)(a²-b²) = 45 × 1 = <strong>45</strong>
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="q-top">练习 · 分母有理化+共轭综合</div>
+        <div class="q-text">
+x = (√3-√2)/(√3+√2)
+y = (√3+√2)/(√3-√2)
+求 √(xy)+(x+y)² / √(xy)-(x+y)²
+        </div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">
+          x = 5-2√6, y = 5+2√6<br>
+          x+y=10, xy=1<br>
+          原式 = (1+100)/(1-100) = <strong>-101/99</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 错题链接 -->
+  <div style="text-align:center;margin:1rem 0;">
+    <a href="wrong_bank.html#add" style="display:inline-block;padding:0.6rem 1.5rem;border-radius:var(--radius-sm);background:var(--primary);color:#fff;text-decoration:none;font-weight:600;font-size:0.85rem;">
+      <i class="fas fa-plus-circle"></i> 录入错题
+    </a>
+    <a href="wrong_bank.html#list" style="display:inline-block;padding:0.6rem 1.5rem;border-radius:var(--radius-sm);background:var(--card-bg);color:var(--text);text-decoration:none;font-weight:600;font-size:0.85rem;border:2px solid var(--border);margin-left:0.5rem;">
+      <i class="fas fa-list"></i> 错题本
+    </a>
+  </div>
+
+</div>
+
+<div class="footer">
+  <i class="fas fa-heart" style="color:var(--danger)"></i> 为若琳定制的数学第三讲互动学习
+</div>
+
+<script>
+function toggleSec(el) {
+  const content = el.nextElementSibling;
+  const toggle = el.querySelector('.s-toggle');
+  if (!content) return;
+  content.classList.toggle('open');
+  if (toggle) toggle.classList.toggle('open');
+}
+
+function toggleAns(btn) {
+  const ans = btn.nextElementSibling;
+  if (ans && ans.classList.contains('q-ans')) {
+    ans.classList.toggle('show');
+    btn.innerHTML = ans.classList.contains('show') ? '🙈 隐藏答案' : '👁️ 显示答案';
+  }
+}
+</script>
+
+</body>
+</html>
