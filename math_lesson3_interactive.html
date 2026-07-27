@@ -150,13 +150,87 @@ body {
 
 <div class="header">
   <h1><i class="fas fa-square-root-alt"></i> 数学第三讲 · 互动学习</h1>
-  <p>二次根式（三）：分母有理化 · 裂项 · 共轭二次根式</p>
+  <p>二次根式（三）：同类二次根式 · 分母有理化 · 根式知二推二</p>
   <span class="badge">初二暑假 · 博学班</span>
 </div>
 
 <div class="container">
 
-  <!-- ======== 模块一：分母有理化 ======== -->
+  <!-- 作业要求 -->
+  <div style="background:linear-gradient(135deg,#ffeaa7,#fdcb6e);border-radius:16px;padding:0.9rem 1.1rem;margin-bottom:1rem;border-left:4px solid #e17055;">
+    <h3 style="font-size:0.9rem;margin-bottom:0.3rem;"><i class="fas fa-exclamation-triangle" style="color:#e17055"></i> 第三次课作业要求</h3>
+    <p style="font-size:0.82rem;line-height:1.6;color:#2d3436;">
+      <strong>⚠️ 本讲主要是二次根式的计算，重在理解计算规则以及计算技巧，不按照上课说的步骤操作计算量会非常大，所以做之前一定要复习！</strong><br><br>
+      📖 <strong>作业：</strong><br>
+      ① 第二讲配套<br>
+      ② 《二次根式》p2<br><br>
+      ⭐ <strong>难度：</strong>⭐⭐⭐⭐⭐
+    </p>
+  </div>
+
+  <!-- ======== 模块零：同类二次根式 ======== -->
+  <div class="section">
+    <div class="section-title s-m1" onclick="toggleSec(this)" style="border-left-color:#9b59b6;">
+      <span class="s-icon" style="color:#9b59b6;"><i class="fas fa-layer-group"></i></span>
+      同类二次根式
+      <span class="s-toggle"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content open">
+      <div class="card">
+        <div class="c-title">📌 定义</div>
+        <div class="c-body">
+          <p><strong>同类二次根式</strong>：几个二次根式化为最简二次根式后，如果被开方数相同，则它们是同类二次根式。</p>
+          <div class="ex-box">
+            <div class="ex-tag">✅ 示例</div>
+            <div class="ex-body">
+              <span class="fm">√8 = 2√2</span> 与 <span class="fm">√18 = 3√2</span> → 被开方数都是2 → <strong>同类二次根式</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="c-title">📝 合并同类二次根式</div>
+        <div class="c-body">
+          <p>与合并同类项类似：<span class="hl">系数相加减，根式不变</span></p>
+          <div class="steps">
+            <div class="step">
+              <div class="sn" style="background:#9b59b6">1</div>
+              <div class="st"><strong>化简</strong> — 每个根式化为最简二次根式</div>
+            </div>
+            <div class="step">
+              <div class="sn" style="background:#9b59b6">2</div>
+              <div class="st"><strong>判断</strong> — 看被开方数是否相同</div>
+            </div>
+            <div class="step">
+              <div class="sn" style="background:#9b59b6">3</div>
+              <div class="st"><strong>合并</strong> — 系数相加减，根式不变</div>
+            </div>
+          </div>
+          <div class="ex-box">
+            <div class="ex-tag">✅ 示例</div>
+            <div class="ex-body">
+              <span class="fm">2√3 + 5√3 = (2+5)√3 = 7√3</span><br>
+              <span class="fm">√12 + √27 - √48 = 2√3 + 3√3 - 4√3 = √3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-card">
+        <div class="q-top">✏️ 练习 · 判断是否同类</div>
+        <div class="q-text">下列各组根式中，是同类二次根式的是？
+A. √2 和 √3   B. √8 和 √18   C. √12 和 √20</div>
+        <button class="q-btn" onclick="toggleAns(this)">👁️ 显示答案</button>
+        <div class="q-ans">
+          <strong>B</strong><br>
+          √8=2√2, √18=3√2 → 被开方数都是2，是同类<br>
+          A: √2 和 √3 被开方数不同<br>
+          C: √12=2√3, √20=2√5 → 被开方数不同
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== 模块二：分母有理化 ======== -->
   <div class="section">
     <div class="section-title s-m1" onclick="toggleSec(this)">
       <span class="s-icon"><i class="fas fa-divide"></i></span>
@@ -235,7 +309,7 @@ body {
     </div>
   </div>
 
-  <!-- ======== 模块二：二次根式裂项 ======== -->
+  <!-- ======== 模块三：二次根式裂项 ======== -->
   <div class="section">
     <div class="section-title s-m2" onclick="toggleSec(this)">
       <span class="s-icon"><i class="fas fa-layer-group"></i></span>
@@ -295,7 +369,7 @@ body {
   <div class="section">
     <div class="section-title s-m3" onclick="toggleSec(this)">
       <span class="s-icon"><i class="fas fa-link"></i></span>
-      模块三：共轭二次根式 · 知二求二
+      模块四：共轭二次根式 · 根式知二推二
       <span class="s-toggle"><i class="fas fa-chevron-down"></i></span>
     </div>
     <div class="section-content">
