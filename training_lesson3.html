@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三层训练 · 第3讲小测</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.2rem;text-align:center}
+.hero h1{font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);font-size:.85rem;margin-top:.3rem}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.5rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1rem;font-weight:700;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.layer-nav{display:flex;gap:.3rem;margin-bottom:1rem;flex-wrap:wrap;justify-content:center}
+.layer-btn{padding:.45rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.82rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.3rem}
+.layer-btn.active{border-color:var(--primary);color:#fff;background:var(--primary)}
+.layer-btn.l1.active{background:#667eea;border-color:#667eea}
+.layer-btn.l2.active{background:#e67e22;border-color:#e67e22}
+.layer-btn.l3.active{background:#e74c3c;border-color:#e74c3c}
+.q-badge{display:inline-block;padding:.2rem .6rem;border-radius:6px;font-size:.75rem;font-weight:600;margin-bottom:.5rem}
+.badge-1{background:#667eea20;color:#667eea}
+.badge-2{background:#e67e2215;color:#e67e22}
+.layer-title{font-size:.95rem;font-weight:700;margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}
+.layer-desc{font-size:.88rem;color:var(--text-light);margin-bottom:.8rem;padding:.6rem;background:var(--bg);border-radius:8px;border-left:4px solid var(--primary);line-height:1.7}
+.layer-desc.l1{border-color:#667eea}
+.layer-desc.l2{border-color:#e67e22}
+.layer-desc.l3{border-color:#e74c3c}
+.q-content{font-size:.92rem;padding:.8rem;margin-bottom:.8rem;border-radius:8px;line-height:1.9}
+.q-content.l1{background:#667eea10;border-left:4px solid #667eea}
+.q-content.l2{background:#e67e2210;border-left:4px solid #e67e22}
+.q-content.l3{background:#e74c3c10;border-left:4px solid #e74c3c}
+.answer-area{width:100%;min-height:100px;padding:.7rem;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:.88rem;font-family:inherit;transition:border-color .2s;margin-bottom:.6rem;resize:vertical}
+.answer-area:focus{outline:none;border-color:var(--primary)}
+.answer-area.saved{border-color:var(--success);background:#48bb7805}
+.ans-box{display:none;padding:.8rem;background:#48bb7810;border-radius:var(--radius-sm);margin-bottom:.8rem;border-left:4px solid var(--success);font-size:.88rem}
+.ans-box.show{display:block}
+.ans-box h4{color:var(--success);font-size:.85rem;margin-bottom:.4rem}
+.ans-box .math{font-weight:700;color:var(--text)}
+.btn-group{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center}
+.btn{padding:.45rem 1rem;border:none;border-radius:var(--radius-sm);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.3rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{box-shadow:0 4px 12px rgba(102,126,234,.4);transform:translateY(-1px)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+.btn-sm{padding:.35rem .7rem;font-size:.78rem}
+.q-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;gap:.5rem}
+.q-nav .counter{font-size:.82rem;color:var(--text-light)}
+.progress{display:flex;gap:.3rem;margin-bottom:.8rem;justify-content:center}
+.progress-dot{width:10px;height:10px;border-radius:50%;background:var(--border);transition:all .3s}
+.progress-dot.active{background:var(--primary);transform:scale(1.2)}
+.progress-dot.done{background:var(--success)}
+.training-select{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1rem}
+.training-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);cursor:pointer;transition:transform .2s;text-align:center}
+.training-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.training-card.q1{border-color:#e74c3c}
+.training-card.q2{border-color:#e67e22}
+.training-card .card-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto .5rem;font-size:.82rem;font-weight:700;color:#fff}
+.card-num.c1{background:#e74c3c}.card-num.c2{background:#e67e22}
+.training-card h3{font-size:.95rem;margin-bottom:.3rem}
+.training-card p{font-size:.82rem;color:var(--text-light)}
+.levels-guide{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1rem}
+.level-guide-card{text-align:center;padding:.8rem;border-radius:var(--radius-sm);font-size:.78rem}
+.level-guide-card.l1{background:#667eea10;border:2px solid #667eea40}
+.level-guide-card.l2{background:#e67e2210;border:2px solid #e67e2240}
+.level-guide-card.l3{background:#e74c3c10;border:2px solid #e74c3c40}
+.level-guide-card h4{font-size:.82rem;margin-bottom:.15rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.levels-guide{grid-template-columns:1fr}.training-select{grid-template-columns:1fr}}
+</style>
+</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 三层训练 · 第3讲小测</a>
+</div></nav>
+
+<div class="container" id="app"></div>
+
+<script>
+// ===== TRAINING DATA =====
+const trainingData = [
+  {
+    id: 1,
+    title: '第3题 · 裂项相消',
+    badge: '❌ 符号错误',
+    desc: '1/(1+√2) + 1/(√2+√3) + ... + 1/(√2025+√2026)',
+    layers: [
+      {
+        title: '🔵 基础同构 · 原题重做',
+        content: `<strong>原题：</strong><br>
+          计算：<br>
+          <span style="font-size:1.05rem">1/(1+√2) + 1/(√2+√3) + 1/(√3+√4) + … + 1/(√2025+√2026)</span><br><br>
+          <strong style="color:var(--success)">✅ 上次错误：</strong>写成了 1−√2026（符号反了）`,
+        answer: `分母有理化：1/(√n+√(n+1)) = √(n+1) − √n<br><br>
+          原式 = (√2−1) + (√3−√2) + (√4−√3) + … + (√2026−√2025)<br>
+          = <strong>√2026 − 1</strong><br><br>
+          ⚠️ 第一项是 √2−1（正数！），不是 1−√2。展开后中间项全部抵消，只剩 √2026−1。`,
+        placeholder: '请重新写出完整解题过程…'
+      },
+      {
+        title: '🟠 条件变化 · 灵活应变',
+        content: `<strong>变式题（换末项）：</strong><br><br>
+          计算：<br>
+          <span style="font-size:1.05rem">1/(1+√2) + 1/(√2+√3) + 1/(√3+√4) + … + 1/(√99+√100)</span><br><br>
+          <div style="background:var(--card-bg);padding:.5rem;border-radius:6px;font-size:.82rem">
+          💡 思路提示：裂项相消的关键不变——分母有理化后，<strong>中间项全部抵消</strong>。<br>
+          只需要看第一项和最后一项是什么即可。</div>`,
+        answer: `1/(√n+√(n+1)) = √(n+1) − √n<br><br>
+          原式 = (√2−1) + (√3−√2) + (√4−√3) + … + (√100−√99)<br>
+          = <strong>√100 − 1 = 10 − 1 = 9</strong><br><br>
+          ✅ 答案是 9。注意 √100 = 10，结果是整数！`,
+        placeholder: '写出变式题目的完整解题过程…'
+      },
+      {
+        title: '🔴 反向综合 · 思维提升',
+        content: `<strong>反向题：编一道裂项相消题</strong><br><br>
+          如果一道裂项相消题的答案是 <strong>√50 − √2</strong>，<br><br>
+          (1) 请你反推，这道题长什么样？把原式写出来。<br>
+          (2) 换一组数据，编一道新的裂项相消题，并算出答案。<br><br>
+          <div style="background:var(--card-bg);padding:.5rem;border-radius:6px;font-size:.82rem">
+          💡 想：√50 − √2 = (√50−√49) + (√49−√48) + … + (√3−√2)<br>
+          每一项的形式是 1/(√n+√(n+1)) …</div>`,
+        answer: `(1) 答案 √50 − √2 的原式：<br>
+          √50−√2 = (√50−√49) + (√49−√48) + … + (√3−√2)<br>
+          = [1/(√49+√50) + 1/(√48+√49) + … + 1/(√2+√3)]<br>
+          ← 反向：从答案反推每一项！<br><br>
+          (2) 自编示例：<br>
+          答案 = √200 − √2<br>
+          原式 = 1/(1+√2) + 1/(√2+√3) + … + 1/(√199+√200)<br>
+          = √200 − 1 = 10√2 − 1`,
+        placeholder: '(1) 写出原式  (2) 自己编一道新题并求解…'
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: '第5(1)题 · 分式化简',
+    badge: '❌ 约分粗心',
+    desc: '已知 x=1/(2+√3), y=1/(2-√3)，求 (x+y)/(x-y)',
+    layers: [
+      {
+        title: '🔵 基础同构 · 原题重做',
+        content: `<strong>原题：</strong><br><br>
+          已知 x = 1/(2+√3)，y = 1/(2−√3)，求 <span style="font-size:1.05rem">(x+y) / (x−y)</span> 的值。<br><br>
+          <strong style="color:var(--success)">✅ 上次错误：</strong>约分时 4/(−2√3) 写成了 −4√3/2（应为 −2√3/3）`,
+        answer: `x = 1/(2+√3) = 2−√3<br>
+          y = 1/(2−√3) = 2+√3<br><br>
+          x+y = (2−√3) + (2+√3) = <strong>4</strong><br>
+          x−y = (2−√3) − (2+√3) = <strong>−2√3</strong><br><br>
+          (x+y)/(x−y) = 4 / (−2√3) = <strong>−2/√3 = −2√3/3</strong><br><br>
+          ⚠️ 4÷2 = 2，不是4！ 分子除2得2，不是4。`,
+        placeholder: '重新完整写出解题过程，注意约分要仔细…'
+      },
+      {
+        title: '🟠 条件变化 · 灵活应变',
+        content: `<strong>变式题（换系数）：</strong><br><br>
+          已知 x = 1/(3+2√2)，y = 1/(3−2√2)，求 <span style="font-size:1.05rem">(2x+y) / (x−y)</span> 的值。<br><br>
+          <div style="background:var(--card-bg);padding:.5rem;border-radius:6px;font-size:.82rem">
+          💡 思路提示：<br>
+          ① 先分母有理化求出 x 和 y 的简化形式<br>
+          ② 分别计算 2x+y 和 x−y<br>
+          ③ 分式相除，注意约分！</div>`,
+        answer: `x = 1/(3+2√2) = (3−2√2)/(9−8) = <strong>3−2√2</strong><br>
+          y = 1/(3−2√2) = (3+2√2)/(9−8) = <strong>3+2√2</strong><br><br>
+          2x+y = 2(3−2√2) + (3+2√2) = 6−4√2+3+2√2 = <strong>9−2√2</strong><br>
+          x−y = (3−2√2)−(3+2√2) = <strong>−4√2</strong><br><br>
+          (2x+y)/(x−y) = (9−2√2) / (−4√2) = <strong>−(9−2√2)/(4√2)</strong><br>
+          分子分母同乘√2：= <strong>−(9√2−4)/8</strong>`,
+        placeholder: '写出解题过程，注意不要跳步…'
+      },
+      {
+        title: '🔴 反向综合 · 思维提升',
+        content: `<strong>反向题：编一道分式+根号题</strong><br><br>
+          如果 (x+y)/(x−y) 的值是 <strong>−√3</strong>，<br>
+          其中 x = 1/(a+√3)，y = 1/(a−√3)，<br><br>
+          (1) 求 a 的值是多少？<br>
+          (2) 把你编的题目完整写出来。<br><br>
+          <div style="background:var(--card-bg);padding:.5rem;border-radius:6px;font-size:.82rem">
+          💡 提示：先写出 x+y 和 x−y 用 a 表达的形式，<br>
+          再代入 (x+y)/(x−y) = −√3 解方程求 a。</div>`,
+        answer: `x = 1/(a+√3) = a−√3，y = 1/(a−√3) = a+√3<br>
+          x+y = 2a，x−y = −2√3<br>
+          (x+y)/(x−y) = 2a/(−2√3) = <strong>−a/√3</strong><br><br>
+          令 −a/√3 = −√3<br>
+          → a/√3 = √3<br>
+          → <strong>a = 3</strong><br><br>
+          自编完整题：<br>
+          已知 x = 1/(3+√3)，y = 1/(3−√3)，求 (x+y)/(x−y) 的值。`,
+        placeholder: '(1) 求 a  ​(2) 写出完整题目…'
+      }
+    ]
+  }
+];
+
+// ===== STATE =====
+let curQ = 0;       // 0 or 1
+let curLayer = 'l1'; // 'l1', 'l2', 'l3'
+let savedAnswers = {};
+
+// Load saved from localStorage
+function loadSaved() {
+  try {
+    savedAnswers = JSON.parse(localStorage.getItem('lesson3_training') || '{}');
+  } catch(e) { savedAnswers = {}; }
+}
+function saveAnswer(qIdx, layer, text) {
+  const key = `q${qIdx}_${layer}`;
+  savedAnswers[key] = text;
+  localStorage.setItem('lesson3_training', JSON.stringify(savedAnswers));
+}
+function getSaved(qIdx, layer) {
+  const key = `q${qIdx}_${layer}`;
+  return savedAnswers[key] || '';
+}
+
+// ===== RENDER =====
+function renderHome() {
+  document.getElementById('app').innerHTML = `
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-layer-group"></i> 三层训练 · 第3讲小测</h1>
+    <p>针对错题进行三层递进式训练，彻底掌握</p>
+  </div>
+  <div class="levels-guide">
+    <div class="level-guide-card l1"><h4>🔵 第一层</h4>基础同构<br>原题重做</div>
+    <div class="level-guide-card l2"><h4>🟠 第二层</h4>条件变化<br>灵活应变</div>
+    <div class="level-guide-card l3"><h4>🔴 第三层</h4>反向综合<br>思维提升</div>
+  </div>
+  <div class="training-select">
+    ${trainingData.map((q, i) => `
+      <div class="training-card q${q.id}" onclick="startTraining(${i})">
+        <div class="card-num c${q.id}">${q.id}</div>
+        <h3>${q.title}</h3>
+        <p>${q.desc}</p>
+        <div style="margin-top:.4rem"><span class="q-badge badge-1">${q.badge}</span></div>
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+function startTraining(idx) {
+  curQ = idx;
+  curLayer = 'l1';
+  renderTraining();
+}
+
+function renderTraining() {
+  const q = trainingData[curQ];
+  const layerIdx = parseInt(curLayer[1]) - 1;
+  const layer = q.layers[layerIdx];
+  const saved = getSaved(curQ, curLayer);
+  
+  const col = curLayer === 'l1' ? '#667eea' : curLayer === 'l2' ? '#e67e22' : '#e74c3c';
+  const bgCol = curLayer === 'l1' ? '#667eea10' : curLayer === 'l2' ? '#e67e2210' : '#e74c3c10';
+  
+  document.getElementById('app').innerHTML = `
+  <div class="fade-in-up">
+    <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.8rem">
+      <button class="btn btn-sm btn-outline" onclick="renderHome()"><i class="fas fa-arrow-left"></i> 返回</button>
+      <span style="font-size:.82rem;color:var(--text-light);align-self:center;margin-left:auto">${q.title}</span>
+    </div>
+    
+    <div class="layer-nav">
+      ${['l1','l2','l3'].map((l, i) => `
+        <button class="layer-btn ${l} ${curLayer === l ? 'active' : ''}" onclick="curLayer='${l}';renderTraining()">
+          ${['🔵','🟠','🔴'][i]} 第${i+1}层
+        </button>
+      `).join('')}
+    </div>
+    
+    <div class="progress">
+      ${q.layers.map((l, i) => {
+        const lk = `l${i+1}`;
+        const sa = getSaved(curQ, lk);
+        const cls = lk === curLayer ? 'active' : (sa ? 'done' : '');
+        return `<div class="progress-dot ${cls}"></div>`;
+      }).join('')}
+    </div>
+    
+    <div class="card">
+      <div class="layer-title" style="color:${col}">${layer.title}</div>
+      <div class="layer-desc ${curLayer}">
+        ${layer.content}
+      </div>
+      
+      <textarea class="answer-area ${saved ? 'saved' : ''}" id="ansArea" 
+        placeholder="${layer.placeholder || '写出解答过程…'}" 
+        oninput="saveAnswer(${curQ}, '${curLayer}', this.value)">${saved}</textarea>
+      
+      <div style="text-align:right;font-size:.75rem;color:var(--text-light)" id="saveStatus">${saved ? '✅ 已保存' : '💡 输入自动保存'}</div>
+      
+      <div class="ans-box" id="ansBox">
+        <h4><i class="fas fa-check-circle"></i> 参考答案</h4>
+        <div class="math">${layer.answer}</div>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-outline btn-sm" onclick="document.getElementById('ansBox').classList.toggle('show')">
+          <i class="fas fa-eye"></i> 查看答案
+        </button>
+        <button class="btn btn-outline btn-sm" onclick="clearAns()">
+          <i class="fas fa-undo"></i> 清空重写
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="goLayer(-1)" ${curLayer === 'l1' ? 'disabled' : ''}>
+          <i class="fas fa-arrow-left"></i> 上一层
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="goLayer(1)" ${curLayer === 'l3' ? 'disabled' : ''}>
+          下一层 <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+      
+      <div class="q-nav">
+        <button class="btn btn-outline btn-sm" onclick="switchQ(-1)" ${curQ === 0 ? 'disabled' : ''}>
+          <i class="fas fa-chevron-left"></i> 上一题
+        </button>
+        <span class="counter">${curQ+1} / ${trainingData.length}</span>
+        <button class="btn btn-outline btn-sm" onclick="switchQ(1)" ${curQ === trainingData.length-1 ? 'disabled' : ''}>
+          下一题 <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>`;
+  
+  // Auto-scroll to top
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function goLayer(dir) {
+  const n = parseInt(curLayer[1]) + dir;
+  if (n >= 1 && n <= 3) {
+    curLayer = 'l' + n;
+    renderTraining();
+  }
+}
+
+function switchQ(dir) {
+  const n = curQ + dir;
+  if (n >= 0 && n < trainingData.length) {
+    curQ = n;
+    curLayer = 'l1';
+    renderTraining();
+  }
+}
+
+function clearAns() {
+  if (!confirm('确定清空当前作答？')) return;
+  saveAnswer(curQ, curLayer, '');
+  renderTraining();
+}
+
+// ===== KEYBOARD SHORTCUTS =====
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    goLayer(1);
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    goLayer(-1);
+  } else if (e.key === '1') { curLayer='l1'; renderTraining(); }
+  else if (e.key === '2') { curLayer='l2'; renderTraining(); }
+  else if (e.key === '3') { curLayer='l3'; renderTraining(); }
+});
+
+// ===== INIT =====
+loadSaved();
+renderHome();
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+</body></html>
