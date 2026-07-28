@@ -117,8 +117,9 @@ body {
 .subject-header .icon { font-size: 1.4rem; }
 .subject-header .icon i { color: var(--primary); }
 .grade-grid .subject-header .icon { font-size: 1rem; }
-.grade-grid .subject-header { padding: 0.4rem 0.6rem; }
+.grade-grid .subject-header { padding: 0.5rem 0.7rem; border-radius: var(--radius-sm); }
 .grade-grid .subject-header h3 { font-size: 0.88rem; }
+.grade-grid .subject-section { margin-bottom: 0; }
 .subject-header h3 { font-size: 1rem; font-weight: 700; flex: 1; }
 .subject-header .count { font-size: 0.75rem; color: var(--text-light); background: var(--bg); padding: 0.15rem 0.6rem; border-radius: 10px; }
 .subject-header .toggle-icon { font-size: 0.8rem; opacity: 0.5; color: var(--text-light); transition: transform 0.3s ease; }
@@ -153,6 +154,9 @@ body {
   transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
   opacity: 0;
   margin-top: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
 }
 .grade-grid.open {
   max-height: 5000px;
