@@ -1,0 +1,326 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>📐 物理 · 测量与声学 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--secondary:#c0392b;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#27ae60,#27ae60dd);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(231,76,60,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#e74c3c20,#c0392b20);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#27ae60,#27ae60dd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap;overflow-x:auto}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem;white-space:nowrap}
+.tab-btn:hover,.tab-btn.active{border-color:#27ae60;color:#27ae60}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card .formula{background:var(--bg);padding:.4rem .6rem;border-radius:6px;font-family:'Times New Roman',serif;font-size:1.05rem;text-align:center;margin:.3rem 0;color:#c0392b;font-weight:700}
+.knowledge-card.c1{border-color:#27ae60}.knowledge-card.c2{border-color:#e67e22}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#3498db}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#27ae60,#27ae60dd);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:1.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#27ae60,#27ae60dd);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-text .expr{font-size:1.05rem;color:#c0392b}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.65rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.9rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#27ae60;background:#e74c3c10}
+.option .letter{width:24px;height:24px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#fff5f5;border-left:4px solid var(--primary);font-size:.88rem;display:none;line-height:1.8}
+.explanation.show{display:block}
+.explanation .exp-formula{font-family:'Times New Roman',serif;color:#c0392b;font-weight:600}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#27ae60,#27ae60dd);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(231,76,60,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#27ae60;color:#27ae60}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#27ae60,#27ae60dd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#27ae60,#27ae60dd);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem;text-align:center}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#27ae60;margin-bottom:.6rem;text-align:center}
+.flashcard-back p{font-size:.95rem;line-height:1.9;color:var(--text);text-align:center}
+.flashcard-back .f-formula{font-family:'Times New Roman',serif;font-size:1.1rem;font-weight:700;color:#27ae60}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.import-btn{margin-top:1rem;text-align:center}
+.teacher-talk{background:linear-gradient(135deg,#e74c3c10,#c0392b10);border-radius:var(--radius);padding:1.5rem;margin:1rem 0;border-left:4px solid #e74c3c}
+.teacher-talk h4{color:#27ae60;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.teacher-talk p{font-size:.9rem;line-height:1.9}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+</style>
+</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 测量与声学</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-calculator"> 语文 · 7年级课堂笔记</h1>
+    <p>初二暑假博学班 · 天元教育 | ⭐⭐⭐</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 30道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header" style="font-weight:700;margin-bottom:.8rem"><i class="fas fa-sitemap" style="color:#27ae60"></i> 第三讲 · 测量（声学计算+刻度尺+秒表）</div>
+    
+    <div class="teacher-talk">
+      <h4><i class="fas fa-chalkboard-teacher"></i> 教师寄语</h4>
+      <p>声学计算和测量工具的使用是八上物理的两大基础。声学计算一定要掌握画图列式子的方法；秒表读数和刻度尺的使用是新的重点内容，其中单位换算的关系需要熟练掌握。</p>
+      <p style="margin-top:.5rem"><strong>⚠️ 声学计算有三种题型：直接套公式、回声问题、和火车鸣笛问题。测量部分要注意估读和单位换算的幂次关系。做之前一定要复习！</strong></p>
+    </div>
+
+    <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-volume-up" style="color:#27ae60"></i> 声学计算</h3><ul>
+        <li><strong>核心公式</strong>：<span class="hl">v = s / t</span></li>
+        <li>空气中声速：<strong>340 m/s</strong></li>
+        <li><strong>画图列式子三步法</strong>：①画示意图 ②列式子 ③代入计算</li>
+        <li>回声问题：<span class="hl">s = vt/2</span>（声音走一个来回）</li>
+        <li>【例】人对山喊2s听到回声 → s = 340×2/2 = 340m</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-stopwatch" style="color:#3498db"></i> 秒表（停表）读数</h3><ul>
+        <li><strong>大圈（秒针）</strong>：0~30s，1大格=1s，1小格=0.1s</li>
+        <li><strong>小圈（分针）</strong>：0~15min，1小格=0.5min</li>
+        <li><strong>读数顺序</strong>：先读小圈，后读大圈</li>
+        <li>小圈过半格 → 大圈读30~60s</li>
+        <li>小圈不过半格 → 大圈读0~30s</li>
+        <li>【例】2min13s = 133s</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-ruler" style="color:#2ecc71"></i> 刻度尺使用</h3><ul>
+        <li><strong>五字口诀</strong>：<span class="hl">选→放→看→读→记</span></li>
+        <li><strong>选</strong>：合适量程和分度值</li>
+        <li><strong>放</strong>：零刻度对齐，紧靠被测物体，平行</li>
+        <li><strong>看</strong>：视线与尺面垂直</li>
+        <li><strong class="hl">读</strong>：估读到分度值下一位</li>
+        <li><strong>记</strong>：数值+单位，测量值=准确值+估值</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-exchange-alt" style="color:#e67e22"></i> 单位换算</h3><ul>
+        <li><strong>长度</strong>：km → m → dm → cm → mm → μm → nm</li>
+        <li><strong>相邻单位</strong>：×10（km→m是×10³）</li>
+        <li><strong>时间</strong>：h → min → s → ms</li>
+        <li>h→min：×60，min→s：×60，s→ms：×10³</li>
+        <li><strong>三步法</strong>：①抄数值 ②换单位 ③科学计数法</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-balance-scale" style="color:#9b59b6"></i> 误差与错误</h3><ul>
+        <li><strong>误差</strong>：测量值与真实值的差异，<span class="hl">不可避免</span></li>
+        <li><strong>错误</strong>：不按规则/粗心导致，<span class="hl">可以避免</span></li>
+        <li><strong>系统误差</strong>：方法或工具不精确</li>
+        <li><strong>偶然误差</strong>：估读水平不够</li>
+        <li><strong>减小方法</strong>：用更精密仪器 + <span class="hl">多次测量取平均</span></li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-tools" style="color:#1abc9c"></i> 特殊测量方法</h3><ul>
+        <li><strong>累积法</strong>：d=D/n（测纸厚/铜丝直径）</li>
+        <li><strong>曲直互化</strong>：曲线→直线（地图等高线）</li>
+        <li><strong>比例法</strong>：相似三角形测树高</li>
+        <li><strong>化内为外</strong>：测硬币直径</li>
+        <li>⚠️ 线圈长度 ≠ 铜线长度</li>
+      </ul></div>
+    </div>
+
+    <div class="card"><div class="card-title"><i class="fas fa-star" style="color:var(--warning)"></i> 本讲重点复习提示</div>
+      <p style="font-size:.9rem;line-height:2;background:#f0f0ff;padding:1rem;border-radius:var(--radius-sm)">
+        <strong>1️⃣ 声学计算</strong> — 画图列式子，回声s=vt/2，火车鸣笛相对运动<br>
+        <strong>2️⃣ 秒表读数</strong> — 先读小圈后读大圈，过半格加30s<br>
+        <strong>3️⃣ 刻度尺使用</strong> — 选放看读记，估读到分度值下一位<br>
+        <strong>4️⃣ 单位换算</strong> — 三步法，相邻×10，时间×60<br>
+        <strong>5️⃣ 误差</strong> — 不可避免 vs 可以避免，多次测量取平均<br>
+        ⚠️ 声学计算务必画图！刻度尺一定要估读！
+      </p>
+    </div>
+    </div>
+
+  <div id="tab-quiz" class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 30</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header" style="font-weight:700;margin-bottom:.8rem"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每条标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 数学 · 物理 · 测量与声学互动学习 | 天元教育 · 初二暑假博学班</div>
+
+<script>
+const questions=[{"q": "以下哪组书写正确？", "opts": ["A. 晃惚", "B. 恍忽", "C. 恍惚", "D. 慌惚"], "ans": 2, "exp": "恍惚正确，注意偏旁为竖心旁。"}, {"q": "汇合与会合的区别是？", "opts": ["A. 没有区别", "B. 汇合水流/会合人群", "C. 汇合人群/会合水流", "D. 汇合更正式"], "ans": 1, "exp": "汇合用于水流（江河汇合），会合用于人群（两队会合）。"}, {"q": "以下哪个属于病句类型？", "opts": ["A. 拟人", "B. 排比", "C. 偷换主语", "D. 对偶"], "ans": 2, "exp": "偷换主语（中途易辙）是常见病句，指句子中途更换了主语。"}, {"q": "提高不能搭配以下哪个词？", "opts": ["A. 水平", "B. 质量", "C. 境界", "D. 效率"], "ans": 2, "exp": "境界通常搭配提升（提升境界），不是提高。"}, {"q": "《爱莲说》是什么文体？", "opts": ["A. 骈文", "B. 议论文", "C. 记叙文", "D. 说明文"], "ans": 1, "exp": "《爱莲说》是议论文；《陋室铭》是不标准骈文。"}, {"q": "比喻修辞的答题步骤是什么？", "opts": ["A. 只写用的修辞", "B. 手法+效果", "C. 本体+喻体→特点→情感", "D. 只写喻体"], "ans": 2, "exp": "比喻：点明本体和喻体→写出事物特点→表达作者情感。"}, {"q": "插叙作用的答题结构是？", "opts": ["A. 只写内容", "B. 概括内容→对人物主旨作用→结构铺垫", "C. 只写结构", "D. 只写情感"], "ans": 1, "exp": "插叙作用：概括内容→分析对人物/主旨作用→对文章结构和情感铺垫作用。"}, {"q": "人物描写题应该怎么做？", "opts": ["A. 只看形容词", "B. 找出核心动词分析特点情感", "C. 只看外貌描写", "D. 直接抄原文"], "ans": 1, "exp": "找出核心动词，分析人物特点与情感态度。"}, {"q": "语言运用中补句的方法？", "opts": ["A. 自己编", "B. 瞻前顾后先定内容再定形式", "C. 只看后面", "D. 只看前面"], "ans": 1, "exp": "补句方法：瞻前顾后，先根据上下文确定内容，再确定句式形式。"}, {"q": "古诗情感赏析的正确答案方式是？", "opts": ["A. 只写思乡", "B. 只写忧伤", "C. 结合具体诗句分析", "D. 写很感人"], "ans": 2, "exp": "必须结合具体诗句内容分析情感，不能只笼统答思乡或忧伤。"}, {"q": "文言文中涕的古义是什么？", "opts": ["A. 鼻涕", "B. 眼泪", "C. 口水", "D. 汗水"], "ans": 1, "exp": "涕古义是眼泪（三点水旁），今义是鼻涕。"}, {"q": "仿写的主要要求是什么？", "opts": ["A. 字数越多越好", "B. 对偶句式字数大体一致", "C. 用生僻字", "D. 押韵"], "ans": 1, "exp": "仿写要求对偶句式，保持字数大体一致，内容相关。"}];
+
+const flashcards=[{"q": "易错字", "a": "恍惚、憋屈、由衷、执拗"}, {"q": "病句六类", "a": "杂糅/偷换主语/重复/否定/歧义/搭配"}, {"q": "搭配库", "a": "提高水平/提升能力/发扬精神"}, {"q": "古诗答题", "a": "结合具体诗句分析情感"}, {"q": "比喻模板", "a": "本体+喻体→特点→情感"}, {"q": "补句方法", "a": "瞻前顾后，先内容后形式"}];
+
+const errors=[{"title": "古诗只答笼统", "wrong": "只写思乡或忧伤等笼统词语", "right": "结合诗句分析，如通过XX意象表达了XX情感"}, {"title": "比喻不写本体喻体", "wrong": "直接写生动形象地写出了", "right": "先点明本体和喻体，再写特点和情感"}, {"title": "阅读不分点作答", "wrong": "一大段文字没有序号", "right": "分①②③点作答，先总结后分析"}, {"title": "字形混淆", "wrong": "汇合会合混用", "right": "汇合=水流聚集；会合=人员聚集"}, {"title": "病句只看前半句", "wrong": "只读前几个字就判断", "right": "完整读完整句，注意偷换主语和搭配不当"}];
+
+const WRONG_HISTORY_KEY='quiz_lesson3_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);retryMode=false;}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);if(doneAll){document.getElementById('quizArea').innerHTML=showResult();return;}
+let h=``;if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div><div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+|<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+|<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+|<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1?'disabled':''}>下一题 <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);autoImportWB(idx,oi);}
+renderQ();if(curQ<shuffled.length-1)setTimeout(()=>nextQ(),1000);}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){if(curQ<shuffled.length-1){curQ++;renderQ();}}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class="question-card result-card fade-in-up"><div class="big-icon">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class="score">${correct}/${total}</div>
+|<div><span class="result-stat"><i class="fas fa-check-circle" style="color:var(--success)"></i> 正确 ${correct} 题</span>
+|<span class="result-stat"><i class="fas fa-times-circle" style="color:var(--danger)"></i> 错误 ${total-correct} 题</span></div>
+|${retryMode?`<div style="margin:.5rem 0"><span class="result-stat"><i class="fas fa-history"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+|${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)"><p style="font-weight:600;margin-bottom:.5rem;font-size:.85rem">📝 需要复习：</p>${wl.map(w=>`<div style="padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)">✗ ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+|<div style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+|<button class="btn btn-primary" onclick="initQ();renderQ();"><i class="fas fa-redo"></i> 重新测验</button>
+|${wl.length?`<button class="btn btn-warning" onclick="initRetryMode()" style="background:#e67e22;color:#fff"><i class="fas fa-bug"></i> 错题重练 (${wl.length}题)</button>`:''}
+|<button class="btn btn-success" onclick="importWB()"><i class="fas fa-database"></i> 导入错题到错题库</button>
+|<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+|<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button>
+|${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()"><i class="fas fa-times"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'物理',chapter:'语文 · 7年级课堂笔记',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'测量,物理'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'语文 · 7年级课堂笔记',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'测量,物理'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库？'))window.open('wrong_bank.html','_blank');}
+
+let fIdx=0;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el)el.classList.toggle('flipped');}
+function renderEC(){let s=localStorage.getItem('physics_measure_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('physics_measure_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('physics_measure_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('physics_measure_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('physics_measure_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
