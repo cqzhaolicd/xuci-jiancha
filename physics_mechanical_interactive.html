@@ -1,0 +1,354 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚗 机械运动 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem}
+.formula-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.05);border-top:4px solid #667eea}
+.formula-card .formula{font-size:1.2rem;font-weight:700;color:#667eea;margin:.3rem 0;font-family:'Times New Roman',serif}
+.formula-card .note{font-size:.82rem;color:var(--text-light)}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+</style>
+</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 机械运动</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-car"></i> 机械运动 · 互动学习</h1>
+    <p>初二暑假博学班 · 天元教育 | 微观运动 &amp; 宏观运动 &amp; 速度</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 30道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 22张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第四讲 · 机械运动</div>
+    <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-atom" style="color:#667eea"></i> 微观运动</h3><ul>
+        <li><strong>物质由分子组成</strong> — 一切物质都由分子构成</li>
+        <li>分子在<strong class="hl">永不停息</strong>地作<strong>无规则运动</strong></li>
+        <li>证据：闻到气味、墨水扩散、听到铃声</li></ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-arrows-alt" style="color:#e74c3c"></i> 机械运动定义</h3><ul>
+        <li>一个物体<strong class="hl">相对另一个物体</strong>位置的变化</li>
+        <li>两个要素：<strong>距离</strong> + <strong>方向</strong></li>
+        <li>❌ 不是机械运动：分子运动、物态变化、植物生长</li></ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-crosshairs" style="color:#2ecc71"></i> 参照物</h3><ul>
+        <li>研究运动时<strong>选作标准的物体</strong></li>
+        <li>(1) 可任意选取，一般选<strong class="hl">地面</strong>或相对地面静止的物体</li>
+        <li>(2) ⚠️ <strong>不选"自己"</strong>（研究物体本身）</li>
+        <li>(3) 参照物看作<strong>静止的</strong></li>
+        <li>参照物不同，运动状态可能不同</li></ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-truck" style="color:#667eea"></i> 多车运动</h3><ul>
+        <li>甲车向东，甲看乙车：</li>
+        <li><strong>不动</strong> → 乙向东且速度与甲相同</li>
+        <li><strong>向东</strong> → 乙向东且速度大于甲</li>
+        <li><strong>向西</strong> → 乙静止/向西/向东速度小于甲</li></ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-wind" style="color:#e74c3c"></i> 风向问题</h3><ul>
+        <li><strong>东风</strong> — 从<strong class="hl">东边</strong>吹来的风</li>
+        <li>从<strong>旗帜、烟、雨、头发</strong>判断风向</li>
+        <li>旗帜飘向西方→吹东风（旗帜向哪飘，风从反方向来）</li></ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-tachometer-alt" style="color:#2ecc71"></i> 比较运动快慢</h3><ul>
+        <li><strong>相同时间比路程</strong>：观众看法</li>
+        <li><strong>相同路程比时间</strong>：裁判看法</li>
+        <li>本质都是比较<strong class="hl">单位时间通过的路程</strong></li></ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-forward" style="color:#667eea"></i> 速度 v = s / t</h3><ul>
+        <li>定义：<strong class="hl">单位时间</strong>通过的路程（比值定义法）</li>
+        <li>公式：<strong>v = s / t</strong></li>
+        <li>单位：<strong>m/s</strong>（国际）、<strong>km/h</strong></li>
+        <li>换算：<strong class="hl">1 m/s = 3.6 km/h</strong></li>
+        <li>10m/s = 36km/h，5m/s = 18km/h</li></ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-ruler" style="color:#e74c3c"></i> 常见速度估测</h3><ul>
+        <li><strong>人步行</strong>：1 m/s（≈ 4-5 km/h）</li>
+        <li><strong>自行车</strong>：20 km/h</li>
+        <li><strong>汽车</strong>：60 km/h</li>
+        <li><strong>动车</strong>：200 km/h</li>
+        <li><strong>飞机</strong>：800 km/h</li>
+        <li><strong>子弹</strong>：900 m/s</li></ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-project-diagram" style="color:#2ecc71"></i> 运动的分类</h3><ul>
+        <li><strong>曲线运动</strong>：轨迹为曲线</li>
+        <li><strong>直线运动</strong>：轨迹为直线</li>
+        <li>↳ <strong>匀速直线</strong>：任意相同时间内路程相等</li>
+        <li>↳ <strong>变速直线</strong>：相同时间内路程不一定相等</li></ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-balance-scale" style="color:#667eea"></i> v=s/t 比例关系</h3><ul>
+        <li>速度与时间成反比？<strong class="hl" style="background:#f5656530;color:var(--danger)">❌ 错！</strong></li>
+        <li>速度与路程成正比？<strong class="hl" style="background:#f5656530;color:var(--danger)">❌ 错！</strong></li>
+        <li><strong class="hl">路程与时间成正比 ✅</strong>（速度一定时）</li>
+        <li>v = s/t 是<strong>计算式</strong>，不是决定式</li></ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-clock" style="color:#e74c3c"></i> 平均速度 v̄</h3><ul>
+        <li>描述某段路程或时间<strong>大致</strong>运动快慢</li>
+        <li>公式：<strong class="hl">v̄ = S总 / t总</strong></li>
+        <li>⚠️ <strong>停留的时间也要算进总时间！</strong></li>
+        <li>不是（v₁+v₂）/2 !</li></ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-flask" style="color:#2ecc71"></i> 斜面实验</h3><ul>
+        <li>测小车在斜面上的平均速度</li>
+        <li>θ <strong class="hl">尽量小</strong> → 便于测量时间</li>
+        <li>θ不能太小 → 小车不易下滑</li>
+        <li>速度关系：<strong>vAB > vAC > vBC</strong></li>
+        <li>⚠️ 先放车后计时→V<strong>偏大</strong>；先计时后放车→V<strong>偏小</strong></li></ul></div>
+    </div>
+
+    <div class="card"><div class="card-title"><i class="fas fa-star" style="color:var(--warning)"></i> 教师寄语</div>
+    <p style="font-size:.9rem;background:linear-gradient(135deg,#667eea10,#764ba210);padding:1rem;border-radius:var(--radius-sm);line-height:1.9">
+    运动是宇宙中最普遍的现象。从分子的无规则运动，到汽车的飞驰，再到飞机的翱翔——世间万物都在不停运动。<br><br>
+    理解参照物的选择是开启机械运动大门的钥匙。同样的运动，换一个参照物看，结果可能完全不同。这正是物理的奇妙之处。掌握好 v = s/t 这一核心公式，你就能描述和计算几乎所有运动的快慢。<br><br>
+    <strong>记住：</strong>参照物不选自己，平均速度要算总时间，v=s/t只计算不决定！</p></div>
+  </div>
+
+  <div id="tab-quiz" class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 30</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共22张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 机械运动互动学习 | 天元教育 · 初二暑假博学班</div>
+
+<script>
+const questions=[
+{q:'下列现象中属于微观分子运动的是',opts:['A. 汽车行驶','B. 闻到花香','C. 河水流动','D. 树叶飘落'],ans:1,exp:'闻到花香是分子扩散现象，属于分子的无规则运动，是微观运动。其他三项都是宏观的机械运动。'},
+{q:'关于分子的运动，下列说法正确的是',opts:['A. 分子只在气体中运动','B. 分子在永不停息地做无规则运动','C. 分子只有在加热时才运动','D. 固体中分子不运动'],ans:1,exp:'一切物质的分子都在永不停息地做无规则运动，与温度、状态无关。温度越高运动越剧烈。'},
+{q:'机械运动的定义是',opts:['A. 物体位置的变化','B. 一个物体相对另一个物体位置的变化','C. 物体运动快慢的变化','D. 物体大小的变化'],ans:1,exp:'机械运动是指一个物体相对于另一个物体位置的变化。强调"相对"二字——必须有两个物体才能描述机械运动。'},
+{q:'下列不属于机械运动的是',opts:['A. 月亮绕地球转动','B. 分子运动','C. 列车飞驰','D. 飞船升空'],ans:1,exp:'分子运动属于微观运动，不是机械运动。机械运动是宏观物体位置的变化。物态变化、植物生长也不是机械运动。'},
+{q:'下列现象中，属于机械运动的是',opts:['A. 植物生长','B. 冰雪融化','C. 江水东流','D. 菜刀生锈'],ans:2,exp:'江水东流是江水（宏观物体）相对地面的位置变化，属于机械运动。植物生长、冰雪融化、菜刀生锈都不是位置变化。'},
+{q:'研究物体运动时，选择参照物的原则是',opts:['A. 只能选地面','B. 任意选取，一般选地面','C. 只能选静止物体','D. 必须选运动的物体'],ans:1,exp:'参照物可以任意选取，但实际中一般选择地面或相对地面静止的物体。不需要一定是静止的物体。'},
+{q:'坐在行驶的列车中，乘客觉得车厢内的人是静止的，所选的参照物是',opts:['A. 路边的树','B. 车厢','C. 铁轨','D. 迎面驶来的列车'],ans:1,exp:'乘客看车厢内的人，以车厢为参照物，人的位置没有改变，所以是静止的。以路边树、铁轨为参照物，人在运动。'},
+{q:'下列说法中，正确的是',opts:['A. 参照物一定是静止不动的物体','B. 不选定参照物就无法确定物体是否运动','C. 研究物体运动时不能选地面为参照物','D. 运动是绝对的，不需要参照物'],ans:1,exp:'运动的描述是相对的，必须选定参照物才能判定物体是运动还是静止。不选参照物就无法确定运动状态。参照物可以是任何物体。'},
+{q:'不能选"自己"做参照物的原因是',opts:['A. 自己是运动的','B. 自己位置没有变化','C. 自己是研究物体本身','D. 选了自己无法判断方向'],ans:2,exp:'不能选自己做参照物，因为自己就是被研究的物体本身。以自己为参照物，自己的位置总是"不变"的，无法判断自己的运动。'},
+{q:'甲车向东行驶，甲看乙车不动。乙车的运动情况是',opts:['A. 乙车静止','B. 乙车向东且速度与甲相同','C. 乙车向西','D. 乙车向东且速度大于甲'],ans:1,exp:'甲看乙车不动，说明两车相对位置没有变化。因此乙车向东行驶且速度与甲车相同（相对静止）。'},
+{q:'甲车向东行驶，甲看乙车向西运动。乙车可能的运动是',opts:['A. 乙向西','B. 乙静止','C. 乙向东速度小于甲','D. 以上都有可能'],ans:3,exp:'甲看乙车向西，有三种可能：乙向西运动、乙静止、乙向东但速度小于甲。这三种情况下，以甲为参照物，乙都是向西运动。'},
+{q:'甲车向东行驶，甲看乙车向东运动且速度比甲快。乙车的实际运动是',opts:['A. 乙静止','B. 乙向东且速度大于甲','C. 乙向西','D. 乙向东且速度等于甲'],ans:1,exp:'甲看乙车向东运动且比甲快，说明乙车实际上也是向东行驶，而且速度大于甲车。'},
+{q:'东风是指风从哪个方向吹来？',opts:['A. 从西向东吹','B. 从东向西吹','C. 从南向北吹','D. 从北向南吹'],ans:1,exp:'东风是指从东边吹来的风。命名方式：以风吹来的方向命名。东风→从东吹来，风向西飘。'},
+{q:'红旗向西飘动，此时刮的是什么风？',opts:['A. 西风','B. 东风','C. 南风','D. 北风'],ans:1,exp:'红旗向西飘，说明风从东边吹来，刮的是东风。风向以风吹来的方向命名，红旗飘向的反方向就是风向。'},
+{q:'速度的物理意义是',opts:['A. 物体运动的路程','B. 物体运动时间的长短','C. 描述运动快慢的物理量','D. 物体的惯性'],ans:2,exp:'速度是描述物体运动快慢的物理量。它等于单位时间内通过的路程，用 v = s/t 计算。'},
+{q:'1 m/s 等于多少 km/h？',opts:['A. 1 km/h','B. 3.6 km/h','C. 0.36 km/h','D. 36 km/h'],ans:1,exp:'1 m/s = 3.6 km/h。换算方法：1m/s = 0.001km ÷ (1/3600)h = 3.6 km/h。口诀：m/s转km/h乘3.6，km/h转m/s除以3.6。'},
+{q:'一辆汽车在平直公路上行驶，通过100m用了5s，汽车的速度是',opts:['A. 20 m/s','B. 72 km/h','C. 20 m/s 和 72 km/h','D. 500 m/s'],ans:2,exp:'v = s/t = 100m/5s = 20 m/s。20 m/s = 20×3.6 = 72 km/h。所以C选项两个都是正确的。'},
+{q:'关于匀速直线运动的速度公式 v = s/t，下列说法正确的是',opts:['A. 速度与路程成正比','B. 速度与时间成反比','C. 路程与时间成正比（速度一定时）','D. 速度由物体运动决定，与s、t无关'],ans:2,exp:'v = s/t 是速度的计算式，不是决定式。速度一定时，路程与时间成正比。但速度不与路程成正比、不与时间成反比，因为速度是定值。'},
+{q:'做匀速直线运动的物体，在10s内通过50m，则在第3s末的速度是',opts:['A. 3 m/s','B. 5 m/s','C. 10 m/s','D. 无法确定'],ans:1,exp:'匀速直线运动速度恒定不变。v = s/t = 50m/10s = 5 m/s。第3s末的速度仍然是5 m/s。'},
+{q:'下列哪个物体运动速度最接近 1 m/s？',opts:['A. 自行车','B. 人步行','C. 汽车','D. 高铁'],ans:1,exp:'人步行的速度约为 1 m/s（约4~5 km/h）。自行车约20 km/h（约5.6 m/s），汽车约60 km/h（约17 m/s），高铁约200 km/h。'},
+{q:'子弹的速度约为900 m/s，它表示',opts:['A. 子弹每秒钟运动900m','B. 子弹每分钟运动900m','C. 子弹每小时运动900m','D. 子弹运动900m需要1分钟'],ans:0,exp:'900 m/s 表示每秒运动900米。即速度大小为900米每秒，每秒钟前进900米。'},
+{q:'人骑自行车的速度约为 20 km/h，合多少 m/s？（保留一位小数）',opts:['A. 5.6 m/s','B. 10 m/s','C. 3.6 m/s','D. 72 m/s'],ans:0,exp:'20 km/h = 20 ÷ 3.6 ≈ 5.6 m/s。从km/h换算到m/s要除以3.6。'},
+{q:'下列说法中正确的是',opts:['A. 做匀速直线运动的物体速度大小与路程成正比','B. 单位时间内通过路程越长的物体速度越大','C. 速度大的物体运动时间一定短','D. 物体运动越快，其速度一定越大'],ans:1,exp:'速度是单位时间内通过的路程。路程/时间=速度，因此单位时间内路程越长，速度越大。A错在v与s不成正比；C错在未说明路程；D表述不严谨。'},
+{q:'平均速度描述的是',opts:['A. 物体某时刻的快慢','B. 物体全程运动的精确快慢','C. 物体在某段路程大致运动快慢','D. 物体匀速运动时的速度'],ans:2,exp:'平均速度描述的是某段路程或时间内大致运动的快慢。它是对变速运动中速度的一种粗略描述，不等于各时刻速度的平均值。'},
+{q:'某同学100m赛跑的成绩是20s，他的平均速度是',opts:['A. 5 m/s','B. 10 m/s','C. 20 m/s','D. 200 m/s'],ans:0,exp:'v̄ = S总 / t总 = 100m / 20s = 5 m/s。平均速度等于总路程除以总时间。'},
+{q:'小明上山速度2 km/h，下山速度4 km/h，整个往返的平均速度是（单程路程相等）',opts:['A. 3 km/h','B. 2.67 km/h','C. 6 km/h','D. 无法计算'],ans:1,exp:'设单程s，总路程=2s。上山时间=t₁=s/2，下山时间=t₂=s/4。总时间=s/2+s/4=3s/4。v̄=2s÷(3s/4)=8/3≈2.67 km/h。不是(2+4)/2=3！'},
+{q:'百米赛跑中，某同学前50m用时8s，后50m用时7s，全程平均速度是',opts:['A. 6.67 m/s','B. 6.25 m/s','C. 6.5 m/s','D. 7.14 m/s'],ans:0,exp:'v̄ = S总 / t总 = 100m / (8s+7s) = 100/15 ≈ 6.67 m/s。注意：平均速度不是(50/8+50/7)/2。要用总路程÷总时间。'},
+{q:'在斜面测平均速度实验中，斜面倾角应',opts:['A. 尽量大','B. 尽量小','C. 越大越好','D. 无关紧要'],ans:1,exp:'斜面倾角应尽量小，目的是延长小车运动时间，便于准确测量时间。但也不能太小，否则小车不易下滑。'},
+{q:'斜面测平均速度实验中，先释放小车后开始计时，测出的速度将',opts:['A. 偏大','B. 偏小','C. 不变','D. 无法判断'],ans:0,exp:'先放车后计时——计时开始时小车已经在运动，计的时间偏短。根据v=s/t，t偏小则v偏大。'},
+{q:'斜面测平均速度实验中，先计时后释放小车，测出的速度将',opts:['A. 偏大','B. 偏小','C. 不变','D. 无法判断'],ans:1,exp:'先计时后放车——计时开始后小车还没动，实际运动时间比计的时间长。根据v=s/t，t偏大则v偏小。'},
+];
+
+const flashcards=[
+{front:'什么是微观运动？',back:'物质由分子组成，分子在<strong>永不停息</strong>地做无规则运动。<br>如：闻到气味、墨水扩散、听到铃声。<br>这是<strong>分子层面</strong>的运动，不是机械运动。'},
+{front:'机械运动的定义',back:'一个物体<strong>相对另一个物体</strong>位置的变化。<br>两个要素：<strong>距离</strong> + <strong>方向</strong>。<br>❌ 不是机械运动：分子运动、物态变化、植物生长。'},
+{front:'什么是参照物？',back:'研究物体运动时，<strong>选做标准的物体</strong>。<br>(1) 可任意选取，一般选地面<br>(2) ⚠️ 不选"自己"<br>(3) 参照物看作静止的'},
+{front:'参照物不同，运动状态不同',back:'同一物体选不同参照物，运动状态可能不同。<br>例：坐在行驶车上的人→选车为参照物静止，选树为参照物运动。<br>这就是运动的<strong>相对性</strong>。'},
+{front:'多车运动 — 甲车向东看乙车',back:'① 乙<strong>不动</strong>→乙向东且速度与甲相同<br>② 乙<strong>向东</strong>→乙向东且速度大于甲<br>③ 乙<strong>向西</strong>→乙静止/向西/向东速度小于甲'},
+{front:'风向的命名',back:'风从哪个方向吹来就叫什么风。<br><strong>东风</strong>：从东边吹来的风（风向向东→西吹）<br>旗向西飘→吹东风；旗向东飘→吹西风'},
+{front:'比较运动快慢的两种方法',back:'① <strong>相同时间比路程</strong>：观众判断法<br>② <strong>相同路程比时间</strong>：裁判判断法<br>本质：比<strong>单位时间通过的路程</strong>'},
+{front:'速度 v = s / t',back:'<strong>定义：</strong>单位时间通过的路程（比值定义法）<br>公式：<strong>v = s / t</strong><br>国际单位：<strong>m/s</strong><br>常用：<strong>km/h</strong>（1m/s = 3.6km/h）'},
+{front:'速度单位换算',back:'<strong>m/s → km/h</strong>：乘以 3.6<br><strong>km/h → m/s</strong>：除以 3.6<br>例：10m/s = 36km/h，5m/s = 18km/h<br>20km/h ≈ 5.6m/s'},
+{front:'常见速度估测',back:'人步行：<strong>1 m/s</strong>（4-5 km/h）<br>自行车：<strong>20 km/h</strong><br>汽车：<strong>60 km/h</strong><br>动车：<strong>200 km/h</strong><br>飞机：<strong>800 km/h</strong><br>子弹：<strong>900 m/s</strong>'},
+{front:'运动的分类',back:'<strong>曲线运动</strong>：轨迹为曲线<br><strong>直线运动</strong>：轨迹为直线<br>↳ <strong>匀速直线</strong>：任意相同时间路程相等<br>↳ <strong>变速直线</strong>：时间相同路程不一定相等'},
+{front:'匀速直线运动的定义',back:'在<strong>任意相同时间内</strong>，通过的路程都相等。<br>关键：必须是"任意"相同时间。<br>速度是<strong>恒定不变</strong>的。'},
+{front:'v=s/t 比例关系（易错）',back:'速度与时间成反比？<strong>❌</strong><br>速度与路程成正比？<strong>❌</strong><br>路程与时间成正比？<strong>✅ 速度一定时</strong><br>v=s/t是<strong>计算式</strong>，不是决定式！'},
+{front:'平均速度 v̄',back:'描述某段路程或时间<strong>大致</strong>的快慢。<br>公式：<strong>v̄ = S总 / t总</strong><br>⚠️ 停留时间要算进总时间！<br>不是(v₁+v₂)/2！'},
+{front:'平均速度易错点',back:'全程平均速度 = 总路程 ÷ 总时间<br>不是速度的平均值！<br>例：上山2km/h下山4km/h → v̄ ≈ 2.67km/h，不是3km/h。'},
+{front:'斜面实验要点',back:'测小车在斜面上的平均速度。<br>θ<strong>尽量小</strong>→便于测时间<br>θ不能太小→小车不易下滑<br>速度关系：<strong>vAB > vAC > vBC</strong>'},
+{front:'斜面实验误差分析',back:'<strong>先放车后计时</strong>：V偏大（计时偏短）<br><strong>先计时后放车</strong>：V偏小（计时偏长）<br>正确操作：<strong>小车运动同时开始计时</strong>'},
+{front:'v = s/t 计算注意事项',back:'① 单位统一（m/s或km/h）<br>② 区分平均速度和瞬时速度<br>③ 总时间含停留时间<br>④ 往返问题总路程=去+回'},
+{front:'曲线运动 vs 直线运动',back:'<strong>曲线运动</strong>：运动方向不断变化<br><strong>直线运动</strong>：运动方向不变<br>② 直线运动又分为<strong>匀速</strong>和<strong>变速</strong>'},
+{front:'"静止"是相对的吗？',back:'是的！<strong>绝对的静止是不存在的。</strong><br>我们说某物体静止，是相对于某个参照物而言的。<br>宇宙中的一切物体都在运动——运动是<strong>绝对</strong>的，静止是<strong>相对</strong>的。'},
+{front:'分子运动与机械运动的区别',back:'<strong>分子运动</strong>：微观，分子层面，永不停息无规则<br><strong>机械运动</strong>：宏观，物体层面，位置相对变化<br>⚠️ 分子运动不是机械运动！'},
+{front:'参照物选择口诀',back:'参照物，要选好，<br>地面最常用到老。<br>研究自身体不能选，<br>相对静止须记牢！'},
+];
+
+const errors=[
+{title:'机械运动 vs 分子运动 ❌',wrong:'混滑分子运动（扩散、布朗运动）与机械运动（物体位置变化）。',right:'<strong>分子运动</strong>是微观的，物质分子层面的运动。<strong>机械运动</strong>是宏观的，物体间相对位置的变化。闻到花香是分子运动（扩散），不是机械运动！'},
+{title:'参照物选"自己" ❌',wrong:'研究自己的运动时，选自己或车上的物体做参照物。',right:'不能选<strong>被研究物体本身</strong>做参照物！以自己为参照物，自己永远是"静止"的。研究车里的人是否运动，不能选自己或车，要选车外物体（树、路标）。'},
+{title:'v=s/t 的比例关系 ❌',wrong:'认为由v=s/t可知，v与s成正比、与t成反比。',right:'v = s/t 是<strong>计算式</strong>，不是决定式！匀速直线运动中v是定值。只有<strong>速度一定时</strong>，路程才与时间成正比。不能说v与s成正比、与t成反比。'},
+{title:'平均速度 = 速度平均值 ❌',wrong:'用 (v₁+v₂)/2 计算全程平均速度。',right:'平均速度 <strong>v̄ = 总路程 / 总时间</strong>，不是速度的平均值！例：去程2m/s、回程4m/s，全程V=2s/(s/2+s/4)=2.67，不是(2+4)/2=3。'},
+{title:'平均速度忘记停留时间 ❌',wrong:'计算平均速度时，忽略中间停留的时间。',right:'停留的时间<strong>也要算进总时间</strong>！总时间 = 运动时间 + 停留时间。物体停下来时虽然不动，但时间仍在流逝。'},
+{title:'测速实验中计时方法导致误差 ❌',wrong:'先放车再计时，或先计时再放车，认为结果不变。',right:'<strong>先放后计</strong> → 已运动一段时间才计时，时间偏短→速度<strong>偏大</strong><br><strong>先计后放</strong> → 计时开始后车还没动，时间偏长→速度<strong>偏小</strong><br>必须同时开始！'},
+];
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=questions.length;const ansd=quizAns.filter(a=>a>=0).length;if(ansd===total){document.getElementById('quizArea').innerHTML=showResult();return;}
+let h=`<div class="question-card fade-in-up"><div class="q-num">${curQ+1}</div><div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${curQ===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${curQ===total-1?'disabled':''}>下一题 <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;renderQ();if(curQ<questions.length-1)setTimeout(()=>nextQ(),1000);}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}}
+function showResult(){const total=questions.length;let correct=0;const wl=[];questions.forEach((qq,i)=>{if(quizAns[shuffled.indexOf(i)]===qq.ans)correct++;else wl.push({idx:i,q:qq});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习';
+return `<div class="question-card result-card fade-in-up"><div class="big-icon">${face}</div><h2>${msg}</h2><div class="score">${correct}/${total}</div>
+<div><span class="result-stat"><i class="fas fa-check-circle" style="color:var(--success)"></i> 正确 ${correct} 题</span>
+<span class="result-stat"><i class="fas fa-times-circle" style="color:var(--danger)"></i> 错误 ${total-correct} 题</span></div>
+${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)"><p style="font-weight:600;margin-bottom:.5rem;font-size:.85rem">📝 需要复习：</p>${wl.map(w=>`<div style="padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)">✗ ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+<div style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+<button class="btn btn-primary" onclick="initQ();renderQ();"><i class="fas fa-redo"></i> 重新测验</button>
+<button class="btn btn-success" onclick="importWB()"><i class="fas fa-database"></i> 导入错题到错题库</button>
+<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button></div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'机械运动',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'机械运动,参照物,速度,平均速度,物理'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库？'))window.open('wrong_bank.html','_blank');}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('phy_mechanical_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('phy_mechanical_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('phy_mechanical_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('phy_mechanical_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('phy_mechanical_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
