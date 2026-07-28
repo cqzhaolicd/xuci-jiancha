@@ -405,8 +405,13 @@ function renderGrade(grade, gi, cnt) {
       </div>
       <div class="grade-grid">
         ${grade.subjects.length > 0 ? grade.subjects.map((subj, si) => {
-          return renderSubject(subj, si, subj.lectures.length);
-        }).join('') : `<div class="lecture-card empty" style="grid-column:1/-1;padding:1rem;text-align:center;color:var(--text-light)"><div class="info"><h4>暂无内容</h4><div class="meta"><span>后续增加</span></div></div></div>`}
+          const firstUrl = subj.lectures.length > 0 ? subj.lectures[0].url : '#';
+          return `<a href="${firstUrl}" class="subject-header ${subj.cls}" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.7rem;border-radius:var(--radius-sm);background:var(--card-bg);border:2px solid var(--border);cursor:pointer;transition:all 0.2s">
+            <div class="icon" style="font-size:1rem;color:var(--primary)"><i class="fas ${subj.icon}"></i></div>
+            <h3 style="font-size:0.88rem;font-weight:600;flex:1;margin:0;color:var(--text)">${subj.name}</h3>
+            <span style="font-size:0.7rem;color:var(--text-light)">${subj.lectures.length}项</span>
+          </a>`;
+        }).join('') : `<div style="grid-column:1/-1;padding:1rem;text-align:center;color:var(--text-light);font-size:0.85rem">暂无内容 · 后续增加</div>`}
       </div>
     </div>`;
 }
