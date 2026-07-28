@@ -242,6 +242,11 @@ function buildSchoolData() {
         { num: '01', title: '八上物理·早背晚默', url: 'physics8_interactive.html', date: '2026-07-28', tags: ['物理'], new: true }
       ]
     },
+    '8年级': {
+      '物理': [
+        { num: '01', title: '八上物理·早背晚默', url: 'physics8_interactive.html', date: '2026-07-28', tags: ['物理'], new: true }
+      ]
+    },
     '综合': {
       '语文': [
         { num: 'S1', title: '虚实词逐义检查（138词）', url: '虚实词逐义检查卷.html', date: '2026-07-27', tags: ['语文'], new: true }
@@ -251,8 +256,8 @@ function buildSchoolData() {
   const result = [];
   schoolGrades.forEach((grade, gi) => {
     const subjects = [];
-    // 7年级: 9个基础学科; 8/9年级: 空; 综合: 特殊内容
-    const gradeSubjects = grade === '7年级' ? schoolSubjects : [];
+    // 7/8年级: 9个基础学科; 9年级: 空; 综合: 特殊内容
+    const gradeSubjects = (grade === '7年级' || grade === '8年级') ? schoolSubjects : [];
     gradeSubjects.forEach((subj, si) => {
       const extras = (extraLectures[grade] && extraLectures[grade][subj]) || [];
       const lectures = [];
