@@ -222,8 +222,8 @@ const tools = [
   { name: '数据分析', icon: 'fa-chart-pie', desc: '错题统计分析', cls: 't-analysis', url: 'wrong_bank.html#analysis' },
 ];
 
-// 🔵 学校学习 — 按学校教学进度，分科目存放，有内容时添加讲次
-const schoolLevels = ['初中学习', '高中学习'];
+// 🔵 学校学习 — 按年级和科目分层存放
+const schoolGrades = ['7年级', '8年级', '9年级', '综合'];
 const schoolSubjects = ['数学', '语文', '英语', '物理', '化学', '生物', '历史', '地理', '道法'];
 const schoolIconsMap = {
   '数学':'fa-calculator','语文':'fa-book','英语':'fa-language','物理':'fa-flask',
@@ -233,39 +233,66 @@ const schoolColorsMap = {
   '数学':'subject-math','语文':'subject-chinese','英语':'subject-math','物理':'subject-physics',
   '化学':'subject-physics','生物':'subject-physics','历史':'subject-math','地理':'subject-physics','道法':'subject-math'
 };
+const gradeIcons = {'7年级':'fa-child','8年级':'fa-child','9年级':'fa-child','综合':'fa-layer-group'};
 
 function buildSchoolData() {
   const extraLectures = {
-    '初中学习': {
-      '语文': [
-        { num: 'S1', title: '虚实词逐义检查（138词）', url: '虚实词逐义检查卷.html', date: '2026-07-27', tags: ['语文'], new: true }
-      ],
+    '7年级': {
       '物理': [
         { num: '01', title: '八上物理·早背晚默', url: 'physics8_interactive.html', date: '2026-07-28', tags: ['物理'], new: true }
+      ]
+    },
+    '综合': {
+      '语文': [
+        { num: 'S1', title: '虚实词逐义检查（138词）', url: '虚实词逐义检查卷.html', date: '2026-07-27', tags: ['语文'], new: true }
       ]
     }
   };
   const result = [];
-  schoolLevels.forEach((level, li) => {
-    const lectures = [];
-    schoolSubjects.forEach((subj, si) => {
-      const extras = (extraLectures[level] && extraLectures[level][subj]) || [];
+  schoolGrades.forEach((grade, gi) => {
+    const subjects = [];
+    // 7年级: 9个基础学科; 8/9年级: 空; 综合: 特殊内容
+    const gradeSubjects = grade === '7年级' ? schoolSubjects : [];
+    gradeSubjects.forEach((subj, si) => {
+      const extras = (extraLectures[grade] && extraLectures[grade][subj]) || [];
+      const lectures = [];
       extras.forEach(e => lectures.push(e));
       lectures.push({
         num: String(si + 1).padStart(2, '0'),
         title: subj,
-        url: `school_interactive.html?level=${encodeURIComponent(level)}&subject=${encodeURIComponent(subj)}`,
+        url: `school_interactive.html?level=${encodeURIComponent(grade)}&subject=${encodeURIComponent(subj)}`,
         date: '',
         tags: [subj],
         new: false
       });
+      subjects.push({
+        id: grade + '-' + subj,
+        name: subj,
+        icon: schoolIconsMap[subj] || 'fa-book',
+        cls: schoolColorsMap[subj] || 'subject-math',
+        lectures: lectures
+      });
     });
+    // 综合: 从extraLectures取
+    if (grade === '综合') {
+      const extraGrade = extraLectures['综合'] || {};
+      Object.keys(extraGrade).forEach(subj => {
+        const lectures = extraGrade[subj] || [];
+        subjects.push({
+          id: 'zonghe-' + subj,
+          name: subj,
+          icon: schoolIconsMap[subj] || 'fa-book',
+          cls: schoolColorsMap[subj] || 'subject-math',
+          lectures: lectures
+        });
+      });
+    }
     result.push({
-      id: level === '初中学习' ? 'cz' : 'gz',
-      name: level,
-      icon: level === '初中学习' ? 'fa-book' : 'fa-graduation-cap',
-      cls: li % 2 === 0 ? 'subject-math' : 'subject-physics',
-      lectures: lectures
+      id: 'grade' + (gi + 1),
+      name: grade,
+      icon: gradeIcons[grade] || 'fa-school',
+      cls: ['subject-math','subject-physics','subject-chinese','subject-other'][gi % 4],
+      subjects: subjects
     });
   });
   return result;
@@ -318,9 +345,9 @@ function render() {
 
   // === 学校学习 ===
   html += renderSection('学校学习', 'fa-school', '#2ecc71', 'badge-study',
-    schoolSubjectsData.map((subj, si) => {
-      const cnt = subj.lectures.length;
-      return renderSubject(subj, si, cnt);
+    schoolSubjectsData.map((grade, gi) => {
+      const cnt = grade.subjects.reduce((a, s) => a + s.lectures.length, 0);
+      return renderGrade(grade, gi, cnt);
     }).join(''));
 
   // === 课外培训 ===
@@ -344,6 +371,23 @@ function renderSection(title, icon, color, badgeClass, content) {
     </div>
     <div class="section-content ${isOpen ? 'open' : ''}">${content}</div>
   </div>`;
+}
+
+function renderGrade(grade, gi, cnt) {
+  return `
+    <div class="subject-section fade-in-up" style="animation-delay:${0.1 + gi * 0.06}s">
+      <div class="subject-header ${grade.cls}" onclick="toggleSubject(this)">
+        <div class="icon"><i class="fas ${grade.icon}"></i></div>
+        <h3>${grade.name}</h3>
+        <span class="count">${cnt} 项</span>
+        <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="lecture-grid">
+        ${grade.subjects.length > 0 ? grade.subjects.map((subj, si) => {
+          return renderSubject(subj, si, subj.lectures.length);
+        }).join('') : `<div class="lecture-card empty" style="grid-column:1/-1;padding:1rem;text-align:center;color:var(--text-light)"><div class="info"><h4>暂无内容</h4><div class="meta"><span>后续增加</span></div></div></div>`}
+      </div>
+    </div>`;
 }
 
 function renderSubject(subj, si, cnt) {
