@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>导入错题 · 第3讲小测</title><style>
+body{font-family:'Noto Sans SC',sans-serif;background:#f0f2f5;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:1rem}
+.card{background:#fff;border-radius:16px;padding:2rem;max-width:460px;width:100%;box-shadow:0 2px 12px rgba(0,0,0,.08);text-align:center}
+h2{color:#1a202c;margin-bottom:.5rem;font-size:1.2rem}
+p{color:#718096;font-size:.88rem;line-height:1.6;margin-bottom:1.2rem}
+.items{text-align:left;margin-bottom:1.2rem}
+.item{background:#f7fafc;border-radius:10px;padding:.8rem;margin-bottom:.6rem;font-size:.82rem;border-left:4px solid #f56565}
+.item strong{color:#e74c3c}
+.btn{display:inline-block;padding:.6rem 1.5rem;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.msg{font-size:.85rem;margin-top:.8rem;color:var(--success)}
+</style></head><body>
+<div class="card" id="app">
+  <h2><i class="fas fa-database" style="color:#667eea"></i> 导入第3讲小测错题</h2>
+  <p>将以下错题导入错题库：</p>
+  <div class="items">
+    <div class="item"><strong>❌ 第3题</strong> — 裂项相消符号错误<br><small>正确答案：√2026 - 1 | 写了：1 - √2026</small></div>
+    <div class="item"><strong>❌ 第5(1)题</strong> — 分式约分错误<br><small>正确答案：-2√3/3 | 写了：-4√3/2</small></div>
+  </div>
+  <button class="btn" id="importBtn" onclick="doImport()"><i class="fas fa-import"></i> 导入错题 &amp; 打开错题库</button>
+  <div id="status" style="margin-top:.8rem;font-size:.85rem;color:var(--success)"></div>
+</div>
+<script>
+function doImport(){
+  const items=[
+    {subject:'数学',chapter:'二次根式（三）',content:'计算：1/(1+√2) + 1/(√2+√3) + 1/(√3+√4) + ... + 1/(√2025+√2026)',correct_answer:'√2026 - 1',my_answer:'1 - √2026',error_reason:'计算失误',source:'考试',difficulty:4,tags:'二次根式,裂项相消,分母有理化'},
+    {subject:'数学',chapter:'二次根式（三）',content:'已知 x=1/(2+√3), y=1/(2-√3)，求 (x+y)/(x-y) 的值',correct_answer:'-2√3/3',my_answer:'-4√3/2',error_reason:'计算失误',source:'考试',difficulty:3,tags:'二次根式,分式化简,分母有理化'}
+  ];
+  const ex=JSON.parse(localStorage.getItem('wrong_bank_import')||'[]');
+  localStorage.setItem('wrong_bank_import',JSON.stringify([...ex,...items]));
+  document.getElementById('status').innerHTML='<i class="fas fa-check-circle"></i> 已准备 '+items.length+' 道错题！';
+  document.getElementById('importBtn').disabled=true;
+  document.getElementById('importBtn').textContent='✅ 已导入，正在跳转…';
+  setTimeout(()=>window.location.href='wrong_bank.html',800);
+}
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</body></html>
