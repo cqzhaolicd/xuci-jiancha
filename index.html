@@ -144,6 +144,18 @@ body {
   opacity: 1;
   margin-top: 0.6rem;
 }
+.grade-grid {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
+  opacity: 0;
+  margin-top: 0;
+}
+.grade-grid.open {
+  max-height: 5000px;
+  opacity: 1;
+  margin-top: 0.6rem;
+}
 .subject-chinese { background: linear-gradient(135deg, #2ecc71, #27ae60); }
 
 .lecture-card {
@@ -384,7 +396,7 @@ function renderGrade(grade, gi, cnt) {
         <span class="count">${cnt} 项</span>
         <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
       </div>
-      <div class="lecture-grid">
+      <div class="grade-grid">
         ${grade.subjects.length > 0 ? grade.subjects.map((subj, si) => {
           return renderSubject(subj, si, subj.lectures.length);
         }).join('') : `<div class="lecture-card empty" style="grid-column:1/-1;padding:1rem;text-align:center;color:var(--text-light)"><div class="info"><h4>暂无内容</h4><div class="meta"><span>后续增加</span></div></div></div>`}
@@ -425,10 +437,10 @@ function toggleSubject(header) {
   const icon = header.querySelector('.toggle-icon');
   if (!grid) return;
   
-  // Close all other subjects in the same section-content
-  const content = header.closest('.section-content');
-  if (content) {
-    content.querySelectorAll('.lecture-grid.open').forEach(el => {
+  // Close only peer grids at the same level (not ancestors)
+  const parent = grid.parentElement;
+  if (parent) {
+    parent.querySelectorAll(':scope > .lecture-grid.open, :scope > .grade-grid.open').forEach(el => {
       if (el !== grid) {
         el.classList.remove('open');
         const h = el.previousElementSibling;
