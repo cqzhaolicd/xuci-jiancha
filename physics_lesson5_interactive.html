@@ -1,0 +1,461 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📈 运动学图像与计算 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+</style>
+</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 运动学图像</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-chart-line"></i> 运动学图像与计算 · 互动学习</h1>
+    <p>初二博学班 · 3 模块 · 20 题 · 12 卡牌 | 天元教育</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 20道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 12张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 5大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第五讲 · 运动学图像与计算</div>
+
+    <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-map-signs" style="color:#667eea"></i> s-t 图 — 路程-时间图像</h3><ul>
+        <li>横轴：时间 t，纵轴：路程 s</li>
+        <li><strong class="hl">倾斜直线</strong> = 匀速直线运动</li>
+        <li>斜率越大 = <strong>速度越大</strong></li>
+        <li><strong class="hl">平行 t 轴</strong> = 静止</li>
+        <li>折回（路程往回）= <strong>返回</strong></li>
+        <li>两线<strong class="hl">相交</strong> = 相遇（路程相同）</li>
+        <li>⚠️ s-t 图 <strong>不是</strong> 物体的运动轨迹！</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-tachometer-alt" style="color:#e74c3c"></i> v-t 图 — 速度-时间图像</h3><ul>
+        <li>横轴：时间 t，纵轴：速度 v</li>
+        <li><strong class="hl">平行 t 轴</strong> = 匀速直线运动</li>
+        <li><strong>上升</strong>（v 增大）= 加速运动</li>
+        <li><strong>下降</strong>（v 减小）= 减速运动</li>
+        <li>两线<strong class="hl">相交</strong> = 速度相等</li>
+        <li>v-t 图面积 = 路程（△S = v × t）</li>
+        <li>⚠️ 注意区分 s-t 和 v-t 两图的含义！</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-calculator" style="color:#2ecc71"></i> 计算题规范</h3><ul>
+        <li><strong class="hl">公式</strong> → 代入数据[单位] → 结果[单位]</li>
+        <li>例：S=vt=60km/h×2h=<strong class="hl">120km</strong></li>
+        <li>先写字母公式，再代入数值</li>
+        <li>数字 <strong>必须带单位</strong> 一起代入</li>
+        <li>结果 <strong>必须写单位</strong></li>
+        <li>同一题单位不一致时先换算</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-arrows-alt-h" style="color:#f39c12"></i> s-t 图 vs v-t 图 辨析</h3><ul>
+        <li>s-t 图看<strong>路程变化</strong>，v-t 图看<strong>速度变化</strong></li>
+        <li>s-t 图平行 t 轴 → <strong>静止</strong></li>
+        <li>v-t 图平行 t 轴 → <strong>匀速</strong></li>
+        <li>s-t 图上升 → <strong>向前运动</strong></li>
+        <li>v-t 图上升 → <strong>加速</strong>（速度增大）</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-chart-line" style="color:#667eea"></i> s-t 图中斜率的意义</h3><ul>
+        <li>s-t 图斜率 = <strong class="hl">速度</strong></li>
+        <li>直线越陡（斜率大）→ 速度 <strong>大</strong></li>
+        <li>直线越缓（斜率小）→ 速度 <strong>小</strong></li>
+        <li>斜率为 0（水平线）→ <strong>静止</strong></li>
+        <li>斜率不变 → <strong>匀速</strong>；斜率变化 → <strong>变速</strong></li>
+        <li>注意：s-t 图是直线不一定是匀速！<br>（反例：s = t² 也是曲线 → 非匀速）</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-chart-area" style="color:#e74c3c"></i> v-t 图中面积的意义</h3><ul>
+        <li>v-t 图与 t 轴围成的面积 = <strong class="hl">路程</strong></li>
+        <li>面积公式：<strong>S = v × t</strong>（匀速）</li>
+        <li>变速运动中，面积=各段路程之和</li>
+        <li>v-t 图在 t 轴上方 → 正向运动</li>
+        <li>v-t 图在 t 轴下方 → 反向运动</li>
+        <li>加减速时，面积仍然是路程</li>
+      </ul></div>
+    </div>
+
+    <!-- s-t 图可视化 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-map-signs" style="color:#667eea"></i> s-t 图示例</div>
+      <svg class="svg-graph" viewBox="0 0 360 220" width="360" height="220">
+        <!-- 坐标轴 -->
+        <line x1="40" y1="180" x2="330" y2="180" stroke="#333" stroke-width="2"/>
+        <line x1="40" y1="180" x2="40" y2="20" stroke="#333" stroke-width="2"/>
+        <text x="340" y="184" font-size="12" fill="#333">t</text>
+        <text x="28" y="24" font-size="12" fill="#333">s</text>
+        <text x="38" y="198" font-size="10" fill="#666">0</text>
+        <!-- 甲：匀速（倾斜直线） -->
+        <line x1="40" y1="160" x2="280" y2="40" stroke="#667eea" stroke-width="3"/>
+        <text x="280" y="36" font-size="11" fill="#667eea" font-weight="600">甲（匀速）</text>
+        <!-- 乙：静止（平行t轴） -->
+        <line x1="40" y1="100" x2="200" y2="100" stroke="#e74c3c" stroke-width="3" stroke-dasharray="6,3"/>
+        <text x="200" y="94" font-size="11" fill="#e74c3c" font-weight="600">乙（静止）</text>
+        <!-- 丙：返回（折回） -->
+        <polyline points="40,50 140,100 230,70" stroke="#2ecc71" stroke-width="3" fill="none" stroke-dasharray="4,3"/>
+        <text x="228" y="64" font-size="11" fill="#2ecc71" font-weight="600">丙（返回）</text>
+        <!-- 交点 -->
+        <circle cx="120" cy="100" r="4" fill="#f39c12"/>
+        <text x="100" y="88" font-size="10" fill="#f39c12">相交=相遇</text>
+      </svg>
+      <div class="graph-label">↑ 甲匀速运动 · 乙静止 · 丙先走再返回 · 甲丙相交点表明此时路程相同（相遇）</div>
+    </div>
+
+    <!-- v-t 图可视化 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-tachometer-alt" style="color:#e74c3c"></i> v-t 图示例</div>
+      <svg class="svg-graph" viewBox="0 0 360 220" width="360" height="220">
+        <!-- 坐标轴 -->
+        <line x1="40" y1="180" x2="330" y2="180" stroke="#333" stroke-width="2"/>
+        <line x1="40" y1="180" x2="40" y2="20" stroke="#333" stroke-width="2"/>
+        <text x="340" y="184" font-size="12" fill="#333">t</text>
+        <text x="28" y="24" font-size="12" fill="#333">v</text>
+        <text x="38" y="198" font-size="10" fill="#666">0</text>
+        <!-- 匀速（平行t轴） -->
+        <line x1="40" y1="140" x2="300" y2="140" stroke="#667eea" stroke-width="3"/>
+        <text x="300" y="136" font-size="11" fill="#667eea" font-weight="600">匀速</text>
+        <!-- 加速（上升） -->
+        <line x1="40" y1="180" x2="150" y2="60" stroke="#e74c3c" stroke-width="3" stroke-dasharray="6,3"/>
+        <text x="148" y="54" font-size="11" fill="#e74c3c" font-weight="600">加速</text>
+        <!-- 减速（下降） -->
+        <line x1="40" y1="50" x2="200" y2="160" stroke="#2ecc71" stroke-width="3" stroke-dasharray="4,3"/>
+        <text x="198" y="164" font-size="11" fill="#2ecc71" font-weight="600">减速</text>
+        <!-- 面积标注 -->
+        <rect x="60" y="140" width="80" height="40" fill="#667eea20" stroke="#667eea40" stroke-width="1"/>
+        <text x="75" y="164" font-size="10" fill="#667eea">面积=S</text>
+        <!-- 交点 -->
+        <circle cx="100" cy="120" r="4" fill="#f39c12"/>
+        <text x="78" y="108" font-size="10" fill="#f39c12">相交=速度相等</text>
+      </svg>
+      <div class="graph-label">↑ 匀速（v不变） · 加速（v上升） · 减速（v下降） · 交点速度相等 · 面积=路程</div>
+    </div>
+
+    <!-- 计算规范 -->
+    <div class="card"><div class="card-title"><i class="fas fa-calculator" style="color:#2ecc71"></i> 计算题规范模板</div>
+    <div class="calc-box">
+      <div class="step">📌 标准解题三步法</div>
+      <div class="formula">① 写公式：S = v t</div>
+      <div class="formula">② 代入（带单位）：= 60 km/h × 2 h</div>
+      <div class="formula">③ 结果：= <strong>120 km</strong></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.8rem;margin-top:.5rem">
+      <div style="padding:.6rem;background:#667eea08;border-radius:8px;font-size:.85rem">
+        <strong style="color:#667eea">✅ 正确示范</strong><br>
+        v = s/t = 100m / 20s = <strong>5 m/s</strong>
+      </div>
+      <div style="padding:.6rem;background:#f5656508;border-radius:8px;font-size:.85rem">
+        <strong style="color:var(--danger)">❌ 错误示范</strong><br>
+        v = 100/20 = 5（<span style="color:var(--danger)">❌ 没写单位</span>）
+      </div>
+      <div style="padding:.6rem;background:#f5656508;border-radius:8px;font-size:.85rem">
+        <strong style="color:var(--danger)">❌ 错误示范</strong><br>
+        100÷20=5m/s（<span style="color:var(--danger)">❌ 没写公式</span>）
+      </div>
+    </div>
+    </div>
+
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第五讲</h4>
+      <p>
+        <strong>s-t 图核心读图法</strong> — ①看横纵轴：确认是路程-时间图 ②看线形：倾斜直线=匀速，水平线=静止，折回=返回 ③看斜率：越陡速度越大 ④看交点：两条线相交=两物体相遇<br>
+        <strong>v-t 图核心读图法</strong> — ①看横纵轴：确认是速度-时间图 ②看线形：水平线=匀速，上升=加速，下降=减速 ③看交点：相交=速度相等 ④看面积：图线与t轴围成的面积=路程<br>
+        <strong>s-t vs v-t 辨析口诀</strong> — "s平行t是静止，v平行t是匀速；s看斜率是速度，v看升降知加减"<br>
+        <strong>计算规范三必须</strong> — ①必须写字母公式 ②代入必须带单位 ③结果必须写单位。同一题单位不同先换算！<br>
+        <strong>常见图题陷阱</strong> — s-t图中的"斜率"不是物体倾斜的角度，而是Δs/Δt的值。v-t图要特别注意纵轴是速度不是路程，不要和s-t图混淆！<br>
+        <strong>多段运动图像</strong> — 一个物体可以分段做不同运动：先匀速、再静止、再加速，图像上表现为不同区段的不同线形。<br>
+        <strong>追及相遇问题</strong> — s-t图中两线相交=路程相等=相遇（同时同地出发）。如果不同时/不同地出发，交点在s轴上的截距代表初始距离差。<br>
+        <strong>v-t 图的加速/减速方向</strong> — v>0的情况下，v-t图上升=加速，下降=减速。若v由正变负，说明反向运动。<br>
+        <strong><em>💬 金句："先看坐标轴，再看图线形；s斜是速度，v平是匀速。"</em></strong><br>
+        <strong><em>💬 金句："公式→代入[单位]→结果[单位]，三步不能少，单位不能丢！"</em></strong><br>
+        <strong><em>💬 金句："s-t交点=相遇，v-t交点=速度相等——千万别搞混！"</em></strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== 闯关测验 ========== -->
+  <div id="tab-quiz" class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 20</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共12张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 运动学图像互动学习 | 天元教育 · 初二博学班</div>
+
+<script>
+const questions=[
+{q:'在 s-t 图像中，横轴和纵轴分别表示什么？',opts:['A. 纵轴时间 t，横轴路程 s','B. 横轴时间 t，纵轴路程 s','C. 横轴速度 v，纵轴路程 s','D. 横轴路程 s，纵轴速度 v'],ans:1,exp:'s-t 图像中，横轴代表时间 t，纵轴代表路程 s。第一步永远先确认坐标轴的含义！'},
+{q:'在 s-t 图像中，一条倾斜直线表示物体做什么运动？',opts:['A. 静止','B. 匀速直线运动','C. 加速运动','D. 变速运动'],ans:1,exp:'s-t 图像中倾斜直线表示匀速直线运动。路程随时间均匀增加，速度保持不变。'},
+{q:'在 s-t 图像中，平行于 t 轴的直线表示什么？',opts:['A. 匀速运动','B. 加速运动','C. 静止','D. 返回运动'],ans:2,exp:'s-t 图像中平行 t 轴表示路程不随时间变化，物体处于静止状态。'},
+{q:'在 s-t 图像中，两条直线相交表示什么含义？',opts:['A. 两物体速度相等','B. 两物体相遇（路程相同）','C. 两物体同时出发','D. 两物体同时停止'],ans:1,exp:'s-t 图像中两条线的交点表示在同一时刻路程相同，即两物体相遇。注意：这和 v-t 图中的交点含义不同！'},
+{q:'在 v-t 图像中，平行于 t 轴的直线表示物体做什么运动？',opts:['A. 静止','B. 匀速直线运动','C. 加速运动','D. 减速运动'],ans:1,exp:'v-t 图像中平行 t 轴表示速度不随时间变化，做匀速直线运动。（注意：s-t 图中平行 t 轴才是静止！）'},
+{q:'在 v-t 图像中，一条上升的直线表示什么？',opts:['A. 匀速运动','B. 静止','C. 加速运动','D. 减速运动'],ans:2,exp:'v-t 图像中上升（速度随时间增大）表示加速运动。下降则代表减速运动。'},
+{q:'在 v-t 图像中，两条线相交表示什么？',opts:['A. 两物体相遇','B. 两物体速度相等','C. 两物体路程相同','D. 两物体同时出发'],ans:1,exp:'v-t 图像中两条线的交点表示在同一时刻速度相等。（注意：s-t 图中的交点表示相遇！）'},
+{q:'在 v-t 图像中，图线与 t 轴围成的面积代表什么？',opts:['A. 速度','B. 时间','C. 路程','D. 加速度'],ans:2,exp:'v-t 图像中图线与 t 轴围成的面积代表路程（位移）。S = v × t（匀速时），这是非常重要的一个考点！'},
+{q:'s-t 图像中的斜率表示什么物理量？',opts:['A. 时间','B. 路程','C. 速度','D. 加速度'],ans:2,exp:'s-t 图像的斜率（倾斜程度）表示速度。直线越抖（斜率越大），速度越大；直线越平缓，速度越小。'},
+{q:'一辆汽车做匀速直线运动，s-t 图像中倾斜直线的斜率越陡表示什么？',opts:['A. 速度越小','B. 速度越大','C. 路程越小','D. 时间越长'],ans:1,exp:'s-t 图像中斜率越大，表示速度越大。同样的时间内通过的路程更多。'},
+{q:'下列表述中，关于 s-t 图像说法正确的是',opts:['A. s-t 图中平行 t 轴表示匀速','B. s-t 图中倾斜直线表示静止','C. s-t 图中交点表示速度相等','D. s-t 图中倾斜直线表示匀速'],ans:3,exp:'s-t 图中倾斜直线表示匀速直线运动。平行 t 轴表示静止。交点表示相遇（路程相同）。注意A选项混淆了s-t和v-t图！'},
+{q:'下列表述中，关于 v-t 图像说法正确的是',opts:['A. v-t 图中平行 t 轴表示静止','B. v-t 图中上升表示加速','C. v-t 图中交点表示相遇','D. v-t 图中下降表示静止'],ans:1,exp:'v-t 图中上升表示加速运动，下降表示减速运动，平行 t 轴表示匀速。交点表示速度相等，不是相遇。'},
+{q:'某物体的 s-t 图像是一条曲线，这说明物体做',opts:['A. 匀速直线运动','B. 变速运动','C. 静止','D. 匀速圆周运动'],ans:1,exp:'s-t 图像是曲线说明路程随时间非均匀变化，速度不是定值，做变速运动。只有倾斜直线才是匀速直线运动。'},
+{q:'计算题中，下列写法规范的是',opts:['A. v=100/20=5','B. v=s/t=100m/20s=5m/s','C. 100÷20=5m/s','D. v=100m÷20s=5'],ans:1,exp:'规范的写法是：公式→代入数据[单位]→结果[单位]。B选项既有公式、又带单位代入、结果也写单位，是最规范的写法。'},
+{q:'某物体速度 10m/s，运动 5s，求通过的路程。规范写法是',opts:['A. s=vt=10m/s×5s=50m','B. s=10×5=50m','C. 10×5=50米','D. s=10m/s×5s=50'],ans:0,exp:'s=vt 是字母公式，代入时数值带单位（10m/s×5s），结果写单位（50m）。A选项正确，B少公式，C少公式和字母，D结果少单位。'},
+{q:'甲、乙两辆小车同时同地出发，它们的 s-t 图像如图所示，哪辆车速度更大？',opts:['A. 甲车速度大','B. 乙车速度大','C. 一样大','D. 无法判断'],ans:0,exp:'s-t 图像中斜率代表速度。甲车图像更陡（斜率更大），所以甲车的速度更大。甲车在相同时间内通过了更多的路程。'},
+{q:'一个物体先静止 2s，然后匀速运动 3s，其 v-t 图像表现为',opts:['A. 先水平线在 t=0，再上升','B. 先水平线在 v=0（2s段），再水平线在 v>0（3s段）','C. 先下降后水平','D. 一段连续的斜线'],ans:1,exp:'前2s静止→v=0，v-t 图上为一段在 v=0 的水平线；后3s匀速→v>0 且不变，v-t 图上为另一段水平线。v-t 图水平线=匀速，包括 v=0 的静止。'},
+{q:'s-t 图中，一条同一条直线如果折回（路程减少），表示物体',opts:['A. 停止运动','B. 加速运动','C. 返回（朝反方向运动）','D. 做曲线运动'],ans:2,exp:'s-t 图中路程随时间减少表示物体正在返回（向出发点运动）。因为路程是标量但这里表示的是离出发点的距离，距离减小说明在往回走。'},
+{q:'v-t 图中，物体做减速运动时，图线呈现什么趋势？',opts:['A. 平行 t 轴','B. 上升','C. 下降','D. 先上升后下降'],ans:2,exp:'v-t 图中减速运动表示速度随时间减小，图线呈下降趋势。上升表示加速，平行表示匀速。'},
+{q:'关于 s-t 图和 v-t 图的说法，正确的是',opts:['A. s-t 图也能看出速度大小（通过斜率）','B. v-t 图中交点表示相遇','C. s-t 图中平行 t 轴表示匀速','D. v-t 图中平行 t 轴表示静止'],ans:0,exp:'s-t 图的斜率可以反映速度大小（斜率=速度）。B错：v-t交点=速度相等。C错：s-t平行t轴=静止。D错：v-t平行t轴=匀速。'},
+];
+
+const flashcards=[
+{front:'s-t 图—横纵轴含义',back:'横轴：<strong>时间 t</strong><br>纵轴：<strong>路程 s</strong><br>反映路程随时间的变化关系。<br>⚠️ 不是物体的运动轨迹！'},
+{front:'s-t 图—倾斜直线',back:'倾斜直线 = <strong>匀速直线运动</strong><br>斜率（倾斜程度）= <strong>速度</strong><br>越陡 → 速度越大<br>越缓 → 速度越小'},
+{front:'s-t 图—水平线 & 折回',back:'<strong>平行 t 轴（水平）</strong> = <strong>静止</strong><br>（路程不随时间变化）<br><br><strong>折回（路程减少）</strong> = <strong>返回</strong><br>（向出发点的方向运动）'},
+{front:'s-t 图—交点含义',back:'两线<strong>相交</strong> = 两物体<strong>相遇</strong><br>（在同一时刻路程相同）<br><br>注意：和 v-t 图的交点含义不同！'},
+{front:'v-t 图—横纵轴含义',back:'横轴：<strong>时间 t</strong><br>纵轴：<strong>速度 v</strong><br>反映速度随时间的变化关系。<br>看运动状态比 s-t 图更直观。'},
+{front:'v-t 图—水平/上升/下降',back:'<strong>平行 t 轴</strong> = <strong>匀速</strong>（v 不变）<br><strong>上升</strong> = <strong>加速</strong>（v 增大）<br><strong>下降</strong> = <strong>减速</strong>（v 减小）'},
+{front:'v-t 图—交点 & 面积',back:'两线<strong>相交</strong> = 速度<strong>相等</strong><br><br>图线与 t 轴围成的<strong>面积</strong> = <strong>路程</strong><br>S = v × t（匀速时）'},
+{front:'s-t 图 vs v-t 图辨析',back:'<strong>s-t 图</strong>：平行t轴=静止，斜率=速度<br><strong>v-t 图</strong>：平行t轴=匀速，升降=加减速<br><br>口诀：<br>"s平是静止，v平是匀速"'},
+{front:'计算题规范三步法',back:'① 写<strong>字母公式</strong><br>② 代入数据<strong>带单位</strong><br>③ 写结果<strong>加单位</strong><br><br>例：S=vt=60km/h×2h=120km'},
+{front:'单位换算常识',back:'1 m/s = <strong>3.6</strong> km/h<br>m/s→km/h：<strong>×3.6</strong><br>km/h→m/s：<strong>÷3.6</strong><br><br>计算前先统一单位！'},
+{front:'追及与相遇问题',back:'<strong>同时同地出发</strong>：<br>s-t 图交点 = 相遇<br><br><strong>不同地出发</strong>：<br>s-t 图纵轴截距 = 初始距离差'},
+{front:'多段运动图像分析',back:'一个物体可分段做不同运动：<br>先匀速、再静止、再加速……<br><br>分<strong>区段</strong>分析：<br>看每段图线形，对应运动状态。<br>s-t 图看全程可一次判断。'},
+];
+
+const errors=[
+{title:'坐标轴看反 ❌',wrong:'做题时没看清横纵轴含义，把s-t图和v-t图混淆。看到水平线就说"静止"但其实可能是v-t图的匀速。',right:'<strong>第一步永远是看坐标轴！</strong>纵轴是s还是v？s-t图水平线=静止，v-t图水平线=匀速。"先看坐标轴，再看图线形"是解题的金标准。'},
+{title:'s-t 图斜率理解错 ❌',wrong:'认为s-t图中倾斜直线越缓速度越大，或认为s-t图的斜率是物体的倾斜角度。',right:'s-t图中<strong>斜率=速度</strong>。直线越陡（越斜）速度越大，越缓速度越小。斜率的物理意义是Δs/Δt，不是几何上的"倾斜角"。'},
+{title:'匀速 vs 加速混淆 ❌',wrong:'看到v-t图中上升线说"速度越来越慢"，或看到s-t图的曲线说"匀速"。',right:'v-t图：<strong>上升=加速（速度增大），下降=减速（速度减小）</strong>。s-t图：倾斜直线=匀速，曲线=变速。记住"v看升降知加减"！'},
+{title:'计算题漏写单位 ❌',wrong:'计算时只写数字不写单位，或只在最后结果写单位。如写"v=100/20=5"。',right:'三步规范法：<strong>①公式 ②代入带单位 ③结果写单位</strong>。正确写法：v = s/t = 100m / 20s = 5m/s。每个数值都要带单位！'},
+{title:'s-t图交点 vs v-t图交点混淆 ❌',wrong:'s-t图中看到交点说"速度相等"，或v-t图中看到交点说"相遇"。',right:'<strong>s-t图交点=相遇（路程相同）<br>v-t图交点=速度相等</strong><br>这是最高频的混淆点！口诀："s交相遇，v交等速"。'},
+];
+
+const WRONG_HISTORY_KEY='quiz_kinematics_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);retryMode=false;}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);if(doneAll){document.getElementById('quizArea').innerHTML=showResult();return;}
+let h=``;if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div><div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1?'disabled':''}>下一题 <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);autoImportWB(idx,oi);}
+renderQ();if(curQ<shuffled.length-1)setTimeout(()=>nextQ(),1000);}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){if(curQ<shuffled.length-1){curQ++;renderQ();}}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class="question-card result-card fade-in-up"><div class="big-icon">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class="score">${correct}/${total}</div>
+<div><span class="result-stat"><i class="fas fa-check-circle" style="color:var(--success)"></i> 正确 ${correct} 题</span>
+<span class="result-stat"><i class="fas fa-times-circle" style="color:var(--danger)"></i> 错误 ${total-correct} 题</span></div>
+${retryMode?`<div style="margin:.5rem 0"><span class="result-stat"><i class="fas fa-history"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)"><p style="font-weight:600;margin-bottom:.5rem;font-size:.85rem">📝 需要复习：</p>${wl.map(w=>`<div style="padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)">✗ ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+<div style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+<button class="btn btn-primary" onclick="initQ();renderQ();"><i class="fas fa-redo"></i> 重新测验</button>
+${wl.length?`<button class="btn btn-warning" onclick="initRetryMode()" style="background:#e67e22;color:#fff"><i class="fas fa-bug"></i> 错题重练 (${wl.length}题)</button>`:''}
+<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button>
+${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()"><i class="fas fa-times"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'物理',chapter:'运动学图像与计算',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'s-t图,v-t图,运动学图像,速度,计算规范,物理'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'运动学图像与计算',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'s-t图,v-t图,运动学图像,速度,计算规范,物理'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('phy_kinematics_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('phy_kinematics_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('phy_kinematics_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('phy_kinematics_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('phy_kinematics_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
