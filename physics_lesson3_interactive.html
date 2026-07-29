@@ -3,10 +3,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-:root{--primary:#667eea;--secondary:#c0392b;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
-.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(231,76,60,.3)}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
 .navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
 .navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
 .navbar-brand a{color:#fff;text-decoration:none}
@@ -14,7 +14,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
 .navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
 .container{max-width:1100px;margin:0 auto;padding:1rem}
-.hero{background:linear-gradient(135deg,#e74c3c20,#c0392b20);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
 .hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
 .hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
@@ -33,8 +33,8 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
 .knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
 .knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
-.knowledge-card .formula{background:var(--bg);padding:.4rem .6rem;border-radius:6px;font-family:'Times New Roman',serif;font-size:1.05rem;text-align:center;margin:.3rem 0;color:#c0392b;font-weight:700}
-.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e67e22}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#3498db}
+.knowledge-card .formula{background:var(--bg);padding:.4rem .6rem;border-radius:6px;font-family:'Times New Roman',serif;font-size:1.05rem;text-align:center;margin:.3rem 0;color:#667eea;font-weight:700}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e67e22}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#3498db}.knowledge-card.c5{border-color:#9b59b6}
 .quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
 .progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
 .progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
@@ -42,10 +42,10 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .question-card{background:var(--card-bg);border-radius:var(--radius);padding:1.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
 .q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
-.q-text .expr{font-size:1.05rem;color:#c0392b}
+.q-text .expr{font-size:1.05rem;color:#667eea}
 .options{display:flex;flex-direction:column;gap:.6rem}
 .option{padding:.65rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.9rem;display:flex;align-items:center;gap:.5rem}
-.option:hover:not(.disabled){border-color:#667eea;background:#e74c3c10}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
 .option .letter{width:24px;height:24px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:600;flex-shrink:0}
 .option.correct{border-color:var(--success);background:#48bb7815}
 .option.correct .letter{background:var(--success);color:#fff}
@@ -54,13 +54,13 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .option.disabled{cursor:default;opacity:.7}
 .option.show-correct{border-color:var(--success);background:#48bb7810}
 .option.show-correct .letter{background:var(--success);color:#fff}
-.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#fff5f5;border-left:4px solid var(--primary);font-size:.88rem;display:none;line-height:1.8}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#f0f0ff;border-left:4px solid var(--primary);font-size:.88rem;display:none;line-height:1.8}
 .explanation.show{display:block}
-.explanation .exp-formula{font-family:'Times New Roman',serif;color:#c0392b;font-weight:600}
+.explanation .exp-formula{font-family:'Times New Roman',serif;color:#667eea;font-weight:600}
 .quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem;align-items:center;flex-wrap:wrap}
 .btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
 .btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(231,76,60,.4)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
 .btn-success{background:var(--success);color:#fff}
 .btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
 .btn-outline:hover{border-color:#667eea;color:#667eea}
@@ -89,8 +89,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .error-card h4{font-size:.92rem;margin-bottom:.4rem}
 .error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
 .error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
-.import-btn{margin-top:1rem;text-align:center}
-.teacher-talk{background:linear-gradient(135deg,#e74c3c10,#c0392b10);border-radius:var(--radius);padding:1.5rem;margin:1rem 0;border-left:4px solid #e74c3c}
+.teacher-talk{background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius);padding:1.5rem;margin:1rem 0;border-left:4px solid #667eea}
 .teacher-talk h4{color:#667eea;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
 .teacher-talk p{font-size:.9rem;line-height:1.9}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
@@ -112,11 +111,11 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 <div class="container">
   <div class="hero fade-in-up">
     <h1><i class="fas fa-ruler"></i> 物理 · 测量初步 · 互动学习</h1>
-    <p>初二暑假博学班 · 天元教育 | ⭐⭐⭐</p>
+    <p>初二博学班 · 课外培训 | ⭐⭐⭐</p>
     <div class="meta">
-      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 30道测验题</span>
-      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
-      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 25道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 15张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 5大易错点</span>
       <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
     </div>
   </div>
@@ -129,69 +128,74 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
   </div>
 
   <div id="tab-knowledge" class="tab-content active">
-    <div class="section-header" style="font-weight:700;margin-bottom:.8rem"><i class="fas fa-sitemap" style="color:#667eea"></i> 第三讲 · 测量（声学计算+刻度尺+秒表）</div>
+    <div class="section-header" style="font-weight:700;margin-bottom:.8rem"><i class="fas fa-sitemap" style="color:#667eea"></i> 第三讲 · 测量初步（长度测量+特殊测量+时间测量）</div>
     
     <div class="teacher-talk">
       <h4><i class="fas fa-chalkboard-teacher"></i> 教师寄语</h4>
-      <p>声学计算和测量工具的使用是八上物理的两大基础。声学计算一定要掌握画图列式子的方法；秒表读数和刻度尺的使用是新的重点内容，其中单位换算的关系需要熟练掌握。</p>
-      <p style="margin-top:.5rem"><strong>⚠️ 声学计算有三种题型：直接套公式、回声问题、和火车鸣笛问题。测量部分要注意估读和单位换算的幂次关系。做之前一定要复习！</strong></p>
+      <p>测量是物理学的基础。这一讲我们学习三个模块：长度测量（单位换算、刻度尺使用、误差分析）、特殊测量（累积法、曲直转换、化内为外）、时间测量（秒表读数）。其中长度单位换算的幂次关系、刻度尺的估读、秒表读数的过半格判断是考试中最高频的易错点。</p>
+      <p style="margin-top:.5rem"><strong>⚠️ 测量题看似简单，但估读、单位换算、累积法中的"张数vs页数"都是出题人喜欢的陷阱！做之前一定要复习！</strong></p>
     </div>
 
     <div class="knowledge-grid">
-      <div class="knowledge-card c1"><h3><i class="fas fa-volume-up" style="color:#667eea"></i> 声学计算</h3><ul>
-        <li><strong>核心公式</strong>：<span class="hl">v = s / t</span></li>
-        <li>空气中声速：<strong>340 m/s</strong></li>
-        <li><strong>画图列式子三步法</strong>：①画示意图 ②列式子 ③代入计算</li>
-        <li>回声问题：<span class="hl">s = vt/2</span>（声音走一个来回）</li>
-        <li>【例】人对山喊2s听到回声 → s = 340×2/2 = 340m</li>
+      <!-- 模块一：长度测量 -->
+      <div class="knowledge-card c1"><h3><i class="fas fa-ruler" style="color:#667eea"></i> 模块一 · 长度测量</h3><ul>
+        <li><strong>国际单位</strong>：<span class="hl">米（m）</span></li>
+        <li><strong>单位换算</strong>：km→m→dm→cm→mm→μm→nm</li>
+        <li>相邻单位×10，km→m是×10³</li>
+        <li>μm→m：×10⁻⁶，nm→m：×10⁻⁹</li>
+        <li><strong>常用估测</strong>：手掌10cm，课本26cm，门高2m</li>
+        <li><strong>刻度尺五字口诀</strong>：<span class="hl">选→放→看→读→记</span></li>
+        <li><strong>读</strong>：估读到分度值下一位</li>
+        <li><strong>记</strong>：测量值=准确值+估读值+单位</li>
       </ul></div>
-      <div class="knowledge-card c2"><h3><i class="fas fa-stopwatch" style="color:#3498db"></i> 秒表（停表）读数</h3><ul>
-        <li><strong>大圈（秒针）</strong>：0~30s，1大格=1s，1小格=0.1s</li>
-        <li><strong>小圈（分针）</strong>：0~15min，1小格=0.5min</li>
-        <li><strong>读数顺序</strong>：先读小圈，后读大圈</li>
-        <li>小圈过半格 → 大圈读30~60s</li>
-        <li>小圈不过半格 → 大圈读0~30s</li>
-        <li>【例】2min13s = 133s</li>
-      </ul></div>
-      <div class="knowledge-card c3"><h3><i class="fas fa-ruler" style="color:#2ecc71"></i> 刻度尺使用</h3><ul>
-        <li><strong>五字口诀</strong>：<span class="hl">选→放→看→读→记</span></li>
-        <li><strong>选</strong>：合适量程和分度值</li>
-        <li><strong>放</strong>：零刻度对齐，紧靠被测物体，平行</li>
-        <li><strong>看</strong>：视线与尺面垂直</li>
-        <li><strong class="hl">读</strong>：估读到分度值下一位</li>
-        <li><strong>记</strong>：数值+单位，测量值=准确值+估值</li>
-      </ul></div>
-      <div class="knowledge-card c4"><h3><i class="fas fa-exchange-alt" style="color:#e67e22"></i> 单位换算</h3><ul>
-        <li><strong>长度</strong>：km → m → dm → cm → mm → μm → nm</li>
-        <li><strong>相邻单位</strong>：×10（km→m是×10³）</li>
-        <li><strong>时间</strong>：h → min → s → ms</li>
-        <li>h→min：×60，min→s：×60，s→ms：×10³</li>
-        <li><strong>三步法</strong>：①抄数值 ②换单位 ③科学计数法</li>
-      </ul></div>
-      <div class="knowledge-card c1"><h3><i class="fas fa-balance-scale" style="color:#9b59b6"></i> 误差与错误</h3><ul>
+      <div class="knowledge-card c2"><h3><i class="fas fa-balance-scale" style="color:#e67e22"></i> 误差与错误</h3><ul>
         <li><strong>误差</strong>：测量值与真实值的差异，<span class="hl">不可避免</span></li>
         <li><strong>错误</strong>：不按规则/粗心导致，<span class="hl">可以避免</span></li>
         <li><strong>系统误差</strong>：方法或工具不精确</li>
         <li><strong>偶然误差</strong>：估读水平不够</li>
-        <li><strong>减小方法</strong>：用更精密仪器 + <span class="hl">多次测量取平均</span></li>
+        <li><strong>减小误差</strong>：精密仪器 + <span class="hl">多次测量取平均</span></li>
+        <li>⚠️ 取平均时保留相同有效数字位数</li>
       </ul></div>
-      <div class="knowledge-card c2"><h3><i class="fas fa-tools" style="color:#1abc9c"></i> 特殊测量方法</h3><ul>
-        <li><strong>累积法</strong>：d=D/n（测纸厚/铜丝直径）</li>
-        <li><strong>曲直互化</strong>：曲线→直线（地图等高线）</li>
+      <!-- 模块二：特殊测量 -->
+      <div class="knowledge-card c3"><h3><i class="fas fa-tools" style="color:#2ecc71"></i> 模块二 · 特殊测量</h3><ul>
+        <li><strong>累积法</strong>：<span class="hl">d = D / n</span></li>
+        <li>测纸厚：d=总厚度/张数（注意页数÷2=张数）</li>
+        <li>测铜丝直径：d=线圈长度/圈数</li>
+        <li>⚠️ 线圈缠绕过松→结果偏大；过紧→偏小</li>
+        <li><strong>曲直转换</strong>：化曲为直（软线）、化直为曲（滚轮）</li>
+        <li><strong>化内为外</strong>：三角板+直尺测硬币直径</li>
         <li><strong>比例法</strong>：相似三角形测树高</li>
-        <li><strong>化内为外</strong>：测硬币直径</li>
-        <li>⚠️ 线圈长度 ≠ 铜线长度</li>
+      </ul></div>
+      <!-- 模块三：时间测量 -->
+      <div class="knowledge-card c4"><h3><i class="fas fa-stopwatch" style="color:#3498db"></i> 模块三 · 时间测量</h3><ul>
+        <li><strong>国际单位</strong>：<span class="hl">秒（s）</span></li>
+        <li>h→min→s：×60，s→ms：×10³</li>
+        <li><strong>秒表（停表）读数</strong></li>
+        <li><strong>小圈（分针）</strong>：0~15min，1小格=0.5min</li>
+        <li><strong>大圈（秒针）</strong>：0~30s，1小格=0.1s</li>
+        <li><strong>读数顺序</strong>：先读小圈，后读大圈</li>
+        <li>小圈过半格→大圈读30~60s（红色数字）</li>
+        <li>小圈不过半格→大圈读0~30s（黑色数字）</li>
+      </ul></div>
+      <!-- 单位换算汇总 -->
+      <div class="knowledge-card c5"><h3><i class="fas fa-exchange-alt" style="color:#9b59b6"></i> 单位换算方法</h3><ul>
+        <li><strong>三步法</strong>：①抄数值 ②换单位 ③科学计数法</li>
+        <li><strong>长度相邻</strong>：×10（大→小）或×10⁻¹（小→大）</li>
+        <li><strong>易错对照</strong>：1m=10²cm=10³mm=10⁶μm=10⁹nm</li>
+        <li><strong>时间换算</strong>：<span class="hl">1h=60min=3600s</span></li>
+        <li>1s=10³ms（毫秒）</li>
+        <li><strong>速度单位</strong>：1m/s=3.6km/h</li>
       </ul></div>
     </div>
 
     <div class="card"><div class="card-title"><i class="fas fa-star" style="color:var(--warning)"></i> 本讲重点复习提示</div>
       <p style="font-size:.9rem;line-height:2;background:#f0f0ff;padding:1rem;border-radius:var(--radius-sm)">
-        <strong>1️⃣ 声学计算</strong> — 画图列式子，回声s=vt/2，火车鸣笛相对运动<br>
-        <strong>2️⃣ 秒表读数</strong> — 先读小圈后读大圈，过半格加30s<br>
-        <strong>3️⃣ 刻度尺使用</strong> — 选放看读记，估读到分度值下一位<br>
-        <strong>4️⃣ 单位换算</strong> — 三步法，相邻×10，时间×60<br>
-        <strong>5️⃣ 误差</strong> — 不可避免 vs 可以避免，多次测量取平均<br>
-        ⚠️ 声学计算务必画图！刻度尺一定要估读！
+        <strong>1️⃣ 长度单位换算</strong> — 三步法，相邻×10，注意幂次不要数错<br>
+        <strong>2️⃣ 刻度尺使用</strong> — 选放看读记，<span class="hl">必须估读到分度值下一位</span><br>
+        <strong>3️⃣ 误差与错误</strong> — 误差不可避免，错误可以避免，多次测量取平均<br>
+        <strong>4️⃣ 累积法</strong> — d=D/n，注意页数与张数的区别<br>
+        <strong>5️⃣ 秒表读数</strong> — 先小圈后大圈，过半格加30s<br>
+        ⚠️ 刻度尺一定<span class="hl">要估读</span>！页数要÷2才是张数！单位换算用<span class="hl">科学计数法</span>！ 
       </p>
     </div>
     </div>
@@ -199,13 +203,13 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
   <div id="tab-quiz" class="tab-content">
     <div class="quiz-progress">
       <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
-      <div class="quiz-stats" id="quizStats">0 / 30</div>
+      <div class="quiz-stats" id="quizStats">0 / 25</div>
     </div>
     <div id="quizArea"></div>
   </div>
 
   <div id="tab-flashcard" class="tab-content">
-    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共15张知识卡</p>
     <div id="flashcardArea"></div>
   </div>
 
@@ -217,82 +221,44 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
   </div>
 </div>
 
-<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 数学 · 物理 · 测量初步互动学习 | 天元教育 · 初二暑假博学班</div>
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 测量初步互动学习 | 初二博学班 · 课外培训</div>
 
 <script>
 const questions=[
-// === 声学计算 ===
-{q:'声音在空气中的传播速度约为',opts:['A. 340m/s','B. 300m/s','C. 400m/s','D. 1000m/s'],ans:0,exp:'空气中声速约为340m/s（15℃时）。'},
-{q:'人耳能区分两次声音的最短时间间隔是',opts:['A. 0.01s','B. 0.1s','C. 1s','D. 0.05s'],ans:1,exp:'0.1s以上才能区分回声和原声，这也是s=vt/2公式的由来。'},
-{q:'某人面对山崖喊话，2s后听到回声，求距离山崖多远？',opts:['A. 340m','B. 680m','C. 170m','D. 510m'],ans:0,exp:'s=vt/2=340×2/2=340m。注意回声走了来回，要除以2。'},
-{q:'汽车以15m/s驶向山崖，鸣笛4s后听到回声，鸣笛时距山崖多远？',opts:['A. 680m','B. 710m','C. 340m','D. 1420m'],ans:1,exp:'s=(v_sound×t+v_car×t)/2=(340×4+15×4)/2=(1360+60)/2=710m。考虑汽车也在运动。'},
-{q:'看到闪电后5s听到雷声，打雷处距观察者多远？',opts:['A. 340m','B. 680m','C. 1700m','D. 3400m'],ans:2,exp:'s=vt=340×5=1700m。光速极快，忽略光传播时间。'},
-{q:'百米赛跑时，终点计时员看到发令枪冒烟开始计时，若听到枪声开始计时，则测量结果',opts:['A. 偏大0.29s','B. 偏小0.29s','C. 准确','D. 偏大0.1s'],ans:1,exp:'t=s/v=100/340≈0.29s。声音传100m需0.29s，听到才计时会少记0.29s。'},
-{q:'某同学对着山崖喊，0.4s后听到回声，山崖距他多远？',opts:['A. 68m','B. 136m','C. 34m','D. 340m'],ans:0,exp:'s=vt/2=340×0.4/2=68m。'},
-// === 秒表读数 ===
-{q:'秒表大圈（秒针）一圈表示多少秒？',opts:['A. 15s','B. 30s','C. 60s','D. 10s'],ans:1,exp:'秒表大圈一圈通常为30s，小圈为0-15min。'},
-{q:'秒表读数时，小圈读数应读在什么位置？',opts:['A. 分针','B. 秒针','C. 时针','D. 计时针'],ans:0,exp:'小圈是分针，大圈是秒针。先读小圈（分钟），后读大圈（秒钟）。'},
-{q:'秒表读数为2min13s，合多少秒？',opts:['A. 120s','B. 133s','C. 140s','D. 150s'],ans:1,exp:'2×60+13=133s。'},
-{q:'小圈指针超过半格时，大圈读数范围是',opts:['A. 0-15s','B. 0-30s','C. 30-60s','D. 15-30s'],ans:2,exp:'小圈过半格→大圈读30-60s；不过半格→大圈读0-30s。'},
-{q:'小圈指针不到半格时，大圈读数范围是',opts:['A. 0-15s','B. 0-30s','C. 30-60s','D. 15-30s'],ans:1,exp:'小圈不到半格，大圈读0-30s。'},
-{q:'秒表大圈1小格代表多少秒？',opts:['A. 1s','B. 0.5s','C. 0.1s','D. 0.01s'],ans:2,exp:'秒表大圈1小格通常为0.1s（1大格=1s=10小格）。'},
-// === 刻度尺使用 ===
-{q:'刻度尺使用五字口诀是',opts:['A. 选放看读记','B. 量切对读算','C. 选对读记算','D. 看量读记写'],ans:0,exp:'选→放→看→读→记，五字口诀。'},
-{q:'刻度尺读数时，视线应与尺面',opts:['A. 平行','B. 垂直','C. 倾斜45°','D. 任意'],ans:1,exp:'读数时视线要与尺面垂直，否则读数会偏大或偏小。'},
-{q:'刻度尺读数需要估读到',opts:['A. 分度值','B. 分度值下一位','C. 分度值上一位','D. 整毫米'],ans:1,exp:'估读到分度值的下一位，这也是刻度尺读数的关键考点。'},
-{q:'测量值 = ？ + ？',opts:['A. 准确值+估读值','B. 真实值+误差','C. 理论值+误差','D. 实际值+估读值'],ans:0,exp:'测量值 = 准确值 + 估读值（含单位）。'},
-{q:'测物体长度时，以下操作错误的是',opts:['A. 零刻度对齐','B. 刻度尺紧靠物体','C. 刻度尺斜着放','D. 读数估读'],ans:2,exp:'刻度尺必须与被测边保持平行，不能斜着放。'},
-{q:'被测物体一端对准3cm，另一端在5.3cm处，分度值1mm，读数为',opts:['A. 2.30cm','B. 2.3cm','C. 5.30cm','D. 2.0cm'],ans:0,exp:'l=5.30-3.00=2.30cm。要估读到分度值下一位（1mm→0.01cm）。'},
-// === 单位换算 ===
-{q:'1m等于多少cm？',opts:['A. 10cm','B. 100cm','C. 1000cm','D. 10000cm'],ans:1,exp:'1m=100cm=10²cm。'},
-{q:'1μm等于多少m？',opts:['A. 10⁻³m','B. 10⁻⁶m','C. 10⁻⁹m','D. 10⁻¹²m'],ans:1,exp:'1μm=10⁻⁶m（微米→米需要除以10⁶）。'},
-{q:'1h等于多少s？',opts:['A. 60s','B. 600s','C. 3600s','D. 360s'],ans:2,exp:'1h=60min=3600s。'},
-{q:'1nm等于多少m？',opts:['A. 10⁻⁶m','B. 10⁻⁹m','C. 10⁻¹²m','D. 10⁻³m'],ans:1,exp:'1nm=10⁻⁹m。'},
-{q:'科学计数法：0.0035m = ？',opts:['A. 3.5×10⁻³m','B. 3.5×10³m','C. 35×10⁻⁴m','D. 3.5×10⁻⁶m'],ans:0,exp:'0.0035=3.5×10⁻³。从小数点往右数3位。'},
-// === 误差与特殊测量 ===
-{q:'误差和错误的区别正确的是',opts:['A. 误差可以避免','B. 错误不可避免','C. 误差不可避免','D. 两者都不可避免'],ans:2,exp:'误差不可避免（可减小），错误可以避免。'},
-{q:'减小误差的正确方法',opts:['A. 多次测量取平均值','B. 不记录估读值','C. 使用更大量程','D. 减少测量次数'],ans:0,exp:'多次测量取平均值是减小误差的主要方法。'},
-{q:'用累积法测一张纸的厚度，测量50张纸厚度为5mm，每张纸厚度为',opts:['A. 0.01mm','B. 0.1mm','C. 0.5mm','D. 1mm'],ans:1,exp:'d=D/n=5/50=0.1mm。'},
-{q:'测一物体长度，数据为3.24cm、3.26cm、3.25cm，最接近真实值的是',opts:['A. 3.24cm','B. 3.25cm','C. 3.26cm','D. 3.20cm'],ans:1,exp:'取平均值：(3.24+3.26+3.25)/3=3.25cm。'},
-{q:'PM2.5中"2.5"的单位是',opts:['A. μm','B. nm','C. mm','D. cm'],ans:0,exp:'PM2.5指直径≤2.5μm的可吸入颗粒物。'},
-{q:'一张纸的厚度约100μm，合多少mm？',opts:['A. 0.01mm','B. 0.1mm','C. 1mm','D. 10mm'],ans:1,exp:'100μm=100×10⁻³mm=0.1mm（μm→mm除以1000）。'},
-];
-
+// === 模块一：长度测量（长度单位 & 刻度尺）===
+{q:'在国际单位制中，长度的基本单位是',opts:['A. 分米（dm）','B. 厘米（cm）','C. 米（m）','D. 千米（km）'],ans:2,exp:'国际单位制中长度的基本单位是米（m）。'},{q:'1km等于多少米？',opts:['A. 100m','B. 1000m','C. 10³m','D. 10000m'],ans:1,exp:'1km=1000m=10³m。注意km→m是×10³而不是×10。'},{q:'1m等于多少厘米？',opts:['A. 10cm','B. 100cm','C. 1000cm','D. 10⁴cm'],ans:1,exp:'1m=10²cm=100cm。'},{q:'1μm等于多少米？',opts:['A. 10⁻³m','B. 10⁻⁶m','C. 10⁻⁹m','D. 10⁻¹²m'],ans:1,exp:'1μm=10⁻⁶m（微米→米需要除以10⁶）。'},{q:'1nm等于多少米？',opts:['A. 10⁻⁶m','B. 10⁻⁹m','C. 10⁻¹²m','D. 10⁻³m'],ans:1,exp:'1nm=10⁻⁹m。'},{q:'下列估测符合实际情况的是',opts:['A. 教室门高18dm','B. 物理书宽50cm','C. 全新2B铅笔长18cm','D. 一张试卷厚1mm'],ans:2,exp:'门高约2m即20dm，不是18dm；书宽约26cm；铅笔长约18cm；试卷厚约0.1mm不是1mm。'},{q:'刚出生的熊猫宝宝头部直径最接近',opts:['A. 2.5mm','B. 2.5cm','C. 2.5dm','D. 2.5m'],ans:1,exp:'熊猫宝宝头部约鸡蛋大小，直径约2.5cm最合理。'},{q:'灭火器罐底距地面高度最接近于',opts:['A. 10cm','B. 40cm','C. 80cm','D. 120cm'],ans:1,exp:'灭火器通常手提高度在膝部附近，约40cm。'},{q:'一张"手撕钢"的厚度最接近于',opts:['A. 2dm','B. 2cm','C. 2mm','D. 0.02mm'],ans:3,exp:'手撕钢极薄，物理课本一张纸约0.1mm，手撕钢厚度为纸的1/5，约0.02mm。'},{q:'下列各表达式中正确的单位换算是',opts:['A. 237.2cm=237.2×100=23720cm','B. 237.2cm=237.2×100cm=23720cm','C. 237.2cm=237.2×1m=237.2m','D. 237.2cm=237.2×0.01m=2.372m'],ans:3,exp:'1cm=0.01m，所以237.2cm=237.2×0.01m=2.372m。B选项数字正确但末尾少单位。'},{q:'用刻度尺测物体长度时，下列要求错误的是',opts:['A. 刻度尺不能歪斜','B. 必须从零刻度线量起','C. 读数时视线与尺面垂直','D. 记录结果要注明单位'],ans:1,exp:'不一定必须从零刻度线量起，如果零刻度磨损，可从完整刻度线对齐再相减。'},{q:'用分度值1mm的刻度尺测课本长度，正确记录是',opts:['A. 238.0mm','B. 23.8cm','C. 237.90mm','D. 2.38dm'],ans:0,exp:'分度值1mm需估读到0.1mm即小数点后一位，238.0mm符合（准确值238mm+估读值0.0mm）。'},{q:'刻度尺读数时视线应与尺面',opts:['A. 平行','B. 垂直','C. 倾斜45°','D. 任意'],ans:1,exp:'读数时视线要与尺面垂直，否则读数会偏大或偏小（属于操作错误）。'},{q:'PM2.5中"2.5"的单位是',opts:['A. cm','B. mm','C. μm','D. nm'],ans:2,exp:'PM2.5指直径≤2.5μm的可吸入颗粒物。肉眼不可见。'},{q:'一位中学生的身高的正确记录为1.724m，所用刻度尺的分度值是',opts:['A. 1m','B. 1dm','C. 1cm','D. 1mm'],ans:2,exp:'1.724m=172.4cm，最后一位4是估读值，准确值172cm，所以分度值1cm。'},
+// === 模块一：误差与错误 ===
+{q:'下列关于误差与错误的说法正确的是',opts:['A. 误差可以避免','B. 错误是完全可以避免的','C. 误差就是错误','D. 态度认真就不会有误差'],ans:1,exp:'误差不可避免（可减小），错误可以避免。A、C、D都错误。'},{q:'下列情况中属于系统误差的是',opts:['A. 未从零刻度线测量','B. 视线未与尺面垂直','C. 刻度尺不精确','D. 估读时偏大或偏小'],ans:2,exp:'系统误差由工具/方法本身引起；A、B属于操作错误；D属于偶然误差。'},{q:'四次测量物体长度分别为2.13cm、2.14cm、2.13cm、2.35cm，测量结果应取',opts:['A. 2.13cm','B. 2.14cm','C. 2.133cm','D. 2.16cm'],ans:0,exp:'2.35cm与其他差异太大，是错误数据应舍去。取(2.13+2.14+2.13)/3≈2.133，保留相同位数→2.13cm。'},{q:'用塑料卷尺用力拉伸后测量物体长度，测得结果将',opts:['A. 偏大','B. 偏小','C. 不变','D. 无法判断'],ans:1,exp:'拉伸后尺子变长了，所以每个刻度代表的实际距离更大，读数偏小。'},
+// === 模块二：特殊测量 ===
+{q:'课本页码1-172页的总厚度是0.86cm，每张纸的厚度约为',opts:['A. 0.05mm','B. 0.1mm','C. 0.5mm','D. 0.01mm'],ans:1,exp:'172页=86张纸。每张纸厚=0.86cm÷86=0.01cm=0.1mm。注意页数÷2=张数！'},{q:'测细铜丝直径时，在一支铅笔上密绕32圈，线圈长5.00cm，铜丝直径是',opts:['A. 0.16cm','B. 0.156cm','C. 0.16mm','D. 0.156mm'],ans:0,exp:'D=L/n=5.00/32≈0.156cm，保留与L相同的位数→0.16cm。'},{q:'测硬币直径时用三角板+直尺配合，这种方法称为',opts:['A. 累积法','B. 化内为外','C. 化曲为直','D. 比例法'],ans:1,exp:'将内部长度平移至外部测量，称为化内为外法（也称平移法）。'},{q:'细铜丝在铅笔上缠绕过松，测得直径结果将',opts:['A. 偏大','B. 偏小','C. 不变','D. 可能偏大也可能偏小'],ans:0,exp:'缠绕过松时线圈间有缝隙，总长度L偏大，D=L/n偏大。'},{q:'长度测量中不合理的是（多选题型改单选）：以下哪种方法操作不合理',opts:['A. 累积法测纸厚','B. 化曲为直测地图','C. 滚轮法测操场','D. 直接用刻度尺弯着测曲线'],ans:3,exp:'测曲线长度不能用刻度尺直接弯曲测量，应使用化曲为直法（软线/滚轮）。'},
+// === 模块三：时间测量 ===
+{q:'1h35min合多少分钟？',opts:['A. 135min','B. 95min','C. 75min','D. 105min'],ans:1,exp:'1h=60min，60+35=95min。'},{q:'下列经历的时间最接近1秒的是',opts:['A. 眼睛眨一次','B. 人体心脏跳动一次','C. 正常呼吸一次','D. 打一次哈欠'],ans:1,exp:'心脏每分钟约跳动60-80次，一次约0.75-1秒。眨眼约0.1-0.2s，呼吸约3-5s。'},{q:'秒表小圈指针超过半格时，大圈应读取',opts:['A. 0~15s','B. 0~30s','C. 30~60s','D. 15~30s'],ans:2,exp:'小圈过半格→已经过了0.5分钟即30秒，大圈读30~60s（红色数字）。'},{q:'秒表大圈1小格代表',opts:['A. 1s','B. 0.5s','C. 0.1s','D. 0.01s'],ans:2,exp:'秒表大圈30s分30大格，1大格=1s，1大格分10小格，1小格=0.1s。'},{q:'停表读数为4min42.4s，小圈指针',opts:['A. 不到半格','B. 超过半格','C. 正好在整格','D. 无法判断'],ans:1,exp:'42.4s超过30s，说明小圈指针已超过半格，大圈读红色数字。'},];
 const flashcards=[
-{front:'声音在空气中的速度',back:'<span class="f-formula">340 m/s</span><br>（15℃时）'},
-{front:'声学计算核心公式',back:'<span class="f-formula">v = s / t</span>'},
-{front:'画图列式子三步法',back:'① 画示意图（标已知/未知）<br>② 列式子<br>③ 代入计算'},
-{front:'回声问题关键公式',back:'<span class="f-formula">s = vt/2</span><br>声音走了<span class="hl">一个来回</span>'},
-{front:'火车鸣笛问题',back:'<span class="f-formula">s = (v₁+v₂)t/2</span><br>声音+汽车都在运动'},
-{front:'秒表大圈（秒针）',back:'一圈30s<br>1大格=1s<br>1小格=0.1s'},
-{front:'秒表小圈（分针）',back:'一圈15min<br>1小格=0.5min'},
-{front:'秒表读数顺序',back:'<span class="hl">先读小圈，后读大圈</span><br>小圈过半格→大圈30-60s'},
-{front:'刻度尺五字口诀',back:'<span class="hl">选→放→看→读→记</span>'},
-{front:'刻度尺估读',back:'估读到<span class="hl">分度值下一位</span>'},
-{front:'测量值公式',back:'测量值 = <span class="hl">准确值</span> + <span class="hl">估读值</span> + 单位'},
-{front:'长度单位换算',back:'1m=10dm=100cm=1000mm=10⁶μm=10⁹nm<br>相邻单位×10'},
-{front:'时间单位换算',back:'1h=60min=3600s<br>1s=10³ms'},
-{front:'误差与错误',back:'<span class="hl">误差</span>：不可避免，可减小<br><span class="hl">错误</span>：可以避免'},
-{front:'减小误差三方法',back:'①多次测量取平均<br>②改进方法<br>③精密工具'},
-{front:'累积法',back:'d = D / n<br>测薄物体厚度/细丝直径'},
-{front:'曲直互化',back:'曲线→直线（常用柔线/滚轮）<br>测量地图等高线等'},
-{front:'化内为外',back:'测硬币直径、瓶口直径等<br>用三角板+直尺配合'},
-{front:'速度单位换算',back:'<span class="f-formula">1m/s = 3.6km/h</span>'},
-{front:'光速vs声速',back:'光速：3×10⁸m/s<br>声速：340m/s<br>光比声快得多！'},
+{front:'长度的国际单位',back:'<span class="f-formula">米（m）</span><br>常用单位：km→m→dm→cm→mm→μm→nm'},
+{front:'长度单位换算口诀',back:'相邻单位×10（大到小）<br>km→m是×10³<br>1m=10²cm=10³mm=10⁶μm=10⁹nm'},
+{front:'刻度尺五字口诀',back:'<span class="hl">选→放→看→读→记</span><br>选量程分度值→平行紧贴→视线垂直→估读下一位→数值+单位'},
+{front:'刻度尺的估读',back:'估读到<span class="hl">分度值的下一位</span><br>即使正好对齐也要写0占位<br>例：分度值1mm，读数应为X.X0cm'},
+{front:'测量值的组成',back:'测量值 = <span class="hl">准确值</span> + <span class="hl">估读值</span> + 单位<br>准确值：分度值上的数值<br>估读值：分度值下一位的数值'},
+{front:'误差与错误的区别',back:'<span class="hl">误差</span>：不可避免，可减小（系统/偶然）<br><span class="hl">错误</span>：可以避免（操作违规/粗心）'},
+{front:'减小误差的方法',back:'①多次测量取平均值（保留相同有效数字）<br>②使用更精密的仪器<br>③改进测量方法'},
+{front:'累积法',back:'<span class="f-formula">d = D / n</span><br>测微小长度：纸厚、铜丝直径<br>⚠️ 注意页数÷2=张数！'},
+{front:'累积法常见陷阱',back:'线圈过松→L偏大→d<span class="hl">偏大</span><br>线圈过紧→L偏小→d<span class="hl">偏小</span><br>页数≠张数，页数÷2'},
+{front:'化曲为直',back:'用软线/棉线贴合曲线<br>拉直后用刻度尺测量<br>用于测地图上的河流、道路'},
+{front:'化内为外（平移法）',back:'三角板+直尺配合<br>测硬币直径、瓶口直径<br>将内部长度平移到外部'},
+{front:'时间国际单位',back:'<span class="f-formula">秒（s）</span><br>1h=60min=3600s<br>1s=10³ms（毫秒）'},
+{front:'秒表读数方法',back:'<span class="hl">先读小圈，后读大圈</span><br>小圈：分钟（0~15min）<br>大圈：秒钟，一圈30s，1小格0.1s'},
+{front:'秒表过半格规则',back:'小圈<span class="hl">超过半格</span>→大圈读30~60s（红色数字）<br>小圈<span class="hl">不到半格</span>→大圈读0~30s（黑色数字）'},
+{front:'常用长度估测',back:'手掌宽≈10cm<br>课本长≈26cm<br>课桌高≈80cm<br>门高≈2m<br>教室高≈3.4m<br>PM2.5≤2.5μm'},
 ];
-
 const errors=[
-{title:'回声问题忘除2 ❌',wrong:'直接s=vt，忘了声音来回走了两倍距离。',right:'<span class="hl">s=vt/2</span>，回声测距要除以2。人和山之间，声音去+回=2倍距离。'},
-{title:'秒表读数：小圈过半格忘加30s ❌',wrong:'小圈指针过了半格，大圈还读0-30s。',right:'小圈过半格→大圈读<span class="hl">30-60s</span>。过半格说明已经走了30秒以上。'},
-{title:'刻度尺读数不估读 ❌',wrong:'读数只读到分度值，没有估读下一位。',right:'必须<span class="hl">估读到分度值的下一位</span>，即使正好对准也要写0占位。'},
-{title:'单位换算幂次搞错 ❌',wrong:'m→cm写成×10，μm→m的10的幂次记错。',right:'相邻：×10。km→m：×10³。mm→μm：×10³。μm→m：<span class="hl">10⁻⁶</span>。'},
-{title:'误差和错误混为一谈 ❌',wrong:'以为误差可以避免，或认为错误也是不可避免的。',right:'<span class="hl">误差不可避</span>（测量工具和人的限制），<span class="hl">错误可以避免</span>（规范操作就不出错）。'},
-{title:'累积法测纸厚忘记除张数 ❌',wrong:'测50张纸厚5mm，直接说纸厚5mm。',right:'d=D/n，50张纸厚5mm，每张=5/50=<span class="hl">0.1mm</span>。'},
+{title:'刻度尺不估读 ❌',wrong:'读数只读到分度值整位，没有估读下一位。例如分度值1mm的尺子读2.3cm。',right:'必须<span class="hl">估读到分度值的下一位</span>。分度值1mm→估读到0.1mm（即小数点后两位 cm）。即使正好对齐也要用0占位。'},
+{title:'秒表过半格判断错误 ❌',wrong:'小圈指针过半格了，大圈还读0~30s，少了30s。',right:'小圈过半格→大圈读<span class="hl">30~60s</span>（红色数字）。分针指在4和5之间且过了半格→秒针读30s以上。'},
+{title:'单位换算幂次搞错 ❌',wrong:'m→cm写成×10，μm→m的10的幂次记反。',right:'m→cm：×10²。km→m：×10³。μm→m：<span class="hl">10⁻⁶</span>。nm→m：<span class="hl">10⁻⁹</span>。可以用数"0"的个数来帮助记忆。'},
+{title:'误差与错误混为一谈 ❌',wrong:'以为误差可以避免，或觉得错误也是不可避免的。',right:'<span class="hl">误差不可避免</span>（工具和人的限制），只能减小。<span class="hl">错误可以避免</span>（规范操作就不出错）。两者有本质区别。'},
+{title:'累积法忘除圈数/张数 ❌',wrong:'测50张纸厚度5mm，直接说纸厚5mm。测铜丝32圈长5.00cm，说直径5cm。',right:'<span class="hl">d=D/n</span>。50张纸厚5mm→每张=5÷50=0.1mm。32圈长5.00cm→直径=5.00÷32≈0.16cm。注意页数要先÷2变成张数。'},
 ];
-
 const WRONG_HISTORY_KEY='quiz_lesson3_wrong';
 let retryMode=false,wrongIds=[];
-
 function loadWrongHistory(){
   try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
 }
@@ -303,7 +269,6 @@ function saveWrongHistoryItem(idx){
   else h.push({idx,count:1,lastWrong:Date.now()});
   localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
 }
-
 let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
 function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);retryMode=false;}
 function initRetryMode(){
@@ -319,7 +284,7 @@ function initRetryMode(){
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
 function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
 function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);if(doneAll){document.getElementById('quizArea').innerHTML=showResult();return;}
-let h=``;if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+let h=``;if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#667eea15;border-radius:6px;font-size:.78rem;color:var(--primary);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
 h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div><div class="q-text">${q.q}</div><div class="options">`;
 q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
 h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
@@ -349,31 +314,29 @@ return `<div class="question-card result-card fade-in-up"><div class="big-icon">
 |<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
 |<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button>
 |${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()"><i class="fas fa-times"></i> 退出重练模式</button>`:''}</div></div>`;}
-
 const IMPORT_KEY='wrong_bank_import';
 function autoImportWB(idx, myAns){
   const q=questions[idx];
-  const item={subject:'物理',chapter:'测量（三）',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'测量,物理'};
+  const item={subject:'物理',chapter:'测量初步（三）',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'测量,物理'};
   const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
   if(ex.some(x=>x.content===item.content))return;
   ex.push(item);
   localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
 }
 function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
-const items=w.map(w=>({subject:'物理',chapter:'测量（三）',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'测量,物理'}));
+const items=w.map(w=>({subject:'物理',chapter:'测量初步（三）',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'测量,物理'}));
 const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
 alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库？'))window.open('wrong_bank.html','_blank');}
-
 let fIdx=0;
 function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;const fc=flashcards[fIdx];
 document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
-<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+|<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
 function toggleFC(){const el=document.getElementById('fc');if(el)el.classList.toggle('flipped');}
 function renderEC(){let s=localStorage.getItem('physics_measure_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
 let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
-<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
-<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
-<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+|<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+|<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+|<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
 function toggleEC(i){let s=localStorage.getItem('physics_measure_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('physics_measure_check',JSON.stringify(c));renderEC();}
 function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('physics_measure_check');renderEC();}}
 function updateEC(){let s=localStorage.getItem('physics_measure_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
