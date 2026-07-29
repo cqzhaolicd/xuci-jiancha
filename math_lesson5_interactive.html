@@ -114,8 +114,8 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
     <h1><i class="fas fa-square-root-variable"></i> 勾股定理 · 互动学习</h1>
     <p>暑假初二博学班 · 天元教育 | ⭐⭐⭐⭐ 难度</p>
     <div class="meta">
-      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 25道测验题</span>
-      <span><i class="fas fa-layer-group"></i> 15张知识卡</span>
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 32道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 18张知识卡</span>
       <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 5大易错点</span>
       <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
     </div>
@@ -189,6 +189,29 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
         <li>④ 逆定理：比较最长边的平方</li>
         <li>💡 数形结合，以形助数</li>
       </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-sort-amount-up" style="color:#e67e22"></i> 勾股数规律详解</h3><ul>
+        <li><strong>奇数开头规律</strong>（最短边为奇数）</li>
+        <li>奇数→平方→÷2→相邻两自然数</li>
+        <li class="formula">通项：(2n+1, 2n²+2n, 2n²+2n+1)</li>
+        <li>例：n=1 → 3,4,5；n=2 → 5,12,13；n=3 → 7,24,25</li>
+        <li><strong>偶数开头规律</strong>（最短边为偶数）</li>
+        <li>偶数→÷2→n→n²相邻两自然数</li>
+        <li class="formula">通项：(2n, n²-1, n²+1)</li>
+        <li>例：n=3 → 6,8,10；n=4 → 8,15,17；n=5 → 10,24,26</li>
+        <li><strong>常用5组</strong>：3,4,5；5,12,13；7,24,25；8,15,17</li>
+        <li>💡 熟悉后直接记忆，做题速度快一倍！</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-shapes" style="color:#2ecc71"></i> 图形验证拓展</h3><ul>
+        <li><strong>半圆验证勾股定理</strong></li>
+        <li>以直角三角形三边为直径作半圆</li>
+        <li>S₁=⅛πa², S₂=⅛πb², S₃=⅛πc²</li>
+        <li class="formula">由 a²+b²=c² 得 S₁+S₂=S₃</li>
+        <li><strong>等边三角形验证</strong>：同样满足 S₁+S₂=S₃</li>
+        <li><strong>垂美四边形</strong>（对角线互相垂直的四边形）</li>
+        <li>向外作正方形，对顶面积和相等</li>
+        <li class="formula">S₁ + S₃ = S₂ + S₄</li>
+        <li>💡 只要三边所作图形<strong>相似</strong>，面积关系恒成立</li>
+      </ul></div>
     </div>
 
     <div class="card"><div class="card-title"><i class="fas fa-star" style="color:var(--warning)"></i> 本讲重点复习提示</div>
@@ -206,13 +229,13 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
   <div id="tab-quiz" class="tab-content">
     <div class="quiz-progress">
       <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
-      <div class="quiz-stats" id="quizStats">0 / 25</div>
+      <div class="quiz-stats" id="quizStats">0 / 32</div>
     </div>
     <div id="quizArea"></div>
   </div>
 
   <div id="tab-flashcard" class="tab-content">
-    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共15张知识卡</p>
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共18张知识卡</p>
     <div id="flashcardArea"></div>
   </div>
 
