@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>道法 · 8年级课堂笔记</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#c0392b;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 道法 · 8年级课堂笔记</h1>
+    <div class="meta">部编版上册 · 4 单元 · 16 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+      <div class="k-item"><h4>第一单元 走进社会生活</h4><p>网络丰富日常生活（信息传递/人际交往/学习）；网络是把双刃剑（信息节食、学会辨析）；理性参与网络生活；传播网络正能量。</p></div>
+      <div class="k-item"><h4>第二单元 遵守社会规则</h4><p>社会秩序（规则保障秩序）；社会规则（道德/纪律/法律）；尊重他人（换位思考）；以礼待人（文明有礼）；诚实守信（诚信无价）。</p></div>
+      <div class="k-item"><h4>第三单元 勇担社会责任</h4><p>责任的含义与来源（职业/道德/法律）；角色不同责任不同；关爱他人（心怀善意、讲究策略）；服务社会（公益劳动）。</p></div>
+      <div class="k-item"><h4>第四单元 维护国家利益</h4><p>国家利益至上（国家利益是整体利益）；树立总体国家安全观（政治/经济/文化/军事等）；国家安全人人有责；建设美好祖国（实干兴邦）。</p></div>
+      <div class="k-item"><h4>核心知识点·网络</h4><p>网络交往（虚拟性、平等、自主）；网络谣言辨识；个人信息保护；合理利用网络工具学习。</p></div>
+      <div class="k-item"><h4>核心知识点·规则与自由</h4><p>自由与规则不可分（自由受规则约束）；规则维护秩序；违反规则要受处罚。</p></div>
+      <div class="k-item"><h4>核心知识点·诚信</h4><p>诚信是中华民族传统美德；诚信是一个人安身立命之本；诚信促进社会文明、国家兴旺。</p></div>
+      <div class="k-item"><h4>核心知识点·国家安全</h4><p>国家安全是国家生存与发展的重要保障；维护国家安全是每个公民的义务；12339举报电话。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 部编版八年级上册 | 持续更新中</div>
+<script>
+const questions=[{"q": "网络丰富日常生活，下列属于网络正面影响的是", "opts": ["A. 沉迷网络游戏", "B. 利用网络学习", "C. 传播谣言", "D. 网络诈骗"], "ans": 1, "exp": "利用网络学习是网络丰富日常生活的正面体现；其余均为负面。"}, {"q": "社会规则的主要形式不包括", "opts": ["A. 道德", "B. 纪律", "C. 法律", "D. 习惯"], "ans": 3, "exp": "社会规则包括道德、纪律、法律等；习惯不是规则的强制形式。"}, {"q": "“己所不欲，勿施于人”体现的交往品质是", "opts": ["A. 诚实守信", "B. 尊重他人", "C. 以礼待人", "D. 见义勇为"], "ans": 1, "exp": "自己不想要的不要强加给别人，是换位思考、尊重他人的体现。"}, {"q": "诚信是一个人", "opts": ["A. 安身立命之本", "B. 可有可无的品质", "C. 只是商业要求", "D. 别人的事"], "ans": 0, "exp": "诚信是一个人安身立命之本，是融入社会的“通行证”。"}, {"q": "责任的来源不包括", "opts": ["A. 对他人的承诺", "B. 职业要求", "C. 法律规定", "D. 随意选择"], "ans": 3, "exp": "责任来自承诺、职业要求、道德规范、法律规定等，不是随意选择的结果。"}, {"q": "作为学生，最主要的责任是", "opts": ["A. 好好学习", "B. 打工赚钱", "C. 玩游戏", "D. 不管别人"], "ans": 0, "exp": "学生的角色决定了认真学习是最主要的责任，同时要关心集体、遵守校规。"}, {"q": "关爱他人应该", "opts": ["A. 心怀善意、讲究策略", "B. 高高在上施舍", "C. 只帮助熟人", "D. 要求回报"], "ans": 0, "exp": "关爱他人要心怀善意、尽己所能，同时讲究策略，注意维护对方自尊。"}, {"q": "总体国家安全观包括", "opts": ["A. 只包括军事安全", "B. 政治、经济、文化、军事等多方面", "C. 只包括网络安全", "D. 只包括粮食安全"], "ans": 1, "exp": "总体国家安全观涵盖政治、军事、国土、经济、文化、社会、科技、网络、生态等多个领域。"}, {"q": "维护国家安全是", "opts": ["A. 军人的职责", "B. 每个公民的义务", "C. 政府的事", "D. 可做可不做"], "ans": 1, "exp": "维护国家安全是每个公民的法定义务，可拨打12339举报危害国家安全行为。"}, {"q": "自由与规则的关系是", "opts": ["A. 自由与规则对立", "B. 自由受规则约束，规则保障自由", "C. 规则越多自由越少", "D. 有自由就不需要规则"], "ans": 1, "exp": "自由与规则不可分：规则划定自由的边界，规则是自由的保障。"}, {"q": "传播网络正能量的做法是", "opts": ["A. 转发未经证实的信息", "B. 利用网络传播先进文化", "C. 网上辱骂他人", "D. 泄露他人隐私"], "ans": 1, "exp": "传播先进文化、弘扬正能量是理性参与网络生活的正确做法。"}, {"q": "“夫喜群而恶独，相扶而相植者，人情之所乐也”体现了", "opts": ["A. 社会对个人的重要性", "B. 个人独立", "C. 脱离社会", "D. 独善其身"], "ans": 0, "exp": "这句话说明人是社会的人，个人离不开社会，人与人需要相互帮助。"}, {"q": "文明有礼对个人的意义是", "opts": ["A. 有利于立身处世", "B. 浪费时间", "C. 只对他人有用", "D. 可有可无"], "ans": 0, "exp": "文明有礼是一个人立身处世的前提，体现个人修养，促进社会和谐。"}, {"q": "下列行为属于服务社会的是", "opts": ["A. 参加社区志愿服务", "B. 拒绝帮助同学", "C. 乱扔垃圾", "D. 占用公共资源"], "ans": 0, "exp": "参加志愿服务、公益活动是服务社会、奉献社会的表现。"}, {"q": "国家利益与个人利益的关系是", "opts": ["A. 完全对立", "B. 国家利益是个人利益的保障", "C. 个人利益至上", "D. 毫不相关"], "ans": 1, "exp": "国家利益是整体利益，是个人利益的保障；国家利益与个人利益在根本上是一致的。"}, {"q": "面对网络谣言，我们应该", "opts": ["A. 随手转发", "B. 不传谣、不信谣、及时举报", "C. 添油加醋", "D. 置之不理"], "ans": 1, "exp": "理性辨别网络信息，不传谣、不信谣，发现谣言及时举报，维护网络环境。"}]
+const flashcards=[{"q": "网络的利与弊", "a": "利：信息传递快、学习便利；弊：沉迷、谣言、隐私泄露。理性使用。"}, {"q": "社会秩序与规则", "a": "规则（道德/纪律/法律）保障秩序；秩序（交通/公共/社会管理）是安居乐业的保障。"}, {"q": "尊重他人", "a": "换位思考、平等待人、宽容理解。“己所不欲勿施于人”。"}, {"q": "诚信", "a": "安身立命之本；待人诚信、信守承诺；诚信促进社会文明国家兴旺。"}, {"q": "责任的来源", "a": "承诺、职业要求、道德规范、法律规定、公民身份。"}, {"q": "角色与责任", "a": "子女-孝敬父母；学生-认真学习；公民-遵纪守法；社会成员-奉献社会。"}, {"q": "关爱他人", "a": "心怀善意、尽己所能、讲究策略、注意方式。"}, {"q": "服务社会", "a": "参加公益、志愿服务；提升自我价值，促进全面发展。"}, {"q": "国家利益至上", "a": "国家利益是整体利益，个人利益的保障；国家利益与个人利益根本一致。"}, {"q": "总体国家安全观", "a": "政治/军事/国土/经济/文化/社会/科技/网络/生态等全方位安全。"}, {"q": "维护国家安全", "a": "公民义务；12339举报；保守国家秘密；支持国防建设。"}, {"q": "网络正能量", "a": "传播先进文化；理性发声；辨析信息；保护个人信息。"}]
+const errors=[{"title": "自由与规则对立", "wrong": "认为有规则就没有自由。", "right": "自由与规则不可分：规则划定自由边界、保障自由。遵守规则才能享有自由。"}, {"title": "责任是强加的", "wrong": "认为责任都是被迫承担。", "right": "责任来自多种来源（承诺/职业/道德/法律），主动承担责任是成长的标志。"}, {"title": "关爱=施舍", "wrong": "关爱他人是高高在上的给予。", "right": "关爱他人要心怀善意、平等待人、讲究策略，维护受助者尊严。"}, {"title": "国家利益vs个人利益对立", "wrong": "认为维护国家利益必须牺牲个人利益。", "right": "国家利益与个人利益根本一致，国家利益是个人利益的保障。"}, {"title": "国家安全=军事安全", "wrong": "把国家安全等同于军事安全。", "right": "总体国家安全观涵盖政治、经济、文化、网络、生态等全方位安全。"}, {"title": "网络自由=随意发言", "wrong": "以为网上可以随意发言不负责任。", "right": "网络不是法外之地，网上发言同样要遵守法律、尊重他人、传播正能量。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+if(curQ<questions.length-1)setTimeout(function(){curQ++;renderQ();},1200);else setTimeout(showResult,1200);}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong><br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();</script>
+</body></html>

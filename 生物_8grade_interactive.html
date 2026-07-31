@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>生物 · 8年级课堂笔记</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 生物 · 8年级课堂笔记</h1>
+    <div class="meta">人教版上册 · 2 单元 · 16 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+      <div class="k-item"><h4>第一章 动物的主要类群·无脊椎动物</h4><p>腔肠动物（水螅，辐射对称）；扁形动物（涡虫，两侧对称）；线形动物（蛔虫）；环节动物（蚯蚓，体节）；软体动物（河蚌）；节肢动物（昆虫，外骨骼）。</p></div>
+      <div class="k-item"><h4>第一章 脊椎动物·鱼</h4><p>鱼：鳃呼吸、鳍游泳、流线型；淡水鱼（青草鲢鳙）/海水鱼；鱼类适应水中生活的特征。</p></div>
+      <div class="k-item"><h4>第一章 两栖动物</h4><p>青蛙：肺呼吸+皮肤辅助；变态发育（蝌蚪→青蛙）；既能在水中又能在陆地上生活。</p></div>
+      <div class="k-item"><h4>第一章 爬行动物</h4><p>蜥蜴：肺呼吸、卵生（有卵壳）、体表鳞片；真正适应陆地生活的脊椎动物。</p></div>
+      <div class="k-item"><h4>第一章 鸟类</h4><p>家鸽：流线型、前肢变翼、气囊辅助呼吸（双重呼吸）、胸肌发达、恒温。</p></div>
+      <div class="k-item"><h4>第一章 哺乳动物</h4><p>体表被毛、胎生哺乳、牙齿分化（门齿/犬齿/臼齿）；恒温；最高等的动物类群。</p></div>
+      <div class="k-item"><h4>第二章 动物的运动和行为</h4><p>运动系统：骨+关节+肌肉；关节（关节头/窝/软骨/韧带）；先天性行为（生来就有）vs学习行为（后天学习）。</p></div>
+      <div class="k-item"><h4>第三章+第六单元 生物多样性</h4><p>动物在生物圈中的作用（维持生态平衡/促进物质循环/帮助植物传粉）；生物分类等级：界门纲目科属种。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 人教版八年级上册 | 持续更新中</div>
+<script>
+const questions=[{"q": "下列动物属于环节动物的是", "opts": ["A. 蝗虫", "B. 蚯蚓", "C. 河蚌", "D. 水螅"], "ans": 1, "exp": "蚯蚓身体由许多体节构成，属于环节动物。蝗虫=节肢动物，河蚌=软体动物，水螅=腔肠动物。"}, {"q": "鱼类的呼吸器官是", "opts": ["A. 肺", "B. 皮肤", "C. 鳃", "D. 气囊"], "ans": 2, "exp": "鱼类用鳃呼吸（鳃丝密布毛细血管），适应水中溶解氧。"}, {"q": "下列属于鱼类的是", "opts": ["A. 鲸鱼", "B. 章鱼", "C. 鲫鱼", "D. 鱿鱼"], "ans": 2, "exp": "鲫鱼是鱼类。鲸鱼是哺乳动物，章鱼/鱿鱼是软体动物。"}, {"q": "青蛙的呼吸器官是", "opts": ["A. 鳃", "B. 肺和皮肤", "C. 气囊", "D. 气管"], "ans": 1, "exp": "青蛙用肺呼吸，皮肤辅助呼吸（皮肤湿润有毛细血管）。"}, {"q": "真正适应陆地生活的脊椎动物是", "opts": ["A. 两栖动物", "B. 爬行动物", "C. 鱼类", "D. 环节动物"], "ans": 1, "exp": "爬行动物体表有鳞片、肺呼吸、卵生有卵壳，摆脱了对水环境的依赖。"}, {"q": "鸟类飞行时辅助呼吸的结构是", "opts": ["A. 气囊", "B. 肺", "C. 鳃", "D. 气管"], "ans": 0, "exp": "鸟类有发达的气囊，与肺相通，实现双重呼吸提高供氧效率。"}, {"q": "哺乳动物特有的生殖方式是", "opts": ["A. 卵生", "B. 胎生哺乳", "C. 体外受精", "D. 变态发育"], "ans": 1, "exp": "胎生哺乳是哺乳动物特有的特征，提高后代成活率。"}, {"q": "人体运动系统中“支点”是", "opts": ["A. 骨", "B. 关节", "C. 肌肉", "D. 韧带"], "ans": 1, "exp": "杠杆原理：骨=杠杆，关节=支点，骨骼肌=动力。"}, {"q": "蜜蜂采蜜属于", "opts": ["A. 学习行为", "B. 先天性行为", "C. 社会行为中的学习", "D. 防御行为"], "ans": 1, "exp": "蜜蜂采蜜是生来就有的先天性行为（由遗传物质决定）。"}, {"q": "下列属于学习行为的是", "opts": ["A. 蜘蛛结网", "B. 大雁南飞", "C. 老马识途", "D. 母鸡孵蛋"], "ans": 2, "exp": "老马识途是后天经验积累的学习行为；其余为先天性行为。"}, {"q": "动物在生物圈中的作用不包括", "opts": ["A. 维持生态平衡", "B. 促进物质循环", "C. 帮助植物传粉", "D. 制造有机物"], "ans": 3, "exp": "动物不能制造有机物（那是绿色植物光合作用），是消费者。"}, {"q": "生物分类最基本的单位是", "opts": ["A. 界", "B. 门", "C. 科", "D. 种"], "ans": 3, "exp": "生物分类等级：界→门→纲→目→科→属→种，种是最基本的分类单位。"}, {"q": "节肢动物的主要特征是", "opts": ["A. 身体分节、有外骨骼", "B. 有脊椎", "C. 用肺呼吸", "D. 胎生"], "ans": 0, "exp": "节肢动物身体分节、附肢分节、体表有外骨骼（保护+防失水），如昆虫、蜘蛛、虾。"}, {"q": "家鸽的呼吸方式是", "opts": ["A. 单重呼吸", "B. 双重呼吸", "C. 皮肤呼吸", "D. 鳃呼吸"], "ans": 1, "exp": "鸟类吸气呼气时气体都经过肺（气囊辅助），实现双重呼吸，供氧效率高。"}, {"q": "牙齿有门齿、犬齿、臼齿分化的动物是", "opts": ["A. 鱼", "B. 鸟", "C. 哺乳动物", "D. 爬行动物"], "ans": 2, "exp": "哺乳动物牙齿分化：门齿切断、犬齿撕裂、臼齿磨碎，与食性有关。"}, {"q": "下列动物行为中，属于社会行为的是", "opts": ["A. 蚂蚁搬家", "B. 蛇蜕皮", "C. 猫捉老鼠", "D. 青蛙冬眠"], "ans": 0, "exp": "社会行为：群体内部有分工合作（如蚂蚁、蜜蜂），蚂蚁搬家有组织分工。"}]
+const flashcards=[{"q": "无脊椎动物分类", "a": "腔肠（水螅）→扁形（涡虫）→线形（蛔虫）→环节（蚯蚓）→软体（河蚌）→节肢（昆虫）。"}, {"q": "鱼类特征", "a": "鳃呼吸、鳍游泳、流线型；体表鳞片+黏液。"}, {"q": "两栖动物", "a": "幼体（蝌蚪）水中鳃呼吸，成体肺呼吸+皮肤辅助；变态发育。"}, {"q": "爬行动物", "a": "体表鳞片/甲、肺呼吸、卵生有卵壳，摆脱水的限制。"}, {"q": "鸟类适于飞行", "a": "流线型、翼、气囊双重呼吸、胸肌发达、骨骼轻、恒温。"}, {"q": "哺乳动物特征", "a": "体表被毛、胎生哺乳、牙齿分化、恒温。"}, {"q": "运动系统", "a": "骨+关节+肌肉；骨=杠杆，关节=支点，肌肉=动力。"}, {"q": "关节结构", "a": "关节头+关节窝（关节面）、关节软骨、关节囊、关节腔（滑液润滑）。"}, {"q": "先天性vs学习行为", "a": "先天性：生来就有、遗传决定（蜘蛛结网）；学习：后天学习（老马识途）。"}, {"q": "社会行为", "a": "群体分工合作，有首领（蚂蚁、蜜蜂、狼群）。"}, {"q": "动物作用", "a": "维持生态平衡、促进物质循环、帮助植物传粉传播种子。"}, {"q": "分类等级", "a": "界门纲目科属种：等级越小，亲缘关系越近。"}]
+const errors=[{"title": "鲸鱼是鱼", "wrong": "鲸鱼名字带“鱼”就认为是鱼类。", "right": "鲸鱼用肺呼吸、胎生哺乳，是哺乳动物。判断是否鱼类看鳃呼吸+鳍游泳。"}, {"title": "青蛙“既能水中又能陆地=爬行动物”", "wrong": "把两栖动物和爬行动物混淆。", "right": "两栖=青蛙（幼体水中、成体水陆、皮肤辅助）；爬行=蜥蜴（完全陆地、肺呼吸、卵壳）。"}, {"title": "先天性vs学习行为判错", "wrong": "把蜜蜂采蜜/蜘蛛结网当学习行为。", "right": "生来就有、由遗传决定=先天性行为（采蜜、结网、南飞）。后天经验=学习行为（老马识途、鹦鹉学舌）。"}, {"title": "动物=生产者", "wrong": "认为动物能自己制造有机物。", "right": "动物是消费者，不能制造有机物，直接或间接以植物为食。"}, {"title": "关节=支点混淆", "wrong": "认为骨是支点。", "right": "运动杠杆：骨=杠杆，关节=支点，骨骼肌=动力。"}, {"title": "鸟类气囊=呼吸器官", "wrong": "认为气囊是气体交换场所。", "right": "气体交换在肺中进行，气囊只辅助呼吸（储存气体、双重呼吸），不进行气体交换。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+if(curQ<questions.length-1)setTimeout(function(){curQ++;renderQ();},1200);else setTimeout(showResult,1200);}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong><br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();</script>
+</body></html>

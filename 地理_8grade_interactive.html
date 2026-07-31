@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>地理 · 8年级课堂笔记</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#1abc9c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 地理 · 8年级课堂笔记</h1>
+    <div class="meta">人教版上册 · 4 章 · 16 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+      <div class="k-item"><h4>第一章 疆域与人口</h4><p>我国地理位置（北温带为主）；陆地面积约960万km²（世界第三）；34个省级行政区（23省5自治区4直辖市2特别区）；人口东多西少（胡焕庸线）。</p></div>
+      <div class="k-item"><h4>第二章 中国的地形与地势</h4><p>三级阶梯（青藏高原→高原盆地→平原丘陵）；主要山脉（东西/东北-西南/南北/弧形）；四大高原/四大盆地/三大平原。</p></div>
+      <div class="k-item"><h4>第二章 气候</h4><p>气温：冬冷夏热，南北温差大；降水：东南多西北少（400mm等降水量线）；季风气候显著；旱涝灾害。</p></div>
+      <div class="k-item"><h4>第二章 河流</h4><p>外流河（太平洋水系：长江黄河珠江）/内流河（塔里木河）；长江（最长，水能宝库，黄金水道）；黄河（含沙量大，地上河，治理）。</p></div>
+      <div class="k-item"><h4>第三章 中国的自然资源</h4><p>自然资源总量丰富、人均不足；土地资源（耕地/林地/草地分布）；水资源（时空分布不均，南多北少，跨流域调水）。</p></div>
+      <div class="k-item"><h4>第四章 中国的经济发展</h4><p>交通运输（铁路网“五纵三横”、公路、水运）；农业（种植业/林业/牧业/渔业，因地制宜）；工业（四大工业基地）。</p></div>
+      <div class="k-item"><h4>四大地理区域</h4><p>北方地区、南方地区、西北地区、青藏地区（界线：秦岭-淮河线、400mm线、青藏高原边缘线）。</p></div>
+      <div class="k-item"><h4>秦岭-淮河线</h4><p>1月0℃等温线、800mm等降水量线；南北方分界：南方水田、北方旱地；南方亚热带、北方暖温带。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 人教版八年级上册 | 持续更新中</div>
+<script>
+const questions=[{"q": "我国领土面积约", "opts": ["A. 960万km²", "B. 760万km²", "C. 1200万km²", "D. 300万km²"], "ans": 0, "exp": "我国陆地面积约960万平方千米，居世界第三位。"}, {"q": "我国共有多少个省级行政区", "opts": ["A. 23个", "B. 34个", "C. 30个", "D. 35个"], "ans": 1, "exp": "34个：23省、5自治区、4直辖市、2特别行政区（港澳）。"}, {"q": "我国地势特征是", "opts": ["A. 西高东低，呈三级阶梯状分布", "B. 东高西低", "C. 北高南低", "D. 中部高四周低"], "ans": 0, "exp": "我国地势西高东低，呈三级阶梯状分布，利于海洋湿润气流深入内陆。"}, {"q": "世界屋脊指的是", "opts": ["A. 黄土高原", "B. 青藏高原", "C. 内蒙古高原", "D. 云贵高原"], "ans": 1, "exp": "青藏高原平均海拔4000米以上，是世界上海拔最高的大高原，称为“世界屋脊”。"}, {"q": "我国降水量的分布规律是", "opts": ["A. 从东南向西北递减", "B. 从西北向东南递减", "C. 均匀分布", "D. 从南向北递增"], "ans": 0, "exp": "受海陆位置和季风影响，我国降水从东南沿海向西北内陆递减。"}, {"q": "我国最长的河流是", "opts": ["A. 黄河", "B. 长江", "C. 珠江", "D. 黑龙江"], "ans": 1, "exp": "长江全长6300多千米，是我国最长、流域面积最广、水量最大的河流。"}, {"q": "黄河“地上河”形成的原因是", "opts": ["A. 中游水土流失，泥沙淤积", "B. 上游冰川融化", "C. 人为挖河", "D. 降水太多"], "ans": 0, "exp": "黄河中游流经黄土高原水土流失严重，下游河道变宽流速减缓，泥沙淤积抬升河床形成“地上河”。"}, {"q": "南水北调工程主要解决", "opts": ["A. 水资源时间分布不均", "B. 水资源空间分布不均", "C. 能源不足", "D. 交通不便"], "ans": 1, "exp": "南水北调把长江水调往华北、西北，解决水资源空间分布不均（南多北少）问题。"}, {"q": "我国耕地主要分布在", "opts": ["A. 东部季风区的平原和低缓丘陵", "B. 青藏高原", "C. 西北内陆", "D. 东北林区"], "ans": 0, "exp": "耕地主要分布在东部季风区平原（东北平原、华北平原、长江中下游平原等）。"}, {"q": "我国铁路网的骨架是", "opts": ["A. 五纵三横", "B. 三纵五横", "C. 环状", "D. 放射状"], "ans": 0, "exp": "我国铁路网以“五纵三横”为骨架，京广线、陇海线是重要干线。"}, {"q": "秦岭-淮河线大致是", "opts": ["A. 1月0℃等温线", "B. 400mm等降水量线", "C. 季风区非季风区界线", "D. 地势二三阶梯界线"], "ans": 0, "exp": "秦岭-淮河线=1月0℃等温线+800mm等降水量线，是南北方分界线。"}, {"q": "南方地区主要的粮食作物是", "opts": ["A. 小麦", "B. 水稻", "C. 玉米", "D. 高粱"], "ans": 1, "exp": "南方水田以水稻为主，北方旱地以小麦为主。“南稻北麦”。"}, {"q": "我国四大工业基地中，以重工业为主的是", "opts": ["A. 辽中南", "B. 京津唐", "C. 沪宁杭", "D. 珠三角"], "ans": 0, "exp": "辽中南工业基地依托丰富煤铁资源，以重工业为主；沪宁杭最大综合性。"}, {"q": "我国人口分布的特点是", "opts": ["A. 东多西少", "B. 西多东少", "C. 均匀分布", "D. 南少北多"], "ans": 0, "exp": "以黑河-腾冲线（胡焕庸线）为界，人口东多西少。"}, {"q": "我国夏季气温最低的地区是", "opts": ["A. 青藏高原", "B. 东北平原", "C. 吐鲁番", "D. 海南岛"], "ans": 0, "exp": "青藏高原因海拔高，夏季气温最低；冬季最低在漠河。"}, {"q": "长江被称为“黄金水道”是因为", "opts": ["A. 航运价值高", "B. 水能丰富", "C. 含沙量大", "D. 水量最大"], "ans": 0, "exp": "长江干支流通航里程长、货运量大，被称为“黄金水道”；上游水能丰富叫“水能宝库”。"}]
+const flashcards=[{"q": "地理位置", "a": "北温带为主；东临太平洋；亚洲东部、太平洋西岸。"}, {"q": "34个省级行政区", "a": "23省+5自治区+4直辖市+2特别行政区；简称：川/蜀、粤、苏等。"}, {"q": "三级阶梯", "a": "第一级：青藏高原（4000m+）；第二级：高原盆地；第三级：平原丘陵。"}, {"q": "主要山脉", "a": "东西：天山-阴山、昆仑-秦岭；东北-西南：大兴安岭-太行山-巫山；弧形：喜马拉雅山。"}, {"q": "季风气候", "a": "雨热同期利于农业；夏季风带来降水，冬春季易旱。"}, {"q": "400mm等降水量线", "a": "大兴安岭-张家口-兰州-拉萨-喜马拉雅山脉；季风区与非季风区分界。"}, {"q": "长江", "a": "源头唐古拉山→东海；水能宝库（上游）+黄金水道（中下游）。"}, {"q": "黄河", "a": "源头巴颜喀拉山→渤海；中游黄土高原水土流失；下游地上河。"}, {"q": "南水北调", "a": "东线（京杭运河）、中线（丹江口水库）、西线；解决北方缺水。"}, {"q": "秦岭-淮河线", "a": "1月0℃等温线+800mm线；南稻北麦、南船北马。"}, {"q": "四大地理区域", "a": "北方/南方/西北/青藏；界线：秦岭-淮河、400mm线、青藏边缘线。"}, {"q": "因地制宜农业", "a": "东部种植业、西部牧业、山区林业；东北大豆、新疆棉花。"}]
+const errors=[{"title": "我国第三大河流", "wrong": "认为黄河是第二长河。", "right": "长度排序：长江第一、黄河第二、黑龙江第三、珠江第四。"}, {"title": "长江黄河源头记反", "wrong": "长江源巴颜喀拉山、黄河源唐古拉山。", "right": "长江：唐古拉山脉→东海；黄河：巴颜喀拉山脉→渤海。"}, {"title": "地上河成因", "wrong": "以为是下游降水多。", "right": "中游黄土高原水土流失→下游泥沙淤积抬升河床→地上河。"}, {"title": "秦岭-淮河线混淆", "wrong": "当成400mm线。", "right": "秦岭-淮河=1月0℃等温线+800mm等降水量线；400mm是季风区界线。"}, {"title": "耕地分布", "wrong": "以为耕地分布在全国各地。", "right": "耕地集中在东部季风区平原；西部以草地荒漠为主。"}, {"title": "南水北调解决时间不均", "wrong": "以为解决降水时间分配不均。", "right": "南水北调解决空间分布不均（南多北少）；时间不均靠水库调节（三峡、小浪底）。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+if(curQ<questions.length-1)setTimeout(function(){curQ++;renderQ();},1200);else setTimeout(showResult,1200);}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong><br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();</script>
+</body></html>
