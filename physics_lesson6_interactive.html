@@ -1,0 +1,448 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌡️ 温度与温度计 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+</style>
+</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 温度与温度计</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-thermometer-half"></i> 温度与温度计 · 互动学习</h1>
+    <p>初二博学班 · 3 模块 · 33 题 · 20 卡牌 | 天元教育</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 33道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第六讲 · 温度与温度计</div>
+
+    <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-thermometer-half" style="color:#667eea"></i> 温度与三种温标</h3><ul>
+        <li><strong class="hl">温度</strong> = 物体的冷热程度</li>
+        <li><strong class="hl">摄氏温标 t</strong>：冰水混合物 0℃，沸水 100℃</li>
+        <li><strong>华氏温标</strong>：32°F ~ 212°F（标准大气压）</li>
+        <li><strong class="hl">热力学温标 T</strong>：国际基本单位 K</li>
+        <li>换算：T = t + 273（K），0K = -273℃</li>
+        <li>1℃ 与 1K 间隔相同</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-fire" style="color:#e74c3c"></i> 热传递</h3><ul>
+        <li>定义：热量从<strong class="hl">高温</strong>传向<strong class="hl">低温</strong>物体</li>
+        <li>条件：<strong class="hl">存在温度差</strong></li>
+        <li><strong>传导</strong>：需接触（金属良导体/木材羽绒不良导体）</li>
+        <li><strong>对流</strong>：液体/气体（热升冷降）</li>
+        <li><strong>辐射</strong>：不需介质（深色吸热多、浅色反射多）</li>
+        <li>⚠️ 温度相同后热传递停止</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-expand-arrows-alt" style="color:#2ecc71"></i> 热胀冷缩</h3><ul>
+        <li><strong class="hl">大多数物体</strong>：受热膨胀、遇冷收缩</li>
+        <li>气体最明显，固体最不明显</li>
+        <li><strong class="hl">水的反常膨胀</strong>：0~4℃反常，4℃体积最小</li>
+        <li><strong>利用</strong>：温度计、剥鸡蛋、瘪乒乓球</li>
+        <li><strong>防止</strong>：铁轨留缝、电线不绷紧</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-thermometer-full" style="color:#f39c12"></i> 温度计结构</h3><ul>
+        <li>玻璃管 + 玻璃泡 + 刻度 + 液体</li>
+        <li>液体：酒精 / 煤油 / 水银</li>
+        <li><strong class="hl">原理</strong>：液体的热胀冷缩</li>
+        <li><strong class="hl">缩口</strong>：防止液体回落（体温计）</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-eye" style="color:#667eea"></i> 使用五步法</h3><ul>
+        <li><strong class="hl">选</strong>：估测温度，选合适量程/分度值</li>
+        <li><strong class="hl">看</strong>：量程、分度值、零刻度线</li>
+        <li><strong class="hl">放</strong>：玻璃泡充分接触，不碰壁/底</li>
+        <li><strong class="hl">读</strong>：示数稳定后，视线与液柱上表面相平</li>
+        <li><strong class="hl">记</strong>：结果带单位 ℃</li>
+        <li>⚠️ 俯视偏大、仰视偏小！</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-stethoscope" style="color:#e74c3c"></i> 三种温度计对比</h3><ul>
+        <li>实验室：-10 ~ 110℃，分度值 1℃</li>
+        <li><strong class="hl">体温计：35 ~ 42℃，分度值 0.1℃</strong></li>
+        <li>寒暑表：-30 ~ 50℃，分度值 1℃</li>
+        <li>体温计有<strong>缩口</strong>，可离开人体读数</li>
+        <li>体温计使用前要<strong>甩动</strong></li>
+      </ul></div>
+    </div>
+
+    <!-- 温度计读数演示 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-thermometer-half" style="color:#e74c3c"></i> 温度计读数：视线与液柱上表面相平</div>
+      <svg class="svg-graph" viewBox="0 0 360 220" width="360" height="220">
+        <!-- 温度计 -->
+        <rect x="160" y="30" width="18" height="140" rx="9" fill="#fff" stroke="#333" stroke-width="2"/>
+        <circle cx="169" cy="185" r="22" fill="#e74c3c" stroke="#333" stroke-width="2"/>
+        <rect x="166" y="45" width="6" height="105" fill="#e74c3c"/>
+        <line x1="130" y1="60" x2="205" y2="60" stroke="#999" stroke-width="1"/>
+        <text x="212" y="64" font-size="10" fill="#999">0℃</text>
+        <line x1="130" y1="100" x2="205" y2="100" stroke="#999" stroke-width="1"/>
+        <text x="212" y="104" font-size="10" fill="#999">20℃</text>
+        <line x1="130" y1="140" x2="205" y2="140" stroke="#999" stroke-width="1"/>
+        <text x="212" y="144" font-size="10" fill="#999">40℃</text>
+        <line x1="130" y1="168" x2="205" y2="168" stroke="#999" stroke-width="1"/>
+        <text x="212" y="172" font-size="10" fill="#999">50℃</text>
+        <!-- 正确视线 -->
+        <line x1="60" y1="100" x2="130" y2="100" stroke="#2ecc71" stroke-width="2.5"/>
+        <text x="30" y="104" font-size="11" fill="#2ecc71" font-weight="600">视线相平 ✓</text>
+        <!-- 俯视 -->
+        <line x1="60" y1="80" x2="130" y2="100" stroke="#e74c3c" stroke-width="2" stroke-dasharray="5,3"/>
+        <text x="25" y="76" font-size="10" fill="#e74c3c">俯视偏大 ✗</text>
+        <!-- 仰视 -->
+        <line x1="60" y1="122" x2="130" y2="100" stroke="#f39c12" stroke-width="2" stroke-dasharray="5,3"/>
+        <text x="25" y="140" font-size="10" fill="#f39c12">仰视偏小 ✗</text>
+      </svg>
+      <div class="graph-label">↑ 读数时视线必须与液柱上表面相平：俯视读数偏大，仰视读数偏小</div>
+    </div>
+
+    <!-- 热传递三方式 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-fire" style="color:#e74c3c"></i> 热传递三种方式</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;padding:.5rem">
+        <div style="padding:.8rem;background:#667eea08;border-radius:8px;font-size:.85rem">
+          <strong style="color:#667eea">🔥 传导</strong><br>
+          需直接接触<br>金属 = 良导体<br>木材/塑料/羽绒 = 不良导体<br>
+          <span style="color:#999">例：冰镇饮料、热水袋</span>
+        </div>
+        <div style="padding:.8rem;background:#e74c3c08;border-radius:8px;font-size:.85rem">
+          <strong style="color:#e74c3c">🌊 对流</strong><br>
+          液体/气体中发生<br>热空气上升、冷空气下降<br>
+          <span style="color:#999">例：烧水、空调夏天往下吹</span>
+        </div>
+        <div style="padding:.8rem;background:#f39c1208;border-radius:8px;font-size:.85rem">
+          <strong style="color:#f39c12">☀️ 辐射</strong><br>
+          不需介质（可真空）<br>深色吸收多、浅色反射多<br>
+          <span style="color:#999">例：太阳、烤火、油罐车银色</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第六讲</h4>
+      <p>
+        <strong>温度计使用五步法</strong> — ①选：估测温度选合适量程分度值 ②看：量程/分度值/零刻度线 ③放：玻璃泡与待测物充分接触（不碰壁底） ④读：示数稳定后，视线与液柱上表面相平 ⑤记：带单位<br>
+        <strong>读数视线</strong> — 俯视偏大、仰视偏小，口诀："平视最准，俯大仰小"<br>
+        <strong>三种温标换算</strong> — T = t + 273，0K = -273℃（绝对零度），1℃与1K间隔相同<br>
+        <strong>热传递三方式辨析</strong> — 传导（接触+固体）、对流（液体/气体）、辐射（不需介质）<br>
+        <strong>水的反常膨胀</strong> — 0~4℃反常膨胀，4℃时体积最小、密度最大<br>
+        <strong>体温计两大特点</strong> — ①缩口防止液体回落，可离开人体读数 ②量程35~42℃、分度值0.1℃、使用前甩动<br>
+        <strong>热胀冷缩利用与防止</strong> — 利用：温度计/剥鸡蛋/瘪乒乓球复原；防止：铁轨留缝、电线不绷紧、热水瓶盖不拧死<br>
+        <strong>常见估测值</strong> — 人体37℃、洗澡水40℃、室温22-25℃、冷冻室-18℃、成都-5~40℃<br>
+        <strong><em>💬 金句："选看放读记，平视读数准；俯大仰小记心间。"</em></strong><br>
+        <strong><em>💬 金句："传导对流辐射，接触液气真空；深色吸热浅色反。"</em></strong><br>
+        <strong><em>💬 金句："体温计有缩口，离开人体也能读；用前甩一甩，水银归位来。"</em></strong>
+      </p>
+    </div>
+  </div>
+<div id="tab-quiz" class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 20</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 温度与温度计互动学习 | 天元教育 · 初二博学班</div>
+
+<script>
+const questions = [
+{q:'温度是表示物体什么的物理量？',opts:['A. 体积大小','B. 冷热程度','C. 质量多少','D. 运动快慢'],ans:1,exp:'温度是表示物体<strong>冷热程度</strong>的物理量。温度高的物体一定比温度低的物体热。'},
+{q:'摄氏温标规定，标准大气压下冰水混合物的温度是',opts:['A. 0℃','B. 4℃','C. 32℃','D. 100℃'],ans:0,exp:'摄氏温标规定：标准大气压下<strong>冰水混合物为0℃</strong>，沸水为100℃。'},
+{q:'标准大气压下水的沸点是',opts:['A. 0℃','B. 37℃','C. 100℃','D. 212℃'],ans:2,exp:'标准大气压下<strong>水沸腾的温度为100℃</strong>（摄氏温标的规定值）。'},
+{q:'热力学温标的单位是',opts:['A. ℃','B. °F','C. K','D. J'],ans:2,exp:'热力学温标的单位是<strong>开尔文（K）</strong>，是温度的国际基本单位。'},
+{q:'热力学温度 T 与摄氏温度 t 的换算关系是',opts:['A. T = t - 273','B. T = t + 273','C. T = 273 - t','D. T = t × 273'],ans:1,exp:'换算公式：<strong>T = t + 273</strong>。如 0℃ = 273K，37℃ = 310K。'},
+{q:'绝对零度（0K）等于多少摄氏度？',opts:['A. -273℃','B. 0℃','C. 100℃','D. -100℃'],ans:0,exp:'绝对零度 0K = <strong>-273℃</strong>，是理论上可能达到的最低温度。'},
+{q:'正常人腋下体温约为',opts:['A. 35℃','B. 37℃','C. 39℃','D. 42℃'],ans:1,exp:'正常人腋下体温约<strong>37℃</strong>（36~37℃为正常范围）。'},
+{q:'家用冰箱冷冻室的温度约为',opts:['A. -18℃','B. 0℃','C. 4℃','D. 18℃'],ans:0,exp:'冰箱冷冻室温度约<strong>-18℃</strong>，冷藏室约4℃。'},
+{q:'洗澡时感觉舒适的水温约为',opts:['A. 20℃','B. 30℃','C. 40℃','D. 60℃'],ans:2,exp:'洗澡舒适水温约<strong>40℃</strong>（略高于体温）。'},
+{q:'热传递发生的条件是',opts:['A. 两物体质量不同','B. 两物体存在温度差','C. 两物体必须接触','D. 两物体状态不同'],ans:1,exp:'热传递条件：<strong>存在温度差</strong>。热量从高温物体传向低温物体，温度相同后停止。'},
+{q:'下列属于热传导的是',opts:['A. 太阳晒热地面','B. 热水袋捂手','C. 空调制冷','D. 烤火取暖'],ans:1,exp:'热水袋捂手通过<strong>接触</strong>传递热量，属于<strong>热传导</strong>。太阳晒热属于辐射，空调/烤火涉及对流和辐射。'},
+{q:'热传递三种方式中，不需要介质的是',opts:['A. 传导','B. 对流','C. 辐射','D. 三种都需要'],ans:2,exp:'<strong>热辐射</strong>不需要介质，可以在真空中传播（太阳通过辐射把热量传到地球）。'},
+{q:'夏天空调安装在高处，主要是利用',opts:['A. 热传导','B. 热对流','C. 热辐射','D. 热胀冷缩'],ans:1,exp:'空调装高处利用<strong>热对流</strong>：冷空气密度大下沉，形成循环制冷。暖气片装下面同理（热空气上升）。'},
+{q:'油罐车车身涂成银白色，主要目的是',opts:['A. 美观','B. 反射热辐射减少吸热','C. 吸收热辐射','D. 防止生锈'],ans:1,exp:'浅色物体<strong>反射热辐射多</strong>，银白色车身可减少太阳辐射吸热，防止油温过高。'},
+{q:'下列现象属于热辐射的是',opts:['A. 铁棒一端加热另一端变热','B. 烧水时水上下翻滚','C. 冬天晒太阳取暖','D. 热水袋焐手'],ans:2,exp:'冬天晒太阳属于<strong>热辐射</strong>（不需介质）。铁棒是传导，烧水是对流，热水袋是传导。'},
+{q:'大多数物体受热时体积会',opts:['A. 膨胀','B. 收缩','C. 不变','D. 先胀后缩'],ans:0,exp:'大多数物体受热<strong>膨胀</strong>、遇冷收缩（热胀冷缩）。气体最明显，固体最不明显。'},
+{q:'水在多少摄氏度时体积最小（密度最大）？',opts:['A. 0℃','B. 2℃','C. 4℃','D. 100℃'],ans:2,exp:'<strong>4℃</strong>时水的体积最小、密度最大。0~4℃水反常膨胀（冷却反而膨胀），所以冬天湖底4℃水最沉。'},
+{q:'下列属于利用热胀冷缩的是',opts:['A. 铁轨留缝隙','B. 温度计测温','C. 电线冬季不绷紧','D. 热水瓶塞不拧死'],ans:1,exp:'<strong>温度计利用液体热胀冷缩</strong>测温。其他三项都是为了防止热胀冷缩带来的危害。'},
+{q:'实验室温度计的量程一般是',opts:['A. -10~110℃','B. 35~42℃','C. -30~50℃','D. 0~100℃'],ans:0,exp:'实验室温度计量程<strong>-10~110℃</strong>，分度值1℃。'},
+{q:'体温计的量程和分度值是',opts:['A. -10~110℃，1℃','B. 35~42℃，0.1℃','C. -30~50℃，1℃','D. 0~100℃，0.5℃'],ans:1,exp:'体温计：量程<strong>35~42℃</strong>，分度值<strong>0.1℃</strong>（比实验室温度计更精确）。'},
+{q:'温度计的工作原理是',opts:['A. 固体的热胀冷缩','B. 液体的热胀冷缩','C. 气体的热胀冷缩','D. 液体的蒸发吸热'],ans:1,exp:'温度计利用<strong>液体的热胀冷缩</strong>原理（酒精/煤油/水银等测温液体）。'},
+{q:'体温计可以离开人体读数，是因为',opts:['A. 量程小','B. 玻璃管有缩口','C. 分度值大','D. 用酒精测温'],ans:1,exp:'体温计的玻璃管有一处<strong>缩口</strong>，水银受冷收缩时在缩口处断开，不能自动回落，所以可离开人体读数。'},
+{q:'使用体温计前要用力甩几下，目的是',opts:['A. 提高灵敏度','B. 使水银回到玻璃泡','C. 校准刻度','D. 消毒'],ans:1,exp:'甩动体温计使<strong>水银在惯性作用下回到玻璃泡</strong>，否则测量结果可能偏高。'},
+{q:'使用温度计测量液体温度，玻璃泡应该',opts:['A. 接触容器底','B. 接触容器壁','C. 全部浸入液体中且不碰壁底','D. 露出液面'],ans:2,exp:'玻璃泡要<strong>全部浸入被测液体中</strong>，且不能接触容器壁和容器底，否则读数不准确。'},
+{q:'读取温度计示数时，视线应该',opts:['A. 俯视液柱','B. 仰视液柱','C. 与液柱上表面相平','D. 与液柱下表面相平'],ans:2,exp:'读数时视线应<strong>与液柱上表面相平</strong>。俯视读数偏大，仰视读数偏小。'},
+{q:'用温度计测水温，俯视读数会导致结果',opts:['A. 偏大','B. 偏小','C. 不变','D. 无法判断'],ans:0,exp:'<strong>俯视读数偏大</strong>，仰视读数偏小。口诀："俯大仰小"！'},
+{q:'温度计示数稳定后读数时，能否将温度计从液体中取出再读？',opts:['A. 可以，读数更准','B. 不可以，温度会变化','C. 都可以','D. 只有体温计可以'],ans:1,exp:'读数时温度计<strong>不能离开被测液体</strong>（否则温度变化读数不准）。只有体温计因缩口设计可以取出读数。'},
+{q:'下列估测最接近实际的是',opts:['A. 人体正常体温约42℃','B. 舒适室温约23℃','C. 沸水温度约50℃','D. 成都冬季约-50℃'],ans:1,exp:'舒适室温约<strong>22~25℃</strong>。人体37℃、沸水100℃、成都冬季约-5℃左右。'},
+{q:'物体颜色与热辐射的关系是',opts:['A. 深色反射多','B. 浅色吸收多','C. 深色吸收热辐射多','D. 颜色与辐射无关'],ans:2,exp:'<strong>深色物体吸收热辐射多</strong>，浅色物体反射热辐射多。所以夏天穿浅色衣服、遮阳伞外浅内黑。'},
+{q:'冬天用手摸铁比摸木头感觉更冷，是因为',opts:['A. 铁的温度更低','B. 木头温度更低','C. 铁是热的良导体，导热快','D. 木头是热的良导体'],ans:2,exp:'铁和木头温度相同，但<strong>铁是热的良导体</strong>，导热快，手的热量迅速被传走，所以感觉更冷。'},
+{q:'下列关于热传递说法正确的是',opts:['A. 热量从低温传向高温','B. 温度相同的两物体间仍有热传递','C. 热传递是热量从高温物体传向低温物体','D. 热传递与温度差无关'],ans:2,exp:'热传递是<strong>热量从高温物体传向低温物体</strong>，条件是存在温度差；温度相同则停止。'},
+{q:'下列现象中，属于热对流的是',opts:['A. 用热水袋焐手','B. 冰块放入水中，水慢慢变冷','C. 炉子上烧水，水上下翻滚','D. 太阳晒热地面'],ans:2,exp:'烧水时水<strong>上下翻滚</strong>是典型的热对流（液体中热升冷降）。热水袋是传导，冰块融入也是传导+对流混合，太阳晒是辐射。'},
+{q:'下列防止热胀冷缩危害的措施是',opts:['A. 温度计测体温','B. 钢轨接头处留缝隙','C. 瘪乒乓球用热水烫','D. 水银温度计选水银'],ans:1,exp:'<strong>钢轨接头留缝隙</strong>是防止夏天铁轨受热膨胀挤压变形。其余三项是热胀冷缩的利用。'},
+];
+
+const flashcards = [
+{front:'温度定义',back:'温度 = 物体的<strong>冷热程度</strong><br>温度高的一定比温度低的物体热<br><br>⚠️ 温度不是热量！<br>温度是状态量，热量是过程量'},
+{front:'摄氏温标规定',back:'标准大气压下：<br><strong>冰水混合物 = 0℃</strong><br><strong>沸水 = 100℃</strong><br><br>0~100℃之间分100等份<br>每等份 = 1℃'},
+{front:'三种温标换算',back:'摄氏 t ↔ 热力学 T：<br><strong>T = t + 273</strong>（K）<br><br>0K = -273℃（绝对零度）<br>华氏：32°F ~ 212°F<br>1℃ 与 1K 间隔相同'},
+{front:'常见温度估测',back:'人体腋下 <strong>37℃</strong><br>洗澡水 <strong>40℃</strong><br>舒适室温 <strong>22-25℃</strong><br>冷冻室 <strong>-18℃</strong><br>成都全年 -5 ~ 40℃'},
+{front:'热传递条件',back:'存在<strong>温度差</strong><br><br>热量：高温 → 低温<br>温度相同后停止传递<br><br>⚠️ 不是"冷"传向"热"！'},
+{front:'热传导',back:'需<strong>直接接触</strong><br>主要在固体中发生<br><br><strong>良导体</strong>：金属<br><strong>不良导体</strong>：木材/塑料/棉/羽绒<br>例：热水袋、铁棒一端加热'},
+{front:'热对流',back:'发生在<strong>液体/气体</strong>中<br>热空气上升、冷空气下降<br><br>例：烧水、空调装高处<br>暖气片装下面<br>形成循环流动'},
+{front:'热辐射',back:'<strong>不需介质</strong>（可在真空传播）<br>太阳传热到地球靠辐射<br><br>深色 → 吸收多<br>浅色 → 反射多<br>例：油罐车银色、遮阳伞外浅内黑'},
+{front:'热胀冷缩规律',back:'大多数物体：受热<strong>膨胀</strong>、遇冷<strong>收缩</strong><br><br>气体最明显<br>固体最不明显<br><br>利用：温度计/剥鸡蛋/瘪球复原<br>防止：铁轨留缝/电线不绷紧'},
+{front:'水的反常膨胀',back:'0~4℃ 水<strong>反常膨胀</strong><br><strong>4℃时体积最小、密度最大</strong><br><br>冬天湖面结冰，湖底4℃水最沉<br>→ 鱼能在湖底存活'},
+{front:'温度计结构',back:'玻璃管 + 玻璃泡 + 刻度 + 液体<br><br>测温液体：<strong>酒精/煤油/水银</strong><br>原理：<strong>液体热胀冷缩</strong><br>缩口：防止液体回落（体温计）'},
+{front:'三种温度计对比',back:'实验室：<strong>-10~110℃</strong>，分度1℃<br>体温计：<strong>35~42℃</strong>，分度0.1℃<br>寒暑表：<strong>-30~50℃</strong>，分度1℃<br><br>体温计最精确、量程最小'},
+{front:'温度计使用五步法',back:'①<strong>选</strong>：估测选合适量程分度值<br>②<strong>看</strong>：量程/分度值/零刻度<br>③<strong>放</strong>：玻璃泡浸入，不碰壁底<br>④<strong>读</strong>：稳定后视线相平<br>⑤<strong>记</strong>：结果带单位℃'},
+{front:'读数视线口诀',back:'视线与<strong>液柱上表面相平</strong><br><br>俯视 → 偏大<br>仰视 → 偏小<br><br>口诀：<strong>"俯大仰小"</strong>'},
+{front:'体温计特点',back:'①量程 35~42℃，分度 0.1℃<br>②玻璃管有<strong>缩口</strong><br>→ 可离开人体读数<br>③使用前要<strong>甩动</strong>使水银回位'},
+{front:'读数能否离开液体',back:'实验室温度计：<strong>不能</strong>离开<br>（离开后温度变化读数不准）<br><br>体温计：<strong>可以</strong>离开读数<br>（缩口阻止水银回落）'},
+{front:'导热性应用',back:'金属（铁/铜/铝）= 良导体<br>→ 锅、暖气片用金属<br><br>木材/塑料/羽绒 = 不良导体<br>→ 锅柄、隔热碗、羽绒服'},
+{front:'热传递三方式辨析',back:'<strong>传导</strong>：接触+固体（铁棒）<br><strong>对流</strong>：液体/气体（烧水）<br><strong>辐射</strong>：不需介质（晒太阳）<br><br>口诀："传导靠接触，对流靠流动，辐射靠电磁波"'},
+{front:'估测题技巧',back:'人体37℃是"标尺"<br>比体温高 → 烫（40℃洗澡水）<br>比体温低 → 凉（室温23℃）<br>远低于0℃ → 极冷（-18℃冷冻室）'},
+{front:'温度计刻度标定',back:'利用<strong>冰水混合物0℃</strong>和<strong>沸水100℃</strong><br>两个固定点标定刻度<br><br>注意必须在<strong>标准大气压</strong>下<br>气压变化沸点会改变'},
+];
+
+const errors = [
+{title:'温度 vs 热量混淆 ❌',wrong:'认为"温度高的物体含有的热量多"，或把温度当作热量。',right:'<strong>温度</strong>是状态量（冷热程度），<strong>热量</strong>是过程量（传递的能量）。不能说"物体含有多少热量"，只能说"吸收/放出多少热量"。'},
+{title:'热传递方向记反 ❌',wrong:'认为热量从低温物体传向高温物体，或认为温度相同的物体间也能传递热量。',right:'热传递是<strong>热量从高温物体传向低温物体</strong>，条件是<strong>存在温度差</strong>。温度相同后热传递立即停止。"高传低，直到等温"。'},
+{title:'温标换算错误 ❌',wrong:'把 T = t + 273 记反成 T = t - 273，或忘记 0K = -273℃。',right:'热力学温标 <strong>T = t + 273</strong>（单位K）。0℃ = 273K，0K = -273℃。1℃与1K的温度间隔相同。"加273"！'},
+{title:'读数视线错误 ❌',wrong:'读数时俯视或仰视液柱，导致读数不准。',right:'读数时视线必须<strong>与液柱上表面相平</strong>。<strong>俯视偏大、仰视偏小</strong>。口诀："俯大仰小"。'},
+{title:'温度计使用错误 ❌',wrong:'玻璃泡碰到容器壁或底、读数时取出温度计、选错量程。',right:'①玻璃泡<strong>全部浸入</strong>且<strong>不碰壁底</strong> ②示数稳定后再读，<strong>不能离开液体</strong>（体温计除外） ③先估测再<strong>选合适量程</strong>，防止超过量程损坏温度计。'},
+{title:'体温计用前不甩 ❌',wrong:'体温计用前不甩直接测，导致读数偏高（残留上次体温）。',right:'体温计有<strong>缩口</strong>，水银不会自动回落。使用前必须<strong>用力甩动</strong>，使水银回到玻璃泡，否则测出的是上次的高体温。"用前甩一甩，读数才准确"。'},
+];
+
+const WRONG_HISTORY_KEY='quiz_temperature_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);retryMode=false;}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);if(doneAll){document.getElementById('quizArea').innerHTML=showResult();return;}
+let h=``;if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div><div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1?'disabled':''}>下一题 <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);autoImportWB(idx,oi);}
+renderQ();if(curQ<shuffled.length-1)setTimeout(()=>nextQ(),1000);}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){if(curQ<shuffled.length-1){curQ++;renderQ();}}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class="question-card result-card fade-in-up"><div class="big-icon">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class="score">${correct}/${total}</div>
+<div><span class="result-stat"><i class="fas fa-check-circle" style="color:var(--success)"></i> 正确 ${correct} 题</span>
+<span class="result-stat"><i class="fas fa-times-circle" style="color:var(--danger)"></i> 错误 ${total-correct} 题</span></div>
+${retryMode?`<div style="margin:.5rem 0"><span class="result-stat"><i class="fas fa-history"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)"><p style="font-weight:600;margin-bottom:.5rem;font-size:.85rem">📝 需要复习：</p>${wl.map(w=>`<div style="padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)">✗ ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+<div style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+<button class="btn btn-primary" onclick="initQ();renderQ();"><i class="fas fa-redo"></i> 重新测验</button>
+${wl.length?`<button class="btn btn-warning" onclick="initRetryMode()" style="background:#e67e22;color:#fff"><i class="fas fa-bug"></i> 错题重练 (${wl.length}题)</button>`:''}
+<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button>
+${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()"><i class="fas fa-times"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'物理',chapter:'温度与温度计',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'温度,温度计,热传递,热胀冷缩,物态变化,物理'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'温度与温度计',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'温度,温度计,热传递,热胀冷缩,物态变化,物理'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('phy_kinematics_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('phy_kinematics_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('phy_kinematics_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('phy_kinematics_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('phy_kinematics_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
