@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>历史 · 8年级课堂笔记</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e67e22;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 历史 · 8年级课堂笔记</h1>
+    <div class="meta">部编版上册 · 8 单元 · 16 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+      <div class="k-item"><h4>第一单元 中国开始沦为半殖民地半封建社会</h4><p>鸦片战争（1840-1842，《南京条约》，割香港岛/赔款2100万银元/五口通商）；第二次鸦片战争（火烧圆明园）；太平天国运动。</p></div>
+      <div class="k-item"><h4>第二单元 近代化的早期探索与民族危机的加剧</h4><p>洋务运动（自强求富，近代化开端）；甲午中日战争（1894，《马关条约》）；戊戌变法（1898，百日维新）；八国联军侵华（《辛丑条约》）。</p></div>
+      <div class="k-item"><h4>第三单元 资产阶级民主革命与中华民国的建立</h4><p>辛亥革命（1911，武昌起义）；中华民国成立（1912，孙中山任临时大总统）；《中华民国临时约法》；辛亥革命历史意义。</p></div>
+      <div class="k-item"><h4>第四单元 新民主主义革命的开始</h4><p>新文化运动（1915，《新青年》）；五四运动（1919.5.4，新民主主义革命开端）；中国共产党成立（1921.7）。</p></div>
+      <div class="k-item"><h4>第五单元 从国共合作到国共对立</h4><p>第一次国共合作/北伐战争（1926）；南昌起义（1927.8.1）；秋收起义；井冈山革命根据地（第一个农村根据地）；红军长征（1934-1936）。</p></div>
+      <div class="k-item"><h4>第六单元 中华民族的抗日战争</h4><p>九一八事变（1931，局部抗战开始）；西安事变（1936）；七七事变（1937.7.7，全面抗战开始）；南京大屠杀；百团大战；中共七大；抗战胜利（1945）。</p></div>
+      <div class="k-item"><h4>第七单元 人民解放战争</h4><p>重庆谈判（1945）；转战陕北；三大战役（辽沈/淮海/平津，1948-49）；渡江战役（1949.4，南京解放）。</p></div>
+      <div class="k-item"><h4>第八单元 近代经济、社会生活与教育文化</h4><p>民族工业（张謇“实业救国”，大生纱厂）；新式交通（火车轮船）；科举废除（1905）；《申报》/商务印书馆。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 部编版八年级上册 | 持续更新中</div>
+<script>
+const questions=[{"q": "中国近代史的开端是", "opts": ["A. 鸦片战争", "B. 五四运动", "C. 辛亥革命", "D. 甲午战争"], "ans": 0, "exp": "鸦片战争（1840）是中国近代史的开端，中国开始沦为半殖民地半封建社会。"}, {"q": "《南京条约》割让给英国的是", "opts": ["A. 台湾", "B. 香港岛", "C. 九龙", "D. 澳门"], "ans": 1, "exp": "《南京条约》割香港岛给英国；甲午战争后《马关条约》割台湾。"}, {"q": "洋务运动的口号是", "opts": ["A. 自强、求富", "B. 变法、维新", "C. 民主、科学", "D. 民族、民权"], "ans": 0, "exp": "洋务运动前期“自强”（军事工业），后期“求富”（民用工业），是中国近代化的开端。"}, {"q": "甲午战争后签订的条约是", "opts": ["A. 《南京条约》", "B. 《马关条约》", "C. 《辛丑条约》", "D. 《北京条约》"], "ans": 1, "exp": "1895年《马关条约》：割台湾、赔款2亿两、允许日本在通商口岸开设工厂。"}, {"q": "辛亥革命首先爆发于", "opts": ["A. 武昌", "B. 广州", "C. 南京", "D. 上海"], "ans": 0, "exp": "1911年10月10日武昌起义爆发，辛亥革命由此开始，最终推翻清朝统治。"}, {"q": "辛亥革命的历史意义是", "opts": ["A. 推翻了清王朝，结束了两千多年的君主专制制度", "B. 完成了反帝反封建任务", "C. 改变了中国半殖民地性质", "D. 建立了社会主义制度"], "ans": 0, "exp": "辛亥革命推翻了清王朝，结束了两千多年的君主专制制度，使民主共和观念深入人心；但未完成反帝反封建任务。"}, {"q": "新文化运动的口号是", "opts": ["A. 自强求富", "B. 民主与科学", "C. 变法图强", "D. 三民主义"], "ans": 1, "exp": "新文化运动（1915）以“民主”“科学”为口号，提倡新文学、反对旧文学。"}, {"q": "五四运动爆发的导火线是", "opts": ["A. 巴黎和会中国外交失败", "B. 袁世凯称帝", "C. 武昌起义", "D. 九一八事变"], "ans": 0, "exp": "1919年巴黎和会上中国外交失败（山东权益被转让），引发五四运动，是新民主主义革命的开端。"}, {"q": "中国共产党成立的时间是", "opts": ["A. 1919年", "B. 1921年", "C. 1927年", "D. 1937年"], "ans": 1, "exp": "1921年7月中共一大在上海召开（后转嘉兴南湖），中国共产党成立。"}, {"q": "打响武装反抗国民党反动派第一枪的是", "opts": ["A. 南昌起义", "B. 秋收起义", "C. 广州起义", "D. 武昌起义"], "ans": 0, "exp": "1927年8月1日南昌起义（周恩来、贺龙等）打响第一枪，8月1日成为建军节。"}, {"q": "中国第一个农村革命根据地是", "opts": ["A. 井冈山", "B. 延安", "C. 瑞金", "D. 西柏坡"], "ans": 0, "exp": "1927年毛泽东创建井冈山革命根据地，开辟“农村包围城市、武装夺取政权”道路。"}, {"q": "红军长征中具有转折意义的会议是", "opts": ["A. 遵义会议", "B. 中共一大", "C. 中共七大", "D. 古田会议"], "ans": 0, "exp": "1935年遵义会议确立毛泽东领导地位，是党的历史上生死攸关的转折点。"}, {"q": "中国局部抗战开始的标志是", "opts": ["A. 九一八事变", "B. 七七事变", "C. 西安事变", "D. 南京大屠杀"], "ans": 0, "exp": "1931年九一八事变（沈阳）标志中国局部抗战开始。"}, {"q": "中国全民族抗战开始的标志是", "opts": ["A. 九一八事变", "B. 七七事变", "C. 八一三事变", "D. 百团大战"], "ans": 1, "exp": "1937年7月7日七七事变（卢沟桥事变）标志全民族抗战开始。"}, {"q": "解放战争中的三大战役不包括", "opts": ["A. 辽沈战役", "B. 淮海战役", "C. 平津战役", "D. 渡江战役"], "ans": 3, "exp": "三大战役：辽沈、淮海、平津（1948.9-1949.1）；渡江战役是1949年4月解放南京，不属于三大战役。"}, {"q": "提出“实业救国”口号的是", "opts": ["A. 张謇", "B. 詹天佑", "C. 康有为", "D. 严复"], "ans": 0, "exp": "清末状元张謇弃官经商，创办大生纱厂等，主张“实业救国”。"}]
+const flashcards=[{"q": "鸦片战争", "a": "1840-1842，英国发动；《南京条约》割香港岛、赔2100万银元、五口通商；中国近代史开端。"}, {"q": "洋务运动", "a": "19世纪60-90年代，自强/求富；创办江南制造总局、轮船招商局；近代化开端。"}, {"q": "甲午中日战争", "a": "1894-1895，《马关条约》割台湾、赔2亿两、允许设厂；刺激列强瓜分中国。"}, {"q": "戊戌变法", "a": "1898年百日维新；康有为梁启超；变法图强，最终失败。"}, {"q": "《辛丑条约》", "a": "1901年八国联军侵华后签订；赔4.5亿两；中国完全沦为半殖民地半封建社会。"}, {"q": "辛亥革命", "a": "1911武昌起义→1912中华民国建立；结束君主专制，民主共和观念深入人心。"}, {"q": "五四运动", "a": "1919年；学生发起→工人支持；彻底反帝反封建；新民主主义革命开端。"}, {"q": "中共成立", "a": "1921年7月中共一大；开天辟地，中国革命面貌焕然一新。"}, {"q": "长征", "a": "1934-1936；遵义会议转折；会宁会师结束；革命转危为安。"}, {"q": "抗日战争", "a": "1931九一八→1937七七事变全面抗战→1945年8月15日日本宣布投降；中共七大确立毛泽东思想。"}, {"q": "三大战役", "a": "辽沈、淮海、平津（1948-49）基本消灭国民党军队主力。"}, {"q": "近代民族工业", "a": "张謇实业救国；轻工业为主（纺织面粉）；受帝国主义和封建主义双重压迫。"}]
+const errors=[{"title": "条约内容张冠李戴", "wrong": "《南京条约》《马关条约》《辛丑条约》内容混淆。", "right": "南京：割香港岛+五口通商；马关：割台湾+允许设厂；辛丑：赔4.5亿两+完全沦为半殖民地。按时间线记。"}, {"title": "近代史开端vs新民主主义开端", "wrong": "都认为是鸦片战争。", "right": "鸦片战争=中国近代史开端（1840）；五四运动=新民主主义革命开端（1919）。"}, {"title": "辛亥革命“推翻封建制度”", "wrong": "认为辛亥革命推翻的是封建制度。", "right": "辛亥革命推翻的是清王朝和两千多年君主专制制度，不是封建制度整体；未完成反帝反封建任务。"}, {"title": "九一八vs七七事变混淆", "wrong": "七七事变是局部抗战开始。", "right": "九一八（1931）=局部抗战开始；七七（1937）=全民族抗战开始。"}, {"title": "建军节与南昌起义", "wrong": "忘记南昌起义在8月1日。", "right": "1927年8月1日南昌起义打响第一枪，8月1日定为建军节。"}, {"title": "中共一大vs遵义会议", "wrong": "把建党与转折点会议混为一谈。", "right": "中共一大（1921）=建党；遵义会议（1935）=长征中生死攸关的转折点。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+if(curQ<questions.length-1)setTimeout(function(){curQ++;renderQ();},1200);else setTimeout(showResult,1200);}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong><br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();</script>
+</body></html>
