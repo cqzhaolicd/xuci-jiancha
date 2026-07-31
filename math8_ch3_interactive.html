@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>位置与坐标 · 8年级上数学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 位置与坐标</h1>
+    <div class="meta">第3章 位置与坐标 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+      <div class="k-item"><h4>平面直角坐标系</h4><p>两条互相垂直且有公共原点的数轴组成。水平=横轴x（向右为正），竖直=纵轴y（向上为正）。</p></div>
+      <div class="k-item"><h4>象限划分</h4><p>第一象限(+,+)，第二(-,+)，第三(-,-)，第四(+,-)。坐标轴上的点不属于任何象限。</p></div>
+      <div class="k-item"><h4>点的坐标</h4><p>有序数对(x,y)：x是横坐标（到y轴距离），y是纵坐标（到x轴距离）。</p></div>
+      <div class="k-item"><h4>特殊点</h4><p>x轴上点(y=0)；y轴上点(x=0)；原点(0,0)；到x轴距离=|y|，到y轴距离=|x|。</p></div>
+      <div class="k-item"><h4>关于x轴对称</h4><p>(x,y)→(x,-y)：横坐标不变，纵坐标互为相反数。</p></div>
+      <div class="k-item"><h4>关于y轴对称</h4><p>(x,y)→(-x,y)：纵坐标不变，横坐标互为相反数。</p></div>
+      <div class="k-item"><h4>关于原点对称</h4><p>(x,y)→(-x,-y)：横纵坐标都互为相反数。</p></div>
+      <div class="k-item"><h4>坐标与图形</h4><p>用坐标表示位置（地图定位）；平行于坐标轴的线段长度：水平=|x₁-x₂|，竖直=|y₁-y₂|。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 北师大版八年级上册 · 第3章 | 持续更新中</div>
+<script>
+const questions=[{"q": "点(-3,4)位于第几象限？", "opts": ["A. 第一象限", "B. 第二象限", "C. 第三象限", "D. 第四象限"], "ans": 1, "exp": "第二象限坐标特征(-,+)，(-3,4)符合，在第二象限。"}, {"q": "点(2,-3)关于x轴对称的点的坐标是", "opts": ["A. (-2,-3)", "B. (2,3)", "C. (-2,3)", "D. (3,2)"], "ans": 1, "exp": "关于x轴对称：横坐标不变，纵坐标变相反数：(2,-3)→(2,3)。"}, {"q": "点(-1,5)关于y轴对称的点的坐标是", "opts": ["A. (1,5)", "B. (-1,-5)", "C. (1,-5)", "D. (5,-1)"], "ans": 0, "exp": "关于y轴对称：纵坐标不变，横坐标变相反数：(-1,5)→(1,5)。"}, {"q": "点(3,-2)关于原点对称的点的坐标是", "opts": ["A. (-3,2)", "B. (3,2)", "C. (-3,-2)", "D. (2,-3)"], "ans": 0, "exp": "关于原点对称：横纵坐标都变相反数：(3,-2)→(-3,2)。"}, {"q": "y轴上任意点的坐标特征是", "opts": ["A. x=0", "B. y=0", "C. x=y", "D. x+y=0"], "ans": 0, "exp": "y轴上所有点横坐标为0，坐标为(0,y)。"}, {"q": "点P到x轴的距离为3，到y轴的距离为4，且P在第二象限，则P的坐标是", "opts": ["A. (-4,3)", "B. (4,-3)", "C. (-3,4)", "D. (3,-4)"], "ans": 0, "exp": "第二象限(-,+)。到y轴距离=|x|=4→x=-4；到x轴距离=|y|=3→y=3。P(-4,3)。"}, {"q": "下列各点中，在x轴上的是", "opts": ["A. (0,3)", "B. (-2,0)", "C. (1,2)", "D. (0,0)"], "ans": 1, "exp": "x轴上点纵坐标为0：(-2,0)在x轴上。(0,3)在y轴上，(0,0)是原点。"}, {"q": "点(5,2)向右平移3个单位，再向上平移1个单位后坐标是", "opts": ["A. (8,3)", "B. (2,1)", "C. (8,1)", "D. (2,3)"], "ans": 0, "exp": "向右平移x+3→5+3=8；向上平移y+1→2+1=3。结果(8,3)。"}, {"q": "若点A(a,3)与点B(-2,b)关于x轴对称，则a+b=", "opts": ["A. -5", "B. -1", "C. 5", "D. 1"], "ans": 0, "exp": "关于x轴对称：横坐标相同a=-2，纵坐标相反b=-3。a+b=-5。"}, {"q": "点M(m+2, m-1)在y轴上，则m=", "opts": ["A. 2", "B. -2", "C. 1", "D. -1"], "ans": 1, "exp": "y轴上x=0：m+2=0，m=-2。"}, {"q": "已知点A(1,2)、B(5,2)，则AB的长度是", "opts": ["A. 4", "B. 6", "C. 2√5", "D. 5"], "ans": 0, "exp": "A、B纵坐标相同，AB=|5-1|=4（水平线段长度）。"}, {"q": "点(2,-5)到x轴的距离是", "opts": ["A. 2", "B. 5", "C. -5", "D. 7"], "ans": 1, "exp": "到x轴距离=|纵坐标|=|-5|=5。"}, {"q": "若ab>0，则点P(a,b)在", "opts": ["A. 第一或第三象限", "B. 第二或第四象限", "C. 第一或第二象限", "D. 坐标轴上"], "ans": 0, "exp": "ab>0→a、b同号：同正(第一象限)或同负(第三象限)。"}, {"q": "下列各点中在第四象限的是", "opts": ["A. (3,4)", "B. (-3,4)", "C. (3,-4)", "D. (-3,-4)"], "ans": 2, "exp": "第四象限(+,-)，(3,-4)符合。"}, {"q": "点P(-3,4)到原点的距离是", "opts": ["A. 5", "B. 7", "C. 1", "D. √7"], "ans": 0, "exp": "两点距离公式（或勾股定理）：√((-3)²+4²)=√(9+16)=√25=5。"}]
+const flashcards=[{"q": "坐标系", "a": "横轴x（水平向右正）+纵轴y（竖直向上正），交点原点(0,0)"}, {"q": "四象限符号", "a": "一(+,+) 二(-,+) 三(-,-) 四(+,-)；坐标轴不属于任何象限"}, {"q": "点的坐标", "a": "(x,y)：x到y轴距离，y到x轴距离；有序数对"}, {"q": "关于x轴对称", "a": "(x,y)→(x,-y)：横不变，纵相反"}, {"q": "关于y轴对称", "a": "(x,y)→(-x,y)：纵不变，横相反"}, {"q": "关于原点对称", "a": "(x,y)→(-x,-y)：横纵都相反"}, {"q": "平移规律", "a": "右加左减(x)，上加下减(y)：右移x+，上移y+"}, {"q": "距离公式", "a": "到x轴距离=|y|，到y轴距离=|x|，到原点=√(x²+y²)"}, {"q": "平行坐标轴线段", "a": "水平线段=|x₁-x₂|；竖直线段=|y₁-y₂|"}, {"q": "象限判定", "a": "看坐标符号：同正一、负正二、同负三、正负四"}, {"q": "坐标与位置", "a": "用一对有序数对确定平面内点的位置"}, {"q": "中点坐标", "a": "两点中点横纵坐标分别为两点横纵坐标的平均数"}]
+const errors=[{"title": "象限符号记混", "wrong": "第二象限记成(+,+)。", "right": "一(+,+) 二(-,+) 三(-,-) 四(+,-)。口诀：右上正正，逆时针转。"}, {"title": "对称变换方向错", "wrong": "关于x轴对称时横坐标变相反数。", "right": "关于x轴对称：横不变、纵相反；关于y轴对称：纵不变、横相反。"}, {"title": "距离=|坐标|", "wrong": "到x轴距离等于横坐标。", "right": "到x轴距离=|y|（纵坐标绝对值）；到y轴距离=|x|。"}, {"title": "原点对称漏一个", "wrong": "只变一个坐标符号。", "right": "关于原点对称：x、y都变相反数：(x,y)→(-x,-y)。"}, {"title": "平移方向搞反", "wrong": "向右平移减x。", "right": "右移x+、左移x-、上移y+、下移y-。口诀：左右变x，上下变y。"}, {"title": "坐标轴上点象限", "wrong": "原点在某个象限里。", "right": "坐标轴上的点（含原点）不属于任何象限。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+if(curQ<questions.length-1)setTimeout(function(){curQ++;renderQ();},1200);else setTimeout(showResult,1200);}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong><br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();</script>
+</body></html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>数据的分析 · 8年级上数学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 数据的分析</h1>
+    <div class="meta">第6章 数据的分析 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+      <div class="k-item"><h4>平均数</h4><p>算术平均数x̄=(x₁+x₂+…+xn)/n，反映数据集中趋势。</p></div>
+      <div class="k-item"><h4>加权平均数</h4><p>考虑各数据权重：x̄=(x₁w₁+x₂w₂+…)/(w₁+w₂+…)。</p></div>
+      <div class="k-item"><h4>中位数</h4><p>将数据从小到大排序后，位于中间的数（偶数个取中间两数平均数）。</p></div>
+      <div class="k-item"><h4>众数</h4><p>一组数据中出现次数最多的数。可能不止一个，也可能没有。</p></div>
+      <div class="k-item"><h4>极差</h4><p>最大值-最小值，反映数据波动范围。</p></div>
+      <div class="k-item"><h4>方差</h4><p>各数据与平均数差的平方的平均数：S²=[∑(xi-x̄)²]/n。方差越小数据越稳定。</p></div>
+      <div class="k-item"><h4>标准差</h4><p>方差的算术平方根。</p></div>
+      <div class="k-item"><h4>数据分析应用</h4><p>选运动员（方差小更稳定）、评商品（众数代表多数意见）、测试成绩（中位数抗极端值）。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 北师大版八年级上册 · 第6章 | 持续更新中</div>
+<script>
+const questions=[{"q": "数据3,5,7,9,11的平均数是", "opts": ["A. 7", "B. 8", "C. 6", "D. 7.5"], "ans": 0, "exp": "x̄=(3+5+7+9+11)/5=35/5=7。"}, {"q": "数据2,3,5,5,7,9的中位数是", "opts": ["A. 5", "B. 5.5", "C. 6", "D. 4"], "ans": 0, "exp": "排序后2,3,5,5,7,9，偶数个取中间两数平均数：(5+5)/2=5。"}, {"q": "数据1,2,3,4,5的方差是", "opts": ["A. 2", "B. √2", "C. 3", "D. 4"], "ans": 0, "exp": "x̄=3。S²=[(1-3)²+(2-3)²+(3-3)²+(4-3)²+(5-3)²]/5=(4+1+0+1+4)/5=10/5=2。"}, {"q": "数据中出现次数最多的数称为", "opts": ["A. 平均数", "B. 中位数", "C. 众数", "D. 方差"], "ans": 2, "exp": "众数=出现次数最多的数据，可能不止一个。"}, {"q": "数据5,7,8,8,10的众数是", "opts": ["A. 8", "B. 7.6", "C. 10", "D. 无众数"], "ans": 0, "exp": "8出现2次最多，众数是8。"}, {"q": "数据2,2,4,6,6的中位数是", "opts": ["A. 4", "B. 2", "C. 6", "D. 5"], "ans": 0, "exp": "排序2,2,4,6,6，中间第3个是4。"}, {"q": "数据1,3,5,7,9的极差是", "opts": ["A. 8", "B. 5", "C. 4", "D. 9"], "ans": 0, "exp": "极差=最大值-最小值=9-1=8。"}, {"q": "甲乙两人射击平均环数相同，甲的方差0.5，乙的方差0.8，则", "opts": ["A. 甲更稳定", "B. 乙更稳定", "C. 一样稳定", "D. 无法比较"], "ans": 0, "exp": "方差越小越稳定。甲方差0.5<乙0.8，甲更稳定。"}, {"q": "数据4,6,8的平均数是", "opts": ["A. 6", "B. 7", "C. 5", "D. 8"], "ans": 0, "exp": "x̄=(4+6+8)/3=18/3=6。"}, {"q": "小明成绩70,80,90的平均数是", "opts": ["A. 80", "B. 85", "C. 90", "D. 75"], "ans": 0, "exp": "x̄=(70+80+90)/3=240/3=80。"}, {"q": "数据2,4,4,6,6,6的众数是", "opts": ["A. 6", "B. 4", "C. 4和6", "D. 无"], "ans": 0, "exp": "6出现3次最多，众数是6。"}, {"q": "中位数的计算需要先将数据", "opts": ["A. 从小到大排序", "B. 从大到小排序", "C. 求平均数", "D. 去重"], "ans": 0, "exp": "求中位数必须先排序（从小到大或从大到小），再找中间位置的数。"}, {"q": "一组数据的方差为0，说明", "opts": ["A. 所有数据都相等", "B. 数据波动很大", "C. 平均数为0", "D. 数据为0"], "ans": 0, "exp": "方差为0表示每个数据都等于平均数，即所有数据完全相同。"}, {"q": "数据10,20,30,40的平均数是25，则各数与平均数差的平方和是", "opts": ["A. 500", "B. 250", "C. 125", "D. 100"], "ans": 0, "exp": "Σ(xi-x̄)²=(10-25)²+(20-25)²+(30-25)²+(40-25)²=225+25+25+225=500。"}, {"q": "甲组方差1.2，乙组方差0.8，则波动较大的是", "opts": ["A. 甲组", "B. 乙组", "C. 相同", "D. 无法判断"], "ans": 0, "exp": "方差越大波动越大：甲1.2>乙0.8，甲波动大。"}]
+const flashcards=[{"q": "平均数", "a": "x̄=(x₁+x₂+…+xn)/n，反映集中趋势"}, {"q": "加权平均数", "a": "x̄=Σ(xi·wi)/Σwi，考虑权重"}, {"q": "中位数", "a": "排序后中间值；偶数取中间两数平均数；抗极端值"}, {"q": "众数", "a": "出现次数最多的数；可能多个"}, {"q": "极差", "a": "最大值-最小值，反映波动范围"}, {"q": "方差", "a": "S²=[Σ(xi-x̄)²]/n，越小越稳定"}, {"q": "标准差", "a": "√S²，与数据同单位"}, {"q": "方差公式", "a": "每个数据减平均数→平方→求和→除以n"}, {"q": "选择依据", "a": "选运动员看方差小；评商品看众数；测试看中位数"}, {"q": "中位数步骤", "a": "排序→找中间（奇数取中，偶数取均值）"}, {"q": "方差意义", "a": "描述数据离散程度（波动大小）"}, {"q": "平均数的局限性", "a": "受极端值影响大；中位数更抗极端值"}]
+const errors=[{"title": "方差公式漏平方", "wrong": "先平均差值再平方。", "right": "每个差值先平方再求和平均：S²=[∑(xi-x̄)²]/n。"}, {"title": "中位数忘记排序", "wrong": "不排序直接取中间。", "right": "必须先排序（从小到大），再找中间位置的数。"}, {"title": "偶数个取错", "wrong": "偶数个数据直接取中间两个之一。", "right": "偶数个取中间两个数的平均数。"}, {"title": "方差大小含义反", "wrong": "方差大=更稳定。", "right": "方差越小越稳定，越大波动越大。"}, {"title": "众数判错", "wrong": "以为众数只能有一个。", "right": "众数可能不止一个（如2,2,3,3的众数是2和3），也可能没有。"}, {"title": "极差与方差混淆", "wrong": "以为极差=平均数。", "right": "极差=最大值-最小值（只看两端）；方差用全部数据（更全面）。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+if(curQ<questions.length-1)setTimeout(function(){curQ++;renderQ();},1200);else setTimeout(showResult,1200);}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong><br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();</script>
+</body></html>

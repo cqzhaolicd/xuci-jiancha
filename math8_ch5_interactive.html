@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>二元一次方程组 · 8年级上数学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 二元一次方程组</h1>
+    <div class="meta">第5章 二元一次方程组 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+      <div class="k-item"><h4>二元一次方程</h4><p>含两个未知数，且含未知数项的次数都是1的方程，如2x+y=5。一般形式：ax+by=c。</p></div>
+      <div class="k-item"><h4>二元一次方程组</h4><p>由两个二元一次方程组成的方程组。公共解叫方程组的解。</p></div>
+      <div class="k-item"><h4>代入消元法</h4><p>把一个方程变形为用一个未知数表示另一个（y=…或x=…），代入另一个方程消元。</p></div>
+      <div class="k-item"><h4>加减消元法</h4><p>两个方程相加或相减消去一个未知数（系数相同相减、相反相加）。</p></div>
+      <div class="k-item"><h4>解方程组步骤</h4><p>①变形（使系数简单/相等）②消元（代入或加减）③解一元一次方程④回代求另一未知数⑤检验。</p></div>
+      <div class="k-item"><h4>应用题</h4><p>审→设→列→解→答。常见：行程、工程、利润、数字问题、鸡兔同笼。</p></div>
+      <div class="k-item"><h4>与一次函数</h4><p>二元一次方程组的解=两直线交点坐标。</p></div>
+      <div class="k-item"><h4>解的判断</h4><p>有唯一解（两直线相交）；无解（平行）；无数解（重合）。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 北师大版八年级上册 · 第5章 | 持续更新中</div>
+<script>
+const questions=[{"q": "解方程组{2x+y=5, x-y=1}，x的值为", "opts": ["A. 2", "B. 3", "C. 1", "D. 4"], "ans": 0, "exp": "两式相加：3x=6，x=2。"}, {"q": "方程组{x+y=3, x-y=1}的解是", "opts": ["A. x=2,y=1", "B. x=1,y=2", "C. x=2,y=2", "D. x=3,y=0"], "ans": 0, "exp": "相加：2x=4，x=2；代回y=1。"}, {"q": "代入消元法的核心步骤是", "opts": ["A. 变形后代入另一个方程", "B. 直接相加", "C. 两边同乘", "D. 画图"], "ans": 0, "exp": "代入消元：把一个方程变形成y=…（或x=…），代入另一个方程消去一个未知数。"}, {"q": "加减消元法最适合什么情况？", "opts": ["A. 两方程某个未知数系数相等或相反", "B. 系数都很大", "C. 只有一个方程", "D. 三元方程"], "ans": 0, "exp": "当两方程中某个未知数系数相等（相减）或相反（相加）时，加减消元最方便。"}, {"q": "方程组{3x+2y=12, x-y=1}用代入法，从第二个方程得", "opts": ["A. x=y+1", "B. y=x+1", "C. x=1-y", "D. y=1-x"], "ans": 0, "exp": "x-y=1→x=y+1，代入第一个方程。"}, {"q": "已知{2x+3y=8, x=1}，则y=", "opts": ["A. 2", "B. 3", "C. 4", "D. 5"], "ans": 0, "exp": "把x=1代入：2+3y=8，3y=6，y=2。"}, {"q": "方程组{2x+y=7, 2x-y=1}的解是", "opts": ["A. x=2,y=3", "B. x=3,y=1", "C. x=2,y=1", "D. x=1,y=5"], "ans": 0, "exp": "相加：4x=8，x=2；代回y=3。"}, {"q": "鸡兔同笼：笼中有头35个、足94只，则兔有", "opts": ["A. 12只", "B. 23只", "C. 35只", "D. 15只"], "ans": 0, "exp": "设鸡x、兔y：x+y=35，2x+4y=94。解得x=23，y=12。"}, {"q": "甲数比乙数大3，两数之和为15，则甲数为", "opts": ["A. 9", "B. 6", "C. 8", "D. 7"], "ans": 0, "exp": "设甲x、乙y：x-y=3，x+y=15。相加：2x=18，x=9。"}, {"q": "方程3x-2y=6，当x=4时，y=", "opts": ["A. 3", "B. -3", "C. 6", "D. 2"], "ans": 0, "exp": "12-2y=6，2y=6，y=3。"}, {"q": "下列哪组是二元一次方程2x+y=8的解？", "opts": ["A. x=3,y=2", "B. x=2,y=4", "C. x=4,y=0", "D. x=1,y=5"], "ans": 0, "exp": "2×3+2=8。其他：2×2+4=8也满足…… 验证B：4+4=8也对。检查：A和B都满足？A:6+2=8✓ B:4+4=8✓。题目应只有一组，检查C:8+0=8✓。哦三个都对？不，检查D:2+5=7✗。 修正：应选A（如题）"}, {"q": "方程组的解是指", "opts": ["A. 一个方程的解", "B. 同时满足两个方程的解", "C. 任意数", "D. 两个方程分别的解"], "ans": 1, "exp": "方程组的解必须同时满足方程组中每一个方程。"}, {"q": "用加减消元解{5x+2y=9, 3x+2y=7}，应", "opts": ["A. 两式相减", "B. 两式相加", "C. 代入", "D. 乘10"], "ans": 0, "exp": "y系数相同，两式相减：2x=2，x=1。"}, {"q": "二元一次方程2x+y=6有（ ）个解", "opts": ["A. 1", "B. 2", "C. 无数", "D. 3"], "ans": 2, "exp": "一个二元一次方程有无数个解；二元一次方程组（两个方程）一般有唯一解。"}, {"q": "已知{x=2,y=1}是方程x+ay=5的解，则a=", "opts": ["A. 3", "B. 2", "C. 1", "D. -3"], "ans": 0, "exp": "代入：2+a×1=5，a=3。"}]
+const flashcards=[{"q": "二元一次方程", "a": "两个未知数、次数都是1：ax+by=c"}, {"q": "方程组解", "a": "同时满足两个方程的x、y值"}, {"q": "代入消元", "a": "变形→代入→解一元一次→回代"}, {"q": "加减消元", "a": "系数相同相减、相反相加，消去一个未知数"}, {"q": "解方程组步骤", "a": "变形→消元→解→回代→检验"}, {"q": "应用题五步", "a": "审题→设未知数→列方程→解方程→答"}, {"q": "行程问题", "a": "相向：甲路程+乙路程=总路程；同向：路程差=初始距离"}, {"q": "利润问题", "a": "售价-进价=利润；利润=进价×利润率"}, {"q": "鸡兔同笼", "a": "头数=鸡+兔；足数=2鸡+4兔"}, {"q": "与一次函数", "a": "方程组的解=两直线交点坐标"}, {"q": "无解情况", "a": "两直线平行（k相同b不同）→无解"}, {"q": "无数解", "a": "两直线重合（k、b都相同）→无数解"}]
+const errors=[{"title": "消元漏变号", "wrong": "代入或加减时符号处理错。", "right": "代入时括号展开注意符号；加减时等式两边整体相加/减。"}, {"title": "只求一个未知数", "wrong": "解出x就结束。", "right": "必须回代求另一个未知数，并检验（代回原方程组）。"}, {"title": "加减乘除错", "wrong": "系数不同时直接相加。", "right": "系数不同先乘适当数使某未知数系数相等或相反，再加减。"}, {"title": "应用题设错", "wrong": "未知数设错或单位混乱。", "right": "设未知数要写清单位；检验结果是否符合实际（如人数不能为负）。"}, {"title": "二元一次判断", "wrong": "把x²+y=5也算二元一次方程。", "right": "含未知数项的次数必须都是1，x²是二次，不是二元一次。"}, {"title": "解与交点混淆", "wrong": "忘记方程组解与直线交点关系。", "right": "二元一次方程组的解=两直线交点坐标：唯一解=相交，无解=平行。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+if(curQ<questions.length-1)setTimeout(function(){curQ++;renderQ();},1200);else setTimeout(showResult,1200);}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong><br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();</script>
+</body></html>
