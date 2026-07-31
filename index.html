@@ -242,7 +242,7 @@ const tools = [
 ];
 
 // 🔵 学校学习 — 按年级和科目分层存放
-const schoolGrades = ['7年级', '8年级', '9年级', '综合'];
+const schoolGrades = ['7年级', '8年级上', '8年级下', '9年级', '综合'];
 const schoolSubjects = ['数学', '语文', '英语', '物理', '化学', '生物', '历史', '地理', '道法'];
 const schoolIconsMap = {
   '数学':'fa-calculator','语文':'fa-book','英语':'fa-language','物理':'fa-flask',
@@ -252,7 +252,7 @@ const schoolColorsMap = {
   '数学':'subject-math','语文':'subject-chinese','英语':'subject-math','物理':'subject-physics',
   '化学':'subject-physics','生物':'subject-physics','历史':'subject-math','地理':'subject-physics','道法':'subject-math'
 };
-const gradeIcons = {'7年级':'fa-child','8年级':'fa-child','9年级':'fa-child','综合':'fa-layer-group'};
+const gradeIcons = {'7年级':'fa-child','8年级上':'fa-child','8年级下':'fa-child','9年级':'fa-child','综合':'fa-layer-group'};
 
 function buildSchoolData() {
   const extraLectures = {
@@ -276,7 +276,7 @@ function buildSchoolData() {
         { num: '01', title: '课堂笔记', url: '生物_7grade_interactive.html', date: '2026-07-28', tags: ['生物'], new: true }
       ],
     },
-    '8年级': {
+    '8年级上': {
       '数学': [
         { num: '01', title: '北师大版课堂笔记', url: '数学_8grade_interactive.html', date: '2026-07-29', tags: ['数学'], new: true }
       ],
@@ -315,7 +315,7 @@ function buildSchoolData() {
   schoolGrades.forEach((grade, gi) => {
     const subjects = [];
     // 7/8年级: 9个基础学科; 9年级: 空; 综合: 特殊内容
-    const gradeSubjects = (grade === '7年级' || grade === '8年级') ? schoolSubjects : [];
+    const gradeSubjects = (grade === '7年级' || grade === '8年级上' || grade === '8年级下') ? schoolSubjects : [];
     gradeSubjects.forEach((subj, si) => {
       const extras = (extraLectures[grade] && extraLectures[grade][subj]) || [];
       const lectures = [];
