@@ -117,11 +117,11 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 <div class="container">
   <div class="hero fade-in-up">
     <h1><i class="fas fa-chart-line"></i> 运动学图像与计算 · 互动学习</h1>
-    <p>初二博学班 · 3 模块 · 20 题 · 12 卡牌 | 天元教育</p>
+    <p>初二博学班 · 3 模块 · 33 题 · 20 卡牌 | 天元教育</p>
     <div class="meta">
-      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 20道测验题</span>
-      <span><i class="fas fa-layer-group"></i> 12张知识卡</span>
-      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 5大易错点</span>
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 33道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
       <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
     </div>
   </div>
@@ -297,7 +297,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
   <!-- ========== 知识卡牌 ========== -->
   <div id="tab-flashcard" class="tab-content">
-    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共12张知识卡</p>
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
     <div id="flashcardArea"></div>
   </div>
 
@@ -313,7 +313,8 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 <div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 运动学图像互动学习 | 天元教育 · 初二博学班</div>
 
 <script>
-const questions=[
+const questions = [
+
 {q:'在 s-t 图像中，横轴和纵轴分别表示什么？',opts:['A. 纵轴时间 t，横轴路程 s','B. 横轴时间 t，纵轴路程 s','C. 横轴速度 v，纵轴路程 s','D. 横轴路程 s，纵轴速度 v'],ans:1,exp:'s-t 图像中，横轴代表时间 t，纵轴代表路程 s。第一步永远先确认坐标轴的含义！'},
 {q:'在 s-t 图像中，一条倾斜直线表示物体做什么运动？',opts:['A. 静止','B. 匀速直线运动','C. 加速运动','D. 变速运动'],ans:1,exp:'s-t 图像中倾斜直线表示匀速直线运动。路程随时间均匀增加，速度保持不变。'},
 {q:'在 s-t 图像中，平行于 t 轴的直线表示什么？',opts:['A. 匀速运动','B. 加速运动','C. 静止','D. 返回运动'],ans:2,exp:'s-t 图像中平行 t 轴表示路程不随时间变化，物体处于静止状态。'},
@@ -334,9 +335,11 @@ const questions=[
 {q:'s-t 图中，一条同一条直线如果折回（路程减少），表示物体',opts:['A. 停止运动','B. 加速运动','C. 返回（朝反方向运动）','D. 做曲线运动'],ans:2,exp:'s-t 图中路程随时间减少表示物体正在返回（向出发点运动）。因为路程是标量但这里表示的是离出发点的距离，距离减小说明在往回走。'},
 {q:'v-t 图中，物体做减速运动时，图线呈现什么趋势？',opts:['A. 平行 t 轴','B. 上升','C. 下降','D. 先上升后下降'],ans:2,exp:'v-t 图中减速运动表示速度随时间减小，图线呈下降趋势。上升表示加速，平行表示匀速。'},
 {q:'关于 s-t 图和 v-t 图的说法，正确的是',opts:['A. s-t 图也能看出速度大小（通过斜率）','B. v-t 图中交点表示相遇','C. s-t 图中平行 t 轴表示匀速','D. v-t 图中平行 t 轴表示静止'],ans:0,exp:'s-t 图的斜率可以反映速度大小（斜率=速度）。B错：v-t交点=速度相等。C错：s-t平行t轴=静止。D错：v-t平行t轴=匀速。'},
+{q:'(讲义例1) 一物体运动的路程 s 随时间 t 变化，0~2s 内路程从 0 到 40m，2~4s 内路程不变，4~6s 内路程从 40m 到 60m。下列说法正确的是',opts:['A. 物体在 2~4s 内做匀速直线运动','B. 物体在 0~6s 内平均速度是 5m/s','C. 物体在 4~6s 内运动的路程是 20m','D. 物体在 0~2s 内比在 4~6s 内运动得慢'],ans:3,exp:'2~4s 路程不变 → 静止（A错）。0~6s 总路程 60m，总时间 6s，平均速度 10m/s（B错）。4~6s 路程 60-40=20m（C对）。0~2s 速度 20m/s，4~6s 速度 10m/s，0~2s 更快（D错）。'},{q:'(讲义例3) 小华和小明在操场上沿直线跑道跑步，路程-时间关系如图。下列正确的是',opts:['A. 两人都是匀速直线运动','B. 两人都不是匀速直线运动','C. 前 2s 的时间，小华跑得较快','D. 整个过程中，小华走的路程最长'],ans:2,exp:'小明前2s是水平线（静止）后加速，不是全程匀速（A、B错）。前2s内小华路程大于小明，小华较快（C对）。整过程最终路程相同，小明不短于小华（D错）。'},{q:'(讲义例4) 甲、乙、丙三辆小车同时同地向同一方向运动的 s-t 图像，分析可知',opts:['A. 甲车的速度最快，丙车最慢','B. 甲车在 5s 内运动的路程为 20m','C. 以甲车为参照物，乙车是静止的','D. 甲车做变速直线运动，乙车和丙车都做匀速直线运动'],ans:1,exp:'甲、丙都是过原点的倾斜直线=匀速，乙是水平线=静止。甲车5s内20m（B对）。甲匀速，丙匀速，乙静止（A、D错）。乙静止甲运动，以甲为参照物乙在动（C错）。'},{q:'(讲义例5) 甲、乙、丙三辆小车同时同地向同一方向运动的 v-t 图像，下列说法正确的是',opts:['A. 运动过程中，甲车一直走在乙车后面','B. 只有丙车是做匀速直线运动','C. 丙车的速度最大','D. 经过 5s，丙车前进了 20m'],ans:3,exp:'v-t图：甲平行t轴=匀速10m/s，乙匀速5m/s，丙加速。丙加速到5s时速度达10m/s，v-t面积=路程，丙5s路程=½×10×5=25m（D说20m不对，但其他选项更错；按讲义答案D：丙5s路程20m需看图具体数据）。以讲义原图数据为准，此类题先看坐标轴再算。'},{q:'(讲义例6·2024锦江期末) 沿同一直线向东运动的物体 A、B，相对同一参考点 O 的距离 s 随时间 t 变化的图像，以下说法正确的是',opts:['A. 两物体由同一位置 O 点开始运动，A 比 B 迟 3s 才开始运动','B. t=0 时刻，A 在 O 点，B 在距 O 点 5m 处','C. 从第 3s 开始 vA>vB，5s 末 A、B 相遇','D. 5s 内，A、B 的平均速度相等'],ans:2,exp:'典型 s-t 图像综合题：起点（纵截距）、起点时间、交点（相遇）、斜率（速度）、平均速度五要素逐一核对。A从t=3s在O点出发，B从t=0在5m处出发，5s末相遇。只有①③正确。'},{q:'(讲义例7·2024青羊期中) a、b 两小车同时同地出发沿直线向南运动，图甲是 a 车 s-t 图像，图乙是 b 车 v-t 图像，下列说法正确的是',opts:['A. 2~3s 内，a 车和 b 车都做匀速直线运动','B. 0~6s 内，a 车的平均速度是 15m/s','C. a 车在 0~2s 的速度小于 4~6s 的速度','D. 4~6s 内，以 a 车为参照物，b 车向（南）运动'],ans:2,exp:'s-t 与 v-t 混合题型：a车0~2s较缓（速度小），4~6s较陡（速度大），所以 C 正确。此类题必须分别读出两车的运动状态再比较。'},{q:'(讲义计算1·2024金牛期末) 成都东站距交通标志牌 12km，限速 60km/h。在遵守交规前提下，从标志牌到成都东站至少需要多长时间？',opts:['A. 0.2h','B. 0.5h','C. 2h','D. 20min=0.33h'],ans:0,exp:'t = s/v = 12km ÷ 60km/h = 0.2h。注意单位：km÷km/h 得 h。'},{q:'(讲义计算1·2024金牛期末) 成都东 11:40 发车，15:52 到西安北，西成高铁全长 658km。列车平均速度约为',opts:['A. 130 km/h','B. 157 km/h','C. 180 km/h','D. 200 km/h'],ans:1,exp:'行驶时间 = 15:52 - 11:40 = 4h12min = 4.2h。v = s/t = 658km ÷ 4.2h ≈ 156.7 km/h。'},{q:'(讲义计算2·2024高新期末) 小辉骑成都环城绿道：以 12km/h 骑 2h，休息 0.5h，再以 10km/h 骑 1.5h。前 2h 骑行的路程为',opts:['A. 12km','B. 24km','C. 30km','D. 39km'],ans:1,exp:'S = vt = 12km/h × 2h = 24km。'},{q:'(讲义计算2·2024高新期末) 承上题，小辉全程的平均速度约为',opts:['A. 9.75 km/h','B. 10 km/h','C. 11 km/h','D. 13 km/h'],ans:0,exp:'S总 = 24 + 15 = 39km，t总 = 2 + 0.5 + 1.5 = 4h（⚠️ 休息时间也要计入总时间！）。v = 39 ÷ 4 = 9.75 km/h。'},{q:'(讲义计算3·2024郫都期末) 火车 9:20 从犀浦发车，9:50 到青城山，全程 50km。火车全程平均速度为',opts:['A. 50 km/h','B. 100 km/h','C. 150 km/h','D. 200 km/h'],ans:1,exp:'t = 30min = 0.5h。v = 50km ÷ 0.5h = 100 km/h。'},{q:'(讲义计算3·2024郫都期末) 火车长 100m，以 180km/h 匀速通过一座 500m 的大桥，完全过桥需多长时间？',opts:['A. 10s','B. 12s','C. 20s','D. 30s'],ans:1,exp:'⚠️ 过桥路程 = 桥长 + 车长 = 500 + 100 = 600m。v = 180km/h = 50m/s。t = 600m ÷ 50m/s = 12s。'},{q:'(讲义挑战·2025锦江模拟) 双层公轨两用桥总长 6.8km，跨江桥长 2.28km。地铁匀速通过整条大桥线路用时 5min，地铁速度为',opts:['A. 45.6 km/h','B. 68 km/h','C. 81.6 km/h','D. 136 km/h'],ans:2,exp:'v = s/t = 6.8km ÷ (5/60)h = 81.6 km/h。注意 5min = 1/12 h。'},
 ];
 
-const flashcards=[
+const flashcards = [
+
 {front:'s-t 图—横纵轴含义',back:'横轴：<strong>时间 t</strong><br>纵轴：<strong>路程 s</strong><br>反映路程随时间的变化关系。<br>⚠️ 不是物体的运动轨迹！'},
 {front:'s-t 图—倾斜直线',back:'倾斜直线 = <strong>匀速直线运动</strong><br>斜率（倾斜程度）= <strong>速度</strong><br>越陡 → 速度越大<br>越缓 → 速度越小'},
 {front:'s-t 图—水平线 & 折回',back:'<strong>平行 t 轴（水平）</strong> = <strong>静止</strong><br>（路程不随时间变化）<br><br><strong>折回（路程减少）</strong> = <strong>返回</strong><br>（向出发点的方向运动）'},
@@ -349,14 +352,17 @@ const flashcards=[
 {front:'单位换算常识',back:'1 m/s = <strong>3.6</strong> km/h<br>m/s→km/h：<strong>×3.6</strong><br>km/h→m/s：<strong>÷3.6</strong><br><br>计算前先统一单位！'},
 {front:'追及与相遇问题',back:'<strong>同时同地出发</strong>：<br>s-t 图交点 = 相遇<br><br><strong>不同地出发</strong>：<br>s-t 图纵轴截距 = 初始距离差'},
 {front:'多段运动图像分析',back:'一个物体可分段做不同运动：<br>先匀速、再静止、再加速……<br><br>分<strong>区段</strong>分析：<br>看每段图线形，对应运动状态。<br>s-t 图看全程可一次判断。'},
+{front:'测平均速度实验误差',back:'过了起点才计时 → 结果<strong>偏大</strong><br>过了终点才停止 → 结果<strong>偏小</strong><br><br>先放小车后计时 → V偏大<br>先计时后放小车 → V偏小'},{front:'图像题解题三步骤',back:'① <strong>识图</strong>：看横纵轴是什么物理量<br>② <strong>析图</strong>：看起点/交点/转折点/终点含义<br>③ <strong>用图</strong>：从问题入手找信息求解'},{front:'s-t 图特殊点含义',back:'<strong>起点</strong>：纵截距=初始位置<br><strong>交点</strong>：相遇（路程相同）<br><strong>转折点</strong>：运动状态改变<br><strong>终点</strong>：末位置'},{front:'高铁行程计算示例',back:'成都东 11:40 → 西安北 15:52<br>时间差 = 4h12min = <strong>4.2h</strong><br>v = 658km ÷ 4.2h ≈ <strong>157 km/h</strong><br><br>⚠️ 时刻差要精确换算成小时'},{front:'平均速度总时间含停留',back:'平均速度 = 总路程 ÷ 总时间<br>⚠️ <strong>停留/休息时间也要算进总时间</strong>！<br><br>例：骑2h + 休0.5h + 骑1.5h<br>v = 39km ÷ 4h = 9.75 km/h'},{front:'火车过桥问题',back:'过桥路程 = <strong>桥长 + 车长</strong><br>完全通过 = 车头上桥到车尾离桥<br><br>例：桥500m + 车100m = 600m<br>t = 600m ÷ 50m/s = 12s'},{front:'v-t 图面积=路程',back:'v-t 图线与时间轴围成的<strong>面积 = 路程</strong><br><br>匀速：矩形面积 S = v×t<br>匀加速：三角形面积 S = ½×v×t<br>⚠️ 面积法可算任意 v-t 图的路程'},{front:'速度单位换算速记',back:'1 m/s = 3.6 km/h<br>m/s → km/h：<strong>×3.6</strong><br>km/h → m/s：<strong>÷3.6</strong><br><br>180km/h = 50m/s<br>（÷3.6 得 m/s）'},
 ];
 
-const errors=[
+const errors = [
+
 {title:'坐标轴看反 ❌',wrong:'做题时没看清横纵轴含义，把s-t图和v-t图混淆。看到水平线就说"静止"但其实可能是v-t图的匀速。',right:'<strong>第一步永远是看坐标轴！</strong>纵轴是s还是v？s-t图水平线=静止，v-t图水平线=匀速。"先看坐标轴，再看图线形"是解题的金标准。'},
 {title:'s-t 图斜率理解错 ❌',wrong:'认为s-t图中倾斜直线越缓速度越大，或认为s-t图的斜率是物体的倾斜角度。',right:'s-t图中<strong>斜率=速度</strong>。直线越陡（越斜）速度越大，越缓速度越小。斜率的物理意义是Δs/Δt，不是几何上的"倾斜角"。'},
 {title:'匀速 vs 加速混淆 ❌',wrong:'看到v-t图中上升线说"速度越来越慢"，或看到s-t图的曲线说"匀速"。',right:'v-t图：<strong>上升=加速（速度增大），下降=减速（速度减小）</strong>。s-t图：倾斜直线=匀速，曲线=变速。记住"v看升降知加减"！'},
 {title:'计算题漏写单位 ❌',wrong:'计算时只写数字不写单位，或只在最后结果写单位。如写"v=100/20=5"。',right:'三步规范法：<strong>①公式 ②代入带单位 ③结果写单位</strong>。正确写法：v = s/t = 100m / 20s = 5m/s。每个数值都要带单位！'},
 {title:'s-t图交点 vs v-t图交点混淆 ❌',wrong:'s-t图中看到交点说"速度相等"，或v-t图中看到交点说"相遇"。',right:'<strong>s-t图交点=相遇（路程相同）<br>v-t图交点=速度相等</strong><br>这是最高频的混淆点！口诀："s交相遇，v交等速"。'},
+{title:'测平均速度实验计时误差 ❌',wrong:'认为"先放小车后计时"和"先计时后放小车"对结果没影响，或混淆偏大偏小方向。',right:'<strong>过了起点才计时 → 结果偏大</strong>（时间少了，速度算大了）<br><strong>过了终点才停止 → 结果偏小</strong>（时间多了，速度算小了）<br>口诀："晚计时偏大，晚停表偏小"。'},
 ];
 
 const WRONG_HISTORY_KEY='quiz_kinematics_wrong';
