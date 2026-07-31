@@ -289,9 +289,6 @@ function buildSchoolData() {
       '物理': [
         { num: '01', title: '八上物理·早背晚默', url: 'physics8_interactive.html', date: '2026-07-28', tags: ['物理'], new: true }
       ],
-      '化学': [
-        { num: '01', title: '课堂笔记（衔接预习）', url: '化学_8grade_interactive.html', date: '2026-07-31', tags: ['化学'], new: true }
-      ],
       '生物': [
         { num: '01', title: '课堂笔记', url: '生物_8grade_interactive.html', date: '2026-07-31', tags: ['生物'], new: true }
       ],
@@ -315,7 +312,9 @@ function buildSchoolData() {
   schoolGrades.forEach((grade, gi) => {
     const subjects = [];
     // 7/8年级: 9个基础学科; 9年级: 空; 综合: 特殊内容
-    const gradeSubjects = (grade === '7年级' || grade === '8年级上' || grade === '8年级下') ? schoolSubjects : [];
+    // 8年级上: 8个学科（无化学）
+    let gradeSubjects = (grade === '7年级' || grade === '8年级上' || grade === '8年级下') ? schoolSubjects.slice() : [];
+    if (grade === '8年级上') gradeSubjects = gradeSubjects.filter(s => s !== '化学');
     gradeSubjects.forEach((subj, si) => {
       const extras = (extraLectures[grade] && extraLectures[grade][subj]) || [];
       const lectures = [];
