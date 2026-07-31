@@ -319,14 +319,17 @@ function buildSchoolData() {
       const extras = (extraLectures[grade] && extraLectures[grade][subj]) || [];
       const lectures = [];
       extras.forEach(e => lectures.push(e));
-      lectures.push({
-        num: String(si + 1).padStart(2, '0'),
-        title: subj,
-        url: `school_interactive.html?level=${encodeURIComponent(grade)}&subject=${encodeURIComponent(subj)}`,
-        date: '',
-        tags: [subj],
-        new: false
-      });
+      // 8年级上已有独立互动页，不添加默认占位链接
+      if (grade !== '8年级上') {
+        lectures.push({
+          num: String(si + 1).padStart(2, '0'),
+          title: subj,
+          url: `school_interactive.html?level=${encodeURIComponent(grade)}&subject=${encodeURIComponent(subj)}`,
+          date: '',
+          tags: [subj],
+          new: false
+        });
+      }
       subjects.push({
         id: grade + '-' + subj,
         name: subj,
@@ -439,6 +442,7 @@ function renderSection(title, icon, color, badgeClass, content) {
 }
 
 function renderGrade(grade, gi, cnt) {
+  const isSubdirGrade = (grade.name === '8年级上');
   return `
     <div class="subject-section fade-in-up" style="animation-delay:${0.1 + gi * 0.06}s">
       <div class="subject-header ${grade.cls}" onclick="toggleSubject(this)">
@@ -449,6 +453,29 @@ function renderGrade(grade, gi, cnt) {
       </div>
       <div class="grade-grid">
         ${grade.subjects.length > 0 ? grade.subjects.map((subj, si) => {
+          if (isSubdirGrade) {
+            // 8年级上：学科=可展开子目录，互动页作为目录内条目
+            return `<div class="subject-section" style="margin-bottom:0">
+              <div class="subject-header ${subj.cls}" onclick="toggleSubject(this)" style="cursor:pointer">
+                <div class="icon" style="font-size:1rem;color:var(--primary)"><i class="fas ${subj.icon}"></i></div>
+                <h3 style="font-size:0.88rem;font-weight:600;flex:1;margin:0;color:var(--text)">${subj.name}</h3>
+                <span style="font-size:0.7rem;color:var(--text-light)">${subj.lectures.length}项</span>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+              </div>
+              <div class="lecture-grid">
+                ${subj.lectures.map((lec, li) => `
+                <a href="${lec.url}" class="lecture-card">
+                  ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
+                  <div class="lnum" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
+                  <div class="info">
+                    <h4>${lec.title}</h4>
+                    <div class="meta"><span>${lec.date}</span>${lec.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                  </div>
+                  <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                </a>`).join('')}
+              </div>
+            </div>`;
+          }
           const firstUrl = subj.lectures.length > 0 ? subj.lectures[0].url : '#';
           return `<a href="${firstUrl}" class="subject-header ${subj.cls}" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.7rem;border-radius:var(--radius-sm);background:var(--card-bg);border:2px solid var(--border);cursor:pointer;transition:all 0.2s">
             <div class="icon" style="font-size:1rem;color:var(--primary)"><i class="fas ${subj.icon}"></i></div>
