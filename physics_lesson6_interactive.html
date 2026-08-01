@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌡️ 温度与温度计 · 互动学习</title>
+<title>🌡️ 温度与物态 · 互动学习</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
@@ -104,7 +104,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 </head><body>
 
 <nav class="navbar"><div class="container">
-  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 温度与温度计</a>
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 温度与物态</a>
   <div class="navbar-nav">
     <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
     <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
@@ -116,12 +116,12 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <div class="container">
   <div class="hero fade-in-up">
-    <h1><i class="fas fa-thermometer-half"></i> 温度与温度计 · 互动学习</h1>
-    <p>初二博学班 · 3 模块 · 33 题 · 20 卡牌 | 天元教育</p>
+    <h1><i class="fas fa-thermometer-half"></i> 温度与物态 · 互动学习</h1>
+    <p>初二博学班 · 4 模块 · 49 题 · 26 卡牌 | 天元教育</p>
     <div class="meta">
-      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 33道测验题</span>
-      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
-      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 49道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 26张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 9大易错点</span>
       <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
     </div>
   </div>
@@ -135,7 +135,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
   <!-- ========== 知识图谱 ========== -->
   <div id="tab-knowledge" class="tab-content active">
-    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第六讲 · 温度与温度计</div>
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第六讲 · 温度与物态（含熔化凝固）</div>
 
     <div class="knowledge-grid">
       <div class="knowledge-card c1"><h3><i class="fas fa-thermometer-half" style="color:#667eea"></i> 温度与三种温标</h3><ul>
@@ -181,6 +181,30 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
         <li>寒暑表：-30 ~ 50℃，分度值 1℃</li>
         <li>体温计有<strong>缩口</strong>，可离开人体读数</li>
         <li>体温计使用前要<strong>甩动</strong></li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-snowflake" style="color:#2ecc71"></i> 熔化与凝固</h3><ul>
+        <li><strong class="hl">熔化</strong>：固态→液态，<strong>吸热</strong>（冰雪消融/冰棒化了）</li>
+        <li><strong class="hl">凝固</strong>：液态→固态，<strong>放热</strong>（铁水浇铸/滴水成冰）</li>
+        <li>⚠️ <strong>溶化</strong>=溶解（糖溶水）；<strong>融化</strong>=冰雪化水</li>
+        <li>同种晶体：熔点 = 凝固点</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-gem" style="color:#f39c12"></i> 晶体 vs 非晶体</h3><ul>
+        <li><strong class="hl">晶体</strong>：有固定熔点（海波/冰/金属/水晶/食盐）</li>
+        <li><strong class="hl">非晶体</strong>：无固定熔点（玻璃/松香/蜂蜡/沥青/石蜡）</li>
+        <li>晶体熔化：吸热但<strong class="hl">温度不变</strong>（图像有平台）</li>
+        <li>非晶体熔化：温度<strong>不断上升</strong>（先软后稠再稀）</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-chart-line" style="color:#667eea"></i> 晶体熔化图像</h3><ul>
+        <li><strong>AB段</strong>：固态，吸热升温</li>
+        <li><strong class="hl">BC段</strong>：<strong>固液共存</strong>，吸热温度不变（熔化过程）</li>
+        <li><strong>CD段</strong>：液态，吸热升温</li>
+        <li>凝固图像同理：BC段固液共存放热温度不变</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-flask" style="color:#e74c3c"></i> 实验要点</h3><ul>
+        <li><strong class="hl">水浴法</strong>：受热均匀（不直接用酒精灯）</li>
+        <li>器材组装<strong>自下而上</strong></li>
+        <li><strong class="hl">撒盐</strong>：加入盐后冰的熔点<strong>降低</strong>（化雪原理）</li>
+        <li>温度计不碰试管壁/底</li>
       </ul></div>
     </div>
 
@@ -235,6 +259,26 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
       </div>
     </div>
 
+    <!-- 晶体熔化凝固图像 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-chart-line" style="color:#2ecc71"></i> 晶体熔化图像：BC段固液共存、吸热温度不变</div>
+      <svg class="svg-graph" viewBox="0 0 360 210" width="360" height="210">
+        <line x1="50" y1="180" x2="340" y2="180" stroke="#333" stroke-width="2"/>
+        <line x1="50" y1="180" x2="50" y2="20" stroke="#333" stroke-width="2"/>
+        <text x="20" y="35" font-size="10" fill="#666">温度/℃</text>
+        <text x="330" y="195" font-size="10" fill="#666">时间/min</text>
+        <line x1="60" y1="160" x2="140" y2="100" stroke="#667eea" stroke-width="3"/>
+        <text x="65" y="150" font-size="9" fill="#667eea">A(固态)</text>
+        <line x1="140" y1="100" x2="230" y2="100" stroke="#2ecc71" stroke-width="3"/>
+        <text x="148" y="92" font-size="9" fill="#2ecc71">B→C 固液共存 吸热不变</text>
+        <line x1="230" y1="100" x2="320" y2="40" stroke="#e74c3c" stroke-width="3"/>
+        <text x="240" y="62" font-size="9" fill="#e74c3c">D(液态)</text>
+        <line x1="50" y1="100" x2="340" y2="100" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="55" y="112" font-size="9" fill="#999">熔点</text>
+      </svg>
+      <div class="graph-label">↑ 晶体熔化：AB固态升温 → BC固液共存（吸热温度不变=熔化） → CD液态升温；凝固图像方向相反</div>
+    </div>
+
     <div class="teacher-talk">
       <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第六讲</h4>
       <p>
@@ -248,21 +292,26 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
         <strong>常见估测值</strong> — 人体37℃、洗澡水40℃、室温22-25℃、冷冻室-18℃、成都-5~40℃<br>
         <strong><em>💬 金句："选看放读记，平视读数准；俯大仰小记心间。"</em></strong><br>
         <strong><em>💬 金句："传导对流辐射，接触液气真空；深色吸热浅色反。"</em></strong><br>
-        <strong><em>💬 金句："体温计有缩口，离开人体也能读；用前甩一甩，水银归位来。"</em></strong>
+        <strong><em>💬 金句："体温计有缩口，离开人体也能读；用前甩一甩，水银归位来。"</em></strong><br>
+        <strong>熔化与凝固</strong> — 熔化吸热（固→液）、凝固放热（液→固）；同种晶体熔点=凝固点；撒盐降低冰的熔点<br>
+        <strong>晶体vs非晶体</strong> — 晶体有固定熔点（海波/冰/金属），熔化吸热温度不变；非晶体无熔点，温度持续上升（玻璃/松香/沥青）<br>
+        <strong>熔化图像三段</strong> — AB固态升温、BC固液共存吸热不变、CD液态升温；凝固图像镜像<br>
+        <strong>实验要点</strong> — 水浴法受热均匀、器材自下而上组装、温度计不碰试管壁底<br>
+        <strong><em>💬 金句："熔化吸热凝固放，晶体平台不变温；撒盐化雪降熔点，水浴均匀是关键。"</em></strong>
       </p>
     </div>
   </div>
 <div id="tab-quiz" class="tab-content">
     <div class="quiz-progress">
       <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
-      <div class="quiz-stats" id="quizStats">0 / 20</div>
+      <div class="quiz-stats" id="quizStats">0 / 49</div>
     </div>
     <div id="quizArea"></div>
   </div>
 
   <!-- ========== 知识卡牌 ========== -->
   <div id="tab-flashcard" class="tab-content">
-    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共26张知识卡</p>
     <div id="flashcardArea"></div>
   </div>
 
@@ -275,7 +324,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
   </div>
 </div>
 
-<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 温度与温度计互动学习 | 天元教育 · 初二博学班</div>
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 温度与物态互动学习 | 天元教育 · 初二博学班</div>
 
 <script>
 const questions = [
@@ -312,6 +361,24 @@ const questions = [
 {q:'下列关于热传递说法正确的是',opts:['A. 热量从低温传向高温','B. 温度相同的两物体间仍有热传递','C. 热传递是热量从高温物体传向低温物体','D. 热传递与温度差无关'],ans:2,exp:'热传递是<strong>热量从高温物体传向低温物体</strong>，条件是存在温度差；温度相同则停止。'},
 {q:'下列现象中，属于热对流的是',opts:['A. 用热水袋焐手','B. 冰块放入水中，水慢慢变冷','C. 炉子上烧水，水上下翻滚','D. 太阳晒热地面'],ans:2,exp:'烧水时水<strong>上下翻滚</strong>是典型的热对流（液体中热升冷降）。热水袋是传导，冰块融入也是传导+对流混合，太阳晒是辐射。'},
 {q:'下列防止热胀冷缩危害的措施是',opts:['A. 温度计测体温','B. 钢轨接头处留缝隙','C. 瘪乒乓球用热水烫','D. 水银温度计选水银'],ans:1,exp:'<strong>钢轨接头留缝隙</strong>是防止夏天铁轨受热膨胀挤压变形。其余三项是热胀冷缩的利用。'},
+// === 模块四：熔化与凝固（第六讲详解新增） ===
+{q:'下列现象中属于熔化的是',opts:['A. 冰雪消融','B. 铁水浇铸成零件','C. 滴水成冰','D. 食盐溶于水'],ans:0,exp:'<strong>熔化</strong>=固态→液态吸热：冰雪消融、冰棒含嘴里化了、玻璃高温变液态。铁水浇铸是凝固，滴水成冰是凝固，食盐溶水是<strong>溶化</strong>（溶解）。'},
+{q:'下列现象中属于凝固的是',opts:['A. 冰雪消融','B. 铁水浇铸成零件','C. 冰棒化了','D. 玻璃变液态'],ans:1,exp:'<strong>凝固</strong>=液态→固态放热：铁水浇铸成零件、滴水成冰。其余三项都是熔化。'},
+{q:'"将食盐放到水中，一会儿水就变咸了"属于',opts:['A. 熔化','B. 凝固','C. 溶化','D. 融化'],ans:2,exp:'食盐溶解在水中是<strong>溶化</strong>（溶解过程）。<strong>熔化</strong>=固态变液态（吸热）；<strong>融化</strong>特指冰雪化水；<strong>溶化</strong>=固体溶解在液体中。'},
+{q:'下列各组物质全部是晶体的是',opts:['A. 松香、冰、铁','B. 玻璃、食盐、海波','C. 铜、铝、水银','D. 松香、石蜡、沥青'],ans:2,exp:'晶体：海波、冰、钻石、水晶、食盐、<strong>各种金属</strong>（铜铝铁汞）。非晶体：松香、玻璃、蜂蜡、沥青、石蜡。'},
+{q:'下列物质中属于非晶体的是',opts:['A. 冰','B. 水晶','C. 玻璃','D. 食盐'],ans:2,exp:'非晶体：<strong>玻璃、松香、蜂蜡、沥青、石蜡</strong>（无固定熔点）。冰、水晶、食盐都是晶体。'},
+{q:'晶体与非晶体的根本区别是',opts:['A. 是否透明','B. 是否有固定的熔点','C. 硬度大小','D. 是否导电'],ans:1,exp:'晶体有<strong>固定熔点</strong>（熔化时温度不变），非晶体无固定熔点（温度持续上升）——这是根本区别。'},
+{q:'晶体在熔化过程中，下列说法正确的是',opts:['A. 吸热，温度升高','B. 吸热，温度不变','C. 放热，温度不变','D. 不吸热也不放热'],ans:1,exp:'晶体熔化时<strong>不断吸热但温度保持不变</strong>（热量用于破坏晶格结构），此时处于<strong>固液共存</strong>状态。'},
+{q:'海波熔化图像中，BC段表示',opts:['A. 固态升温','B. 固液共存，吸热温度不变','C. 液态升温','D. 凝固过程'],ans:1,exp:'晶体熔化图像：AB固态升温→<strong>BC固液共存（吸热温度不变）</strong>→CD液态升温。BC段是熔化过程。'},
+{q:'第10min海波处于熔化过程中，它的状态是',opts:['A. 固态','B. 液态','C. 固液共存','D. 气态'],ans:2,exp:'熔化过程中（图像BC段）海波处于<strong>固液共存</strong>状态，既有固态也有液态。'},
+{q:'同一种晶体的熔点和凝固点关系是',opts:['A. 熔点高于凝固点','B. 熔点低于凝固点','C. 相同','D. 无法比较'],ans:2,exp:'同一种晶体，<strong>熔点和凝固点相同</strong>。如冰的熔点和凝固点都是0℃。'},
+{q:'环卫工人在路面撒盐使冰融化，原理是',opts:['A. 盐能放热','B. 加入盐后冰的熔点降低','C. 盐使冰变软','D. 盐吸收热量'],ans:1,exp:'撒盐后<strong>冰的熔点降低</strong>（低于0℃），路面冰在更低温度下也能融化，实现化雪。'},
+{q:'晶体熔化实验中用水浴法加热，目的是',opts:['A. 节省酒精','B. 使物质受热均匀','C. 加快熔化速度','D. 防止温度计损坏'],ans:1,exp:'水浴法通过烧杯中的水间接加热，使试管内物质<strong>受热均匀</strong>，温度变化更平稳。'},
+{q:'做晶体熔化实验时，器材组装顺序应为',opts:['A. 自上而下','B. 自下而上','C. 随意','D. 从中间开始'],ans:1,exp:'实验器材应<strong>自下而上</strong>组装（先放酒精灯再放铁架台等），保证酒精灯外焰加热位置合适。'},
+{q:'(2024锦江)将1600℃铁水抛向高空形成"打铁花"，关于该过程说法错误的是',opts:['A. 铁是晶体','B. 铁先熔化后凝固','C. 铁水凝固放热','D. 满天飞舞的铁花还在熔化'],ans:3,exp:'铁花已是<strong>固态</strong>（凝固完成），不再熔化。铁是晶体，打铁花先熔后凝，凝固放热。'},
+{q:'将装有冰水混合物的试管放入正在熔化的某物质中，试管内冰会逐渐增加，说明该物质',opts:['A. 是非晶体','B. 熔点高于0℃','C. 熔点低于0℃','D. 与冰温度相同'],ans:2,exp:'该物质熔化时温度=其熔点（<strong>低于0℃</strong>），冰水混合物放热给该物质，试管内水结冰→冰增加。'},
+{q:'下列图像能反映晶体凝固过程的是',opts:['A. 温度先降后平台再降','B. 温度持续上升','C. 温度持续下降','D. 温度先升后平台再升'],ans:0,exp:'晶体凝固：液态先<strong>降温</strong>→凝固过程<strong>温度不变（平台）</strong>→固态继续降温。"先降、平台、再降"。'},
+
 ];
 
 const flashcards = [
@@ -335,6 +402,14 @@ const flashcards = [
 {front:'热传递三方式辨析',back:'<strong>传导</strong>：接触+固体（铁棒）<br><strong>对流</strong>：液体/气体（烧水）<br><strong>辐射</strong>：不需介质（晒太阳）<br><br>口诀："传导靠接触，对流靠流动，辐射靠电磁波"'},
 {front:'估测题技巧',back:'人体37℃是"标尺"<br>比体温高 → 烫（40℃洗澡水）<br>比体温低 → 凉（室温23℃）<br>远低于0℃ → 极冷（-18℃冷冻室）'},
 {front:'温度计刻度标定',back:'利用<strong>冰水混合物0℃</strong>和<strong>沸水100℃</strong><br>两个固定点标定刻度<br><br>注意必须在<strong>标准大气压</strong>下<br>气压变化沸点会改变'},
+// === 熔化与凝固（详解新增） ===
+{front:'熔化与凝固',back:'<strong>熔化</strong>：固→液，<strong>吸热</strong><br>冰雪消融、冰棒化了、玻璃变液态<br><br><strong>凝固</strong>：液→固，<strong>放热</strong><br>铁水浇铸、滴水成冰<br>⚠️ 溶化=溶解；融化=冰雪化水'},
+{front:'晶体与非晶体',back:'<strong>晶体</strong>：有固定熔点<br>海波、冰、钻石、水晶、食盐、金属<br><br><strong>非晶体</strong>：无固定熔点<br>玻璃、松香、蜂蜡、沥青、石蜡<br><br>同种晶体：熔点=凝固点'},
+{front:'晶体熔化图像',back:'AB：<strong>固态</strong>，吸热升温<br>BC：<strong>固液共存</strong>，吸热温度不变（熔化）<br>CD：<strong>液态</strong>，吸热升温<br><br>凝固图像方向相反：先降→平台→再降'},
+{front:'撒盐化雪原理',back:'加入盐 → 冰的<strong>熔点降低</strong><br>（低于0℃也能熔化）<br><br>环卫工撒盐化雪、做冰棍加盐<br>盐水冰熔点 &lt; 纯水冰熔点'},
+{front:'水浴法',back:'通过烧杯中的<strong>水</strong>间接加热<br>目的：<strong>受热均匀</strong><br><br>器材组装<strong>自下而上</strong><br>温度计不碰试管壁/底<br>海波熔点48℃，蜂蜡无熔点'},
+{front:'熔化凝固综合判断',back:'失蜡法：铜汁凝固<strong>放热</strong><br>打铁花：铁花是<strong>固态</strong><br>月壤打砖：吸热<strong>熔化</strong>再<strong>凝固</strong><br><br>图像题三步：看平台→定晶体→判过程'},
+
 ];
 
 const errors = [
@@ -344,6 +419,11 @@ const errors = [
 {title:'读数视线错误 ❌',wrong:'读数时俯视或仰视液柱，导致读数不准。',right:'读数时视线必须<strong>与液柱上表面相平</strong>。<strong>俯视偏大、仰视偏小</strong>。口诀："俯大仰小"。'},
 {title:'温度计使用错误 ❌',wrong:'玻璃泡碰到容器壁或底、读数时取出温度计、选错量程。',right:'①玻璃泡<strong>全部浸入</strong>且<strong>不碰壁底</strong> ②示数稳定后再读，<strong>不能离开液体</strong>（体温计除外） ③先估测再<strong>选合适量程</strong>，防止超过量程损坏温度计。'},
 {title:'体温计用前不甩 ❌',wrong:'体温计用前不甩直接测，导致读数偏高（残留上次体温）。',right:'体温计有<strong>缩口</strong>，水银不会自动回落。使用前必须<strong>用力甩动</strong>，使水银回到玻璃泡，否则测出的是上次的高体温。"用前甩一甩，读数才准确"。'},
+// === 熔化与凝固（详解新增） ===
+{title:'熔化/溶化/融化混淆 ❌',wrong:'把"食盐溶于水"说成熔化，把"冰雪消融"说成溶化，三者混用。',right:'<strong>熔化</strong>=固态变液态（吸热，物态变化）：冰雪消融、冰棒化了。<strong>凝固</strong>=液态变固态。<strong>溶化</strong>=固体溶解在液体中（无物态变化）：糖溶水、食盐溶水。<strong>融化</strong>特指冰/雪化成水。'},
+{title:'晶体熔化认为温度升高 ❌',wrong:'认为晶体熔化时一直在吸热所以温度不断升高。',right:'晶体熔化时<strong>吸热但温度不变</strong>（热量用于破坏晶格结构），处于固液共存状态，图像BC段是水平平台。非晶体才持续升温。'},
+{title:'熔化图像段判断错 ❌',wrong:'把BC段（固液共存）误判为固态或液态。',right:'晶体熔化图像：<strong>AB固态、BC固液共存（熔化中）、CD液态</strong>。凝固图像：AB液态、BC固液共存（凝固中）、CD固态。看到平台段先想"固液共存"。'},
+
 ];
 
 const WRONG_HISTORY_KEY='quiz_temperature_wrong';
@@ -408,14 +488,14 @@ ${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()">
 const IMPORT_KEY='wrong_bank_import';
 function autoImportWB(idx, myAns){
   const q=questions[idx];
-  const item={subject:'物理',chapter:'温度与温度计',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'温度,温度计,热传递,热胀冷缩,物态变化,物理'};
+  const item={subject:'物理',chapter:'温度与物态',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'温度,温度计,热传递,热胀冷缩,熔化凝固,晶体,物理'};
   const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
   if(ex.some(x=>x.content===item.content))return;
   ex.push(item);
   localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
 }
 function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
-const items=w.map(w=>({subject:'物理',chapter:'温度与温度计',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'温度,温度计,热传递,热胀冷缩,物态变化,物理'}));
+const items=w.map(w=>({subject:'物理',chapter:'温度与物态',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'温度,温度计,热传递,热胀冷缩,熔化凝固,晶体,物理'}));
 const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
 alert(`✅ 已准备 ${items.length} 道错题！`);}
 
