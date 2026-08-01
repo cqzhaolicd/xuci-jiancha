@@ -1,0 +1,436 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>📐 勾股定理解三角形 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--secondary:#c0392b;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#e74c3c,#c0392b);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(231,76,60,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#e74c3c20,#c0392b20);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#e74c3c,#c0392b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap;overflow-x:auto}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem;white-space:nowrap}
+.tab-btn:hover,.tab-btn.active{border-color:#e74c3c;color:#e74c3c}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card .formula{background:var(--bg);padding:.4rem .6rem;border-radius:6px;font-family:'Times New Roman',serif;font-size:1.05rem;text-align:center;margin:.3rem 0;color:#c0392b;font-weight:700}
+.knowledge-card.c1{border-color:#e74c3c}.knowledge-card.c2{border-color:#e67e22}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#3498db}.knowledge-card.c5{border-color:#9b59b6}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#e74c3c,#c0392b);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:1.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-text .expr{font-size:1.05rem;color:#c0392b}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.65rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.9rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#e74c3c;background:#e74c3c10}
+.option .letter{width:24px;height:24px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#fff5f5;border-left:4px solid var(--primary);font-size:.88rem;display:none;line-height:1.8}
+.explanation.show{display:block}
+.explanation .exp-formula{font-family:'Times New Roman',serif;color:#c0392b;font-weight:600}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(231,76,60,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#e74c3c;color:#e74c3c}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#e74c3c,#c0392b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem;text-align:center}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#e74c3c;margin-bottom:.6rem;text-align:center}
+.flashcard-back p{font-size:.95rem;line-height:1.9;color:var(--text);text-align:center}
+.flashcard-back .f-formula{font-family:'Times New Roman',serif;font-size:1.1rem;font-weight:700;color:#e74c3c}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.import-btn{margin-top:1rem;text-align:center}
+.teacher-talk{background:linear-gradient(135deg,#e74c3c10,#c0392b10);border-radius:var(--radius);padding:1.5rem;margin:1rem 0;border-left:4px solid #e74c3c}
+.teacher-talk h4{color:#e74c3c;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.teacher-talk p{font-size:.9rem;line-height:1.9}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+</style>
+</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 数学 · 勾股定理解三角形</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-route"></i> 勾股定理解三角形 · 互动学习</h1>
+    <p>暑假初二博学班 · 天元教育 | ⭐⭐⭐⭐ 难度</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 42道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#e74c3c"></i> 第七讲 · 勾股定理解三角形</div>
+
+    <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-ruler-triangle" style="color:#e74c3c"></i> 特殊角三边比</h3><ul>
+        <li><strong class="hl">45°-45°-90°</strong>：1 : 1 : √2</li>
+        <li><strong class="hl">30°-60°-90°</strong>：1 : √3 : 2</li>
+        <li>120°等腰：作高 → 30°直角三角形</li>
+        <li>⚠️ 口诀：30°对半、45°等腰</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-shapes" style="color:#e74c3c"></i> 解三角形定义</h3><ul>
+        <li>已知<strong class="hl">3个边角元素</strong>求其它</li>
+        <li>可解类型：SSS / SAS / AAS / ASA / HL</li>
+        <li><strong>SSA 是陷阱</strong>：可能两解</li>
+        <li>特殊角：30° 45° 60° 及补角 150° 135° 120°</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-square-root-alt" style="color:#e74c3c"></i> 解直角三角形</h3><ul>
+        <li>勾股定理 a²+b²=c²</li>
+        <li>特殊角比例：1:1:√2 / 1:√3:2</li>
+        <li>30°对边 = 斜边×<strong>½</strong></li>
+        <li>45°斜边 = 直角边×√2</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-arrows-alt-v" style="color:#e74c3c"></i> 作高法（核心）</h3><ul>
+        <li>斜三角形 → <strong class="hl">作高</strong> → 直角三角形</li>
+        <li><strong>保留特殊角</strong>，不破坏已知角</li>
+        <li>钝角作<strong>外高</strong>（延长线）</li>
+        <li>设未知数 → 列勾股方程</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-exclamation-triangle" style="color:#e74c3c"></i> SSA 两解陷阱</h3><ul>
+        <li>两边 + 非夹角 → <strong class="hl">可能两解</strong></li>
+        <li>例：AC=4√2, ∠A=45°, BC=5 → AB=7 或 1</li>
+        <li>高在三角形内（内高）或延长线（外高）</li>
+        <li>⚠️ 无图题必须分类讨论</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-lightbulb" style="color:#e74c3c"></i> 拓展公式</h3><ul>
+        <li><strong class="hl">海伦公式</strong>：S=√(s(s-a)(s-b)(s-c))</li>
+        <li><strong>中线定理</strong>：AB²+AC²=2(AD²+BD²)</li>
+        <li>面积 S = ½·底·高（作高求高）</li>
+        <li>等腰三角形作高 = 中线 = 角平分线</li>
+      </ul></div>
+    </div>
+
+    <!-- 作高法演示 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-arrows-alt-v" style="color:#e74c3c"></i> 作高法：斜三角形 → 两个直角三角形</div>
+      <svg class="svg-graph" viewBox="0 0 360 200" width="360" height="200">
+        <!-- 斜三角形 ABC，∠A=60°，∠B=45° -->
+        <line x1="40" y1="170" x2="320" y2="170" stroke="#333" stroke-width="2"/>
+        <line x1="40" y1="170" x2="150" y2="30" stroke="#333" stroke-width="2"/>
+        <line x1="150" y1="30" x2="320" y2="170" stroke="#333" stroke-width="2"/>
+        <!-- 高 CD -->
+        <line x1="150" y1="30" x2="150" y2="170" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="6,3"/>
+        <text x="155" y="105" font-size="10" fill="#e74c3c">高 h</text>
+        <text x="30" y="185" font-size="11" fill="#333">A</text>
+        <text x="320" y="185" font-size="11" fill="#333">B</text>
+        <text x="140" y="22" font-size="11" fill="#e74c3c" font-weight="600">C</text>
+        <text x="62" y="115" font-size="10" fill="#666">∠A=60°</text>
+        <text x="270" y="155" font-size="10" fill="#666">∠B=45°</text>
+        <text x="150" y="185" font-size="10" fill="#2ecc71">D</text>
+        <!-- 标注 -->
+        <text x="70" y="20" font-size="10" fill="#2ecc71">△ACD: 30-60-90 → AD=h/√3</text>
+        <text x="220" y="20" font-size="10" fill="#2ecc71">△BCD: 45-45-90 → BD=h</text>
+      </svg>
+      <div class="graph-label">↑ 保留特殊角 60°/45° 作高 CD：△ACD 是 30-60-90，△BCD 是 45-45-90，分别用三边比求 AD、BD，相加得 AB</div>
+    </div>
+
+    <!-- SSA 两解演示 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-exclamation-triangle" style="color:#e74c3c"></i> SSA 两解：AC=4√2, ∠A=45°, BC=5</div>
+      <svg class="svg-graph" viewBox="0 0 360 200" width="360" height="200">
+        <!-- 解1：AB=7 -->
+        <line x1="30" y1="170" x2="180" y2="170" stroke="#333" stroke-width="2"/>
+        <line x1="30" y1="170" x2="80" y2="30" stroke="#333" stroke-width="2"/>
+        <line x1="80" y1="30" x2="180" y2="170" stroke="#e74c3c" stroke-width="2"/>
+        <text x="20" y="185" font-size="10" fill="#333">A</text>
+        <text x="182" y="185" font-size="10" fill="#e74c3c">B(AB=7)</text>
+        <text x="72" y="22" font-size="10" fill="#e74c3c">C</text>
+        <text x="95" y="160" font-size="10" fill="#2ecc71">AC=4√2, ∠A=45°</text>
+        <!-- 解2：AB=1 -->
+        <line x1="30" y1="170" x2="55" y2="170" stroke="#f39c12" stroke-width="2"/>
+        <line x1="55" y1="170" x2="80" y2="30" stroke="#f39c12" stroke-width="2" stroke-dasharray="4,2"/>
+        <text x="42" y="185" font-size="10" fill="#f39c12">B'(AB=1)</text>
+        <text x="80" y="22" font-size="10" fill="#999">C'</text>
+      </svg>
+      <div class="graph-label">↑ 同一条件可画出两个三角形：CD=4 为高，BD=√(5²-4²)=3 → AB=AD+BD=7 或 AB=AD-BD=1，两解都满足</div>
+    </div>
+
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第七讲</h4>
+      <p>
+        <strong>常见特殊角三边比例</strong> — ①45°-45°-90°：1:1:√2 ②30°-60°-90°：1:√3:2，看到特殊角直接套比例，比硬算快得多<br>
+        <strong>解三角形</strong> — 已知3个边角元素（SSS/SAS/AAS/ASA），求其它元素；斜三角形通过<strong>作高</strong>转化为直角三角形求解<br>
+        <strong>特殊角及补角</strong> — 30° 45° 60° 及补角 150° 135° 120°：补角作高后回到 30°/45°/60° 的直角三角形<br>
+        <strong>保留特殊角，作高线</strong> — 作高时<strong>不破坏已知特殊角</strong>（从顶角向对边作垂线），钝角三角形作外高（延长线）<br>
+        <strong>SSA 陷阱</strong> — 两边一非夹角不能唯一确定三角形，可能两解，无图题必须分类讨论内高/外高<br>
+        <strong>设未知数列方程</strong> — 公共高 + 两个直角三角形 → 两个勾股方程 → 解出未知段（SSS 型求面积/高的通法）<br>
+        <strong><em>💬 金句："30°对半，45°等腰，补角作外高，解三角靠勾股。"</em></strong><br>
+        <strong><em>💬 金句："特殊角先看，作高不拆角；SSA 要小心，两解别漏掉。"</em></strong><br>
+        <strong><em>💬 金句："设未知数列方程，公共高是桥梁。"</em></strong>
+      </p>
+    </div>
+  </div> class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 42</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header" style="font-weight:700;margin-bottom:.8rem"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每条标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 数学 · 勾股定理解三角形互动学习 | 天元教育 · 初二暑假博学班</div>
+
+<script>
+const questions = [
+// === 模块一：特殊角三边比 ===
+{q:'45°-45°-90°等腰直角三角形的三边比为',opts:['A. 1:1:√2','B. 1:√3:2','C. 1:2:3','D. 3:4:5'],ans:0,exp:'45°等腰直角：两直角边相等，斜边=直角边×√2，即 1:1:√2。'},
+{q:'30°-60°-90°直角三角形的三边比为',opts:['A. 1:1:√2','B. 1:√3:2','C. 1:2:√3','D. 2:3:4'],ans:1,exp:'30°角对边=1，60°角对边=√3，斜边=2，即 1:√3:2。'},
+{q:'30°直角三角形中，30°角所对的直角边与斜边的关系是',opts:['A. 对边=斜边×½','B. 对边=斜边×√3','C. 对边=斜边','D. 对边=斜边×√2'],ans:0,exp:'30°角所对直角边等于斜边的一半（sin30°=½）。'},
+{q:'等腰直角三角形斜边为4√2，则直角边长为',opts:['A. 4','B. 8','C. 2√2','D. 4√2'],ans:0,exp:'斜边=直角边×√2 → 直角边=4√2÷√2=4。'},
+{q:'在△ABC中，∠A=45°，∠B=30°，CD⊥AB于D，CD=1，则AB的长为',opts:['A. √3+1','B. √3-1','C. 2','D. 1+√2'],ans:0,exp:'∠A=45°→AD=CD=1；∠B=30°→BD=CD/tan30°=√3；AB=AD+BD=1+√3。'},
+{q:'在△ABC中，∠A=60°，∠B=45°，AC=2cm，则BC的长为',opts:['A. √6 cm','B. √3 cm','C. 2 cm','D. 3 cm'],ans:0,exp:'作CD⊥AB：∠A=60°→AD=1，CD=√3；∠B=45°→BD=CD=√3，BC=√(3+3)=√6。'},
+{q:'(2023双流区校考)在Rt△ABC中∠C=90°，D在AC上，∠BDC=45°，∠ABD=15°，BD=10√2cm，则AB=',opts:['A. 20 cm','B. 10 cm','C. 15 cm','D. 10√2 cm'],ans:0,exp:'Rt△BCD中∠BDC=45°→CD=CB=10；∠ABC=15°+45°=60°→AB=BC/cos60°=20。'},
+{q:'在△ABC中，AB=4m，BC=3m，∠ABC=120°，则△ABC的面积是',opts:['A. 3√3 m²','B. 6 m²','C. 6√3 m²','D. 3 m²'],ans:0,exp:'S=½×AB×BC×sin∠B=½×4×3×sin120°=6×(√3/2)=3√3。'},
+{q:'△ABC空地 AB=40m，BC=19m，∠ABC=150°，每平米草坪100元，建造需花费',opts:['A. 19000 元','B. 38000 元','C. 1900 元','D. 380 元'],ans:0,exp:'S=½×40×19×sin150°=380×½=190m²；190×100=19000元。'},
+{q:'顶角为120°的等腰三角形腰长为4，则底边长为',opts:['A. 4√3','B. 4','C. 8','D. 2√3'],ans:0,exp:'作高后：半底=4×sin60°=2√3，底边=4√3。'},
+// === 模块二：解三角形 · SAS ===
+{q:'解三角形中的"SAS"表示',opts:['A. 已知两边及其夹角','B. 已知两角一边','C. 已知三边','D. 已知斜边一直角边'],ans:0,exp:'SAS=Side-Angle-Side：已知两边及其夹角，可唯一确定三角形。'},
+{q:'在△ABC中，AB=3，CB=4√3，∠ABC=30°，则AC的长为',opts:['A. √21','B. √15','C. 5','D. √33'],ans:0,exp:'作AD⊥BC：AD=3×sin30°=3/2，BD=3×cos30°=3√3/2，CD=4√3-3√3/2=5√3/2；AC²=(3/2)²+(5√3/2)²=21。'},
+{q:'在△ABC中，AB=3，BC=4，∠ABC=120°，则AC的长为',opts:['A. √37','B. √17','C. 5','D. √13'],ans:0,exp:'作AD⊥BC延长线：∠ABD=60°→AD=3√3/2，BD=3/2，CD=3/2+4=11/2；AC²=27/4+121/4=148/4=37。'},
+{q:'在△ABC中，AB=2，BC=3√2，∠ABC=135°，则AC的长为',opts:['A. √34','B. √74','C. 5','D. 4√2'],ans:0,exp:'作CD⊥AB延长线：∠CBD=45°→CD=BD=3√2×sin45°=3，AD=2+3=5；AC=√(25+9)=√34。'},
+{q:'在△ABC中，AB=15cm，AC=24cm，∠A=60°，则BC的长为',opts:['A. 21 cm','B. 20 cm','C. 18 cm','D. 3√21 cm'],ans:0,exp:'作CD⊥AB：AD=12，CD=12√3，BD=3；BC²=9+432=441→BC=21。'},
+{q:'在△ABC中，∠A=135°，AC=2√2，AB=8，则BC的长为',opts:['A. 2√26','B. 10','C. 4√5','D. 2√10'],ans:0,exp:'作CD⊥BA延长线：AD=CD=2，BD=8+2=10；BC=√(100+4)=√104=2√26。'},
+{q:'SAS型解三角形作高的关键是',opts:['A. 保留已知角，从另一顶点作高','B. 沿已知边作高','C. 拆掉已知角','D. 直接用量角器'],ans:0,exp:'保留已知特殊角，从另一顶点向对边（或延长线）作高，构造直角三角形。'},
+{q:'∠ABC=120°（钝角）时作高，垂足应在',opts:['A. BC延长线上（外高）','B. BC边上（内高）','C. 无法作高','D. AC边上'],ans:0,exp:'钝角120°作高时垂足落在BC延长线上，形成外高；∠CBD=60°回到特殊角。'},
+// === 模块三：解三角形 · AAS/ASA ===
+{q:'在△ABC中，AC=8，∠A=30°，∠B=45°，则AB、BC的长分别为',opts:['A. 4√3+4，4√2','B. 4√2+4，4√2','C. 8，8','D. 6，4√2'],ans:0,exp:'作CD⊥AB：CD=8×sin30°=4，AD=8×cos30°=4√3；∠B=45°→BD=4；AB=4√3+4，BC=4√2。'},
+{q:'在△ABC中，∠A=105°，∠B=30°，AC=2，则BC的长为',opts:['A. √6+√2','B. 2√2','C. 4','D. √6'],ans:0,exp:'∠C=45°。作AD⊥BC：AD=CD=2×sin45°=√2；∠B=30°→BD=AD/tan30°=√6；BC=√6+√2。'},
+{q:'在△ABC中，AB=2+2√3，∠A=30°，∠B=45°，则AC的长为',opts:['A. 4','B. 2√3','C. 6','D. 3√2'],ans:0,exp:'作CD⊥AB：设BD=CD=x，则AD=√3x；AB=x+√3x=2+2√3→x=2；AC=2x=4。'},
+{q:'在△ABC中，∠A=45°，∠B=120°，AC=12，则BC的长为',opts:['A. 4√6','B. 6√2','C. 8','D. 4√3'],ans:0,exp:'作CD⊥AB延长线：∠A=45°→CD=AD=6√2；∠CBD=60°→BD=2√6，BC=4√6。'},
+{q:'在△ABC中，∠A=30°，∠B=45°，AC=2√3，则AB的长为',opts:['A. 3+√3','B. 2√3','C. 3√3','D. 6'],ans:0,exp:'作CD⊥AB：CD=2√3×sin30°=√3，AD=2√3×cos30°=3；∠B=45°→BD=√3；AB=3+√3。'},
+{q:'在△ABC中，∠B=60°，∠C=45°，AB=2√6，则BC的长为',opts:['A. 3√2+√6','B. 4√2','C. 6','D. 2√6+2'],ans:0,exp:'作AD⊥BC：BD=√6，AD=3√2；∠C=45°→CD=3√2；BC=3√2+√6。'},
+{q:'在△ABC中，∠A=60°，∠B=45°，AC=2√3，则BC的长为',opts:['A. 3√2','B. 2√3','C. 6','D. 4'],ans:0,exp:'作CD⊥AB：CD=2√3×sin60°=3；∠B=45°→BC=CD/sin45°=3√2。'},
+{q:'AAS/ASA型作高后出现两个直角三角形，通常的解题思路是',opts:['A. 设公共高或未知段，列方程','B. 直接量长度','C. 用相似三角形','D. 放弃计算'],ans:0,exp:'设公共高/未知段为x，在两个直角三角形中分别用特殊角比例表示，列方程求解。'},
+// === 模块四：解三角形 · SSS ===
+{q:'SSS型（已知三边）求面积，常用方法是',opts:['A. 作高+两个勾股方程','B. 直接乘三边','C. 量角器量高','D. 面积=周长'],ans:0,exp:'作高把三角形分成两个直角三角形，设未知段为x，用两个勾股方程解出高，再求面积。'},
+{q:'Rt△ABD中∠D=90°，C在BD上，CB=9，AB=17，AC=10，则AD的长为',opts:['A. 8','B. 6','C. 10','D. 12'],ans:0,exp:'设CD=x：AD²+x²=10²，AD²+(9+x)²=17² → 81+18x=189 → x=6；AD²=100-36=64→AD=8。'},
+{q:'△ABC三边长分别为5、7、8，则其面积为',opts:['A. 10√3','B. 10√7','C. 20','D. 12√2'],ans:0,exp:'作AD⊥BC，设BD=x：x²+AD²=25，(8-x)²+AD²=49 → x=5/2，AD=5√3/2；S=½×8×AD=10√3。'},
+{q:'△ABC中AD是BC边上的高，AB=7，AC=3，BD-CD=1，则BC的长为',opts:['A. 40','B. 20','C. 10','D. 39'],ans:0,exp:'设CD=x：AD²=9-x²=49-(x+1)² → 2x+1=40 → x=19.5；BC=BD+CD=2x+1=40。'},
+{q:'△ABC中AC=13cm，AB=15cm，BC=14cm，则BC边上的高AD为',opts:['A. 12 cm','B. 10 cm','C. 14 cm','D. 8 cm'],ans:0,exp:'设BD=x：x²+AD²=225，(14-x)²+AD²=169 → 28x=252 → x=9；AD²=225-81=144→AD=12。'},
+{q:'海伦公式计算三边5、7、8的三角形面积，结果为',opts:['A. 10√3','B. 20','C. 10√7','D. 5√3'],ans:0,exp:'s=(5+7+8)/2=10；S=√(10×5×3×2)=√300=10√3。'},
+// === 模块五：解三角形 · SSA ===
+{q:'SSA（两边一非夹角）为什么是陷阱？',opts:['A. 可能有两解或不能唯一确定','B. 一定无解','C. 和SAS一样','D. 只能用于直角三角形'],ans:0,exp:'已知两边和其中一边对角，可能画出两个三角形（两解），必须分类讨论。'},
+{q:'在△ABC中，AB=3√2，CB=5，∠A=45°，则AC的长为',opts:['A. 7','B. 5','C. 6','D. 4'],ans:0,exp:'设AC=x，作CD⊥AB：CD=x√2/2；BC²=x²/2+(3√2-x√2/2)² → x²-6x-7=0 → x=7（取正）。'},
+{q:'在△ABC中，AC=12√2cm，∠A=45°，BC=15cm，则AB的长为',opts:['A. 21或3 cm','B. 21 cm','C. 3 cm','D. 18 cm'],ans:0,exp:'x²+288-24x=225 → x²-24x+63=0 → (x-21)(x-3)=0 → AB=21或3（两解）。'},
+{q:'在△ABC中，AC=4√2，∠A=45°，BC=5，则AB的长为',opts:['A. 7或1','B. 7','C. 1','D. 5'],ans:0,exp:'作CD⊥AB：AD=CD=4，BD=√(5²-4²)=3；AB=AD+BD=7 或 AB=AD-BD=1（两解）。'},
+{q:'在△ABC中，AC=40，∠A=30°，BC=25，则AB的长为',opts:['A. 20√3±15','B. 25','C. 40','D. 30√3'],ans:0,exp:'x²+1600-40√3·x=625 → x²-40√3x+975=0 → x=20√3±15（两解）。'},
+{q:'SSA出现两解时，两个解对应的高分别是',opts:['A. 内高和外高（垂足在边上/延长线上）','B. 两个内高','C. 两个外高','D. 高不同但都在边上'],ans:0,exp:'一解对应垂足D在AB上（内高，AB=AD+BD），另一解对应垂足在AB延长线上（外高，AB=AD-BD）。'},
+// === 综合巩固 ===
+{q:'Rt△ABD中∠D=90°，∠B=45°，∠ACD=60°，BC=10，则AD的长为',opts:['A. 15+5√3','B. 10√3','C. 20','D. 15'],ans:0,exp:'设CD=x：AD=√3x（∠ACD=60°）；∠B=45°→BD=AD=√3x；BC=√3x-x=10 → x=5(√3+1)；AD=15+5√3。'},
+{q:'(2025锦江区校考)Rt△ABC中∠C=90°，∠B=15°，DE是AB的中垂线，DB=8cm，则∠A=',opts:['A. 75°','B. 15°','C. 60°','D. 45°'],ans:0,exp:'直角三角形两锐角互余：∠A=90°-∠B=90°-15°=75°。'},
+{q:'承上题，中垂线DE上，AD与BD的数量关系是',opts:['A. AD=BD=8cm','B. AD=2BD','C. AD=BD×√2','D. 无法确定'],ans:0,exp:'线段垂直平分线上的点到两端点距离相等：AD=BD=8cm。'},
+{q:'△ABC中AD是BC边上的中线，AE⊥BC于E，AB=12，BC=10，AC=8，则DE的长为',opts:['A. 4','B. 5','C. 3','D. 6'],ans:0,exp:'设CE=x：12²-(10-x)²=8²-x² → x=1，BE=9；D是中点→BD=5；DE=BE-BD=4。'},
+];
+
+const flashcards = [
+{front:'特殊角三边比总表',back:'<strong>45°-45°-90°</strong>：1 : 1 : √2<br><strong>30°-60°-90°</strong>：1 : √3 : 2<br>120°等腰：作高→30°直角三角形<br><br>口诀："30°对半，45°等腰"'},
+{front:'45°-45°-90°',back:'等腰直角三角形<br>两直角边相等<br>斜边 = 直角边×√2<br>sin45°=cos45°=√2/2'},
+{front:'30°-60°-90°',back:'30°对边 = 斜边×<strong>½</strong><br>三边比 1 : √3 : 2<br>sin30°=½，cos30°=√3/2<br>例：斜边8 → 短边4、长边4√3'},
+{front:'120°等腰三角形',back:'顶角120°，两底角30°<br>作高（三线合一）<br>→ 得到 30°-60°-90° 直角三角形<br>底边 = 腰×√3'},
+{front:'钝角作外高',back:'钝角120°/135°/150°作高时<br>垂足落在<strong>边的延长线上</strong><br>补角 = 180°-钝角<br>∠CBD = 60°/45°/30° 回到特殊角'},
+{front:'解三角形定义',back:'已知<strong>3个边角元素</strong><br>求其它元素<br>可解类型：SSS/SAS/AAS/ASA/HL<br>⚠️ SSA 不能唯一确定！'},
+{front:'解直角三角形',back:'勾股定理 a²+b²=c²<br>特殊角比例：1:1:√2 / 1:√3:2<br>30°对边=斜边×½<br>45°斜边=直角边×√2'},
+{front:'解斜三角形',back:'斜三角形 → <strong>作高</strong><br>→ 两个直角三角形<br>→ 勾股定理/特殊角比例<br>→ 求解'},
+{front:'保留特殊角作高',back:'作高时<strong>不破坏已知角</strong><br>从顶角向对边（或延长线）作垂线<br>锐角：内高<br>钝角：外高'},
+{front:'内高与外高',back:'锐角三角形：垂足在<strong>边上</strong>（内高）<br>钝角三角形：垂足在<strong>延长线上</strong>（外高）<br>无图题要<strong>分类讨论</strong>'},
+{front:'无图分类讨论',back:'题目没给图时<br>垂足可能在边上也可能在延长线上<br>答案可能<strong>两解</strong>（如 AB=7 或 1）<br>必须画两种图'},
+{front:'SAS型步骤',back:'已知两边+夹角<br>①作高（保留已知角）<br>②特殊角比例求两段<br>③勾股定理求第三边<br>例：AB=3,BC=4,∠B=120°→AC=√37'},
+{front:'SSS型步骤',back:'已知三边<br>①作高，设未知段=x<br>②两个勾股方程<br>③解x求高<br>④求面积/其它量'},
+{front:'AAS/ASA型步骤',back:'已知两角+一边<br>①作高<br>②每个直角三角形用特殊角比例<br>③设公共高，列方程<br>④相加（或相减）得所求边'},
+{front:'SSA两解陷阱',back:'两边+非夹角 → 可能<strong>两解</strong><br>例：AC=4√2,∠A=45°,BC=5<br>AB = 7 或 1<br>高在边上（+）或在延长线（-）'},
+{front:'面积公式',back:'S = ½ × 底 × 高<br>作高求高后用公式<br>例：S=½×4×3×sin120°=3√3<br>实际应用：草坪造价=面积×单价'},
+{front:'海伦公式',back:'S = √(s(s-a)(s-b)(s-c))<br>其中 s = (a+b+c)/2<br>例：三边5,7,8<br>s=10 → S=√(10×5×3×2)=10√3'},
+{front:'中线长度定理',back:'△ABC中AD是BC边中线<br><strong>AB²+AC² = 2(AD²+BD²)</strong><br>或 AB²+AC² = 2AD²+½BC²<br>已知两边+中线可求第三边'},
+{front:'特殊角补角速算',back:'150° → 补角30°<br>135° → 补角45°<br>120° → 补角60°<br>外高后直接用补角比例'},
+{front:'作高设未知数列方程',back:'公共高是<strong>桥梁</strong><br>设未知段为x<br>两个直角三角形 → 两个方程<br>解出x → 答案<br><br>例：AB=7,AC=3,BD-CD=1 → BC=40'},
+];
+
+const errors = [
+{title:'特殊角比例混淆 ❌',wrong:'把 45°-45°-90° 写成 1:√3:2，或 30°-60°-90° 记成 1:1:√2。',right:'<strong>45°-45°-90° → 1:1:√2</strong>（等腰：两直角边相等）；<strong>30°-60°-90° → 1:√3:2</strong>（30°对边最小=1，斜边最大=2）。口诀：30°对半、45°等腰。'},
+{title:'作高破坏已知角 ❌',wrong:'作高时把已知特殊角拆掉，比如沿已知边作垂线把60°角切掉。',right:'作高要<strong>保留已知特殊角</strong>：从另一顶点向对边（或延长线）作垂线，使已知角完整保留在一个直角三角形里。例：∠A=60°时从C向AB作高，∠A仍在Rt△ACD中。'},
+{title:'钝角三角形忘作外高 ❌',wrong:'∠ABC=120°/135°/150°作高时垂足画在BC边上，构造不出直角三角形。',right:'钝角作高垂足在<strong>延长线</strong>上（外高），补角=180°-钝角。例：∠ABC=120° → 作AD⊥BC延长线 → ∠ABD=60°（回到特殊角）。'},
+{title:'SSA直接写唯一解 ❌',wrong:'两边一非夹角（SSA）直接当全等/唯一解处理。',right:'SSA <strong>不能唯一确定</strong>三角形：可能两解。例：AC=4√2,∠A=45°,BC=5 → AB=7（内高）或 AB=1（外高）。无图题必须分类讨论。'},
+{title:'面积公式忘乘½ ❌',wrong:'面积 = 底×高，忘记乘以½；或钝角三角形直接用两边乘积。',right:'三角形面积 S = <strong>½</strong> × 底 × 高。例：S=½×40×19×sin150°=½×40×19×½=190m²。两边夹角公式也带½：S=½ab·sinC。'},
+{title:'硬套正弦/余弦定理 ❌',wrong:'初中题直接用正弦定理/余弦定理硬算（超纲且易错）。',right:'初中要求<strong>作高构造直角三角形</strong>，用勾股定理+特殊角比例。例：∠A=105°,∠B=30°,AC=2 → 作AD⊥BC，∠C=45°→AD=CD=√2，BD=√6，BC=√6+√2。'},
+];
+
+const WRONG_HISTORY_KEY='quiz_math7_gougu_solve';;
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);retryMode=false;}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);if(doneAll){document.getElementById('quizArea').innerHTML=showResult();return;}
+let h=``;if(retryMode)h+=`<div style=\"margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block\"><i class=\"fas fa-redo\"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class=\"question-card fade-in-up\"><div class=\"q-num\">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div><div class=\"q-text\">${q.q}</div><div class=\"options\">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class=\"option ${c.join(' ')}\" onclick=\"selA(${oi})\"><span class=\"letter\">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class=\"explanation ${quizAns[idx]>=0?'show':''}\"><strong><i class=\"fas fa-lightbulb\"></i> 解析：</strong><br>${q.exp}</div>
+|<div class=\"quiz-nav\"><button class=\"btn btn-outline\" onclick=\"prevQ()\" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class=\"fas fa-arrow-left\"></i> 上一题</button>
+|<span style=\"font-size:.85rem;color:var(--text-light);align-self:center\">${ansd}/${total}</span>
+|<button class=\"btn btn-primary\" onclick=\"nextQ()\" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1?'disabled':''}>下一题 <i class=\"fas fa-arrow-right\"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);autoImportWB(idx,oi);}
+renderQ();if(curQ<shuffled.length-1)setTimeout(()=>nextQ(),1000);}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){if(curQ<shuffled.length-1){curQ++;renderQ();}}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class=\"question-card result-card fade-in-up\"><div class=\"big-icon\">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class=\"score\">${correct}/${total}</div>
+|<div><span class=\"result-stat\"><i class=\"fas fa-check-circle\" style=\"color:var(--success)\"></i> 正确 ${correct} 题</span>
+|<span class=\"result-stat\"><i class=\"fas fa-times-circle\" style=\"color:var(--danger)\"></i> 错误 ${total-correct} 题</span></div>
+|${retryMode?`<div style=\"margin:.5rem 0\"><span class=\"result-stat\"><i class=\"fas fa-history\"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+|${wl.length?`<div style=\"text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)\"><p style=\"font-weight:600;margin-bottom:.5rem;font-size:.85rem\">📝 需要复习：</p>${wl.map(w=>`<div style=\"padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)\">✗ ${w.q.q.substring(0,50)}…<br><small style=\"color:var(--text-light)\">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+|<div style=\"margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap\">
+|<button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\"><i class=\"fas fa-redo\"></i> 重新测验</button>
+|${wl.length?`<button class=\"btn btn-warning\" onclick=\"initRetryMode()\" style=\"background:#e67e22;color:#fff\"><i class=\"fas fa-bug\"></i> 错题重练 (${wl.length}题)</button>`:''}
+|<button class=\"btn btn-success\" onclick=\"importWB()\"><i class=\"fas fa-database\"></i> 导入错题到错题库</button>
+|<button class=\"btn btn-outline\" onclick=\"switchTab('flashcard')\"><i class=\"fas fa-layer-group\"></i> 复习知识卡</button>
+|<button class=\"btn btn-outline\" onclick=\"switchTab('errors')\"><i class=\"fas fa-exclamation-triangle\"></i> 易错点</button>
+|${retryMode?`<button class=\"btn btn-sm btn-outline\" onclick=\"initQ();renderQ()\"><i class=\"fas fa-times\"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'数学',chapter:'勾股定理解三角形',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'勾股定理解三角形,特殊角,作高法,SSA两解,数学'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'数学',chapter:'勾股定理解三角形',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'勾股定理解三角形,特殊角,作高法,SSA两解,数学'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库？'))window.open('wrong_bank.html','_blank');}
+
+let fIdx=0;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class=\"flashcard-container fade-in-up\"><div class=\"flashcard\" id=\"fc\" onclick=\"toggleFC()\"><div class=\"flashcard-face flashcard-front\"><i class=\"fas fa-question-circle\" style=\"font-size:1.8rem;opacity:.5;margin-bottom:.8rem\"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class=\"flashcard-face flashcard-back\"><i class=\"fas fa-lightbulb\" style=\"font-size:1.3rem;color:var(--warning);margin-bottom:.4rem\"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+|<div class=\"flashcard-nav\"><button class=\"btn btn-outline\" onclick=\"renderFC('prev')\" ${fIdx===0?'disabled':''}><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">${fIdx+1}/${flashcards.length}</span><button class=\"btn btn-primary\" onclick=\"renderFC('next')\" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el)el.classList.toggle('flipped');}
+function renderEC(){let s=localStorage.getItem('math_lesson7_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class=\"error-grid\">';errors.forEach((e,i)=>{h+=`<div class=\"error-card fade-in-up\"><div class=\"num\">${i+1}</div><h4>${e.title}</h4><div class=\"ex-wrong\">❌ ${e.wrong}</div><div class=\"ex-right\">✅ ${e.right}</div>
+|<div class=\"check-item ${c[i]?'checked':''}\" onclick=\"toggleEC(${i})\" style=\"margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer\">
+|<div style=\"width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}\">${c[i]?'<i class=\"fas fa-check\" style=\"font-size:10px\"></i>':''}</div>
+|<span style=\"font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}\">我已掌握这个易错点</span></div></div>`;});h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('math_lesson7_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('math_lesson7_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('math_lesson7_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('math_lesson7_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
