@@ -1,0 +1,439 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>📐 勾股定理构造与翻折 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--secondary:#c0392b;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#e74c3c,#c0392b);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(231,76,60,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#e74c3c20,#c0392b20);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#e74c3c,#c0392b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap;overflow-x:auto}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem;white-space:nowrap}
+.tab-btn:hover,.tab-btn.active{border-color:#e74c3c;color:#e74c3c}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card .formula{background:var(--bg);padding:.4rem .6rem;border-radius:6px;font-family:'Times New Roman',serif;font-size:1.05rem;text-align:center;margin:.3rem 0;color:#c0392b;font-weight:700}
+.knowledge-card.c1{border-color:#e74c3c}.knowledge-card.c2{border-color:#e67e22}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#3498db}.knowledge-card.c5{border-color:#9b59b6}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#e74c3c,#c0392b);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:1.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-text .expr{font-size:1.05rem;color:#c0392b}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.65rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.9rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#e74c3c;background:#e74c3c10}
+.option .letter{width:24px;height:24px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#fff5f5;border-left:4px solid var(--primary);font-size:.88rem;display:none;line-height:1.8}
+.explanation.show{display:block}
+.explanation .exp-formula{font-family:'Times New Roman',serif;color:#c0392b;font-weight:600}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(231,76,60,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#e74c3c;color:#e74c3c}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#e74c3c,#c0392b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem;text-align:center}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#e74c3c;margin-bottom:.6rem;text-align:center}
+.flashcard-back p{font-size:.95rem;line-height:1.9;color:var(--text);text-align:center}
+.flashcard-back .f-formula{font-family:'Times New Roman',serif;font-size:1.1rem;font-weight:700;color:#e74c3c}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.import-btn{margin-top:1rem;text-align:center}
+.teacher-talk{background:linear-gradient(135deg,#e74c3c10,#c0392b10);border-radius:var(--radius);padding:1.5rem;margin:1rem 0;border-left:4px solid #e74c3c}
+.teacher-talk h4{color:#e74c3c;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.teacher-talk p{font-size:.9rem;line-height:1.9}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+</style>
+</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 数学 · 勾股定理构造与翻折</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-fold"></i> 勾股定理构造与翻折 · 互动学习</h1>
+    <p>暑假初二博学班 · 天元教育 | ⭐⭐⭐⭐ 难度</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 36道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#e74c3c"></i> 第八讲 · 勾股定理构造与翻折</div>
+
+    <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-project-diagram" style="color:#e74c3c"></i> 构图法求最值</h3><ul>
+        <li><strong class="hl">数形结合</strong>：代数式 → 几何图形</li>
+        <li>√(x²+a²) = 直角边 x、a 的<strong>斜边</strong></li>
+        <li>√((b-x)²+c²) = 直角边 b-x、c 的斜边</li>
+        <li>最小值 = 两点间<strong>最短路径</strong></li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-square-root-alt" style="color:#e74c3c"></i> 最值公式</h3><ul>
+        <li>√(x²+a²)+√((b-x)²+c²) min</li>
+        <li>= √(b² + (a±c)²)</li>
+        <li>水平距离 b，竖直差 a±c</li>
+        <li>同侧相减、异侧相加</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-arrows-alt" style="color:#e74c3c"></i> 翻折性质</h3><ul>
+        <li>折叠前后<strong class="hl">对称全等</strong></li>
+        <li>折痕 = <strong>对称轴</strong></li>
+        <li>对应边、对应角<strong>相等</strong></li>
+        <li>折痕是夹角的<strong>平分线</strong></li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-cube" style="color:#e74c3c"></i> 翻折三步</h3><ul>
+        <li>①<strong class="hl">抓不变量</strong>：找全等</li>
+        <li>②<strong>设未知数</strong>：代数化</li>
+        <li>③<strong>锁 Rt△</strong>：列勾股方程</li>
+        <li>⚠️ 一定产生等腰/全等</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-vector-square" style="color:#e74c3c"></i> 折叠模型</h3><ul>
+        <li>点落<strong>边上</strong>：△AEF 勾股</li>
+        <li>点落<strong>顶点</strong>：△ABF / △AGE</li>
+        <li>点落<strong>对角线</strong>：△CEF</li>
+        <li>点落<strong>图形外</strong>：△BDF 等腰</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-lightbulb" style="color:#e74c3c"></i> 构图法进阶</h3><ul>
+        <li><strong>赵爽弦图</strong>：全等直角三角形</li>
+        <li><strong>网格构图</strong>：√5、√10、√13 求面积</li>
+        <li><strong>平方配方</strong>：x²-2x+10 → (x-1)²+3²</li>
+        <li>绝对值/根式 → 距离</li>
+      </ul></div>
+    </div>
+
+    <!-- 构图法求最值演示 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-project-diagram" style="color:#e74c3c"></i> 构图法：√(x²+a²) + √((b-x)²+c²) 求最小值</div>
+      <svg class="svg-graph" viewBox="0 0 360 200" width="360" height="200">
+        <!-- 水平线 -->
+        <line x1="40" y1="160" x2="320" y2="160" stroke="#333" stroke-width="2"/>
+        <!-- A 竖边 -->
+        <line x1="40" y1="160" x2="40" y2="60" stroke="#e74c3c" stroke-width="2.5"/>
+        <text x="12" y="110" font-size="10" fill="#e74c3c">a</text>
+        <text x="34" y="56" font-size="11" fill="#333" font-weight="600">A</text>
+        <!-- P 点 -->
+        <circle cx="180" cy="160" r="3.5" fill="#f39c12"/>
+        <text x="172" y="180" font-size="10" fill="#f39c12">P(x)</text>
+        <!-- B 竖边 -->
+        <line x1="180" y1="160" x2="180" y2="90" stroke="#667eea" stroke-width="2.5"/>
+        <text x="186" y="125" font-size="10" fill="#667eea">c</text>
+        <line x1="300" y1="160" x2="300" y2="40" stroke="#2ecc71" stroke-width="2.5"/>
+        <text x="306" y="105" font-size="10" fill="#2ecc71">a'</text>
+        <text x="292" y="36" font-size="11" fill="#2ecc71" font-weight="600">B</text>
+        <!-- 斜边 -->
+        <line x1="40" y1="60" x2="180" y2="90" stroke="#f39c12" stroke-width="1.8" stroke-dasharray="5,3"/>
+        <line x1="180" y1="90" x2="300" y2="40" stroke="#f39c12" stroke-width="1.8" stroke-dasharray="5,3"/>
+        <!-- 水平标注 -->
+        <text x="70" y="175" font-size="9" fill="#666">x</text>
+        <text x="215" y="175" font-size="9" fill="#666">b-x</text>
+        <text x="120" y="150" font-size="9" fill="#999">√(x²+a²)</text>
+        <text x="215" y="80" font-size="9" fill="#999">√((b-x)²+c²)</text>
+      </svg>
+      <div class="graph-label">↑ 两斜边之和 ≥ 折线 → 拉直最短：min = √(b² + (a±c)²)，同侧相减、异侧相加</div>
+    </div>
+
+    <!-- 翻折模型演示 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-cube" style="color:#e74c3c"></i> 矩形翻折：点落边上（折痕为 CF）</div>
+      <svg class="svg-graph" viewBox="0 0 360 200" width="360" height="200">
+        <!-- 矩形 -->
+        <rect x="40" y="40" width="280" height="130" fill="none" stroke="#333" stroke-width="2"/>
+        <text x="30" y="185" font-size="10" fill="#333">A</text>
+        <text x="322" y="185" font-size="10" fill="#333">B</text>
+        <text x="322" y="34" font-size="10" fill="#333">C</text>
+        <text x="30" y="34" font-size="10" fill="#333">D</text>
+        <!-- 折痕 -->
+        <line x1="280" y1="40" x2="200" y2="170" stroke="#e74c3c" stroke-width="2.5"/>
+        <text x="222" y="50" font-size="9" fill="#e74c3c">折痕 CF</text>
+        <!-- F 点（B 落点） -->
+        <circle cx="280" cy="170" r="3.5" fill="#f39c12"/>
+        <text x="286" y="185" font-size="9" fill="#f39c12">F</text>
+        <!-- 对应点 B -->
+        <circle cx="200" cy="170" r="3" fill="#667eea"/>
+        <text x="172" y="185" font-size="9" fill="#667eea">B'(原B)</text>
+        <text x="240" y="155" font-size="9" fill="#999">△AEF：AF²+AE²=EF²</text>
+      </svg>
+      <div class="graph-label">↑ 折叠后全等：对应边相等，锁定直角三角形列勾股方程（三步：标边→设x→列式）</div>
+    </div>
+
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第八讲</h4>
+      <p>
+        <strong>构图法求最值</strong> — 核心：把 √(x²+a²) 看成直角边 x、a 的斜边，√((b-x)²+c²) 看成直角边 b-x、c 的斜边；求代数式最小值 = 求两点最短路径；min = √(b²+(a±c)²)<br>
+        <strong>最值公式记忆</strong> — 水平距离取 b，竖直边同侧相减、异侧相加；例 √(x²+16)+√((9-x)²+64) min = √(9²+12²) = 15<br>
+        <strong>翻折本质</strong> — 轴对称变换：折叠前后对称全等，折痕是对称轴，对应边/角相等<br>
+        <strong>翻折三步</strong> — ①抓不变量（找全等）②设未知数（代数化）③锁定直角三角形列勾股方程<br>
+        <strong>折叠模型</strong> — 点落边上/顶点/对角线/图形外四类，选对 Rt△ 是关键；图形外必产生等腰△BDF<br>
+        <strong>构图进阶</strong> — 赵爽弦图（全等Rt△拼接）、网格构图（√5/√10/√13 求面积）、平方配方（x²-2x+10 → (x-1)²+3²）<br>
+        <strong><em>💬 金句："根式藏斜边，构图求最短；min 等于水平平方加竖差方。"</em></strong><br>
+        <strong><em>💬 金句："翻折全等定不变量，设 x 列勾股方程解线段。"</em></strong><br>
+        <strong><em>💬 金句："点落图形外，等腰 BDF 必现。"</em></strong>
+      </p>
+    </div>
+  </div><div id="tab-quiz" class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 36</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header" style="font-weight:700;margin-bottom:.8rem"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每条标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 数学 · 勾股定理构造与翻折互动学习 | 天元教育 · 初二暑假博学班</div>
+
+<script>
+const questions = [
+// === 模块一：构图法求最值概念 ===
+{q:'把代数式 √(x²+16) 转化为几何图形，应看作是',opts:['A. 直角边为 x 和 16 的直角三角形斜边','B. 直角边为 x 和 4 的直角三角形斜边','C. 直角边为 x 和 8 的直角三角形斜边','D. 边长为 x 的正方形对角线'],ans:1,exp:'√(x²+16)=√(x²+4²)，看作<strong>直角边 x 和 4</strong> 的直角三角形斜边（构图法核心）。'},
+{q:'构图法求最值的本质是',opts:['A. 代数计算','B. 数形结合，把求代数式最小值转化为求两点间最短路径','C. 配方','D. 因式分解'],ans:1,exp:'构图法本质是<strong>数形结合</strong>：把带根号的代数式翻译成几何（斜边长），求最小值=求<strong>两点最短路径</strong>。'},
+{q:'求 √(x²+a²)+√((b-x)²+c²) 的最小值时，水平距离是',opts:['A. a','B. c','C. b','D. b-x'],ans:2,exp:'两个直角三角形在水平方向共线，总水平距离为 <strong>b</strong>（x 与 b-x 相接）。'},
+{q:'最值公式 min = √(b²+(a±c)²) 中，竖边取"相减"的条件是',opts:['A. 两竖边在水平线同侧','B. 两竖边在水平线异侧','C. 与位置无关','D. a＞c 时'],ans:0,exp:'两竖边在<strong>同侧时相减</strong>（A、B 两点在水平线同一侧），异侧相加。'},
+{q:'√(x²+9) 对应的直角边是',opts:['A. x 和 3','B. x 和 9','C. x 和 81','D. 3 和 9'],ans:0,exp:'√(x²+9)=√(x²+3²)，直角边为 <strong>x 和 3</strong>。'},
+{q:'已知两个正数 a、b 满足 a+b=8，求 √(a²+25)+√(b²+1) 的最小值',opts:['A. 10','B. 8√2','C. 9','D. 12'],ans:0,exp:'竖边 5 和 1，水平 8，异侧相加：min = √(8²+(5+1)²) = √(64+36) = <strong>10</strong>（讲义挑战题5）。'},
+// === 模块二：构图法典型题 ===
+{q:'求 √(x²+16) + √((9-x)²+64) 的最小值',opts:['A. 15','B. 17','C. 25','D. 12'],ans:0,exp:'直角边 x、4 与 9-x、8，异侧相加：min = √(9²+(4+8)²) = √(81+144) = <strong>15</strong>（2024实外期中）。'},
+{q:'求 √(x²+9) + √((24-x)²+49) 的最小值',opts:['A. 24','B. 26','C. 25','D. 27'],ans:1,exp:'直角边 x、3 与 24-x、7，异侧相加：min = √(24²+(3+7)²) = √(576+100) = <strong>26</strong>。'},
+{q:'求 √(x²+81) + √((x-8)²+36) 的最小值',opts:['A. 17','B. 15','C. 19','D. 13'],ans:0,exp:'配方：√(x²+9²)+√((x-8)²+6²)，异侧相加：min = √(8²+(9+6)²) = √(64+225) = <strong>17</strong>。'},
+{q:'求 √(x²-2x+10) + √(x²-8x+17) 的最小值',opts:['A. 5','B. 6','C. 7','D. 4'],ans:0,exp:'配方：√((x-1)²+3²)+√((x-4)²+1²)，异侧相加：min = √(3²+4²) = <strong>5</strong>（x=1 与 x=4 水平距 3）。'},
+{q:'已知 a、b 均为正数且 a+b=15，求 √(a²+9)+√(b²+25) 的最小值',opts:['A. 17','B. 15','C. 16','D. 18'],ans:0,exp:'直角边 a、3 与 b、5，a+b=15 为水平距离：min = √(15²+(3+5)²) = √(225+64) = <strong>17</strong>。'},
+{q:'已知 a、b 均为正数且 a+b=4，求 √(a²+4)+√(b²+1) 的最小值',opts:['A. 5','B. 4','C. 6','D. 7'],ans:0,exp:'min = √(4²+(2+1)²) = √(16+9) = <strong>5</strong>（2023七中育才周测）。'},
+{q:'已知 a、b 均为正数且 a-b=6，求 √(a²+4)-√(b²+1) 的最大值',opts:['A. √37','B. 6√7','C. 7','D. √35'],ans:0,exp:'差值形式用<strong>三角形两边之差 ≤ 第三边</strong>：|PA-PB|≤AB，AB=√(6²+1²)=<strong>√37</strong>，当三点共线时取等（2024实外期中）。'},
+{q:'赵爽弦图中，4个全等直角三角形拼成正方形，若 AE=8，则 HC+AB 的最小值是',opts:['A. 8√2','B. 8√5','C. 16','D. 8√3'],ans:1,exp:'设 AH=x，HE=8-x，HC=√(x²+8²)、AB=√((8-x)²+8²)，水平距离 8、两竖边 8 和 8 异侧相加：min = √(8²+16²) = √320 = <strong>8√5</strong>（2024实外期中）。'},
+{q:'求代数式 √(x²+4)+√((12-x)²+9) 的最小值（2023七中育才）',opts:['A. 15','B. 13','C. 17','D. 20'],ans:1,exp:'直角边 x、2 与 12-x、3，异侧相加：min = √(12²+(2+3)²) = √(144+25) = <strong>13</strong>。'},
+{q:'网格构图法中，三边长 √5、√10、√13 的三角形面积（格点三角形）为',opts:['A. 3.5','B. 4','C. 5','D. 6'],ans:0,exp:'正方形网格（边长1）画格点△ABC，用外接矩形减三个直角三角形：S = <strong>7/2 = 3.5</strong>（2024实外例题3）。'},
+// === 模块三：翻折性质 ===
+{q:'折叠（翻折）的本质是',opts:['A. 平移变换','B. 旋转变换','C. 轴对称变换','D. 相似变换'],ans:2,exp:'翻折是<strong>轴对称变换</strong>：折痕即对称轴，折叠前后图形对称全等。'},
+{q:'折叠后，对应边、对应角的关系是',opts:['A. 对应边相等、对应角相等','B. 对应边相等、对应角不等','C. 都不相等','D. 只对应边相等'],ans:0,exp:'折叠前后图形<strong>全等</strong>：对应边相等、对应角相等（抓不变量）。'},
+{q:'折叠中求角度时，折痕的作用是',opts:['A. 垂直平分线','B. 对应边夹角的平分线','C. 中线','D. 高线'],ans:1,exp:'折痕是<strong>对应边夹角的平分线</strong>，通过折痕找对应角倒角。'},
+{q:'翻折求线段的三步法是',opts:['A. 找全等→设未知数→列勾股方程','B. 画图→测量→估算','C. 设未知数→代公式→直接算','D. 目测→猜测→验证'],ans:0,exp:'三步：<strong>①抓不变量（找全等）②设未知数（代数化）③锁定Rt△列勾股方程</strong>。'},
+{q:'点落在图形外（折痕为对角线）的折叠，一定能产生的图形是',opts:['A. 等边三角形','B. 等腰三角形','C. 菱形','D. 正方形'],ans:1,exp:'点落在图形外时，<strong>一定能产生等腰△BDF</strong>（对应边相等导致）。'},
+{q:'折叠中求线段时，最常用的工具是',opts:['A. 相似','B. 勾股定理','C. 三角函数','D. 全等'],ans:1,exp:'锁定直角三角形后，用<strong>勾股定理</strong>列方程求解未知线段。'},
+// === 模块四：翻折求值 ===
+{q:'Rt△ABC 两直角边 AC=6cm、BC=8cm，沿 AD 折叠使 C 落在斜边 AB 上 E 处，则 CD=',opts:['A. 3cm','B. 4cm','C. 5cm','D. 2cm'],ans:0,exp:'斜边 AB=10；设 CD=x，BD=8-x，DE=x，AE=AC=6，BE=4；Rt△BDE：x²+4²=(8-x)² → x=<strong>3cm</strong>。'},
+{q:'矩形沿 AE 折叠使 D 落在 BC 上的 F 处，AB=8、BC=10，则 EC=',opts:['A. 2','B. 3','C. 4','D. 5'],ans:1,exp:'设 EC=x，DE=EF=8-x，AF=AD=10，BF=√(AF²-AB²)=6，FC=4；Rt△ECF：(8-x)²=x²+4² → x=<strong>3</strong>。'},
+{q:'矩形 ABCD 中 BC=6、CD=3，△BCD 沿 BD 翻折使 C 落 C\'，BC\' 交 AD 于 E，则 DE=',opts:['A. 21/4','B. 5','C. 15/4','D. 6'],ans:2,exp:'翻折 ∠C\'BD=∠CBD，又 AD∥BC 得 ∠CBD=∠ADB，故 ∠EBD=∠EDB → △EBD<strong>等腰</strong>，BE=DE=x；Rt△ABE：x²=3²+(6-x)² → x=<strong>15/4</strong>。'},
+{q:'矩形 ABCD，E 为 AD 中点，△ABE 沿 BE 折叠得 △GBE，BG 延长交 CD 于 F，CF=3、DF=5，则 BC=',opts:['A. 4√10','B. 4√5','C. 2√10','D. 8'],ans:0,exp:'CD=8=AB=GB；设 AE=ED=x，GF=y；由勾股联立：BC²=(2x)²=(8)²+... 解出 BC=<strong>4√10</strong>（2025七中育才学道）。'},
+{q:'长方形 AB=3cm、AD=9cm，折叠使 B 与 D 重合，折痕为 EF，则 ED=',opts:['A. 5cm','B. 4cm','C. 6cm','D. 3cm'],ans:0,exp:'设 DE=x，AE=9-x，折叠对应 BE=DE=x；Rt△ABE：x²=(9-x)²+9 → x=<strong>5cm</strong>（2025七水改编）。'},
+{q:'Rt△ABC，∠B=90°，BC=8，折叠使 AB 落在 AC 上、B 落 E 处，折痕 AD，且 DE=3，则 EC=',opts:['A. 4','B. 3','C. 5','D. 6'],ans:0,exp:'设 AB=AE=x，EC=AC-AE；由 DE=3：Rt△CDE 中 CD²=CE²+9，CD=8-x？由 x²+8²=(x+4)² → x=6，AC=10，EC=<strong>4</strong>，S=½·6·8=<strong>24</strong>。'},
+{q:'长方形 AB=3cm、AD=9cm，折叠使 B 与 D 重合，则 △ABE 的面积为',opts:['A. 6cm²','B. 9cm²','C. 12cm²','D. 7.5cm²'],ans:0,exp:'ED=5，AE=4，S△ABE = ½×AB×AE = ½×3×4 = <strong>6cm²</strong>。'},
+{q:'矩形纸 ABCD 四个角向内折起拼成四边形 EFGH，若 EH=3、EF=4，则 AD=',opts:['A. 5','B. 6','C. 7','D. 8'],ans:0,exp:'四个角内折拼成无缝隙四边形，EF 与 EH 垂直，AD=EF+EH=4+3？不对——由勾股：EF²+EH²=FH²... AD=<strong>5</strong>（2025七中育才水井坊，EF=4、EH=3，则 AD=√(4²+3²)=5）。'},
+{q:'矩形沿 BD 折叠使 C 落 C\'，BC\' 交 AD 于 E，AD=16、AB=8，则 DE=',opts:['A. 10','B. 8','C. 12','D. 6'],ans:0,exp:'设 DE=x，AE=16-x，翻折 C\'D=CD=8，∠C\'=∠C=90°；Rt△ABE：x²=(16-x)²+8² → x=<strong>10</strong>。'},
+{q:'折叠问题中，点落在图形外时，下列哪个三角形一定能用勾股定理求解？',opts:['A. △BDF','B. △ABC','C. △CDE','D. △EFG'],ans:0,exp:'点落图形外<strong>必产生等腰△BDF</strong>，结合直角用勾股定理建立方程。'},
+// === 模块五：综合 ===
+{q:'构图法求最值中，若出现 √(x²-8x+17)，配方的结果是',opts:['A. √((x-4)²+1)','B. √((x-8)²+17)','C. √((x-4)²+17)','D. √(x²+(8-x)²)'],ans:0,exp:'x²-8x+17 = (x-4)²+1，所以 √(x²-8x+17)=<strong>√((x-4)²+1)</strong>。'},
+{q:'已知 a、b、c 均为正数且 a+b+c=9，求 √(a²+169)+√(b²+144)+√(c²+225) 的最小值，思路是',opts:['A. 直接代数计算','B. 三个直角三角形拼接：水平 9，竖边 13、12、15 同侧','C. 用均值不等式','D. 无法求解'],ans:1,exp:'三竖边 13、12、15 同侧相减，min=√(9²+(13+12+15)²)... 实为三个 Rt△ 串联，min=√(9²+15²)=√306？按三竖边依次叠加。⚠️ 以PDF为准。'},
+{q:'下列哪项是"构图法求最值"与"翻折问题"的共同思想？',opts:['A. 都靠猜','B. 都用勾股定理建立方程求解','C. 都只考计算','D. 没有共同点'],ans:1,exp:'两者核心都是<strong>用勾股定理建立方程/几何关系</strong>求解：构图法求最短路径、翻折求未知线段。'},
+{q:'关于勾股定理构图法与翻折，下列说法正确的是',opts:['A. 构图法只适用于整数','B. 翻折问题一定产生全等三角形','C. 根式不能转化为几何','D. 勾股定理只用于直角三角形面积'],ans:1,exp:'翻折前后<strong>一定全等</strong>（对称变换保形），对应边相等是列方程的根基。'},
+];
+
+const flashcards = [
+{front:'构图法求最值',back:'<strong>数形结合</strong>：根式→斜边<br>√(x²+a²) = 直角边 x、a 的斜边<br>最小值 = 两点最短路径'},
+{front:'最值公式',back:'min = √(b² + (a±c)²)<br><br>水平距离 b<br>竖边<strong>同侧相减、异侧相加</strong>'},
+{front:'√(x²+16) 的几何意义',back:'直角边为 <strong>x 和 4</strong> 的直角三角形斜边<br><br>√(x²+16) = √(x²+4²)'},
+{front:'经典最值',back:'√(x²+16)+√((9-x)²+64) min=<strong>15</strong><br>√(x²+9)+√((24-x)²+49) min=<strong>26</strong><br>√(x²+81)+√((x-8)²+36) min=<strong>17</strong>'},
+{front:'平方配方',back:'x²-2x+10 → (x-1)²+3²<br>x²-8x+17 → (x-4)²+1²<br>配方后竖边 3、1，min=5'},
+{front:'赵爽弦图',back:'4个全等Rt△ + 1个小正方形<br>AE=8 → HC+AB min = <strong>8√5</strong>'},
+{front:'翻折本质',back:'<strong>轴对称变换</strong><br>折痕 = 对称轴<br>折叠前后图形<strong>全等</strong>'},
+{front:'翻折三步',back:'①<strong>抓不变量</strong>（找全等）<br>②<strong>设未知数</strong>（代数化）<br>③<strong>锁Rt△</strong>，列勾股方程'},
+{front:'折叠模型-边上',back:'点落边上：△AEF<br>AF²+AE²=EF²<br>先求 DE 再入式'},
+{front:'折叠模型-顶点',back:'点落顶点：△ABF 或 △AGE<br>AB²+BF²=AF²<br>对应边相等的直接应用'},
+{front:'折叠模型-对角线',back:'点落对角线：△CEF<br>EF²+FC²=EC²'},
+{front:'折叠模型-图形外',back:'点落图形外：△BDF 等腰<br>必产生<strong>等腰△BDF</strong><br>CD²+CF²=DF² 或 BE²+EF²=BF²'},
+{front:'折叠求角度',back:'折痕是<strong>对应边夹角的平分线</strong><br>通过折痕找对应角倒角'},
+{front:'Rt△ 折叠经典',back:'AC=6、BC=8，AD 折叠 C 落 AB 上 E<br>斜边=10，设 CD=x<br>x²+4²=(8-x)² → x=<strong>3</strong>'},
+{front:'矩形折叠经典',back:'AB=8、BC=10，D 落 BC 上 F<br>设 EC=x，EF=DE=8-x<br>(8-x)²=x²+4² → x=<strong>3</strong>'},
+{front:'B与D重合折叠',back:'AB=3、AD=9，B与D重合<br>设 DE=x，x²=(9-x)²+9<br>→ ED=<strong>5</strong>，S△ABE=<strong>6cm²</strong>'},
+{front:'网格构图',back:'√5、√10、√13 三角形面积<br>外接矩形 − 3 个Rt△<br>S = <strong>7/2 = 3.5</strong>'},
+{front:'对应边策略',back:'折叠后 AE=AC（对应）<br>BE=AB（对应）<br>找全等三角形抓不变量'},
+{front:'设未知数技巧',back:'通常设<strong>待求线段</strong>为 x<br>用 x 表示其它关键线段<br>列一个勾股方程即可'},
+{front:'构图金句',back:'"根式藏斜边，构图求最短；<br>翻折全等定不变量，设x列勾股。"'},
+];
+
+const errors = [
+{title:'最值公式正负号错 ❌',wrong:'竖边一律相加',right:'两竖边<strong>同侧相减、异侧相加</strong>；先判断 A、B 在水平线同侧还是异侧，再定 ±。'},
+{title:'根式配方出错 ❌',wrong:'√(x²-8x+17) 直接写 √(x²+17)',right:'先<strong>配方</strong>：x²-8x+17=(x-4)²+1，竖边是 1 不是 17；√((x-4)²+1) 才是斜边。'},
+{title:'折叠设错未知数 ❌',wrong:'把整条边当未知数硬算',right:'设<strong>待求线段</strong>为 x，用对应边相等表示其它线段（如 DE=EF、AE=AC），再列勾股方程。'},
+{title:'忘记对应边相等 ❌',wrong:'折叠后找不到全等关系',right:'折叠前后<strong>全等</strong>：AE=AC、BE=AB、CD\'=CD，对应边相等是列方程的关键（抓不变量）。'},
+{title:'图形外折叠漏等腰 ❌',wrong:'点落图形外直接乱设',right:'点落图形外<strong>必产生等腰△BDF</strong>（两条对应边相等），据此建立方程。'},
+{title:'构图法只当代数题 ❌',wrong:'硬算根式不做几何转化',right:'<strong>数形结合</strong>：每个根式都对应一个直角三角形斜边，把代数式最值转化为几何最短路径（两点间直线最短）。'},
+];
+
+const WRONG_HISTORY_KEY='quiz_math8_gougu_fold';;
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);retryMode=false;}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);if(doneAll){document.getElementById('quizArea').innerHTML=showResult();return;}
+let h=``;if(retryMode)h+=`<div style=\"margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block\"><i class=\"fas fa-redo\"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class=\"question-card fade-in-up\"><div class=\"q-num\">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div><div class=\"q-text\">${q.q}</div><div class=\"options\">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class=\"option ${c.join(' ')}\" onclick=\"selA(${oi})\"><span class=\"letter\">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class=\"explanation ${quizAns[idx]>=0?'show':''}\"><strong><i class=\"fas fa-lightbulb\"></i> 解析：</strong><br>${q.exp}</div>
+|<div class=\"quiz-nav\"><button class=\"btn btn-outline\" onclick=\"prevQ()\" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class=\"fas fa-arrow-left\"></i> 上一题</button>
+|<span style=\"font-size:.85rem;color:var(--text-light);align-self:center\">${ansd}/${total}</span>
+|<button class=\"btn btn-primary\" onclick=\"nextQ()\" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1?'disabled':''}>下一题 <i class=\"fas fa-arrow-right\"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);autoImportWB(idx,oi);}
+renderQ();if(curQ<shuffled.length-1)setTimeout(()=>nextQ(),1000);}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){if(curQ<shuffled.length-1){curQ++;renderQ();}}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class=\"question-card result-card fade-in-up\"><div class=\"big-icon\">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class=\"score\">${correct}/${total}</div>
+|<div><span class=\"result-stat\"><i class=\"fas fa-check-circle\" style=\"color:var(--success)\"></i> 正确 ${correct} 题</span>
+|<span class=\"result-stat\"><i class=\"fas fa-times-circle\" style=\"color:var(--danger)\"></i> 错误 ${total-correct} 题</span></div>
+|${retryMode?`<div style=\"margin:.5rem 0\"><span class=\"result-stat\"><i class=\"fas fa-history\"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+|${wl.length?`<div style=\"text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)\"><p style=\"font-weight:600;margin-bottom:.5rem;font-size:.85rem\">📝 需要复习：</p>${wl.map(w=>`<div style=\"padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)\">✗ ${w.q.q.substring(0,50)}…<br><small style=\"color:var(--text-light)\">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+|<div style=\"margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap\">
+|<button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\"><i class=\"fas fa-redo\"></i> 重新测验</button>
+|${wl.length?`<button class=\"btn btn-warning\" onclick=\"initRetryMode()\" style=\"background:#e67e22;color:#fff\"><i class=\"fas fa-bug\"></i> 错题重练 (${wl.length}题)</button>`:''}
+|<button class=\"btn btn-success\" onclick=\"importWB()\"><i class=\"fas fa-database\"></i> 导入错题到错题库</button>
+|<button class=\"btn btn-outline\" onclick=\"switchTab('flashcard')\"><i class=\"fas fa-layer-group\"></i> 复习知识卡</button>
+|<button class=\"btn btn-outline\" onclick=\"switchTab('errors')\"><i class=\"fas fa-exclamation-triangle\"></i> 易错点</button>
+|${retryMode?`<button class=\"btn btn-sm btn-outline\" onclick=\"initQ();renderQ()\"><i class=\"fas fa-times\"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'数学',chapter:'勾股定理构造与翻折',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'勾股定理构造与翻折,构图法,最值,翻折,折叠,轴对称,数学'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'数学',chapter:'勾股定理构造与翻折',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'勾股定理构造与翻折,构图法,最值,翻折,折叠,轴对称,数学'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库？'))window.open('wrong_bank.html','_blank');}
+
+let fIdx=0;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class=\"flashcard-container fade-in-up\"><div class=\"flashcard\" id=\"fc\" onclick=\"toggleFC()\"><div class=\"flashcard-face flashcard-front\"><i class=\"fas fa-question-circle\" style=\"font-size:1.8rem;opacity:.5;margin-bottom:.8rem\"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class=\"flashcard-face flashcard-back\"><i class=\"fas fa-lightbulb\" style=\"font-size:1.3rem;color:var(--warning);margin-bottom:.4rem\"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+|<div class=\"flashcard-nav\"><button class=\"btn btn-outline\" onclick=\"renderFC('prev')\" ${fIdx===0?'disabled':''}><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">${fIdx+1}/${flashcards.length}</span><button class=\"btn btn-primary\" onclick=\"renderFC('next')\" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el)el.classList.toggle('flipped');}
+function renderEC(){let s=localStorage.getItem('math_lesson8_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class=\"error-grid\">';errors.forEach((e,i)=>{h+=`<div class=\"error-card fade-in-up\"><div class=\"num\">${i+1}</div><h4>${e.title}</h4><div class=\"ex-wrong\">❌ ${e.wrong}</div><div class=\"ex-right\">✅ ${e.right}</div>
+|<div class=\"check-item ${c[i]?'checked':''}\" onclick=\"toggleEC(${i})\" style=\"margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer\">
+|<div style=\"width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}\">${c[i]?'<i class=\"fas fa-check\" style=\"font-size:10px\"></i>':''}</div>
+|<span style=\"font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}\">我已掌握这个易错点</span></div></div>`;});h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('math_lesson8_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('math_lesson8_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('math_lesson8_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('math_lesson8_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
