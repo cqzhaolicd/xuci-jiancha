@@ -1,0 +1,445 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔦 光的传播 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+</style>
+</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 光的传播</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-lightbulb"></i> 光的传播 · 互动学习</h1>
+    <p>初二博学班 · 5 模块 · 36 题 · 20 卡牌 | 天元教育</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 36道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第八讲（上） · 光的传播</div>
+
+    <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-sun" style="color:#f39c12"></i> 光源</h3><ul>
+        <li><strong class="hl">光源</strong>：能够自行发光的物体</li>
+        <li>自然光源（太阳）/ 人造光源（电灯）</li>
+        <li>冷光源（LED/萤火虫）/ 热光源（白炽灯）</li>
+        <li>⚠️ <strong class="hl">不是光源</strong>：月亮、钻石、黄金、屏幕、眼睛</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-arrows-alt-h" style="color:#667eea"></i> 光的直线传播</h3><ul>
+        <li>条件：<strong class="hl">同种均匀介质</strong>中沿直线</li>
+        <li>光<strong>不需要介质</strong>，真空也能传播</li>
+        <li>应用：影子、排队、小孔成像、激光准直</li>
+        <li>日食月食、金星凌日、瞄准射击</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-ruler-combined" style="color:#e74c3c"></i> 光线：理想模型</h3><ul>
+        <li><strong class="hl">光线</strong>：带箭头的直线，表示传播路径和方向</li>
+        <li><strong class="hl">理想模型法</strong>：光线并不存在</li>
+        <li>光是客观存在的，光线是人为引入</li>
+        <li>作图时用光线描述光路</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-tachometer-alt" style="color:#2ecc71"></i> 光速与光年</h3><ul>
+        <li>真空中光速：<strong class="hl">c=3×10⁸ m/s</strong></li>
+        <li>光速排序：真空 &gt; 空气 &gt; 液体 &gt; 固体</li>
+        <li>⚠️ <strong class="hl">光年是长度单位</strong>（非时间单位）</li>
+        <li>1光年 = 光在真空中传播一年的距离</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-eclipse" style="color:#9b59b6"></i> 日食与月食</h3><ul>
+        <li>日食：<strong>月球</strong>挡住太阳光（日偏/全/环食）</li>
+        <li>月食：<strong>地球</strong>挡住阳光（月偏/全食）</li>
+        <li>⚠️ <strong class="hl">没有月环食</strong>（地球影子比月球大）</li>
+        <li>成因：光沿直线传播</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-camera" style="color:#3498db"></i> 小孔成像</h3><ul>
+        <li>特点：<strong class="hl">上下颠倒、左右互换的实像</strong></li>
+        <li>由实际光线汇聚，<strong>光屏可承接</strong></li>
+        <li>像的形状<strong>由光源决定，与孔形无关</strong></li>
+        <li>物体靠近/光屏远离 → 像<strong>变大</strong></li>
+      </ul></div>
+    </div>
+
+    <!-- 光的直线传播示意图 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-sun" style="color:#f39c12"></i> 光的直线传播：光源 → 直线 → 小孔成像</div>
+      <svg class="svg-graph" viewBox="0 0 360 190" width="360" height="190">
+        <!-- 光源 -->
+        <circle cx="45" cy="95" r="12" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+        <text x="18" y="80" font-size="11" fill="#e67e22" font-weight="700">光源S</text>
+        <!-- 光线（直线） -->
+        <line x1="60" y1="92" x2="300" y2="92" stroke="#667eea" stroke-width="2" marker-end="url(#arrow)"/>
+        <line x1="62" y1="100" x2="295" y2="118" stroke="#aaa" stroke-width="1.2" stroke-dasharray="4,3"/>
+        <line x1="62" y1="84" x2="295" y2="66" stroke="#aaa" stroke-width="1.2" stroke-dasharray="4,3"/>
+        <!-- 小孔挡板 -->
+        <line x1="300" y1="50" x2="300" y2="140" stroke="#333" stroke-width="4"/>
+        <text x="306" y="98" font-size="9" fill="#666">小孔O</text>
+        <!-- 屏 -->
+        <line x1="330" y1="40" x2="330" y2="150" stroke="#e74c3c" stroke-width="3"/>
+        <text x="316" y="32" font-size="10" fill="#e74c3c">光屏</text>
+        <!-- 像 -->
+        <text x="338" y="70" font-size="10" fill="#e74c3c">像</text>
+        <text x="338" y="118" font-size="10" fill="#666">(倒立)</text>
+        <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#667eea"/></marker></defs>
+      </svg>
+      <div class="graph-label">↑ 光沿直线传播：小孔成像是倒立实像，上下颠倒、左右互换</div>
+    </div>
+
+    <!-- 日食月食示意 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-eclipse" style="color:#9b59b6"></i> 日食与月食：光沿直线传播的经典应用</div>
+      <svg class="svg-graph" viewBox="0 0 360 200" width="360" height="200">
+        <!-- 太阳 -->
+        <circle cx="55" cy="100" r="18" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+        <text x="38" y="82" font-size="10" fill="#e67e22" font-weight="700">太阳</text>
+        <!-- 日食：月球在地日之间 -->
+        <circle cx="170" cy="70" r="10" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2"/>
+        <text x="145" y="52" font-size="9" fill="#7f8c8d">月球(日食)</text>
+        <line x1="75" y1="88" x2="160" y2="62" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="75" y1="112" x2="160" y2="78" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="96" y="96" font-size="8" fill="#666">阴影</text>
+        <!-- 地球 -->
+        <circle cx="260" cy="100" r="14" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+        <text x="244" y="130" font-size="9" fill="#2980b9">地球</text>
+        <!-- 月食：地球在日月之间 -->
+        <circle cx="170" cy="170" r="9" fill="#95a5a6" stroke="#7f8c8d" stroke-width="1.5"/>
+        <text x="150" y="190" font-size="9" fill="#7f8c8d">月球(月食)</text>
+        <line x1="75" y1="105" x2="245" y2="105" stroke="#e74c3c" stroke-width="1.2" stroke-dasharray="4,3"/>
+        <text x="120" y="118" font-size="8" fill="#e74c3c">地球影子(月食)</text>
+      </svg>
+      <div class="graph-label">↑ 日食：月球在日地之间；月食：地球在日月之间（无月环食）</div>
+    </div>
+
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第八讲（上）</h4>
+      <p>
+        <strong>光源</strong> — 自行发光的物体：自然光源（太阳）、人造光源（电灯）；月亮、钻石、黄金、屏幕、眼睛都不是光源（只反射光）<br>
+        <strong>光的直线传播</strong> — 条件：同种均匀介质；光不需要介质（真空可传）；应用：影子、排队看齐、日晷、日食月食、小孔成像、激光准直、瞄准、金星凌日<br>
+        <strong>光线</strong> — 带箭头直线，表示光传播路径和方向；理想模型法，光线不存在但光存在<br>
+        <strong>光速与光年</strong> — 真空中 c=3×10⁸ m/s；光速：真空＞空气＞液体＞固体；光年=长度单位（光跑一年的距离）<br>
+        <strong>日食与月食</strong> — 日食：月球挡太阳（日偏/全/环食）；月食：地球挡太阳（月偏/全食）；没有月环食<br>
+        <strong>小孔成像</strong> — 倒立实像（光屏可承接）；像形由光源决定与孔形无关；物体靠近/光屏远离像变大；孔大屏近像更亮<br>
+        <strong><em>💬 金句："月亮不发光，反射太阳光；光年量距离，不是量时间。"</em></strong><br>
+        <strong><em>💬 金句："小孔成像倒实像，孔形不决定像形状；物近屏远像变大，孔大屏近像更亮。"</em></strong><br>
+        <strong><em>💬 金句："日食月食直线传，月球地球轮流挡；月环食不存在，记牢光学不踩坑。"</em></strong>
+      </p>
+    </div>
+  </div><div id="tab-quiz" class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 36</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 光的传播互动学习 | 天元教育 · 初二博学班</div>
+
+<script>
+const questions = [
+// === 模块一：光源 ===
+{q:'下列物体中属于光源的是',opts:['A. 月亮','B. 钻石','C. 太阳','D. 电影屏幕'],ans:2,exp:'<strong>太阳是光源</strong>（自行发光）。月亮/钻石/屏幕都是反射光，不是光源。'},
+{q:'月亮不是光源，是因为',opts:['A. 月亮不发光','B. 月亮不透明','C. 月亮太远','D. 月亮是固体'],ans:0,exp:'月亮<strong>不自行发光</strong>，只是反射太阳光，所以不是光源。'},
+{q:'下列属于人造光源的是',opts:['A. 太阳','B. 萤火虫','C. 电灯','D. 恒星'],ans:2,exp:'<strong>电灯是人造光源</strong>（人类制造）。太阳、恒星是自然光源；萤火虫是自然冷光源。'},
+{q:'下列关于光源的说法正确的是',opts:['A. 月亮是光源','B. 所有光源都发热','C. 发光物体一定是光源','D. 电影屏幕是光源'],ans:2,exp:'<strong>能够自行发光的物体就是光源</strong>。月亮/屏幕只是反射光（A、D×）；LED冷光源不发热（B×）。'},
+{q:'下列光源中属于冷光源的是',opts:['A. 白炽灯','B. 萤火虫','C. 太阳','D. 蜡烛火焰'],ans:1,exp:'<strong>萤火虫是冷光源</strong>（发光不发热）。白炽灯、太阳、蜡烛火焰发光同时发热，是热光源。'},
+// === 模块二：光的直线传播 ===
+{q:'光沿直线传播的条件是',opts:['A. 同种均匀介质','B. 任何介质','C. 真空','D. 透明介质'],ans:0,exp:'光在<strong>同种均匀介质</strong>中沿直线传播。介质不均匀（如空气受热）时光会弯曲。'},
+{q:'光在传播时（ ）介质',opts:['A. 需要','B. 不需要','C. 必须有水','D. 必须有空气'],ans:1,exp:'光<strong>不需要介质</strong>，在真空中也能传播（太阳光穿过真空到达地球）。'},
+{q:'下列现象中，属于光沿直线传播形成的是',opts:['A. 水中倒影','B. 影子','C. 彩虹','D. 池水变浅'],ans:1,exp:'<strong>影子</strong>是光沿直线传播被物体挡住形成的暗区。倒影/彩虹/池水变浅都与光的反射、折射有关。'},
+{q:'排队时"向后看齐"利用的原理是',opts:['A. 光的反射','B. 光的直线传播','C. 光的折射','D. 光的色散'],ans:1,exp:'看齐时只能看到前一个同学，说明光<strong>沿直线传播</strong>，后面的同学被挡住看不见。'},
+{q:'关于光线，下列说法正确的是',opts:['A. 光线是真实存在的','B. 光线是带箭头的直线，表示光传播路径和方向','C. 光线是光束','D. 没有光线就没有光'],ans:1,exp:'光线是<strong>理想模型</strong>，带箭头直线表示光传播<strong>路径和方向</strong>，实际并不存在，但光是客观存在的。'},
+{q:'下列利用光的直线传播的是',opts:['A. 用放大镜看物体','B. 激光准直','C. 穿衣镜照镜子','D. 海市蜃楼'],ans:1,exp:'<strong>激光准直</strong>（如隧道开挖、射击瞄准）利用光沿直线传播。放大镜/镜子是折射/反射，海市蜃楼是折射。'},
+{q:'"金星凌日"现象形成的原因是',opts:['A. 光的反射','B. 光的直线传播','C. 光的折射','D. 金星发光'],ans:1,exp:'金星运行到太阳和地球之间，<strong>光沿直线传播</strong>被金星挡住，地球上看到金星经过日面，原理与日食相同。'},
+{q:'小孔成像、日食、月食的共同成因是',opts:['A. 光的反射','B. 光的折射','C. 光的直线传播','D. 光的色散'],ans:2,exp:'小孔成像、日食、月食、影子都是<strong>光沿直线传播</strong>形成的现象。'},
+// === 模块三：光速与光年 ===
+{q:'光在真空中的传播速度是',opts:['A. 3×10⁵ m/s','B. 3×10⁶ m/s','C. 3×10⁸ m/s','D. 340 m/s'],ans:2,exp:'真空中光速 <strong>c=3×10⁸ m/s</strong>。340 m/s是声速，光速远大于声速。'},
+{q:'光速的大小关系正确的是',opts:['A. 真空＞空气＞水＞玻璃','B. 玻璃＞水＞空气＞真空','C. 空气＞真空＞水','D. 水中光速最大'],ans:0,exp:'光速：<strong>真空＞空气＞液体＞固体</strong>。介质越密，光速越小。'},
+{q:'关于光年，下列说法正确的是',opts:['A. 是时间单位','B. 是长度单位，光在真空中传播一年的距离','C. 是速度单位','D. 是光的速度'],ans:1,exp:'<strong>光年是长度单位</strong>，指光在真空中传播一年的距离，用于天体间距离（如"牛郎织女相距16光年"）。'},
+{q:'太阳发出的光到达地球约需8分钟，太阳与地球的距离约为',opts:['A. 8光年','B. 8光秒','C. 1.5×10¹¹ m','D. 无法估算'],ans:2,exp:'距离=速度×时间 = 3×10⁸ m/s × 480s ≈ <strong>1.5×10¹¹ m</strong>（8光分，不是8光年）。'},
+{q:'光在空气、水、玻璃中传播，速度从大到小排列正确的是',opts:['A. 空气＞水＞玻璃','B. 玻璃＞水＞空气','C. 水＞空气＞玻璃','D. 三者一样'],ans:0,exp:'光速：<strong>空气＞水＞玻璃</strong>。介质越稠密，光传播越慢。'},
+{q:'打雷时先看到闪电后听到雷声，是因为',opts:['A. 闪电在前','B. 光速大于声速','C. 声音传播路径长','D. 雷声更远'],ans:1,exp:'光速（3×10⁸ m/s）远大于声速（340 m/s），所以<strong>先看到闪电、后听到雷声</strong>。'},
+// === 模块四：日食与月食 ===
+{q:'日食形成的原因是',opts:['A. 月球挡住太阳光','B. 地球挡住太阳光','C. 太阳被云遮住','D. 光发生折射'],ans:0,exp:'日食：<strong>月球</strong>运行到太阳和地球之间，挡住太阳光（光沿直线传播）。'},
+{q:'月食形成的原因是',opts:['A. 月球挡住太阳光','B. 地球挡住太阳光','C. 月球发光','D. 太阳被月球遮住'],ans:1,exp:'月食：<strong>地球</strong>运行到太阳和月球之间，地球的影子挡住月球（光沿直线传播）。'},
+{q:'下列日食类型中，实际存在的是',opts:['A. 日偏食、日全食、日环食','B. 日偏食、日全食、日环食、日环月食','C. 只有日全食','D. 只有日偏食'],ans:0,exp:'日食有<strong>日偏食、日全食、日环食</strong>三种；月食只有<strong>月偏食、月全食</strong>，<strong>没有月环食</strong>。'},
+{q:'为什么没有月环食？',opts:['A. 月球太大','B. 地球的影子比月球大','C. 太阳太远','D. 月球不透明'],ans:1,exp:'地球的<strong>影子（本影）比月球大</strong>，月球进入地球本影时被完全遮住，不会出现月环食。'},
+{q:'发生日食时，太阳、月球、地球三者的位置关系是',opts:['A. 太阳-地球-月球','B. 太阳-月球-地球','C. 月球-太阳-地球','D. 地球-太阳-月球'],ans:1,exp:'日食时<strong>月球在中间</strong>（太阳-月球-地球），月球挡住射向地球的太阳光。'},
+{q:'发生月食时，太阳、地球、月球三者的位置关系是',opts:['A. 太阳-地球-月球','B. 太阳-月球-地球','C. 月球-太阳-地球','D. 无法确定'],ans:0,exp:'月食时<strong>地球在中间</strong>（太阳-地球-月球），地球影子落在月球上。'},
+// === 模块五：小孔成像 ===
+{q:'小孔成像所成的像是',opts:['A. 正立的虚像','B. 倒立的实像','C. 正立的实像','D. 倒立的虚像'],ans:1,exp:'小孔成像是<strong>上下颠倒、左右互换的实像</strong>，由实际光线汇聚形成，可用光屏承接。'},
+{q:'小孔成像中，像的形状取决于',opts:['A. 小孔的形状','B. 光源（物体）的形状','C. 挡板的大小','D. 小孔的大小'],ans:1,exp:'像的形状<strong>由光源决定，与孔的形状无关</strong>。圆形小孔照出三角形物体，像仍是三角形。'},
+{q:'小孔成像的像可以在光屏上呈现，说明它是',opts:['A. 虚像','B. 实像','C. 平面镜成像','D. 幻觉'],ans:1,exp:'小孔成像由<strong>实际光线汇聚</strong>形成，能在光屏上呈现，是<strong>实像</strong>。'},
+{q:'小孔成像中，要使像变大，应该',opts:['A. 物体远离小孔','B. 光屏靠近小孔','C. 物体靠近小孔、光屏远离小孔','D. 缩小孔'],ans:2,exp:'<strong>物体靠近小孔、光屏远离小孔</strong>，像会变大（作图法可得）。'},
+{q:'小孔成像中，将小孔适当增大，光屏适当靠近小孔，则像会',opts:['A. 变暗','B. 变亮','C. 变小','D. 消失'],ans:1,exp:'孔适当增大、光屏靠近小孔 → 像<strong>变亮</strong>（进光更多，但像会变模糊）。'},
+{q:'用小孔成像观察烛焰，若把小孔由圆形改为三角形，则像',opts:['A. 变成三角形','B. 仍是烛焰形状','C. 消失','D. 变成圆形'],ans:1,exp:'<strong>像的形状由光源决定，与孔的形状无关</strong>。孔改成三角形，像仍是烛焰的形状。'},
+// === 模块六：综合应用 ===
+{q:'红绿灯指挥交通，主要利用光能',opts:['A. 传递能量','B. 传递信息','C. 加热物体','D. 产生声音'],ans:1,exp:'红绿灯通过不同颜色的光<strong>传递信息</strong>。光纤通信、交通信号灯都是光传递信息。'},
+{q:'激光切割金属，主要利用光能',opts:['A. 传递信息','B. 传递能量','C. 反射成像','D. 直线传播'],ans:1,exp:'激光切割利用激光的<strong>能量</strong>（高能量密度）熔化金属。太阳能发电也是光传递能量。'},
+{q:'关于光，下列说法错误的是',opts:['A. 光能传递信息和能量','B. 光在真空中也能传播','C. 光年是时间单位','D. 光沿直线传播可以解释影子'],ans:2,exp:'<strong>光年是长度单位</strong>（C错）。A、B、D说法都正确。'},
+{q:'下列说法正确的是',opts:['A. 光线真实存在','B. 光总是沿直线传播','C. 光在均匀介质中沿直线传播','D. 光速在任何介质中都一样'],ans:2,exp:'光在<strong>同种均匀介质</strong>中沿直线传播（C对）。光线是模型不存在（A×），介质不均匀会弯曲（B×），光速随介质变化（D×）。'},
+{q:'太阳、月亮、钻石、电灯中，属于光源的有',opts:['A. 太阳和月亮','B. 太阳和电灯','C. 月亮和钻石','D. 钻石和电灯'],ans:1,exp:'<strong>太阳（自然光源）和电灯（人造光源）</strong>是光源；月亮、钻石只反射光，不是光源。'},
+];
+
+const flashcards = [
+{front:'光源',back:'<strong>自行发光的物体</strong><br>自然光源：太阳、恒星<br>人造光源：电灯、蜡烛<br>冷光源：LED、萤火虫<br>热光源：太阳、白炽灯'},
+{front:'不是光源',back:'月亮、钻石、黄金、<strong>电影屏幕</strong>、眼睛、行星<br><br>它们都只是<strong>反射光</strong>，不自行发光'},
+{front:'光的直线传播',back:'条件：<strong>同种均匀介质</strong><br>光不需要介质，<strong>真空可传</strong><br>应用：影子、排队、小孔成像、激光准直、日食月食、瞄准'},
+{front:'光线',back:'带箭头的直线，表示光的<strong>传播路径和方向</strong><br><br>⚠️ <strong>理想模型法</strong>：光线不存在，光是客观存在的'},
+{front:'光速',back:'真空：<strong>c = 3×10⁸ m/s</strong><br><br>排序：真空＞空气＞液体＞固体<br>介质越密光速越小'},
+{front:'光年',back:'<strong>长度单位</strong>（不是时间单位！）<br><br>光在真空中传播<strong>一年</strong>的距离<br>用于天体间距离'},
+{front:'影子',back:'光沿直线传播，被不透明物体挡住<br><br>物体后方形成<strong>阴影区</strong>'},
+{front:'日食',back:'<strong>月球</strong>在太阳和地球之间，挡住太阳光<br><br>日偏食、日全食、日环食'},
+{front:'月食',back:'<strong>地球</strong>在太阳和月球之间，影子落在月球上<br><br>月偏食、月全食<br>⚠️ <strong>没有月环食</strong>'},
+{front:'小孔成像',back:'<strong>上下颠倒、左右互换的实像</strong><br><br>由实际光线汇聚，<strong>光屏可承接</strong>'},
+{front:'像形与孔形',back:'像的形状<strong>由光源决定</strong><br><br>⚠️ <strong>与孔的形状无关</strong><br>圆孔/方孔/三角孔 → 像形状不变'},
+{front:'像的大小',back:'物体<strong>靠近</strong>小孔、光屏<strong>远离</strong> → 像<strong>变大</strong><br><br>作图法可验证'},
+{front:'像的亮度',back:'孔适当<strong>增大</strong>、光屏<strong>靠近</strong>小孔<br>→ 像<strong>变亮</strong>'},
+{front:'实像 vs 虚像',back:'实像：<strong>实际光线汇聚</strong>，光屏可承接<br>虚像：光线的反向延长线汇聚，光屏不可承接<br><br>小孔成像=实像'},
+{front:'光传递信息',back:'红绿灯、光纤通信、交通信号<br><br>光携带信息快速传播'},
+{front:'光传递能量',back:'激光切割、太阳能发电、激光手术<br><br>光具有能量'},
+{front:'金星凌日',back:'金星在太阳和地球之间<br>光沿直线传播被金星挡住<br><br>与日食原理相同'},
+{front:'激光准直',back:'利用光沿直线传播<br><br>隧道开挖、射击瞄准、砌墙对齐'},
+{front:'光的传播不需要介质',back:'真空也能传播光<br><br>太阳光穿过真空到达地球（约8分钟）'},
+{front:'光学金句',back:'"月亮不发光，反射太阳光；<br>光年量距离，不是量时间。"<br><br>"小孔成像倒实像，孔形不决定像形状。"'},
+];
+
+const errors = [
+{title:'月亮当光源 ❌',wrong:'月亮晚上会发光，是光源',right:'月亮反射太阳光，不自行发光，<strong>不是光源</strong>；钻石、黄金、屏幕、眼睛同理。'},
+{title:'光年是时间单位 ❌',wrong:'光年=光跑一年，是时间单位',right:'光年是<strong>长度单位</strong>（光在真空中传播一年的距离），用于天体距离。'},
+{title:'光速排序记反 ❌',wrong:'玻璃中光速比空气中快',right:'光速<strong>真空＞空气＞液体＞固体</strong>，介质越密光速越小。'},
+{title:'像形由孔决定 ❌',wrong:'小孔是圆的，像就是圆的',right:'像的形状<strong>由光源决定，与孔的形状无关</strong>；孔形只影响像的亮度/清晰度。'},
+{title:'小孔成像是虚像 ❌',wrong:'小孔成像不能在光屏上呈现',right:'小孔成像是<strong>实像</strong>（上下颠倒、左右互换），由实际光线汇聚，<strong>光屏可承接</strong>。'},
+{title:'存在月环食 ❌',wrong:'日食有环食，月食也有环食',right:'<strong>没有月环食</strong>（地球影子比月球大，月球被完全遮住）；只有月偏食、月全食。'},
+];
+
+const WRONG_HISTORY_KEY='quiz_physics8_state';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);retryMode=false;}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);if(doneAll){document.getElementById('quizArea').innerHTML=showResult();return;}
+let h=``;if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div><div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1?'disabled':''}>下一题 <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);autoImportWB(idx,oi);}
+renderQ();if(curQ<shuffled.length-1)setTimeout(()=>nextQ(),1000);}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){if(curQ<shuffled.length-1){curQ++;renderQ();}}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class="question-card result-card fade-in-up"><div class="big-icon">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class="score">${correct}/${total}</div>
+<div><span class="result-stat"><i class="fas fa-check-circle" style="color:var(--success)"></i> 正确 ${correct} 题</span>
+<span class="result-stat"><i class="fas fa-times-circle" style="color:var(--danger)"></i> 错误 ${total-correct} 题</span></div>
+${retryMode?`<div style="margin:.5rem 0"><span class="result-stat"><i class="fas fa-history"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)"><p style="font-weight:600;margin-bottom:.5rem;font-size:.85rem">📝 需要复习：</p>${wl.map(w=>`<div style="padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)">✗ ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+<div style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+<button class="btn btn-primary" onclick="initQ();renderQ();"><i class="fas fa-redo"></i> 重新测验</button>
+${wl.length?`<button class="btn btn-warning" onclick="initRetryMode()" style="background:#e67e22;color:#fff"><i class="fas fa-bug"></i> 错题重练 (${wl.length}题)</button>`:''}
+<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button>
+${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()"><i class="fas fa-times"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'物理',chapter:'光的传播',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'光的传播,光源,光速,光年,小孔成像,日食,月食,物理'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'光的传播',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'光的传播,光源,光速,光年,小孔成像,日食,月食,物理'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('phy_lesson7_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('phy_lesson7_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
