@@ -1,0 +1,416 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>📐 二元一次方程组 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--secondary:#c0392b;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#e74c3c,#c0392b);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(231,76,60,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#e74c3c20,#c0392b20);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#e74c3c,#c0392b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap;overflow-x:auto}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem;white-space:nowrap}
+.tab-btn:hover,.tab-btn.active{border-color:#e74c3c;color:#e74c3c}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card .formula{background:var(--bg);padding:.4rem .6rem;border-radius:6px;font-family:'Times New Roman',serif;font-size:1.05rem;text-align:center;margin:.3rem 0;color:#c0392b;font-weight:700}
+.knowledge-card.c1{border-color:#e74c3c}.knowledge-card.c2{border-color:#e67e22}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#3498db}.knowledge-card.c5{border-color:#9b59b6}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#e74c3c,#c0392b);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:1.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-text .expr{font-size:1.05rem;color:#c0392b}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.65rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.9rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#e74c3c;background:#e74c3c10}
+.option .letter{width:24px;height:24px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#fff5f5;border-left:4px solid var(--primary);font-size:.88rem;display:none;line-height:1.8}
+.explanation.show{display:block}
+.explanation .exp-formula{font-family:'Times New Roman',serif;color:#c0392b;font-weight:600}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(231,76,60,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#e74c3c;color:#e74c3c}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#e74c3c,#c0392b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem;text-align:center}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#e74c3c;margin-bottom:.6rem;text-align:center}
+.flashcard-back p{font-size:.95rem;line-height:1.9;color:var(--text);text-align:center}
+.flashcard-back .f-formula{font-family:'Times New Roman',serif;font-size:1.1rem;font-weight:700;color:#e74c3c}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.import-btn{margin-top:1rem;text-align:center}
+.teacher-talk{background:linear-gradient(135deg,#e74c3c10,#c0392b10);border-radius:var(--radius);padding:1.5rem;margin:1rem 0;border-left:4px solid #e74c3c}
+.teacher-talk h4{color:#e74c3c;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.teacher-talk p{font-size:.9rem;line-height:1.9}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+</style>
+</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 数学 · 二元一次方程组</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-project-diagram"></i> 二元一次方程组 · 互动学习</h1>
+    <p>暑假初二博学班 · 天元教育 | ⭐⭐⭐⭐ 难度</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 36道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#e74c3c"></i> 第九讲 · 二元一次方程组（二）</div>
+
+    <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-th-list" style="color:#e74c3c"></i> 二元一次方程组</h3><ul>
+        <li>含<strong class="hl">两个未知数</strong>的两个一次方程组成</li>
+        <li>一般形式：ax+by=c; dx+ey=f</li>
+        <li>公共解 = <strong class="hl">方程组的解</strong></li>
+        <li>解集：一对 x、y 值同时满足两式</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-exchange-alt" style="color:#e74c3c"></i> 代入消元法</h3><ul>
+        <li>①选<strong class="hl">系数简单</strong>的方程变形</li>
+        <li>②y=ax+b 代入另一方程<strong>消元</strong></li>
+        <li>③解一元一次方程求 x</li>
+        <li>④代回求 y → 写出解</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-plus-square" style="color:#e74c3c"></i> 加减消元法</h3><ul>
+        <li>①乘适当数使某未知数<strong class="hl">系数相反/相等</strong></li>
+        <li>②两方程<strong>相加/相减</strong>消元</li>
+        <li>③解一元一次方程求一个未知数</li>
+        <li>④代回求另一个 → 写出解</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-cubes" style="color:#e74c3c"></i> 三元一次方程组</h3><ul>
+        <li>三个方程、<strong class="hl">三个未知数</strong></li>
+        <li>方法：消元降次 → 二元 → 一元</li>
+        <li>常用：代入 + 加减<strong>组合消元</strong></li>
+        <li>注意检验解的合理性</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-file-alt" style="color:#e74c3c"></i> 列方程解应用题</h3><ul>
+        <li>审题 → <strong class="hl">设元</strong>（选两个未知量）</li>
+        <li>找<strong class="hl">两个等量关系</strong></li>
+        <li>列方程组 → 解方程组</li>
+        <li>⚠️ <strong>检验</strong>是否符合实际意义</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-balance-scale" style="color:#e74c3c"></i> 等量关系常见类型</h3><ul>
+        <li><strong>总和</strong>：x+y=总人数/总件数</li>
+        <li><strong>倍数</strong>：2x-y=18（2倍多18）</li>
+        <li><strong>盈亏</strong>：每份×份数±余/缺=总量</li>
+        <li><strong>古代题</strong>：绳长/井深、鸡兔同笼</li>
+      </ul></div>
+    </div>
+
+    <!-- 代入消元法演示 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-exchange-alt" style="color:#e74c3c"></i> 代入消元法：3x+4y=19; x-y=4</div>
+      <svg class="svg-graph" viewBox="0 0 360 200" width="360" height="200">
+        <!-- 流程框 -->
+        <rect x="30" y="20" width="300" height="36" rx="8" fill="#e74c3c20" stroke="#e74c3c" stroke-width="1.5"/>
+        <text x="45" y="44" font-size="12" fill="#333" font-weight="600">① 由 x-y=4 → x = y+4</text>
+        <line x1="180" y1="56" x2="180" y2="76" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+        <rect x="30" y="78" width="300" height="36" rx="8" fill="#667eea20" stroke="#667eea" stroke-width="1.5"/>
+        <text x="45" y="102" font-size="12" fill="#333" font-weight="600">② 代入 3(y+4)+4y = 19</text>
+        <line x1="180" y1="114" x2="180" y2="134" stroke="#667eea" stroke-width="2" marker-end="url(#arrow)"/>
+        <rect x="30" y="136" width="300" height="36" rx="8" fill="#2ecc7120" stroke="#2ecc71" stroke-width="1.5"/>
+        <text x="45" y="160" font-size="12" fill="#333" font-weight="600">③ 解出 y=1，代回得 x=5</text>
+        <text x="30" y="196" font-size="11" fill="#666">解：{x=5, y=1} — 消去一个未知数，化二元为一元</text>
+      </svg>
+      <div class="graph-label">↑ 代入消元：用一个未知数表示另一个 → 代入消元 → 解一元一次方程</div>
+    </div>
+
+    <!-- 加减消元法演示 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-plus-square" style="color:#e74c3c"></i> 加减消元法：x+2y=1; 3x-2y=11</div>
+      <svg class="svg-graph" viewBox="0 0 360 200" width="360" height="200">
+        <rect x="30" y="20" width="300" height="36" rx="8" fill="#e74c3c20" stroke="#e74c3c" stroke-width="1.5"/>
+        <text x="45" y="44" font-size="12" fill="#333" font-weight="600">① 观察：y 系数 +2 与 -2 相反</text>
+        <line x1="180" y1="56" x2="180" y2="76" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+        <rect x="30" y="78" width="300" height="36" rx="8" fill="#667eea20" stroke="#667eea" stroke-width="1.5"/>
+        <text x="45" y="102" font-size="12" fill="#333" font-weight="600">② ①+② → 4x = 12 → x=3</text>
+        <line x1="180" y1="114" x2="180" y2="134" stroke="#667eea" stroke-width="2" marker-end="url(#arrow)"/>
+        <rect x="30" y="136" width="300" height="36" rx="8" fill="#2ecc7120" stroke="#2ecc71" stroke-width="1.5"/>
+        <text x="45" y="160" font-size="12" fill="#333" font-weight="600">③ 代回① → 3+2y=1 → y=-1</text>
+        <text x="30" y="196" font-size="11" fill="#666">解：{x=3, y=-1} — 系数相反相加、相等相减，直接消元</text>
+      </svg>
+      <div class="graph-label">↑ 加减消元：让某未知数系数相反/相等 → 相加或相减消去</div>
+    </div>
+
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第九讲</h4>
+      <p>
+        <strong>二元一次方程组</strong> — 两个未知数、两个一次方程，公共解是方程组的解；核心思想：<strong>消元</strong>，化二元为一元<br>
+        <strong>代入消元法</strong> — 选系数简单的方程，用一个未知数表示另一个（y=ax+b），代入另一方程消元；适用：某未知数系数为 1 或 -1<br>
+        <strong>加减消元法</strong> — 乘适当数使某未知数系数相反/相等，两方程相加或相减直接消元；适用：系数成倍数或相等<br>
+        <strong>三元一次方程组</strong> — 三个方程三个未知数，先消元成二元，再消元成一元；注意检验<br>
+        <strong>列方程组解应用题六步</strong> — 审题→设元→找两个等量关系→列方程组→解方程组→检验作答<br>
+        <strong>古代数学题</strong> — 《孙子算经》木长/鸡兔同笼、《算法统宗》分银/井深绳长/开店：抓住"每份×份数±余缺=总量"列式<br>
+        <strong><em>💬 金句："二元要消元，代入看系数，加减看相反；列方程找等量，两个关系两个式。"</em></strong><br>
+        <strong><em>💬 金句："每份乘份数，余加缺来减；绳长井深分银开店，全是同一个模型。"</em></strong>
+      </p>
+    </div>
+  <div id="tab-quiz" class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 32</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header" style="font-weight:700;margin-bottom:.8rem"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每条标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 数学 · 二元一次方程组互动学习 | 天元教育 · 初二暑假博学班</div>
+
+<script>
+const questions = [
+// === 模块一：概念辨析 ===
+{q:'下列方程组中，是二元一次方程组的是',opts:['A. {x+y=5; x-y=1}','B. {x²+y=3; x-y=1}','C. {xy=6; x+y=5}','D. {x+y=5; y=2}（含x²/xy的不是）'],ans:0,exp:'二元一次方程组：<strong>两个未知数、每个方程都是一次</strong>。B含x²、C含xy，都不是一次；A、D都是二元一次。'},
+{q:'二元一次方程组 {x+y=5; x-y=1} 的解是',opts:['A. x=3, y=2','B. x=2, y=3','C. x=4, y=1','D. x=1, y=4'],ans:0,exp:'两式相加得 2x=6 → <strong>x=3</strong>；代回得 <strong>y=2</strong>。验证：3+2=5 ✓，3-2=1 ✓。'},
+{q:'解二元一次方程组的基本思想是',opts:['A. 消元','B. 代入','C. 配方','D. 因式分解'],ans:0,exp:'核心思想是<strong>消元</strong>：化二元为一元（代入消元或加减消元都是消元的具体方法）。'},
+{q:'判断 {x=1; y=2} 是否为方程组 {x+y=3; 2x-y=0} 的解',opts:['A. 是','B. 不是','C. 只满足第一个','D. 只满足第二个'],ans:0,exp:'代入验证：1+2=3 ✓；2×1-2=0 ✓。<strong>两个方程都满足</strong>才是方程组的解。'},
+// === 模块二：代入消元法 ===
+{q:'用代入消元法解 {x+y=7; 2x-y=2}，第一步通常将①变形为',opts:['A. x=7-y','B. y=7+x','C. x=7+y','D. y=2x-2'],ans:0,exp:'选系数简单的①变形：x+y=7 → <strong>x=7-y</strong>，再代入②消去x。'},
+{q:'方程组 {x=3y; x+y=16} 的解是',opts:['A. x=12, y=4','B. x=9, y=3','C. x=8, y=8','D. x=6, y=2'],ans:0,exp:'将x=3y代入②：3y+y=16 → 4y=16 → <strong>y=4</strong>，x=3×4=<strong>12</strong>。'},
+{q:'用代入法解 {2x+y=5; x+2y=4}，解得',opts:['A. x=2, y=1','B. x=1, y=3','C. x=3, y=-1','D. x=0, y=5'],ans:0,exp:'由①得 y=5-2x，代入②：x+2(5-2x)=4 → x+10-4x=4 → -3x=-6 → <strong>x=2</strong>，y=5-4=<strong>1</strong>。'},
+// === 模块三：加减消元法 ===
+{q:'解 {3x+4y=19; x-y=4} 用代入法：由②得 x=y+4 代入①得',opts:['A. 3(y+4)+4y=19','B. 3y+4y=19','C. 3(y+4)-4y=19','D. y+4+4y=19'],ans:0,exp:'将 <strong>x=y+4</strong> 代入①中的x：3(y+4)+4y=19 → 7y+12=19 → y=1，代回x=5。'},
+{q:'解 {x+2y=1; 3x-2y=11} 时，用加减消元应',opts:['A. ①+②消y','B. ①-②消x','C. ②×2再减','D. ①×3再减'],ans:0,exp:'y系数 +2 和 -2 <strong>相反</strong>，①+②直接消y：4x=12 → x=3。'},
+{q:'方程组 {2x+y=3; 3x-5y=11} 用加减法：5×①+②得',opts:['A. 10x+3x=15+11','B. 10x-3x=15-11','C. 6x+3x=6+11','D. 2x+3x=3+11'],ans:0,exp:'5×①: 10x+5y=15；与②相加：10x+3x=15+11 → 13x=26 → x=2。'},
+{q:'解 {2x+y=3; 4x-2y=10} 选加减消元，第一步',opts:['A. ①×2 使y系数相反','B. ①×2 使x系数相等','C. 直接相减','D. ①代入②'],ans:0,exp:'①×2 得 4x+2y=6，与② 4x-2y=10 相加消x：8x=16 → x=2。'},
+// === 模块四：三元一次方程组 ===
+{q:'三元一次方程组 {x+y+z=6; x-y=0; x+2y-z=0} 的解是',opts:['A. x=2, y=2, z=2','B. x=1, y=1, z=4','C. x=3, y=3, z=0','D. x=2, y=1, z=3'],ans:0,exp:'由x-y=0 → x=y。代入①：2x+z=6；代入③：3x-z=0 → z=3x。2x+3x=6 → x=2，y=2，z=6-2-2=2。'},
+{q:'解三元一次方程组的基本思路是',opts:['A. 消元降次：三元→二元→一元','B. 直接代入','C. 因式分解','D. 换元'],ans:0,exp:'<strong>消元降次</strong>：先消去一个未知数变二元，再消元变一元。'},
+// === 模块五：列方程组解应用题（成都真题） ===
+{q:'《孙子算经》木长题：绳测木长，余绳4.5尺；绳折半量木，木余1尺。设绳长x尺、木长y尺，已知 x-y=4.5，另一个方程是',opts:['A. x/2+1=y','B. 2x+1=y','C. x/2=y-1','D. x/2-1=y'],ans:0,exp:'绳折半= x/2，量木余1尺 → <strong>x/2 + 1 = y</strong>（半绳比木短1尺）。'},
+{q:'《算法统宗》分银题：每人7两多4两，每人9两差8两。设客x人、银y两，列方程组为',opts:['A. {7x+4=y; 9x-8=y}','B. {7x-4=y; 9x+8=y}','C. {7x+4=y; 9x+8=y}','D. {7x=y+4; 9x=y-8}'],ans:0,exp:'每人7两多4两：7x+4=y；每人9两差8两：<strong>9x-8=y</strong>。'},
+{q:'《算法统宗》井深绳长题：绳折三份入井，一份比井深多4尺；折四份，一份比井深多1尺。设绳长x、井深y，方程组为',opts:['A. {x/3-y=4; x/4-y=1}','B. {3x-y=4; 4x-y=1}','C. {x-y/3=4; x-y/4=1}','D. {x/3+y=4; x/4+y=1}'],ans:0,exp:'绳折三份每份x/3，比井深多4：<strong>x/3-y=4</strong>；折四份：x/4-y=1。'},
+{q:'开店题：一房7客多6人，一房8客空一房。设客x人、房y间，方程组为',opts:['A. {7y+6=x; 8(y-1)=x}','B. {7y-6=x; 8(y-1)=x}','C. {7y+6=x; 8y-1=x}','D. {7y=x+6; 8y=x+1}'],ans:0,exp:'一房7客多6人：<strong>7y+6=x</strong>；一房8客空一房：8(y-1)=x。'},
+{q:'栖树鸦题：三只栖一树多5只没处去；五只栖一树空一树。设树x棵、鸦y只，方程组为',opts:['A. {3x+5=y; 5(x-1)=y}','B. {3y+5=x; 5(y-1)=x}','C. {3x-5=y; 5x=y}','D. {3x+5=y; 5x+1=y}'],ans:0,exp:'三只栖一树多5只：<strong>3x+5=y</strong>；五只栖一树空一树：5(x-1)=y。'},
+{q:'鸡兔同笼：头35、足94。设鸡x只、兔y只，方程组为',opts:['A. {x+y=35; 2x+4y=94}','B. {x+y=35; 4x+2y=94}','C. {x+y=35; x+y=94}','D. {2x+4y=35; x+y=94}'],ans:0,exp:'头数：x+y=35；足数：<strong>2x+4y=94</strong>（鸡2足、兔4足）。'},
+{q:'三人共车题：三人一车空2车；二人一车9人步行。设人x、车y，方程组为',opts:['A. {3(y-2)=x; 2y+9=x}','B. {3(y+2)=x; 2y+9=x}','C. {3y-2=x; 2y-9=x}','D. {3(y-2)=x; 2y-9=x}'],ans:0,exp:'三人一车空2车：<strong>3(y-2)=x</strong>；二人一车9人步行：2y+9=x。'},
+{q:'商场商品题：按定价售每件利45元；八折售8件利润=降价35元售12件利润。设进价x、定价y，正确的方程组是',opts:['A. {y-x=45; (0.8y-x)×8=(y-35-x)×12}','B. {y-x=45; (0.8y-x)×8=(y-35)×12}','C. {x-y=45; (x-0.8y)×8=(x-y+35)×12}','D. {y-x=45; (y-0.8x)×8=(y-35-x)×12}'],ans:0,exp:'按定价利45：<strong>y-x=45</strong>；八折售价0.8y，利润(0.8y-x)×8=降价35元利润(y-35-x)×12。'},
+{q:'合唱舞蹈队题：两队共60人，合唱队人数的2倍比舞蹈队多18人。设合唱x、舞蹈y，方程组为',opts:['A. {x+y=60; 2x-y=18}','B. {x+y=60; x-2y=18}','C. {2x+y=60; x-y=18}','D. {x+y=60; 2x=18-y}'],ans:0,exp:'共60人：x+y=60；合唱2倍比舞蹈多18：<strong>2x-y=18</strong>。'},
+{q:'义卖题：3台无人机+2台玩具车130元；4台无人机+3台玩具车180元。设无人机x元/台、玩具车y元/台，方程组为',opts:['A. {3x+2y=130; 4x+3y=180}','B. {3x+2y=130; 3x+4y=180}','C. {2x+3y=130; 3x+4y=180}','D. {3x+4y=130; 2x+3y=180}'],ans:0,exp:'3台无人机+2台玩具车：<strong>3x+2y=130</strong>；4台+3台：4x+3y=180。解得x=30、y=20。'},
+{q:'教学设备题：A进价1.5万售价1.65万；B进价1.2万售价1.4万。购A、B共需66万，毛利9万。设A购x套、B购y套，第一个方程为',opts:['A. 1.5x+1.2y=66','B. 1.65x+1.4y=66','C. x+y=66','D. 1.5x+1.4y=66'],ans:0,exp:'进价总款66万：<strong>1.5x+1.2y=66</strong>；毛利方程：(1.65-1.5)x+(1.4-1.2)y=9，即0.15x+0.2y=9。'},
+{q:'汽车进货题：4辆晨光+3辆清风总成本160万；3辆清风进价比4辆晨光少40万。设晨光x万、清风y万，方程组为',opts:['A. {4x+3y=160; 3y-4x=-40}','B. {4x+3y=160; 4x-3y=40}','C. {4x+3y=160; 3y+4x=40}','D. {x+y=160; 4x-3y=40}'],ans:0,exp:'4辆晨光+3辆清风：<strong>4x+3y=160</strong>；3辆清风比4辆晨光少40：3y=4x-40 → 3y-4x=-40。解得x=25、y=20。'},
+// === 模块六：综合与应用 ===
+{q:'解方程组 {x-2y=5; 3x+5y=4}，①×3-②得',opts:['A. -6y-5y=15-4','B. 6y-5y=15-4','C. -6y+5y=15-4','D. 3x-6y=15'],ans:0,exp:'①×3：3x-6y=15；减②：-6y-5y=15-4 → -11y=11 → y=-1。'},
+{q:'解 {3x+2y=2; 5x-4y=7}，①×2+②得',opts:['A. 6x+5x=4+7','B. 6x-5x=4-7','C. 3x+5x=2+7','D. 6x+2y=4'],ans:0,exp:'①×2：6x+4y=4；加②：6x+5x=4+7 → 11x=11 → x=1，y=-1/2。'},
+{q:'解 {3(y-1)=4(x-4); 5(x-1)=3(y+5)}，先化简为',opts:['A. {3y-4x=-13; 5x-3y=20}','B. {3y-4x=13; 5x-3y=20}','C. {3y-4x=-13; 5x+3y=20}','D. {3y-4x=-13; 5x-3y=-20}'],ans:0,exp:'展开①：3y-3=4x-16 → 3y-4x=-13；展开②：5x-5=3y+15 → <strong>5x-3y=20</strong>。'},
+{q:'方程 {x/3-y=4; x/4-y=1} 表示绳长井深，解得',opts:['A. x=36, y=8','B. x=36, y=6','C. x=24, y=8','D. x=48, y=12'],ans:0,exp:'两式相减：x/3-x/4=3 → x/12=3 → <strong>x=36</strong>；36/3-y=4 → y=8。'},
+{q:'解 {2x+3y=16; x+2y=5}（三元练习题基础）先消去x：①-②×2得',opts:['A. -y=6','B. 3y-4y=16-10','C. y=6','D. 2x-2x=16-10'],ans:0,exp:'②×2：2x+4y=10；①-②×2：2x+3y-2x-4y=16-10 → <strong>-y=6</strong> → y=-6。'},
+{q:'解 {23x+17y=63; 17x+23y=57}，两式相加得',opts:['A. 40x+40y=120','B. 40x+40y=6','C. 40x+40y=120→x+y=3','D. 6x-6y=6'],ans:0,exp:'相加：40x+40y=120 → x+y=3；相减：6x-6y=6 → x-y=1。联立得 x=2、y=1。'},
+{q:'解 {2x+y=5; 4x-2y=10} 用加减法，正确做法是',opts:['A. ①×2后与②相加','B. ①×2后与②相减','C. 直接①+②','D. 直接①-②'],ans:0,exp:'①×2：4x+2y=10；与②相加：8x=20 → x=2.5；代回得 y=0。'},
+];
+
+const flashcards = [
+{front:'二元一次方程组',back:'含<strong>两个未知数</strong>的两个<strong>一次方程</strong><br><br>公共解叫方程组的解<br>核心思想：<strong>消元</strong>（化二元为一元）'},
+{front:'代入消元法',back:'①选<strong>系数简单</strong>的方程变形<br>②y=ax+b 代入另一方程<br>③解一元一次方程<br>④代回求另一个未知数'},
+{front:'加减消元法',back:'①乘适当数使某未知数<strong>系数相反/相等</strong><br>②两方程<strong>相加/相减</strong>消元<br>③解一元一次方程<br>④代回求另一个'},
+{front:'何时用代入法',back:'某未知数系数为 <strong>1 或 -1</strong> 时首选<br><br>例：x-y=4 → x=y+4<br>变形简单、代入方便'},
+{front:'何时用加减法',back:'某未知数系数<strong>相反或成倍数</strong><br><br>例：+2y 与 -2y → 相加消y<br>2y 与 6y → ②-①×3 消y'},
+{front:'三元一次方程组',back:'三个方程、三个未知数<br><br>思路：<strong>消元降次</strong><br>三元 → 二元 → 一元<br>解完要<strong>检验</strong>'},
+{front:'列方程解应用题六步',back:'①审题 ②设元<br>③找<strong>两个等量关系</strong><br>④列方程组 ⑤解方程组<br>⑥检验作答（含单位）'},
+{front:'等量关系·总和型',back:'x+y=总数<br><br>例：合唱+舞蹈=60人<br>鸡+兔=35头'},
+{front:'等量关系·倍数型',back:'A的2倍比B多18 → <strong>2x-y=18</strong><br><br>"多"用+、"少"用-<br>读题时把文字直接翻译成符号'},
+{front:'等量关系·盈亏型',back:'每份×份数 ± 余/缺 = 总量<br><br>每人7两多4：7x+4=y<br>每人9两差8：9x-8=y'},
+{front:'绳长井深模型',back:'绳折n份入井，每份比井深多d尺<br><br>x/n - y = d<br>折3份多4：x/3-y=4<br>折4份多1：x/4-y=1'},
+{front:'鸡兔同笼',back:'{x+y=头数; 2x+4y=足数}<br><br>鸡2足、兔4足<br>头数方程：个数总和'},
+{front:'开店住客模型',back:'一房7客多6人：7y+6=x<br>一房8客空一房：8(y-1)=x<br><br>"多"→+，"空/缺"→按实际间数'},
+{front:'汽车进货·毛利',back:'4晨光+3清风=160万：4x+3y=160<br>3清风比4晨光少40：3y-4x=-40<br><br>W=(售价-进价)×销量'},
+{front:'整体思想',back:'系数互换型：23x+17y=63; 17x+23y=57<br><br><strong>相加</strong>→x+y；<strong>相减</strong>→x-y<br>再联立求解，巧算'},
+{front:'解后检验',back:'把解代回<strong>两个</strong>方程验证<br><br>应用题还要检验<strong>实际意义</strong><br>（人数/件数不能为负、小数）'},
+{front:'消元法口诀',back:'"二元要消元，代入看系数，加减看相反"<br><br>代入：系数1或-1<br>加减：系数相反或倍数'},
+{front:'列方程金句',back:'"每份乘份数，余加缺来减"<br><br>先找两个等量关系<br>再写两个方程'},
+{front:'八折利润',back:'八折售价 = 0.8×定价<br>利润 = 售价 - 进价<br><br>(0.8y-x)×8 = (y-35-x)×12'},
+{front:'检验实际意义',back:'人数、件数、台数必须<strong>非负整数</strong><br><br>若解得负数/分数 → 检查列式<br>注意题目"至少一套"等限制'},
+];
+
+const errors = [
+{title:'代入方向选错 ❌',wrong:'随便选一个方程变形，代入自己',right:'选<strong>系数简单</strong>的方程变形（某未知数系数为1或-1最佳），代入<strong>另一个</strong>方程消元，不能代入原方程自己。'},
+{title:'加减法符号出错 ❌',wrong:'系数相反时相减、相等时相加',right:'系数<strong>相反 → 相加</strong>消元；系数<strong>相等 → 相减</strong>消元。搞反会得到0=0或抵消失败。'},
+{title:'代入法消错元 ❌',wrong:'变形后的式子代入原方程本身，消不掉未知数',right:'变形得到 x=ay+b 后必须代入<strong>另一个方程</strong>，代入原方程会得到恒等式 0=0，无法求解。'},
+{title:'三元当二元解 ❌',wrong:'三元一次方程组只列两个方程就解',right:'三个未知数必须<strong>三个独立方程</strong>。缺一个方程解不出来，先消元降次成二元。'},
+{title:'应用题漏第二个等量关系 ❌',wrong:'只找一个等量关系列一个方程',right:'列方程组需要<strong>两个等量关系</strong>，分别对应两个方程。审题时圈出两个"相等"描述。'},
+{title:'古代题单位混淆 ❌',wrong:'半斤=5两（习惯性换算错）',right:'古代1斤=<strong>16两</strong>，半斤=<strong>8两</strong>。《算法统宗》分银题"少半斤"=少8两。'},
+{title:'解后不检验 ❌',wrong:'解出来直接作答，不代回验证',right:'解出后<strong>代回原方程组</strong>检验两个方程都成立；应用题还要检验<strong>实际意义</strong>（人数/件数为非负整数）。'},
+];
+
+const WRONG_HISTORY_KEY='quiz_math9_binary_eq';;
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);retryMode=false;}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);if(doneAll){document.getElementById('quizArea').innerHTML=showResult();return;}
+let h=``;if(retryMode)h+=`<div style=\"margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block\"><i class=\"fas fa-redo\"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class=\"question-card fade-in-up\"><div class=\"q-num\">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div><div class=\"q-text\">${q.q}</div><div class=\"options\">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class=\"option ${c.join(' ')}\" onclick=\"selA(${oi})\"><span class=\"letter\">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class=\"explanation ${quizAns[idx]>=0?'show':''}\"><strong><i class=\"fas fa-lightbulb\"></i> 解析：</strong><br>${q.exp}</div>
+|<div class=\"quiz-nav\"><button class=\"btn btn-outline\" onclick=\"prevQ()\" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class=\"fas fa-arrow-left\"></i> 上一题</button>
+|<span style=\"font-size:.85rem;color:var(--text-light);align-self:center\">${ansd}/${total}</span>
+|<button class=\"btn btn-primary\" onclick=\"nextQ()\" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1?'disabled':''}>下一题 <i class=\"fas fa-arrow-right\"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);autoImportWB(idx,oi);}
+renderQ();if(curQ<shuffled.length-1)setTimeout(()=>nextQ(),1000);}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){if(curQ<shuffled.length-1){curQ++;renderQ();}}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class=\"question-card result-card fade-in-up\"><div class=\"big-icon\">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class=\"score\">${correct}/${total}</div>
+|<div><span class=\"result-stat\"><i class=\"fas fa-check-circle\" style=\"color:var(--success)\"></i> 正确 ${correct} 题</span>
+|<span class=\"result-stat\"><i class=\"fas fa-times-circle\" style=\"color:var(--danger)\"></i> 错误 ${total-correct} 题</span></div>
+|${retryMode?`<div style=\"margin:.5rem 0\"><span class=\"result-stat\"><i class=\"fas fa-history\"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+|${wl.length?`<div style=\"text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)\"><p style=\"font-weight:600;margin-bottom:.5rem;font-size:.85rem\">📝 需要复习：</p>${wl.map(w=>`<div style=\"padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)\">✗ ${w.q.q.substring(0,50)}…<br><small style=\"color:var(--text-light)\">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+|<div style=\"margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap\">
+|<button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\"><i class=\"fas fa-redo\"></i> 重新测验</button>
+|${wl.length?`<button class=\"btn btn-warning\" onclick=\"initRetryMode()\" style=\"background:#e67e22;color:#fff\"><i class=\"fas fa-bug\"></i> 错题重练 (${wl.length}题)</button>`:''}
+|<button class=\"btn btn-success\" onclick=\"importWB()\"><i class=\"fas fa-database\"></i> 导入错题到错题库</button>
+|<button class=\"btn btn-outline\" onclick=\"switchTab('flashcard')\"><i class=\"fas fa-layer-group\"></i> 复习知识卡</button>
+|<button class=\"btn btn-outline\" onclick=\"switchTab('errors')\"><i class=\"fas fa-exclamation-triangle\"></i> 易错点</button>
+|${retryMode?`<button class=\"btn btn-sm btn-outline\" onclick=\"initQ();renderQ()\"><i class=\"fas fa-times\"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'数学',chapter:'二元一次方程组',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'二元一次方程组,代入消元法,加减消元法,三元一次方程组,列方程组解应用题,数学'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'数学',chapter:'二元一次方程组',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'二元一次方程组,代入消元法,加减消元法,三元一次方程组,列方程组解应用题,数学'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库？'))window.open('wrong_bank.html','_blank');}
+
+let fIdx=0;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class=\"flashcard-container fade-in-up\"><div class=\"flashcard\" id=\"fc\" onclick=\"toggleFC()\"><div class=\"flashcard-face flashcard-front\"><i class=\"fas fa-question-circle\" style=\"font-size:1.8rem;opacity:.5;margin-bottom:.8rem\"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class=\"flashcard-face flashcard-back\"><i class=\"fas fa-lightbulb\" style=\"font-size:1.3rem;color:var(--warning);margin-bottom:.4rem\"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+|<div class=\"flashcard-nav\"><button class=\"btn btn-outline\" onclick=\"renderFC('prev')\" ${fIdx===0?'disabled':''}><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">${fIdx+1}/${flashcards.length}</span><button class=\"btn btn-primary\" onclick=\"renderFC('next')\" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el)el.classList.toggle('flipped');}
+function renderEC(){let s=localStorage.getItem('math_lesson9_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class=\"error-grid\">';errors.forEach((e,i)=>{h+=`<div class=\"error-card fade-in-up\"><div class=\"num\">${i+1}</div><h4>${e.title}</h4><div class=\"ex-wrong\">❌ ${e.wrong}</div><div class=\"ex-right\">✅ ${e.right}</div>
+|<div class=\"check-item ${c[i]?'checked':''}\" onclick=\"toggleEC(${i})\" style=\"margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer\">
+|<div style=\"width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}\">${c[i]?'<i class=\"fas fa-check\" style=\"font-size:10px\"></i>':''}</div>
+|<span style=\"font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}\">我已掌握这个易错点</span></div></div>`;});h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('math_lesson9_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('math_lesson9_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('math_lesson9_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('math_lesson9_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
