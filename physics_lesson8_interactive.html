@@ -117,11 +117,11 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 <div class="container">
   <div class="hero fade-in-up">
     <h1><i class="fas fa-lightbulb"></i> 光的传播与反射 · 互动学习</h1>
-    <p>初二博学班 · 7 模块 · 51 题 · 27 卡牌 | 天元教育</p>
+    <p>初二博学班 · 8 模块 · 62 题 · 31 卡牌 | 天元教育</p>
     <div class="meta">
-      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 51道测验题</span>
-      <span><i class="fas fa-layer-group"></i> 27张知识卡</span>
-      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 11大易错点</span>
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 62道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 31张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 14大易错点</span>
       <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
     </div>
   </div>
@@ -341,6 +341,20 @@ const questions = [
 {q:'光反射作图时，下列做法正确的是',opts:['A. 法线画实线','B. 光线画虚线','C. 法线画虚线，光线画实线并标箭头','D. 不需要画法线'],ans:2,exp:'作图规范：①<strong>法线画虚线</strong> ②标垂足 ③<strong>光线画实线</strong>+箭头 ④标出角度。'},
 {q:'夜间，汽车灯光照射到路面上，我们能看清路面是因为',opts:['A. 路面发生镜面反射','B. 路面发生漫反射','C. 路面发光','D. 车灯发光进入眼睛'],ans:1,exp:'路面<strong>粗糙</strong>发生<strong>漫反射</strong>，反射光进入人眼，从各个方向都能看清。'},
 
+
+// === 模块八：成都真题详解补充 ===
+{q:'光从玻璃中射进房间的瞬间，光速将',opts:['A. 变大','B. 变小','C. 不变','D. 先变大后变小'],ans:0,exp:'玻璃中光速约为<strong>⅔c</strong>，空气中约为c，所以从玻璃进入空气光速<strong>变大</strong>。'},
+{q:'向水中注入海波溶液后，激光笔的光线发生弯曲，搅拌后光线又变直，说明',opts:['A. 光的传播需要介质','B. 光只有在水中才沿直线传播','C. 光在海波溶液里不能沿直线传播','D. 光在同种均匀介质中沿直线传播'],ans:3,exp:'海波溶液使介质变<strong>不均匀</strong>，光线弯曲；搅拌均匀后恢复直线 → 光在<strong>同种均匀介质</strong>中沿直线传播。'},
+{q:'手影戏表演时，手影的形成利用了',opts:['A. 光的反射','B. 光的折射','C. 光的色散','D. 光沿直线传播'],ans:3,exp:'<strong>手影戏</strong>：手挡住光，在幕布上形成影子，利用<strong>光沿直线传播</strong>。'},
+{q:'自制"投影灯笼"能在黑暗中投射出美丽图案，用到的光学原理是',opts:['A. 光沿直线传播','B. 光的折射','C. 光的反射','D. 凸透镜成像'],ans:0,exp:'灯笼中的灯透过剪纸小孔向外投射图案，属于<strong>小孔成像</strong>，利用<strong>光沿直线传播</strong>。'},
+{q:'下列成语中，不能说明光沿直线传播的是',opts:['A. 一叶障目','B. 刻舟求剑','C. 凿壁借光','D. 立竿见影'],ans:1,exp:'一叶障目/凿壁借光/立竿见影都是光的直线传播；<strong>刻舟求剑</strong>是讽刺不懂事物变化，与光无关。'},
+{q:'手机防窥膜两侧看不清屏幕内容，是由于',opts:['A. 光的反射','B. 光沿直线传播','C. 光的折射','D. 屏幕不发光'],ans:1,exp:'防窥膜用超细百叶窗技术，只有<strong>一定角度</strong>的光线能透过，两侧看不到是<strong>光沿直线传播</strong>；防窥效果更好应<strong>减小</strong>百叶窗间距。'},
+{q:'晴天树荫下的圆形小亮斑，实际上是太阳的',opts:['A. 正立虚像','B. 倒立实像','C. 正立实像','D. 倒立虚像'],ans:1,exp:'树荫亮斑是<strong>小孔成像</strong>，太阳通过树叶空隙成的<strong>倒立实像</strong>；日偏食时亮斑呈<strong>月牙形</strong>。'},
+{q:'晚上桌上铺白纸、放平面镜，手电筒正对着平面镜照射，从侧面看',opts:['A. 镜子比较亮，白纸比较暗','B. 镜子和白纸一样亮','C. 镜子和白纸都比较暗','D. 镜子比较暗，白纸比较亮'],ans:3,exp:'镜子发生<strong>镜面反射</strong>，反射光集中射向同一方向（侧面看不到）；白纸发生<strong>漫反射</strong>，反射光进眼睛 → 侧面看<strong>镜子暗、白纸亮</strong>。'},
+{q:'雨后月夜背对月亮走，为避免踩水应走较亮的地方，因为',opts:['A. 水面发生漫反射显得亮','B. 水面发生镜面反射显得暗，地面漫反射显得亮','C. 地面发生镜面反射显得亮','D. 水面发光'],ans:1,exp:'水面<strong>镜面反射</strong>，月光反射后射向月亮方向（背对走时不入眼）→ 水面<strong>暗</strong>；地面<strong>漫反射</strong> → 地面<strong>亮</strong>。走亮处避水坑。'},
+{q:'干燥路面与积水路面相比，夜间无来车时驾驶员看到',opts:['A. 积水路面更亮','B. 干燥路面更亮','C. 一样亮','D. 都看不见'],ans:1,exp:'干燥路面粗糙发生<strong>漫反射</strong>，反射光进入驾驶员眼睛 → 更亮；积水路面<strong>镜面反射</strong>，反射光射向别处 → 显得暗。'},
+{q:'自行车尾灯由许多角反射器组成，来自后方的灯光照在上面，下列说法正确的是',opts:['A. 自行车尾灯是光源','B. 光照射尾灯发生的主要是镜面反射','C. 从侧面看比正面看更亮','D. 尾灯的反射不遵循反射定律'],ans:1,exp:'尾灯由<strong>相互垂直的反光面</strong>组成，光经两次反射沿原路返回，属于<strong>镜面反射</strong>，且<strong>遵循反射定律</strong>。尾灯不发光，不是光源。'},
+
 ];
 
 const flashcards = [
@@ -373,6 +387,12 @@ const flashcards = [
 {front:'漫反射',back:'反射面<strong>粗糙</strong>，平行光<strong>四散射出</strong><br><br>关键词：粗糙、各个角度都能看到<br>⭐ <strong>漫反射也遵循反射定律</strong>'},
 {front:'光路作图规范',back:'① 法线画<strong>虚线</strong> ② 标垂足<br>③ 光线画<strong>实线</strong> ④ 标箭头<br>⑤ 标出要求的<strong>角度</strong>'},
 
+
+{front:'光速与介质',back:'真空：<strong>c=3×10⁸ m/s</strong><br>空气中≈c　水中≈<strong>¾c</strong>　玻璃中≈<strong>⅔c</strong><br><br>光从玻璃进入空气，光速<strong>变大</strong>'},
+{front:'本影·半影·伪本影',back:'本影：完全黑暗<br>半影：部分被挡，较暗<br>伪本影：中心光线被挡、边缘未挡<br><br>日全食=本影区，日偏食=半影区，日环食=伪本影区'},
+{front:'无影灯',back:'把灯光分散成<strong>多方向</strong>、合成大面积光源<br><br>⚠️ 并非真的"无影"，只是阴影不明显<br>手术室用无影灯避免影子干扰'},
+{front:'角反射器',back:'由<strong>相互垂直</strong>的反光面组成<br><br>光经两次反射沿<strong>原路返回</strong><br>自行车尾灯、高速公路反光标志'},
+
 ];
 
 const errors = [
@@ -388,6 +408,11 @@ const errors = [
 {title:'入射角定义记错 ❌',wrong:'入射角是入射光线与镜面的夹角',right:'入射角是入射光线与<strong>法线</strong>的夹角。入射光线与镜面成30°时，入射角是<strong>60°</strong>。'},
 {title:'垂直入射反射角90° ❌',wrong:'垂直射向镜面，反射角为90°',right:'垂直入射时入射角=<strong>0°</strong>，反射角也=0°，光<strong>沿原路返回</strong>。'},
 {title:'看见物体=物体发光 ❌',wrong:'眼睛能看到物体，是因为物体在发光',right:'看不发光的物体，是因为物体<strong>反射的光进入人眼</strong>。月亮、书本、人都是靠反射光被看见。'},
+
+
+{title:'电影银幕是镜面反射 ❌',wrong:'电影银幕很平整，是镜面反射',right:'电影银幕表面<strong>粗糙</strong>，发生<strong>漫反射</strong>，反射光射向各个方向，全场观众才能看到画面。'},
+{title:'玻璃进空气光速变小 ❌',wrong:'空气比玻璃"稀疏"，光速应该变小',right:'光在<strong>玻璃中≈⅔c、空气中≈c</strong>，从玻璃进入空气光速<strong>变大</strong>。介质越密光速越小。'},
+{title:'背对月亮走分不清水坑 ❌',wrong:'水面亮的地方是水坑',right:'水面<strong>镜面反射</strong>→月光不入眼→<strong>暗</strong>；地面<strong>漫反射</strong>→亮。<strong>走亮处</strong>避开水坑。'},
 
 ];
 
