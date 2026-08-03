@@ -55,7 +55,10 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
 .btn-sm{padding:.18rem .4rem;font-size:.7rem}
 @media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
-</style></head><body>
+</style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</head><body>
 <nav class="navbar"><div class="container">
   <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
   <div class="navbar-nav">
@@ -99,12 +102,15 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 <script>
 
 const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
 function autoImportWB(idx, myAns){
   const q=questions[idx];
   const item={subject:'实数',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'实数,课堂练习'};
   const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
-  if(ex.some(x=>x.content===item.content))return;
+  if(ex.some(x=>x.content===item.content))return false;
   ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
 }
 const questions=[{"q": "下列哪个是无理数？", "opts": ["A. 3.14", "B. 22/7", "C. √2", "D. 0.333…"], "ans": 2, "exp": "√2=1.414…是无限不循环小数，是无理数。3.14、22/7、0.333…都是有理数。"}, {"q": "16的平方根是", "opts": ["A. 4", "B. ±4", "C. -4", "D. ±2"], "ans": 1, "exp": "因为(±4)²=16，所以16的平方根是±4。注意：平方根有两个！"}, {"q": "√16的值是", "opts": ["A. 4", "B. ±4", "C. -4", "D. 8"], "ans": 0, "exp": "√16表示16的算术平方根，只取正值，√16=4。"}, {"q": "√9的算术平方根是", "opts": ["A. 3", "B. ±3", "C. √3", "D. 9"], "ans": 2, "exp": "√9=3，3的算术平方根是√3。注意层层剥开！"}, {"q": "64的立方根是", "opts": ["A. 8", "B. ±8", "C. 4", "D. 16"], "ans": 2, "exp": "因为4³=64，所以64的立方根是4。立方根只有一个实数值。"}, {"q": "(-8)的立方根是", "opts": ["A. 2", "B. -2", "C. ±2", "D. 无意义"], "ans": 1, "exp": "负数的立方根是负数，³√(-8)=-2。立方根对负数有意义（平方根没有）。"}, {"q": "二次根式√(a-1)有意义的条件是", "opts": ["A. a>1", "B. a≥1", "C. a≠1", "D. a为任意实数"], "ans": 1, "exp": "被开方数非负：a-1≥0，所以a≥1。"}, {"q": "√(3²)的值是", "opts": ["A. 3", "B. -3", "C. ±3", "D. 9"], "ans": 0, "exp": "√a²=|a|，√(3²)=|3|=3。"}, {"q": "下列计算正确的是", "opts": ["A. √2+√3=√5", "B. √2×√3=√6", "C. √4-√2=√2", "D. √9=±3"], "ans": 1, "exp": "√a·√b=√(ab)，所以√2×√3=√6。√2+√3不能合并！"}, {"q": "介于2和3之间的无理数是", "opts": ["A. √2", "B. √5", "C. √9", "D. 2.5"], "ans": 1, "exp": "√5≈2.236，在2和3之间。√2≈1.414<2，√9=3不是无理数，2.5是有理数。"}, {"q": "√2的相反数是", "opts": ["A. √2", "B. -√2", "C. 1/√2", "D. 2"], "ans": 1, "exp": "实数a的相反数是-a，√2的相反数是-√2。"}, {"q": "|√3-2|的值是", "opts": ["A. √3-2", "B. 2-√3", "C. ±(√3-2)", "D. 1"], "ans": 1, "exp": "√3≈1.732<2，所以√3-2<0，|√3-2|=2-√3。"}, {"q": "下列各数中，有理数是", "opts": ["A. π", "B. √7", "C. 0.1010010001…", "D. 0.5"], "ans": 3, "exp": "0.5是有限小数，是有理数。π、√7、0.1010010001…都是无理数。"}, {"q": "√8化简后是", "opts": ["A. 2√2", "B. 4√2", "C. √2", "D. 2√4"], "ans": 0, "exp": "√8=√(4×2)=√4×√2=2√2。"}, {"q": "比较大小：√10（ ）π", "opts": ["A. >", "B. <", "C. =", "D. 无法比较"], "ans": 0, "exp": "√10≈3.162，π≈3.142，√10>π。"}]
 const flashcards=[{"q": "无理数定义", "a": "无限不循环小数：π、√2、√3、0.101001…"}, {"q": "实数分类", "a": "实数=有理数（整数/分数）+无理数"}, {"q": "平方根", "a": "x²=a→x=±√a；正数两个平方根，0的平方根是0，负数无平方根"}, {"q": "算术平方根", "a": "正的那个平方根√a；√a²=|a|"}, {"q": "立方根", "a": "x³=a→x=³√a；唯一性：³√(-a)=-³√a"}, {"q": "二次根式性质", "a": "√(ab)=√a·√b；√(a/b)=√a/√b（a≥0,b>0）"}, {"q": "最简二次根式", "a": "被开方数不含分母、不含能开得尽的因数"}, {"q": "常见无理数值", "a": "√2≈1.414，√3≈1.732，√5≈2.236，π≈3.14"}, {"q": "绝对值", "a": "|a|=a(a≥0)；|a|=-a(a<0)；先判正负再去绝对值"}, {"q": "估算夹逼法", "a": "找相邻平方数：如√5在√4=2和√9=3之间"}, {"q": "运算优先级", "a": "先算乘方开方→再乘除→后加减；有括号先括号"}, {"q": "√a²=|a|", "a": "开方后必须取绝对值！√(x²)=|x|，不是x"}]
@@ -118,7 +124,7 @@ q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\
 function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
 var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
 if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
-if(oi===questions[idx].ans)score++;else autoImportWB(idx,oi);var qh=document.querySelector('.q-header');
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
 qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
 var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
 function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}

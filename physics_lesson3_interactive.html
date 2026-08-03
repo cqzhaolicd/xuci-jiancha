@@ -95,7 +95,10 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 @keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
 </style>
-</head><body>
+.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</head><body>
 
 <nav class="navbar"><div class="container">
   <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 测量初步</a>
@@ -257,6 +260,8 @@ const errors=[
 {title:'误差与错误混为一谈 ❌',wrong:'以为误差可以避免，或觉得错误也是不可避免的。',right:'<span class="hl">误差不可避免</span>（工具和人的限制），只能减小。<span class="hl">错误可以避免</span>（规范操作就不出错）。两者有本质区别。'},
 {title:'累积法忘除圈数/张数 ❌',wrong:'测50张纸厚度5mm，直接说纸厚5mm。测铜丝32圈长5.00cm，说直径5cm。',right:'<span class="hl">d=D/n</span>。50张纸厚5mm→每张=5÷50=0.1mm。32圈长5.00cm→直径=5.00÷32≈0.16cm。注意页数要先÷2变成张数。'},
 ];
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
 const WRONG_HISTORY_KEY='quiz_lesson3_wrong';
 let retryMode=false,wrongIds=[];
 function loadWrongHistory(){
@@ -296,7 +301,7 @@ document.getElementById('quizArea').innerHTML=h;
 document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
 document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
 function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;
-  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);autoImportWB(idx,oi);}
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
 renderQ();}
 function prevQ(){if(curQ>0){curQ--;renderQ();}}
 function nextQ(){const idx=shuffled[curQ];const total=retryMode?wrongIds.length:questions.length;const isLast=(retryMode?shuffled.indexOf(idx):curQ)===total-1;if(isLast){if(quizAns[idx]>=0){document.getElementById('quizArea').innerHTML=showResult();}return;}curQ++;renderQ();}
@@ -319,9 +324,10 @@ function autoImportWB(idx, myAns){
   const q=questions[idx];
   const item={subject:'物理',chapter:'测量初步（三）',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'测量,物理'};
   const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
-  if(ex.some(x=>x.content===item.content))return;
+  if(ex.some(x=>x.content===item.content))return false;
   ex.push(item);
   localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
 }
 function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
 const items=w.map(w=>({subject:'物理',chapter:'测量初步（三）',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'测量,物理'}));

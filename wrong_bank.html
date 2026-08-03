@@ -529,16 +529,34 @@ function renderReview(){
     qs=d.questions.filter(q=>q.next_review&&q.next_review<=today());
     if(!qs.length)qs=d.questions.filter(q=>q.mastery<5);
     if(!qs.length)qs=[...d.questions];
-  }else qs=[...d.questions];
+  }else if(reviewFilter==='twice'){
+    qs=d.questions.filter(q=>q.review_count<2);
+    if(!qs.length)qs=[...d.questions];
+  }else{
+    // 默认：先复习未满2次重做的错题（确保每道错题重做2次以上）
+    qs=d.questions.filter(q=>q.review_count<2);
+    if(!qs.length)qs=d.questions.filter(q=>q.next_review&&q.next_review<=today());
+    if(!qs.length)qs=d.questions.filter(q=>q.mastery<5);
+    if(!qs.length)qs=[...d.questions];
+  }
   if(!qs.length)return'<div class="empty-state"><i class="fas fa-check-circle" style="color:var(--success)"></i><h5>没有错题需要复习</h5><p>先录入一些错题吧！</p></div>';
   reviewList=qs.sort(()=>Math.random()-.5);
   reviewIdx=0;reviewAnswered=false;
   return reviewCard();
 }
 function reviewCard(){
-  if(reviewIdx>=reviewList.length)return`<div class="card review-card"><div class="big-icon" style="font-size:3rem">🎉</div><h2>复习完成！</h2>
+  if(reviewIdx>=reviewList.length){
+    const d=loadData();
+    const twiceDone=d.questions.filter(q=>q.review_count>=2).length;
+    const needTwice=d.questions.filter(q=>q.review_count<2).length;
+    return`<div class="card review-card"><div class="big-icon" style="font-size:3rem">🎉</div><h2>复习完成！</h2>
     <p style="color:var(--text-light);margin:.5rem 0">共复习了 ${reviewList.length} 道题</p>
-    <button class="btn btn-primary" onclick="renderReview()"><i class="fas fa-redo"></i> 再来一轮</button></div>`;
+    <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:.5rem 0">
+      <span class="q-badge" style="background:#48bb7820;color:#2f855a">✅ 已重做2次以上：${twiceDone} 题</span>
+      <span class="q-badge" style="background:#ed893620;color:#c05621">⚠️ 未满2次：${needTwice} 题</span>
+    </div>
+    ${needTwice?`<p style="font-size:.8rem;color:var(--text-light)">💡 错题需重做 <strong>2次以上</strong>才算基础巩固，继续复习未满2次的题目吧！</p>`:''}
+    <button class="btn btn-primary" onclick="renderReview()"><i class="fas fa-redo"></i> 再来一轮</button></div>`;}
   const q=reviewList[reviewIdx];
   const d=loadData();
   const subj=d.subjects.find(s=>s.id===q.subject_id);
@@ -550,6 +568,7 @@ function reviewCard(){
       <span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
       <span class="q-badge badge-reason">${q.error_reason}</span>
       <span class="q-badge badge-mastery">${'⭐'.repeat(q.difficulty)}</span>
+      <span class="q-badge" style="background:${q.review_count>=2?'#48bb7820':'#ed893620'};color:${q.review_count>=2?'#2f855a':'#c05621'};font-size:.68rem">${q.review_count>=2?`✅ 已重做${q.review_count}次`:`⚠️ 已重做${q.review_count}次（需2次以上）`}</span>
     </div>
     <div class="q-text">${q.content}</div>
     ${reviewAnswered?`
@@ -578,6 +597,9 @@ function reviewResult(r){
     qq.review_count++;
     qq.updated_at=now();
     saveData(d);
+    if(qq.review_count===2)toast('✅ 该错题已重做2次，基础巩固达成！','success');
+    if(qq.review_count>=2&&qq.mastery>=3)toast('🏆 已重做2次以上且掌握良好！','success');
+    if(qq.mastery>=5)toast('🎉 该错题已完全掌握！','success');
   }
   reviewIdx++;reviewAnswered=false;
   document.querySelector('#app').innerHTML=reviewCard();
