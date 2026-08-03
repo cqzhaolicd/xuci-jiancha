@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔦 光的传播 · 互动学习</title>
+<title>🔦 光的传播与反射 · 互动学习</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
@@ -116,12 +116,12 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <div class="container">
   <div class="hero fade-in-up">
-    <h1><i class="fas fa-lightbulb"></i> 光的传播 · 互动学习</h1>
-    <p>初二博学班 · 5 模块 · 36 题 · 20 卡牌 | 天元教育</p>
+    <h1><i class="fas fa-lightbulb"></i> 光的传播与反射 · 互动学习</h1>
+    <p>初二博学班 · 7 模块 · 51 题 · 27 卡牌 | 天元教育</p>
     <div class="meta">
-      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 36道测验题</span>
-      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
-      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 51道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 27张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 11大易错点</span>
       <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
     </div>
   </div>
@@ -135,7 +135,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
   <!-- ========== 知识图谱 ========== -->
   <div id="tab-knowledge" class="tab-content active">
-    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第八讲（上） · 光的传播</div>
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第八讲 · 光的传播与光的反射</div>
 
     <div class="knowledge-grid">
       <div class="knowledge-card c1"><h3><i class="fas fa-sun" style="color:#f39c12"></i> 光源</h3><ul>
@@ -173,6 +173,20 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
         <li>由实际光线汇聚，<strong>光屏可承接</strong></li>
         <li>像的形状<strong>由光源决定，与孔形无关</strong></li>
         <li>物体靠近/光屏远离 → 像<strong>变大</strong></li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-exchange-alt" style="color:#e67e22"></i> 光的反射与反射定律</h3><ul>
+        <li>定义：光射向介质表面，<strong class="hl">部分光返回原介质</strong></li>
+        <li>基本概念：入射点O、法线、入射/反射光线、入射角、反射角</li>
+        <li>反射定律：<strong class="hl">三线共面、两线分居</strong></li>
+        <li><strong class="hl">两角相等</strong>：反射角=入射角（<strong>顺序不能换</strong>）⭐</li>
+        <li><strong class="hl">光路可逆</strong></li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-eye" style="color:#16a085"></i> 视物原理与两种反射</h3><ul>
+        <li>看发光物体：物体<strong class="hl">发出的光</strong>入眼</li>
+        <li>看不发光物体：物体<strong class="hl">反射的光</strong>入眼</li>
+        <li>镜面反射：光滑面，平行光<strong>平行射出</strong>（刺眼）</li>
+        <li>漫反射：粗糙面，平行光<strong>四散射出</strong>（各角度可见）</li>
+        <li>⭐ <strong class="hl">漫反射也遵循反射定律</strong></li>
       </ul></div>
     </div>
 
@@ -309,6 +323,24 @@ const questions = [
 {q:'关于光，下列说法错误的是',opts:['A. 光能传递信息和能量','B. 光在真空中也能传播','C. 光年是时间单位','D. 光沿直线传播可以解释影子'],ans:2,exp:'<strong>光年是长度单位</strong>（C错）。A、B、D说法都正确。'},
 {q:'下列说法正确的是',opts:['A. 光线真实存在','B. 光总是沿直线传播','C. 光在均匀介质中沿直线传播','D. 光速在任何介质中都一样'],ans:2,exp:'光在<strong>同种均匀介质</strong>中沿直线传播（C对）。光线是模型不存在（A×），介质不均匀会弯曲（B×），光速随介质变化（D×）。'},
 {q:'太阳、月亮、钻石、电灯中，属于光源的有',opts:['A. 太阳和月亮','B. 太阳和电灯','C. 月亮和钻石','D. 钻石和电灯'],ans:1,exp:'<strong>太阳（自然光源）和电灯（人造光源）</strong>是光源；月亮、钻石只反射光，不是光源。'},
+
+// === 模块七：光的反射 ===
+{q:'下列现象中属于光的反射的是',opts:['A. 影子','B. 小孔成像','C. 水中倒影','D. 日食'],ans:2,exp:'<strong>水中倒影</strong>是光的反射（水面相当于平面镜）。影子/小孔成像/日食都是光沿直线传播。'},
+{q:'光反射时，过入射点垂直于反射面的直线叫做',opts:['A. 入射光线','B. 反射光线','C. 法线','D. 垂线'],ans:2,exp:'<strong>法线</strong>：过入射点垂直于反射面的直线，作图时画<strong>虚线</strong>。'},
+{q:'入射角是指',opts:['A. 入射光线与反射面的夹角','B. 入射光线与法线的夹角','C. 反射光线与反射面的夹角','D. 两条光线的夹角'],ans:1,exp:'<strong>入射角</strong>：入射光线与<strong>法线</strong>的夹角；反射角是反射光线与法线的夹角。'},
+{q:'反射定律中"三线共面"是指',opts:['A. 入射光线、反射光线、反射面在同一平面','B. 入射光线、反射光线、法线在同一平面','C. 三条光线重合','D. 入射角、反射角、法线在同一平面'],ans:1,exp:'<strong>三线共面</strong>：入射光线、反射光线、法线在同一平面内（不是反射面）。'},
+{q:'反射定律中"两线分居"是指',opts:['A. 入射光线和法线分居两侧','B. 反射光线和法线分居两侧','C. 入射光线和反射光线分居法线两侧','D. 入射角和反射角分居两侧'],ans:2,exp:'<strong>两线分居</strong>：反射光线、入射光线分居法线两侧。'},
+{q:'关于反射定律中"两角相等"，下列说法正确的是',opts:['A. 入射角等于反射角','B. 反射角等于入射角','C. 入射角大于反射角','D. 两角之和为90°'],ans:1,exp:'只能说<strong>反射角等于入射角</strong>（顺序不能换），因为入射角决定反射角。'},
+{q:'一束光垂直射到平面镜上，反射角为',opts:['A. 0°','B. 45°','C. 90°','D. 180°'],ans:0,exp:'垂直入射时入射角=0°，根据<strong>反射角等于入射角</strong>，反射角也为<strong>0°</strong>，光沿原路返回。'},
+{q:'入射光线与镜面的夹角为30°，则反射角为',opts:['A. 30°','B. 60°','C. 90°','D. 150°'],ans:1,exp:'入射光线与镜面夹角30°，则与法线夹角为<strong>90°-30°=60°</strong>，反射角=入射角=<strong>60°</strong>。'},
+{q:'光路可逆是指',opts:['A. 光可以倒流回光源','B. 逆着反射光线的方向射入，光将沿原入射光线的方向射出','C. 反射光线可以变成入射光线','D. 光会重复反射'],ans:1,exp:'<strong>光路可逆</strong>：若逆着反射光线的方向射入，光将沿原入射光线的方向射出。'},
+{q:'我们能看见本身不发光的物体，是因为',opts:['A. 物体发出的光进入人眼','B. 物体反射的光进入人眼','C. 人眼发出的光照射物体','D. 物体吸收了光'],ans:1,exp:'看见<strong>不发光的物体</strong>：物体<strong>反射的光</strong>进入人眼。看见发光的物体：物体发出的光进入人眼。'},
+{q:'黑板"反光"刺眼，是因为黑板某处发生',opts:['A. 漫反射','B. 镜面反射','C. 折射','D. 全反射'],ans:1,exp:'黑板某处较光滑，平行光发生<strong>镜面反射</strong>，集中射向眼睛感觉<strong>刺眼</strong>。'},
+{q:'我们能从各个方向看到白纸上的字，是因为白纸发生',opts:['A. 镜面反射','B. 漫反射','C. 折射','D. 直线传播'],ans:1,exp:'白纸表面<strong>粗糙</strong>，发生<strong>漫反射</strong>，反射光四散射出，<strong>各个角度都能看到</strong>。'},
+{q:'关于漫反射，下列说法正确的是',opts:['A. 漫反射不遵循反射定律','B. 漫反射也遵循反射定律','C. 漫反射只发生在光滑表面','D. 漫反射时反射角不等于入射角'],ans:1,exp:'⭐ <strong>漫反射也遵循反射定律</strong>！只是反射面粗糙，各点法线方向不同，反射光四散。'},
+{q:'光反射作图时，下列做法正确的是',opts:['A. 法线画实线','B. 光线画虚线','C. 法线画虚线，光线画实线并标箭头','D. 不需要画法线'],ans:2,exp:'作图规范：①<strong>法线画虚线</strong> ②标垂足 ③<strong>光线画实线</strong>+箭头 ④标出角度。'},
+{q:'夜间，汽车灯光照射到路面上，我们能看清路面是因为',opts:['A. 路面发生镜面反射','B. 路面发生漫反射','C. 路面发光','D. 车灯发光进入眼睛'],ans:1,exp:'路面<strong>粗糙</strong>发生<strong>漫反射</strong>，反射光进入人眼，从各个方向都能看清。'},
+
 ];
 
 const flashcards = [
@@ -332,6 +364,15 @@ const flashcards = [
 {front:'激光准直',back:'利用光沿直线传播<br><br>隧道开挖、射击瞄准、砌墙对齐'},
 {front:'光的传播不需要介质',back:'真空也能传播光<br><br>太阳光穿过真空到达地球（约8分钟）'},
 {front:'光学金句',back:'"月亮不发光，反射太阳光；<br>光年量距离，不是量时间。"<br><br>"小孔成像倒实像，孔形不决定像形状。"'},
+
+{front:'光的反射',back:'光射向介质表面，<strong>部分光返回原介质</strong><br><br>入射点O·法线·入射光线·反射光线<br>入射角·反射角'},
+{front:'反射定律',back:'①<strong>三线共面</strong>：入射光线、反射光线、法线同平面<br>②<strong>两线分居</strong>：入射/反射光线分居法线两侧<br>③<strong>两角相等</strong>：反射角=入射角（顺序不能换）⭐<br>④<strong>光路可逆</strong>'},
+{front:'法线与角度',back:'法线：过入射点<strong>垂直反射面</strong>，画<strong>虚线</strong><br><br>入射角=入射光线与<strong>法线</strong>的夹角<br>（不是与反射面的夹角！）'},
+{front:'视物原理',back:'看<strong>发光</strong>物体：物体<strong>发出的光</strong>入眼<br>看<strong>不发光</strong>物体：物体<strong>反射的光</strong>入眼<br><br>我们能看见月亮/书本，靠的是反射光'},
+{front:'镜面反射',back:'反射面<strong>光滑</strong>，平行光<strong>平行射出</strong><br><br>关键词：光滑、刺眼、某一角度耀眼<br>例：镜面、平静水面、光滑黑板'},
+{front:'漫反射',back:'反射面<strong>粗糙</strong>，平行光<strong>四散射出</strong><br><br>关键词：粗糙、各个角度都能看到<br>⭐ <strong>漫反射也遵循反射定律</strong>'},
+{front:'光路作图规范',back:'① 法线画<strong>虚线</strong> ② 标垂足<br>③ 光线画<strong>实线</strong> ④ 标箭头<br>⑤ 标出要求的<strong>角度</strong>'},
+
 ];
 
 const errors = [
@@ -341,6 +382,13 @@ const errors = [
 {title:'像形由孔决定 ❌',wrong:'小孔是圆的，像就是圆的',right:'像的形状<strong>由光源决定，与孔的形状无关</strong>；孔形只影响像的亮度/清晰度。'},
 {title:'小孔成像是虚像 ❌',wrong:'小孔成像不能在光屏上呈现',right:'小孔成像是<strong>实像</strong>（上下颠倒、左右互换），由实际光线汇聚，<strong>光屏可承接</strong>。'},
 {title:'存在月环食 ❌',wrong:'日食有环食，月食也有环食',right:'<strong>没有月环食</strong>（地球影子比月球大，月球被完全遮住）；只有月偏食、月全食。'},
+
+{title:'反射角顺序说反 ❌',wrong:'入射角等于反射角',right:'只能写<strong>反射角等于入射角</strong>（顺序不能换），入射角是"因"，反射角是"果"。'},
+{title:'漫反射不遵循定律 ❌',wrong:'漫反射光向四面八方，不遵循反射定律',right:'⭐ <strong>漫反射也遵循反射定律</strong>！只是反射面粗糙，各点法线方向不同，反射光才四散。'},
+{title:'入射角定义记错 ❌',wrong:'入射角是入射光线与镜面的夹角',right:'入射角是入射光线与<strong>法线</strong>的夹角。入射光线与镜面成30°时，入射角是<strong>60°</strong>。'},
+{title:'垂直入射反射角90° ❌',wrong:'垂直射向镜面，反射角为90°',right:'垂直入射时入射角=<strong>0°</strong>，反射角也=0°，光<strong>沿原路返回</strong>。'},
+{title:'看见物体=物体发光 ❌',wrong:'眼睛能看到物体，是因为物体在发光',right:'看不发光的物体，是因为物体<strong>反射的光进入人眼</strong>。月亮、书本、人都是靠反射光被看见。'},
+
 ];
 
 const WRONG_HISTORY_KEY='quiz_physics8_state';
