@@ -96,6 +96,15 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 </div>
 <div class="footer">为若琳定制的学习工具 | 基于课堂录音整理 | 持续更新中</div>
 <script>
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'语文',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'语文,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+}
 const questions=[{"q": "以下哪个正确？", "opts": ["A. 晃惚", "B. 恍忽", "C. 恍惚", "D. 慌惚"], "ans": 2, "exp": "恍惚正确，竖心旁。"}, {"q": "汇合与会合区别？", "opts": ["A. 没区别", "B. 汇合水流/会合人群", "C. 汇合人群/会合水流", "D. 都行"], "ans": 1, "exp": "汇合用于水流，会合用于人群。"}, {"q": "以下哪个是病句类型？", "opts": ["A. 拟人", "B. 排比", "C. 偷换主语", "D. 对偶"], "ans": 2, "exp": "偷换主语(中途易辙)是病句。"}, {"q": "提高不能搭配？", "opts": ["A. 水平", "B. 质量", "C. 境界", "D. 效率"], "ans": 2, "exp": "境界搭配提升，不是提高。"}, {"q": "《爱莲说》文体？", "opts": ["A. 骈文", "B. 议论文", "C. 记叙文", "D. 说明文"], "ans": 1, "exp": "《爱莲说》是议论文。"}, {"q": "比喻修辞答题步骤？", "opts": ["A. 只写手法", "B. 手法+效果", "C. 本体+喻体→特点→情感", "D. 只写喻体"], "ans": 2, "exp": "点明本体+喻体→写出特点→表达情感。"}, {"q": "插叙作用答题结构？", "opts": ["A. 只写内容", "B. 概括+作用+铺垫", "C. 只写结构", "D. 只写情感"], "ans": 1, "exp": "概括内容→对人物主旨作用→结构铺垫。"}, {"q": "人物描写题怎么做？", "opts": ["A. 看形容词", "B. 找核心动词分析特点", "C. 看外貌", "D. 抄原文"], "ans": 1, "exp": "找出核心动词，分析人物特点情感。"}, {"q": "补句方法？", "opts": ["A. 自己编", "B. 瞻前顾后定内容定形式", "C. 只看后", "D. 只看前"], "ans": 1, "exp": "瞻前顾后，先内容后形式。"}, {"q": "古诗情感怎么答？", "opts": ["A. 只写思乡", "B. 结合诗句分析", "C. 只写忧伤", "D. 写感人"], "ans": 1, "exp": "必须结合具体诗句分析。"}, {"q": "'涕'古义？", "opts": ["A. 鼻涕", "B. 眼泪", "C. 口水", "D. 汗水"], "ans": 1, "exp": "涕古义=眼泪(三点水)。"}, {"q": "仿写要求？", "opts": ["A. 字数多", "B. 对偶句式字数一致", "C. 生僻字", "D. 押韵"], "ans": 1, "exp": "对偶句式，字数大体一致。"}];
 const flashcards=[{"q": "易错字", "a": "恍惚、憋屈、由衷、执拗"}, {"q": "病句六类", "a": "杂糅/偷换主语/重复/否定/歧义/搭配"}, {"q": "搭配库", "a": "提高水平/提升能力/发扬精神"}, {"q": "古诗答题", "a": "结合诗句不笼统"}, {"q": "比喻模板", "a": "本体+喻体→特点→情感"}, {"q": "补句方法", "a": "瞻前顾后，先内容后形式"}];
 const errors=[{"title": "古诗只答笼统", "wrong": "只写思乡忧伤", "right": "结合诗句分析"}, {"title": "比喻不写本体喻体", "wrong": "直接生动形象", "right": "先点明本体喻体"}, {"title": "阅读不分点", "wrong": "一大段无序号", "right": "分①②③点作答"}, {"title": "字形混淆", "wrong": "汇合会合混用", "right": "汇合=水流；会合=人群"}];
