@@ -55,7 +55,10 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
 .btn-sm{padding:.18rem .4rem;font-size:.7rem}
 @media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
-</style></head><body>
+</style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</head><body>
 <nav class="navbar"><div class="container">
   <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
   <div class="navbar-nav">
@@ -94,12 +97,15 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 <script>
 
 const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
 function autoImportWB(idx, myAns){
   const q=questions[idx];
   const item={subject:'生物',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'生物,课堂练习'};
   const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
-  if(ex.some(x=>x.content===item.content))return;
+  if(ex.some(x=>x.content===item.content))return false;
   ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
 }
 const questions=[{"q": "会考满分线？", "opts": ["A. 60", "B. 70", "C. 80", "D. 90"], "ans": 2, "exp": "80分以上为满分。"}, {"q": "班级平均分？", "opts": ["A. 57", "B. 62", "C. 72", "D. 80"], "ans": 0, "exp": "班级57分，年级72分。"}, {"q": "未及格人数？", "opts": ["A. 15", "B. 20", "C. 25", "D. 30"], "ans": 3, "exp": "30人未及格。"}, {"q": "成绩差原因？", "opts": ["A. 老师差", "B. 每天有课不重视", "C. 太难", "D. 没作业"], "ans": 1, "exp": "每天有课反而不重视。"}, {"q": "50分抄几遍？", "opts": ["A. 1", "B. 2", "C. 3", "D. 4"], "ans": 0, "exp": "50分1遍，40分2遍，30分3遍，20分4遍。"}, {"q": "年级平均分？", "opts": ["A. 57", "B. 62", "C. 72", "D. 80"], "ans": 2, "exp": "年级平均72分。"}];
 const flashcards=[{"q": "会考满分", "a": "80分"}, {"q": "班级平均", "a": "57分(年级72)"}, {"q": "成绩差原因", "a": "每天有课不重视"}, {"q": "罚抄", "a": "50分1遍→40分2遍→30分3遍→20分4遍"}];
@@ -113,7 +119,7 @@ q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+
 function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
 var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
 if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
-if(oi===questions[idx].ans)score++;else autoImportWB(idx,oi);var qh=document.querySelector('.q-header');
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
 qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
 var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
 function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}

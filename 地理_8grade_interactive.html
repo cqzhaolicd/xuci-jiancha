@@ -55,7 +55,10 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
 .btn-sm{padding:.18rem .4rem;font-size:.7rem}
 @media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
-</style></head><body>
+</style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</head><body>
 <nav class="navbar"><div class="container">
   <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
   <div class="navbar-nav">
@@ -99,12 +102,15 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 <script>
 
 const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
 function autoImportWB(idx, myAns){
   const q=questions[idx];
   const item={subject:'地理',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'地理,课堂练习'};
   const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
-  if(ex.some(x=>x.content===item.content))return;
+  if(ex.some(x=>x.content===item.content))return false;
   ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
 }
 const questions=[{"q": "我国领土面积约", "opts": ["A. 960万km²", "B. 760万km²", "C. 1200万km²", "D. 300万km²"], "ans": 0, "exp": "我国陆地面积约960万平方千米，居世界第三位。"}, {"q": "我国共有多少个省级行政区", "opts": ["A. 23个", "B. 34个", "C. 30个", "D. 35个"], "ans": 1, "exp": "34个：23省、5自治区、4直辖市、2特别行政区（港澳）。"}, {"q": "我国地势特征是", "opts": ["A. 西高东低，呈三级阶梯状分布", "B. 东高西低", "C. 北高南低", "D. 中部高四周低"], "ans": 0, "exp": "我国地势西高东低，呈三级阶梯状分布，利于海洋湿润气流深入内陆。"}, {"q": "世界屋脊指的是", "opts": ["A. 黄土高原", "B. 青藏高原", "C. 内蒙古高原", "D. 云贵高原"], "ans": 1, "exp": "青藏高原平均海拔4000米以上，是世界上海拔最高的大高原，称为“世界屋脊”。"}, {"q": "我国降水量的分布规律是", "opts": ["A. 从东南向西北递减", "B. 从西北向东南递减", "C. 均匀分布", "D. 从南向北递增"], "ans": 0, "exp": "受海陆位置和季风影响，我国降水从东南沿海向西北内陆递减。"}, {"q": "我国最长的河流是", "opts": ["A. 黄河", "B. 长江", "C. 珠江", "D. 黑龙江"], "ans": 1, "exp": "长江全长6300多千米，是我国最长、流域面积最广、水量最大的河流。"}, {"q": "黄河“地上河”形成的原因是", "opts": ["A. 中游水土流失，泥沙淤积", "B. 上游冰川融化", "C. 人为挖河", "D. 降水太多"], "ans": 0, "exp": "黄河中游流经黄土高原水土流失严重，下游河道变宽流速减缓，泥沙淤积抬升河床形成“地上河”。"}, {"q": "南水北调工程主要解决", "opts": ["A. 水资源时间分布不均", "B. 水资源空间分布不均", "C. 能源不足", "D. 交通不便"], "ans": 1, "exp": "南水北调把长江水调往华北、西北，解决水资源空间分布不均（南多北少）问题。"}, {"q": "我国耕地主要分布在", "opts": ["A. 东部季风区的平原和低缓丘陵", "B. 青藏高原", "C. 西北内陆", "D. 东北林区"], "ans": 0, "exp": "耕地主要分布在东部季风区平原（东北平原、华北平原、长江中下游平原等）。"}, {"q": "我国铁路网的骨架是", "opts": ["A. 五纵三横", "B. 三纵五横", "C. 环状", "D. 放射状"], "ans": 0, "exp": "我国铁路网以“五纵三横”为骨架，京广线、陇海线是重要干线。"}, {"q": "秦岭-淮河线大致是", "opts": ["A. 1月0℃等温线", "B. 400mm等降水量线", "C. 季风区非季风区界线", "D. 地势二三阶梯界线"], "ans": 0, "exp": "秦岭-淮河线=1月0℃等温线+800mm等降水量线，是南北方分界线。"}, {"q": "南方地区主要的粮食作物是", "opts": ["A. 小麦", "B. 水稻", "C. 玉米", "D. 高粱"], "ans": 1, "exp": "南方水田以水稻为主，北方旱地以小麦为主。“南稻北麦”。"}, {"q": "我国四大工业基地中，以重工业为主的是", "opts": ["A. 辽中南", "B. 京津唐", "C. 沪宁杭", "D. 珠三角"], "ans": 0, "exp": "辽中南工业基地依托丰富煤铁资源，以重工业为主；沪宁杭最大综合性。"}, {"q": "我国人口分布的特点是", "opts": ["A. 东多西少", "B. 西多东少", "C. 均匀分布", "D. 南少北多"], "ans": 0, "exp": "以黑河-腾冲线（胡焕庸线）为界，人口东多西少。"}, {"q": "我国夏季气温最低的地区是", "opts": ["A. 青藏高原", "B. 东北平原", "C. 吐鲁番", "D. 海南岛"], "ans": 0, "exp": "青藏高原因海拔高，夏季气温最低；冬季最低在漠河。"}, {"q": "长江被称为“黄金水道”是因为", "opts": ["A. 航运价值高", "B. 水能丰富", "C. 含沙量大", "D. 水量最大"], "ans": 0, "exp": "长江干支流通航里程长、货运量大，被称为“黄金水道”；上游水能丰富叫“水能宝库”。"}]
 const flashcards=[{"q": "地理位置", "a": "北温带为主；东临太平洋；亚洲东部、太平洋西岸。"}, {"q": "34个省级行政区", "a": "23省+5自治区+4直辖市+2特别行政区；简称：川/蜀、粤、苏等。"}, {"q": "三级阶梯", "a": "第一级：青藏高原（4000m+）；第二级：高原盆地；第三级：平原丘陵。"}, {"q": "主要山脉", "a": "东西：天山-阴山、昆仑-秦岭；东北-西南：大兴安岭-太行山-巫山；弧形：喜马拉雅山。"}, {"q": "季风气候", "a": "雨热同期利于农业；夏季风带来降水，冬春季易旱。"}, {"q": "400mm等降水量线", "a": "大兴安岭-张家口-兰州-拉萨-喜马拉雅山脉；季风区与非季风区分界。"}, {"q": "长江", "a": "源头唐古拉山→东海；水能宝库（上游）+黄金水道（中下游）。"}, {"q": "黄河", "a": "源头巴颜喀拉山→渤海；中游黄土高原水土流失；下游地上河。"}, {"q": "南水北调", "a": "东线（京杭运河）、中线（丹江口水库）、西线；解决北方缺水。"}, {"q": "秦岭-淮河线", "a": "1月0℃等温线+800mm线；南稻北麦、南船北马。"}, {"q": "四大地理区域", "a": "北方/南方/西北/青藏；界线：秦岭-淮河、400mm线、青藏边缘线。"}, {"q": "因地制宜农业", "a": "东部种植业、西部牧业、山区林业；东北大豆、新疆棉花。"}]
@@ -118,7 +124,7 @@ q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\
 function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
 var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
 if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
-if(oi===questions[idx].ans)score++;else autoImportWB(idx,oi);var qh=document.querySelector('.q-header');
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
 qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
 var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
 function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}

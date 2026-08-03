@@ -94,7 +94,10 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 @keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
 </style>
-</head><body>
+.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</head><body>
 
 <nav class="navbar"><div class="container">
   <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 机械运动</a>
@@ -301,6 +304,8 @@ const errors=[
 {title:'测速实验中计时方法出错 ❌',wrong:'先放车再计时，或先计时再放车，认为结果不变。',right:'<strong>先放后计</strong> → 已运动一段时间才计时，时间偏短→速度<strong>偏大</strong><br><strong>先计后放</strong> → 计时开始后车还没动，时间偏长→速度<strong>偏小</strong><br>必须同时开始！'},
 ];
 
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
 const WRONG_HISTORY_KEY='quiz_mechanical_wrong';
 let retryMode=false,wrongIds=[];
 
@@ -342,7 +347,7 @@ document.getElementById('quizArea').innerHTML=h;
 document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
 document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
 function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;
-  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);autoImportWB(idx,oi);}
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
 renderQ();}
 function prevQ(){if(curQ>0){curQ--;renderQ();}}
 function nextQ(){const idx=shuffled[curQ];const total=retryMode?wrongIds.length:questions.length;const isLast=(retryMode?shuffled.indexOf(idx):curQ)===total-1;if(isLast){if(quizAns[idx]>=0){document.getElementById('quizArea').innerHTML=showResult();}return;}curQ++;renderQ();}
@@ -366,9 +371,10 @@ function autoImportWB(idx, myAns){
   const q=questions[idx];
   const item={subject:'物理',chapter:'机械运动',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'机械运动,参照物,速度,平均速度,物理'};
   const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
-  if(ex.some(x=>x.content===item.content))return;
+  if(ex.some(x=>x.content===item.content))return false;
   ex.push(item);
   localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
 }
 function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
 const items=w.map(w=>({subject:'物理',chapter:'机械运动',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'机械运动,参照物,速度,平均速度,物理'}));
