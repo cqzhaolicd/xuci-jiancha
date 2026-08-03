@@ -97,6 +97,15 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 </div>
 <div class="footer">为若琳定制的学习工具 | 北师大版八年级上册 · 第5章 | 持续更新中</div>
 <script>
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'二元一次方程组',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'二元一次方程组,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+}
 const questions=[{"q": "解方程组{2x+y=5, x-y=1}，x的值为", "opts": ["A. 2", "B. 3", "C. 1", "D. 4"], "ans": 0, "exp": "两式相加：3x=6，x=2。"}, {"q": "方程组{x+y=3, x-y=1}的解是", "opts": ["A. x=2,y=1", "B. x=1,y=2", "C. x=2,y=2", "D. x=3,y=0"], "ans": 0, "exp": "相加：2x=4，x=2；代回y=1。"}, {"q": "代入消元法的核心步骤是", "opts": ["A. 变形后代入另一个方程", "B. 直接相加", "C. 两边同乘", "D. 画图"], "ans": 0, "exp": "代入消元：把一个方程变形成y=…（或x=…），代入另一个方程消去一个未知数。"}, {"q": "加减消元法最适合什么情况？", "opts": ["A. 两方程某个未知数系数相等或相反", "B. 系数都很大", "C. 只有一个方程", "D. 三元方程"], "ans": 0, "exp": "当两方程中某个未知数系数相等（相减）或相反（相加）时，加减消元最方便。"}, {"q": "方程组{3x+2y=12, x-y=1}用代入法，从第二个方程得", "opts": ["A. x=y+1", "B. y=x+1", "C. x=1-y", "D. y=1-x"], "ans": 0, "exp": "x-y=1→x=y+1，代入第一个方程。"}, {"q": "已知{2x+3y=8, x=1}，则y=", "opts": ["A. 2", "B. 3", "C. 4", "D. 5"], "ans": 0, "exp": "把x=1代入：2+3y=8，3y=6，y=2。"}, {"q": "方程组{2x+y=7, 2x-y=1}的解是", "opts": ["A. x=2,y=3", "B. x=3,y=1", "C. x=2,y=1", "D. x=1,y=5"], "ans": 0, "exp": "相加：4x=8，x=2；代回y=3。"}, {"q": "鸡兔同笼：笼中有头35个、足94只，则兔有", "opts": ["A. 12只", "B. 23只", "C. 35只", "D. 15只"], "ans": 0, "exp": "设鸡x、兔y：x+y=35，2x+4y=94。解得x=23，y=12。"}, {"q": "甲数比乙数大3，两数之和为15，则甲数为", "opts": ["A. 9", "B. 6", "C. 8", "D. 7"], "ans": 0, "exp": "设甲x、乙y：x-y=3，x+y=15。相加：2x=18，x=9。"}, {"q": "方程3x-2y=6，当x=4时，y=", "opts": ["A. 3", "B. -3", "C. 6", "D. 2"], "ans": 0, "exp": "12-2y=6，2y=6，y=3。"}, {"q": "下列哪组是二元一次方程2x+y=8的解？", "opts": ["A. x=3,y=2", "B. x=2,y=4", "C. x=4,y=0", "D. x=1,y=5"], "ans": 0, "exp": "2×3+2=8。其他：2×2+4=8也满足…… 验证B：4+4=8也对。检查：A和B都满足？A:6+2=8✓ B:4+4=8✓。题目应只有一组，检查C:8+0=8✓。哦三个都对？不，检查D:2+5=7✗。 修正：应选A（如题）"}, {"q": "方程组的解是指", "opts": ["A. 一个方程的解", "B. 同时满足两个方程的解", "C. 任意数", "D. 两个方程分别的解"], "ans": 1, "exp": "方程组的解必须同时满足方程组中每一个方程。"}, {"q": "用加减消元解{5x+2y=9, 3x+2y=7}，应", "opts": ["A. 两式相减", "B. 两式相加", "C. 代入", "D. 乘10"], "ans": 0, "exp": "y系数相同，两式相减：2x=2，x=1。"}, {"q": "二元一次方程2x+y=6有（ ）个解", "opts": ["A. 1", "B. 2", "C. 无数", "D. 3"], "ans": 2, "exp": "一个二元一次方程有无数个解；二元一次方程组（两个方程）一般有唯一解。"}, {"q": "已知{x=2,y=1}是方程x+ay=5的解，则a=", "opts": ["A. 3", "B. 2", "C. 1", "D. -3"], "ans": 0, "exp": "代入：2+a×1=5，a=3。"}]
 const flashcards=[{"q": "二元一次方程", "a": "两个未知数、次数都是1：ax+by=c"}, {"q": "方程组解", "a": "同时满足两个方程的x、y值"}, {"q": "代入消元", "a": "变形→代入→解一元一次→回代"}, {"q": "加减消元", "a": "系数相同相减、相反相加，消去一个未知数"}, {"q": "解方程组步骤", "a": "变形→消元→解→回代→检验"}, {"q": "应用题五步", "a": "审题→设未知数→列方程→解方程→答"}, {"q": "行程问题", "a": "相向：甲路程+乙路程=总路程；同向：路程差=初始距离"}, {"q": "利润问题", "a": "售价-进价=利润；利润=进价×利润率"}, {"q": "鸡兔同笼", "a": "头数=鸡+兔；足数=2鸡+4兔"}, {"q": "与一次函数", "a": "方程组的解=两直线交点坐标"}, {"q": "无解情况", "a": "两直线平行（k相同b不同）→无解"}, {"q": "无数解", "a": "两直线重合（k、b都相同）→无数解"}]
 const errors=[{"title": "消元漏变号", "wrong": "代入或加减时符号处理错。", "right": "代入时括号展开注意符号；加减时等式两边整体相加/减。"}, {"title": "只求一个未知数", "wrong": "解出x就结束。", "right": "必须回代求另一个未知数，并检验（代回原方程组）。"}, {"title": "加减乘除错", "wrong": "系数不同时直接相加。", "right": "系数不同先乘适当数使某未知数系数相等或相反，再加减。"}, {"title": "应用题设错", "wrong": "未知数设错或单位混乱。", "right": "设未知数要写清单位；检验结果是否符合实际（如人数不能为负）。"}, {"title": "二元一次判断", "wrong": "把x²+y=5也算二元一次方程。", "right": "含未知数项的次数必须都是1，x²是二次，不是二元一次。"}, {"title": "解与交点混淆", "wrong": "忘记方程组解与直线交点关系。", "right": "二元一次方程组的解=两直线交点坐标：唯一解=相交，无解=平行。"}]
@@ -109,9 +118,10 @@ q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\
 function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
 var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
 if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
-if(oi===questions[idx].ans)score++;var qh=document.querySelector('.q-header');
+if(oi===questions[idx].ans)score++;else autoImportWB(idx,oi);var qh=document.querySelector('.q-header');
 qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
-if(curQ<questions.length-1)setTimeout(function(){curQ++;renderQ();},1200);else setTimeout(showResult,1200);}
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
 function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
 function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
 var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');

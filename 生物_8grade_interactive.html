@@ -97,6 +97,15 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 </div>
 <div class="footer">为若琳定制的学习工具 | 人教版八年级上册 | 持续更新中</div>
 <script>
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'生物',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'生物,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+}
 const questions=[{"q": "下列动物属于环节动物的是", "opts": ["A. 蝗虫", "B. 蚯蚓", "C. 河蚌", "D. 水螅"], "ans": 1, "exp": "蚯蚓身体由许多体节构成，属于环节动物。蝗虫=节肢动物，河蚌=软体动物，水螅=腔肠动物。"}, {"q": "鱼类的呼吸器官是", "opts": ["A. 肺", "B. 皮肤", "C. 鳃", "D. 气囊"], "ans": 2, "exp": "鱼类用鳃呼吸（鳃丝密布毛细血管），适应水中溶解氧。"}, {"q": "下列属于鱼类的是", "opts": ["A. 鲸鱼", "B. 章鱼", "C. 鲫鱼", "D. 鱿鱼"], "ans": 2, "exp": "鲫鱼是鱼类。鲸鱼是哺乳动物，章鱼/鱿鱼是软体动物。"}, {"q": "青蛙的呼吸器官是", "opts": ["A. 鳃", "B. 肺和皮肤", "C. 气囊", "D. 气管"], "ans": 1, "exp": "青蛙用肺呼吸，皮肤辅助呼吸（皮肤湿润有毛细血管）。"}, {"q": "真正适应陆地生活的脊椎动物是", "opts": ["A. 两栖动物", "B. 爬行动物", "C. 鱼类", "D. 环节动物"], "ans": 1, "exp": "爬行动物体表有鳞片、肺呼吸、卵生有卵壳，摆脱了对水环境的依赖。"}, {"q": "鸟类飞行时辅助呼吸的结构是", "opts": ["A. 气囊", "B. 肺", "C. 鳃", "D. 气管"], "ans": 0, "exp": "鸟类有发达的气囊，与肺相通，实现双重呼吸提高供氧效率。"}, {"q": "哺乳动物特有的生殖方式是", "opts": ["A. 卵生", "B. 胎生哺乳", "C. 体外受精", "D. 变态发育"], "ans": 1, "exp": "胎生哺乳是哺乳动物特有的特征，提高后代成活率。"}, {"q": "人体运动系统中“支点”是", "opts": ["A. 骨", "B. 关节", "C. 肌肉", "D. 韧带"], "ans": 1, "exp": "杠杆原理：骨=杠杆，关节=支点，骨骼肌=动力。"}, {"q": "蜜蜂采蜜属于", "opts": ["A. 学习行为", "B. 先天性行为", "C. 社会行为中的学习", "D. 防御行为"], "ans": 1, "exp": "蜜蜂采蜜是生来就有的先天性行为（由遗传物质决定）。"}, {"q": "下列属于学习行为的是", "opts": ["A. 蜘蛛结网", "B. 大雁南飞", "C. 老马识途", "D. 母鸡孵蛋"], "ans": 2, "exp": "老马识途是后天经验积累的学习行为；其余为先天性行为。"}, {"q": "动物在生物圈中的作用不包括", "opts": ["A. 维持生态平衡", "B. 促进物质循环", "C. 帮助植物传粉", "D. 制造有机物"], "ans": 3, "exp": "动物不能制造有机物（那是绿色植物光合作用），是消费者。"}, {"q": "生物分类最基本的单位是", "opts": ["A. 界", "B. 门", "C. 科", "D. 种"], "ans": 3, "exp": "生物分类等级：界→门→纲→目→科→属→种，种是最基本的分类单位。"}, {"q": "节肢动物的主要特征是", "opts": ["A. 身体分节、有外骨骼", "B. 有脊椎", "C. 用肺呼吸", "D. 胎生"], "ans": 0, "exp": "节肢动物身体分节、附肢分节、体表有外骨骼（保护+防失水），如昆虫、蜘蛛、虾。"}, {"q": "家鸽的呼吸方式是", "opts": ["A. 单重呼吸", "B. 双重呼吸", "C. 皮肤呼吸", "D. 鳃呼吸"], "ans": 1, "exp": "鸟类吸气呼气时气体都经过肺（气囊辅助），实现双重呼吸，供氧效率高。"}, {"q": "牙齿有门齿、犬齿、臼齿分化的动物是", "opts": ["A. 鱼", "B. 鸟", "C. 哺乳动物", "D. 爬行动物"], "ans": 2, "exp": "哺乳动物牙齿分化：门齿切断、犬齿撕裂、臼齿磨碎，与食性有关。"}, {"q": "下列动物行为中，属于社会行为的是", "opts": ["A. 蚂蚁搬家", "B. 蛇蜕皮", "C. 猫捉老鼠", "D. 青蛙冬眠"], "ans": 0, "exp": "社会行为：群体内部有分工合作（如蚂蚁、蜜蜂），蚂蚁搬家有组织分工。"}]
 const flashcards=[{"q": "无脊椎动物分类", "a": "腔肠（水螅）→扁形（涡虫）→线形（蛔虫）→环节（蚯蚓）→软体（河蚌）→节肢（昆虫）。"}, {"q": "鱼类特征", "a": "鳃呼吸、鳍游泳、流线型；体表鳞片+黏液。"}, {"q": "两栖动物", "a": "幼体（蝌蚪）水中鳃呼吸，成体肺呼吸+皮肤辅助；变态发育。"}, {"q": "爬行动物", "a": "体表鳞片/甲、肺呼吸、卵生有卵壳，摆脱水的限制。"}, {"q": "鸟类适于飞行", "a": "流线型、翼、气囊双重呼吸、胸肌发达、骨骼轻、恒温。"}, {"q": "哺乳动物特征", "a": "体表被毛、胎生哺乳、牙齿分化、恒温。"}, {"q": "运动系统", "a": "骨+关节+肌肉；骨=杠杆，关节=支点，肌肉=动力。"}, {"q": "关节结构", "a": "关节头+关节窝（关节面）、关节软骨、关节囊、关节腔（滑液润滑）。"}, {"q": "先天性vs学习行为", "a": "先天性：生来就有、遗传决定（蜘蛛结网）；学习：后天学习（老马识途）。"}, {"q": "社会行为", "a": "群体分工合作，有首领（蚂蚁、蜜蜂、狼群）。"}, {"q": "动物作用", "a": "维持生态平衡、促进物质循环、帮助植物传粉传播种子。"}, {"q": "分类等级", "a": "界门纲目科属种：等级越小，亲缘关系越近。"}]
 const errors=[{"title": "鲸鱼是鱼", "wrong": "鲸鱼名字带“鱼”就认为是鱼类。", "right": "鲸鱼用肺呼吸、胎生哺乳，是哺乳动物。判断是否鱼类看鳃呼吸+鳍游泳。"}, {"title": "青蛙“既能水中又能陆地=爬行动物”", "wrong": "把两栖动物和爬行动物混淆。", "right": "两栖=青蛙（幼体水中、成体水陆、皮肤辅助）；爬行=蜥蜴（完全陆地、肺呼吸、卵壳）。"}, {"title": "先天性vs学习行为判错", "wrong": "把蜜蜂采蜜/蜘蛛结网当学习行为。", "right": "生来就有、由遗传决定=先天性行为（采蜜、结网、南飞）。后天经验=学习行为（老马识途、鹦鹉学舌）。"}, {"title": "动物=生产者", "wrong": "认为动物能自己制造有机物。", "right": "动物是消费者，不能制造有机物，直接或间接以植物为食。"}, {"title": "关节=支点混淆", "wrong": "认为骨是支点。", "right": "运动杠杆：骨=杠杆，关节=支点，骨骼肌=动力。"}, {"title": "鸟类气囊=呼吸器官", "wrong": "认为气囊是气体交换场所。", "right": "气体交换在肺中进行，气囊只辅助呼吸（储存气体、双重呼吸），不进行气体交换。"}]
@@ -109,9 +118,10 @@ q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\
 function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
 var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
 if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
-if(oi===questions[idx].ans)score++;var qh=document.querySelector('.q-header');
+if(oi===questions[idx].ans)score++;else autoImportWB(idx,oi);var qh=document.querySelector('.q-header');
 qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
-if(curQ<questions.length-1)setTimeout(function(){curQ++;renderQ();},1200);else setTimeout(showResult,1200);}
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
 function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
 function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
 var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
