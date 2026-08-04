@@ -1,0 +1,455 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>📐 二元一次方程组（三）· 含参问题 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--secondary:#c0392b;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#e74c3c,#c0392b);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(231,76,60,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#e74c3c20,#c0392b20);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#e74c3c,#c0392b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap;overflow-x:auto}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem;white-space:nowrap}
+.tab-btn:hover,.tab-btn.active{border-color:#e74c3c;color:#e74c3c}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card .formula{background:var(--bg);padding:.4rem .6rem;border-radius:6px;font-family:'Times New Roman',serif;font-size:1.05rem;text-align:center;margin:.3rem 0;color:#c0392b;font-weight:700}
+.knowledge-card.c1{border-color:#e74c3c}.knowledge-card.c2{border-color:#e67e22}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#3498db}.knowledge-card.c5{border-color:#9b59b6}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#e74c3c,#c0392b);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:1.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-text .expr{font-size:1.05rem;color:#c0392b}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.65rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.9rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#e74c3c;background:#e74c3c10}
+.option .letter{width:24px;height:24px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#fff5f5;border-left:4px solid var(--primary);font-size:.88rem;display:none;line-height:1.8}
+.explanation.show{display:block}
+.explanation .exp-formula{font-family:'Times New Roman',serif;color:#c0392b;font-weight:600}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(231,76,60,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#e74c3c;color:#e74c3c}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#e74c3c,#c0392b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem;text-align:center}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#e74c3c;margin-bottom:.6rem;text-align:center}
+.flashcard-back p{font-size:.95rem;line-height:1.9;color:var(--text);text-align:center}
+.flashcard-back .f-formula{font-family:'Times New Roman',serif;font-size:1.1rem;font-weight:700;color:#e74c3c}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.import-btn{margin-top:1rem;text-align:center}
+.teacher-talk{background:linear-gradient(135deg,#e74c3c10,#c0392b10);border-radius:var(--radius);padding:1.5rem;margin:1rem 0;border-left:4px solid #e74c3c}
+.teacher-talk h4{color:#e74c3c;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.teacher-talk p{font-size:.9rem;line-height:1.9}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+</style>
+.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 数学 · 二元一次方程组</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-project-diagram"></i> 二元一次方程组（三）· 含参问题</h1>
+    <p>暑假初二博学班 · 天元教育 | ⭐⭐⭐⭐ 难度</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 33道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#e74c3c"></i> 第十讲 · 二元一次方程组（三）· 含参问题</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-th-list" style="color:#e74c3c"></i> 二元一次方程</h3><ul>
+        <li><strong class="hl">二元</strong>：含两个未知数（系数不为0）</li>
+        <li><strong class="hl">一次</strong>：未知数次数都是1</li>
+        <li>必须是<strong class="hl">整式方程</strong>（分母不能有未知数）</li>
+        <li>判断：先看整式，再看元数和次数</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-cubes" style="color:#e74c3c"></i> 含参基本含义</h3><ul>
+        <li>方程组的解：<strong class="hl">代入方程组求参</strong></li>
+        <li>参数方程：未知数系数含字母 → 分类讨论</li>
+        <li>⚠️ 系数<strong class="hl">不为0</strong>是隐藏条件</li>
+        <li>整体思想：不直接求x、y，组合求值</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-balance-scale" style="color:#e74c3c"></i> 解的三种情况（ax=b）</h3><ul>
+        <li><strong class="hl">a≠0</strong> → 唯一解 x=b/a</li>
+        <li><strong class="hl">a=0且b=0</strong> → 无数解</li>
+        <li><strong class="hl">a=0且b≠0</strong> → 无解</li>
+        <li>⭐ 消元化为含参方程后再分类讨论</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-link" style="color:#e74c3c"></i> 解与方程问题</h3><ul>
+        <li>Step1：<strong class="hl">联立方程组，表示x、y</strong></li>
+        <li>Step2：代入另一方程求参数</li>
+        <li>解同时满足某方程 → 代入条件方程</li>
+        <li>如：解满足 x+y=6 → 用k表示x+y</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-bug" style="color:#e74c3c"></i> 错解问题</h3><ul>
+        <li>Step1：将解代入<strong class="hl">未抄错</strong>的方程</li>
+        <li>Step2：联立求参数</li>
+        <li>Step3：回代原方程组求解</li>
+        <li>⭐ 抄错的是<strong class="hl">系数c/m</strong>，其余方程仍成立</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-sync-alt" style="color:#e74c3c"></i> 同解问题</h3><ul>
+        <li>两个方程组<strong class="hl">有相同解</strong></li>
+        <li>Step1：<strong class="hl">重新分组</strong>，联立不含参数的方程</li>
+        <li>Step2：先解出x、y，再代入含参方程</li>
+        <li>解变换：整体换元（x+1、y-3 等）</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-hashtag" style="color:#e74c3c"></i> 整数解问题</h3><ul>
+        <li>Step1：用参数<strong class="hl">表示方程的解</strong></li>
+        <li>Step2：<strong class="hl">分离常数</strong>，讨论所有因数</li>
+        <li>例：y(2+a)=12 → 2+a 是12的因数</li>
+        <li>⚠️ 正负因数都要考虑，注意取整条件</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-lightbulb" style="color:#e74c3c"></i> 本讲方法论</h3><ul>
+        <li>含参问题=概念理解+分类讨论</li>
+        <li>核心：参数如何影响解的存在性与唯一性</li>
+        <li>步骤：<strong class="hl">消元 → 含参方程 → 讨论</strong></li>
+        <li>记得<strong class="hl">回代验证</strong>另一未知数</li>
+      </ul></div>
+    </div>
+
+    <!-- 解的三种情况示意图 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-balance-scale" style="color:#e74c3c"></i> ax=b 的三种情况：唯一解 · 无数解 · 无解</div>
+      <svg class="svg-graph" viewBox="0 0 360 170" width="360" height="170">
+        <text x="180" y="25" font-size="13" fill="#e74c3c" font-weight="700" text-anchor="middle">ax = b</text>
+        <line x1="30" y1="120" x2="330" y2="120" stroke="#999" stroke-width="1.2" marker-end="url(#arrow10)"/>
+        <line x1="30" y1="150" x2="30" y2="40" stroke="#999" stroke-width="1.2" marker-end="url(#arrow10)"/>
+        <!-- 情况1 -->
+        <line x1="60" y1="100" x2="140" y2="40" stroke="#e74c3c" stroke-width="2.5"/>
+        <text x="95" y="80" font-size="10" fill="#e74c3c" font-weight="700">a≠0 唯一解</text>
+        <!-- 情况2 -->
+        <line x1="170" y1="95" x2="250" y2="95" stroke="#2ecc71" stroke-width="2.5"/>
+        <text x="205" y="82" font-size="10" fill="#2ecc71" font-weight="700">a=0,b=0 无数解</text>
+        <!-- 情况3 -->
+        <circle cx="310" cy="95" r="6" fill="none" stroke="#3498db" stroke-width="2.5"/>
+        <line x1="302" y1="103" x2="318" y2="87" stroke="#3498db" stroke-width="2.5"/>
+        <text x="310" y="130" font-size="10" fill="#3498db" font-weight="700">a=0,b≠0 无解</text>
+        <defs><marker id="arrow10" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#999"/></marker></defs>
+      </svg>
+      <div class="graph-label">↑ 消元后化为 ax=b，按 a、b 取值分类讨论解的三种情况</div>
+    </div>
+
+    <!-- 含参问题流程 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-project-diagram" style="color:#e74c3c"></i> 含参方程组五大题型流程图</div>
+      <svg class="svg-graph" viewBox="0 0 360 150" width="360" height="150">
+        <rect x="15" y="15" width="105" height="40" rx="8" fill="#e74c3c10" stroke="#e74c3c" stroke-width="1.5"/>
+        <text x="67" y="40" font-size="11" fill="#e74c3c" font-weight="700" text-anchor="middle">解与方程</text>
+        <rect x="135" y="15" width="105" height="40" rx="8" fill="#2ecc7110" stroke="#2ecc71" stroke-width="1.5"/>
+        <text x="187" y="40" font-size="11" fill="#2ecc71" font-weight="700" text-anchor="middle">错解问题</text>
+        <rect x="255" y="15" width="90" height="40" rx="8" fill="#3498db10" stroke="#3498db" stroke-width="1.5"/>
+        <text x="300" y="40" font-size="11" fill="#3498db" font-weight="700" text-anchor="middle">同解问题</text>
+        <rect x="75" y="85" width="105" height="40" rx="8" fill="#e67e2210" stroke="#e67e22" stroke-width="1.5"/>
+        <text x="127" y="110" font-size="11" fill="#e67e22" font-weight="700" text-anchor="middle">整数解</text>
+        <rect x="195" y="85" width="105" height="40" rx="8" fill="#9b59b610" stroke="#9b59b6" stroke-width="1.5"/>
+        <text x="247" y="110" font-size="11" fill="#9b59b6" font-weight="700" text-anchor="middle">解的情况</text>
+        <line x1="67" y1="55" x2="127" y2="85" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="187" y1="55" x2="187" y2="85" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="247" y1="55" x2="247" y2="85" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="300" y1="55" x2="247" y2="85" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+      </svg>
+      <div class="graph-label">↑ 五大题型统一思路：消元 → 含参方程 → 分类讨论</div>
+    </div>
+
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第十讲</h4>
+      <p>
+        <strong>基本含义</strong> — 二元=两未知数系数≠0；一次=未知数次数=1；方程组解=代入求参；整体思想组合求值<br>
+        <strong>解的三种情况</strong> — 消元化为 ax=b：a≠0 唯一解；a=0,b=0 无数解；a=0,b≠0 无解；<strong>记得回代验证另一未知数</strong><br>
+        <strong>解与方程问题</strong> — 联立表示x、y → 代入另一方程求参（如解满足 x+y=6、2x-y=1 等）<br>
+        <strong>错解问题</strong> — 解代入<strong>未抄错的方程</strong>联立求参 → 回代求解；抄错的只是某个系数<br>
+        <strong>同解问题</strong> — 重新分组，联立不含参方程先求解 → 代入含参方程<br>
+        <strong>整数解问题</strong> — 参数表示解 → 分离常数 → 讨论因数（正负都考虑）<br>
+        <strong><em>💬 金句："含参问题不畏惧，消元之后看a、b；分类讨论慢慢来，回代验证不遗漏。"</em></strong><br>
+        <strong><em>💬 金句："错解代入未错式，同解重新分组求；整数解分离常数，因数讨论要周全。"</em></strong>
+      </p>
+    </div>
+
+  </div><div id="tab-quiz" class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 33</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header" style="font-weight:700;margin-bottom:.8rem"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每条标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 数学 · 二元一次方程组互动学习 | 天元教育 · 初二暑假博学班</div>
+
+<script>
+const questions = [
+// === 模块一：基本含义 ===
+{q:'二元一次方程必须满足的条件是',opts:['A. 含两个未知数即可','B. 未知数次数为1即可','C. 含两个未知数、未知数次数都为1的整式方程','D. 含两个未知数的方程'],ans:2,exp:'二元一次方程三条件：<strong>两个未知数</strong>（系数≠0）+ <strong>次数都为1</strong> + <strong>整式方程</strong>（分母无未知数）。'},
+{q:'下列方程属于二元一次方程的是',opts:['A. x+y=1','B. xy+5=4','C. 3y²-8=x','D. x+1/y=2'],ans:0,exp:'A 是二元一次方程。B 有xy（次数2）；C 有y²（次数2）；D 分母含未知数（不是整式）。'},
+{q:'下列方程组中，是二元一次方程组的是',opts:['A. {2x+y=1; 1/y=-1}','B. {2x=1; xy=-1}','C. {2x+y=1; y-z=-1}','D. {x=1; y=-1}'],ans:3,exp:'D 两个方程都是二元一次方程，组成二元一次方程组。A 有分式（1/y）；B 有xy（次数2）；C 含三个未知数x、y、z。'},
+{q:'下列不是二元一次方程组的是',opts:['A. {x=2; y=-1}','B. {m=2n+3; 3n-m=4}','C. {x+y=2; y+z=3}','D. {4a+2=5; 2(a-b)+1=2(a+b)-3}'],ans:2,exp:'C 含三个未知数x、y、z，不是二元一次方程组。A、B、D 都是二元一次方程组。'},
+{q:'若方程(a-2)x^{|a|-1}-(b+5)y^{|b|-4}=3是关于x、y的二元一次方程，则a、b的值为',opts:['A. a=2, b=5','B. a=-2, b=5','C. a=-2, b=-5','D. a=2, b=-5'],ans:1,exp:'x的次数|a|-1=1 → |a|=2，且系数a-2≠0 → a≠2 → <strong>a=-2</strong>；y的次数|b|-4=1 → |b|=5，且系数b+5≠0 → b≠-5 → <strong>b=5</strong>。'},
+{q:'二元一次方程ax+by=6有两组解{x=2; y=-2}与{x=-1; y=-8}，则a+b的值为',opts:['A. 0','B. 1','C. 2','D. 3'],ans:1,exp:'代入两组解：2a-2b=6 → a-b=3；-a-8b=6。解得 <strong>a=2, b=-1</strong>，a+b=<strong>1</strong>。'},
+{q:'若方程x^{n-1}+2y^{m-1}=m是关于x、y的二元一次方程，则',opts:['A. n=1, m=1','B. n=2, m=2','C. n=2, m=1','D. n=1, m=2'],ans:1,exp:'x次数n-1=1 → <strong>n=2</strong>；y次数m-1=1 → <strong>m=2</strong>（y的系数2≠0，无需排除）。'},
+{q:'方程组的解是指',opts:['A. 任意一个方程的解','B. 同时满足方程组中每个方程的未知数的值','C. 方程组中第一个方程的解','D. 满足其中一个方程的x值'],ans:1,exp:'方程组的解必须<strong>同时满足所有方程</strong>，代入每个方程都成立。'},
+// === 模块二：解的三种情况 ===
+{q:'关于x的方程ax=b，当a≠0时，方程',opts:['A. 无解','B. 有无数解','C. 有唯一解 x=b/a','D. 无法确定'],ans:2,exp:'a≠0 时 <strong>唯一解</strong>：x=b/a。'},
+{q:'关于x的方程ax=b，当a=0且b=0时，方程',opts:['A. 无解','B. 有无数解','C. 有唯一解','D. 有且只有一个解'],ans:1,exp:'a=0且b=0：0·x=0 恒成立 → <strong>无数解</strong>（任意x都满足）。'},
+{q:'关于x的方程ax=b，当a=0且b≠0时，方程',opts:['A. 无解','B. 有无数解','C. 有唯一解','D. 解为x=0'],ans:0,exp:'a=0且b≠0：0·x=b≠0 不可能成立 → <strong>无解</strong>。'},
+{q:'含参数方程组解的情况判断，正确的步骤是',opts:['A. 直接看系数大小','B. 先消元化为含参方程ax=b，再分类讨论','C. 把参数取特殊值','D. 画图像即可'],ans:1,exp:'标准方法：<strong>消元 → 化为含参方程ax=b → 按a、b分类讨论</strong>，并回代验证另一未知数。'},
+{q:'关于x、y的方程组{ax+2(a-1)y=a; 2x+2y=3}，下列说法正确的是',opts:['A. 一定有唯一解','B. 可能有无数多解','C. 当a=2时方程组无解','D. 若解中y=0，则a=2'],ans:2,exp:'由②x+y=3/2代入①：x(2-a)=3-2a。a=2时左边0右边-1 → <strong>无解</strong>（C✓）；a≠2时唯一解（A×）；该方程不可能无数解（B×）；y=0→x=3/2→a=0（D×）。'},
+// === 模块三：解与方程问题 ===
+{q:'若方程组{x+y=5k-2; x-y=k+4}的解也是方程2x-y=1的解，则k的值为',opts:['A. -1','B. 0','C. 1','D. 2'],ans:0,exp:'两式相加：2x=6k+2 → x=3k+1，y=2k-3。代入2x-y=1：2(3k+1)-(2k-3)=1 → 4k+5=1 → <strong>k=-1</strong>。'},
+{q:'若方程组{3x+y=2k; 2x-y=3k}的解满足3x-2y=10，则k的值为',opts:['A. 1','B. 2','C. 3','D. 4'],ans:1,exp:'两式相加：5x=5k → x=k；代入②：y=-k。代入3x-2y=10：3k+2k=10 → <strong>k=2</strong>。'},
+{q:'若方程组{3x+2y=2k-5; 2x+3y=3k}的解满足x+y=6，则k的值为',opts:['A. 5','B. 6','C. 7','D. 8'],ans:2,exp:'两式相加：5x+5y=5k-5 → x+y=k-1。由x+y=6 → k-1=6 → <strong>k=7</strong>。'},
+{q:'若方程组{2x+5y=3-4k; x-2y=4}的解满足x+y=2，则k的值为',opts:['A. 1/4','B. 1/2','C. 3/4','D. 1'],ans:0,exp:'x-2y=4且x+y=2 → x=8/3, y=-2/3。代入①：2·(8/3)+5·(-2/3)=2=3-4k → 4k=1 → <strong>k=1/4</strong>。'},
+{q:'若方程组{2x-y=m-1; x-4y=2m+3}的解满足x+3y=2，则m的值为',opts:['A. -6','B. -2','C. 2','D. 6'],ans:0,exp:'由x+3y=2 → x=2-3y。代入①：m=5-7y；代入②：m=(-7y-1)/2。联立：5-7y=(-7y-1)/2 → y=11/7 → <strong>m=-6</strong>。'},
+{q:'已知方程组{2a+b=3; a-2b=5}，则2a+6b的值为',opts:['A. -4','B. -2','C. 2','D. 4'],ans:0,exp:'<strong>整体思想</strong>：由2a+b=3乘以2：4a+2b=6，与a-2b=5相加：5a=11 → a=11/5，b=-7/5。2a+6b = 22/5 - 42/5 = <strong>-4</strong>。'},
+// === 模块四：错解问题 ===
+{q:'晓哲解方程组{ax+by=2; cx-7y=8}时抄错c，解得{x=-2; y=2}，则a-b的值为',opts:['A. -2','B. -1','C. 1','D. 2'],ans:1,exp:'抄错c只影响第二式，第一式ax+by=2仍成立：-2a+2b=2 → -a+b=1 → <strong>a-b=-1</strong>（b-a=1）。'},
+{q:'小鸣、小杰解方程组{ax+by=2; mx-7y=-9}，小鸣解对得{x=-2; y=3}，小杰抄错m得{x=-2; y=-2}，则a、b的值为',opts:['A. a=1, b=1','B. a=-1, b=0','C. a=0, b=1','D. a=1, b=0'],ans:1,exp:'第一式ax+by=2不受抄错m影响：小鸣 -2a+3b=2；小杰 -2a-2b=2。联立：5b=0 → b=0，<strong>a=-1</strong>。'},
+{q:'若{x=2; y=1}是方程组{ax+by=1; bx+ay=2}的解，则a-b的值为',opts:['A. -1','B. 0','C. 1','D. 2'],ans:0,exp:'代入：2a+b=1；2b+a=2。解得 a=0, b=1 → <strong>a-b=-1</strong>。'},
+// === 模块五：同解与解变换 ===
+{q:'方程组{x=y+5; x+y+m=0}和{2x-y=5; x+y+m=0}有相同的解，则m的值为',opts:['A. 3','B. 4','C. 5','D. 6'],ans:2,exp:'<strong>同解问题重新分组</strong>：取不含m的方程 x=y+5 和 2x-y=5 联立 → x=0, y=-5。代入x+y+m=0：-5+m=0 → <strong>m=5</strong>。'},
+{q:'已知方程组{a₁x+b₁y=c₁; a₂x+b₂y=c₂}的解是{x=6; y=2}，则方程组{a₁(x+1)-b₁(y-3)=c₁; a₂(x+1)-b₂(y-3)=c₂}的解为',opts:['A. {x=5; y=-1}','B. {x=5; y=1}','C. {x=7; y=5}','D. {x=7; y=1}'],ans:1,exp:'<strong>整体换元</strong>：令 X=x+1, Y=3-y。原解X=6, Y=2 → x+1=6 → x=5；3-y=2 → <strong>y=1</strong>。'},
+{q:'已知方程组{ax+by=3; cx+dy=4}的解为{x=-5; y=1}，且{a(3m+n)+b(m+3n)=3; c(3m+n)+d(m+3n)=4}，则(m+n)^2025的值为',opts:['A. -1','B. 0','C. 1','D. 无法确定'],ans:0,exp:'换元：3m+n=-5，m+3n=1。两式相加：4m+4n=-4 → m+n=-1 → (-1)^2025=<strong>-1</strong>。'},
+{q:'若方程组{2a-3b=13; 3a+5b=30.9}的解是{a=8.3; b=1.2}，则方程组{2(x+2)-3(y-1)=13; 3(x+2)+5(y-1)=30.9}的解是',opts:['A. {x=6.3; y=2.2}','B. {x=8.3; y=1.2}','C. {x=10.3; y=2.2}','D. {x=10.3; y=0.2}'],ans:0,exp:'换元：令a′=x+2, b′=y-1。原解a′=8.3, b′=1.2 → x=8.3-2=<strong>6.3</strong>，y=1.2+1=<strong>2.2</strong>。'},
+// === 模块六：整数解 ===
+{q:'关于x、y的方程组{x+y=6; 2x-ay=0}有正整数解，则整数a的值为',opts:['A. 1、2、4、10','B. 1、2、3、6','C. 2、4、6、12','D. 1、3、4、10'],ans:0,exp:'x=6-y代入②：y(2+a)=12。y∈{1,2,3,4}（x>0）→ 2+a=12,6,4,3 → <strong>a=10,4,2,1</strong>。'},
+{q:'关于x、y的方程组{4x-3y=6; 6x+my=26}有正整数解，则正整数m的值为',opts:['A. 2','B. 3','C. 4','D. 5'],ans:2,exp:'x=(6+3y)/4代入②：y(9+2m)=34。y=2时9+2m=17 → <strong>m=4</strong>（验证x=3为正整数）。'},
+{q:'整数解问题的通用方法是',opts:['A. 直接代入特殊值','B. 用参数表示解，分离常数后讨论因数','C. 两式相减','D. 画图求解'],ans:1,exp:'<strong>Step1 参数表示解 → Step2 分离常数 → 讨论所有因数</strong>（正负都要考虑），再验证整数条件。'},
+// === 模块七：综合 ===
+{q:'下列方程中是二元一次方程的是（填序号）①4x+5=1 ②3x-2y=1 ③1/y+x=1 ④xy+y=14 ⑤x=y ⑥y=½(x+8)',opts:['A. ①②⑤','B. ②⑤⑥','C. ②③⑤','D. ①④⑥'],ans:1,exp:'②③⑤⑥中：②3x-2y=1、⑤x=y、⑥y=½(x+8) 是二元一次方程。①一元；③分母有y；④xy次数2。'},
+{q:'已知方程(m+2)x^{m²-3}+(n-2)y^{n²-8}=2是关于x、y的二元一次方程，则(m+n)²的值为',opts:['A. 1或25','B. 9或25','C. 1或9','D. 25'],ans:0,exp:'m²-3=1 → m=±2，且m+2≠0 → m=2；n²-8=1 → n=±3，且n-2≠0 → n=±3。m+n=5或-1 → (m+n)²=<strong>1或25</strong>。'},
+{q:'若{x=-4; y=3}是方程组{ax+y=-1; x-by=2}的解，则(a+b)^6的值为',opts:['A. 0','B. 1','C. 2','D. 4'],ans:1,exp:'代入：-4a+3=-1 → a=1；-4-3b=2 → b=-2。a+b=-1 → (-1)^6=<strong>1</strong>。'},
+{q:'解含参数方程组后，最后一步一定要',opts:['A. 检查书写是否工整','B. 回代验证另一未知数','C. 画图','D. 换一种方法重做'],ans:1,exp:'求出参数后<strong>回代验证另一未知数</strong>，确保解的自洽性（尤其解的情况讨论题）。'},
+];
+
+
+
+
+
+
+
+const flashcards = [
+{front:'二元一次方程',back:'三条件：<strong>两个未知数</strong>（系数≠0）<br><strong>次数都为1</strong><br><strong>整式方程</strong>（分母无未知数）'},
+{front:'二元一次方程组',back:'由两个<strong>二元一次方程</strong>组成<br>含<strong>两个相同未知数</strong><br>方程组的解=同时满足所有方程'},
+{front:'方程组的解',back:'代入每个方程<strong>都成立</strong>的x、y值<br><br>判断：代入验证即可'},
+{front:'含参问题总纲',back:'核心：参数如何影响<strong>解的存在性与唯一性</strong><br><br>统一思路：<strong>消元 → 含参方程ax=b → 分类讨论</strong>'},
+{front:'基本含义',back:'二元=两未知数<strong>系数≠0</strong><br>一次=次数=1<br>解=代入方程组求参<br><strong>整体思想</strong>：组合求值'},
+{front:'ax=b 三种情况',back:'<strong>a≠0</strong> → 唯一解 x=b/a<br><strong>a=0,b=0</strong> → 无数解<br><strong>a=0,b≠0</strong> → 无解'},
+{front:'唯一解',back:'a≠0 时<br>x = b/a<br>两条直线<strong>相交于一点</strong>'},
+{front:'无数解',back:'a=0且b=0<br>0·x=0 恒成立<br>两条直线<strong>重合</strong>'},
+{front:'无解',back:'a=0且b≠0<br>0·x=b 不可能<br>两条直线<strong>平行</strong>'},
+{front:'解与方程问题',back:'Step1：<strong>联立方程组，表示x、y</strong><br>Step2：代入另一方程求参数<br>例：解满足x+y=6 → 用k表示x+y'},
+{front:'错解问题',back:'Step1：解代入<strong>未抄错的方程</strong><br>Step2：联立求参<br>Step3：回代原方程组求解'},
+{front:'同解问题',back:'两方程组<strong>有相同解</strong><br>Step1：<strong>重新分组</strong>联立不含参方程<br>Step2：先解x、y，再代入含参方程'},
+{front:'整数解问题',back:'Step1：用参数<strong>表示方程的解</strong><br>Step2：<strong>分离常数</strong><br>Step3：讨论所有<strong>因数</strong>（正负都要）'},
+{front:'解变换/换元',back:'原解{x=6; y=2}<br>新方程组含(x+1)、(y-3)等<br>→ 令整体等于原解再解'},
+{front:'整体思想',back:'不直接求x、y<br>通过<strong>组合</strong>（如2a+6b、x+y、a-b）<br>利用已有方程整体求值'},
+{front:'回代验证',back:'求出参数后<br><strong>回代验证另一未知数</strong><br>保证解的自洽性'},
+{front:'分类讨论思想',back:'含参问题关键思维<br>按参数取值分段讨论<br>每种情况对应不同解'},
+{front:'系数不为0陷阱',back:'x^{|a|-1}中 |a|=2 → a=±2<br>但系数(a-2)≠0 → a≠2<br>最终<strong>a=-2</strong>（隐藏条件）'},
+{front:'常见失误',back:'漏考虑<strong>系数≠0</strong><br>错解代入<strong>抄错的方程</strong><br>整数解<strong>漏负因数</strong><br>不<strong>回代验证</strong>'},
+{front:'本讲金句',back:'"含参问题不畏惧，消元之后看a、b；<br>分类讨论慢慢来，回代验证不遗漏。"'},
+];
+
+
+const errors = [
+{title:'漏掉系数≠0 ❌',wrong:'x^{|a|-1}中|a|=1，所以a=±1',right:'除次数外还要检查<strong>系数不为0</strong>：若系数含参数，需排除使系数为0的值（如(a-2)≠0）。'},
+{title:'次数只看一个未知数 ❌',wrong:'只检查x的次数是1就认为是二元一次方程',right:'必须<strong>两个未知数</strong>的次数<strong>都为1</strong>，且是<strong>整式方程</strong>（分母无未知数、无xy项）。'},
+{title:'ax=b三种情况混淆 ❌',wrong:'a=0且b≠0时有无数解',right:'<strong>a=0且b≠0 → 无解</strong>（0·x=b不可能）；a=0且b=0才有无数解；a≠0唯一解。'},
+{title:'错解代入错方程 ❌',wrong:'抄错c后，把错误解代入含c的方程',right:'抄错的是<strong>某个系数</strong>（如c/m），其余方程未变 → 解代入<strong>未抄错的方程</strong>联立求参。'},
+{title:'同解问题各自求解 ❌',wrong:'分别解两个方程组再比较',right:'<strong>重新分组</strong>：把不含参数的方程联立（取公共部分）先求出x、y，再代入含参方程。'},
+{title:'整数解漏负因数 ❌',wrong:'y(2+a)=12，只讨论正因数1、2、3、4、6、12',right:'先看y的取值范围（正整数且x也正整数），再讨论<strong>对应因数</strong>；分离常数后正负因数都要考虑，验证整数条件。'},
+{title:'忘记回代验证 ❌',wrong:'求出参数后直接结束',right:'解的情况讨论题必须<strong>回代验证另一未知数</strong>，防止出现矛盾解或增根。'},
+{title:'解变换不会换元 ❌',wrong:'看到(x+1)、(y-3)就硬解方程组',right:'<strong>整体换元</strong>：令X=x+1、Y=3-y，与原解对应（X=6、Y=2），再反解x、y，秒杀此类题。'},
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const WRONG_HISTORY_KEY='quiz_math10_param_eq';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);retryMode=false;}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;if(retryMode)h+=`<div style=\"margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block\"><i class=\"fas fa-redo\"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class=\"question-card fade-in-up\"><div class=\"q-num\">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div><div class=\"q-text\">${q.q}</div><div class=\"options\">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class=\"option ${c.join(' ')}\" onclick=\"selA(${oi})\"><span class=\"letter\">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class=\"explanation ${quizAns[idx]>=0?'show':''}\"><strong><i class=\"fas fa-lightbulb\"></i> 解析：</strong><br>${q.exp}</div>
+|<div class=\"quiz-nav\"><button class=\"btn btn-outline\" onclick=\"prevQ()\" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class=\"fas fa-arrow-left\"></i> 上一题</button>
+|<span style=\"font-size:.85rem;color:var(--text-light);align-self:center\">${ansd}/${total}</span>
+|<button class=\"btn btn-primary\" onclick=\"nextQ()\" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class=\"fas fa-arrow-right\"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const idx=shuffled[curQ];const total=retryMode?wrongIds.length:questions.length;const isLast=(retryMode?shuffled.indexOf(idx):curQ)===total-1;if(isLast){if(quizAns[idx]>=0){document.getElementById('quizArea').innerHTML=showResult();}return;}curQ++;renderQ();}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class=\"question-card result-card fade-in-up\"><div class=\"big-icon\">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class=\"score\">${correct}/${total}</div>
+|<div><span class=\"result-stat\"><i class=\"fas fa-check-circle\" style=\"color:var(--success)\"></i> 正确 ${correct} 题</span>
+|<span class=\"result-stat\"><i class=\"fas fa-times-circle\" style=\"color:var(--danger)\"></i> 错误 ${total-correct} 题</span></div>
+|${retryMode?`<div style=\"margin:.5rem 0\"><span class=\"result-stat\"><i class=\"fas fa-history\"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+|${wl.length?`<div style=\"text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)\"><p style=\"font-weight:600;margin-bottom:.5rem;font-size:.85rem\">📝 需要复习：</p>${wl.map(w=>`<div style=\"padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)\">✗ ${w.q.q.substring(0,50)}…<br><small style=\"color:var(--text-light)\">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+|<div style=\"margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap\">
+|<button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\"><i class=\"fas fa-redo\"></i> 重新测验</button>
+|${wl.length?`<button class=\"btn btn-warning\" onclick=\"initRetryMode()\" style=\"background:#e67e22;color:#fff\"><i class=\"fas fa-bug\"></i> 错题重练 (${wl.length}题)</button>`:''}
+|<button class=\"btn btn-success\" onclick=\"importWB()\"><i class=\"fas fa-database\"></i> 导入错题到错题库</button>
+|<button class=\"btn btn-outline\" onclick=\"switchTab('flashcard')\"><i class=\"fas fa-layer-group\"></i> 复习知识卡</button>
+|<button class=\"btn btn-outline\" onclick=\"switchTab('errors')\"><i class=\"fas fa-exclamation-triangle\"></i> 易错点</button>
+|${retryMode?`<button class=\"btn btn-sm btn-outline\" onclick=\"initQ();renderQ()\"><i class=\"fas fa-times\"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'数学',chapter:'二元一次方程组（三）含参问题',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'二元一次方程组,含参问题,解的情况,错解,同解,整数解,数学'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'数学',chapter:'二元一次方程组（三）含参问题',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'二元一次方程组,含参问题,解的情况,错解,同解,整数解,数学'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库？'))window.open('wrong_bank.html','_blank');}
+
+let fIdx=0;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class=\"flashcard-container fade-in-up\"><div class=\"flashcard\" id=\"fc\" onclick=\"toggleFC()\"><div class=\"flashcard-face flashcard-front\"><i class=\"fas fa-question-circle\" style=\"font-size:1.8rem;opacity:.5;margin-bottom:.8rem\"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class=\"flashcard-face flashcard-back\"><i class=\"fas fa-lightbulb\" style=\"font-size:1.3rem;color:var(--warning);margin-bottom:.4rem\"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+|<div class=\"flashcard-nav\"><button class=\"btn btn-outline\" onclick=\"renderFC('prev')\" ${fIdx===0?'disabled':''}><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">${fIdx+1}/${flashcards.length}</span><button class=\"btn btn-primary\" onclick=\"renderFC('next')\" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el)el.classList.toggle('flipped');}
+function renderEC(){let s=localStorage.getItem('math_lesson9_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class=\"error-grid\">';errors.forEach((e,i)=>{h+=`<div class=\"error-card fade-in-up\"><div class=\"num\">${i+1}</div><h4>${e.title}</h4><div class=\"ex-wrong\">❌ ${e.wrong}</div><div class=\"ex-right\">✅ ${e.right}</div>
+|<div class=\"check-item ${c[i]?'checked':''}\" onclick=\"toggleEC(${i})\" style=\"margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer\">
+|<div style=\"width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}\">${c[i]?'<i class=\"fas fa-check\" style=\"font-size:10px\"></i>':''}</div>
+|<span style=\"font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}\">我已掌握这个易错点</span></div></div>`;});h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('math_lesson9_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('math_lesson9_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('math_lesson9_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('math_lesson9_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
