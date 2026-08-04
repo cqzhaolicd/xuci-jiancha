@@ -1,0 +1,471 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🪞 平面镜成像 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+</style>
+.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 平面镜成像</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-lightbulb"></i> 平面镜成像 · 互动学习</h1>
+    <p>初二博学班 · 4 模块 · 36 题 · 20 卡牌 | 天元教育</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 36道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第九讲 · 平面镜成像</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-lightbulb" style="color:#f39c12"></i> 成像原理</h3><ul>
+        <li>原理：<strong class="hl">光的反射</strong></li>
+        <li>像=反射光线的<strong class="hl">反向延长线</strong>会聚而成</li>
+        <li>反射光线的反向延长线<strong class="hl">必过像点</strong> ⭐</li>
+        <li>人眼觉得光线从镜后射来 → 看到像</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-balance-scale" style="color:#667eea"></i> 成像特点（四字诀）</h3><ul>
+        <li><strong class="hl">等大</strong>：像与物大小相等</li>
+        <li><strong class="hl">等距</strong>：像与物到镜面距离相等</li>
+        <li><strong class="hl">垂直</strong>：像与物连线垂直镜面</li>
+        <li><strong class="hl">虚像</strong>：正立、光屏无法承接</li>
+        <li>⭐ 先"像"后"物"：像是结果、物是原因</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-flask" style="color:#e74c3c"></i> 探究实验（等效替代法）</h3><ul>
+        <li>用<strong class="hl">透明玻璃板</strong>：便于确定像的位置</li>
+        <li>两根<strong class="hl">完全相同</strong>蜡烛：比较像与物大小</li>
+        <li>B与A的像完全重合：确定像的位置</li>
+        <li>玻璃板<strong class="hl">垂直</strong>桌面放置</li>
+        <li>较暗环境效果更好（原理是反射）</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-exclamation" style="color:#2ecc71"></i> 实验高频陷阱</h3><ul>
+        <li>光屏<strong class="hl">无法承接</strong>像 → 虚像</li>
+        <li>玻璃板后<strong class="hl">两个像</strong>：前后两个面各成一个</li>
+        <li>玻璃板<strong class="hl">越厚</strong>，两像间距<strong class="hl">越大</strong> → 选薄板</li>
+        <li>跳棋子像太暗 → <strong class="hl">手电筒照亮棋子</strong></li>
+        <li>多次实验：找更普遍规律</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-ruler" style="color:#9b59b6"></i> 原理作图（光路图）</h3><ul>
+        <li>根据<strong class="hl">反射定律</strong>作光路图</li>
+        <li>例：由两条反射光线确定光源S</li>
+        <li>反射光线反向延长线交点 = 像点</li>
+        <li>人眼位置：连接像点与眼睛</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-pen-ruler" style="color:#3498db"></i> 特点作图（对称性）</h3><ul>
+        <li>像与物关于镜面<strong class="hl">对称</strong></li>
+        <li>作对称：<strong class="hl">垂线 + 等距 + 标垂足</strong></li>
+        <li>对应点标记 A-A′、B-B′</li>
+        <li>⚠️ 只能作<strong class="hl">光源</strong>的对称（不作入射点）</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-clock" style="color:#e67e22"></i> 镜中时间</h3><ul>
+        <li><strong class="hl">水平镜子：上下翻转</strong>（倒着看）</li>
+        <li><strong class="hl">竖直镜子：左右翻转</strong></li>
+        <li>12:05 → 水平镜中 05:21（上下颠倒）</li>
+        <li>钟面读数法：左右对称读</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-binoculars" style="color:#16a085"></i> 应用</h3><ul>
+        <li><strong class="hl">改变光路</strong>：潜望镜（两次反射）、后视镜</li>
+        <li><strong class="hl">增大空间感</strong>：商场/小房间装饰镜</li>
+        <li>矫正姿势、牙医观察镜</li>
+        <li>⚠️ 负面：<strong class="hl">玻璃幕墙反光</strong></li>
+      </ul></div>
+    </div>
+
+    <!-- 平面镜成像特点示意图 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-balance-scale" style="color:#667eea"></i> 平面镜成像：等大 · 等距 · 垂直 · 虚像</div>
+      <svg class="svg-graph" viewBox="0 0 360 200" width="360" height="200">
+        <!-- 镜面 -->
+        <line x1="180" y1="20" x2="180" y2="180" stroke="#667eea" stroke-width="5"/>
+        <line x1="176" y1="30" x2="176" y2="170" stroke="#fff" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <text x="150" y="195" font-size="10" fill="#667eea" font-weight="700">平面镜</text>
+        <!-- 物 S -->
+        <circle cx="90" cy="90" r="9" fill="#e74c3c"/>
+        <text x="72" y="80" font-size="11" fill="#e74c3c" font-weight="700">物S</text>
+        <!-- 像 S' -->
+        <circle cx="270" cy="90" r="9" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="3,3"/>
+        <text x="262" y="80" font-size="11" fill="#e74c3c" font-weight="700">像S′</text>
+        <!-- 连线（垂直） -->
+        <line x1="90" y1="90" x2="270" y2="90" stroke="#999" stroke-width="1.2" stroke-dasharray="4,3"/>
+        <text x="168" y="82" font-size="9" fill="#666">垂直</text>
+        <!-- 等距标注 -->
+        <line x1="90" y1="108" x2="180" y2="108" stroke="#2ecc71" stroke-width="1"/>
+        <line x1="180" y1="108" x2="270" y2="108" stroke="#2ecc71" stroke-width="1"/>
+        <text x="118" y="124" font-size="9" fill="#2ecc71">d</text>
+        <text x="216" y="124" font-size="9" fill="#2ecc71">d</text>
+        <text x="108" y="140" font-size="9" fill="#666">等距：像到镜=物到镜</text>
+        <defs><marker id="arrow9" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#667eea"/></marker></defs>
+      </svg>
+      <div class="graph-label">↑ 像与物关于平面镜对称：大小相等、到镜等距、连线垂直、成虚像</div>
+    </div>
+
+    <!-- 潜望镜光路 -->
+    <div class="graph-demo">
+      <div class="graph-title"><i class="fas fa-binoculars" style="color:#16a085"></i> 潜望镜：两面平面镜各反射一次，改变光路</div>
+      <svg class="svg-graph" viewBox="0 0 360 200" width="360" height="200">
+        <!-- 潜望镜筒 -->
+        <rect x="150" y="20" width="12" height="160" fill="#e8e8e8" stroke="#999" stroke-width="1"/>
+        <rect x="198" y="20" width="12" height="160" fill="#e8e8e8" stroke="#999" stroke-width="1"/>
+        <rect x="150" y="20" width="60" height="12" fill="#e8e8e8" stroke="#999" stroke-width="1"/>
+        <!-- 上面镜子（45°） -->
+        <line x1="156" y1="80" x2="204" y2="80" stroke="#667eea" stroke-width="4"/>
+        <text x="206" y="76" font-size="9" fill="#667eea">平面镜①</text>
+        <!-- 下面镜子 -->
+        <line x1="156" y1="120" x2="204" y2="120" stroke="#667eea" stroke-width="4"/>
+        <text x="206" y="136" font-size="9" fill="#667eea">平面镜②</text>
+        <!-- 光路 -->
+        <line x1="120" y1="52" x2="180" y2="80" stroke="#f39c12" stroke-width="2" marker-end="url(#arrow9)"/>
+        <line x1="180" y1="80" x2="180" y2="120" stroke="#f39c12" stroke-width="2" marker-end="url(#arrow9)"/>
+        <line x1="180" y1="120" x2="240" y2="148" stroke="#f39c12" stroke-width="2" marker-end="url(#arrow9)"/>
+        <text x="100" y="46" font-size="9" fill="#f39c12" font-weight="700">光线</text>
+        <text x="244" y="164" font-size="9" fill="#666">人眼（正前方看到像）</text>
+      </svg>
+      <div class="graph-label">↑ 光线经两面平面镜两次反射，方向改变180°，人从下方看到正前方的像</div>
+    </div>
+
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第九讲</h4>
+      <p>
+        <strong>成像原理</strong> — 光的反射；像=反射光线反向延长线会聚的<strong>虚像</strong>；反射光线的反向延长线必过像点<br>
+        <strong>成像特点（四字诀）</strong> — <strong>等大</strong>（像与物大小相等）、<strong>等距</strong>（到镜距离相等）、<strong>垂直</strong>（连线垂直镜面）、<strong>虚像</strong>（正立、光屏不可承接）；先"像"后"物"<br>
+        <strong>探究实验</strong> — 玻璃板（便于确定像位置/薄板避免双像）、相同蜡烛（比较大小）、等效替代法、垂直放置、较暗环境、多次实验找普遍规律<br>
+        <strong>作图规范</strong> — 实际光线<strong>实线+箭头</strong>；法线、反向延长线、虚像<strong>虚线</strong>；对称作图<strong>必画垂足</strong>；只能作光源的对称<br>
+        <strong>镜中时间</strong> — 水平镜子上下翻转；竖直镜子左右翻转<br>
+        <strong>应用</strong> — 潜望镜（两次反射改变光路）、后视镜、增大空间感；负面：玻璃幕墙反光<br>
+        <strong><em>💬 金句："一切光学问题都是作图问题。"</em></strong><br>
+        <strong><em>💬 金句："平面镜成虚像，等大等距垂直方向；虚像虚线画，实线箭头不能忘。"</em></strong>
+      </p>
+    </div>
+</div><div id="tab-quiz" class="tab-content">
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 36</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 平面镜成像互动学习 | 天元教育 · 初二博学班</div>
+
+<script>
+const questions = [
+// === 模块一：成像原理 ===
+{q:'平面镜成像的原理是',opts:['A. 光的直线传播','B. 光的反射','C. 光的折射','D. 光的色散'],ans:1,exp:'平面镜成像原理是<strong>光的反射</strong>，像=反射光线的<strong>反向延长线</strong>会聚而成。'},
+{q:'平面镜所成的像是',opts:['A. 正立的实像','B. 倒立的虚像','C. 正立的虚像','D. 倒立的实像'],ans:2,exp:'平面镜成<strong>正立、等大的虚像</strong>，光屏无法承接。'},
+{q:'有关平面镜成像，下列说法正确的是',opts:['A. 从镜中看到像，一定有光线从像上发出射入人眼','B. 平面镜中有像，一定有光线透过平面镜','C. 镜中的像是反射光线反向延长线会聚成的虚像','D. 平面镜成虚像是人的幻觉，实际没有光线进入人眼'],ans:2,exp:'像是由<strong>反射光线的反向延长线会聚</strong>成的虚像（C✓）。光线从物体发出经镜面反射入眼，并非从像发出（A×）、不透过镜（B×）、确实有反射光线入眼（D×）。'},
+{q:'人眼能看到平面镜中物体的像，是因为',opts:['A. 物体发出的光直接进入人眼','B. 物体反射的光经平面镜反射后进入人眼','C. 像发出的光进入人眼','D. 平面镜发出的光进入人眼'],ans:1,exp:'物体反射的光线射到平面镜上，经<strong>平面镜反射</strong>后进入人眼，人眼逆着反射光线看去，觉得光从像的位置射来。'},
+// === 模块二：探究实验 ===
+{q:'探究平面镜成像特点时，应选用',opts:['A. 厚玻璃板','B. 透明薄平板玻璃','C. 不透光的平面镜','D. 普通白纸'],ans:1,exp:'选用<strong>透明薄平板玻璃</strong>：透明可看到后方以便确定像的位置；薄可避免两面反射成两个像。'},
+{q:'实验选用两根完全相同的蜡烛，是为了',opts:['A. 使实验更美观','B. 比较像与物的大小','C. 使蜡烛更容易点燃','D. 使像更清晰'],ans:1,exp:'两根<strong>完全相同</strong>的蜡烛：用B替代A的像，若B与像完全重合，说明<strong>像与物大小相等</strong>（等效替代法）。'},
+{q:'实验中玻璃板应与桌面',opts:['A. 平行放置','B. 垂直放置','C. 倾斜30°','D. 随意放置'],ans:1,exp:'玻璃板必须<strong>垂直</strong>桌面，否则像偏离桌面，无论如何移动B都无法与A的像完全重合。'},
+{q:'移去蜡烛B，在像的位置放一光屏，光屏上',opts:['A. 能呈现蜡烛的像','B. 不能呈现蜡烛的像','C. 能呈现倒立的像','D. 能呈现放大的像'],ans:1,exp:'光屏<strong>无法承接</strong>像，说明平面镜成的是<strong>虚像</strong>（虚像不是实际光线会聚）。'},
+{q:'玻璃板后有时看到两个像，原因是',opts:['A. 蜡烛有两根','B. 玻璃板前后两个面各反射成一个像','C. 眼睛有重影','D. 光发生了折射'],ans:1,exp:'玻璃板的<strong>前后两个面</strong>都会反射光，各成一个像；板越厚两像间距越大。'},
+{q:'做实验时蜡烛B与A的像完全重合，说明',opts:['A. 像与物到镜面距离相等','B. 像与物大小相等','C. 像与物连线垂直镜面','D. 成的是虚像'],ans:1,exp:'B与A的像完全重合 → B的位置即像的位置，且B与A大小相同 → 说明<strong>像与物大小相等</strong>。'},
+{q:'用跳棋子代替蜡烛实验时像较暗，应',opts:['A. 用手电筒照亮玻璃板后面的棋子','B. 用手电筒照亮玻璃板前面的棋子','C. 把环境灯光调亮','D. 换用更暗的棋子'],ans:1,exp:'像的亮暗取决于<strong>物体</strong>的亮度（反射的光多少），应<strong>照亮玻璃板前面的棋子</strong>（物体本身）。'},
+{q:'实验中多次改变蜡烛A的位置进行实验，目的是',opts:['A. 使实验更麻烦','B. 减小误差，找到更普遍的规律','C. 使像更清晰','D. 使玻璃板更稳定'],ans:1,exp:'多次实验：避免实验结论的<strong>偶然性</strong>，使结论具有普遍性。'},
+// === 模块三：成像特点 ===
+{q:'平面镜成像特点中"等大"是指',opts:['A. 像和镜子一样大','B. 像与物大小相等','C. 像比物小','D. 像比物大'],ans:1,exp:'<strong>等大</strong>：像与物大小<strong>相等</strong>，与物距镜面远近无关。'},
+{q:'像与物到平面镜的距离',opts:['A. 像距大','B. 物距大','C. 相等','D. 无法确定'],ans:2,exp:'<strong>等距</strong>：像与物到平面镜的距离<strong>相等</strong>。'},
+{q:'像与物的连线与镜面的关系是',opts:['A. 平行','B. 垂直','C. 成45°','D. 成30°'],ans:1,exp:'<strong>垂直</strong>：像与物的连线<strong>垂直于镜面</strong>，且被镜面平分。'},
+{q:'人站在平面镜前远离镜子时，镜中的像',opts:['A. 变小','B. 变大','C. 大小不变','D. 先变大后变小'],ans:2,exp:'平面镜成像<strong>等大</strong>，像的大小<strong>始终等于物的大小</strong>，远离时视觉上变小是视角问题，像本身不变。'},
+{q:'描述平面镜成像时，正确的说法是',opts:['A. 物与像的大小相等','B. 像与物的大小相等','C. 物与像到镜面距离相等','D. 物与像关于平面镜不对称'],ans:1,exp:'⭐ 一定要<strong>先"像"后"物"</strong>：像是结果、物是原因，只能说"像与物大小相等"等。'},
+{q:'夜晚桥灯亮起，桥下一彩灯距水面10m，则该彩灯的"倒影"距水面',opts:['A. 5m','B. 10m','C. 20m','D. 与水深有关'],ans:1,exp:'水面相当于平面镜，"倒影"距水面=彩灯距水面=<strong>10m</strong>。与河水深度<strong>无关</strong>（水深是干扰信息）。'},
+{q:'桥下水深3m，彩灯距水面10m，若水面上升0.25m，则彩灯的"倒影"与彩灯间的距离',opts:['A. 增大0.5m','B. 减小0.5m','C. 减小0.25m','D. 不变'],ans:1,exp:'水面上升0.25m → 彩灯到水面距离减小0.25m，像到水面也减小0.25m，两者间距共<strong>减小0.5m</strong>；像的大小不变。'},
+{q:'小华靠近玻璃窗观察吊灯的像，她与像之间的距离',opts:['A. 变大','B. 变小','C. 不变','D. 先大后小'],ans:1,exp:'人靠近玻璃窗=物到镜面距离减小 → 像到镜面距离也减小 → 人与像距离<strong>变小</strong>。'},
+{q:'向右推动玻璃窗（吊灯不动），吊灯像的位置',opts:['A. 向右移动','B. 向左移动','C. 不变','D. 消失'],ans:2,exp:'像的位置由<strong>物体</strong>决定（物体不动，像不动），玻璃板平移不影响像的位置。'},
+{q:'白鹭在浅水觅食，水中形成两个"影子"，下列说法正确的是',opts:['A. "影子"甲是光的反射形成的','B. "影子"乙是光的直线传播形成的','C. 白鹭飞起时两个"影子"大小都不变','D. "影子"甲不是像，"影子"乙是虚像'],ans:3,exp:'甲是光沿直线传播被白鹭挡住形成的<strong>影子</strong>（不是像）；乙是水面<strong>反射</strong>成的虚像。飞起时影子大小会变（C×）。'},
+// === 模块四：作图 ===
+{q:'平面镜作图中，实际光线应画成',opts:['A. 虚线','B. 实线','C. 波浪线','D. 双线'],ans:1,exp:'实际光线画<strong>实线</strong>并标箭头；法线、反向延长线、虚像画<strong>虚线</strong>。'},
+{q:'下列应画虚线的是',opts:['A. 入射光线','B. 反射光线','C. 法线和虚像','D. 平面镜'],ans:2,exp:'<strong>法线、反射光线的反向延长线、虚像</strong>都是辅助/虚拟元素，画<strong>虚线</strong>。'},
+{q:'关于作图箭头，下列说法正确的是',opts:['A. 所有线都要标箭头','B. 实际光线标箭头，虚线不标','C. 虚线也要标箭头','D. 都不需要标箭头'],ans:1,exp:'<strong>实线（实际光线）标箭头</strong>表示传播方向；<strong>虚线（辅助线）不标箭头</strong>。'},
+{q:'根据两条反射光线作出光源S的位置，应',opts:['A. 连接两条反射光线的入射点','B. 作两条反射光线反向延长线，其交点即S的像','C. 延长反射光线到镜后','D. 直接连接反射光线端点'],ans:1,exp:'两条反射光线的<strong>反向延长线</strong>交于一点，即为<strong>像点S′</strong>；像与物关于镜面对称，再作对称得到光源S。'},
+{q:'利用对称性作物体在平面镜中的像，正确步骤是',opts:['A. 直接平移物体','B. 作各点到镜面的垂线并等距延长，标垂足，连接各像点','C. 将物体旋转90°','D. 将物体放大'],ans:1,exp:'特点作图：<strong>作垂线 → 取等距 → 标垂足</strong>，得到各顶点对称点，连接即像（虚线）。'},
+{q:'下列镜中时间判断正确的是（竖直平面镜）',opts:['A. 镜中12:05对应实际05:21','B. 镜中12:05对应实际12:05','C. 镜中12:05对应实际21:50','D. 镜中12:05对应实际15:02'],ans:1,exp:'<strong>竖直镜子：左右翻转</strong>。12:05左右翻转后读数<strong>05:21</strong>（把纸翻过来从背面看）。'},
+// === 模块五：应用 ===
+{q:'潜望镜利用的原理是',opts:['A. 光的直线传播','B. 平面镜改变光路（两次反射）','C. 光的折射','D. 光的色散'],ans:1,exp:'潜望镜用<strong>两面平面镜</strong>各反射一次，改变光路，使人从下方看到正前方的物体。'},
+{q:'下列属于平面镜成像正面应用的是',opts:['A. 玻璃幕墙','B. 牙医用小镜子观察牙齿背面','C. 夜间车内开灯','D. 强光手电'],ans:1,exp:'牙医<strong>利用平面镜反射</strong>观察牙齿背面是正面应用；玻璃幕墙反光、夜间车内开灯都是负面影响。'},
+{q:'下列属于防止平面镜成像的是',opts:['A. 舞蹈演员对镜矫正姿势','B. 检查视力用平面镜看视力表','C. 夜间行驶时关闭车内灯光','D. 商店用镜子增大空间感'],ans:2,exp:'夜间关闭车内灯：避免车内物体在挡风玻璃上<strong>成像</strong>干扰视线，属于<strong>防止</strong>平面镜成像。'},
+{q:'下列应用给人们生活带来负面影响的是',opts:['A. 平面镜矫正姿势','B. 平面镜观察牙齿背面','C. 平面镜打造视觉美','D. 玻璃幕墙造成反光'],ans:3,exp:'<strong>玻璃幕墙反光</strong>会造成光污染、影响交通视线，是负面影响。'},
+{q:'汽车抬头显示器通过前挡风玻璃成的像是',opts:['A. 实像','B. 虚像','C. 放大实像','D. 缩小实像'],ans:1,exp:'挡风玻璃相当于平面镜，显示器经其成的像是<strong>虚像</strong>，投射在前方。'},
+{q:'古人"以铜为镜"，人远离铜镜时，镜中的像',opts:['A. 变小','B. 变大','C. 大小不变','D. 先变小后变大'],ans:2,exp:'平面镜成像<strong>等大</strong>：人远离铜镜，像的大小<strong>不变</strong>（"像变小"的说法不正确）。'},
+{q:'检查视力时，视力表挂在东墙，人背对视力表看西墙镜子，视力表距镜3m、人距镜2m，则视力表在镜中的像与人相距',opts:['A. 3m','B. 5m','C. 6m','D. 2m'],ans:1,exp:'像距镜=<strong>物距镜=3m</strong>；人距镜2m → 像与人相距 3+2=<strong>5m</strong>。'},
+{q:'铅笔倒向平面镜，镜中的像',opts:['A. 比铅笔长','B. 也倒向平面镜','C. 保持竖直','D. 先倒像后倒'],ans:1,exp:'像与物<strong>关于镜面对称</strong>：铅笔倒向镜面，像<strong>同步</strong>倒向镜面（等大、同步运动）。'},
+];
+
+
+const flashcards = [
+{front:'平面镜成像原理',back:'<strong>光的反射</strong><br>像=反射光线的<strong>反向延长线</strong>会聚而成<br>反射光线的反向延长线<strong>必过像点</strong>'},
+{front:'成像特点四字诀',back:'<strong>等大</strong>：像与物大小相等<br><strong>等距</strong>：到镜面距离相等<br><strong>垂直</strong>：连线垂直镜面<br><strong>虚像</strong>：正立、光屏不可承接'},
+{front:'先"像"后"物"',back:'只能写"像与物大小相等"<br>⭐ <strong>像是结果、物是原因</strong><br>顺序不能换'},
+{front:'像的大小',back:'像与物<strong>始终等大</strong><br>远离镜子像<strong>不变小</strong>（视觉变小是视角问题）'},
+{front:'像的位置',back:'由<strong>物体</strong>决定<br>物体不动 → 像的位置<strong>不变</strong><br>平移玻璃板不影响像的位置'},
+{front:'实验器材',back:'<strong>透明薄平板玻璃</strong><br>透明：便于确定像的位置<br>薄：避免两面反射成两个像'},
+{front:'等效替代法',back:'用<strong>完全相同</strong>的蜡烛B<br>B与A的像完全重合<br>B的位置=像的位置，B的大小=像的大小'},
+{front:'玻璃板垂直放置',back:'玻璃板须<strong>垂直桌面</strong><br>否则像偏离桌面<br>B无法与像完全重合'},
+{front:'虚像',back:'<strong>光屏无法承接</strong><br>不是实际光线会聚<br>平面镜成虚像（正立）'},
+{front:'玻璃板两个像',back:'<strong>前后两个面</strong>各反射成一个像<br>板<strong>越厚</strong>，两像间距<strong>越大</strong><br>→ 选薄玻璃板'},
+{front:'实验环境',back:'较暗处效果更好（原理是反射）<br>跳棋子像暗 → <strong>照亮前面的棋子</strong><br>多次实验：找普遍规律'},
+{front:'原理作图',back:'根据<strong>反射定律</strong>作光路图<br>两条反射光线反向延长线交点=像点<br>再作对称得光源'},
+{front:'特点作图',back:'像与物关于镜面<strong>对称</strong><br><strong>垂线 + 等距 + 标垂足</strong><br>对应点标记 A-A′、B-B′'},
+{front:'作图规范',back:'实际光线<strong>实线+箭头</strong><br>法线/反向延长线/虚像<strong>虚线</strong><br>虚线<strong>不标箭头</strong>'},
+{front:'只能作光源的对称',back:'补全光路图时<br>⭐ <strong>只能作光源的对称</strong><br>不作入射点的对称'},
+{front:'镜中时间',back:'<strong>水平镜子：上下翻转</strong><br><strong>竖直镜子：左右翻转</strong><br>例：竖直镜中12:05 → 实际05:21'},
+{front:'潜望镜',back:'<strong>两面平面镜</strong>各反射一次<br>光路改变180°<br>从下方看到正前方物体'},
+{front:'平面镜应用',back:'改变光路：潜望镜、后视镜<br>增大空间感：装饰镜<br>负面：玻璃幕墙反光'},
+{front:'防止平面镜成像',back:'夜间行驶<strong>关闭车内灯</strong><br>避免车内物体成像干扰视线<br>检查视力用平面镜是"利用"'},
+{front:'光学金句',back:'"一切光学问题都是作图问题。"<br><br>"平面镜成虚像，等大等距垂直方向；<br>虚像虚线画，实线箭头不能忘。"'},
+];
+
+
+const errors = [
+{title:'远离镜子像变小 ❌',wrong:'人远离平面镜，镜中的像越来越小',right:'平面镜成像<strong>等大</strong>：像与物大小<strong>始终相等</strong>，远离时只是视角变小，像本身不变。'},
+{title:'玻璃板平移像跟着动 ❌',wrong:'玻璃板向右移动，蜡烛的像也向右移动',right:'像的位置由<strong>物体</strong>决定：物体不动，无论玻璃板怎么平移，像的位置<strong>不变</strong>。'},
+{title:'先"物"后"像" ❌',wrong:'物与像的大小相等',right:'只能说<strong>"像与物大小相等"</strong>：像是结果、物是原因，先"像"后"物"，顺序不能换。'},
+{title:'人眼在后侧观察 ❌',wrong:'探究实验时人眼应在玻璃板后侧观察',right:'人眼应在玻璃板<strong>前侧</strong>（点燃蜡烛A的一侧）观察，透过玻璃板看像并与B比较。'},
+{title:'虚像画实线 ❌',wrong:'作图中虚像用实线画出',right:'<strong>虚像、法线、反向延长线都画虚线</strong>；只有实际光线才画实线并标箭头。'},
+{title:'倒影距离看水深 ❌',wrong:'桥下水深3m，彩灯"倒影"距水面与水深有关',right:'倒影距水面=<strong>物体到水面距离</strong>（如10m），水深3m是<strong>干扰信息</strong>，与像距无关。'},
+{title:'镜中时间翻转方向记反 ❌',wrong:'竖直平面镜中时间是上下翻转',right:'<strong>水平镜子：上下翻转</strong>（像倒立）；<strong>竖直镜子：左右翻转</strong>。读数把纸翻过来从背面看。'},
+{title:'玻璃板越厚越好 ❌',wrong:'玻璃板厚一点更结实，实验更好做',right:'玻璃板<strong>越厚</strong>，前后两个面成的像<strong>间距越大</strong>，难以确定像的位置 → 应选<strong>较薄</strong>玻璃板。'},
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const WRONG_HISTORY_KEY='quiz_physics9_state';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);shuffled=shuffle([...Array(questions.length).keys()]);retryMode=false;}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div><div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const idx=shuffled[curQ];const total=retryMode?wrongIds.length:questions.length;const isLast=(retryMode?shuffled.indexOf(idx):curQ)===total-1;if(isLast){if(quizAns[idx]>=0){document.getElementById('quizArea').innerHTML=showResult();}return;}curQ++;renderQ();}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class="question-card result-card fade-in-up"><div class="big-icon">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class="score">${correct}/${total}</div>
+<div><span class="result-stat"><i class="fas fa-check-circle" style="color:var(--success)"></i> 正确 ${correct} 题</span>
+<span class="result-stat"><i class="fas fa-times-circle" style="color:var(--danger)"></i> 错误 ${total-correct} 题</span></div>
+${retryMode?`<div style="margin:.5rem 0"><span class="result-stat"><i class="fas fa-history"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)"><p style="font-weight:600;margin-bottom:.5rem;font-size:.85rem">📝 需要复习：</p>${wl.map(w=>`<div style="padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)">✗ ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+<div style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+<button class="btn btn-primary" onclick="initQ();renderQ();"><i class="fas fa-redo"></i> 重新测验</button>
+${wl.length?`<button class="btn btn-warning" onclick="initRetryMode()" style="background:#e67e22;color:#fff"><i class="fas fa-bug"></i> 错题重练 (${wl.length}题)</button>`:''}
+<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button>
+${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()"><i class="fas fa-times"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'物理',chapter:'平面镜成像',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'平面镜成像,光的反射,成像特点,作图,镜中时间,物理'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'平面镜成像',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'平面镜成像,光的反射,成像特点,作图,镜中时间,物理'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('phy_lesson7_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('phy_lesson7_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
