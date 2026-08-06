@@ -55,6 +55,16 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
 .btn-sm{padding:.18rem .4rem;font-size:.7rem}
 @media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
 </style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
 .toast-success{background:#48bb78}
 .toast-warning{background:#ed8936}
@@ -88,7 +98,13 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
       <div class="k-item"><h4>第六单元 中华民族的抗日战争</h4><p>九一八事变（1931，局部抗战开始）；西安事变（1936）；七七事变（1937.7.7，全面抗战开始）；南京大屠杀；百团大战；中共七大；抗战胜利（1945）。</p></div>
       <div class="k-item"><h4>第七单元 人民解放战争</h4><p>重庆谈判（1945）；转战陕北；三大战役（辽沈/淮海/平津，1948-49）；渡江战役（1949.4，南京解放）。</p></div>
       <div class="k-item"><h4>第八单元 近代经济、社会生活与教育文化</h4><p>民族工业（张謇“实业救国”，大生纱厂）；新式交通（火车轮船）；科举废除（1905）；《申报》/商务印书馆。</p></div>
-  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
   <div id="tab-flashcard" class="tab-content">
     <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
     <div id="flashcardArea"></div>
@@ -116,12 +132,22 @@ const questions=[{"q": "中国近代史的开端是", "opts": ["A. 鸦片战争"
 const flashcards=[{"q": "鸦片战争", "a": "1840-1842，英国发动；《南京条约》割香港岛、赔2100万银元、五口通商；中国近代史开端。"}, {"q": "洋务运动", "a": "19世纪60-90年代，自强/求富；创办江南制造总局、轮船招商局；近代化开端。"}, {"q": "甲午中日战争", "a": "1894-1895，《马关条约》割台湾、赔2亿两、允许设厂；刺激列强瓜分中国。"}, {"q": "戊戌变法", "a": "1898年百日维新；康有为梁启超；变法图强，最终失败。"}, {"q": "《辛丑条约》", "a": "1901年八国联军侵华后签订；赔4.5亿两；中国完全沦为半殖民地半封建社会。"}, {"q": "辛亥革命", "a": "1911武昌起义→1912中华民国建立；结束君主专制，民主共和观念深入人心。"}, {"q": "五四运动", "a": "1919年；学生发起→工人支持；彻底反帝反封建；新民主主义革命开端。"}, {"q": "中共成立", "a": "1921年7月中共一大；开天辟地，中国革命面貌焕然一新。"}, {"q": "长征", "a": "1934-1936；遵义会议转折；会宁会师结束；革命转危为安。"}, {"q": "抗日战争", "a": "1931九一八→1937七七事变全面抗战→1945年8月15日日本宣布投降；中共七大确立毛泽东思想。"}, {"q": "三大战役", "a": "辽沈、淮海、平津（1948-49）基本消灭国民党军队主力。"}, {"q": "近代民族工业", "a": "张謇实业救国；轻工业为主（纺织面粉）；受帝国主义和封建主义双重压迫。"}]
 const errors=[{"title": "条约内容张冠李戴", "wrong": "《南京条约》《马关条约》《辛丑条约》内容混淆。", "right": "南京：割香港岛+五口通商；马关：割台湾+允许设厂；辛丑：赔4.5亿两+完全沦为半殖民地。按时间线记。"}, {"title": "近代史开端vs新民主主义开端", "wrong": "都认为是鸦片战争。", "right": "鸦片战争=中国近代史开端（1840）；五四运动=新民主主义革命开端（1919）。"}, {"title": "辛亥革命“推翻封建制度”", "wrong": "认为辛亥革命推翻的是封建制度。", "right": "辛亥革命推翻的是清王朝和两千多年君主专制制度，不是封建制度整体；未完成反帝反封建任务。"}, {"title": "九一八vs七七事变混淆", "wrong": "七七事变是局部抗战开始。", "right": "九一八（1931）=局部抗战开始；七七（1937）=全民族抗战开始。"}, {"title": "建军节与南昌起义", "wrong": "忘记南昌起义在8月1日。", "right": "1927年8月1日南昌起义打响第一枪，8月1日定为建军节。"}, {"title": "中共一大vs遵义会议", "wrong": "把建党与转折点会议混为一谈。", "right": "中共一大（1921）=建党；遵义会议（1935）=长征中生死攸关的转折点。"}]
 let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
-function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_历史_8grade';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
 function renderQ(){if(curQ>=questions.length){showResult();return;}
 var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
-prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
 q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
-function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
 var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
 if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
 if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');

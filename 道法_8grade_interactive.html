@@ -55,6 +55,16 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
 .btn-sm{padding:.18rem .4rem;font-size:.7rem}
 @media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
 </style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
 .toast-success{background:#48bb78}
 .toast-warning{background:#ed8936}
@@ -88,7 +98,13 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
       <div class="k-item"><h4>核心知识点·规则与自由</h4><p>自由与规则不可分（自由受规则约束）；规则维护秩序；违反规则要受处罚。</p></div>
       <div class="k-item"><h4>核心知识点·诚信</h4><p>诚信是中华民族传统美德；诚信是一个人安身立命之本；诚信促进社会文明、国家兴旺。</p></div>
       <div class="k-item"><h4>核心知识点·国家安全</h4><p>国家安全是国家生存与发展的重要保障；维护国家安全是每个公民的义务；12339举报电话。</p></div>
-  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
   <div id="tab-flashcard" class="tab-content">
     <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
     <div id="flashcardArea"></div>
@@ -116,12 +132,22 @@ const questions=[{"q": "网络丰富日常生活，下列属于网络正面影�
 const flashcards=[{"q": "网络的利与弊", "a": "利：信息传递快、学习便利；弊：沉迷、谣言、隐私泄露。理性使用。"}, {"q": "社会秩序与规则", "a": "规则（道德/纪律/法律）保障秩序；秩序（交通/公共/社会管理）是安居乐业的保障。"}, {"q": "尊重他人", "a": "换位思考、平等待人、宽容理解。“己所不欲勿施于人”。"}, {"q": "诚信", "a": "安身立命之本；待人诚信、信守承诺；诚信促进社会文明国家兴旺。"}, {"q": "责任的来源", "a": "承诺、职业要求、道德规范、法律规定、公民身份。"}, {"q": "角色与责任", "a": "子女-孝敬父母；学生-认真学习；公民-遵纪守法；社会成员-奉献社会。"}, {"q": "关爱他人", "a": "心怀善意、尽己所能、讲究策略、注意方式。"}, {"q": "服务社会", "a": "参加公益、志愿服务；提升自我价值，促进全面发展。"}, {"q": "国家利益至上", "a": "国家利益是整体利益，个人利益的保障；国家利益与个人利益根本一致。"}, {"q": "总体国家安全观", "a": "政治/军事/国土/经济/文化/社会/科技/网络/生态等全方位安全。"}, {"q": "维护国家安全", "a": "公民义务；12339举报；保守国家秘密；支持国防建设。"}, {"q": "网络正能量", "a": "传播先进文化；理性发声；辨析信息；保护个人信息。"}]
 const errors=[{"title": "自由与规则对立", "wrong": "认为有规则就没有自由。", "right": "自由与规则不可分：规则划定自由边界、保障自由。遵守规则才能享有自由。"}, {"title": "责任是强加的", "wrong": "认为责任都是被迫承担。", "right": "责任来自多种来源（承诺/职业/道德/法律），主动承担责任是成长的标志。"}, {"title": "关爱=施舍", "wrong": "关爱他人是高高在上的给予。", "right": "关爱他人要心怀善意、平等待人、讲究策略，维护受助者尊严。"}, {"title": "国家利益vs个人利益对立", "wrong": "认为维护国家利益必须牺牲个人利益。", "right": "国家利益与个人利益根本一致，国家利益是个人利益的保障。"}, {"title": "国家安全=军事安全", "wrong": "把国家安全等同于军事安全。", "right": "总体国家安全观涵盖政治、经济、文化、网络、生态等全方位安全。"}, {"title": "网络自由=随意发言", "wrong": "以为网上可以随意发言不负责任。", "right": "网络不是法外之地，网上发言同样要遵守法律、尊重他人、传播正能量。"}]
 let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
-function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_道法_8grade';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
 function renderQ(){if(curQ>=questions.length){showResult();return;}
 var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
-prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
 q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
-function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
 var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
 if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
 if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');

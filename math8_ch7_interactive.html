@@ -55,6 +55,16 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
 .btn-sm{padding:.18rem .4rem;font-size:.7rem}
 @media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
 </style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
 .toast-success{background:#48bb78}
 .toast-warning{background:#ed8936}
@@ -88,7 +98,13 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
       <div class="k-item"><h4>三角形外角</h4><p>三角形的一个外角等于与它不相邻的两个内角之和。</p></div>
       <div class="k-item"><h4>证明的格式</h4><p>∵（因为）… ∴（所以）…；每一步都要有依据（定义/公理/定理）。</p></div>
       <div class="k-item"><h4>常见证明</h4><p>角平分线、垂直、平行组合证明；辅助线（平行线、延长线）。</p></div>
-  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
   <div id="tab-flashcard" class="tab-content">
     <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
     <div id="flashcardArea"></div>
@@ -116,12 +132,22 @@ const questions=[{"q": "命题\"同位角相等，两直线平行\"中的结论�
 const flashcards=[{"q": "命题", "a": "判断语句；题设+结论；\"如果…那么…\""}, {"q": "公理与定理", "a": "公理不需证明；定理经证明；定理依据公理"}, {"q": "平行线判定", "a": "同位角相等/内错角相等/同旁内角互补→平行"}, {"q": "平行线性质", "a": "平行→同位角相等/内错角相等/同旁内角互补"}, {"q": "内角和定理", "a": "三角形内角和=180°"}, {"q": "外角定理", "a": "外角=不相邻两内角之和"}, {"q": "对顶角", "a": "对顶角相等"}, {"q": "等量代换", "a": "a=b，b=c→a=c"}, {"q": "等角性质", "a": "等角的余角相等；等角的补角相等"}, {"q": "平行传递", "a": "a∥b且b∥c→a∥c"}, {"q": "证明格式", "a": "∵条件 ∴结论；步步有依据"}, {"q": "辅助线", "a": "构造平行线/延长线；把分散角集中"}]
 const errors=[{"title": "判定vs性质混淆", "wrong": "用\"两直线平行\"推出\"同位角相等\"来判定平行。", "right": "判定：由角推平行（同位角相等→平行）；性质：由平行推角（平行→同位角相等）。方向相反！"}, {"title": "同旁内角", "wrong": "以为同旁内角相等。", "right": "平行时同旁内角互补（180°）；同旁内角相等不能判定平行。"}, {"title": "外角理解错", "wrong": "外角等于相邻内角。", "right": "外角=与它不相邻的两个内角之和（不是相邻的那个）。"}, {"title": "命题真假", "wrong": "把\"相等的角是对顶角\"当真的。", "right": "对顶角一定相等，但相等的角不一定是对顶角（如等腰三角形底角）。"}, {"title": "证明无依据", "wrong": "跳步或凭感觉写结论。", "right": "每一步必须写依据（已知/定义/公理/定理），用∵∴表达。"}, {"title": "内角和用错", "wrong": "四边形内角和也算180°。", "right": "三角形内角和180°；n边形内角和=(n-2)×180°。"}]
 let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
-function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_math8_ch7';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
 function renderQ(){if(curQ>=questions.length){showResult();return;}
 var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
-prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
 q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
-function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
 var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
 if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
 if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');

@@ -55,6 +55,16 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
 .btn-sm{padding:.18rem .4rem;font-size:.7rem}
 @media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
 </style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
 .toast-success{background:#48bb78}
 .toast-warning{background:#ed8936}
@@ -88,7 +98,13 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
       <div class="k-item"><h4>勾股定理应用·面积</h4><p>求高、求距离（最短路径）、折叠问题、实际应用（如旗杆、梯子）。常用：等面积法求斜边上的高。</p></div>
       <div class="k-item"><h4>赵爽弦图</h4><p>四个全等直角三角形拼成正方形。外弦图：(a+b)²=c²+4×½ab；内弦图：(a-b)²+4×½ab=c²。</p></div>
       <div class="k-item"><h4>常见题型·多解</h4><p>高在三角形内/外两种情况；腰/底不确定时的分类讨论。答：√41或3；8或10等。</p></div>
-  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
   <div id="tab-flashcard" class="tab-content">
     <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
     <div id="flashcardArea"></div>
@@ -116,12 +132,22 @@ const questions=[{"q": "勾股定理的数学表达式是", "opts": ["A. a+b=c",
 const flashcards=[{"q": "勾股定理", "a": "a²+b²=c²（直角三角形两直角边平方和=斜边平方）"}, {"q": "勾股数", "a": "3,4,5；5,12,13；7,24,25；8,15,17；9,40,41（都是正整数）"}, {"q": "逆定理", "a": "三边满足a²+b²=c²（c最长）→直角三角形"}, {"q": "赵爽弦图", "a": "外弦图：(a+b)²=c²+4×½ab → a²+b²=c²"}, {"q": "求斜边上的高", "a": "等面积法：h = ab/c（两直角边积÷斜边）"}, {"q": "分类讨论", "a": "两边长不确定时：第三边可能是直角边也可能是斜边→两解"}, {"q": "等腰直角", "a": "直角边1:1，斜边1:√2；30°-60°-90°：1:√3:2"}, {"q": "最短路径", "a": "展开成平面→勾股定理求最短路程（蚂蚁爬行问题）"}, {"q": "折叠问题", "a": "折叠后利用勾股定理列方程求边长"}, {"q": "勾股定理用处", "a": "求边长、判定直角、求高、求距离、解决实际问题"}, {"q": "多边形面积", "a": "不规则图形→分割成直角三角形→用勾股定理求边长→求面积"}, {"q": "旋转弦图", "a": "四个直角三角形拼正方形→面积法证明（出入相补）"}]
 const errors=[{"title": "任意三角形用勾股定理", "wrong": "把a²+b²=c²用于所有三角形。", "right": "勾股定理只适用于直角三角形，且c必须是斜边。"}, {"title": "求第三边漏分类", "wrong": "两边长4、5，直接写第三边=√41。", "right": "第三边可能是直角边（3）也可能是斜边（√41），需分类讨论。"}, {"title": "勾股数要求", "wrong": "把0.6,0.8,1也算勾股数。", "right": "勾股数必须是正整数。小数或根式只满足a²+b²=c²，称广义勾股数。"}, {"title": "斜边高公式记错", "wrong": "斜边上的高=两直角边之和÷斜边。", "right": "等面积法：h=ab/c（两直角边乘积÷斜边），如3,4,5的h=12/5=2.4。"}, {"title": "高在形内外", "wrong": "三角形高AD=12时只算一种情况。", "right": "钝角三角形高可能在形外，BC有14或4两种情况。"}, {"title": "逆定理方向", "wrong": "由直角三角形推出a²+b²=c²和由a²+b²=c²推出直角三角形混用。", "right": "正向：直角→a²+b²=c²（勾股定理）；逆向：a²+b²=c²→直角（逆定理）。"}]
 let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
-function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_math8_ch1';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
 function renderQ(){if(curQ>=questions.length){showResult();return;}
 var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
-prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
 q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
-function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
 var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
 if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
 if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
