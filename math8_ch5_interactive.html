@@ -55,6 +55,16 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
 .btn-sm{padding:.18rem .4rem;font-size:.7rem}
 @media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
 </style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
 .toast-success{background:#48bb78}
 .toast-warning{background:#ed8936}
@@ -88,7 +98,13 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
       <div class="k-item"><h4>应用题</h4><p>审→设→列→解→答。常见：行程、工程、利润、数字问题、鸡兔同笼。</p></div>
       <div class="k-item"><h4>与一次函数</h4><p>二元一次方程组的解=两直线交点坐标。</p></div>
       <div class="k-item"><h4>解的判断</h4><p>有唯一解（两直线相交）；无解（平行）；无数解（重合）。</p></div>
-  </div></div><div id="tab-quiz" class="tab-content"><div id="quizArea"></div></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
   <div id="tab-flashcard" class="tab-content">
     <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
     <div id="flashcardArea"></div>
@@ -116,12 +132,22 @@ const questions=[{"q": "解方程组{2x+y=5, x-y=1}，x的值为", "opts": ["A. 
 const flashcards=[{"q": "二元一次方程", "a": "两个未知数、次数都是1：ax+by=c"}, {"q": "方程组解", "a": "同时满足两个方程的x、y值"}, {"q": "代入消元", "a": "变形→代入→解一元一次→回代"}, {"q": "加减消元", "a": "系数相同相减、相反相加，消去一个未知数"}, {"q": "解方程组步骤", "a": "变形→消元→解→回代→检验"}, {"q": "应用题五步", "a": "审题→设未知数→列方程→解方程→答"}, {"q": "行程问题", "a": "相向：甲路程+乙路程=总路程；同向：路程差=初始距离"}, {"q": "利润问题", "a": "售价-进价=利润；利润=进价×利润率"}, {"q": "鸡兔同笼", "a": "头数=鸡+兔；足数=2鸡+4兔"}, {"q": "与一次函数", "a": "方程组的解=两直线交点坐标"}, {"q": "无解情况", "a": "两直线平行（k相同b不同）→无解"}, {"q": "无数解", "a": "两直线重合（k、b都相同）→无数解"}]
 const errors=[{"title": "消元漏变号", "wrong": "代入或加减时符号处理错。", "right": "代入时括号展开注意符号；加减时等式两边整体相加/减。"}, {"title": "只求一个未知数", "wrong": "解出x就结束。", "right": "必须回代求另一个未知数，并检验（代回原方程组）。"}, {"title": "加减乘除错", "wrong": "系数不同时直接相加。", "right": "系数不同先乘适当数使某未知数系数相等或相反，再加减。"}, {"title": "应用题设错", "wrong": "未知数设错或单位混乱。", "right": "设未知数要写清单位；检验结果是否符合实际（如人数不能为负）。"}, {"title": "二元一次判断", "wrong": "把x²+y=5也算二元一次方程。", "right": "含未知数项的次数必须都是1，x²是二次，不是二元一次。"}, {"title": "解与交点混淆", "wrong": "忘记方程组解与直线交点关系。", "right": "二元一次方程组的解=两直线交点坐标：唯一解=相交，无解=平行。"}]
 let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
-function initQ(){curQ=0;score=0;answered=0;shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});}
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_math8_ch5';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
 function renderQ(){if(curQ>=questions.length){showResult();return;}
 var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
-prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+q.q+'</div>'+
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
 q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
-function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
 var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
 if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
 if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
