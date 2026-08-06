@@ -1,0 +1,451 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔦 光的折射 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style>
+.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 光的折射</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-lightbulb"></i> 光的折射 · 互动学习</h1>
+    <p>初二博学班 · 4 模块 · 40 题 · 20 卡牌 | 天元教育</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 40道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第十讲 · 光的折射</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-lightbulb" style="color:#f39c12"></i> 光的折射</h3><ul>
+        <li>定义：光从一种介质<strong class="hl">斜射</strong>入另一种介质时，传播方向发生<strong class="hl">偏折</strong></li>
+        <li>折射原因：光在不同介质中<strong class="hl">传播速度不同</strong>（光速改变）</li>
+        <li>垂直入射 → <strong class="hl">传播方向不变</strong>（不偏折）</li>
+        <li>⭐ 折射现象中光路<strong class="hl">可逆</strong></li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-balance-scale" style="color:#667eea"></i> 折射规律（四句诀）</h3><ul>
+        <li><strong class="hl">三线共面</strong>：折射光线、入射光线、法线在同一平面内</li>
+        <li><strong class="hl">两线分居</strong>：折射光线与入射光线分居法线两侧</li>
+        <li><strong class="hl">空气角大</strong>：空气中光线与法线的夹角大（在空气里的角>在介质里的角）</li>
+        <li><strong class="hl">折随入变</strong>：入射角增大，折射角也增大</li>
+        <li>垂直入射：折射角=入射角=0°，方向不变</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-eye" style="color:#e74c3c"></i> 折射现象解释</h3><ul>
+        <li><strong class="hl">潭清疑水浅</strong>：池底看起来比实际<strong class="hl">浅</strong>（像变高）</li>
+        <li>水中筷子看起来<strong class="hl">向上弯折</strong></li>
+        <li>叉鱼：瞄准<strong class="hl">鱼的下方</strong>（看到的鱼偏浅）</li>
+        <li>激光笔叉鱼：<strong class="hl">直接对准看到的鱼</strong>（光路可逆）</li>
+        <li>海市蜃楼、提前看到日出：大气折射</li>
+        <li>⚠️ 折射所成像都是<strong class="hl">虚像</strong></li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-exclamation" style="color:#2ecc71"></i> 折射 vs 反射 vs 直线传播</h3><ul>
+        <li><strong class="hl">折射</strong>：筷子折断、池水变浅、海市蜃楼、水中鱼变浅</li>
+        <li><strong class="hl">反射</strong>：倒影、平面镜成像、镜花水月、波光粼粼</li>
+        <li><strong class="hl">直线传播</strong>：影子、小孔成像、日食/月食、一叶障目</li>
+        <li>判定：光<strong class="hl">跨介质</strong>=折射；<strong class="hl">同介质被界面弹回</strong>=反射；<strong class="hl">同介质直行遇阻</strong>=直线传播</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-pen-ruler" style="color:#9b59b6"></i> 折射作图规范</h3><ul>
+        <li>实际光线：<strong class="hl">实线+箭头</strong>；法线、反向延长线：<strong class="hl">虚线</strong></li>
+        <li>光从空气→玻璃/水：折射光线<strong class="hl">靠近法线</strong>（偏向法线）</li>
+        <li>光从玻璃/水→空气：折射光线<strong class="hl">远离法线</strong>（偏离法线）</li>
+        <li>玻璃砖：入射光线与出射光线<strong class="hl">平行</strong>（侧移）</li>
+        <li>圆界面法线：<strong class="hl">过圆心</strong>（点与圆心的连线）</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-flask" style="color:#3498db"></i> 光的色散</h3><ul>
+        <li>太阳光经三棱镜分解成<strong class="hl">红橙黄绿蓝靛紫</strong>七色光</li>
+        <li>白光=由各种色光混合而成的<strong class="hl">复合光</strong></li>
+        <li>偏折程度：紫光<strong class="hl">最强</strong>，红光<strong class="hl">最弱</strong></li>
+        <li>彩虹=光的色散；光通过三棱镜偏向<strong class="hl">底部</strong></li>
+        <li>光谱上红光外=红外线（热效应）；紫光外=紫外线（荧光/杀菌）</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-palette" style="color:#e67e22"></i> 三原色与物体颜色</h3><ul>
+        <li>色光三原色：<strong class="hl">红、绿、蓝</strong>（混合成白光）</li>
+        <li>颜料三原色：<strong class="hl">红、黄、蓝</strong>（混合成黑色）</li>
+        <li>不透明物体颜色=它<strong class="hl">反射</strong>的色光（红衣服只反射红光）</li>
+        <li>透明物体颜色=它<strong class="hl">透过</strong>的色光（红玻璃只透过红光）</li>
+        <li>黑物体吸收所有色光；白物体反射所有色光</li>
+        <li>绿光照红衣服 → 衣服显<strong class="hl">黑</strong>（无红光可反射）</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-binoculars" style="color:#16a085"></i> 红外线与紫外线</h3><ul>
+        <li><strong class="hl">红外线</strong>：热效应强 → 遥控器、测温枪、热成像</li>
+        <li><strong class="hl">紫外线</strong>：荧光效应 → 验钞、杀菌消毒</li>
+        <li>红外线在红光外侧；紫外线在紫光外侧（均不可见）</li>
+        <li>过强紫外线伤害皮肤/眼睛 → 防晒</li>
+      </ul></div>
+    </div>
+<div class="teacher-talk">
+      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第十讲</h4>
+      <p>
+        <strong>折射规律四句诀</strong> — <strong>三线共面</strong>、<strong>两线分居</strong>、<strong>空气角大</strong>（空气里的角大）、<strong>折随入变</strong>；垂直入射方向不变，光路可逆<br>
+        <strong>折射现象</strong> — 池水变浅（像变高）、筷子弯折、叉鱼（瞄准鱼下方）、海市蜃楼、提前看到日出；看到的都是<strong>虚像</strong><br>
+        <strong>三类光现象判定</strong> — 跨介质=折射（筷子折、池水浅、海市蜃楼）；同介质弹回=反射（倒影、镜花水月）；同介质直行=直线传播（影子、小孔、日食）<br>
+        <strong>作图规范</strong> — 空气→介质：折射光线<strong>靠近法线</strong>；介质→空气：<strong>远离法线</strong>；法线虚线、光线实线带箭头；玻璃砖出射光线与入射光线平行<br>
+        <strong>色散</strong> — 白光=复合光；三棱镜分解为红橙黄绿蓝靛紫；紫光偏折最强、红光最弱；彩虹=色散<br>
+        <strong>颜色</strong> — 色光三原色<strong>红绿蓝</strong>、颜料三原色<strong>红黄蓝</strong>；不透明物体=反射的色光，透明物体=透过的色光；黑吸白反<br>
+        <strong>不可见光</strong> — 红外线（热效应：遥控/测温）、紫外线（荧光效应：验钞/杀菌）<br>
+        <strong>老师课后总结（光学第三目标）</strong> — 光的折射：理解<strong>折射规律</strong>并能解释生活中的折射现象，规范完成<strong>折射作图</strong>；光的色散与颜色：掌握白光复合、三原色与物体颜色判定<br>
+      </p>
+    </div>
+</div><div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 40</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 光的折射互动学习 | 天元教育 · 初二博学班</div>
+
+<script>
+const questions = [
+// === 模块一：光的折射 ===
+{q:'光从一种介质斜射入另一种介质时，传播方向发生偏折，这种现象叫做',opts:['A. 光的反射','B. 光的折射','C. 光的直线传播','D. 光的色散'],ans:1,exp:'光从一种介质<strong>斜射</strong>入另一种介质时发生偏折叫折射；反射是光在同种介质中被界面弹回。'},
+{q:'下列现象中属于光的折射的是',opts:['A. 水中倒影','B. 小孔成像','C. 插入水中的筷子看起来弯折了','D. 阳光下的影子'],ans:2,exp:'筷子弯折是光从水到空气发生折射。A 倒影是反射；B、D 是直线传播。'},
+{q:'关于光的折射，下列说法正确的是',opts:['A. 光从空气垂直射入水中，传播方向会发生偏折','B. 折射光线与入射光线可能在法线的同侧','C. 光从空气斜射入水中时，折射角小于入射角','D. 在折射现象中光路不可逆'],ans:2,exp:'光从空气斜射入水，折射光线<strong>靠近法线</strong>，折射角<strong>小于</strong>入射角。A 垂直入射方向不变；B 折射与入射光线分居法线两侧；D 折射光路可逆。'},
+{q:'在折射现象中，入射角增大时，折射角将',opts:['A. 减小','B. 增大','C. 不变','D. 先增大后减小'],ans:1,exp:'折射规律：入射角增大，折射角也随着<strong>增大</strong>（折随入变）。'},
+{q:'一束光从空气斜射向水面，同时发生反射和折射，下列判断正确的是',opts:['A. 反射光线与折射光线都在水中','B. 入射光线、反射光线、折射光线和法线在同一平面内','C. 折射光线与入射光线在法线的同侧','D. 折射角大于入射角'],ans:1,exp:'反射光线和折射光线分居法线两侧，但都与入射光线、法线<strong>在同一平面内</strong>。'},
+{q:'光从水中斜射入空气中时，折射角与入射角的关系是',opts:['A. 折射角小于入射角','B. 折射角大于入射角','C. 折射角等于入射角','D. 无法比较'],ans:1,exp:'光从水（介质）进入空气，折射光线<strong>远离法线</strong>，折射角<strong>大于</strong>入射角（空气角大）。'},
+{q:'下列现象中，属于光的反射现象的是',opts:['A. 海市蜃楼','B. 池水看起来变浅','C. 从平静水面看到岸边树的倒影','D. 日环食'],ans:2,exp:'倒影是水面反射形成的<strong>虚像</strong>。A、B 是折射；D 是直线传播。'},
+{q:'下列现象中，属于光的直线传播现象的是',opts:['A. 海市蜃楼','B. 一叶障目（看不见泰山）','C. 筷子在水中弯折','D. 镜花水月'],ans:1,exp:'一叶障目是光沿直线传播被叶子挡住。A 是折射；C 是折射；D 是反射。'},
+{q:'“潭清疑水浅”中池水看起来变浅，是因为',opts:['A. 光的反射使池底像变浅','B. 光的折射使池底像的位置变高','C. 光的直线传播使池底像变浅','D. 池水本身变浅了'],ans:1,exp:'池底反射的光经水面折射进入人眼，人眼逆着折射光线看，池底的<strong>像变高</strong>（看起来变浅），是<strong>虚像</strong>。'},
+{q:'在水中叉鱼时，渔民应瞄准什么位置才能叉到鱼',opts:['A. 看到的鱼','B. 鱼的下方（看到的鱼稍深处）','C. 鱼的上方','D. 任意位置'],ans:1,exp:'看到的鱼是折射形成的<strong>虚像</strong>，位置偏浅，真实鱼在下方，所以要瞄准<strong>鱼的下方</strong>。'},
+{q:'如果用激光笔照鱼，应该瞄准',opts:['A. 看到的鱼','B. 鱼的下方','C. 鱼的上方','D. 无法确定'],ans:0,exp:'激光也会发生同样的折射且光路<strong>可逆</strong>，直接对准<strong>看到的鱼</strong>就能击中真实鱼。'},
+{q:'小明观察到燃烧的蜡烛周围有一圈光晕，这是由于',opts:['A. 蜡烛火焰直接发光','B. 热空气与周围冷空气密度不同，光发生折射','C. 光的反射','D. 光的直线传播'],ans:1,exp:'热空气上升、冷热空气密度不同，光通过不均匀介质发生<strong>折射</strong>形成光晕。'},
+{q:'关于光的折射现象，下列说法正确的是',opts:['A. 折射光线与入射光线一定在两种介质中','B. 光从水中射入空气中时传播方向一定改变','C. 光从空气射入水中时折射角一定大于入射角','D. 光从空气斜射入水中时，折射光线靠近法线'],ans:3,exp:'光从空气斜射入水，折射光线<strong>靠近法线</strong>。A 折射光线和入射光线在两种介质中（说法笼统，反例是玻璃砖两界面）；B 垂直入射方向不变；C 空气到水折射角<strong>小于</strong>入射角。'},
+{q:'在探究光的折射规律实验中，光屏由E、F两个半圆形组成，竖直放置，先在水中加入适量牛奶的目的是',opts:['A. 使水变成白色','B. 让折射光线更清晰可见','C. 改变光的传播方向','D. 让实验更好看'],ans:1,exp:'水中加牛奶等悬浮颗粒，光线通过时被散射，<strong>折射光路清晰可见</strong>。'},
+{q:'某同学多次改变入射角记录折射角，多次实验的主要目的是',opts:['A. 减小误差','B. 避免偶然性，得出普遍规律','C. 增加实验时间','D. 让数据更复杂'],ans:1,exp:'多次实验（改变入射角）目的是<strong>避免偶然性、寻找普遍规律</strong>；多次测量取平均值才是减小误差。'},
+{q:'一束光以50°入射角从空气射入水中，其折射角',opts:['A. 等于50°','B. 大于50°','C. 小于50°','D. 等于90°'],ans:2,exp:'光从空气进入水，折射角<strong>小于</strong>入射角，所以折射角小于50°。'},
+{q:'一束光斜射到两种介质的分界面上，与界面成40°角，反射光线与折射光线夹角恰好90°，则入射角和折射角分别是',opts:['A. 40°、50°','B. 40°、40°','C. 50°、40°','D. 50°、30°'],ans:2,exp:'入射角=90°-40°=<strong>50°</strong>；反射角=50°；反射光线与折射光线夹角90°且反射光线与界面成40°，则折射光线与界面成50°，折射角=90°-50°=<strong>40°</strong>。'},
+{q:'下列光路图中，能正确表示光从空气斜射入水中传播方向的是',opts:['A. 折射光线远离法线','B. 折射光线靠近法线且与入射光线分居法线两侧','C. 折射光线与入射光线同侧','D. 折射光线沿原方向不变'],ans:1,exp:'空气→水：折射光线<strong>靠近法线</strong>，且与入射光线<strong>分居法线两侧</strong>。'},
+// === 模块二：折射现象解释 ===
+{q:'下列现象中，属于光的折射的是',opts:['A. 从平静水面看到树的倒影','B. 海市蜃楼','C. 日环食','D. 阳光下的影子'],ans:1,exp:'海市蜃楼是光在不均匀大气中<strong>折射</strong>形成的虚像。A 反射；C、D 直线传播。'},
+{q:'下列现象中，属于光的反射的是',opts:['A. 筷子在水中“折断”','B. 海市蜃楼','C. 镜花水月','D. 坐井观天'],ans:2,exp:'镜花水月=镜中花、水中月，都是<strong>反射</strong>形成的虚像。A、B 折射；D 直线传播。'},
+{q:'下列现象中，属于光的直线传播的是',opts:['A. 池水变浅','B. 海市蜃楼','C. 日食、月食','D. 水中鱼看起来变浅'],ans:2,exp:'日食月食是光沿<strong>直线传播</strong>被月球/地球挡住形成的。A、B、D 都是折射。'},
+{q:'“月下飞天镜，云生结海楼”中，前后两句包含的光学知识分别是',opts:['A. 折射、反射','B. 反射、折射','C. 直线传播、反射','D. 反射、直线传播'],ans:1,exp:'“月下飞天镜”月亮在水中的倒影是<strong>反射</strong>；“云生结海楼”海市蜃楼是<strong>折射</strong>。'},
+{q:'李白诗“湖光秋月两相和，潭面无风镜未磨”，水中月影的形成原理是',opts:['A. 光的折射','B. 光的反射','C. 光的直线传播','D. 光的色散'],ans:1,exp:'水面像镜子，月影是<strong>镜面反射</strong>形成的虚像。'},
+{q:'岸上行人看到水中的“鱼”，下列说法正确的是',opts:['A. 看到的是鱼的实像，位置偏高','B. 看到的是鱼的虚像，位置偏高（偏浅）','C. 看到的是鱼的虚像，位置偏低','D. 看到的是鱼的实像，位置偏低'],ans:1,exp:'鱼反射的光经水面折射进入人眼，人看到的是<strong>虚像</strong>，位置比实际<strong>偏高偏浅</strong>。'},
+{q:'关于池水深度，下列说法正确的是',opts:['A. 看到的池水比实际深','B. 看到的池水比实际浅，是虚像','C. 看到的池水深度与实际相同','D. 池水深度是实像'],ans:1,exp:'池底折射成像<strong>变浅</strong>，是<strong>虚像</strong>，所以“看起来不过齐腰深”的池水实际可能更深，切勿贸然下水。'},
+// === 模块三：折射作图 ===
+{q:'光从空气射入玻璃砖，经过另一界面射出，出射光线与入射光线的关系是',opts:['A. 垂直','B. 平行','C. 相交于一点','D. 无法确定'],ans:1,exp:'光线穿过<strong>平行玻璃砖</strong>，在两次界面发生折射，出射光线与入射光线<strong>平行</strong>（发生侧移）。'},
+{q:'光从水中斜射入空气，折射光线应',opts:['A. 靠近法线','B. 远离法线','C. 沿原方向','D. 与法线重合'],ans:1,exp:'介质→空气，折射光线<strong>远离法线</strong>（空气角大）。'},
+{q:'作图时，下列哪个应画成虚线',opts:['A. 入射光线','B. 折射光线','C. 法线','D. 界面'],ans:2,exp:'法线、反向延长线、辅助线用<strong>虚线</strong>；实际光线（入射/折射）用<strong>实线带箭头</strong>。'},
+// === 模块四：光的色散与颜色 ===
+{q:'太阳光通过三棱镜后分解成红、橙、黄、绿、蓝、靛、紫七种色光，这个现象叫',opts:['A. 光的反射','B. 光的折射','C. 光的色散','D. 光的直线传播'],ans:2,exp:'白光经三棱镜分解为七色光叫<strong>光的色散</strong>，说明白光是由多种色光混合而成的<strong>复合光</strong>。'},
+{q:'在光的色散中，偏折程度最大的色光是',opts:['A. 红光','B. 黄光','C. 绿光','D. 紫光'],ans:3,exp:'三棱镜对不同色光偏折程度不同，<strong>紫光偏折最强</strong>、红光最弱。'},
+{q:'彩虹的形成原理是',opts:['A. 光的反射','B. 光的色散（折射）','C. 光的直线传播','D. 光的干涉'],ans:1,exp:'雨后空气中的小水珠相当于三棱镜，阳光经折射发生<strong>色散</strong>形成彩虹。'},
+{q:'关于色光三原色和颜料三原色，下列说法正确的是',opts:['A. 都是红、绿、蓝','B. 色光三原色是红、绿、蓝，颜料三原色是红、黄、蓝','C. 都是红、黄、蓝','D. 色光三原色是红、黄、蓝，颜料三原色是红、绿、蓝'],ans:1,exp:'<strong>色光三原色：红、绿、蓝</strong>（混合成白光）；<strong>颜料三原色：红、黄、蓝</strong>（混合成黑色）。'},
+{q:'不透明物体的颜色由什么决定',opts:['A. 它透过的色光','B. 它反射的色光','C. 照射它的色光','D. 它吸收的色光'],ans:1,exp:'不透明物体颜色=它<strong>反射</strong>的色光（红衣服只反射红光，其余被吸收）。'},
+{q:'透明物体的颜色由什么决定',opts:['A. 它反射的色光','B. 它透过的色光','C. 它吸收的色光','D. 它的形状'],ans:1,exp:'透明物体颜色=它<strong>透过</strong>的色光（红玻璃只透过红光，其余色光被吸收）。'},
+{q:'用白光照射红苹果，苹果呈红色，这是因为',opts:['A. 苹果反射红光，吸收其他色光','B. 苹果吸收红光，反射其他色光','C. 白光使苹果变红','D. 苹果透过红光'],ans:0,exp:'红苹果是不透明物体，<strong>反射红光</strong>、吸收其他色光，所以呈红色。'},
+{q:'用红光照射绿叶，叶子将呈',opts:['A. 红色','B. 绿色','C. 黑色','D. 白色'],ans:2,exp:'绿叶只<strong>反射绿光</strong>，红光照射时无绿光可反射（绿光被吸收），所以呈<strong>黑色</strong>。'},
+{q:'红衣服在绿光照射下呈什么颜色',opts:['A. 红色','B. 绿色','C. 黑色','D. 白色'],ans:2,exp:'红衣服只反射红光，绿光中没有红光，红光被吸收，所以呈<strong>黑色</strong>。'},
+{q:'透过红色玻璃看绿色树叶，树叶呈什么颜色',opts:['A. 红色','B. 绿色','C. 黑色','D. 白色'],ans:2,exp:'红玻璃只<strong>透过红光</strong>，绿树叶反射的绿光被红玻璃吸收，人眼看到<strong>黑色</strong>。'},
+{q:'红外线在生活中的应用是',opts:['A. 验钞','B. 杀菌消毒','C. 遥控器、测温枪','D. 荧光物质发光'],ans:2,exp:'红外线有<strong>热效应</strong>，用于遥控器、测温枪、热成像。紫外线有荧光效应，用于验钞、杀菌。'},
+{q:'紫外线在生活中的应用是',opts:['A. 遥控器','B. 验钞、杀菌消毒','C. 热成像','D. 夜视仪'],ans:1,exp:'紫外线能使<strong>荧光物质发光</strong>（验钞）、<strong>杀菌消毒</strong>。'},
+];
+
+
+const flashcards = [
+{front:'什么是光的折射？',back:'光从一种介质<strong>斜射</strong>入另一种介质时，传播方向发生偏折的现象。垂直入射时不偏折。'},
+{front:'折射的原因是什么？',back:'光在不同介质中<strong>传播速度不同</strong>，速度改变导致传播方向发生偏折。'},
+{front:'折射规律四句诀是什么？',back:'<strong>三线共面</strong>（折射/入射光线与法线同平面）、<strong>两线分居</strong>（折射与入射分居法线两侧）、<strong>空气角大</strong>（空气里的角大）、<strong>折随入变</strong>（入射角增大折射角也增大）。'},
+{front:'光从空气斜射入水中，折射角与入射角大小关系？',back:'折射角<strong>小于</strong>入射角（折射光线靠近法线）。'},
+{front:'光从水中斜射入空气中，折射角与入射角大小关系？',back:'折射角<strong>大于</strong>入射角（折射光线远离法线）。'},
+{front:'垂直入射时折射角是多少？',back:'折射角=入射角=<strong>0°</strong>，传播方向<strong>不变</strong>。'},
+{front:'折射现象中光路是否可逆？',back:'<strong>可逆</strong>。这也是激光笔能直接瞄准“看到的鱼”打中真鱼的原因。'},
+{front:'池水看起来变浅是什么现象？',back:'<strong>折射</strong>。池底的光经水面折射进入人眼，人逆着光线看到池底<strong>虚像变高</strong>，所以水看起来浅了。'},
+{front:'水中筷子为什么看起来向上弯折？',back:'筷子反射的光从水进入空气发生<strong>折射</strong>，人看到筷子的虚像位置比实际高，所以看起来向上弯折。'},
+{front:'叉鱼时应瞄准哪里？',back:'瞄准<strong>鱼的下方</strong>（看到的鱼偏浅，真实鱼在稍深处）。用激光则直接瞄准看到的鱼（光路可逆）。'},
+{front:'海市蜃楼是什么现象？',back:'光在<strong>不均匀大气</strong>中发生<strong>折射</strong>形成的虚像。'},
+{front:'如何区分折射/反射/直线传播？',back:'<strong>跨介质偏折</strong>=折射（筷子折、池水浅、海市蜃楼）；<strong>同介质被界面弹回</strong>=反射（倒影、镜花水月）；<strong>同介质直行遇阻</strong>=直线传播（影子、小孔、日食、一叶障目）。'},
+{front:'折射作图时法线怎么画？',back:'法线画<strong>虚线</strong>，过入射点与界面垂直；入射/折射光线画<strong>实线带箭头</strong>。'},
+{front:'光穿过平行玻璃砖后光线方向如何？',back:'出射光线与入射光线<strong>平行</strong>（整体发生侧移）。'},
+{front:'什么是光的色散？',back:'太阳光（白光）通过三棱镜分解成<strong>红橙黄绿蓝靛紫</strong>七色光的现象。白光=复合光。'},
+{front:'三棱镜中哪种色光偏折最强？',back:'<strong>紫光</strong>偏折最强，<strong>红光</strong>偏折最弱。'},
+{front:'色光三原色和颜料三原色？',back:'色光三原色：<strong>红、绿、蓝</strong>（混合成白光）；颜料三原色：<strong>红、黄、蓝</strong>（混合成黑色）。'},
+{front:'不透明物体的颜色由什么决定？',back:'由它<strong>反射</strong>的色光决定。红衣服反射红光、吸收其他色光 → 呈红色。'},
+{front:'透明物体的颜色由什么决定？',back:'由它<strong>透过</strong>的色光决定。红玻璃只透过红光，其余色光被吸收。'},
+{front:'红外线和紫外线各有什么应用？',back:'红外线<strong>热效应</strong>：遥控器、测温枪、热成像。紫外线<strong>荧光效应</strong>：验钞、杀菌消毒。'},
+];
+
+
+const errors = [
+{title:'❌ 折射角/入射角看错对象',desc:'<strong>易错</strong>：把折射角当成光线与<strong>界面</strong>的夹角。<strong>正解</strong>：折射角、入射角都是光线与<strong>法线</strong>的夹角。入射光线与界面成40° → 入射角是50°，不是40°。'},
+{title:'❌ “空气角大”理解反',desc:'<strong>易错</strong>：记成“折射角大”。<strong>正解</strong>：<strong>空气里的角大</strong>——光从空气进介质，折射角&lt;入射角；光从介质进空气，折射角&gt;入射角。判断时先看光线从哪侧来。'},
+{title:'❌ 折射现象分类错误',desc:'<strong>易错</strong>：把海市蜃楼、池水变浅归为反射，把倒影归为折射。<strong>正解</strong>：<strong>跨介质</strong>=折射（筷子折、池水浅、海市蜃楼、水中鱼变浅）；<strong>同介质弹回</strong>=反射（倒影、镜花水月、波光粼粼）；<strong>直行遇阻</strong>=直线传播（影子、小孔、日食、一叶障目）。'},
+{title:'❌ 看到的鱼是实像',desc:'<strong>易错</strong>：认为看到水中的鱼是“实像”。<strong>正解</strong>：人眼看到的鱼是折射形成的<strong>虚像</strong>，位置比实际偏<strong>高偏浅</strong>；叉鱼瞄准鱼的下方，激光直接瞄准看到的鱼（光路可逆）。'},
+{title:'❌ 玻璃砖出射光线画歪',desc:'<strong>易错</strong>：画玻璃砖折射时出射光线方向乱画。<strong>正解</strong>：光进入玻璃砖<strong>靠近法线</strong>，从另一面射出<strong>远离法线</strong>，出射光线与入射光线<strong>平行</strong>（侧移）。圆界面法线<strong>过圆心</strong>。'},
+{title:'❌ 白光=单色光',desc:'<strong>易错</strong>：认为白光/太阳光是单色光。<strong>正解</strong>：白光是由红橙黄绿蓝靛紫等色光混合而成的<strong>复合光</strong>；色散把白光分解，紫光偏折最强、红光最弱。'},
+{title:'❌ 三原色混淆',desc:'<strong>易错</strong>：把光的三原色记成红黄蓝。<strong>正解</strong>：<strong>色光三原色=红绿蓝</strong>（相加出白光）；<strong>颜料三原色=红黄蓝</strong>（混合出黑）。'},
+{title:'❌ 颜色判定反了',desc:'<strong>易错</strong>：把透明/不透明物体颜色规则搞反。<strong>正解</strong>：<strong>不透明物体</strong>颜色=它<strong>反射</strong>的色光（红衣服在绿光下显黑，无红光可反射）；<strong>透明物体</strong>颜色=它<strong>透过</strong>的色光（红玻璃看绿叶=黑）。黑色吸收所有色光，白色反射所有色光。'},
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const WRONG_HISTORY_KEY='quiz_physics9_state';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_physics_lesson10';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=_dp?`<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`:'';if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const idx=shuffled[curQ];const total=retryMode?wrongIds.length:questions.length;const isLast=(retryMode?shuffled.indexOf(idx):curQ)===total-1;if(isLast){if(quizAns[idx]>=0){document.getElementById('quizArea').innerHTML=showResult();}return;}curQ++;renderQ();}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class="question-card result-card fade-in-up"><div class="big-icon">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class="score">${correct}/${total}</div>
+<div><span class="result-stat"><i class="fas fa-check-circle" style="color:var(--success)"></i> 正确 ${correct} 题</span>
+<span class="result-stat"><i class="fas fa-times-circle" style="color:var(--danger)"></i> 错误 ${total-correct} 题</span></div>
+${retryMode?`<div style="margin:.5rem 0"><span class="result-stat"><i class="fas fa-history"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)"><p style="font-weight:600;margin-bottom:.5rem;font-size:.85rem">📝 需要复习：</p>${wl.map(w=>`<div style="padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)">✗ ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+<div style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+<button class="btn btn-primary" onclick="initQ();renderQ();"><i class="fas fa-redo"></i> 重新测验</button>
+${wl.length?`<button class="btn btn-warning" onclick="initRetryMode()" style="background:#e67e22;color:#fff"><i class="fas fa-bug"></i> 错题重练 (${wl.length}题)</button>`:''}
+<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button>
+${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()"><i class="fas fa-times"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'物理',chapter:'光的折射',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'光的折射,折射规律,色散,三原色,物体颜色,物理'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'光的折射',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'光的折射,折射规律,色散,三原色,物体颜色,物理'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('phy_lesson7_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('phy_lesson7_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
