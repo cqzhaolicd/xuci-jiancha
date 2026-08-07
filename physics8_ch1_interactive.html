@@ -1,0 +1,424 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>📐 初中物理·八上早背晚默 · 第1章 机械运动</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#c0392b;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(231,76,60,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#e74c3c20,#c0392b20);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap;overflow-x:auto}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem;white-space:nowrap}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card .formula{background:var(--bg);padding:.4rem .6rem;border-radius:6px;font-family:'Times New Roman',serif;font-size:1.05rem;text-align:center;margin:.3rem 0;color:#c0392b;font-weight:700}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e67e22}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#3498db}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:1.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-text .expr{font-size:1.05rem;color:#c0392b}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.65rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.9rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#e74c3c10}
+.option .letter{width:24px;height:24px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#fff5f5;border-left:4px solid var(--primary);font-size:.88rem;display:none;line-height:1.8}
+.explanation.show{display:block}
+.explanation .exp-formula{font-family:'Times New Roman',serif;color:#c0392b;font-weight:600}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(231,76,60,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem;text-align:center}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem;text-align:center}
+.flashcard-back p{font-size:.95rem;line-height:1.9;color:var(--text);text-align:center}
+.flashcard-back .f-formula{font-family:'Times New Roman',serif;font-size:1.1rem;font-weight:700;color:#667eea}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.import-btn{margin-top:1rem;text-align:center}
+.teacher-talk{background:linear-gradient(135deg,#e74c3c10,#c0392b10);border-radius:var(--radius);padding:1.5rem;margin:1rem 0;border-left:4px solid #e74c3c}
+.teacher-talk h4{color:#667eea;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.teacher-talk p{font-size:.9rem;line-height:1.9}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style>
+.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 八上早背晚默 · 第1章</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-calculator"></i> 初中物理·八上早背晚默 · 第1章 机械运动</h1>
+    <p>38天早背晚默 · 第1章 机械运动 · ⭐⭐⭐⭐⭐</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 51道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 51张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 1大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header" style="font-weight:700;margin-bottom:.8rem"><i class="fas fa-sitemap" style="color:#667eea"></i> 八年级上册 · 必考知识38天</div>
+    
+        <div class="teacher-talk">
+      <h4><i class="fas fa-chalkboard-teacher"></i> 使用说明</h4>
+      <p>本页聚焦《八上物理必考知识38天早背晚默》<strong>第1章 机械运动</strong>，共 51 个必考知识点。通过知识图谱速览 → 闯关测验自测 → 知识卡牌记忆 → 易错自检巩固，按章节系统掌握八上物理核心内容。</p>
+      <p style="margin-top:.5rem"><strong>⚠️ 完成本章知识卡牌学习后，配合闯关测验检验掌握程度，用易错自检标记薄弱点反复练习。</strong></p>
+    </div>
+
+        <div class="knowledge-grid">
+
+      <div class="knowledge-card c1"><h3><i class="fas fa-tachometer-alt" style="color:#667eea"></i> 机械运动</h3><ul>
+        <li><strong>单位换算</strong>：1h=60min=3600s, 1km=1000m, 1m=10dm=100cm</li>
+        <li><strong>刻度尺使用</strong>：选→放→看→读→记（估读至分度值下一位）</li>
+        <li><strong>误差</strong>：不可避免，<span class="hl">多次测量取平均值</span>可减小</li>
+        <li><strong>速度</strong>：v=s/t, 1m/s=3.6km/h</li>
+        <li><strong>平均速度实验</strong>：斜面小→便于测时间</li>
+      </ul></div>
+    </div>
+
+        <div class="card"><div class="card-title"><i class="fas fa-star" style="color:var(--warning)"></i> 第1章 机械运动 · 核心复习框架</div>
+      <p style="font-size:.9rem;line-height:2;background:#f0f0ff;padding:1rem;border-radius:var(--radius-sm)">
+        <strong>1️⃣ 机械运动</strong> — 单位换算 + 刻度尺 + v=s/t<br>
+        ⚠️ 每天早背晚默，坚持38天，八上物理不丢分！
+      </p>
+    </div>
+    </div>
+
+  <div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 51</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共51张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header" style="font-weight:700;margin-bottom:.8rem"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每条标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 八上早背晚默 · 第1章 机械运动 | 天元教育 · 初二暑假博学班</div>
+
+<script>
+const questions=[
+{q:'[第1条] 请选出正确内容',opts:['\n1.刻度尺的使用方法第二步零刻度线或整刻度线与被测物体的一端对齐，有刻度的','\n2.1 米=106 微米，即1m=106μm，反过来，1μm=10-6m。','\n3.刻度尺的使用方法记录的测量结果应由准确值、估数值和单位组成。','\n4.时间单位：时、分、秒'],ans:3,exp:'第1条：时间单位：时、分、秒'},
+{q:'[第2条] 请选出正确内容',opts:['\n1.时的符号为h，分的符号为min，秒的符号为s。','\n2.毫米符号为mm。','\n3.人步行的速度约1m/s。','\n4.1 分米=10 厘米，即1dm=10cm。'],ans:0,exp:'第2条：时的符号为h，分的符号为min，秒的符号为s。'},
+{q:'[第3条] 请选出正确内容',opts:['\n1.千米符号为km。','\n2.1 小时等于60 分，即1h=60min。','\n3.人步行的速度约1m/s。','\n4.国际长度单位是米、常用单位有千米、分米、厘米、毫米、微米、纳米。'],ans:1,exp:'第3条：1 小时等于60 分，即1h=60min。'},
+{q:'[第4条] 请选出正确内容',opts:['\n1.相同路程，时间越短，速度越大。','\n2.40m/s 的意义是物体每秒通过的路程是40 米','\n3.参照物是作为标准的物体，是可以任意选择的假定不动的物体。','\n4.1 分等于60 秒，即1min=60s。'],ans:3,exp:'第4条：1 分等于60 秒，即1min=60s。'},
+{q:'[第5条] 请选出正确内容',opts:['\n1.1 米=10 分米，即1m=10dm。','\n2.1 厘米=10 毫米，即1cm=10mm。','\n3.1 小时等于3600 秒，即1h=3600s。','\n4.测量值和真实值之间的差别叫做误差。'],ans:2,exp:'第5条：1 小时等于3600 秒，即1h=3600s。'},
+{q:'[第6条] 请选出正确内容',opts:['\n1.千米符号为km。','\n2.1 小时等于60 分，即1h=60min。','\n3.测量长度的基础工具为刻度尺。','\n4.1 米=109 纳米，即1m=109nm，反过来，1nm=10-9m。'],ans:2,exp:'第6条：测量长度的基础工具为刻度尺。'},
+{q:'[第7条] 请选出正确内容',opts:['\n1.自行车的速度约5 m/s。','\n2.测量长度的精密工具为游标卡尺、螺旋测微器。','\n3.1 米=106 微米，即1m=106μm，反过来，1μm=10-6m。','\n4.匀速直线运动的s-t 图像（会画）'],ans:1,exp:'第7条：测量长度的精密工具为游标卡尺、螺旋测微器。'},
+{q:'[第8条] 请选出正确内容',opts:['\n1.匀速直线运动的v-t 图像（会画）','\n2.自行车的速度约5 m/s。','\n3.国际长度单位是米、常用单位有千米、分米、厘米、毫米、微米、纳米。','\n4.刻度尺的使用方法记录的测量结果应由准确值、估数值和单位组成。'],ans:2,exp:'第8条：国际长度单位是米、常用单位有千米、分米、厘米、毫米、微米、纳米。'},
+{q:'[第9条] 请选出正确内容',opts:['\n1.1 分等于60 秒，即1min=60s。','\n2.1 米=106 微米，即1m=106μm，反过来，1μm=10-6m。','\n3.匀速直线运动的s-t 图像（会画）','\n4.千米符号为km。'],ans:3,exp:'第9条：千米符号为km。'},
+{q:'[第10条] 请选出正确内容',opts:['\n1.米符号为m。','\n2.测量长度的基础工具为刻度尺。','\n3.1 米=100 厘米，即1m=100cm。','\n4.时的符号为h，分的符号为min，秒的符号为s。'],ans:0,exp:'第10条：米符号为m。'},
+{q:'[第11条] 请选出正确内容',opts:['\n1.1 千米=1000 米，即1km=1000m。','\n2.千米符号为km。','\n3.换算关系：1m/s=3.6km/h','\n4.速度是表示物体运动快慢的物理量。'],ans:0,exp:'第11条：1 千米=1000 米，即1km=1000m。'},
+{q:'[第12条] 请选出正确内容',opts:['\n1.时的符号为h，分的符号为min，秒的符号为s。','\n2.刻度尺的使用方法第二步零刻度线或整刻度线与被测物体的一端对齐，有刻度的','\n3.分米符号为dm。','\n4.人步行的速度约1m/s。'],ans:2,exp:'第12条：分米符号为dm。'},
+{q:'[第13条] 请选出正确内容',opts:['\n1.千米符号为km。','\n2.毫米符号为mm。','\n3.人步行的速度约1m/s。','\n4.1 米=10 分米，即1m=10dm。'],ans:3,exp:'第13条：1 米=10 分米，即1m=10dm。'},
+{q:'[第14条] 请选出正确内容',opts:['\n1.比较运动快慢的方法：','\n2.刻度尺的使用方法记录的测量结果应由准确值、估数值和单位组成。','\n3.厘米符号为cm。','\n4.相同路程，时间越短，速度越大。'],ans:2,exp:'第14条：厘米符号为cm。'},
+{q:'[第15条] 请选出正确内容',opts:['\n1.匀速直线运动的v-t 图像（会画）','\n2.1 分米=10 厘米，即1dm=10cm。','\n3.厘米符号为cm。','\n4.相同时间，路程越长，速率越大。'],ans:1,exp:'第15条：1 分米=10 厘米，即1dm=10cm。'},
+{q:'[第16条] 请选出正确内容',opts:['\n1.时间单位：时、分、秒','\n2.1 米=100 厘米，即1m=100cm。','\n3.刻度尺的使用方法读数时，视线要整对刻度线，视线与尺面垂直。','\n4.匀速直线运动的v-t 图像（会画）'],ans:1,exp:'第16条：1 米=100 厘米，即1m=100cm。'},
+{q:'[第17条] 请选出正确内容',opts:['\n1.1 米=106 微米，即1m=106μm，反过来，1μm=10-6m。','\n2.平均速度等于总路程除以总时间。','\n3.1 分米=10 厘米，即1dm=10cm。','\n4.毫米符号为mm。'],ans:3,exp:'第17条：毫米符号为mm。'},
+{q:'[第18条] 请选出正确内容',opts:['\n1.刻度尺的使用方法使用前认清刻度尺的量程、分度值和零刻度线的位置。','\n2.测量平均速度实验要选择斜面较小的目的是便于测量时间。','\n3.1 厘米=10 毫米，即1cm=10mm。','\n4.1 米=10 分米，即1m=10dm。'],ans:2,exp:'第18条：1 厘米=10 毫米，即1cm=10mm。'},
+{q:'[第19条] 请选出正确内容',opts:['\n1.40m/s 的意义是物体每秒通过的路程是40 米','\n2.物理学中，把物体位置随时间的变化叫做机械运动。','\n3.常用的速度单位：m/s 读作米每秒、km/h 读作千米每小时。','\n4.微米符号为μm。'],ans:3,exp:'第19条：微米符号为μm。'},
+{q:'[第20条] 请选出正确内容',opts:['\n1.匀速直线运动的s-t 图像（会画）','\n2.验证发声体振动的实验是音叉实验。','\n3.1 毫米=103 微米，即1mm=103μm。','\n4.刻度尺的使用方法读数时，视线要整对刻度线，视线与尺面垂直。'],ans:2,exp:'第20条：1 毫米=103 微米，即1mm=103μm。'},
+{q:'[第21条] 请选出正确内容',opts:['\n1.验证发声体振动的实验是音叉实验。','\n2.千米符号为km。','\n3.平均速度等于总路程除以总时间。','\n4.1 米=106 微米，即1m=106μm，反过来，1μm=10-6m。'],ans:3,exp:'第21条：1 米=106 微米，即1m=106μm，反过来，1μm=10-6m。'},
+{q:'[第22条] 请选出正确内容',opts:['\n1.速度是表示物体运动快慢的物理量。','\n2.相同时间，路程越长，速率越大。','\n3.千米符号为km。','\n4.纳米的符号为nm。'],ans:3,exp:'第22条：纳米的符号为nm。'},
+{q:'[第23条] 请选出正确内容',opts:['\n1.1 小时等于60 分，即1h=60min。','\n2.时的符号为h，分的符号为min，秒的符号为s。','\n3.1 米=109 纳米，即1m=109nm，反过来，1nm=10-9m。','\n4.刻度尺的使用方法记录的测量结果应由准确值、估数值和单位组成。'],ans:2,exp:'第23条：1 米=109 纳米，即1m=109nm，反过来，1nm=10-9m。'},
+{q:'[第24条] 请选出正确内容',opts:['\n1.刻度尺的使用方法使用前认清刻度尺的量程、分度值和零刻度线的位置。','\n2.测量值和真实值之间的差别叫做误差。','\n3.参照物是作为标准的物体，是可以任意选择的假定不动的物体。','\n4.1 分米=10 厘米，即1dm=10cm。'],ans:0,exp:'第24条：刻度尺的使用方法使用前认清刻度尺的量程、分度值和零刻度线的位置。'},
+{q:'[第25条] 请选出正确内容',opts:['\n1.刻度尺的使用方法第二步零刻度线或整刻度线与被测物体的一端对齐，有刻度的','\n2.1 小时等于60 分，即1h=60min。','\n3.路程与时间的比越大，速度越大。','\n4.运动具有相对性，物体的运动和静止是相对的，一切物体都在运动。'],ans:0,exp:'第25条：刻度尺的使用方法第二步零刻度线或整刻度线与被测物体的一端对齐，有刻度的'},
+{q:'[第26条] 请选出正确内容',opts:['\n1.参照物是作为标准的物体，是可以任意选择的假定不动的物体。','\n2.毫米符号为mm。','\n3.误差不是错误，错误可以避免，误差不能避免。','\n4.刻度尺的使用方法读数时，视线要整对刻度线，视线与尺面垂直。'],ans:3,exp:'第26条：刻度尺的使用方法读数时，视线要整对刻度线，视线与尺面垂直。'},
+{q:'[第27条] 请选出正确内容',opts:['\n1.刻度尺的使用方法记录的测量结果应由准确值、估数值和单位组成。','\n2.1 米=106 微米，即1m=106μm，反过来，1μm=10-6m。','\n3.相同路程，时间越短，速度越大。','\n4.人步行的速度约1m/s。'],ans:0,exp:'第27条：刻度尺的使用方法记录的测量结果应由准确值、估数值和单位组成。'},
+{q:'[第28条] 请选出正确内容',opts:['\n1.匀速直线运动的s-t 图像（会画）','\n2.测量值和真实值之间的差别叫做误差。','\n3.1 分米=10 厘米，即1dm=10cm。','\n4.1 毫米=103 微米，即1mm=103μm。'],ans:1,exp:'第28条：测量值和真实值之间的差别叫做误差。'},
+{q:'[第29条] 请选出正确内容',opts:['\n1.换算关系：1m/s=3.6km/h','\n2.相同时间，路程越长，速率越大。','\n3.声音是由物体的振动产生的，振动停止，发声停止。','\n4.减小误差的方法：'],ans:3,exp:'第29条：减小误差的方法：'},
+{q:'[第30条] 请选出正确内容',opts:['\n1.速度是路程和时间的比值。','\n2.误差不是错误，错误可以避免，误差不能避免。','\n3.参照物是作为标准的物体，是可以任意选择的假定不动的物体。','\n4.速度公式：v=s/t'],ans:1,exp:'第30条：误差不是错误，错误可以避免，误差不能避免。'},
+{q:'[第31条] 请选出正确内容',opts:['\n1.物理学中，把物体位置随时间的变化叫做机械运动。','\n2.时间单位：时、分、秒','\n3.运动具有相对性，物体的运动和静止是相对的，一切物体都在运动。','\n4.千米符号为km。'],ans:0,exp:'第31条：物理学中，把物体位置随时间的变化叫做机械运动。'},
+{q:'[第32条] 请选出正确内容',opts:['\n1.分米符号为dm。','\n2.参照物是作为标准的物体，是可以任意选择的假定不动的物体。','\n3.速度公式：v=s/t','\n4.运动具有相对性，物体的运动和静止是相对的，一切物体都在运动。'],ans:1,exp:'第32条：参照物是作为标准的物体，是可以任意选择的假定不动的物体。'},
+{q:'[第33条] 请选出正确内容',opts:['\n1.运动具有相对性，物体的运动和静止是相对的，一切物体都在运动。','\n2.国际长度单位是米、常用单位有千米、分米、厘米、毫米、微米、纳米。','\n3.1 厘米=10 毫米，即1cm=10mm。','\n4.平均速度等于总路程除以总时间。'],ans:0,exp:'第33条：运动具有相对性，物体的运动和静止是相对的，一切物体都在运动。'},
+{q:'[第34条] 请选出正确内容',opts:['\n1.时间单位：时、分、秒','\n2.速度是路程和时间的比值。','\n3.常用的速度单位：m/s 读作米每秒、km/h 读作千米每小时。','\n4.1 分等于60 秒，即1min=60s。'],ans:1,exp:'第34条：速度是路程和时间的比值。'},
+{q:'[第35条] 请选出正确内容',opts:['\n1.纳米的符号为nm。','\n2.速度公式：v=s/t','\n3.人步行的速度约1m/s。','\n4.比较运动快慢的方法：'],ans:3,exp:'第35条：比较运动快慢的方法：'},
+{q:'[第36条] 请选出正确内容',opts:['\n1.相同路程，时间越短，速度越大。','\n2.1 米=10 分米，即1m=10dm。','\n3.匀速直线运动的s-t 图像（会画）','\n4.路程与时间的比越大，速度越大。'],ans:3,exp:'第36条：路程与时间的比越大，速度越大。'},
+{q:'[第37条] 请选出正确内容',opts:['\n1.刻度尺的使用方法第二步零刻度线或整刻度线与被测物体的一端对齐，有刻度的','\n2.时间单位：时、分、秒','\n3.匀速直线运动的s-t 图像（会画）','\n4.相同时间，路程越长，速率越大。'],ans:3,exp:'第37条：相同时间，路程越长，速率越大。'},
+{q:'[第38条] 请选出正确内容',opts:['\n1.相同路程，时间越短，速度越大。','\n2.40m/s 的意义是物体每秒通过的路程是40 米','\n3.误差不是错误，错误可以避免，误差不能避免。','\n4.1 分等于60 秒，即1min=60s。'],ans:0,exp:'第38条：相同路程，时间越短，速度越大。'},
+{q:'[第39条] 请选出正确内容',opts:['\n1.1 米=10 分米，即1m=10dm。','\n2.速度是表示物体运动快慢的物理量。','\n3.时间单位：时、分、秒','\n4.误差不是错误，错误可以避免，误差不能避免。'],ans:1,exp:'第39条：速度是表示物体运动快慢的物理量。'},
+{q:'[第40条] 请选出正确内容',opts:['\n1.运动具有相对性，物体的运动和静止是相对的，一切物体都在运动。','\n2.1 分等于60 秒，即1min=60s。','\n3.声音是由物体的振动产生的，振动停止，发声停止。','\n4.速度公式：v=s/t'],ans:3,exp:'第40条：速度公式：v=s/t'},
+{q:'[第41条] 请选出正确内容',opts:['\n1.速度是路程和时间的比值。','\n2.分米符号为dm。','\n3.常用的速度单位：m/s 读作米每秒、km/h 读作千米每小时。','\n4.刻度尺的使用方法使用前认清刻度尺的量程、分度值和零刻度线的位置。'],ans:2,exp:'第41条：常用的速度单位：m/s 读作米每秒、km/h 读作千米每小时。'},
+{q:'[第42条] 请选出正确内容',opts:['\n1.换算关系：1m/s=3.6km/h','\n2.分米符号为dm。','\n3.速度是路程和时间的比值。','\n4.速度公式：v=s/t'],ans:0,exp:'第42条：换算关系：1m/s=3.6km/h'},
+{q:'[第43条] 请选出正确内容',opts:['\n1.1 米=106 微米，即1m=106μm，反过来，1μm=10-6m。','\n2.平均速度等于总路程除以总时间。','\n3.减小误差的方法：','\n4.测量长度的基础工具为刻度尺。'],ans:1,exp:'第43条：平均速度等于总路程除以总时间。'},
+{q:'[第44条] 请选出正确内容',opts:['\n1.测量长度的基础工具为刻度尺。','\n2.40m/s 的意义是物体每秒通过的路程是40 米','\n3.减小误差的方法：','\n4.1 厘米=10 毫米，即1cm=10mm。'],ans:1,exp:'第44条：40m/s 的意义是物体每秒通过的路程是40 米'},
+{q:'[第45条] 请选出正确内容',opts:['\n1.人步行的速度约1m/s。','\n2.时间单位：时、分、秒','\n3.测量值和真实值之间的差别叫做误差。','\n4.时的符号为h，分的符号为min，秒的符号为s。'],ans:0,exp:'第45条：人步行的速度约1m/s。'},
+{q:'[第46条] 请选出正确内容',opts:['\n1.声音是由物体的振动产生的，振动停止，发声停止。','\n2.刻度尺的使用方法使用前认清刻度尺的量程、分度值和零刻度线的位置。','\n3.1 分米=10 厘米，即1dm=10cm。','\n4.自行车的速度约5 m/s。'],ans:3,exp:'第46条：自行车的速度约5 m/s。'},
+{q:'[第47条] 请选出正确内容',opts:['\n1.国际长度单位是米、常用单位有千米、分米、厘米、毫米、微米、纳米。','\n2.常用的速度单位：m/s 读作米每秒、km/h 读作千米每小时。','\n3.测量平均速度实验要选择斜面较小的目的是便于测量时间。','\n4.时的符号为h，分的符号为min，秒的符号为s。'],ans:2,exp:'第47条：测量平均速度实验要选择斜面较小的目的是便于测量时间。'},
+{q:'[第48条] 请选出正确内容',opts:['\n1.匀速直线运动的v-t 图像（会画）','\n2.测量值和真实值之间的差别叫做误差。','\n3.速度公式：v=s/t','\n4.厘米符号为cm。'],ans:0,exp:'第48条：匀速直线运动的v-t 图像（会画）'},
+{q:'[第49条] 请选出正确内容',opts:['\n1.1 小时等于60 分，即1h=60min。','\n2.自行车的速度约5 m/s。','\n3.匀速直线运动的s-t 图像（会画）','\n4.纳米的符号为nm。'],ans:2,exp:'第49条：匀速直线运动的s-t 图像（会画）'},
+{q:'[第50条] 请选出正确内容',opts:['\n1.速度公式：v=s/t','\n2.声音是由物体的振动产生的，振动停止，发声停止。','\n3.1 毫米=103 微米，即1mm=103μm。','\n4.毫米符号为mm。'],ans:1,exp:'第50条：声音是由物体的振动产生的，振动停止，发声停止。'},
+{q:'[第51条] 请选出正确内容',opts:['\n1.1 小时等于3600 秒，即1h=3600s。','\n2.验证发声体振动的实验是音叉实验。','\n3.时间单位：时、分、秒','\n4.1 米=109 纳米，即1m=109nm，反过来，1nm=10-9m。'],ans:1,exp:'第51条：验证发声体振动的实验是音叉实验。'}
+];
+
+const flashcards=[
+{front:'🏃 #1 机械运动',back:'<strong>第1条 · 机械运动</strong><br><br>时间单位：时、分、秒'},
+{front:'🏃 #2 机械运动',back:'<strong>第2条 · 机械运动</strong><br><br>时的符号为h，分的符号为min，秒的符号为s。'},
+{front:'🏃 #3 机械运动',back:'<strong>第3条 · 机械运动</strong><br><br>1 小时等于60 分，即1h=60min。'},
+{front:'🏃 #4 机械运动',back:'<strong>第4条 · 机械运动</strong><br><br>1 分等于60 秒，即1min=60s。'},
+{front:'🏃 #5 机械运动',back:'<strong>第5条 · 机械运动</strong><br><br>1 小时等于3600 秒，即1h=3600s。'},
+{front:'🏃 #6 机械运动',back:'<strong>第6条 · 机械运动</strong><br><br>测量长度的基础工具为刻度尺。'},
+{front:'🏃 #7 机械运动',back:'<strong>第7条 · 机械运动</strong><br><br>测量长度的精密工具为游标卡尺、螺旋测微器。'},
+{front:'🏃 #8 机械运动',back:'<strong>第8条 · 机械运动</strong><br><br>国际长度单位是米、常用单位有千米、分米、厘米、毫米、微米、纳米。'},
+{front:'🏃 #9 机械运动',back:'<strong>第9条 · 机械运动</strong><br><br>千米符号为km。'},
+{front:'🏃 #10 机械运动',back:'<strong>第10条 · 机械运动</strong><br><br>米符号为m。'},
+{front:'🏃 #11 机械运动',back:'<strong>第11条 · 机械运动</strong><br><br>1 千米=1000 米，即1km=1000m。'},
+{front:'🏃 #12 机械运动',back:'<strong>第12条 · 机械运动</strong><br><br>分米符号为dm。'},
+{front:'🏃 #13 机械运动',back:'<strong>第13条 · 机械运动</strong><br><br>1 米=10 分米，即1m=10dm。'},
+{front:'🏃 #14 机械运动',back:'<strong>第14条 · 机械运动</strong><br><br>厘米符号为cm。'},
+{front:'🏃 #15 机械运动',back:'<strong>第15条 · 机械运动</strong><br><br>1 分米=10 厘米，即1dm=10cm。'},
+{front:'🏃 #16 机械运动',back:'<strong>第16条 · 机械运动</strong><br><br>1 米=100 厘米，即1m=100cm。'},
+{front:'🏃 #17 机械运动',back:'<strong>第17条 · 机械运动</strong><br><br>毫米符号为mm。'},
+{front:'🏃 #18 机械运动',back:'<strong>第18条 · 机械运动</strong><br><br>1 厘米=10 毫米，即1cm=10mm。'},
+{front:'🏃 #19 机械运动',back:'<strong>第19条 · 机械运动</strong><br><br>微米符号为μm。'},
+{front:'🏃 #20 机械运动',back:'<strong>第20条 · 机械运动</strong><br><br>1 毫米=103 微米，即1mm=103μm。'},
+{front:'🏃 #21 机械运动',back:'<strong>第21条 · 机械运动</strong><br><br>1 米=106 微米，即1m=106μm，反过来，1μm=10-6m。'},
+{front:'🏃 #22 机械运动',back:'<strong>第22条 · 机械运动</strong><br><br>纳米的符号为nm。'},
+{front:'🏃 #23 机械运动',back:'<strong>第23条 · 机械运动</strong><br><br>1 米=109 纳米，即1m=109nm，反过来，1nm=10-9m。'},
+{front:'🏃 #24 机械运动',back:'<strong>第24条 · 机械运动</strong><br><br>刻度尺的使用方法使用前认清刻度尺的量程、分度值和零刻度线的位置。'},
+{front:'🏃 #25 机械运动',back:'<strong>第25条 · 机械运动</strong><br><br>刻度尺的使用方法第二步零刻度线或整刻度线与被测物体的一端对齐，有刻度的'},
+{front:'🏃 #26 机械运动',back:'<strong>第26条 · 机械运动</strong><br><br>刻度尺的使用方法读数时，视线要整对刻度线，视线与尺面垂直。'},
+{front:'🏃 #27 机械运动',back:'<strong>第27条 · 机械运动</strong><br><br>刻度尺的使用方法记录的测量结果应由准确值、估数值和单位组成。'},
+{front:'🏃 #28 机械运动',back:'<strong>第28条 · 机械运动</strong><br><br>测量值和真实值之间的差别叫做误差。'},
+{front:'🏃 #29 机械运动',back:'<strong>第29条 · 机械运动</strong><br><br>减小误差的方法：'},
+{front:'🏃 #30 机械运动',back:'<strong>第30条 · 机械运动</strong><br><br>误差不是错误，错误可以避免，误差不能避免。'},
+{front:'🏃 #31 机械运动',back:'<strong>第31条 · 机械运动</strong><br><br>物理学中，把物体位置随时间的变化叫做机械运动。'},
+{front:'🏃 #32 机械运动',back:'<strong>第32条 · 机械运动</strong><br><br>参照物是作为标准的物体，是可以任意选择的假定不动的物体。'},
+{front:'🏃 #33 机械运动',back:'<strong>第33条 · 机械运动</strong><br><br>运动具有相对性，物体的运动和静止是相对的，一切物体都在运动。'},
+{front:'🏃 #34 机械运动',back:'<strong>第34条 · 机械运动</strong><br><br>速度是路程和时间的比值。'},
+{front:'🏃 #35 机械运动',back:'<strong>第35条 · 机械运动</strong><br><br>比较运动快慢的方法：'},
+{front:'🏃 #36 机械运动',back:'<strong>第36条 · 机械运动</strong><br><br>路程与时间的比越大，速度越大。'},
+{front:'🏃 #37 机械运动',back:'<strong>第37条 · 机械运动</strong><br><br>相同时间，路程越长，速率越大。'},
+{front:'🏃 #38 机械运动',back:'<strong>第38条 · 机械运动</strong><br><br>相同路程，时间越短，速度越大。'},
+{front:'🏃 #39 机械运动',back:'<strong>第39条 · 机械运动</strong><br><br>速度是表示物体运动快慢的物理量。'},
+{front:'🏃 #40 机械运动',back:'<strong>第40条 · 机械运动</strong><br><br>速度公式：v=s/t'},
+{front:'🏃 #41 机械运动',back:'<strong>第41条 · 机械运动</strong><br><br>常用的速度单位：m/s 读作米每秒、km/h 读作千米每小时。'},
+{front:'🏃 #42 机械运动',back:'<strong>第42条 · 机械运动</strong><br><br>换算关系：1m/s=3.6km/h'},
+{front:'🏃 #43 机械运动',back:'<strong>第43条 · 机械运动</strong><br><br>平均速度等于总路程除以总时间。'},
+{front:'🏃 #44 机械运动',back:'<strong>第44条 · 机械运动</strong><br><br>40m/s 的意义是物体每秒通过的路程是40 米'},
+{front:'🏃 #45 机械运动',back:'<strong>第45条 · 机械运动</strong><br><br>人步行的速度约1m/s。'},
+{front:'🏃 #46 机械运动',back:'<strong>第46条 · 机械运动</strong><br><br>自行车的速度约5 m/s。'},
+{front:'🏃 #47 机械运动',back:'<strong>第47条 · 机械运动</strong><br><br>测量平均速度实验要选择斜面较小的目的是便于测量时间。'},
+{front:'🏃 #48 机械运动',back:'<strong>第48条 · 机械运动</strong><br><br>匀速直线运动的v-t 图像（会画）'},
+{front:'🏃 #49 机械运动',back:'<strong>第49条 · 机械运动</strong><br><br>匀速直线运动的s-t 图像（会画）'},
+{front:'🏃 #50 机械运动',back:'<strong>第50条 · 机械运动</strong><br><br>声音是由物体的振动产生的，振动停止，发声停止。'},
+{front:'🏃 #51 机械运动',back:'<strong>第51条 · 机械运动</strong><br><br>验证发声体振动的实验是音叉实验。'}
+];
+
+const errors=[
+{title:'单位换算指数搞混 ❌',wrong:'m→cm是×10还是×100？km/h和m/s换算常出错。',right:'1m=100cm，1km=1000m。速度：<span class="hl">m/s→km/h ×3.6</span>，反过来÷3.6。'}
+];
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const WRONG_HISTORY_KEY='quiz_phys8_ch1_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_physics8_ch1';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=_dp?`<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`:'';if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+|<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+|<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+|<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const idx=shuffled[curQ];const total=retryMode?wrongIds.length:questions.length;const isLast=(retryMode?shuffled.indexOf(idx):curQ)===total-1;if(isLast){if(quizAns[idx]>=0){document.getElementById('quizArea').innerHTML=showResult();}return;}curQ++;renderQ();}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class="question-card result-card fade-in-up"><div class="big-icon">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class="score">${correct}/${total}</div>
+|<div><span class="result-stat"><i class="fas fa-check-circle" style="color:var(--success)"></i> 正确 ${correct} 题</span>
+|<span class="result-stat"><i class="fas fa-times-circle" style="color:var(--danger)"></i> 错误 ${total-correct} 题</span></div>
+|${retryMode?`<div style="margin:.5rem 0"><span class="result-stat"><i class="fas fa-history"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+|${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)"><p style="font-weight:600;margin-bottom:.5rem;font-size:.85rem">📝 需要复习：</p>${wl.map(w=>`<div style="padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)">✗ ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+|<div style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+|<button class="btn btn-primary" onclick="initQ();renderQ();"><i class="fas fa-redo"></i> 重新测验</button>
+|${wl.length?`<button class="btn btn-warning" onclick="initRetryMode()" style="background:#e67e22;color:#fff"><i class="fas fa-bug"></i> 错题重练 (${wl.length}题)</button>`:''}
+|<button class="btn btn-success" onclick="importWB()"><i class="fas fa-database"></i> 导入错题到错题库</button>
+|<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+|<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button>
+|${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()"><i class="fas fa-times"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'物理',chapter:'八上物理',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'物理,八上'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'八上物理',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'物理,八上'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库？'))window.open('wrong_bank.html','_blank');}
+
+let fIdx=0;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el)el.classList.toggle('flipped');}
+function renderEC(){let s=localStorage.getItem('physics8_ch1_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('physics8_ch1_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('physics8_ch1_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('physics8_ch1_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('physics8_ch1_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
