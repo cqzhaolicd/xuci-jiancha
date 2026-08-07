@@ -1,0 +1,449 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>📈 正比例函数与一次函数 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--secondary:#c0392b;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#e74c3c,#c0392b);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(231,76,60,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#e74c3c20,#c0392b20);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#e74c3c,#c0392b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap;overflow-x:auto}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem;white-space:nowrap}
+.tab-btn:hover,.tab-btn.active{border-color:#e74c3c;color:#e74c3c}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card .formula{background:var(--bg);padding:.4rem .6rem;border-radius:6px;font-family:'Times New Roman',serif;font-size:1.05rem;text-align:center;margin:.3rem 0;color:#c0392b;font-weight:700}
+.knowledge-card.c1{border-color:#e74c3c}.knowledge-card.c2{border-color:#e67e22}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#3498db}.knowledge-card.c5{border-color:#9b59b6}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#e74c3c,#c0392b);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:1.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-text .expr{font-size:1.05rem;color:#c0392b}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.65rem 1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.9rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#e74c3c;background:#e74c3c10}
+.option .letter{width:24px;height:24px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#fff5f5;border-left:4px solid var(--primary);font-size:.88rem;display:none;line-height:1.8}
+.explanation.show{display:block}
+.explanation .exp-formula{font-family:'Times New Roman',serif;color:#c0392b;font-weight:600}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(231,76,60,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#e74c3c;color:#e74c3c}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#e74c3c,#c0392b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem;text-align:center}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#e74c3c;margin-bottom:.6rem;text-align:center}
+.flashcard-back p{font-size:.95rem;line-height:1.9;color:var(--text);text-align:center}
+.flashcard-back .f-formula{font-family:'Times New Roman',serif;font-size:1.1rem;font-weight:700;color:#e74c3c}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.import-btn{margin-top:1rem;text-align:center}
+.teacher-talk{background:linear-gradient(135deg,#e74c3c10,#c0392b10);border-radius:var(--radius);padding:1.5rem;margin:1rem 0;border-left:4px solid #e74c3c}
+.teacher-talk h4{color:#e74c3c;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.teacher-talk p{font-size:.9rem;line-height:1.9}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style>
+.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 数学 · 正比例函数与一次函数</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-chart-line"></i> 正比例函数与一次函数</h1>
+    <p>暑假初二博学班 · 天元教育 | ⭐⭐⭐⭐ 难度</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 40道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#e74c3c"></i> 第十一讲 · 正比例函数与一次函数</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-th-list" style="color:#e74c3c"></i> 函数基础</h3><ul>
+        <li>常量：变化中<strong class="hl">始终不变</strong>；变量：发生变化的量（自变量/因变量）</li>
+        <li>函数定义：每个 x 都有<strong class="hl">唯一确定</strong>的 y 与之对应</li>
+        <li>表示方法：<strong class="hl">关系式法 / 列表法 / 图象法</strong></li>
+        <li>⚠️ 函数不是数，是<strong class="hl">一种关系</strong>；一个 x 对应一个 y</li>
+        <li>一个 y 可对应多个 x（如 y=0 时多个 x）</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-minus" style="color:#667eea"></i> 正比例函数定义</h3><ul>
+        <li>形如 <strong class="hl">y=kx（k≠0）</strong> 的函数</li>
+        <li>k 叫<strong class="hl">比例系数（斜率）</strong></li>
+        <li>图象：一条<strong class="hl">经过原点</strong>的直线</li>
+        <li>例：y=2x、y=-3x、y=½x</li>
+        <li>⚠️ k=0 时不是正比例函数</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-arrow-up" style="color:#2ecc71"></i> k>0 的性质</h3><ul>
+        <li>图象过<strong class="hl">第一、三象限</strong>（含原点）</li>
+        <li>从左向右<strong class="hl">不断上升</strong></li>
+        <li>y 随 x 增大而<strong class="hl">增大</strong>，随 x 减小而减小</li>
+        <li>|k| 越大，图象越靠近 <strong class="hl">y 轴</strong></li>
+        <li>例：y=2x 比 y=½x 更陡</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-arrow-down" style="color:#f39c12"></i> k<0 的性质</h3><ul>
+        <li>图象过<strong class="hl">第二、四象限</strong>（含原点）</li>
+        <li>从左向右<strong class="hl">不断下降</strong></li>
+        <li>y 随 x 增大而<strong class="hl">减小</strong>，随 x 减小而增大</li>
+        <li>|k| 越大，图象越靠近 <strong class="hl">y 轴</strong></li>
+        <li>例：y=-3x 比 y=-½x 更陡</li>
+      </ul></div>
+      <div class="knowledge-card c1"><h3><i class="fas fa-cog" style="color:#9b59b6"></i> 一次函数定义</h3><ul>
+        <li>形如 <strong class="hl">y=kx+b（k≠0）</strong> 的函数</li>
+        <li>b=0 时即<strong class="hl">正比例函数</strong>（特殊的一次函数）</li>
+        <li>k 不能为 0，b 可以为 0</li>
+        <li>图象：一条<strong class="hl">直线</strong>（不一定过原点）</li>
+        <li>一次函数指数为 <strong class="hl">1</strong>（x¹）</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-arrows-alt-v" style="color:#3498db"></i> b（截距）的作用</h3><ul>
+        <li>决定图象与 <strong class="hl">y 轴交点</strong>位置</li>
+        <li>b&gt;0：与 y 轴交于<strong class="hl">正半轴</strong></li>
+        <li>b&lt;0：与 y 轴交于<strong class="hl">负半轴</strong></li>
+        <li>b=0：过<strong class="hl">原点</strong>（正比例函数）</li>
+        <li>y 轴交点坐标：<strong class="hl">(0, b)</strong></li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-border-all" style="color:#e67e22"></i> k、b 四组合象限</h3><ul>
+        <li>k&gt;0,b&gt;0：过<strong class="hl">一、二、三</strong>象限</li>
+        <li>k&gt;0,b&lt;0：过<strong class="hl">一、三、四</strong>象限</li>
+        <li>k&lt;0,b&gt;0：过<strong class="hl">一、二、四</strong>象限</li>
+        <li>k&lt;0,b&lt;0：过<strong class="hl">二、三、四</strong>象限</li>
+        <li>⭐ 口诀：k 定增减过一二三/二四象限，b 定与 y 轴交点</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-calculator" style="color:#16a085"></i> 交点与面积</h3><ul>
+        <li>与 x 轴交点：<strong class="hl">令 y=0</strong> → (-b/k, 0)</li>
+        <li>与 y 轴交点：<strong class="hl">令 x=0</strong> → (0, b)</li>
+        <li>围成三角形：<strong class="hl">½×|横截距|×|纵截距|</strong></li>
+        <li>例 y=kx+b：面积=½×|(-b/k)|×|b|=b²/(2|k|)</li>
+        <li>⚠️ 别忘了 ×½</li>
+      </ul></div>
+    </div><div class="teacher-talk">
+      <h4><i class="fas fa-chalkboard-teacher"></i> 老师课堂总结</h4>
+      <p>
+        <strong>本讲核心</strong> — 函数是"每个 x 对应唯一 y"的对应关系；正比例函数 y=kx 过原点，一次函数 y=kx+b 由 k、b 决定图象形状与位置<br>
+        <strong>两条主线</strong> — k（斜率）定增减：k&gt;0 递增（一三象限）、k&lt;0 递减（二四象限），|k| 越大越靠近 y 轴；b（截距）定与 y 轴交点：b&gt;0 正半轴、b&lt;0 负半轴、b=0 过原点<br>
+        <strong>四个组合</strong> — k、b 同号过一二三或二三四；k&gt;0,b&lt;0 过一三四；k&lt;0,b&gt;0 过一二四（先定 b 再看 k）<br>
+        <strong>老师寄语</strong> — 斜率是前行的姿态，或平缓稳健，或昂扬向上；截距是人生的起点，或平凡淡然，或满载期许。以坚定的"斜率"坚守初心，以从容的心态接纳"截距"的不同<br>
+        <strong>老师提醒</strong> — 求与坐标轴交点：与 x 轴令 y=0，与 y 轴令 x=0；围成三角形面积 = ½×两截距绝对值之积。判断"是不是函数"看：一个 x 是否只对应一个 y（|y|=x 型不是函数）
+      </p>
+    </div>
+
+
+  </div><div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 40</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header" style="font-weight:700;margin-bottom:.8rem"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每条标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 数学 · 正比例函数与一次函数互动学习 | 天元教育 · 初二暑假博学班</div>
+
+<script>
+const questions = [
+// === 模块一：函数初步 ===
+{q:'在 S=πr² 中，变量是',opts:['A. r 和 S','B. π 和 r','C. π 和 S','D. 只有 S'],ans:0,exp:'S 随 r 变化，<strong>r 和 S 是变量</strong>；π 是常量。'},
+{q:'关于 y²=(3x-5)²，下列说法正确的是',opts:['A. y 是 x 的函数，因为能开方','B. y 是 x 的函数，且一一对应','C. y 不是 x 的函数，一个 x 对应两个 y','D. 无法判断'],ans:2,exp:'开方得 y=±(3x-5)，一个 x 对应<strong>两个 y</strong>，不是函数。'},
+{q:'在 |y|=-12x 中，y 是 x 的函数吗？',opts:['A. 是，因为 y=±12x','B. 是，一个 x 对应一个 y','C. 不是，一个 x 对应两个 y','D. 不是，x 没有对应的 y'],ans:2,exp:'|y| 使一个 x 对应<strong>正负两个 y</strong>，不满足函数定义。'},
+{q:'关于函数的理解，下列说法正确的是',opts:['A. 一个 y 只能对应一个 x','B. 一个 x 对应唯一一个 y，但一个 y 可对应多个 x','C. 函数是一种数','D. x 和 y 必须一一对应'],ans:1,exp:'函数是<strong>一种关系</strong>：一个 x 对应唯一 y；一个 y 可对应多个 x。'},
+{q:'函数的表示方法不包括',opts:['A. 关系式法','B. 列表法','C. 图象法','D. 方程法'],ans:3,exp:'三种表示法：<strong>关系式法、列表法、图象法</strong>。'},
+{q:'判断图象是否表示 y 是 x 的函数，正确方法是',opts:['A. 作与 x 轴垂直的直线，与图象最多有一个交点','B. 作与 y 轴垂直的直线，与图象最多有一个交点','C. 图象必须是直线','D. 图象必须过原点'],ans:0,exp:'<strong>垂直检验法</strong>：作 x 轴垂线，与图象<strong>最多一个交点</strong>才是函数。'},
+// === 模块二：正比例函数 ===
+{q:'下列函数关系中，y 是 x 的正比例函数的是',opts:['A. y=2x-1','B. y=-x','C. y=-3/x','D. y=2(x-1)'],ans:1,exp:'正比例函数形如 <strong>y=kx（k≠0）</strong>；A/D 含常数项、C 是反比例。'},
+{q:'若 y=(m-2)x^(2m²-7) 是正比例函数，则 m 的值是',opts:['A. 2','B. -2','C. ±2','D. 4'],ans:1,exp:'指数 2m²-7=1 → m=±2；又 k=m-2≠0 → m≠2，故 <strong>m=-2</strong>。'},
+{q:'若 y=(4m²-1)x²+(1-2m)x 是正比例函数，则 m 的值为',opts:['A. 1/2','B. -1/2','C. ±1/2','D. 0'],ans:1,exp:'二次项系数 4m²-1=0 → m=±½；一次项系数 1-2m≠0 → m≠½，故 <strong>m=-½</strong>。'},
+{q:'已知正比例函数 y=(m-3)x 的图象过第二、四象限，则 m 的取值范围是',opts:['A. m≥3','B. m&gt;3','C. m≤3','D. m&lt;3'],ans:3,exp:'过二四象限 → k&lt;0 → <strong>m-3&lt;0</strong> → m&lt;3。'},
+{q:'下列正比例函数的图象经过第一、三象限的是',opts:['A. y=(√2-√3)x','B. y=(3.14-π)x','C. y=-(m²+1)x（m 为常数）','D. y=(√2-1)x'],ans:3,exp:'过一三象限需 <strong>k&gt;0</strong>；A/B/C 的 k 均&lt;0，D 中 √2-1&gt;0 ✅。'},
+{q:'若正比例函数 y=kx 的图象经过点 (1,5)，则 y 随 x 的增大而',opts:['A. 增大','B. 减小','C. 不变','D. 先增后减'],ans:0,exp:'代入 (1,5) 得 k=5&gt;0 → y 随 x 增大而<strong>增大</strong>。'},
+{q:'正比例函数 y=mx 的图象经过 A(x₁,y₁)、B(x₂,y₂)，当 x₁&lt;x₂ 时 y₁&lt;y₂，则 m 的取值范围是',opts:['A. m&gt;0','B. m&lt;0','C. m=0','D. m≥0'],ans:0,exp:'x 增大 y 也增大 → 递增 → <strong>k=m&gt;0</strong>。'},
+{q:'正比例函数 y=(1-2m)x 的图象经过 A(x₁,y₁)、B(x₂,y₂)，当 x₁&lt;x₂ 时 y₁&gt;y₂，则 m 的取值范围是',opts:['A. m&gt;1/2','B. m&lt;1/2','C. m&gt;0','D. m&lt;0'],ans:0,exp:'x 增大 y 减小 → 递减 → k=1-2m&lt;0 → <strong>m&gt;1/2</strong>。'},
+{q:'下列关于正比例函数 y=-5x 的说法中，正确的是',opts:['A. 当 x=1 时，y=5','B. 它的图象是一条经过原点的直线','C. y 随 x 的增大而增大','D. 它的图象经过第一、三象限'],ans:1,exp:'正比例函数图象<strong>必过原点</strong>；k=-5&lt;0 递减、过二四象限；x=1 时 y=-5。'},
+{q:'正比例函数 y=(k-3)x 的图象经过第一、三象限，那么 k 的取值范围是',opts:['A. k&gt;0','B. k&gt;3','C. k&lt;0','D. k&lt;3'],ans:1,exp:'过一三象限 → k&gt;0 → <strong>k-3&gt;0</strong> → k&gt;3。'},
+{q:'正比例函数 y=kx（k≠0）的图象一定经过',opts:['A. 原点','B. 第一象限','C. 第二象限','D. y 轴正半轴'],ans:0,exp:'正比例函数图象是一条<strong>经过原点的直线</strong>。'},
+// === 模块三：一次函数 ===
+{q:'下列函数中是一次函数的是：①y=2px(p为常数) ②y=-2x ③y=(3x-1)/2 ④y=x²+3 ⑤y=π(x+1)',opts:['A. ①②④','B. ②③⑤','C. ③④⑤','D. ①③⑤'],ans:1,exp:'一次函数形如 y=kx+b(k≠0)：<strong>②③⑤</strong>；①p 可能为 0、④是二次函数。'},
+{q:'若 y=x^(k²-3)+k-2 是一次函数，则 k 的值为',opts:['A. ±√2','B. ±2','C. 2','D. -2'],ans:1,exp:'指数 k²-3=1 → k²=4 → <strong>k=±2</strong>（k 为常数无额外限制）。'},
+{q:'函数 y=(m-√2)x^(m²-1)+2m 是一次函数，当 m=-√2 时其表达式是',opts:['A. y=-2√2x+2√2','B. y=-2√2x-2√2','C. y=2√2x-2√2','D. y=-2√2x'],ans:1,exp:'m=-√2 → k=m-√2=-2√2，b=2m=-2√2 → <strong>y=-2√2x-2√2</strong>。'},
+{q:'一次函数 y=kx+b 的图象经过第一象限，且与 y 轴负半轴相交，那么',opts:['A. k&gt;0, b&gt;0','B. k&lt;0, b&lt;0','C. k&gt;0, b&lt;0','D. k&lt;0, b&gt;0'],ans:2,exp:'与 y 轴负半轴 → b&lt;0；过第一象限 → k&gt;0（一三四象限）→ <strong>k&gt;0, b&lt;0</strong>。'},
+{q:'已知一次函数 y=kx+b，其中 kb&gt;0，则所有符合条件的图象一定都经过',opts:['A. 第一、二象限','B. 第二、三象限','C. 第三、四象限','D. 第一、四象限'],ans:1,exp:'kb&gt;0 → k、b 同号：同正过一二三，同负过二三四，<strong>共同经过第二、三象限</strong>。'},
+{q:'在函数 y=kx+3（k&lt;0）的图象上有 A(-2,y₁)、B(1,y₂)、C(-1,y₃) 三点，则',opts:['A. y₁&lt;y₂&lt;y₃','B. y₁&lt;y₃&lt;y₂','C. y₃&lt;y₂&lt;y₁','D. y₂&lt;y₃&lt;y₁'],ans:3,exp:'k&lt;0 递减，x 越大 y 越小；x：-2&lt;-1&lt;1 → <strong>y₁&gt;y₃&gt;y₂</strong>，即 y₂&lt;y₃&lt;y₁。'},
+{q:'函数 y=kx+b 的图象在第一、三、四象限，那么 k、b 的符号是',opts:['A. k&gt;0, b&gt;0','B. k&lt;0, b&lt;0','C. k&lt;0, b&gt;0','D. k&gt;0, b&lt;0'],ans:3,exp:'过一三四象限 → <strong>k&gt;0, b&lt;0</strong>（k&gt;0 过一三，b&lt;0 交 y 轴负半轴）。'},
+{q:'若一次函数 y=kx+b 的函数值随 x 的增大而减小，且图象与 y 轴的正半轴相交，则',opts:['A. k&gt;0, b&gt;0','B. k&gt;0, b&lt;0','C. k&lt;0, b&gt;0','D. k&lt;0, b&lt;0'],ans:2,exp:'递减 → k&lt;0；与 y 轴正半轴 → b&gt;0 → <strong>k&lt;0, b&gt;0</strong>（过一二四象限）。'},
+{q:'若一次函数 y=(m-2)x+m-3 的图象过第一、三、四象限，则 m 的取值范围为',opts:['A. m&gt;2','B. m&lt;3','C. 2&lt;m&lt;3','D. m&gt;3'],ans:2,exp:'过一三四象限 → k=m-2&gt;0 且 b=m-3&lt;0 → <strong>2&lt;m&lt;3</strong>。'},
+{q:'一次函数 y=kx+b 的图象与 x 轴的交点坐标是',opts:['A. (-b/k, 0)','B. (0, -b/k)','C. (b/k, 0)','D. (0, b)'],ans:0,exp:'与 x 轴交点<strong>令 y=0</strong>：kx+b=0 → x=-b/k → <strong>(-b/k, 0)</strong>。'},
+{q:'一次函数 y=kx+b 的图象与 y 轴的交点坐标是',opts:['A. (b, 0)','B. (0, b)','C. (-b, 0)','D. (0, -b)'],ans:1,exp:'与 y 轴交点<strong>令 x=0</strong>：y=b → <strong>(0, b)</strong>。'},
+{q:'一次函数 y=-2x+3 的图象与 x 轴的交点坐标是',opts:['A. (3/2, 0)','B. (0, 3/2)','C. (3, 0)','D. (0, 3)'],ans:0,exp:'令 y=0：-2x+3=0 → x=3/2 → <strong>(3/2, 0)</strong>。'},
+{q:'一次函数 y=-3x-5 的图象与 y 轴的交点坐标是',opts:['A. (-5/3, 0)','B. (0, -5)','C. (5/3, 0)','D. (0, 5)'],ans:1,exp:'令 x=0：y=-5 → <strong>(0, -5)</strong>。'},
+// === 模块四：交点与面积 ===
+{q:'一次函数 y=-2x+½ 的图象与 x 轴的交点坐标是',opts:['A. (¼, 0)','B. (-¼, 0)','C. (0, ½)','D. (½, 0)'],ans:0,exp:'令 y=0：-2x+½=0 → x=¼ → <strong>(¼, 0)</strong>。'},
+{q:'直线 y=-√3/3x+1 与 x 轴的交点坐标是',opts:['A. (√3, 0)','B. (-√3, 0)','C. (3, 0)','D. (0, 1)'],ans:0,exp:'令 y=0：-√3/3x+1=0 → x=√3 → <strong>(√3, 0)</strong>。'},
+{q:'直线 y=√3/3x-√3 与坐标轴围成的三角形面积是',opts:['A. √3','B. 3√3/2','C. 3√3','D. √3/2'],ans:1,exp:'x 截距 3、y 截距 -√3；面积 = ½×3×√3 = <strong>3√3/2</strong>。'},
+{q:'直线 y=-√2/2x+√2/2 与坐标轴围成的三角形面积是',opts:['A. √2/2','B. √2','C. √2/4','D. 1/4'],ans:2,exp:'x 截距 1、y 截距 √2/2；面积 = ½×1×√2/2 = <strong>√2/4</strong>。'},
+{q:'直线 y=-6x-12 与坐标轴围成的三角形面积是',opts:['A. 6','B. 12','C. 24','D. 36'],ans:1,exp:'x 截距 -2、y 截距 -12；面积 = ½×2×12 = <strong>12</strong>。'},
+{q:'直线 y=-2/3x+3/2 与坐标轴围成的三角形面积是',opts:['A. 27/16','B. 9/8','C. 3/4','D. 9/16'],ans:0,exp:'x 截距 9/4、y 截距 3/2；面积 = ½×(9/4)×(3/2) = <strong>27/16</strong>。'},
+{q:'直线 y=-√2x+3√2 与 x 轴的交点坐标是',opts:['A. (3, 0)','B. (-3, 0)','C. (0, 3√2)','D. (3√2, 0)'],ans:0,exp:'令 y=0：-√2x+3√2=0 → x=3 → <strong>(3, 0)</strong>。'},
+// === 综合巩固 ===
+{q:'已知 y=(2m-1)x^(m²-3) 是正比例函数，且 y 随 x 的增大而减小，则 m 的值为',opts:['A. 2','B. -2','C. ±2','D. 1/2'],ans:1,exp:'指数 m²-3=1 → m=±2；递减 → k=2m-1&lt;0 → m&lt;½ → <strong>m=-2</strong>。'},
+{q:'当 a 为何值时，函数 y=(a²-1)x²+(a+1)x-2 是一次函数？',opts:['A. ±1','B. 1','C. -1','D. 0'],ans:1,exp:'二次项系数 a²-1=0 → a=±1；一次项 a+1≠0 → a≠-1 → <strong>a=1</strong>。'},
+{q:'若一次函数 y=(m-2)x^(m²-8)+5 中 y 随 x 增大而减小，则 m 的值为',opts:['A. ±3','B. 3','C. -3','D. 2'],ans:2,exp:'指数 m²-8=1 → m=±3；递减 → k=m-2&lt;0 → m&lt;2 → <strong>m=-3</strong>。'},
+];
+
+
+
+
+
+
+
+
+const flashcards = [
+{front:'什么是常量、什么是变量？',back:'常量：变化过程中<strong>始终不变</strong>的量；变量：变化过程中<strong>发生改变</strong>的量（如 S=πr² 中 π 是常量，r 和 S 是变量）。'},
+{front:'函数的定义是什么？',back:'两个变量 x、y，对于<strong>每一个 x</strong> 都有<strong>唯一确定</strong>的 y 与之对应，则 y 是 x 的函数。函数不是数，是一种<strong>对应关系</strong>。'},
+{front:'函数的三种表示方法？',back:'①<strong>关系式法</strong>（解析式）②<strong>列表法</strong>③<strong>图象法</strong>（列表→描点→连线）。'},
+{front:'怎么判断一个式子中 y 是不是 x 的函数？',back:'看一个 x 是否只对应<strong>唯一一个 y</strong>。如 |y|=x、y²=x 型一个 x 对应正负两个 y，<strong>不是函数</strong>。'},
+{front:'正比例函数的定义？',back:'形如 <strong>y=kx（k≠0）</strong> 的函数，k 叫比例系数（斜率）。k=0 时不是正比例函数。'},
+{front:'正比例函数的图象？',back:'一条<strong>经过原点</strong>的直线。k&gt;0 过一三象限上升；k&lt;0 过二四象限下降。'},
+{front:'正比例函数 k&gt;0 的性质？',back:'过<strong>一、三象限</strong>，从左向右上升，y 随 x 增大而<strong>增大</strong>、随 x 减小而减小。'},
+{front:'正比例函数 k&lt;0 的性质？',back:'过<strong>二、四象限</strong>，从左向右下降，y 随 x 增大而<strong>减小</strong>、随 x 减小而增大。'},
+{front:'|k| 的大小对图象有什么影响？',back:'<strong>|k| 越大，图象越靠近 y 轴</strong>（越陡）；|k| 越小，图象越靠近 x 轴（越平缓）。'},
+{front:'一次函数的定义？',back:'形如 <strong>y=kx+b（k≠0）</strong> 的函数。特别地 b=0 时是正比例函数，所以<strong>正比例函数是特殊的一次函数</strong>。'},
+{front:'一次函数中 b（截距）的作用？',back:'决定图象与 <strong>y 轴交点</strong>位置：b&gt;0 交正半轴、b&lt;0 交负半轴、b=0 过原点。交点坐标 (0,b)。'},
+{front:'k&gt;0、b&gt;0 时一次函数过哪些象限？',back:'过<strong>第一、二、三</strong>象限（k&gt;0 递增，b&gt;0 交 y 轴正半轴）。'},
+{front:'k&gt;0、b&lt;0 时一次函数过哪些象限？',back:'过<strong>第一、三、四</strong>象限（k&gt;0 递增，b&lt;0 交 y 轴负半轴）。'},
+{front:'k&lt;0、b&gt;0 时一次函数过哪些象限？',back:'过<strong>第一、二、四</strong>象限（k&lt;0 递减，b&gt;0 交 y 轴正半轴）。'},
+{front:'k&lt;0、b&lt;0 时一次函数过哪些象限？',back:'过<strong>第二、三、四</strong>象限（k&lt;0 递减，b&lt;0 交 y 轴负半轴）。'},
+{front:'一次函数与 x 轴的交点坐标？',back:'<strong>令 y=0</strong>：kx+b=0 → x=-b/k → <strong>(-b/k, 0)</strong>。'},
+{front:'一次函数与 y 轴的交点坐标？',back:'<strong>令 x=0</strong>：y=b → <strong>(0, b)</strong>。'},
+{front:'一次函数与坐标轴围成的三角形面积？',back:'两截距绝对值之积的一半：<strong>S=½×|横截距|×|纵截距|</strong>。'},
+{front:'怎么快速判断 k 的符号？',back:'看图象<strong>增减趋势</strong>：从左向右上升 → k&gt;0；下降 → k&lt;0。过一三象限 k&gt;0，过二四象限 k&lt;0。'},
+{front:'怎么快速判断 b 的符号？',back:'看图象与 y 轴交点：交于<strong>正半轴</strong> → b&gt;0；交于<strong>负半轴</strong> → b&lt;0；过原点 → b=0。'},
+];
+
+
+
+const errors = [
+{title:'❌ 求一次函数参数忘了 k≠0',desc:'<strong>易错</strong>：y=(m-2)x^(2m²-7) 算出 m=±2 直接填两个。<strong>正解</strong>：还要验证 k=m-2≠0 → m=2 舍去，只留 <strong>m=-2</strong>。'},
+{title:'❌ 把正比例函数和一次函数割裂',desc:'<strong>易错</strong>：以为正比例函数不是一次函数。<strong>正解</strong>：y=kx 就是 b=0 的一次函数，<strong>正比例函数是特殊的一次函数</strong>，但一次函数不一定是正比例函数。'},
+{title:'❌ |y|=x 型误判为函数',desc:'<strong>易错</strong>：认为 y²=x、|y|=x 也能叫函数。<strong>正解</strong>：一个 x 对应<strong>正负两个 y</strong>，不满足"唯一对应"，<strong>不是函数</strong>。'},
+{title:'❌ k、b 符号与象限对应记反',desc:'<strong>易错</strong>：k&lt;0,b&gt;0 以为是二三象限。<strong>正解</strong>：先看 b（与 y 轴交点上下），再看 k（增减方向）：k&lt;0,b&gt;0 → 过<strong>一、二、四</strong>象限。'},
+{title:'❌ 求 x 轴交点误令 x=0',desc:'<strong>易错</strong>：求与 x 轴交点代入 x=0 得到 (0,b)。<strong>正解</strong>：与 x 轴交点<strong>令 y=0</strong> → (-b/k, 0)；与 y 轴交点才令 x=0。'},
+{title:'❌ 过象限组合漏判',desc:'<strong>易错</strong>：k&gt;0,b&lt;0 以为过一二三。<strong>正解</strong>：k&gt;0 过一三、b&lt;0 交 y 轴负半轴 → 实际过<strong>一、三、四</strong>。画草图最稳：先画 y 轴交点，再按 k 方向画。'},
+{title:'❌ 增减性判断与 k 符号脱节',desc:'<strong>易错</strong>：k&lt;0 还认为 y 随 x 增大而增大。<strong>正解</strong>：<strong>k&gt;0 递增、k&lt;0 递减</strong>；比较函数值大小按 x 排序后用增减性判断。'},
+{title:'❌ 三角形面积忘了 ×½',desc:'<strong>易错</strong>：算围成面积直接 |截距×截距|。<strong>正解</strong>：三角形面积 <strong>S=½×|横截距|×|纵截距|</strong>，两轴垂直构成直角三角形，必须取一半。'},
+];
+
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const WRONG_HISTORY_KEY='quiz_math10_param_eq';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_math_lesson12';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=_dp?`<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`:'';if(retryMode)h+=`<div style=\"margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block\"><i class=\"fas fa-redo\"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class=\"question-card fade-in-up\"><div class=\"q-num\">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class=\"q-text\">${q.q}</div><div class=\"options\">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class=\"option ${c.join(' ')}\" onclick=\"selA(${oi})\"><span class=\"letter\">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class=\"explanation ${quizAns[idx]>=0?'show':''}\"><strong><i class=\"fas fa-lightbulb\"></i> 解析：</strong><br>${q.exp}</div>
+|<div class=\"quiz-nav\"><button class=\"btn btn-outline\" onclick=\"prevQ()\" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class=\"fas fa-arrow-left\"></i> 上一题</button>
+|<span style=\"font-size:.85rem;color:var(--text-light);align-self:center\">${ansd}/${total}</span>
+|<button class=\"btn btn-primary\" onclick=\"nextQ()\" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class=\"fas fa-arrow-right\"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const idx=shuffled[curQ];const total=retryMode?wrongIds.length:questions.length;const isLast=(retryMode?shuffled.indexOf(idx):curQ)===total-1;if(isLast){if(quizAns[idx]>=0){document.getElementById('quizArea').innerHTML=showResult();}return;}curQ++;renderQ();}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class=\"question-card result-card fade-in-up\"><div class=\"big-icon\">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class=\"score\">${correct}/${total}</div>
+|<div><span class=\"result-stat\"><i class=\"fas fa-check-circle\" style=\"color:var(--success)\"></i> 正确 ${correct} 题</span>
+|<span class=\"result-stat\"><i class=\"fas fa-times-circle\" style=\"color:var(--danger)\"></i> 错误 ${total-correct} 题</span></div>
+|${retryMode?`<div style=\"margin:.5rem 0\"><span class=\"result-stat\"><i class=\"fas fa-history\"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+|${wl.length?`<div style=\"text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)\"><p style=\"font-weight:600;margin-bottom:.5rem;font-size:.85rem\">📝 需要复习：</p>${wl.map(w=>`<div style=\"padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)\">✗ ${w.q.q.substring(0,50)}…<br><small style=\"color:var(--text-light)\">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+|<div style=\"margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap\">
+|<button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\"><i class=\"fas fa-redo\"></i> 重新测验</button>
+|${wl.length?`<button class=\"btn btn-warning\" onclick=\"initRetryMode()\" style=\"background:#e67e22;color:#fff\"><i class=\"fas fa-bug\"></i> 错题重练 (${wl.length}题)</button>`:''}
+|<button class=\"btn btn-success\" onclick=\"importWB()\"><i class=\"fas fa-database\"></i> 导入错题到错题库</button>
+|<button class=\"btn btn-outline\" onclick=\"switchTab('flashcard')\"><i class=\"fas fa-layer-group\"></i> 复习知识卡</button>
+|<button class=\"btn btn-outline\" onclick=\"switchTab('errors')\"><i class=\"fas fa-exclamation-triangle\"></i> 易错点</button>
+|${retryMode?`<button class=\"btn btn-sm btn-outline\" onclick=\"initQ();renderQ()\"><i class=\"fas fa-times\"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'数学',chapter:'正比例函数与一次函数',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'正比例函数与一次函数,象限,平移,对称,旋转,两点间距离,中点坐标,数学'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'数学',chapter:'正比例函数与一次函数',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'正比例函数与一次函数,象限,平移,对称,旋转,两点间距离,中点坐标,数学'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库？'))window.open('wrong_bank.html','_blank');}
+
+let fIdx=0;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class=\"flashcard-container fade-in-up\"><div class=\"flashcard\" id=\"fc\" onclick=\"toggleFC()\"><div class=\"flashcard-face flashcard-front\"><i class=\"fas fa-question-circle\" style=\"font-size:1.8rem;opacity:.5;margin-bottom:.8rem\"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class=\"flashcard-face flashcard-back\"><i class=\"fas fa-lightbulb\" style=\"font-size:1.3rem;color:var(--warning);margin-bottom:.4rem\"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+|<div class=\"flashcard-nav\"><button class=\"btn btn-outline\" onclick=\"renderFC('prev')\" ${fIdx===0?'disabled':''}><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">${fIdx+1}/${flashcards.length}</span><button class=\"btn btn-primary\" onclick=\"renderFC('next')\" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el)el.classList.toggle('flipped');}
+function renderEC(){let s=localStorage.getItem('math_lesson9_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class=\"error-grid\">';errors.forEach((e,i)=>{h+=`<div class=\"error-card fade-in-up\"><div class=\"num\">${i+1}</div><h4>${e.title}</h4><div class=\"ex-wrong\">❌ ${e.wrong}</div><div class=\"ex-right\">✅ ${e.right}</div>
+|<div class=\"check-item ${c[i]?'checked':''}\" onclick=\"toggleEC(${i})\" style=\"margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer\">
+|<div style=\"width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}\">${c[i]?'<i class=\"fas fa-check\" style=\"font-size:10px\"></i>':''}</div>
+|<span style=\"font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}\">我已掌握这个易错点</span></div></div>`;});h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('math_lesson9_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('math_lesson9_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('math_lesson9_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('math_lesson9_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
