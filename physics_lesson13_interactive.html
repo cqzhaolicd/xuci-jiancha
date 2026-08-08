@@ -1,0 +1,421 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚖️ 质量和体积 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style>
+.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 质量和体积</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-weight-hanging"></i> 质量和体积 · 互动学习</h1>
+    <p>初二博学班 · 4 模块 · 22 题 · 20 卡牌 | 天元教育</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 22道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第十三讲 · 质量和体积</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-weight-hanging" style="color:#667eea"></i> 质量</h3><ul>
+        <li>定义：物体所含<strong class="hl">物质的多少</strong>，符号 m</li>
+        <li>质量是物体的<strong class="hl">基本属性</strong>，不随位置、形状、温度、状态变化</li>
+        <li>宇航员到月球质量<strong class="hl">不变</strong>；冰熔化成水质量不变</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-balance-scale" style="color:#e67e22"></i> 质量单位</h3><ul>
+        <li>国际单位：<strong class="hl">千克(kg)</strong>；常用 t、g、mg</li>
+        <li>换算：1t=1000kg=10⁶g=10⁹mg</li>
+        <li>1克拉=0.2g，1磅=450g</li>
+        <li>单位符号：t 吨、kg 千克、g 克、mg 毫克</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-egg" style="color:#2ecc71"></i> 质量估测</h3><ul>
+        <li>回形针 30mg；一元硬币 <strong class="hl">6g</strong>；药片 200mg</li>
+        <li>鸡蛋 <strong class="hl">50g</strong>；苹果 150g；物理书 200g</li>
+        <li>矿泉水 500g；老母鸡 3kg；中学生 <strong class="hl">50kg</strong></li>
+        <li>大象 5t；蓝鲸 150t；小轿车 1~2t</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-tools" style="color:#3498db"></i> 托盘天平使用</h3><ul>
+        <li>测量工具：托盘天平、台秤、杆秤、电子秤、地磅</li>
+        <li><strong class="hl">放</strong>：天平放水平桌面；<strong class="hl">调</strong>：游码归零、平衡螺母调平（<strong class="hl">左偏右调</strong>）</li>
+        <li><strong class="hl">称</strong>：左物右码、砝码从大到小；<strong class="hl">读</strong>：m物=m砝码+游码示数（<strong class="hl">游码读左边</strong>）</li>
+      </ul></div>
+      <div class="knowledge-card c5"><h3><i class="fas fa-exclamation-triangle" style="color:#e74c3c"></i> 天平注意事项</h3><ul>
+        <li>调平后称量时<strong class="hl">不能再动平衡螺母</strong></li>
+        <li>砝码、游码用<strong class="hl">镊子</strong>夹取，防腐蚀</li>
+        <li>液体<strong class="hl">装杯</strong>测；固体<strong class="hl">垫纸</strong>（脏、化、腐物品不能直接放盘）</li>
+        <li>烧杯左右都垫或单边垫完再调零；<strong class="hl">不能用量筒</strong>装液体称量（太高易倒）</li>
+      </ul></div>
+      <div class="knowledge-card c6"><h3><i class="fas fa-cube" style="color:#9b59b6"></i> 体积定义与单位</h3><ul>
+        <li>定义：物体所占<strong class="hl">空间的大小</strong>，符号 V</li>
+        <li>国际单位：<strong class="hl">立方米(m³)</strong>；常用 dm³、cm³、L、mL</li>
+        <li>换算：1m³=10³dm³=10⁶cm³；<strong class="hl">1L=1dm³</strong>，1mL=1cm³</li>
+      </ul></div>
+      <div class="knowledge-card c7"><h3><i class="fas fa-flask" style="color:#1abc9c"></i> 体积测量</h3><ul>
+        <li>测液体：<strong class="hl">量筒、量杯</strong>；读数视线与<strong class="hl">凹液面最低处</strong>相平（仰小俯大）</li>
+        <li>规则固体：测边长用公式计算</li>
+        <li>不规则固体：<strong class="hl">排水法</strong> V物=V₂-V₁</li>
+        <li>漂浮物：<strong class="hl">针压法、吊重物法</strong>；溶水物：<strong class="hl">排沙法、排油法</strong></li>
+      </ul></div>
+      <div class="knowledge-card c8"><h3><i class="fas fa-chart-line" style="color:#34495e"></i> 误差分析</h3><ul>
+        <li>先测V₁再测V₂（正常排水法）→ 结果准确</li>
+        <li>取出物<strong class="hl">沾水带出</strong>→V₁偏小→测得体积<strong class="hl">偏大</strong></li>
+        <li>木块<strong class="hl">吸水</strong>→V₃偏小→测得体积<strong class="hl">偏小</strong></li>
+        <li>解决吸水：<strong class="hl">包一层薄膜</strong>或<strong class="hl">吸足水再测</strong></li>
+        <li>V铁=V₂-V₁；V木=V₃-V₂</li>
+      </ul></div>
+      </div>
+
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第十三讲</h4>
+      <p>
+        <strong>质量</strong> — 物体所含物质的多少；属性：不随位置/形状/温度/状态变化<br>
+        <strong>单位</strong> — kg（国际）、t/g/mg；1t=1000kg=10⁶g；1克拉=0.2g、1磅=450g<br>
+        <strong>估测</strong> — 鸡蛋50g、一元硬币6g、中学生50kg、矿泉水500g、大象5t<br>
+        <strong>天平</strong> — 放→调→称→读：左偏右调、左物右码、m物=m砝码+游码（游码读左边）<br>
+        <strong>天平注意</strong> — 调平后不动平衡螺母、砝码用镊子、液体装杯、固体垫纸<br>
+        <strong>体积</strong> — 国际单位m³；1L=1dm³、1mL=1cm³；量筒读数凹液面最低处（仰小俯大）<br>
+        <strong>测固体</strong> — 排水法V物=V₂-V₁；漂浮物针压法/吊重物；溶水物排沙/排油；吸水物包薄膜<br>
+        <strong>老师课后总结</strong> — 质量与体积：掌握质量属性与天平规范使用；会用排水法测体积并分析误差
+      </p>
+    </div>
+    </div><div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 22</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 质量和体积互动学习 | 天元教育 · 初二博学班</div>
+
+<script>
+const questions = [
+{q:'质量是指物体所含',opts:["A. 物质的多少", "B. 重力的大小", "C. 体积的大小", "D. 密度的大小"],ans:0,exp:'质量定义：物体所含<strong>物质的多少</strong>（m）。'},
+{q:'宇航员从地球到月球，他的质量将',opts:["A. 变大", "B. 变小", "C. 不变", "D. 变为零"],ans:2,exp:'质量是物体的<strong>属性</strong>，不随位置变化，宇航员到月球质量不变。'},
+{q:'把铁块加热熔化成铁水，它的质量',opts:["A. 变大", "B. 变小", "C. 不变", "D. 无法判断"],ans:2,exp:'质量不随<strong>温度、状态</strong>变化，铁块变铁水质量不变。'},
+{q:'1t 等于',opts:["A. 10kg", "B. 100kg", "C. 1000kg", "D. 10000kg"],ans:2,exp:'1t=<strong>1000</strong>kg。'},
+{q:'一个鸡蛋质量约50g，合',opts:["A. 0.05kg", "B. 0.5kg", "C. 5kg", "D. 500g"],ans:0,exp:'1kg=1000g，50g=<strong>0.05</strong>kg。'},
+{q:'下列估测最接近实际的是',opts:["A. 一个鸡蛋约500g", "B. 一名中学生约50kg", "C. 一元硬币约50g", "D. 一瓶矿泉水约5kg"],ans:1,exp:'中学生约<strong>50kg</strong>；鸡蛋约50g、硬币约6g、矿泉水约500g。'},
+{q:'实验室测量质量的工具是',opts:["A. 量筒", "B. 刻度尺", "C. 托盘天平", "D. 弹簧测力计"],ans:2,exp:'测量质量用<strong>托盘天平</strong>；量筒测体积、刻度尺测长度。'},
+{q:'使用托盘天平时，首先应',opts:["A. 将天平放在水平桌面上", "B. 左物右码开始称量", "C. 调节游码归零", "D. 直接放物体"],ans:0,exp:'天平使用第一步：<strong>放</strong>——放在水平桌面上。'},
+{q:'调节天平横梁平衡时，指针左偏，应将平衡螺母向',opts:["A. 左调", "B. 右调", "C. 上调", "D. 下调"],ans:1,exp:'<strong>左偏右调</strong>：指针左偏说明左盘重，平衡螺母向右调。'},
+{q:'称量时物体应放在____盘，砝码放在____盘',opts:["A. 左；右", "B. 右；左", "C. 左；左", "D. 右；右"],ans:0,exp:'天平称量规则：<strong>左物右码</strong>。'},
+{q:'砝码50g+20g，游码示数2.4g，物体质量为',opts:["A. 72.4g", "B. 67.6g", "C. 70g", "D. 74g"],ans:0,exp:'m物=m砝码+游码示数=50+20+2.4=<strong>72.4g</strong>。'},
+{q:'读取游码示数时，应读游码',opts:["A. 左边所对刻度", "B. 右边所对刻度", "C. 中间所对刻度", "D. 任意位置"],ans:0,exp:'游码读数：读<strong>左边</strong>所对刻度。'},
+{q:'天平调平后，称量过程中',opts:["A. 不能再调节平衡螺母", "B. 可以调节平衡螺母", "C. 可以移动游码归零", "D. 可以左右换盘"],ans:0,exp:'调平后称量时<strong>不能动平衡螺母</strong>，只能加减砝码、移动游码。'},
+{q:'取放砝码应使用',opts:["A. 镊子", "B. 手直接拿", "C. 小刀", "D. 夹子随意"],ans:0,exp:'砝码、游码用<strong>镊子</strong>夹取，防止腐蚀生锈。'},
+{q:'体积的国际单位是',opts:["A. 立方米(m³)", "B. 升(L)", "C. 立方厘米(cm³)", "D. 毫升(mL)"],ans:0,exp:'体积国际单位<strong>m³</strong>；L、cm³、mL 是常用单位。'},
+{q:'1L 等于',opts:["A. 1m³", "B. 1dm³", "C. 1cm³", "D. 10dm³"],ans:1,exp:'<strong>1L=1dm³</strong>；1mL=1cm³。'},
+{q:'用量筒测液体体积，读数时视线应',opts:["A. 与凹液面最低处相平", "B. 与凹液面最高处相平", "C. 俯视量筒刻度", "D. 仰视量筒刻度"],ans:0,exp:'量筒读数：视线与<strong>凹液面最低处</strong>相平；俯视偏大、仰视偏小。'},
+{q:'量筒内原有水V₁，放入石块后示数为V₂，石块体积为',opts:["A. V₂-V₁", "B. V₂+V₁", "C. V₁-V₂", "D. V₂"],ans:0,exp:'排水法：V物=<strong>V₂-V₁</strong>。'},
+{q:'测石块体积时，从水中取出石块带出一部分水，测得体积会',opts:["A. 偏大", "B. 偏小", "C. 不变", "D. 无法判断"],ans:0,exp:'带出水→量筒中水<strong>V₁偏小</strong>→V₂-V₁<strong>偏大</strong>。'},
+{q:'测木块（会吸水）体积，正确的做法是',opts:["A. 直接放入水中读数", "B. 包一层薄膜再测", "C. 用排沙法", "D. 用针压法"],ans:1,exp:'木块吸水会使测得体积<strong>偏小</strong>，应<strong>包一层薄膜</strong>或吸足水后再测。'},
+{q:'漂浮在水面的小木块测体积，可采用',opts:["A. 针压法或吊重物法", "B. 直接排水法", "C. 排油法", "D. 刻度尺量"],ans:0,exp:'漂浮物不能自然浸没，用<strong>针压法</strong>（针压入水）或<strong>吊重物法</strong>使其浸没。'},
+{q:'易溶于水的物体（如食盐）测体积，应用',opts:["A. 排水法", "B. 排沙法或排油法", "C. 量筒直接测", "D. 天平换算"],ans:1,exp:'溶水物不能排水法，用<strong>排沙法、排油法</strong>。'}
+];
+
+
+const flashcards = [
+{front:'什么是质量？',back:'物体所含<strong>物质的多少</strong>，符号 m；是物体的基本属性。'},
+{front:'质量有什么特点？',back:'<strong>不随位置、形状、温度、状态</strong>变化而变化（到月球不变、冰化水不变）。'},
+{front:'质量单位有哪些？',back:'国际单位<strong>千克(kg)</strong>；常用 t、g、mg；1t=1000kg=10⁶g=10⁹mg。'},
+{front:'常见质量估测？',back:'鸡蛋<strong>50g</strong>、一元硬币6g、中学生50kg、苹果150g、矿泉水500g、大象5t、蓝鲸150t。'},
+{front:'托盘天平使用四步？',back:'<strong>放</strong>（水平桌面）→<strong>调</strong>（游码归零、螺母调平）→<strong>称</strong>（左物右码）→<strong>读</strong>（m物=m砝码+游码）。'},
+{front:'天平指针左偏怎么办？',back:'<strong>左偏右调</strong>：指针左偏说明左盘重，平衡螺母向右调。'},
+{front:'天平读数公式？',back:'m物=<strong>m砝码+游码示数</strong>；游码读数读<strong>左边</strong>。'},
+{front:'天平使用注意事项？',back:'调平后<strong>不动平衡螺母</strong>；砝码游码用<strong>镊子</strong>；液体装杯、固体垫纸；不能用量筒装液体称。'},
+{front:'什么是体积？',back:'物体所占<strong>空间的大小</strong>，符号 V；国际单位<strong>立方米(m³)</strong>。'},
+{front:'体积单位换算？',back:'1m³=10³dm³=10⁶cm³；<strong>1L=1dm³</strong>，1mL=1cm³。'},
+{front:'量筒读数要点？',back:'视线与<strong>凹液面最低处</strong>相平；<strong>俯视偏大、仰视偏小</strong>。'},
+{front:'测液体体积用什么？',back:'<strong>量筒、量杯</strong>。'},
+{front:'测规则固体体积？',back:'直接测量边长，用公式计算（如正方体 V=a³、长方体 V=abh）。'},
+{front:'排水法测体积？',back:'量筒水V₁，放入物体示数V₂，V物=<strong>V₂-V₁</strong>。'},
+{front:'漂浮物体如何测体积？',back:'<strong>针压法</strong>（用针把物体压入水中）或<strong>吊重物法</strong>。'},
+{front:'溶水物体如何测体积？',back:'<strong>排沙法、排油法</strong>（如食盐不能排水法）。'},
+{front:'排水法误差：沾水带出？',back:'取出物带出水→V₁偏小→测得体积<strong>偏大</strong>。'},
+{front:'排水法误差：木块吸水？',back:'V₃偏小→测得体积<strong>偏小</strong>；应<strong>包薄膜</strong>或<strong>吸足水</strong>再测。'},
+{front:'质量测量工具有哪些？',back:'托盘天平（实验室）、台秤、杆秤、电子秤、地磅。'},
+{front:'天平称量特殊物体？',back:'液体<strong>装杯</strong>称（杯+液再减杯）；脏/化/腐固体<strong>垫纸</strong>；烧杯垫纸后调零。'}
+];
+
+
+const errors = [
+{title:'❌ 质量随位置/状态变化',desc:'<strong>易错</strong>：以为宇航员到月球质量变小、冰化成水质量变大。<strong>正解</strong>：质量是<strong>属性</strong>：不随位置、形状、温度、状态变化；月球、冰水质量都不变。'},
+{title:'❌ 调平后称量时动平衡螺母',desc:'<strong>易错</strong>：称量中发现不平衡就调平衡螺母。<strong>正解</strong>：调平后<strong>不能再动平衡螺母</strong>；只能加减砝码、移动游码。'},
+{title:'❌ 游码读数读右边',desc:'<strong>易错</strong>：把游码右端对着的刻度当成示数。<strong>正解</strong>：游码读数读<strong>左边</strong>所对刻度。'},
+{title:'❌ 左码右物',desc:'<strong>易错</strong>：把物体放右盘、砝码放左盘。<strong>正解</strong>：必须<strong>左物右码</strong>；若放反，m物=砝码-游码（游码被加反）。'},
+{title:'❌ 量筒读数俯视/仰视',desc:'<strong>易错</strong>：俯视或仰视量筒刻度读数。<strong>正解</strong>：<strong>俯视偏大、仰视偏小</strong>，必须平视<strong>凹液面最低处</strong>。'},
+{title:'❌ 木块吸水误差方向',desc:'<strong>易错</strong>：以为吸水使体积偏大。<strong>正解</strong>：吸水使V₃<strong>偏小</strong>→体积<strong>偏小</strong>；应包薄膜或吸足水再测。'},
+{title:'❌ 排水法取出带水',desc:'<strong>易错</strong>：忽略取出物带出的水。<strong>正解</strong>：带出水→V₁偏小→体积<strong>偏大</strong>；应将带出的水冲回量筒。'},
+{title:'❌ 单位换算混淆',desc:'<strong>易错</strong>：1L=1cm³、1t=100g 等错记。<strong>正解</strong>：<strong>1L=1dm³</strong>=10⁻³m³、1mL=1cm³；1t=1000kg=10⁶g。'}
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const WRONG_HISTORY_KEY='quiz_physics_lesson13_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_physics_lesson13';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=_dp?`<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`:'';if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const idx=shuffled[curQ];const total=retryMode?wrongIds.length:questions.length;const isLast=(retryMode?shuffled.indexOf(idx):curQ)===total-1;if(isLast){if(quizAns[idx]>=0){document.getElementById('quizArea').innerHTML=showResult();}return;}curQ++;renderQ();}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class="question-card result-card fade-in-up"><div class="big-icon">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class="score">${correct}/${total}</div>
+<div><span class="result-stat"><i class="fas fa-check-circle" style="color:var(--success)"></i> 正确 ${correct} 题</span>
+<span class="result-stat"><i class="fas fa-times-circle" style="color:var(--danger)"></i> 错误 ${total-correct} 题</span></div>
+${retryMode?`<div style="margin:.5rem 0"><span class="result-stat"><i class="fas fa-history"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)"><p style="font-weight:600;margin-bottom:.5rem;font-size:.85rem">📝 需要复习：</p>${wl.map(w=>`<div style="padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)">✗ ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+<div style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+<button class="btn btn-primary" onclick="initQ();renderQ();"><i class="fas fa-redo"></i> 重新测验</button>
+${wl.length?`<button class="btn btn-warning" onclick="initRetryMode()" style="background:#e67e22;color:#fff"><i class="fas fa-bug"></i> 错题重练 (${wl.length}题)</button>`:''}
+<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button>
+${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()"><i class="fas fa-times"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'物理',chapter:'质量和体积',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'质量,体积,天平,量筒,排水法,物理'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'质量和体积',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'质量,体积,天平,量筒,排水法,物理'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('phy_lesson7_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('phy_lesson7_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔍 透镜应用 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style>
+.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 透镜应用</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-search"></i> 透镜应用 · 互动学习</h1>
+    <p>初二博学班 · 4 模块 · 25 题 · 20 卡牌 | 天元教育</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 25道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第十二讲 · 透镜应用</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-search-plus" style="color:#667eea"></i> 放大镜</h3><ul>
+        <li>物距 <strong class="hl">u＜f</strong>：成正立、放大的<strong class="hl">虚像</strong></li>
+        <li>像与物在透镜<strong class="hl">同侧</strong>，人从另一侧观察</li>
+        <li>物体离放大镜<strong class="hl">越近</strong>，所成像越大</li>
+        <li>成像原理：u＜f 虚像（<strong class="hl">同侧正大虚</strong>）</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-projector" style="color:#e67e22"></i> 幻灯机 / 投影仪</h3><ul>
+        <li>物距 <strong class="hl">f＜u＜2f</strong>：成倒立、放大的<strong class="hl">实像</strong></li>
+        <li>为使屏幕上是正立像，幻灯片要<strong class="hl">倒放</strong></li>
+        <li>凸透镜离幻灯片<strong class="hl">越近</strong>，像越大</li>
+        <li>投影仪用<strong class="hl">平面镜改变光路</strong>（竖直成像转水平）</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-camera" style="color:#3498db"></i> 照相机</h3><ul>
+        <li>物距 <strong class="hl">u＞2f</strong>：成倒立、缩小的<strong class="hl">实像</strong></li>
+        <li>像距 <strong class="hl">f＜v＜2f</strong>（镜头=凸透镜，胶卷/传感器=光屏）</li>
+        <li>物体离镜头<strong class="hl">越远</strong>，像越小，像距越小</li>
+        <li>摄像头、航空摄影均为<strong class="hl">照相机原理</strong></li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-eye" style="color:#2ecc71"></i> 眼睛</h3><ul>
+        <li><strong class="hl">晶状体+角膜</strong>=凸透镜，<strong class="hl">视网膜</strong>=光屏</li>
+        <li>物距＞2f，视网膜上成<strong class="hl">倒立缩小实像</strong></li>
+        <li>睫状体调节晶状体<strong class="hl">厚薄</strong>改变焦距（看远变薄、看近变厚）</li>
+        <li>大脑将倒立像处理为<strong class="hl">正立</strong>视觉</li>
+      </ul></div>
+      <div class="knowledge-card c5"><h3><i class="fas fa-glasses" style="color:#e74c3c"></i> 近视眼</h3><ul>
+        <li>成因：晶状体<strong class="hl">曲度过大</strong>（折光过强），像成在视网膜<strong class="hl">前</strong></li>
+        <li>矫正：配戴<strong class="hl">凹透镜</strong>（发散光线使像后移）</li>
+        <li>全飞秒手术：削去角膜使形成<strong class="hl">凹透镜</strong>形状</li>
+        <li>近点<strong class="hl">变近</strong>，看不清远处物体</li>
+      </ul></div>
+      <div class="knowledge-card c6"><h3><i class="fas fa-eye-slash" style="color:#9b59b6"></i> 远视眼</h3><ul>
+        <li>成因：晶状体<strong class="hl">太薄/曲度过小</strong>，像成在视网膜<strong class="hl">后</strong></li>
+        <li>矫正：配戴<strong class="hl">凸透镜</strong>（会聚光线使像前移）</li>
+        <li>老花眼也需凸透镜矫正</li>
+        <li>正常眼<strong class="hl">明视距离=25cm</strong>，远点无限远、近点约10cm</li>
+      </ul></div>
+      <div class="knowledge-card c7"><h3><i class="fas fa-microscope" style="color:#1abc9c"></i> 显微镜</h3><ul>
+        <li>两组凸透镜：<strong class="hl">物镜（短焦）</strong>+<strong class="hl">目镜（较长焦）</strong></li>
+        <li>物镜：物体在 f＜u＜2f，成倒立放大<strong class="hl">实像</strong></li>
+        <li>目镜：实像落在 u＜f 内，当<strong class="hl">放大镜</strong>用成正立放大虚像</li>
+        <li>最终看到<strong class="hl">倒立放大虚像</strong>（两次放大）</li>
+      </ul></div>
+      <div class="knowledge-card c8"><h3><i class="fas fa-telescope" style="color:#34495e"></i> 望远镜</h3><ul>
+        <li>两组凸透镜：<strong class="hl">物镜（长焦、大口径）</strong>+<strong class="hl">目镜（短焦）</strong></li>
+        <li>物镜：远处物体成倒立缩小<strong class="hl">实像</strong>（照相机原理）</li>
+        <li>目镜：将实像当放大镜用，成正立放大<strong class="hl">虚像</strong></li>
+        <li>最终看到倒立缩小虚像，但<strong class="hl">视角增大</strong>显得清晰</li>
+      </ul></div>
+      </div>
+
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第十二讲</h4>
+      <p>
+        <strong>放大镜</strong> — u＜f 成正立放大<strong>虚像</strong>，像物同侧；物越近像越大<br>
+        <strong>幻灯机/投影仪</strong> — f＜u＜2f 成倒立放大<strong>实像</strong>，幻灯片倒放，平面镜改变光路<br>
+        <strong>照相机</strong> — u＞2f 成倒立缩小<strong>实像</strong>，像距 f＜v＜2f；物远像小<br>
+        <strong>眼睛</strong> — 晶状体=凸透镜、视网膜=光屏，成倒立缩小实像；明视距离25cm<br>
+        <strong>近视/远视</strong> — 近视：像在视网膜前，<strong>凹透镜</strong>矫正；远视：像在视网膜后，<strong>凸透镜</strong>矫正<br>
+        <strong>显微镜</strong> — 物镜短焦成放大实像 + 目镜放大虚像，最终倒立放大虚像<br>
+        <strong>望远镜</strong> — 物镜长焦成缩小实像 + 目镜放大，视角增大<br>
+        <strong>老师课后总结</strong> — 透镜应用：会判断照相机/投影仪/放大镜的成像与调节；掌握近视远视成因与矫正；了解显微镜望远镜两次成像
+      </p>
+    </div>
+    </div><div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 25</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+  </div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 透镜应用互动学习 | 天元教育 · 初二博学班</div>
+
+<script>
+const questions = [
+{q:'小明用简易照相机模型对着远处广告牌观察，半透明纸上只能看到局部，为看到整个广告牌的像，应把相机',opts:["A. 远离广告牌，纸筒N往后缩", "B. 远离广告牌，纸筒N往前伸", "C. 靠近广告牌，纸筒N往后缩", "D. 靠近广告牌，纸筒N往前伸"],ans:0,exp:'要看整个广告牌→物距<strong>增大</strong>（远离），像变小，像距减小→纸筒N<strong>往后缩</strong>。'},
+{q:'航空摄影中照相机镜头焦距 f=50mm，则底片到镜头间的距离应为',opts:["A. 100mm 以外", "B. 50mm 以内", "C. 50mm＜v＜100mm", "D. 恰为100mm"],ans:2,exp:'远处物体 u＞2f，像距在<strong>f＜v＜2f</strong>，即 50mm＜v＜100mm。'},
+{q:'关于摄像头的说法，错误的是',opts:["A. 摄像头镜头对光有会聚作用", "B. 物体通过摄像头成倒立、缩小的实像", "C. 摄像头成像原理与投影仪相同", "D. 拍摄时物体位于镜头二倍焦距以外"],ans:2,exp:'摄像头与<strong>照相机</strong>原理相同（u＞2f 倒立缩小实像），不是投影仪（f＜u＜2f 倒立放大实像）。'},
+{q:'用自拍杆自拍与直接手持自拍相比，自拍杆可以',opts:["A. 增大物距，减小像的大小", "B. 减小物距，减小像的大小", "C. 增大物距，增大像的大小", "D. 减小物距，增大像的大小"],ans:0,exp:'自拍杆使手机远离人→<strong>物距增大</strong>→像变小（物远像小）。'},
+{q:'“强行透视法”拍摄，下列说法正确的是',opts:["A. 照相机镜头对光有发散作用", "B. 人手和飞机成倒立、缩小的虚像", "C. 拍摄时镜头离飞机更远一些", "D. 若使人手的像变大，将镜头离人手更近一些"],ans:3,exp:'照相机成倒立缩小<strong>实像</strong>（B错）；<strong>物近像大</strong>，镜头离人手更近像变大（D对）；镜头会聚光（A错）。'},
+{q:'投影仪中 h=40cm，凸透镜焦距不可能小于',opts:["A. 10cm", "B. 20cm", "C. 30cm", "D. 40cm"],ans:1,exp:'投影仪 f＜u＜2f，h=40cm 为像距，则 f＜40cm＜2f → <strong>20cm＜f＜40cm</strong>，焦距不可能小于20cm。'},
+{q:'简易投影仪（手机投影到白墙）的说法，不正确的是',opts:["A. 投影仪成倒立、放大的实像", "B. 要在墙上正常阅读，手机应倒立放置", "C. 要使像变大，应减小手机与透镜间距离且增大像距", "D. 手机到凸透镜的距离应大于二倍焦距"],ans:3,exp:'投影仪要求物距在 <strong>f＜u＜2f</strong>，手机距离不能大于2f（D错）；A/B/C均正确。'},
+{q:'关于公共场所宣传投影灯的说法，正确的是',opts:["A. 地面上看到的是放大的虚像", "B. 缩短镜头与图片的距离时，图案变小", "C. 该投影灯成像原理与照相机相同", "D. 不同方向都能看到图案是光在地面发生漫反射"],ans:3,exp:'投影灯成放大<strong>实像</strong>（A错）；缩短物距像应变大（B错）；与<strong>投影仪</strong>原理相同（C错）；漫反射使各方向可见（D对）。'},
+{q:'自制投影仪（凸透镜焦距 f=10cm）的说法，正确的是',opts:["A. 凸透镜对光线有发散作用", "B. 白墙到凸透镜的距离应大于20cm", "C. 胶片与凸透镜距离应小于10cm且倒立放置", "D. 要使像更大，只将内筒往外拉一些即可"],ans:1,exp:'投影仪 f＜u＜2f 且像距 v＞2f → 白墙到透镜距离（像距）<strong>＞20cm</strong>（B对）；凸透镜会聚光（A错）；胶片距离应在10~20cm（C错）。'},
+{q:'博物馆在文物前放凸透镜方便观察，文物在透镜中所成的像与文物在透镜的',opts:["A. 同侧", "B. 异侧", "C. 焦点上", "D. 无法判断"],ans:0,exp:'放大镜 u＜f 成正立放大虚像，像与物在透镜<strong>同侧</strong>。'},
+{q:'用焦距10cm的凸透镜看到“电”字放大的像，下列说法正确的是',opts:["A. 看到的放大像是实像", "B. “电”字恰在凸透镜焦点上", "C. “电”字到凸透镜的距离应小于10cm", "D. “电”字到凸透镜的距离可能是15cm"],ans:2,exp:'放大镜 u＜f → 物距<strong>小于10cm</strong>，成正立放大虚像（A错）。'},
+{q:'放大镜的镜头是____透镜，它对光有____作用',opts:["A. 凸；会聚", "B. 凸；发散", "C. 凹；会聚", "D. 凹；发散"],ans:0,exp:'放大镜是<strong>凸透镜</strong>，对光有<strong>会聚</strong>作用。'},
+{q:'用放大镜看书，从甲图（像大）到乙图（像小），所成的像是____物距的结果',opts:["A. 增大", "B. 减小", "C. 不变", "D. 无法判断"],ans:0,exp:'放大镜物距<strong>增大</strong>，像变小（物近像大、物远像小）。'},
+{q:'人眼成像中，相当于光屏（承接像）的是',opts:["A. 角膜", "B. 晶状体", "C. 视网膜", "D. 视神经"],ans:2,exp:'晶状体=凸透镜，<strong>视网膜=光屏</strong>，成倒立缩小实像。'},
+{q:'近视眼看远处物体时，像成在视网膜的',opts:["A. 前方", "B. 后方", "C. 上方", "D. 下方"],ans:0,exp:'近视眼晶状体<strong>曲度过大</strong>折光过强，像成在视网膜<strong>前方</strong>。'},
+{q:'一副眼镜镜片中心厚度1.7mm，边缘厚度大于1.7mm，该眼镜可用来矫正',opts:["A. 近视眼", "B. 远视眼", "C. 老花眼", "D. 散光"],ans:0,exp:'中心薄边缘厚=<strong>凹透镜</strong>，凹透镜矫正<strong>近视眼</strong>。'},
+{q:'全飞秒近视手术用激光削去部分角膜，使角膜形成____透镜形状矫正近视',opts:["A. 凹", "B. 凸", "C. 平", "D. 球"],ans:0,exp:'手术使角膜形成<strong>凹透镜</strong>形状，发散光线，矫正近视。'},
+{q:'（2025·成都）人形机器人“眼睛”光学成像与人眼相似，下列说法正确的是',opts:["A. 物体在成像面上成放大的虚像", "B. 机器人“眼睛”镜头对光有发散作用", "C. 机器人“眼睛”成像原理与照相机相同", "D. 机器人“眼睛”只能“看见”发光的物体"],ans:2,exp:'机器人眼睛=人眼/照相机原理：u＞2f 成倒立缩小<strong>实像</strong>（A错、C对）；镜头会聚光（B错）；能看见不发光物体（D错）。'},
+{q:'关于眼睛视力矫正的光路图，下列说法正确的是',opts:["A. 矫正镜片是凹透镜", "B. 该图模拟矫正远视眼的情况", "C. 去掉镜片光会聚在视网膜前", "D. 正常眼的明视距离为25cm"],ans:3,exp:'正常眼<strong>明视距离25cm</strong>（最清晰又不疲劳）。A/B/C 需结合图判断，D 为恒定结论。'},
+{q:'小刚爷爷是近视眼，下列说法正确的是',opts:["A. 爷爷眼睛的明视距离小于25cm", "B. 远视眼是由于像成在了视网膜后方", "C. 人眼视网膜上成正立、缩小的实像", "D. 爷爷应佩戴合适的凸透镜矫正"],ans:1,exp:'B 物理正确：<strong>远视眼像成在视网膜后方</strong>；A错（明视距离标准25cm）；C错（视网膜成倒立像）；D错（近视配凹透镜）。'},
+{q:'由短文“眼睛和眼镜”：正常眼睛的观察范围是',opts:["A. 0~10cm", "B. 10cm~25cm", "C. 25cm~无限远", "D. 10cm~无限远"],ans:3,exp:'正常眼睛<strong>远点无限远、近点约10cm</strong>，观察范围为 10cm~无限远。'},
+{q:'小芳所戴眼镜度数为-500度，该镜片的焦距为',opts:["A. 0.1m", "B. 0.2m", "C. 0.5m", "D. 2m"],ans:1,exp:'度数=焦度×100 → 500度焦度=5m⁻¹；φ=1/f → f=1/5=<strong>0.2m</strong>（负号表示凹透镜）。'},
+{q:'望远镜观察远处物体，物镜成像原理与____相同，目镜所成像是正立、放大的____像',opts:["A. 照相机；虚", "B. 投影仪；实", "C. 放大镜；实", "D. 照相机；实"],ans:0,exp:'物镜成倒立缩小实像=<strong>照相机</strong>原理；目镜=放大镜，成正立放大<strong>虚像</strong>。'},
+{q:'显微镜中，物体到物镜的距离应',opts:["A. 大于一倍焦距小于二倍焦距", "B. 小于一倍焦距", "C. 大于二倍焦距", "D. 等于一倍焦距"],ans:0,exp:'显微镜物镜：物体在 <strong>f＜u＜2f</strong>，成倒立放大实像，目镜再放大成虚像。'},
+{q:'光年（如“距离我们约130亿光年”）是____单位',opts:["A. 长度", "B. 时间", "C. 速度", "D. 光强度"],ans:0,exp:'<strong>光年=光一年传播的距离</strong>，是长度单位。'}
+];
+
+
+const flashcards = [
+{front:'放大镜的成像规律是什么？',back:'物距 <strong>u＜f</strong>，成正立、放大的<strong>虚像</strong>，像与物在透镜<strong>同侧</strong>；物体越近像越大。'},
+{front:'幻灯机/投影仪的成像规律？',back:'物距 <strong>f＜u＜2f</strong>，成倒立、放大的<strong>实像</strong>；幻灯片要倒放，平面镜改变光路。'},
+{front:'照相机的成像规律？',back:'物距 <strong>u＞2f</strong>，成倒立、缩小的<strong>实像</strong>，像距 <strong>f＜v＜2f</strong>。'},
+{front:'实像成像口诀是什么？',back:'<strong>物近像远像变大</strong>，<strong>物远像近像变小</strong>（对实像）。'},
+{front:'眼睛的主要结构？',back:'<strong>晶状体+角膜</strong>=凸透镜（折射光），<strong>视网膜</strong>=光屏，成倒立缩小实像。'},
+{front:'近视眼的成因？',back:'晶状体<strong>曲度过大</strong>、折光过强，远处物体像成在视网膜<strong>前方</strong>。'},
+{front:'近视眼如何矫正？',back:'配戴<strong>凹透镜</strong>（发散光线，使像后移至视网膜）；全飞秒手术使角膜成凹透镜形。'},
+{front:'远视眼的成因？',back:'晶状体太薄/曲度过小，像成在视网膜<strong>后方</strong>。'},
+{front:'远视眼如何矫正？',back:'配戴<strong>凸透镜</strong>（会聚光线，使像前移至视网膜）；老花眼同理。'},
+{front:'正常眼的明视距离是多少？',back:'<strong>25cm</strong>——正常眼观察物体最清晰又不疲劳的距离。'},
+{front:'眼镜度数怎么计算？',back:'度数=焦度×100，焦度 φ=1/f（f单位m）；凸透镜为正、凹透镜为负。例：-200度=凹透镜，φ=2m⁻¹，f=0.5m。'},
+{front:'显微镜由什么组成？',back:'两组凸透镜：<strong>物镜（焦距短）</strong>靠近物体 + <strong>目镜（焦距较长）</strong>靠近眼睛。'},
+{front:'显微镜的成像原理？',back:'物镜（f＜u＜2f）成倒立放大<strong>实像</strong>，目镜（u＜f）当放大镜成正立放大<strong>虚像</strong>，最终为倒立放大虚像。'},
+{front:'望远镜由什么组成？',back:'<strong>物镜（口径大、焦距长）</strong> + <strong>目镜（焦距短）</strong>，如开普勒望远镜。'},
+{front:'望远镜的成像原理？',back:'物镜成倒立缩小<strong>实像</strong>（照相机原理），目镜放大成虚像；视角增大使远处物体清晰。'},
+{front:'投影仪中平面镜的作用？',back:'<strong>改变光路</strong>：将竖直向上的光反射到屏幕上，使像呈现在观众方向。'},
+{front:'实像与虚像的区别？',back:'<strong>实像</strong>：实际光线会聚，<strong>倒立</strong>，光屏可承接；<strong>虚像</strong>：光线反向延长线会聚，<strong>正立</strong>，光屏不能承接。'},
+{front:'照相机中像的大小如何调节？',back:'物体离镜头越远，像越小（像距越小）；离得越近，像越大（像距越大）。'},
+{front:'幻灯机中像的大小如何调节？',back:'凸透镜离幻灯片<strong>越近</strong>，所成像越大；越远，像越小。'},
+{front:'人眼看远近物体如何调节？',back:'<strong>睫状体</strong>调节晶状体厚薄改变焦距：看远处变<strong>薄</strong>、看近处变<strong>厚</strong>。'}
+];
+
+
+const errors = [
+{title:'❌ 照相机/投影仪/放大镜物距范围记反',desc:'<strong>易错</strong>：把 u＞2f、f＜u＜2f、u＜f 三种情况对应错。<strong>正解</strong>：口诀：<strong>u＞2f 照相机</strong>（倒小实）、<strong>f＜u＜2f 投影仪</strong>（倒大实）、<strong>u＜f 放大镜</strong>（正大虚）。'},
+{title:'❌ 近视眼、远视眼矫正透镜记反',desc:'<strong>易错</strong>：以为近视眼戴凸透镜、远视眼戴凹透镜。<strong>正解</strong>：近视=像在视网膜<strong>前</strong>→<strong>凹透镜</strong>（发散后移）；远视=像在视网膜<strong>后</strong>→<strong>凸透镜</strong>（会聚前移）。'},
+{title:'❌ 像的大小与物距关系记反',desc:'<strong>易错</strong>：以为物体靠近镜头像变小。<strong>正解</strong>：实像规律：<strong>物近像远像变大</strong>、物远像近像变小；照相机要拍大，人走近或镜头前伸。'},
+{title:'❌ 显微镜、望远镜物镜目镜焦距记反',desc:'<strong>易错</strong>：把两者的物镜、目镜焦距长短搞混。<strong>正解</strong>：显微镜：物镜<strong>短焦</strong>、目镜较长焦；望远镜：物镜<strong>长焦</strong>（大口径）、目镜短焦。'},
+{title:'❌ 实像虚像的正倒判断错',desc:'<strong>易错</strong>：以为放大镜成像是倒立实像。<strong>正解</strong>：<strong>实像倒立</strong>（照相机/投影仪，光屏承接），<strong>虚像正立</strong>（放大镜/目镜，光屏不能承接）。'},
+{title:'❌ 视网膜成像方向搞错',desc:'<strong>易错</strong>：以为眼睛看到的是正立像。<strong>正解</strong>：视网膜上成<strong>倒立缩小实像</strong>，大脑自动处理为<strong>正立</strong>视觉。'},
+{title:'❌ 眼镜度数正负号混淆',desc:'<strong>易错</strong>：把凸透镜（远视）度数当负、凹透镜（近视）当正。<strong>正解</strong>：凸透镜度数<strong>正</strong>（远视/老花），凹透镜度数<strong>负</strong>（近视）；-200度是凹透镜。'},
+{title:'❌ 明视距离与近点远点混淆',desc:'<strong>易错</strong>：把明视距离当成近点。<strong>正解</strong>：<strong>明视距离25cm</strong>（最清晰不疲劳）、近点约10cm、远点无限远；明视距离对所有人相同。'}
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const WRONG_HISTORY_KEY='quiz_physics_lesson12_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();}
+  else h.push({idx,count:1,lastWrong:Date.now()});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_physics_lesson12';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory();
+  if(!h.length){alert('还没有错题记录，先做一遍测验吧！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=_dp?`<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`:'';if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const idx=shuffled[curQ];const total=retryMode?wrongIds.length:questions.length;const isLast=(retryMode?shuffled.indexOf(idx):curQ)===total-1;if(isLast){if(quizAns[idx]>=0){document.getElementById('quizArea').innerHTML=showResult();}return;}curQ++;renderQ();}
+function showResult(){const total=retryMode?wrongIds.length:questions.length;let correct=0;const wl=[];const h=loadWrongHistory();
+(retryMode?wrongIds:questions.map((_,i)=>i)).forEach(i=>{const ai=quizAns[i];if(ai===questions[i].ans)correct++;else wl.push({idx:i,q:questions[i]});});const pct=Math.round(correct/total*100);const face=pct>=90?'🎉':pct>=70?'👍':pct>=50?'💪':'📚';const msg=retryMode?(pct>=90?'错题全部攻克！':pct>=70?'大部分已掌握！':pct>=50?'还需巩固！':'仍需努力'):(pct>=90?'太棒了！':pct>=70?'不错！':pct>=50?'继续加油':'需要多复习');
+return `<div class="question-card result-card fade-in-up"><div class="big-icon">${face}</div><h2>${retryMode?'错题重练结果':'测验结果'}</h2><div class="score">${correct}/${total}</div>
+<div><span class="result-stat"><i class="fas fa-check-circle" style="color:var(--success)"></i> 正确 ${correct} 题</span>
+<span class="result-stat"><i class="fas fa-times-circle" style="color:var(--danger)"></i> 错误 ${total-correct} 题</span></div>
+${retryMode?`<div style="margin:.5rem 0"><span class="result-stat"><i class="fas fa-history"></i> 错题重做次数 ${h.reduce((a,x)=>a+x.count,0)}次</span></div>`:''}
+${wl.length?`<div style="text-align:left;margin-top:1rem;padding:.8rem;background:var(--bg);border-radius:var(--radius-sm)"><p style="font-weight:600;margin-bottom:.5rem;font-size:.85rem">📝 需要复习：</p>${wl.map(w=>`<div style="padding:.2rem 0;font-size:.82rem;border-bottom:1px solid var(--border)">✗ ${w.q.q.substring(0,50)}…<br><small style="color:var(--text-light)">正确答案：${w.q.opts[w.q.ans]}</small></div>`).join('')}</div>`:''}
+<div style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+<button class="btn btn-primary" onclick="initQ();renderQ();"><i class="fas fa-redo"></i> 重新测验</button>
+${wl.length?`<button class="btn btn-warning" onclick="initRetryMode()" style="background:#e67e22;color:#fff"><i class="fas fa-bug"></i> 错题重练 (${wl.length}题)</button>`:''}
+<button class="btn btn-outline" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 复习知识卡</button>
+<button class="btn btn-outline" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错点</button>
+${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()"><i class="fas fa-times"></i> 退出重练模式</button>`:''}</div></div>`;}
+
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'物理',chapter:'透镜应用',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'透镜应用,凸透镜,眼睛,显微镜,望远镜,物理'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);
+  localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'透镜应用',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'透镜应用,凸透镜,眼睛,显微镜,望远镜,物理'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('phy_lesson7_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('phy_lesson7_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('phy_lesson7_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
