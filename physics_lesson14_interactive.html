@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚖️ 质量和体积 · 互动学习</title>
+<title>⚖️ 密度 · 互动学习</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
@@ -117,7 +117,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .toast-info{background:#667eea}</head><body>
 
 <nav class="navbar"><div class="container">
-  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 质量和体积</a>
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 密度</a>
   <div class="navbar-nav">
     <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
     <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
@@ -129,10 +129,10 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <div class="container">
   <div class="hero fade-in-up">
-    <h1><i class="fas fa-weight-hanging"></i> 质量和体积 · 互动学习</h1>
-    <p>初二博学班 · 4 模块 · 40 题 · 20 卡牌 | 天元教育</p>
+    <h1><i class="fas fa-weight-hanging"></i> 密度 · 互动学习</h1>
+    <p>初二博学班 · 4 模块 · 32 题 · 20 卡牌 | 天元教育</p>
     <div class="meta">
-      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 40道测验题</span>
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 32道测验题</span>
       <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
       <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
       <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
@@ -148,71 +148,55 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
   <!-- ========== 知识图谱 ========== -->
   <div id="tab-knowledge" class="tab-content active">
-    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第十三讲 · 质量和体积</div>
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第十三讲 · 密度</div>
 
         <div class="knowledge-grid">
-      <div class="knowledge-card c1"><h3><i class="fas fa-weight-hanging" style="color:#667eea"></i> 质量</h3><ul>
-        <li>定义：物体所含<strong class="hl">物质的多少</strong>，符号 m</li>
-        <li>质量是物体的<strong class="hl">基本属性</strong>，不随位置、形状、温度、状态变化</li>
-        <li>宇航员到月球质量<strong class="hl">不变</strong>；冰熔化成水质量不变</li>
+      <div class="knowledge-card c1"><h3><i class="fas fa-balance-scale" style="color:#8e44ad"></i> 密度定义</h3><ul>
+        <li>物体<strong class="hl">质量与体积的比值</strong>叫密度（ρ）</li>
+        <li>用<strong class="hl">比值定义法</strong>定义物理量</li>
+        <li>可用来<strong class="hl">鉴别物质</strong></li>
       </ul></div>
-      <div class="knowledge-card c2"><h3><i class="fas fa-balance-scale" style="color:#e67e22"></i> 质量单位</h3><ul>
-        <li>国际单位：<strong class="hl">千克(kg)</strong>；常用 t、g、mg</li>
-        <li>换算：1t=1000kg=10⁶g=10⁹mg</li>
-        <li>1克拉=0.2g，1磅=450g</li>
-        <li>单位符号：t 吨、kg 千克、g 克、mg 毫克</li>
+      <div class="knowledge-card c2"><h3><i class="fas fa-divide" style="color:#e74c3c"></i> 密度公式</h3><ul>
+        <li><strong class="hl">ρ = m / V</strong></li>
+        <li>变形：m=ρV；V=m/ρ</li>
+        <li>ρ 读作"rou"（肉）</li>
       </ul></div>
-      <div class="knowledge-card c3"><h3><i class="fas fa-egg" style="color:#2ecc71"></i> 质量估测</h3><ul>
-        <li>回形针 30mg；一元硬币 <strong class="hl">6g</strong>；药片 200mg</li>
-        <li>鸡蛋 <strong class="hl">50g</strong>；苹果 150g；物理书 200g</li>
-        <li>矿泉水 500g；老母鸡 3kg；中学生 <strong class="hl">50kg</strong></li>
-        <li>大象 5t；蓝鲸 150t；小轿车 1~2t</li>
+      <div class="knowledge-card c3"><h3><i class="fas fa-cube" style="color:#3498db"></i> 密度特性</h3><ul>
+        <li>与 m、V <strong class="hl">无关</strong></li>
+        <li>与物质的<strong class="hl">种类、状态</strong>有关</li>
+        <li>冰→水：状态变，密度变大</li>
       </ul></div>
-      <div class="knowledge-card c4"><h3><i class="fas fa-tools" style="color:#3498db"></i> 托盘天平使用 <span style="font-size:.7rem;color:#e74c3c;background:#fde8e8;padding:.1rem .4rem;border-radius:4px">中考重点</span></h3><ul>
-        <li>测量工具：托盘天平、台秤、杆秤、电子秤、地磅</li>
-        <li><strong class="hl">放</strong>：天平放水平桌面；<strong class="hl">调</strong>：游码归零、平衡螺母调平（<strong class="hl">左偏右调</strong>）</li>
-        <li><strong class="hl">称</strong>：左物右码、砝码从大到小；<strong class="hl">读</strong>：m物=m砝码+游码示数（<strong class="hl">游码读左边</strong>）</li>
-        <li>⚠️ 实验题要<strong class="hl">身临其境</strong>：先感受题目中的实验操作要求，再按 放→调→称→读 想步骤</li>
+      <div class="knowledge-card c4"><h3><i class="fas fa-exchange-alt" style="color:#27ae60"></i> 单位换算</h3><ul>
+        <li>国际单位：<strong class="hl">kg/m³</strong></li>
+        <li>常用单位：<strong class="hl">g/cm³</strong></li>
+        <li><strong class="hl">1 g/cm³ = 10³ kg/m³</strong></li>
       </ul></div>
-      <div class="knowledge-card c5"><h3><i class="fas fa-exclamation-triangle" style="color:#e74c3c"></i> 天平注意事项</h3><ul>
-        <li>调平后称量时<strong class="hl">不能再动平衡螺母</strong></li>
-        <li>砝码、游码用<strong class="hl">镊子</strong>夹取，防腐蚀</li>
-        <li>液体<strong class="hl">装杯</strong>测；固体<strong class="hl">垫纸</strong>（脏、化、腐物品不能直接放盘）</li>
-        <li>烧杯左右都垫或单边垫完再调零；<strong class="hl">不能用量筒</strong>装液体称量（太高易倒）</li>
+      <div class="knowledge-card c5"><h3><i class="fas fa-tint" style="color:#2980b9"></i> 常见密度</h3><ul>
+        <li>水 1.0×10³、冰 0.9×10³</li>
+        <li>酒精/煤油 0.8×10³</li>
+        <li>铁 7.9、铜 8.9、铝 2.7、水银 13.6、金 19.3（×10³）</li>
+        <li>空气 1.29 kg/m³</li>
       </ul></div>
-      <div class="knowledge-card c6"><h3><i class="fas fa-cube" style="color:#9b59b6"></i> 体积定义与单位</h3><ul>
-        <li>定义：物体所占<strong class="hl">空间的大小</strong>，符号 V</li>
-        <li>国际单位：<strong class="hl">立方米(m³)</strong>；常用 dm³、cm³、L、mL</li>
-        <li>换算：1m³=10³dm³=10⁶cm³；<strong class="hl">1L=1dm³</strong>，1mL=1cm³</li>
+      <div class="knowledge-card c6"><h3><i class="fas fa-wind" style="color:#16a085"></i> 气体密度计算</h3><ul>
+        <li>气体<strong class="hl">永远充满容器</strong></li>
+        <li>用去一部分：m↓、V 不变 → ρ↓</li>
+        <li>压缩体积：m 不变、V↓ → ρ↑</li>
       </ul></div>
-      <div class="knowledge-card c7"><h3><i class="fas fa-flask" style="color:#1abc9c"></i> 体积测量</h3><ul>
-        <li>测液体：<strong class="hl">量筒、量杯</strong>；读数视线与<strong class="hl">凹液面最低处</strong>相平（仰小俯大）</li>
-        <li>规则固体：测边长用公式计算</li>
-        <li>不规则固体：<strong class="hl">排水法</strong> V物=V₂-V₁</li>
-        <li>漂浮物：<strong class="hl">针压法、吊重物法</strong>；溶水物：<strong class="hl">排沙法、排油法</strong></li>
+      <div class="knowledge-card c7"><h3><i class="fas fa-percentage" style="color:#f39c12"></i> 比例计算</h3><ul>
+        <li>m 同 → ρ 与 V <strong class="hl">成反比</strong></li>
+        <li>V 同 → ρ 与 m 成正比</li>
+        <li>密度比=质量比×<strong class="hl">体积比倒数</strong>（倒数之比，不是换顺序）</li>
       </ul></div>
-      <div class="knowledge-card c8"><h3><i class="fas fa-chart-line" style="color:#34495e"></i> 误差分析</h3><ul>
-        <li>先测V₁再测V₂（正常排水法）→ 结果准确</li>
-        <li>取出物<strong class="hl">沾水带出</strong>→V₁偏小→测得体积<strong class="hl">偏大</strong></li>
-        <li>木块<strong class="hl">吸水</strong>→V₃偏小→测得体积<strong class="hl">偏小</strong></li>
-        <li>解决吸水：<strong class="hl">包一层薄膜</strong>或<strong class="hl">吸足水再测</strong></li>
-        <li>V铁=V₂-V₁；V木=V₃-V₂</li>
+      <div class="knowledge-card c8"><h3><i class="fas fa-chart-line" style="color:#34495e"></i> m-V 图像</h3><ul>
+        <li>斜率 = 密度，<strong class="hl">越靠近 m 轴密度越大</strong></li>
+        <li>V-m 图：斜率=V/m=1/ρ</li>
+        <li>截距=空烧杯质量（不过原点）</li>
       </ul></div>
-      </div>
-
+    </div>
     <div class="teacher-talk">
-      <h4><i class="fas fa-microphone"></i> 🎙️ 课堂要点 · 第十三讲</h4>
-      <p>
-        <strong>质量</strong> — 物体所含物质的多少；属性：不随位置/形状/温度/状态变化<br>
-        <strong>单位</strong> — kg（国际）、t/g/mg；1t=1000kg=10⁶g；1克拉=0.2g、1磅=450g<br>
-        <strong>估测</strong> — 鸡蛋50g、一元硬币6g、中学生50kg、矿泉水500g、大象5t<br>
-        <strong>天平</strong> — 放→调→称→读：左偏右调、左物右码、m物=m砝码+游码（游码读左边）<br>
-        <strong>天平注意</strong> — 调平后不动平衡螺母、砝码用镊子、液体装杯、固体垫纸<br>
-        <strong>体积</strong> — 国际单位m³；1L=1dm³、1mL=1cm³；量筒读数凹液面最低处（仰小俯大）<br>
-        <strong>测固体</strong> — 排水法V物=V₂-V₁；漂浮物针压法/吊重物；溶水物排沙/排油；吸水物包薄膜<br>
-        <strong>老师课后总结</strong> — 质量与体积：掌握质量属性与天平规范使用；会用排水法测体积并分析误差<br>
-        <strong>🎓 老师课堂强调</strong> — ①质量定义要理解透；②<strong>天平使用是中考常考重点</strong>，实验操作要“身临其境”感受题目实验要求再想步骤；③体积测量方法按物体分类记；④误差分析抓细节。本讲比光学简单，重在实验细节；光学内容每天复习；<strong>密度是八上期末压轴题</strong>，暑假打好基础
-      </p>
+      <h4><i class="fas fa-microphone-alt"></i> 🎙️ 课堂要点 · 第十四讲（密度）</h4>
+      <p><strong>本讲核心</strong>：密度是八上期末压轴题重点！务必掌握：①ρ=m/V 及单位换算（1g/cm³=10³kg/m³）②气体计算"永远充满容器"③比例题"倒数之比"④图像"越靠近m轴密度越大"。</p>
+      <p><strong>易错提醒</strong>：密度是物质的属性，与 m、V 大小无关；气体用去一半是 m 变 V 不变，压缩是 V 变 m 不变。</p>
     </div>
     </div><div id="tab-quiz" class="tab-content">
     <div class="quiz-mode-bar" id="quizModeBar">
@@ -223,7 +207,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
   </div>
     <div class="quiz-progress">
       <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
-      <div class="quiz-stats" id="quizStats">0 / 40</div>
+      <div class="quiz-stats" id="quizStats">0 / 32</div>
     </div>
     <div id="quizArea"></div>
   </div>
@@ -243,77 +227,84 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
   </div>
 </div>
 
-<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 质量和体积互动学习 | 天元教育 · 初二博学班</div>
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 密度互动学习 | 天元教育 · 初二博学班</div>
 
 <script>
 const questions = [
-{q:'质量是指物体所含',opts:["A. 物质的多少", "B. 重力的大小", "C. 体积的大小", "D. 密度的大小"],ans:0,exp:'质量定义：物体所含<strong>物质的多少</strong>（m）。'},
-{q:'宇航员从地球到月球，他的质量将',opts:["A. 变大", "B. 变小", "C. 不变", "D. 变为零"],ans:2,exp:'质量是物体的<strong>属性</strong>，不随位置变化，宇航员到月球质量不变。'},
-{q:'把铁块加热熔化成铁水，它的质量',opts:["A. 变大", "B. 变小", "C. 不变", "D. 无法判断"],ans:2,exp:'质量不随<strong>温度、状态</strong>变化，铁块变铁水质量不变。'},
-{q:'1t 等于',opts:["A. 10kg", "B. 100kg", "C. 1000kg", "D. 10000kg"],ans:2,exp:'1t=<strong>1000</strong>kg。'},
-{q:'一个鸡蛋质量约50g，合',opts:["A. 0.05kg", "B. 0.5kg", "C. 5kg", "D. 500g"],ans:0,exp:'1kg=1000g，50g=<strong>0.05</strong>kg。'},
-{q:'下列估测最接近实际的是',opts:["A. 一个鸡蛋约500g", "B. 一名中学生约50kg", "C. 一元硬币约50g", "D. 一瓶矿泉水约5kg"],ans:1,exp:'中学生约<strong>50kg</strong>；鸡蛋约50g、硬币约6g、矿泉水约500g。'},
-{q:'实验室测量质量的工具是',opts:["A. 量筒", "B. 刻度尺", "C. 托盘天平", "D. 弹簧测力计"],ans:2,exp:'测量质量用<strong>托盘天平</strong>；量筒测体积、刻度尺测长度。'},
-{q:'使用托盘天平时，首先应',opts:["A. 将天平放在水平桌面上", "B. 左物右码开始称量", "C. 调节游码归零", "D. 直接放物体"],ans:0,exp:'天平使用第一步：<strong>放</strong>——放在水平桌面上。'},
-{q:'调节天平横梁平衡时，指针左偏，应将平衡螺母向',opts:["A. 左调", "B. 右调", "C. 上调", "D. 下调"],ans:1,exp:'<strong>左偏右调</strong>：指针左偏说明左盘重，平衡螺母向右调。'},
-{q:'称量时物体应放在____盘，砝码放在____盘',opts:["A. 左；右", "B. 右；左", "C. 左；左", "D. 右；右"],ans:0,exp:'天平称量规则：<strong>左物右码</strong>。'},
-{q:'砝码50g+20g，游码示数2.4g，物体质量为',opts:["A. 72.4g", "B. 67.6g", "C. 70g", "D. 74g"],ans:0,exp:'m物=m砝码+游码示数=50+20+2.4=<strong>72.4g</strong>。'},
-{q:'读取游码示数时，应读游码',opts:["A. 左边所对刻度", "B. 右边所对刻度", "C. 中间所对刻度", "D. 任意位置"],ans:0,exp:'游码读数：读<strong>左边</strong>所对刻度。'},
-{q:'天平调平后，称量过程中',opts:["A. 不能再调节平衡螺母", "B. 可以调节平衡螺母", "C. 可以移动游码归零", "D. 可以左右换盘"],ans:0,exp:'调平后称量时<strong>不能动平衡螺母</strong>，只能加减砝码、移动游码。'},
-{q:'取放砝码应使用',opts:["A. 镊子", "B. 手直接拿", "C. 小刀", "D. 夹子随意"],ans:0,exp:'砝码、游码用<strong>镊子</strong>夹取，防止腐蚀生锈。'},
-{q:'体积的国际单位是',opts:["A. 立方米(m³)", "B. 升(L)", "C. 立方厘米(cm³)", "D. 毫升(mL)"],ans:0,exp:'体积国际单位<strong>m³</strong>；L、cm³、mL 是常用单位。'},
-{q:'1L 等于',opts:["A. 1m³", "B. 1dm³", "C. 1cm³", "D. 10dm³"],ans:1,exp:'<strong>1L=1dm³</strong>；1mL=1cm³。'},
-{q:'用量筒测液体体积，读数时视线应',opts:["A. 与凹液面最低处相平", "B. 与凹液面最高处相平", "C. 俯视量筒刻度", "D. 仰视量筒刻度"],ans:0,exp:'量筒读数：视线与<strong>凹液面最低处</strong>相平；俯视偏大、仰视偏小。'},
-{q:'量筒内原有水V₁，放入石块后示数为V₂，石块体积为',opts:["A. V₂-V₁", "B. V₂+V₁", "C. V₁-V₂", "D. V₂"],ans:0,exp:'排水法：V物=<strong>V₂-V₁</strong>。'},
-{q:'测石块体积时，从水中取出石块带出一部分水，测得体积会',opts:["A. 偏大", "B. 偏小", "C. 不变", "D. 无法判断"],ans:0,exp:'带出水→量筒中水<strong>V₁偏小</strong>→V₂-V₁<strong>偏大</strong>。'},
-{q:'测木块（会吸水）体积，正确的做法是',opts:["A. 直接放入水中读数", "B. 包一层薄膜再测", "C. 用排沙法", "D. 用针压法"],ans:1,exp:'木块吸水会使测得体积<strong>偏小</strong>，应<strong>包一层薄膜</strong>或吸足水后再测。'},
-{q:'漂浮在水面的小木块测体积，可采用',opts:["A. 针压法或吊重物法", "B. 直接排水法", "C. 排油法", "D. 刻度尺量"],ans:0,exp:'漂浮物不能自然浸没，用<strong>针压法</strong>（针压入水）或<strong>吊重物法</strong>使其浸没。'},
-{q:'易溶于水的物体（如食盐）测体积，应用',opts:["A. 排水法", "B. 排沙法或排油法", "C. 量筒直接测", "D. 天平换算"],ans:1,exp:'溶水物不能排水法，用<strong>排沙法、排油法</strong>。'},
-
-{q:'下列情境中质量不变的是：①减肥 ②长胖 ③铁杵磨针 ④水结冰 ⑤飞太空 ⑥月船落月 ⑦水温0→4℃ ⑧氧气用掉一半 ⑨气球压缩变小',opts:["A. ①②③", "B. ④⑤⑥⑦⑨", "C. ③⑥⑦⑧", "D. ④⑤⑥⑦⑧"],ans:1,exp:'质量是<strong>属性</strong>：④状态变、⑤⑥位置变、⑦温度变、⑨形状变但质量都不变；<strong>⑧氧气用掉一半物质减少，质量变少</strong>。'},{q:'（2024秋·双流区期末）两个物体的质量不同，一定是由于它们的',opts:["A. 形状不同", "B. 物态不同", "C. 温度不同", "D. 所含物质的多少不同"],ans:3,exp:'质量=所含<strong>物质的多少</strong>，质量不同一定因为所含物质多少不同。'},{q:'“神舟六号”上航天员的钢笔可以漂浮在空中，这时钢笔的质量与地面相比',opts:["A. 不变", "B. 变小", "C. 变大", "D. 无法确定"],ans:0,exp:'失重≠质量变小，质量是<strong>属性</strong>，与位置、重力无关。'},{q:'（2024秋·金牛区期末）下列物体的质量发生了变化的是',opts:["A. 冰块全部熔化成水", "B. 铝块拉成铝线", "C. 将月球岩石带到地球", "D. 将菜刀刃磨薄"],ans:3,exp:'磨薄使<strong>物质减少</strong>→质量变小；熔化/拉丝/位置变化质量都不变。'},{q:'（2024秋·简阳市校级期末）关于质量的认识，正确的是',opts:["A. 苹果从地球带到月球质量变小", "B. 矿泉水结冰质量变小", "C. 橡皮泥捏成不同形状质量都相同", "D. 1kg铁比1kg棉花质量大"],ans:2,exp:'橡皮泥<strong>形状变质量不变</strong>；1kg铁和1kg棉花质量<strong>相等</strong>。'},{q:'初中生的质量约为0.06___，合适的单位是',opts:["A. t", "B. kg", "C. g", "D. mg"],ans:0,exp:'0.06t=60kg，符合初中生质量。'},{q:'（2024·攀枝花）单个质量约5g、外径约1cm的水果是',opts:["A. 芒果", "B. 油桃", "C. 枇杷", "D. 樱桃"],ans:3,exp:'樱桃单个约<strong>5g、1cm</strong>；芒果/油桃/枇杷都大得多。'},{q:'一辆国产纯电跑车的质量最接近实际的是',opts:["A. 1900g", "B. 19kg", "C. 19t", "D. 1.9t"],ans:3,exp:'家用轿车质量约<strong>1~2t</strong>，跑车约1.9t；19t是重型卡车级别。'},{q:'天平结构中，用于调节横梁平衡的部件是',opts:["A. 游码", "B. 平衡螺母", "C. 砝码", "D. 分度盘"],ans:1,exp:'<strong>平衡螺母</strong>调节横梁平衡；游码用于微调/读数。'},{q:'（2024·高新区校级模拟）使用托盘天平测质量，操作不正确的是',opts:["A. 应放在水平桌面上", "B. 先游码移至左端零刻线", "C. 移动天平后重新调节平衡", "D. 称量过程中调节平衡螺母"],ans:3,exp:'称量过程中<strong>不能调平衡螺母</strong>，只能加减砝码、移游码。'},{q:'（2025·金牛区期末）关于质量及其测量，正确的是',opts:["A. 一杯水变成冰后体积变大，质量不变", "B. 同一物体在地面和空间站质量不同", "C. 国际单位制中质量基本单位是克", "D. 实验室调好的天平拿到教室可直接用"],ans:0,exp:'水结冰<strong>状态变、质量不变</strong>（体积变大）；基本单位是<strong>千克</strong>。'},{q:'（2024·自贡）已调好的天平测物体，指针指在分度盘中线左边一点，这时应',opts:["A. 右端螺母向右旋出", "B. 右端螺母向左旋进", "C. 减少右盘砝码", "D. 把游码向右移动一些"],ans:3,exp:'称量中<strong>不能动螺母</strong>；指针偏左说明砝码不够，应<strong>向右移游码</strong>。'},{q:'称5g食盐需在托盘垫纸。正确方法是①先放纸再调平，再放5g砝码左盘加盐；②先调平再放纸，再放5g砝码加盐。应选',opts:["A. 方法①", "B. 方法②", "C. 两种都对", "D. 两种都错"],ans:0,exp:'先放纸再调平，纸的质量被<strong>归零抵消</strong>；方法②纸的重量会使称量<strong>偏大</strong>。'},{q:'称5g食盐过程中发现天平指针偏左，接下来应',opts:["A. 取下一些食盐", "B. 再放一些食盐", "C. 调平衡螺母", "D. 加砝码"],ans:0,exp:'指针偏左=左盘<strong>太重</strong>，应<strong>取下一些食盐</strong>。'},{q:'（2022·成都）测量质量时用镊子而不能用手加减砝码，原因是',opts:["A. 防止汗液腐蚀砝码和游码", "B. 用手更快", "C. 镊子更美观", "D. 防止砝码丢失"],ans:0,exp:'手汗会<strong>腐蚀砝码和游码</strong>，必须用镊子轻拿轻放。'},{q:'用量筒测液体体积时仰视刻度读数，读数将会',opts:["A. 偏大", "B. 偏小", "C. 无偏差", "D. 无法确定"],ans:1,exp:'<strong>俯大仰小</strong>：仰视读出的刻度在真实液面<strong>下方</strong>，读数偏小。'},{q:'测瓷器碎片体积：碎片浸没水中做标记→取出→用量筒加水40mL回到标记处，碎片体积为',opts:["A. 40cm³", "B. 80cm³", "C. 20cm³", "D. 无法确定"],ans:0,exp:'标记法：补回的水的体积=<strong>碎片体积</strong>，40mL=<strong>40cm³</strong>。'},{q:'教室的体积约为144___，合适的单位是',opts:["A. m³", "B. dm³", "C. cm³", "D. L"],ans:0,exp:'教室体积约<strong>144m³</strong>（如8m×6m×3m=144m³）。'}
-
+{q:'密度是物体',opts:["A. 质量与体积的比值", "B. 质量与体积的乘积", "C. 体积与质量的比值", "D. 重力与体积的比值"],ans:0,exp:'密度=<strong>质量与体积的比值</strong>，用比值定义法定义。'},
+{q:'密度的定义方法是',opts:["A. 比值定义法", "B. 类比法", "C. 控制变量法", "D. 等效替代法"],ans:0,exp:'密度用<strong>比值定义法</strong>定义，是物质的基本属性。'},
+{q:'密度公式 ρ=m/V 中，ρ 的单位是',opts:["A. kg/m³", "B. kg", "C. m³", "D. N"],ans:0,exp:'密度国际单位<strong>kg/m³</strong>，常用 g/cm³。'},
+{q:'1 g/cm³ 等于',opts:["A. 10³ kg/m³", "B. 10² kg/m³", "C. 10⁴ kg/m³", "D. 1 kg/m³"],ans:0,exp:'<strong>1 g/cm³ = 10³ kg/m³</strong>（单位换算必考）。'},
+{q:'水的密度 1.0×10³ kg/m³，物理意义是',opts:["A. 1m³水的质量为1.0×10³kg", "B. 1kg水的体积为1.0×10³m³", "C. 水比铁重", "D. 水的质量是1kg"],ans:0,exp:'密度物理意义：<strong>1m³水的质量是1.0×10³kg</strong>。'},
+{q:'密度是物质的属性，它',opts:["A. 与质量m成正比", "B. 与体积V成反比", "C. 与m、V无关，与种类和状态有关", "D. 与温度无关"],ans:2,exp:'密度与 m、V <strong>无关</strong>，与<strong>种类、状态</strong>有关。'},
+{q:'冰熔化成水，密度',opts:["A. 变大", "B. 变小", "C. 不变", "D. 变为零"],ans:0,exp:'冰 0.9×10³ → 水 1.0×10³，状态变<strong>密度变大</strong>（质量不变、体积变小）。'},
+{q:'铁的密度 7.9×10³ kg/m³，合',opts:["A. 7.9 g/cm³", "B. 790 g/cm³", "C. 0.79 g/cm³", "D. 79 g/cm³"],ans:0,exp:'7.9×10³ kg/m³ = <strong>7.9 g/cm³</strong>（除以10³）。'},
+{q:'下列物质密度最大的是',opts:["A. 水银(13.6×10³)", "B. 铁(7.9×10³)", "C. 铜(8.9×10³)", "D. 金(19.3×10³)"],ans:3,exp:'金 19.3×10³ 最大；水银其次 13.6×10³。'},
+{q:'实心立方体边长2dm，质量2.16×10⁴g，密度为',opts:["A. 2.7 g/cm³", "B. 2.7 kg/m³", "C. 27 g/cm³", "D. 0.27 g/cm³"],ans:0,exp:'V=(2dm)³=8dm³=8×10³cm³；ρ=m/V=2.16×10⁴/8×10³=<strong>2.7 g/cm³</strong>（铝）。'},
+{q:'由 ρ=m/V 可知，下列说法正确的是',opts:["A. ρ与m成正比", "B. ρ与V成反比", "C. ρ与m成正比、与V成反比", "D. ρ与m、V无关，由物质种类决定"],ans:3,exp:'公式只是计算式，<strong>ρ由物质种类和状态决定</strong>，与m、V无关。'},
+{q:'同种物质（状态不变）的密度',opts:["A. 随质量增大而增大", "B. 随体积增大而减小", "C. 保持不变", "D. 随温度升高而增大"],ans:2,exp:'同种物质同状态，密度<strong>不变</strong>，与质量体积无关。'},
+{q:'钢瓶内 10dm³、2.5kg/m³ 气体，用去5g后剩余密度为',opts:["A. 2 kg/m³", "B. 1.5 kg/m³", "C. 2.5 kg/m³", "D. 1 kg/m³"],ans:0,exp:'气体<strong>充满容器</strong>V不变；m′=2.5×0.01−0.005=0.02kg；ρ′=0.02/0.01=<strong>2 kg/m³</strong>。'},
+{q:'钢瓶内气体用去一半，瓶内气体密度',opts:["A. 不变", "B. 变为原来一半", "C. 变为原来两倍", "D. 无法判断"],ans:1,exp:'气体充满容器V不变，m减半→ρ=<strong>原来一半</strong>。'},
+{q:'钢瓶内 10L、1.5kg/m³ 气体压缩为4L，压缩后密度为',opts:["A. 3.75 kg/m³", "B. 1.5 kg/m³", "C. 6 kg/m³", "D. 0.6 kg/m³"],ans:0,exp:'m不变=1.5×0.01=0.015kg；V′=0.004m³；ρ′=0.015/0.004=<strong>3.75 kg/m³</strong>。'},
+{q:'气体被压缩体积变小，密度',opts:["A. 变大", "B. 变小", "C. 不变", "D. 变为零"],ans:0,exp:'质量不变、V变小→ρ=<strong>变大</strong>。'},
+{q:'m₁:m₂=2:3，V₁:V₂=1:2，则 ρ₁:ρ₂=',opts:["A. 4:3", "B. 3:4", "C. 2:3", "D. 1:2"],ans:0,exp:'ρ₁/ρ₂=(m₁/m₂)×(V₂/V₁)=(2/3)×(2/1)=<strong>4:3</strong>。'},
+{q:'质量相同的两个物体，体积之比1:2:3，密度之比为',opts:["A. 1:2:3", "B. 6:3:2", "C. 3:2:1", "D. 2:3:6"],ans:1,exp:'m相同→ρ与V<strong>成反比</strong>：1:1/2:1/3=<strong>6:3:2</strong>（倒数之比）。'},
+{q:'体积相同的两个物体，密度之比1:2，质量之比为',opts:["A. 1:2", "B. 2:1", "C. 1:1", "D. 1:4"],ans:0,exp:'V相同→m与ρ成正比：m₁:m₂=ρ₁:ρ₂=<strong>1:2</strong>。'},
+{q:'m-V图像中，图线a过点(1cm³,3g)，图线b过点(3cm³,3g)，则',opts:["A. ρa>ρb", "B. ρa<ρb", "C. ρa=ρb", "D. 无法比较"],ans:0,exp:'ρa=3/1=3g/cm³，ρb=3/3=1g/cm³，<strong>ρa>ρb</strong>；越靠近m轴密度越大。'},
+{q:'m-V图像中，下列说法正确的是',opts:["A. 斜率代表密度，越靠近m轴密度越大", "B. 斜率代表体积", "C. 越靠近V轴密度越大", "D. 图线不过原点"],ans:0,exp:'m-V图像<strong>斜率=密度</strong>，越靠近<strong>m轴</strong>（纵轴）密度越大。'},
+{q:'V-m图像（横轴m、纵轴V）中，斜率代表',opts:["A. 密度ρ", "B. V/m即1/ρ", "C. 质量", "D. 体积"],ans:1,exp:'V-m图斜率=V/m=<strong>1/ρ</strong>；斜率越小密度越大。'},
+{q:'测烧杯+液体总质量与体积关系图，图线不过原点，截距代表',opts:["A. 空烧杯质量", "B. 液体密度", "C. 液体体积", "D. 液体质量"],ans:0,exp:'V=0时总质量=烧杯质量，<strong>截距=空烧杯质量</strong>。'},
+{q:'下列单位换算正确的是',opts:["A. 1g/cm³=10³kg/m³", "B. 1g/cm³=10kg/m³", "C. 1kg/m³=10³g/cm³", "D. 1kg/m³=10⁶g/cm³"],ans:0,exp:'<strong>1g/cm³=10³kg/m³</strong>（大单位克每立方厘米=1000千克每立方米）。'},
+{q:'质量1.5t的物体，密度为2.7×10³kg/m³，其体积约为',opts:["A. 0.56m³", "B. 5.6m³", "C. 56m³", "D. 5.6dm³"],ans:0,exp:'V=m/ρ=1500/2700≈<strong>0.56m³</strong>。'},
+{q:'两个实心球质量相等，体积之比V₁:V₂=1:2，密度之比为',opts:["A. 1:2", "B. 2:1", "C. 1:1", "D. 4:1"],ans:1,exp:'m同→ρ与V成反比：ρ₁:ρ₂=V₂:V₁=<strong>2:1</strong>。'},
+{q:'鉴别物质常用密度，是因为',opts:["A. 不同物质密度一般不同", "B. 密度与质量有关", "C. 密度与体积有关", "D. 密度可以测量"],ans:0,exp:'不同物质密度<strong>一般不同</strong>，可用密度鉴别物质。'},
+{q:'一块砖切成两半，每半的密度',opts:["A. 变为原来一半", "B. 变为原来两倍", "C. 不变", "D. 无法判断"],ans:2,exp:'密度是<strong>物质属性</strong>，与质量和体积大小无关，切成两半密度<strong>不变</strong>。'},
+{q:'氧气瓶内氧气密度为ρ，用去一半后（瓶体积不变）密度为',opts:["A. ρ/2", "B. ρ", "C. 2ρ", "D. 无法确定"],ans:0,exp:'瓶体积不变（气体充满），m减半→ρ=<strong>ρ/2</strong>。'},
+{q:'水的密度比冰大，下列说法正确的是',opts:["A. 同质量的水和冰，水体积小", "B. 同质量的水和冰，冰体积小", "C. 水结冰质量变大", "D. 冰化水质量变小"],ans:0,exp:'ρ水>ρ冰，同质量时ρ大者V小：<strong>水体积小</strong>；冰化水质量不变。'},
+{q:'ρ水=1.0×10³kg/m³，表示',opts:["A. 每立方米水的质量是1.0×10³kg", "B. 每千克水的体积是1.0×10³m³", "C. 水的密度是1kg/m³", "D. 每立方厘米水的质量是1.0×10³kg"],ans:0,exp:'密度定义：单位体积的质量，<strong>1m³水=1.0×10³kg</strong>。'},
+{q:'关于密度公式 ρ=m/V，下列理解正确的是',opts:["A. 对于不同物质，m越大ρ越大", "B. 对于同种物质，ρ与m、V无关", "C. 对于同种物质，V越大ρ越小", "D. 不同物质ρ一定不同"],ans:1,exp:'同种物质同状态ρ<strong>不变</strong>；不同物质ρ<strong>可能相同</strong>（如酒精和煤油）。'}
 ];
 
 
 const flashcards = [
-{front:'什么是质量？',back:'物体所含<strong>物质的多少</strong>，符号 m；是物体的基本属性。'},
-{front:'质量有什么特点？',back:'<strong>不随位置、形状、温度、状态</strong>变化而变化（到月球不变、冰化水不变）。'},
-{front:'质量单位有哪些？',back:'国际单位<strong>千克(kg)</strong>；常用 t、g、mg；1t=1000kg=10⁶g=10⁹mg。'},
-{front:'常见质量估测？',back:'鸡蛋<strong>50g</strong>、一元硬币6g、中学生50kg、苹果150g、矿泉水500g、大象5t、蓝鲸150t。'},
-{front:'托盘天平使用四步？',back:'<strong>放</strong>（水平桌面）→<strong>调</strong>（游码归零、螺母调平）→<strong>称</strong>（左物右码）→<strong>读</strong>（m物=m砝码+游码）。'},
-{front:'天平指针左偏怎么办？',back:'<strong>左偏右调</strong>：指针左偏说明左盘重，平衡螺母向右调。'},
-{front:'天平读数公式？',back:'m物=<strong>m砝码+游码示数</strong>；游码读数读<strong>左边</strong>。'},
-{front:'天平使用注意事项？',back:'调平后<strong>不动平衡螺母</strong>；砝码游码用<strong>镊子</strong>；液体装杯、固体垫纸；不能用量筒装液体称。'},
-{front:'什么是体积？',back:'物体所占<strong>空间的大小</strong>，符号 V；国际单位<strong>立方米(m³)</strong>。'},
-{front:'体积单位换算？',back:'1m³=10³dm³=10⁶cm³；<strong>1L=1dm³</strong>，1mL=1cm³。'},
-{front:'量筒读数要点？',back:'视线与<strong>凹液面最低处</strong>相平；<strong>俯视偏大、仰视偏小</strong>。'},
-{front:'测液体体积用什么？',back:'<strong>量筒、量杯</strong>。'},
-{front:'测规则固体体积？',back:'直接测量边长，用公式计算（如正方体 V=a³、长方体 V=abh）。'},
-{front:'排水法测体积？',back:'量筒水V₁，放入物体示数V₂，V物=<strong>V₂-V₁</strong>。'},
-{front:'漂浮物体如何测体积？',back:'<strong>针压法</strong>（用针把物体压入水中）或<strong>吊重物法</strong>。'},
-{front:'溶水物体如何测体积？',back:'<strong>排沙法、排油法</strong>（如食盐不能排水法）。'},
-{front:'排水法误差：沾水带出？',back:'取出物带出水→V₁偏小→测得体积<strong>偏大</strong>。'},
-{front:'排水法误差：木块吸水？',back:'V₃偏小→测得体积<strong>偏小</strong>；应<strong>包薄膜</strong>或<strong>吸足水</strong>再测。'},
-{front:'质量测量工具有哪些？',back:'托盘天平（实验室）、台秤、杆秤、电子秤、地磅。'},
-{front:'天平称量特殊物体？',back:'液体<strong>装杯</strong>称（杯+液再减杯）；脏/化/腐固体<strong>垫纸</strong>；烧杯垫纸后调零。'}
+{front:'什么是密度？',back:'物体<strong>质量与体积的比值</strong>，用 ρ 表示；用<strong>比值定义法</strong>定义。'},
+{front:'密度公式？',back:'<strong>ρ = m / V</strong>；变形 m=ρV、V=m/ρ。'},
+{front:'密度有什么特性？',back:'与 m、V <strong>无关</strong>，与物质的<strong>种类、状态</strong>有关；同种物质同状态密度不变。'},
+{front:'密度单位换算？',back:'<strong>1 g/cm³ = 10³ kg/m³</strong>；kg/m³是国际单位。'},
+{front:'水的密度是多少？',back:'<strong>1.0×10³ kg/m³</strong>（=1g/cm³）；物理意义：1m³水质量为1.0×10³kg。'},
+{front:'常见物质密度？',back:'冰0.9、酒精/煤油0.8、铁7.9、铜8.9、铝2.7、水银13.6、金19.3（×10³kg/m³）；空气1.29kg/m³。'},
+{front:'状态变化密度怎么变？',back:'冰→水：<strong>密度变大</strong>（质量不变、体积变小）；ρ与状态有关。'},
+{front:'气体密度计算要点？',back:'气体<strong>永远充满容器</strong>：用去一部分→m变V不变；压缩→V变m不变。'},
+{front:'气体用去一半密度？',back:'体积不变、质量减半→密度<strong>变为原来一半</strong>。'},
+{front:'比例计算：m同则？',back:'m相同→ρ与V<strong>成反比</strong>，密度比=体积比的<strong>倒数</strong>（倒数之比）。'},
+{front:'比例计算：V同则？',back:'V相同→ρ与m<strong>成正比</strong>。'},
+{front:'m-V图像怎么看？',back:'斜率=密度；<strong>越靠近m轴（纵轴）密度越大</strong>。'},
+{front:'V-m图像怎么看？',back:'斜率=V/m=<strong>1/ρ</strong>；斜率越小密度越大。'},
+{front:'烧杯+液体图像截距？',back:'图线不过原点，<strong>截距=空烧杯质量</strong>。'},
+{front:'鉴别物质用什么？',back:'<strong>密度</strong>：不同物质密度一般不同。'},
+{front:'ρ=2.7g/cm³是什么物质？',back:'<strong>铝</strong>（2.7×10³kg/m³）。'},
+{front:'计算固体密度步骤？',back:'①求体积（规则用公式/不规则排水法）②统一单位③ρ=m/V。'},
+{front:'单位换算技巧？',back:'g/cm³ → kg/m³ 乘<strong>10³</strong>；kg/m³ → g/cm³ 除10³。'},
+{front:'冰化水体积变化？',back:'质量不变、密度变大→体积<strong>变小</strong>（水结冰体积变大）。'},
+{front:'同质量铁块和木块？',back:'ρ铁>ρ木→同质量时<strong>铁体积小</strong>；ρ=m/V，ρ大V小。'}
 ];
 
 
-const errors = [
-{title:'❌ 质量随位置/状态变化',desc:'<strong>易错</strong>：以为宇航员到月球质量变小、冰化成水质量变大。<strong>正解</strong>：质量是<strong>属性</strong>：不随位置、形状、温度、状态变化；月球、冰水质量都不变。'},
-{title:'❌ 调平后称量时动平衡螺母',desc:'<strong>易错</strong>：称量中发现不平衡就调平衡螺母。<strong>正解</strong>：调平后<strong>不能再动平衡螺母</strong>；只能加减砝码、移动游码。'},
-{title:'❌ 游码读数读右边',desc:'<strong>易错</strong>：把游码右端对着的刻度当成示数。<strong>正解</strong>：游码读数读<strong>左边</strong>所对刻度。'},
-{title:'❌ 左码右物',desc:'<strong>易错</strong>：把物体放右盘、砝码放左盘。<strong>正解</strong>：必须<strong>左物右码</strong>；若放反，m物=砝码-游码（游码被加反）。'},
-{title:'❌ 量筒读数俯视/仰视',desc:'<strong>易错</strong>：俯视或仰视量筒刻度读数。<strong>正解</strong>：<strong>俯视偏大、仰视偏小</strong>，必须平视<strong>凹液面最低处</strong>。'},
-{title:'❌ 木块吸水误差方向',desc:'<strong>易错</strong>：以为吸水使体积偏大。<strong>正解</strong>：吸水使V₃<strong>偏小</strong>→体积<strong>偏小</strong>；应包薄膜或吸足水再测。'},
-{title:'❌ 排水法取出带水',desc:'<strong>易错</strong>：忽略取出物带出的水。<strong>正解</strong>：带出水→V₁偏小→体积<strong>偏大</strong>；应将带出的水冲回量筒。'},
-{title:'❌ 单位换算混淆',desc:'<strong>易错</strong>：1L=1cm³、1t=100g 等错记。<strong>正解</strong>：<strong>1L=1dm³</strong>=10⁻³m³、1mL=1cm³；1t=1000kg=10⁶g。'}
+errors = [
+{title:'❌ 密度与m、V成正比/反比',desc:'<strong>易错</strong>：由ρ=m/V误认为密度与m成正比、与V成反比。<strong>正解</strong>：ρ是物质<strong>属性</strong>，与m、V<strong>无关</strong>，只与种类和状态有关。'},
+{title:'❌ 单位换算错',desc:'<strong>易错</strong>：1g/cm³误认为=1kg/m³。<strong>正解</strong>：<strong>1g/cm³=10³kg/m³</strong>；kg/m³→g/cm³要除以10³。'},
+{title:'❌ 气体用去一半密度不变',desc:'<strong>易错</strong>：以为气体用掉一半密度不变。<strong>正解</strong>：气体<strong>充满容器体积不变</strong>，m减半→ρ变为一半。'},
+{title:'❌ 压缩气体质量变化',desc:'<strong>易错</strong>：以为压缩后质量变大。<strong>正解</strong>：压缩只变V不变m→ρ<strong>变大</strong>。'},
+{title:'❌ 比例题直接换顺序',desc:'<strong>易错</strong>：m同、V比1:2:3，直接写ρ比1:2:3。<strong>正解</strong>：m同→ρ与V<strong>成反比</strong>，取<strong>倒数之比</strong>6:3:2。'},
+{title:'❌ m-V图像看反',desc:'<strong>易错</strong>：以为越靠近V轴密度越大。<strong>正解</strong>：<strong>越靠近m轴密度越大</strong>（斜率=ρ）。'},
+{title:'❌ 冰化水体积不变',desc:'<strong>易错</strong>：以为冰化水体积不变。<strong>正解</strong>：质量不变、密度变大(0.9→1.0)→体积<strong>变小</strong>。'},
+{title:'❌ 液体密度题忽略烧杯质量',desc:'<strong>易错</strong>：测总质量误当液体质量。<strong>正解</strong>：图线<strong>截距=空烧杯质量</strong>，算液体密度要减去烧杯质量。'}
 ];
 
 
 
 function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
-const WRONG_HISTORY_KEY='quiz_physics_lesson13_wrong';
+const WRONG_HISTORY_KEY='quiz_physics_lesson14_wrong';
 let retryMode=false,wrongIds=[];
 
 function loadWrongHistory(){
@@ -331,7 +322,7 @@ let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
 
 /* ===== 已做标记 + 未做/错题筛选 ===== */
 var QUIZ_MODE='all';
-var QUIZ_PROG_KEY='quiz_progress_physics_lesson13';
+var QUIZ_PROG_KEY='quiz_progress_physics_lesson14';
 function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
 function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
 function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
@@ -385,7 +376,7 @@ ${retryMode?`<button class="btn btn-sm btn-outline" onclick="initQ();renderQ()">
 const IMPORT_KEY='wrong_bank_import';
 function autoImportWB(idx, myAns){
   const q=questions[idx];
-  const item={subject:'物理',chapter:'质量和体积',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'质量,体积,天平,量筒,排水法,物理'};
+  const item={subject:'物理',chapter:'密度',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'密度,ρ=m/V,单位换算,气体计算,比例计算,m-V图像,物理'};
   const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
   if(ex.some(x=>x.content===item.content))return false;
   ex.push(item);
@@ -393,7 +384,7 @@ function autoImportWB(idx, myAns){
   return true;
 }
 function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
-const items=w.map(w=>({subject:'物理',chapter:'质量和体积',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'质量,体积,天平,量筒,排水法,物理'}));
+const items=w.map(w=>({subject:'物理',chapter:'密度',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'密度,ρ=m/V,单位换算,气体计算,比例计算,m-V图像,物理'}));
 const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
 alert(`✅ 已准备 ${items.length} 道错题！`);}
 
