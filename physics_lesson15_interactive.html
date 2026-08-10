@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚖️ 密度 · 互动学习</title>
+<title>📊 密度图象与计算 · 互动学习</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
@@ -129,12 +129,12 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <div class="container">
   <div class="hero fade-in-up">
-    <h1><i class="fas fa-weight-hanging"></i> 密度 · 互动学习</h1>
-    <p>初二博学班 · 4 模块 · 50 题 · 20 卡牌 | 天元教育</p>
+    <h1><i class="fas fa-chart-line"></i> 密度图象与计算 · 互动学习</h1>
+    <p>初二博学班 · 2 模块 · 9 题 · 12 卡牌 | 天元教育</p>
     <div class="meta">
-      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 50道测验题</span>
-      <span><i class="fas fa-layer-group"></i> 20张知识卡</span>
-      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 9道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 12张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
       <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
     </div>
   </div>
@@ -148,58 +148,57 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
   <!-- ========== 知识图谱 ========== -->
   <div id="tab-knowledge" class="tab-content active">
-    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第十三讲 · 密度</div>
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第十五讲 · 密度图象与计算</div>
 
         <div class="knowledge-grid">
-      <div class="knowledge-card c1"><h3><i class="fas fa-balance-scale" style="color:#8e44ad"></i> 密度定义</h3><ul>
-        <li>物体<strong class="hl">质量与体积的比值</strong>叫密度（ρ）</li>
-        <li>用<strong class="hl">比值定义法</strong>定义物理量</li>
-        <li>可用来<strong class="hl">鉴别物质</strong></li>
+      <div class="knowledge-card c1"><h3><i class="fas fa-chart-line" style="color:#34495e"></i> m-V 图象</h3><ul>
+        <li>横轴 V、纵轴 m，<strong class="hl">斜率=m/V=ρ</strong></li>
+        <li>同种物质：<strong class="hl">过原点的直线</strong></li>
+        <li>斜率越大，密度越大</li>
       </ul></div>
-      <div class="knowledge-card c2"><h3><i class="fas fa-divide" style="color:#e74c3c"></i> 密度公式</h3><ul>
-        <li><strong class="hl">ρ = m / V</strong></li>
-        <li>变形：m=ρV；V=m/ρ</li>
-        <li>ρ 读作"rou"（肉）</li>
+      <div class="knowledge-card c2"><h3><i class="fas fa-balance-scale" style="color:#8e44ad"></i> 图象比较密度</h3><ul>
+        <li>取<strong class="hl">相同体积</strong>比质量</li>
+        <li>质量大的密度大</li>
+        <li>或直接比<strong class="hl">斜率</strong></li>
       </ul></div>
-      <div class="knowledge-card c3"><h3><i class="fas fa-cube" style="color:#3498db"></i> 密度特性</h3><ul>
-        <li>与 m、V <strong class="hl">无关</strong></li>
-        <li>与物质的<strong class="hl">种类、状态</strong>有关</li>
-        <li>冰→水：状态变，密度变大</li>
+      <div class="knowledge-card c3"><h3><i class="fas fa-flask" style="color:#3498db"></i> 含烧杯图象</h3><ul>
+        <li>m总 = m杯 + ρ液V</li>
+        <li>直线<strong class="hl">不过原点</strong></li>
+        <li><strong class="hl">截距=烧杯质量</strong>，斜率=液体密度</li>
       </ul></div>
-      <div class="knowledge-card c4"><h3><i class="fas fa-exchange-alt" style="color:#27ae60"></i> 单位换算</h3><ul>
-        <li>国际单位：<strong class="hl">kg/m³</strong></li>
-        <li>常用单位：<strong class="hl">g/cm³</strong></li>
-        <li><strong class="hl">1 g/cm³ = 10³ kg/m³</strong></li>
-      </ul></div>
-      <div class="knowledge-card c5"><h3><i class="fas fa-tint" style="color:#2980b9"></i> 常见密度</h3><ul>
-        <li>水 1.0×10³、冰 0.9×10³</li>
-        <li>酒精/煤油 0.8×10³</li>
-        <li>铁 7.9、铜 8.9、铝 2.7、水银 13.6、金 19.3（×10³）</li>
-        <li>空气 1.29 kg/m³</li>
-      </ul></div>
-      <div class="knowledge-card c6"><h3><i class="fas fa-wind" style="color:#16a085"></i> 气体密度计算</h3><ul>
-        <li>气体<strong class="hl">永远充满容器</strong></li>
-        <li>用去一部分：m↓、V 不变 → ρ↓</li>
-        <li>压缩体积：m 不变、V↓ → ρ↑</li>
-      </ul></div>
-      <div class="knowledge-card c7"><h3><i class="fas fa-percentage" style="color:#f39c12"></i> 比例计算</h3><ul>
+      <div class="knowledge-card c4"><h3><i class="fas fa-exchange-alt" style="color:#27ae60"></i> 等质量/等体积</h3><ul>
         <li>m 同 → ρ 与 V <strong class="hl">成反比</strong></li>
         <li>V 同 → ρ 与 m 成正比</li>
-        <li>密度比=质量比×<strong class="hl">体积比倒数</strong>（倒数之比，不是换顺序）</li>
+        <li>V水:V油=ρ油:ρ水（m同）</li>
       </ul></div>
-      <div class="knowledge-card c8"><h3><i class="fas fa-chart-line" style="color:#34495e"></i> m-V 图像</h3><ul>
-        <li>斜率 = 密度，<strong class="hl">越靠近 m 轴密度越大</strong></li>
-        <li>V-m 图：斜率=V/m=1/ρ</li>
-        <li>截距=空烧杯质量（不过原点）</li>
+      <div class="knowledge-card c5"><h3><i class="fas fa-dove" style="color:#2980b9"></i> 乌鸦喝水</h3><ul>
+        <li><strong class="hl">V石 = V瓶 - V水</strong></li>
+        <li>m石 = ρ石 × V石</li>
+        <li>水面升到瓶口：V石+V水=V瓶</li>
+      </ul></div>
+      <div class="knowledge-card c6"><h3><i class="fas fa-cube" style="color:#f39c12"></i> 空心砖</h3><ul>
+        <li>材料密度 ρ = m砖 / <strong class="hl">V实</strong></li>
+        <li>V实 = V总 × 实心比例</li>
+        <li>节省材料 = ρ × V空</li>
+      </ul></div>
+      <div class="knowledge-card c7"><h3><i class="fas fa-bicycle" style="color:#16a085"></i> 综合计算</h3><ul>
+        <li>ρ=m/V、m=ρV、V=m/ρ</li>
+        <li>换材料增重：Δm=(ρ₂-ρ₁)V</li>
+        <li>单位统一：g/cm³ ↔ kg/m³（×10³）</li>
+      </ul></div>
+      <div class="knowledge-card c8"><h3><i class="fas fa-ruler" style="color:#e74c3c"></i> 单位换算</h3><ul>
+        <li><strong class="hl">1 g/cm³ = 10³ kg/m³</strong></li>
+        <li>kg/m³ → g/cm³：除以10³</li>
+        <li>1L=1dm³=10⁻³m³</li>
       </ul></div>
     </div>
     <div class="teacher-talk">
-      <h4><i class="fas fa-microphone-alt"></i> 🎙️ 课堂要点 · 第十四讲（密度）</h4>
-      <p><strong>本讲核心</strong>：密度是八上期末压轴题重点！务必掌握：①ρ=m/V 及单位换算（1g/cm³=10³kg/m³）②气体计算"永远充满容器"③比例题"倒数之比"④图像"越靠近m轴密度越大"。</p>
-      <p><strong>易错提醒</strong>：密度是物质的属性，与 m、V 大小无关；气体用去一半是 m 变 V 不变，压缩是 V 变 m 不变。</p>
-      <p><strong>🎓 老师课堂总结</strong> — 本讲重点是<strong>密度的计算</strong>：①普通带公式计算 ρ=m/V ②比例计算 ③气体密度计算（过程更复杂）。密度是<strong>开学半期后</strong>的内容，<strong>期末考试非常重要</strong>。暑假一定要把<strong>基础计算练到位</strong>，后面到难题才能把重心放到逻辑推理上，<strong>不让计算成为绊脚石</strong>。</p>
+      <h4><i class="fas fa-microphone-alt"></i> 🎙️ 课堂要点 · 第十五讲（密度图象与计算）</h4>
+      <p><strong>本讲核心</strong>：密度板块收官——图象与计算。①m-V 图象斜率=ρ，越靠近 m 轴密度越大；②含烧杯图象<strong>不过原点，截距=烧杯质量</strong>；③比较密度取<strong>相同体积</strong>比质量；④计算题：乌鸦喝水 V石=V瓶-V水、空心砖用实心体积求材料密度。</p>
+      <p><strong>易错提醒</strong>：含烧杯总质量图象误认为过原点；乌鸦喝水 V石 误等于 V水；空心砖用总体积算密度（应用实心部分体积）。</p>
+      <p><strong>🎓 老师课堂总结</strong> — 图象题先看坐标轴，再找截距和斜率：截距是烧杯/容器质量，斜率是液体密度；计算题把公式 ρ=m/V 用熟，单位先统一再代入。</p>
     </div>
-    </div><div id="tab-quiz" class="tab-content">
+    </div>id="tab-quiz" class="tab-content">
     <div class="quiz-mode-bar" id="quizModeBar">
     <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
     <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
@@ -215,7 +214,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
   <!-- ========== 知识卡牌 ========== -->
   <div id="tab-flashcard" class="tab-content">
-    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共20张知识卡</p>
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共12张知识卡</p>
     <div id="flashcardArea"></div>
   </div>
 
@@ -232,92 +231,41 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <script>
 const questions = [
-  {"q":"密度是物体","opts":["A. 质量与体积的乘积","B. 质量与体积的比值","C. 体积与质量的比值","D. 重力与体积的比值"],"ans":1,"exp":"密度=<strong>质量与体积的比值</strong>，用比值定义法定义。"},
-  {"q":"密度的定义方法是","opts":["A. 类比法","B. 控制变量法","C. 比值定义法","D. 等效替代法"],"ans":2,"exp":"密度用<strong>比值定义法</strong>定义，是物质的基本属性。"},
-  {"q":"密度公式 ρ=m/V 中，ρ 的单位是","opts":["A. kg","B. kg/m³","C. m³","D. N"],"ans":1,"exp":"密度国际单位<strong>kg/m³</strong>，常用 g/cm³。"},
-  {"q":"1 g/cm³ 等于","opts":["A. 10² kg/m³","B. 10⁴ kg/m³","C. 10³ kg/m³","D. 1 kg/m³"],"ans":2,"exp":"<strong>1 g/cm³ = 10³ kg/m³</strong>（单位换算必考）。"},
-  {"q":"水的密度 1.0×10³ kg/m³，物理意义是","opts":["A. 1m³水的质量为1.0×10³kg","B. 1kg水的体积为1.0×10³m³","C. 水比铁重","D. 水的质量是1kg"],"ans":0,"exp":"密度物理意义：<strong>1m³水的质量是1.0×10³kg</strong>。"},
-  {"q":"密度是物质的属性，它","opts":["A. 与质量m成正比","B. 与m、V无关，与种类和状态有关","C. 与体积V成反比","D. 与温度无关"],"ans":1,"exp":"密度与 m、V <strong>无关</strong>，与<strong>种类、状态</strong>有关。"},
-  {"q":"冰熔化成水，密度","opts":["A. 变小","B. 变大","C. 不变","D. 变为零"],"ans":1,"exp":"冰 0.9×10³ → 水 1.0×10³，状态变<strong>密度变大</strong>（质量不变、体积变小）。"},
-  {"q":"铁的密度 7.9×10³ kg/m³，合","opts":["A. 790 g/cm³","B. 7.9 g/cm³","C. 0.79 g/cm³","D. 79 g/cm³"],"ans":1,"exp":"7.9×10³ kg/m³ = <strong>7.9 g/cm³</strong>（除以10³）。"},
-  {"q":"下列物质密度最大的是","opts":["A. 水银(13.6×10³)","B. 铁(7.9×10³)","C. 金(19.3×10³)","D. 铜(8.9×10³)"],"ans":2,"exp":"金 19.3×10³ 最大；水银其次 13.6×10³。"},
-  {"q":"实心立方体边长2dm，质量2.16×10⁴g，密度为","opts":["A. 2.7 kg/m³","B. 27 g/cm³","C. 2.7 g/cm³","D. 0.27 g/cm³"],"ans":2,"exp":"V=(2dm)³=8dm³=8×10³cm³；ρ=m/V=2.16×10⁴/8×10³=<strong>2.7 g/cm³</strong>（铝）。"},
-  {"q":"由 ρ=m/V 可知，下列说法正确的是","opts":["A. ρ与m成正比","B. ρ与V成反比","C. ρ与m、V无关，由物质种类决定","D. ρ与m成正比、与V成反比"],"ans":2,"exp":"公式只是计算式，<strong>ρ由物质种类和状态决定</strong>，与m、V无关。"},
-  {"q":"同种物质（状态不变）的密度","opts":["A. 随质量增大而增大","B. 随体积增大而减小","C. 随温度升高而增大","D. 保持不变"],"ans":3,"exp":"同种物质同状态，密度<strong>不变</strong>，与质量体积无关。"},
-  {"q":"钢瓶内 10dm³、2.5kg/m³ 气体，用去5g后剩余密度为","opts":["A. 2 kg/m³","B. 1.5 kg/m³","C. 2.5 kg/m³","D. 1 kg/m³"],"ans":0,"exp":"气体<strong>充满容器</strong>V不变；m′=2.5×0.01−0.005=0.02kg；ρ′=0.02/0.01=<strong>2 kg/m³</strong>。"},
-  {"q":"钢瓶内气体用去一半，瓶内气体密度","opts":["A. 变为原来一半","B. 不变","C. 变为原来两倍","D. 无法判断"],"ans":0,"exp":"气体充满容器V不变，m减半→ρ=<strong>原来一半</strong>。"},
-  {"q":"钢瓶内 10L、1.5kg/m³ 气体压缩为4L，压缩后密度为","opts":["A. 3.75 kg/m³","B. 1.5 kg/m³","C. 6 kg/m³","D. 0.6 kg/m³"],"ans":0,"exp":"m不变=1.5×0.01=0.015kg；V′=0.004m³；ρ′=0.015/0.004=<strong>3.75 kg/m³</strong>。"},
-  {"q":"气体被压缩体积变小，密度","opts":["A. 变大","B. 变小","C. 不变","D. 变为零"],"ans":0,"exp":"质量不变、V变小→ρ=<strong>变大</strong>。"},
-  {"q":"m₁:m₂=2:3，V₁:V₂=1:2，则 ρ₁:ρ₂=","opts":["A. 4:3","B. 3:4","C. 2:3","D. 1:2"],"ans":0,"exp":"ρ₁/ρ₂=(m₁/m₂)×(V₂/V₁)=(2/3)×(2/1)=<strong>4:3</strong>。"},
-  {"q":"质量相同的两个物体，体积之比1:2:3，密度之比为","opts":["A. 6:3:2","B. 1:2:3","C. 3:2:1","D. 2:3:6"],"ans":0,"exp":"m相同→ρ与V<strong>成反比</strong>：1:1/2:1/3=<strong>6:3:2</strong>（倒数之比）。"},
-  {"q":"体积相同的两个物体，密度之比1:2，质量之比为","opts":["A. 1:2","B. 2:1","C. 1:1","D. 1:4"],"ans":0,"exp":"V相同→m与ρ成正比：m₁:m₂=ρ₁:ρ₂=<strong>1:2</strong>。"},
-  {"q":"m-V图像中，图线a过点(1cm³,3g)，图线b过点(3cm³,3g)，则","opts":["A. ρa<ρb","B. ρa=ρb","C. ρa>ρb","D. 无法比较"],"ans":2,"exp":"ρa=3/1=3g/cm³，ρb=3/3=1g/cm³，<strong>ρa>ρb</strong>；越靠近m轴密度越大。"},
-  {"q":"m-V图像中，下列说法正确的是","opts":["A. 斜率代表体积","B. 斜率代表密度，越靠近m轴密度越大","C. 越靠近V轴密度越大","D. 图线不过原点"],"ans":1,"exp":"m-V图像<strong>斜率=密度</strong>，越靠近<strong>m轴</strong>（纵轴）密度越大。"},
-  {"q":"V-m图像（横轴m、纵轴V）中，斜率代表","opts":["A. 密度ρ","B. V/m即1/ρ","C. 质量","D. 体积"],"ans":1,"exp":"V-m图斜率=V/m=<strong>1/ρ</strong>；斜率越小密度越大。"},
-  {"q":"测烧杯+液体总质量与体积关系图，图线不过原点，截距代表","opts":["A. 空烧杯质量","B. 液体密度","C. 液体体积","D. 液体质量"],"ans":0,"exp":"V=0时总质量=烧杯质量，<strong>截距=空烧杯质量</strong>。"},
-  {"q":"下列单位换算正确的是","opts":["A. 1g/cm³=10³kg/m³","B. 1g/cm³=10kg/m³","C. 1kg/m³=10³g/cm³","D. 1kg/m³=10⁶g/cm³"],"ans":0,"exp":"<strong>1g/cm³=10³kg/m³</strong>（大单位克每立方厘米=1000千克每立方米）。"},
-  {"q":"质量1.5t的物体，密度为2.7×10³kg/m³，其体积约为","opts":["A. 5.6m³","B. 56m³","C. 0.56m³","D. 5.6dm³"],"ans":2,"exp":"V=m/ρ=1500/2700≈<strong>0.56m³</strong>。"},
-  {"q":"两个实心球质量相等，体积之比V₁:V₂=1:2，密度之比为","opts":["A. 1:2","B. 2:1","C. 1:1","D. 4:1"],"ans":1,"exp":"m同→ρ与V成反比：ρ₁:ρ₂=V₂:V₁=<strong>2:1</strong>。"},
-  {"q":"鉴别物质常用密度，是因为","opts":["A. 密度与质量有关","B. 密度与体积有关","C. 密度可以测量","D. 不同物质密度一般不同"],"ans":3,"exp":"不同物质密度<strong>一般不同</strong>，可用密度鉴别物质。"},
-  {"q":"一块砖切成两半，每半的密度","opts":["A. 不变","B. 变为原来一半","C. 变为原来两倍","D. 无法判断"],"ans":0,"exp":"密度是<strong>物质属性</strong>，与质量和体积大小无关，切成两半密度<strong>不变</strong>。"},
-  {"q":"氧气瓶内氧气密度为ρ，用去一半后（瓶体积不变）密度为","opts":["A. ρ/2","B. ρ","C. 2ρ","D. 无法确定"],"ans":0,"exp":"瓶体积不变（气体充满），m减半→ρ=<strong>ρ/2</strong>。"},
-  {"q":"水的密度比冰大，下列说法正确的是","opts":["A. 同质量的水和冰，冰体积小","B. 水结冰质量变大","C. 同质量的水和冰，水体积小","D. 冰化水质量变小"],"ans":2,"exp":"ρ水>ρ冰，同质量时ρ大者V小：<strong>水体积小</strong>；冰化水质量不变。"},
-  {"q":"ρ水=1.0×10³kg/m³，表示","opts":["A. 每立方米水的质量是1.0×10³kg","B. 每千克水的体积是1.0×10³m³","C. 水的密度是1kg/m³","D. 每立方厘米水的质量是1.0×10³kg"],"ans":0,"exp":"密度定义：单位体积的质量，<strong>1m³水=1.0×10³kg</strong>。"},
-  {"q":"关于密度公式 ρ=m/V，下列理解正确的是","opts":["A. 对于不同物质，m越大ρ越大","B. 对于同种物质，V越大ρ越小","C. 不同物质ρ一定不同","D. 对于同种物质，ρ与m、V无关"],"ans":3,"exp":"同种物质同状态ρ<strong>不变</strong>；不同物质ρ<strong>可能相同</strong>（如酒精和煤油）。"},
-  {"q":"在探究\"密度概念的建构\"实验中，同种物质的质量与体积的比值是","opts":["A. 不同的","B. 相同的","C. 随体积增大而增大","D. 随质量增大而减小"],"ans":1,"exp":"实验结论：同种物质 m/V <strong>相同</strong>；不同物质 m/V 一般<strong>不同</strong>。密度由此引入。"},
-  {"q":"密度是物质本身的一种特性，它","opts":["A. 与物体的质量有关","B. 与物体的体积有关","C. 与物体的形状有关","D. 与物体的质量和体积都无关"],"ans":3,"exp":"密度由<strong>物质的种类和状态</strong>决定，与物体质量、体积<strong>无关</strong>。"},
-  {"q":"密度表：水1.0×10³、冰0.9×10³、水银13.6×10³、酒精0.8×10³（kg/m³），下列说法正确的是","opts":["A. 不同物质的密度一定不同","B. 同种物质的密度一定相同","C. 将200g水银倒出50g，剩下水银的密度不变","D. 固体物质的密度一定比液体物质大"],"ans":2,"exp":"密度是物质的<strong>特性</strong>，倒出部分不改变种类和状态，密度<strong>不变</strong>（B√）；A×酒精=煤油密度相同；C×状态变密度变；D×水银是液体但密度比多数固体大。"},
-  {"q":"（2025秋·青羊区校级期末）关于\"物理最美公式\"ρ=m/V，下列说法正确的是","opts":["A. 物体的质量越大，密度越大","B. 物质的温度变化，密度变化","C. 物体的体积越大，密度越大","D. 物体的温度变化，密度不变"],"ans":1,"exp":"质量体积变化密度<strong>不变</strong>；但<strong>温度变化→热胀冷缩→体积变→密度变</strong>（D√）。"},
-  {"q":"由密度公式ρ=m/V可知，关于铁的密度说法正确的是","opts":["A. 铁的密度与质量成正比","B. 铁的密度不随质量或体积的变化而变化","C. 铁的密度与体积成反比","D. 铁的密度与质量成正比、与体积成反比"],"ans":1,"exp":"ρ=m/V 只是<strong>计算式</strong>；铁的密度是<strong>属性</strong>，不随 m、V 变化（D√）。"},
-  {"q":"（2024秋·武侯区期末）用温度计测热水温度时，感温液液面逐渐升高，此过程中感温液的","opts":["A. 质量不断增加","B. 质量一直不变","C. 密度不断增加","D. 质量变小密度变大"],"ans":1,"exp":"液面升高是<strong>热胀冷缩体积变大</strong>，质量<strong>不变</strong>；体积变大→密度<strong>变小</strong>（B√）。"},
-  {"q":"生活中说\"铁比棉花重\"，指的是","opts":["A. 铁的质量比棉花大","B. 铁的体积比棉花大","C. 铁的重力比棉花大","D. 铁的密度比棉花大，体积相等时铁的质量大"],"ans":3,"exp":"\"铁比棉花重\"指<strong>体积相等时铁的质量大</strong>，即<strong>铁的密度大</strong>（C√）。"},
-  {"q":"酱油、盐水、纯净水三种液体，密度最小的是","opts":["A. 酱油","B. 纯净水","C. 盐水","D. 三者相同"],"ans":1,"exp":"酱油、盐水含溶质密度大于水；<strong>纯净水密度最小</strong>（1.0×10³kg/m³）。"},
-  {"q":"（2024秋·金牛区期末）用天平测金属块质量39g，量筒测体积5cm³，该金属块密度为","opts":["A. 7.8 g/cm³","B. 7.8×10³ kg/m³","C. 39×10³ kg/m³","D. 195 g/cm³"],"ans":1,"exp":"ρ=m/V=39g/5cm³=<strong>7.8g/cm³=7.8×10³kg/m³</strong>（铁）。"},
-  {"q":"（2024秋·武侯区校级月考）\"金龙鱼\"调和油瓶标\"5L\"，油密度0.9×10³kg/m³，瓶内油质量为","opts":["A. 45 kg","B. 5.6 kg","C. 4.5 kg","D. 0.9 kg"],"ans":2,"exp":"m=ρV=0.9×10³kg/m³×5×10⁻³m³=<strong>4.5kg</strong>；用去一半后密度不变仍0.9×10³kg/m³。"},
-  {"q":"（2025·成华区模拟）正方形均匀薄铝片质量16.2g、边长10cm，ρ铝=2.7×10³kg/m³，铝片厚度为","opts":["A. 6 mm","B. 0.6 mm","C. 0.06 mm","D. 0.006 mm"],"ans":1,"exp":"V=m/ρ=16.2g/2.7g/cm³=6cm³；厚度=V/S=6cm³/100cm²=0.06cm=<strong>0.6mm</strong>。"},
-  {"q":"天平左盘放2个甲球和1个乙球，右盘放1个甲球和3个乙球（V甲=V乙），天平平衡，甲、乙密度之比为","opts":["A. 3:4","B. 4:3","C. 1:2","D. 2:1"],"ans":3,"exp":"平衡：(2ρ甲+ρ乙)V=(ρ甲+3ρ乙)V → ρ甲=2ρ乙 → 甲:乙=<strong>2:1</strong>。"},
-  {"q":"甲、乙两金属球密度之比5:4，体积之比1:2，质量之比为","opts":["A. 2:5","B. 5:2","C. 5:8","D. 8:5"],"ans":2,"exp":"m甲:m乙=(ρ甲V甲):(ρ乙V乙)=5×1:4×2=<strong>5:8</strong>（D）。"},
-  {"q":"一瓶水和一瓶酒精质量之比3:4（ρ水=1g/cm³，ρ酒精=0.8×10³kg/m³），体积之比为","opts":["A. 5:3","B. 16:15","C. 3:5","D. 15:16"],"ans":2,"exp":"V=m/ρ：V水=3/1=3，V酒=4/0.8=5 → V水:V酒=<strong>3:5</strong>（D）。"},
-  {"q":"实木椅子边角料质量7.2g、长宽高4cm×2cm×1cm，木材密度为","opts":["A. 1.1 g/cm³","B. 0.45 g/cm³","C. 0.9 g/cm³","D. 1.8 g/cm³"],"ans":2,"exp":"ρ=m/V=7.2g/(4×2×1)cm³=<strong>0.9g/cm³</strong>。"},
-  {"q":"（2024秋·武侯区期末）木椅质量5.4kg、木材密度0.9×10³kg/m³，椅子体积约为","opts":["A. 6×10² m³","B. 6×10⁻³ m³","C. 4.86×10⁻³ m³","D. 6 m³"],"ans":1,"exp":"V=m/ρ=5.4kg/0.9×10³kg/m³=<strong>6×10⁻³m³</strong>。"},
-  {"q":"空桶装满沙石质量52kg，同一桶装满水质量20kg（ρ水=1.0×10³kg/m³），桶容积和沙石密度分别为","opts":["A. 2×10⁻²m³，2.6×10³kg/m³","B. 2×10⁻²m³，2.6×10²kg/m³","C. 2×10⁻³m³，2.6×10³kg/m³","D. 0.02m³，2.6×10²kg/m³"],"ans":0,"exp":"V桶=V水=20kg/1.0×10³kg/m³=<strong>2×10⁻²m³</strong>；ρ沙=52kg/2×10⁻²m³=<strong>2.6×10³kg/m³</strong>。"},
-  {"q":"建筑工地需沙石400m³（ρ沙=2.6×10³kg/m³），所需沙石总质量为","opts":["A. 1.04×10⁵ kg","B. 104 kg","C. 1.04×10⁶ kg","D. 1.04×10³ kg"],"ans":2,"exp":"m=ρV=2.6×10³×400=<strong>1.04×10⁶kg</strong>。"}
+  {"q":"同种物质的质量与体积关系图象（m-V图象）是","opts":["A. 过原点的直线","B. 曲线","C. 不过原点的直线","D. 折线"],"ans":0,"exp":"同种物质密度不变，m=ρV，m与V<strong>成正比</strong>，图象是<strong>过原点的直线</strong>（斜率=ρ）。"},
+  {"q":"（2024秋·金牛区期末）甲、乙两种物质的m-V图象，下列说法不正确的是","opts":["A. 同种物质组成的物体，质量与体积成正比","B. 乙物质的密度为0.5×10³kg/m³","C. 甲、乙物质的密度之比为2:1","D. 甲、乙质量相同时，乙的体积是甲的2倍"],"ans":1,"exp":"由C、D自洽：ρ甲:ρ乙=2:1，同质量时V乙=2V甲。<strong>乙密度应为1.0×10³kg/m³</strong>（若ρ甲=2.0×10³），不是0.5×10³，B不正确。"},
+  {"q":"水和食用油的m-V图象中，图线b对应食用油（ρ油=0.8×10³kg/m³），相同质量的水和食用油的体积之比为","opts":["A. 5:4","B. 1:1","C. 2:3","D. 4:5"],"ans":3,"exp":"m同→V与ρ成反比：V水:V油=ρ油:ρ水=0.8:1=<strong>4:5</strong>。"},
+  {"q":"瓶容积450cm³、内有200g水，投入密度2.6g/cm³的石块使水面升到瓶口，石块体积为","opts":["A. 250 cm³","B. 200 cm³","C. 450 cm³","D. 150 cm³"],"ans":0,"exp":"V石=V瓶-V水=450-200=<strong>250cm³</strong>；m石=ρV=2.6×250=<strong>650g</strong>。"},
+  {"q":"瓶容积450cm³、内有200g水，投入密度2.6g/cm³的石块使水面升到瓶口，石块质量为","opts":["A. 520 g","B. 650 g","C. 1170 g","D. 780 g"],"ans":1,"exp":"V石=450-200=250cm³；m石=ρV=2.6×250=<strong>650g</strong>。"},
+  {"q":"空心砖规格20cm×15cm×10cm、质量3.6kg，实心部分占总体积60%，该砖材料密度为","opts":["A. 1.2 g/cm³","B. 3 g/cm³","C. 2 g/cm³","D. 1.8 g/cm³"],"ans":2,"exp":"V实=3000cm³×60%=1800cm³；ρ=m/V实=3600g/1800cm³=<strong>2g/cm³</strong>。"},
+  {"q":"空心砖（材料密度2g/cm³）比同规格实心砖每块节省材料","opts":["A. 1.2 kg","B. 2.4 kg","C. 3.6 kg","D. 1.8 kg"],"ans":1,"exp":"V空=3000cm³×40%=1200cm³；m空=ρ×V空=2g/cm³×1200cm³=2400g=<strong>2.4kg</strong>。"},
+  {"q":"碳纤维小块质量32g、体积20cm³，其密度为","opts":["A. 0.625 g/cm³","B. 16 g/cm³","C. 1.6 g/cm³","D. 640 g/cm³"],"ans":2,"exp":"ρ=m/V=32g/20cm³=<strong>1.6g/cm³</strong>。"},
+  {"q":"碳纤维自行车架质量1600g（ρ碳=1.6g/cm³），车架体积为","opts":["A. 1600 cm³","B. 2560 cm³","C. 0.625 cm³","D. 1000 cm³"],"ans":3,"exp":"V=m/ρ=1600g/1.6g/cm³=<strong>1000cm³</strong>；若用锰钢制作质量增大6300g→ρ钢=7.9g/cm³。"}
 ];
 
 
 const flashcards = [
-{front:'什么是密度？',back:'物体<strong>质量与体积的比值</strong>，用 ρ 表示；用<strong>比值定义法</strong>定义。'},
-{front:'密度公式？',back:'<strong>ρ = m / V</strong>；变形 m=ρV、V=m/ρ。'},
-{front:'密度有什么特性？',back:'与 m、V <strong>无关</strong>，与物质的<strong>种类、状态</strong>有关；同种物质同状态密度不变。'},
-{front:'密度单位换算？',back:'<strong>1 g/cm³ = 10³ kg/m³</strong>；kg/m³是国际单位。'},
-{front:'水的密度是多少？',back:'<strong>1.0×10³ kg/m³</strong>（=1g/cm³）；物理意义：1m³水质量为1.0×10³kg。'},
-{front:'常见物质密度？',back:'冰0.9、酒精/煤油0.8、铁7.9、铜8.9、铝2.7、水银13.6、金19.3（×10³kg/m³）；空气1.29kg/m³。'},
-{front:'状态变化密度怎么变？',back:'冰→水：<strong>密度变大</strong>（质量不变、体积变小）；ρ与状态有关。'},
-{front:'气体密度计算要点？',back:'气体<strong>永远充满容器</strong>：用去一部分→m变V不变；压缩→V变m不变。'},
-{front:'气体用去一半密度？',back:'体积不变、质量减半→密度<strong>变为原来一半</strong>。'},
-{front:'比例计算：m同则？',back:'m相同→ρ与V<strong>成反比</strong>，密度比=体积比的<strong>倒数</strong>（倒数之比）。'},
-{front:'比例计算：V同则？',back:'V相同→ρ与m<strong>成正比</strong>。'},
-{front:'m-V图像怎么看？',back:'斜率=密度；<strong>越靠近m轴（纵轴）密度越大</strong>。'},
-{front:'V-m图像怎么看？',back:'斜率=V/m=<strong>1/ρ</strong>；斜率越小密度越大。'},
-{front:'烧杯+液体图像截距？',back:'图线不过原点，<strong>截距=空烧杯质量</strong>。'},
-{front:'鉴别物质用什么？',back:'<strong>密度</strong>：不同物质密度一般不同。'},
-{front:'ρ=2.7g/cm³是什么物质？',back:'<strong>铝</strong>（2.7×10³kg/m³）。'},
-{front:'计算固体密度步骤？',back:'①求体积（规则用公式/不规则排水法）②统一单位③ρ=m/V。'},
-{front:'单位换算技巧？',back:'g/cm³ → kg/m³ 乘<strong>10³</strong>；kg/m³ → g/cm³ 除10³。'},
-{front:'冰化水体积变化？',back:'质量不变、密度变大→体积<strong>变小</strong>（水结冰体积变大）。'},
-{front:'同质量铁块和木块？',back:'ρ铁>ρ木→同质量时<strong>铁体积小</strong>；ρ=m/V，ρ大V小。'}
+{front:'密度图象怎么看？',back:'m-V图象中<strong>斜率=m/V=ρ</strong>；同种物质是过原点直线，斜率越大密度越大。'},
+{front:'含烧杯的m-V图象？',back:'m总=m杯+ρ液V，直线<strong>不过原点</strong>，<strong>截距=烧杯质量</strong>，斜率=液体密度。'},
+{front:'两种液体m-V图象比较密度？',back:'<strong>斜率大密度大</strong>；或取相同体积比较质量，质量大密度大。'},
+{front:'质量相同，体积比与密度比？',back:'m同→ρ与V<strong>成反比</strong>：V₁:V₂=ρ₂:ρ₁。'},
+{front:'体积相同，质量比与密度比？',back:'V同→m与ρ<strong>成正比</strong>：m₁:m₂=ρ₁:ρ₂。'},
+{front:'乌鸦喝水模型？',back:'V石=V瓶-V水；m石=ρ石V石；水面升到瓶口时V石+V水=V瓶。'},
+{front:'空心砖密度计算？',back:'ρ材料=m砖/V实；V实=V总×实心比例；节省材料=m空=ρ材料×V空。'},
+{front:'图象取点比较注意？',back:'取<strong>图象上的点</strong>比较，不能取坐标轴上的任意点；同体积比m最方便。'},
+{front:'单位换算？',back:'<strong>1g/cm³=10³kg/m³</strong>；kg/m³→g/cm³除以10³。'},
+{front:'气体密度？',back:'气体<strong>充满容器V不变</strong>；用去一半m减半→ρ减半。'},
+{front:'温度变化密度？',back:'热胀冷缩V变m不变→<strong>ρ变</strong>；同种物质不同温度密度不同。'},
+{front:'密度特性？',back:'ρ与m、V<strong>无关</strong>，由<strong>种类和状态</strong>决定；倒出/切割一部分密度不变。'},
 ];
 
 
 errors = [
-{title:'❌ 密度与m、V成正比/反比',desc:'<strong>易错</strong>：由ρ=m/V误认为密度与m成正比、与V成反比。<strong>正解</strong>：ρ是物质<strong>属性</strong>，与m、V<strong>无关</strong>，只与种类和状态有关。'},
-{title:'❌ 单位换算错',desc:'<strong>易错</strong>：1g/cm³误认为=1kg/m³。<strong>正解</strong>：<strong>1g/cm³=10³kg/m³</strong>；kg/m³→g/cm³要除以10³。'},
-{title:'❌ 气体用去一半密度不变',desc:'<strong>易错</strong>：以为气体用掉一半密度不变。<strong>正解</strong>：气体<strong>充满容器体积不变</strong>，m减半→ρ变为一半。'},
-{title:'❌ 压缩气体质量变化',desc:'<strong>易错</strong>：以为压缩后质量变大。<strong>正解</strong>：压缩只变V不变m→ρ<strong>变大</strong>。'},
-{title:'❌ 比例题直接换顺序',desc:'<strong>易错</strong>：m同、V比1:2:3，直接写ρ比1:2:3。<strong>正解</strong>：m同→ρ与V<strong>成反比</strong>，取<strong>倒数之比</strong>6:3:2。'},
-{title:'❌ m-V图像看反',desc:'<strong>易错</strong>：以为越靠近V轴密度越大。<strong>正解</strong>：<strong>越靠近m轴密度越大</strong>（斜率=ρ）。'},
-{title:'❌ 冰化水体积不变',desc:'<strong>易错</strong>：以为冰化水体积不变。<strong>正解</strong>：质量不变、密度变大(0.9→1.0)→体积<strong>变小</strong>。'},
-{title:'❌ 液体密度题忽略烧杯质量',desc:'<strong>易错</strong>：测总质量误当液体质量。<strong>正解</strong>：图线<strong>截距=空烧杯质量</strong>，算液体密度要减去烧杯质量。'}
+{title:'❌ m-V图象斜率看反',desc:'<strong>易错</strong>：以为越靠近V轴密度越大。<strong>正解</strong>：斜率=m/V=ρ，<strong>越陡密度越大</strong>（越靠近m轴）。'},
+{title:'❌ 含烧杯图误认为过原点',desc:'<strong>易错</strong>：总质量m-V图象误认为过原点。<strong>正解</strong>：m总=m杯+ρV，<strong>截距=烧杯质量</strong>。'},
+{title:'❌ 比密度只取单点',desc:'<strong>易错</strong>：随意取点比较。<strong>正解</strong>：取<strong>相同体积</strong>比质量，或直接比斜率。'},
+{title:'❌ 乌鸦喝水体积代错',desc:'<strong>易错</strong>：V石误等于V水。<strong>正解</strong>：V石=V瓶-V水=450-200=250cm³。'},
+{title:'❌ 空心砖用总体积',desc:'<strong>易错</strong>：ρ=m/V总。<strong>正解</strong>：材料密度用<strong>实心体积</strong>；节省材料=ρ×空心体积。'},
+{title:'❌ 气体/温度变化忽略',desc:'<strong>易错</strong>：密度只认种类。<strong>正解</strong>：气体用一半ρ减半；温度变化热胀冷缩ρ变。'},
 ];
 
 
@@ -341,7 +289,7 @@ let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
 
 /* ===== 已做标记 + 未做/错题筛选 ===== */
 var QUIZ_MODE='all';
-var QUIZ_PROG_KEY='quiz_progress_physics_lesson14';
+var QUIZ_PROG_KEY='quiz_progress_physics_lesson15';
 function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
 function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
 function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
