@@ -441,28 +441,6 @@ function render() {
       </a>`).join('')}
     </div>`);
 
-  // === 个人投研 ===
-  html += renderSection('个人投研 · AI 工具', 'fa-chart-line', '#b8860b', 'badge-tools', `
-    <div class="subject-section fade-in-up">
-      <div class="subject-header" style="border-left:4px solid #b8860b" onclick="toggleSubject(this)">
-        <div class="icon" style="font-size:1.2rem;color:#b8860b"><i class="fas fa-robot"></i></div>
-        <h3>Vibe-Research 个人AI投研系统</h3>
-        <span class="count">1 项</span>
-        <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-      </div>
-      <div class="lecture-grid">
-        <a href="vibe_research_interactive.html" class="lecture-card">
-          <span class="badge-new">NEW</span>
-          <div class="lnum" style="background:#b8860b">AI</div>
-          <div class="info">
-            <h4>个人AI投研系统 · 互动学习页</h4>
-            <div class="meta"><span>2026-08-14</span><span class="tag">投研</span><span class="tag">A股/美股/港股</span></div>
-          </div>
-          <div class="arrow"><i class="fas fa-chevron-right"></i></div>
-        </a>
-      </div>
-    </div>`);
-
   // === 学校学习 ===
   html += renderSection('学校学习', 'fa-school', '#2ecc71', 'badge-study',
     schoolSubjectsData.map((grade, gi) => {
