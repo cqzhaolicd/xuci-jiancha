@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>错题三刷清单 · 若琳</title>
+<style>
+  :root{--primary:#e74c3c;--secondary:#f39c12;--bg:#f5f7fa;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#e2e8f0;--success:#27ae60;--danger:#e74c3c;--warn:#e67e22;--radius:12px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  .navbar{background:var(--card);border-bottom:1px solid var(--border);padding:.9rem 1rem;display:flex;align-items:center;gap:.6rem;position:sticky;top:0;z-index:10}
+  .navbar a{color:var(--text-light);text-decoration:none;font-size:.9rem}
+  .navbar .brand{font-weight:700;color:var(--text);font-size:1rem}
+  .container{max-width:760px;margin:0 auto;padding:1.2rem 1rem 4rem}
+  h1{font-size:1.35rem;margin-bottom:.2rem}
+  .sub{color:var(--text-light);font-size:.85rem;margin-bottom:1rem}
+  .card{background:var(--card);border-radius:var(--radius);padding:1rem;margin-bottom:1rem;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid var(--border)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1rem}
+  .stat{background:var(--card);border-radius:var(--radius);padding:.8rem;text-align:center;border:1px solid var(--border)}
+  .stat .n{font-size:1.5rem;font-weight:800}
+  .stat .l{font-size:.75rem;color:var(--text-light)}
+  .stat.today .n{color:var(--danger)}
+  .stat.done .n{color:var(--success)}
+  .stat.all .n{color:var(--primary)}
+  .form-row{display:flex;gap:.5rem;flex-wrap:wrap}
+  .form-row select,.form-row input{flex:1;min-width:120px;padding:.55rem .6rem;border:1.5px solid var(--border);border-radius:8px;font-size:.9rem;background:#fff;color:var(--text)}
+  .btn{padding:.55rem 1rem;border:none;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;color:#fff;background:var(--primary);transition:all .2s}
+  .btn:hover{opacity:.9}
+  .btn.ghost{background:#ecf0f1;color:var(--text-light)}
+  .btn.print{background:#9b59b6}
+  .q-card{border-left:4px solid var(--primary)}
+  .q-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;margin-bottom:.6rem}
+  .q-subject{font-size:.72rem;background:#fdf2f2;color:var(--danger);padding:.15rem .5rem;border-radius:20px;font-weight:600;white-space:nowrap}
+  .q-content{font-size:.92rem;line-height:1.6;margin-bottom:.7rem;word-break:break-word}
+  .q-del{cursor:pointer;color:var(--text-light);font-size:.8rem;background:none;border:none;padding:.2rem}
+  .q-del:hover{color:var(--danger)}
+  .nodes{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+  .node{border:1.5px solid var(--border);border-radius:10px;padding:.6rem .55rem;cursor:pointer;text-align:center;transition:all .2s;background:#fff}
+  .node .tag{font-size:.72rem;font-weight:700;margin-bottom:.2rem}
+  .node .date{font-size:.75rem;color:var(--text-light);margin-bottom:.3rem}
+  .node .status{font-size:.75rem;font-weight:600}
+  .node.pending{border-color:#cbd5e0}
+  .node.pending .status{color:var(--text-light)}
+  .node.today{border-color:var(--danger);background:#fdf2f2;animation:pulse 1.5s infinite}
+  .node.overdue{border-color:var(--warn);background:#fef9f0}
+  .node.overdue .status{color:var(--warn)}
+  .node.done{border-color:var(--success);background:#f0faf4}
+  .node.done .status{color:var(--success)}
+  .node .check{display:inline-block;width:18px;height:18px;border-radius:50%;border:2px solid #cbd5e0;line-height:14px;font-size:11px;color:transparent;margin-bottom:.15rem}
+  .node.done .check{border-color:var(--success);background:var(--success);color:#fff}
+  .node.today .check{border-color:var(--danger)}
+  .q-done-all{opacity:.75}
+  .q-done-all .q-content{text-decoration:line-through;color:var(--text-light)}
+  .empty{text-align:center;color:var(--text-light);padding:2rem 0}
+  .empty .big{font-size:2.5rem;margin-bottom:.5rem}
+  .tip{font-size:.78rem;color:var(--text-light);background:#f8fafc;border-left:3px solid var(--secondary);padding:.5rem .7rem;border-radius:6px;line-height:1.7;margin-top:.6rem}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(231,76,60,.25)}50%{box-shadow:0 0 0 5px rgba(231,76,60,.12)}}
+  @media(max-width:560px){.nodes{grid-template-columns:1fr}.form-row select,.form-row input{min-width:100%}}
+  @media print{
+    .navbar,.form-row,.btn,.q-del{display:none!important}
+    body{background:#fff}
+    .container{max-width:100%;padding:0}
+    .card{box-shadow:none;page-break-inside:avoid}
+    .node.today{animation:none}
+  }
+</style>
+</head>
+<body>
+<div class="navbar">
+  <a href="index.html">←</a>
+  <span class="brand">错题三刷清单</span>
+</div>
+<div class="container">
+  <h1>📌 错题三刷时间表</h1>
+  <div class="sub">每道错题按 <b>当天 → 3天后 → 2周后</b> 三刷，点击节点勾选完成。今日到期的会标红提醒。</div>
+
+  <div class="stats">
+    <div class="stat all"><div class="n" id="st_total">0</div><div class="l">错题总数</div></div>
+    <div class="stat today"><div class="n" id="st_today">0</div><div class="l">今日待做</div></div>
+    <div class="stat done"><div class="n" id="st_done">0</div><div class="l">三刷完成</div></div>
+  </div>
+
+  <div class="card">
+    <div class="form-row">
+      <select id="f_subject">
+        <option value="数学">数学</option><option value="物理">物理</option><option value="化学">化学</option>
+        <option value="语文">语文</option><option value="英语">英语</option><option value="其他">其他</option>
+      </select>
+      <input id="f_content" placeholder="错题简述（如：一次函数交点坐标，记不清公式）" style="flex:2">
+      <input id="f_date" type="date" style="flex:0 0 auto">
+      <button class="btn" onclick="addQ()">＋ 添加错题</button>
+    </div>
+    <div class="tip">💡 三刷节奏：<b>第1刷</b>（当天）订正并完整走五步法 → <b>第2刷</b>（3天后）不看答案重做 → <b>第3刷</b>（2周后）再做一遍确认掌握。三刷全过 = 这题真正过关。</div>
+  </div>
+
+  <div id="list"></div>
+</div>
+
+<script>
+const LS_KEY='three_brush_list';
+const SUBJ_COLORS={数学:'#e74c3c',物理:'#667eea',化学:'#9b59b6',语文:'#27ae60',英语:'#3498db',其他:'#7f8c8d'};
+const NODE_NAMES=['第1刷 · 当天','第2刷 · 3天后','第3刷 · 2周后'];
+const NODE_OFFSET=[0,3,14];
+
+function load(){return JSON.parse(localStorage.getItem(LS_KEY)||'{"nextId":1,"items":[]}');}
+function save(d){localStorage.setItem(LS_KEY,JSON.stringify(d));}
+function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function addDays(dateStr,offset){
+  const d=new Date(dateStr+'T00:00:00');d.setDate(d.getDate()+offset);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function fmt(dateStr){const d=new Date(dateStr+'T00:00:00');return `${d.getMonth()+1}/${d.getDate()}`;}
+function cmpDate(a,b){return a<b?-1:a>b?1:0;}
+
+function addQ(){
+  const content=document.getElementById('f_content').value.trim();
+  if(!content){alert('请填写错题简述');return;}
+  const date=document.getElementById('f_date').value||today();
+  const d=load();
+  d.items.push({id:d.nextId++,subject:document.getElementById('f_subject').value,content,date,done:{0:false,1:false,2:false}});
+  save(d);
+  document.getElementById('f_content').value='';
+  render();
+}
+
+function toggleNode(id,nodeIdx){
+  const d=load();
+  const q=d.items.find(x=>x.id===id);
+  if(!q)return;
+  q.done[nodeIdx]=!q.done[nodeIdx];
+  save(d);render();
+}
+
+function delQ(id){
+  if(!confirm('删除这道错题的三刷记录？'))return;
+  const d=load();
+  d.items=d.items.filter(x=>x.id!==id);
+  save(d);render();
+}
+
+function nodeState(q,idx){
+  const due=addDays(q.date,NODE_OFFSET[idx]);
+  const t=today();
+  if(q.done[idx])return{cls:'done',txt:'✅ 已完成',due};
+  if(cmpDate(due,t)<0)return{cls:'overdue',txt:'⚠️ 已逾期',due};
+  if(cmpDate(due,t)===0)return{cls:'today',txt:'🔴 今日待做',due};
+  return{cls:'pending',txt:'未到时间',due};
+}
+
+function render(){
+  const d=load();
+  const t=today();
+  let todayCnt=0,doneAll=0;
+  d.items.forEach(q=>{
+    let allDone=true;
+    for(let i=0;i<3;i++){const st=nodeState(q,i);if(!q.done[i]){allDone=false;if(st.cls==='today'||st.cls==='overdue')todayCnt++;}}
+    if(allDone)doneAll++;
+  });
+  document.getElementById('st_total').textContent=d.items.length;
+  document.getElementById('st_today').textContent=todayCnt;
+  document.getElementById('st_done').textContent=doneAll;
+
+  // 排序：有今日/逾期待做 > 有未完成 > 全部完成
+  const sorted=[...d.items].sort((a,b)=>{
+    const score=q=>{let s=0;for(let i=0;i<3;i++){if(q.done[i])continue;const st=nodeState(q,i);if(st.cls==='today')s+=3;else if(st.cls==='overdue')s+=2;else s+=1;}return s;};
+    return score(b)-score(a);
+  });
+
+  const list=document.getElementById('list');
+  if(!sorted.length){
+    list.innerHTML='<div class="empty"><div class="big">📭</div><h3>还没有错题记录</h3><p>把错题加进来，自动生成三刷时间表</p></div>';
+    return;
+  }
+  list.innerHTML=sorted.map(q=>{
+    const allDone=q.done[0]&&q.done[1]&&q.done[2];
+    const color=SUBJ_COLORS[q.subject]||'#7f8c8d';
+    const nodes=[0,1,2].map(i=>{
+      const st=nodeState(q,i);
+      return `<div class="node ${st.cls}" onclick="toggleNode(${q.id},${i})">
+        <div class="check">✓</div>
+        <div class="tag">${NODE_NAMES[i]}</div>
+        <div class="date">${fmt(st.due)}</div>
+        <div class="status">${st.txt}</div>
+      </div>`;
+    }).join('');
+    return `<div class="card q-card ${allDone?'q-done-all':''}" style="border-left-color:${color}">
+      <div class="q-head">
+        <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap">
+          <span class="q-subject" style="background:${color}18;color:${color}">${q.subject}</span>
+          <span style="font-size:.75rem;color:var(--text-light)">错题日 ${fmt(q.date)}</span>
+        </div>
+        <button class="q-del" onclick="delQ(${q.id})">🗑</button>
+      </div>
+      <div class="q-content">${q.content}</div>
+      <div class="nodes">${nodes}</div>
+    </div>`;
+  }).join('');
+}
+
+document.getElementById('f_date').value=today();
+render();
+</script>
+</body>
+</html>

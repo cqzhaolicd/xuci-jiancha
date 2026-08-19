@@ -79,6 +79,11 @@ textarea.form-control{resize:vertical;min-height:70px}
 .review-card .q-text{font-size:1.1rem;font-weight:600;margin-bottom:1.5rem}
 .review-btns{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}
 .review-meta{font-size:.8rem;color:var(--text-light);margin-top:1rem}
+.flow-check{margin-top:1rem;padding:.9rem 1rem;border-radius:var(--radius-sm);background:#fdf2f2;border:1.5px solid #f5c6c6;text-align:left}
+.flow-check-title{font-size:.85rem;font-weight:700;color:var(--danger);margin-bottom:.6rem}
+.flow-check textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:.5rem .6rem;font-size:.85rem;font-family:inherit;margin-bottom:.45rem;resize:vertical;background:#fff;color:var(--text);line-height:1.6}
+.flow-check textarea::placeholder{color:#bdc3c7}
+.flow-check-warn{font-size:.76rem;color:var(--danger);margin-top:.2rem;display:none;font-weight:600}
 .review-progress{margin-bottom:1rem}
 /* Training */
 .training-layout{display:grid;grid-template-columns:1fr;gap:1rem}
@@ -185,6 +190,7 @@ function checkImport(){try{
       error_reason:item.error_reason||'概念不清',tags:item.tags||'',source:item.source||'练习',
       difficulty:item.difficulty||3,mastery:0,created_at:now(),updated_at:now(),
       next_review:today(),review_count:0,image_path:'',answer_image_path:''
+      ,flow:{}
     });
     imported++;
   }
@@ -367,6 +373,7 @@ function submitAdd(){
     error_reason:addForm.error_reason,tags:addForm.tags,source:addForm.source,
     difficulty:addForm.difficulty,mastery:0,created_at:now(),updated_at:now(),
     next_review:today(),review_count:0,image_path:addForm.image_path||'',answer_image_path:addForm.answer_image_path||''
+    ,flow:{}
   });
   saveData(d);
   addForm={subject_id:addForm.subject_id,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,image_path:'',answer_image_path:''};
@@ -478,6 +485,7 @@ function renderDetail(data){
     ${q.my_answer?`<div class="detail-field"><div class="label" style="color:var(--danger)">❌ 我的错误答案</div><div class="value" style="background:#f5656510;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger)">${q.my_answer}</div></div>`:''}
     ${q.answer_image_path?`<div class="detail-field"><div class="label">📷 答案图片</div><div style="max-width:400px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="${q.answer_image_path}" style="width:100%"></div></div>`:''}
     <div class="detail-field"><div class="label">错因分析</div><div class="value"><span class="q-badge badge-reason">${q.error_reason}</span> ${q.tags?'🏷️ '+q.tags:''}</div></div>
+    ${q.flow&&(q.flow.known||q.flow.target||q.flow.plan||q.flow.check)?`<div class="detail-field"><div class="label">📋 流程检查</div><div class="value" style="background:#fdf2f2;padding:.6rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger);font-size:.85rem;line-height:1.9">① 已知：${q.flow.known||'—'}<br>② 目标：${q.flow.target||'—'}<br>③ 路径：${q.flow.plan||'—'}<br>④ 检验：${q.flow.check||'—'}</div></div>`:''}
     <div class="detail-field"><div class="label">时间</div><div class="value" style="color:var(--text-light);font-size:.85rem">录入: ${q.created_at} | 复习: ${q.review_count}次 | 下次复习: ${q.next_review||'无需'}</div></div>
     <div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
       <button class="btn btn-primary btn-sm" onclick="detailEditMode=true;renderDetail({qid:${q.id}})"><i class="fas fa-edit"></i> 编辑</button>
@@ -577,6 +585,14 @@ function reviewCard(){
       </div>
       ${q.my_answer?`<div style="margin:.5rem 0;padding:.5rem .8rem;border-radius:var(--radius-sm);background:#f5656510;border-left:3px solid var(--danger);text-align:left;font-size:.85rem">
         <strong style="color:var(--danger)">❌ 你的答案：</strong> ${q.my_answer}</div>`:''}
+      <div class="flow-check">
+        <div class="flow-check-title">📋 流程检查（五步法 · 必填，不填完不算订正完成）</div>
+        <textarea id="fc_known" rows="1" placeholder="① 审题圈画：已知什么条件？">${q.flow&&q.flow.known?q.flow.known:''}</textarea>
+        <textarea id="fc_target" rows="1" placeholder="② 写出目标：这题求什么？">${q.flow&&q.flow.target?q.flow.target:''}</textarea>
+        <textarea id="fc_plan" rows="1" placeholder="③ 规划路径：用什么公式/方法？">${q.flow&&q.flow.plan?q.flow.plan:''}</textarea>
+        <textarea id="fc_check" rows="1" placeholder="④ 回代检验：怎么验证答案对不对？">${q.flow&&q.flow.check?q.flow.check:''}</textarea>
+        <div class="flow-check-warn" id="fc_warn">⚠️ 流程未完成：请先填完 已知/求/步骤/检验 四项，才算订正完成！</div>
+      </div>
       <div class="review-btns" style="margin-top:1rem">
         <button class="btn btn-danger" onclick="reviewResult(0)"><i class="fas fa-times"></i> 还不会</button>
         <button class="btn btn-warning" style="background:var(--warning);color:#fff" onclick="reviewResult(1)"><i class="fas fa-minus"></i> 有点印象</button>
@@ -591,6 +607,15 @@ function reviewResult(r){
   const d=loadData();
   const qq=d.questions.find(x=>x.id===q.id);
   if(qq){
+    // 流程检查（五步法）：四项必填，不填完不算订正完成
+    const fcVals={};
+    ['fc_known','fc_target','fc_plan','fc_check'].forEach(id=>{const el=document.getElementById(id);fcVals[id]=el?(el.value||'').trim():'';});
+    if(!fcVals.fc_known||!fcVals.fc_target||!fcVals.fc_plan||!fcVals.fc_check){
+      const warn=document.getElementById('fc_warn');if(warn)warn.style.display='block';
+      toast('⚠️ 流程未完成：请填完 已知/求/步骤/检验 四项，才算订正完成！','error');
+      return;
+    }
+    qq.flow={known:fcVals.fc_known,target:fcVals.fc_target,plan:fcVals.fc_plan,check:fcVals.fc_check};
     if(r===2)qq.mastery=Math.min(qq.mastery+1,REVIEW_INTERVALS.length);
     else if(r===0)qq.mastery=0;
     qq.next_review=calcNextReview(qq.mastery);

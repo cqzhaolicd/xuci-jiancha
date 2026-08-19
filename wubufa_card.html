@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学解题五步法 · 模板卡</title>
+<style>
+  :root{--red:#e74c3c;--ink:#2c3e50;--sub:#7f8c8d;--line:#eef1f4;--paper:#ffffff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;background:#f0f2f5;color:var(--ink);padding:24px}
+  .page{width:210mm;min-height:292mm;margin:0 auto;background:var(--paper);padding:12mm 16mm;box-shadow:0 4px 20px rgba(0,0,0,.12);border-radius:8px;position:relative;overflow:hidden}
+  .page::before{content:"";position:absolute;top:0;left:0;right:0;height:6mm;background:linear-gradient(90deg,var(--red),#f39c12)}
+  .header{text-align:center;margin-bottom:7mm}
+  .header .kicker{font-size:10pt;color:var(--sub);letter-spacing:2px;margin-bottom:2mm}
+  .header h1{font-size:26pt;font-weight:800;color:var(--red);letter-spacing:3px}
+  .header .sub{font-size:11pt;color:var(--sub);margin-top:2mm}
+  .rule{margin:5mm 0 7mm;padding:4mm 6mm;background:#fdf2f2;border:1.2px solid #f5c6c6;border-radius:6px;font-size:10.5pt;line-height:2;color:#8a3b3b}
+  .rule b{color:var(--red)}
+  .steps{display:flex;flex-direction:column;gap:4.5mm}
+  .step{display:flex;gap:4mm;align-items:flex-start;border:1.4px solid var(--line);border-radius:8px;padding:4.5mm 5mm;background:#fff}
+  .step .num{flex:0 0 14mm;height:14mm;border-radius:50%;background:var(--red);color:#fff;font-size:15pt;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .step .body{flex:1}
+  .step .body h3{font-size:12.5pt;margin-bottom:1.5mm;color:var(--ink)}
+  .step .body h3 span{font-size:10pt;color:var(--sub);font-weight:500;margin-left:2mm}
+  .step .body p{font-size:10.5pt;color:#4a5568;line-height:1.8}
+  .step .body .ask{margin-top:2mm;font-size:9.5pt;color:var(--red);background:#fdf2f2;padding:1.5mm 3mm;border-radius:4px;display:inline-block}
+  .step.done .num{background:#27ae60}
+  .checkline{margin-top:8mm;display:flex;gap:8mm;align-items:flex-end}
+  .checkline .item{flex:1;border-top:1.6px solid var(--ink);padding-top:2.5mm;font-size:10pt;color:var(--sub);text-align:center}
+  .foot{margin-top:5mm;text-align:center;font-size:9pt;color:#bdc3c7;letter-spacing:1px}
+  .toolbar{max-width:210mm;margin:0 auto 12px;display:flex;gap:10px;justify-content:center}
+  .toolbar button{padding:10px 22px;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:600;color:#fff}
+  .btn-print{background:#e74c3c}.btn-back{background:#7f8c8d;text-decoration:none;display:inline-flex;align-items:center}
+  @media print{
+    body{background:#fff;padding:0}
+    .toolbar{display:none}
+    .page{box-shadow:none;border-radius:0;margin:0;width:auto;min-height:auto;padding:10mm 14mm}
+  }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <button class="btn-print" onclick="window.print()">🖨️ 打印 / 存 PDF</button>
+  <a class="btn-back" href="index.html">← 返回学习中心</a>
+</div>
+<div class="page">
+  <div class="header">
+    <div class="kicker">赵若琳 · 数学解题流程卡</div>
+    <h1>数学解题五步法</h1>
+    <div class="sub">每次做题都按这 5 步走 · 流程完整 = 才叫"做完了"</div>
+  </div>
+
+  <div class="rule">
+    🚨 <b>铁律：格式不对 = 没做完。</b>无论题目多简单，都必须完整走完五步；<b>超过 2 步的题，中间量必须写出来，禁止心算跳步</b>；做完必须回代检验，不检验不算完成。
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body">
+        <h3>审题圈画<span>读题时动笔</span></h3>
+        <p>把 <b>已知条件</b>、<b>未知量</b>、<b>隐含条件</b> 用笔圈出来，标上记号。</p>
+        <div class="ask">自问：题目给了什么？要求什么？哪个条件还没用到？</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body">
+        <h3>写出目标<span>明确终点</span></h3>
+        <p>用一句话写下：<b>这题求什么</b>？（求 x 的值 / 证明全等 / 求面积……）</p>
+        <div class="ask">自问：终点不明确，路径一定乱。先写目标再动手。</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <h3>规划路径<span>先想后写</span></h3>
+        <p>动笔前先写一句话：<b>用什么公式 / 方法 / 思路</b>？（如：用勾股定理；用待定系数法）</p>
+        <div class="ask">自问：这道题和学过的哪类题最像？第一步该干什么？</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="body">
+        <h3>分步书写<span>一行一步</span></h3>
+        <p>按 ①②③ 标号，<b>一行一步，不跳步</b>；每一步写清楚依据（公式/性质），草稿纸分区分题号。</p>
+        <div class="ask">自问：这一步为什么成立？我能讲给别人听吗？</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="body">
+        <h3>回代检验<span>不检验=没做完</span></h3>
+        <p>把答案<b>代回原题</b>验证；计算题用<b>另一种方法</b>验算（加法题用减法验、方程代入原式验）；检查单位、符号。</p>
+        <div class="ask">自问：答案代回去成立吗？有没有算错符号/抄错数字？</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkline">
+    <div class="item">本周重点（家长写）</div>
+    <div class="item">日期：____月____日</div>
+    <div class="item">家长签字：__________</div>
+  </div>
+
+  <div class="foot">打印贴书桌 · 每次做题前看一眼 · 坚持 4-6 周变成肌肉记忆</div>
+</div>
+</body>
+</html>
