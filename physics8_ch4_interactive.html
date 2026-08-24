@@ -136,7 +136,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
     <h1><i class="fas fa-calculator"></i> 初中物理·八上早背晚默 · 第4章 光现象</h1>
     <p>38天早背晚默 · 第4章 光现象 · ⭐⭐⭐⭐⭐</p>
     <div class="meta">
-      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 75道测验题</span>
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 77道测验题</span>
       <span><i class="fas fa-layer-group"></i> 75张知识卡</span>
       <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 1大易错点</span>
       <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
@@ -160,13 +160,12 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
     </div>
 
         <div class="knowledge-grid">
-
       <div class="knowledge-card c4"><h3><i class="fas fa-sun" style="color:#3498db"></i> 光现象</h3><ul>
-        <li><strong>直线传播</strong>：同种均匀介质中，影子/小孔成像/日食月食</li>
-        <li><strong>反射定律</strong>：三线共面、两线分居、反射角=入射角</li>
-        <li><strong>平面镜</strong>：<span class="hl">等大、等距、垂直、虚像</span></li>
-        <li><strong>光的折射</strong>：空气→水(偏向法线)，水→空气(远离法线)</li>
-        <li><strong>色散</strong>：白光→七色光，物体颜色由反射/透过的色光决定</li>
+        <li><strong>直线传播</strong>：同种均匀介质中，影子/小孔成像/日食月食<br>实例：影子、日食月食、激光准直、排队看齐、皮影戏；小孔成像成<b>倒立实像</b>，像的形状与小孔形状无关<br>应用：利用光沿直线传播解释影子的形成（光被物体挡住，光不能到达的区域就是影子）</li>
+        <li><strong>反射定律</strong>：三线共面、两线分居、反射角=入射角<br>作图方法：①过入射点画法线（虚线，垂直于界面）②确定入射角（入射光线与法线的夹角）③按反射角=入射角画出反射光线<br>光路可逆；入射角增大，反射角也增大（例：入射角 30°→反射角 30°）；镜面反射与漫反射都遵守反射定律</li>
+        <li><strong>平面镜</strong>：<span class="hl">等大、等距、垂直、虚像</span><br>成像特点：像与物大小相等、到镜面距离相等、连线与镜面垂直、正立虚像<br>作图：利用对称性（像与物关于镜面对称）先作对称点再连线；虚像不能呈在光屏上；应用：穿衣镜、潜望镜（改变光路）、超市扩大视野</li>
+        <li><strong>光的折射</strong>：空气→水(偏向法线)，水→空气(远离法线)<br>规律：三线共面、两线分居；光从空气斜射入水/玻璃：折射角&lt;入射角（偏向法线）；水→空气：折射角&gt;入射角（远离法线）；垂直入射方向不变；光路可逆<br>实例：池底变浅、水中筷子弯折、海市蜃楼；叉鱼要叉到看到的鱼的下方（鱼实际更深）</li>
+        <li><strong>色散</strong>：白光→七色光，物体颜色由反射/透过的色光决定<br>牛顿三棱镜实验：白光分解为红橙黄绿蓝靛紫（紫光偏折最大）；色光三原色：红绿蓝<br>透明物体颜色=透过的色光（红玻璃透红光）；不透明物体颜色=反射的色光（绿叶反射绿光）；黑色吸收所有光、白色反射所有光；红外线热效应（遥控器、夜视仪）、紫外线杀菌/荧光（验钞机）</li>
       </ul></div>
     </div>
 
@@ -207,7 +206,52 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 八上早背晚默 · 第4章 光现象 | 天元教育 · 初二暑假博学班</div>
 
-<script>function fcMark(q) {
+<script>// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_physics8_ch4_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+function fcMark(q) {
   const learned = getKP().includes('fc:' + q);
   return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
 }
@@ -302,7 +346,9 @@ const questions=[
   {"q": "[第248条] 产生光的色散原因是七色光通过三棱镜的偏折程度不同… 请选出正确内容", "opts": ["\n1.凸面镜的特点是对光有分散作用，可以扩大视野。", "\n2.光的色散现象，属于光的折射。", "\n3.产生光的色散原因是七色光通过三棱镜的偏折程度不同，紫光偏折程度大（折射能力强），红光偏折程度小。", "\n4.对各种色光都能吸收的物体颜色是黑色；对各种色光都能反射的物体颜色是白色；汽车雾灯用的是黄光，因为人眼对黄光最敏感。"], "ans": 2, "exp": "第248条：产生光的色散原因是七色光通过三棱镜的偏折程度不同，紫光偏折程度大（折射能力强），红光偏折程度小。"},
   {"q": "[第249条] 彩色电视机屏幕上的色彩是由红、绿、蓝三种颜色合成… 请选出正确内容", "opts": ["\n1.光的传播是否需要介质？有无介质均可传播；是否可以绕过障碍物？光沿直线传播，不能绕过障碍物，在障碍物后形成影子；光空气中的速度是？3×10⁸m/s。", "\n2.光的折射规律③两角不等：光从空气斜射入水中或其他介质中时，折射角小于入射角。", "\n3.彩色电视机屏幕上的色彩是由红、绿、蓝三种颜色合成，这也是色光的三原色。", "\n4.做折射角练习时，牢记折射角是折射光线与法线的夹角。"], "ans": 2, "exp": "第249条：彩色电视机屏幕上的色彩是由红、绿、蓝三种颜色合成，这也是色光的三原色。"},
   {"q": "[第250条] 透明物体的颜色由它透过的色光决定；不透明物体的颜色由它反射的色光决定… 请选出正确内容", "opts": ["\n1.利用平面镜改变光路举例：潜望镜。", "\n2.凹面镜对光有会聚作用。", "\n3.透明物体的颜色由它透过的色光决定；不透明物体的颜色由它反射的色光决定。", "\n4.蓝蓝的天上白云飘，白云映在水中央，鱼在“云中遨游”，我们在岸上看到水中的“白云”是由于光的反射所形成的虚像，看到的“鱼”是光的折射所形成的虚像。"], "ans": 2, "exp": "第250条：透明物体的颜色由它透过的色光决定；不透明物体的颜色由它反射的色光决定。"},
-  {"q": "[第251条] 对各种色光都能吸收的物体颜色是黑色；对各种色光都能反射的物体颜色是白色；汽车雾灯用的是黄光… 请选出正确内容", "opts": ["\n1.对各种色光都能吸收的物体颜色是黑色；对各种色光都能反射的物体颜色是白色；汽车雾灯用的是黄光，因为人眼对黄光最敏感。", "\n2.红外线可应用于烤箱、红外夜视仪、遥控器。", "\n3.平面镜成像实验玻璃板倾斜偏向蜡烛A（即点燃的蜡烛），会导致像成在斜上方。", "\n4.光的传播是否需要介质？有无介质均可传播；是否可以绕过障碍物？光沿直线传播，不能绕过障碍物，在障碍物后形成影子；光空气中的速度是？3×10⁸m/s。"], "ans": 0, "exp": "第251条：对各种色光都能吸收的物体颜色是黑色；对各种色光都能反射的物体颜色是白色；汽车雾灯用的是黄光，因为人眼对黄光最敏感。"}
+  {"q": "[第251条] 对各种色光都能吸收的物体颜色是黑色；对各种色光都能反射的物体颜色是白色；汽车雾灯用的是黄光… 请选出正确内容", "opts": ["\n1.对各种色光都能吸收的物体颜色是黑色；对各种色光都能反射的物体颜色是白色；汽车雾灯用的是黄光，因为人眼对黄光最敏感。", "\n2.红外线可应用于烤箱、红外夜视仪、遥控器。", "\n3.平面镜成像实验玻璃板倾斜偏向蜡烛A（即点燃的蜡烛），会导致像成在斜上方。", "\n4.光的传播是否需要介质？有无介质均可传播；是否可以绕过障碍物？光沿直线传播，不能绕过障碍物，在障碍物后形成影子；光空气中的速度是？3×10⁸m/s。"], "ans": 0, "exp": "第251条：对各种色光都能吸收的物体颜色是黑色；对各种色光都能反射的物体颜色是白色；汽车雾灯用的是黄光，因为人眼对黄光最敏感。"},
+  {"q": "[第178条] 光的反射定律的内容是… 请选出正确内容", "opts": ["\n1.三线共面、两线分居、反射角等于入射角", "\n2.反射光线、入射光线分居法线两侧，反射角大于入射角", "\n3.反射角随入射角的增大而减小", "\n4.反射时反射光线与入射光线不在同一平面内"], "ans": 0, "exp": "第178条：反射定律：①三线共面：反射光线、入射光线和法线在同一平面内；②两线分居：反射光线、入射光线分居法线两侧；③反射角=入射角。作图时先过入射点画法线，再按反射角等于入射角作出反射光线。"},
+  {"q": "[第205条] 一束光射到平面镜上，入射角为30°，则反射角为… 请选出正确内容", "opts": ["\n1.30°", "\n2.60°", "\n3.90°", "\n4.150°"], "ans": 0, "exp": "第205条：由反射定律可知反射角等于入射角，入射角为30°，所以反射角也是30°。注意：入射角是入射光线与法线的夹角，不是与镜面的夹角。"}
 ];
 
 const flashcards=[
@@ -476,7 +522,7 @@ alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库�
 
 let fIdx=0;
 function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;const fc=flashcards[fIdx];
-document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front} ${fcMark(fc.front)}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
 <div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
 function toggleFC(){const el=document.getElementById('fc');if(el)el.classList.toggle('flipped');}
 function renderEC(){let s=localStorage.getItem('physics8_ch4_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
@@ -496,50 +542,7 @@ renderEC();initQ();renderFC();renderQ();
 // 点击音效
 (function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
 
-// ===== 知识点已学习标记 =====
-const KP_KEY = 'learned_kp_physics8_ch4_interactive';
-function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
-function toggleKP(name, el) {
-  let arr = getKP();
-  const i = arr.indexOf(name);
-  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
-  localStorage.setItem(KP_KEY, JSON.stringify(arr));
-  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
-  if (item) item.classList.toggle('kp-learned', arr.includes(name));
-  const mark = el.querySelector('.kp-mark') || el;
-  if (mark) {
-    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
-  }
-  try {
-    const ac = new (window.AudioContext || window.webkitAudioContext)();
-    const o = ac.createOscillator(), g = ac.createGain();
-    o.connect(g); g.connect(ac.destination);
-    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
-    g.gain.setValueAtTime(0.08, ac.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
-    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
-  } catch(e) {}
-}
-function kpMark(name) {
-  const learned = getKP().includes(name);
-  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
-}
-function kpInit() {
-  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
-    const titleEl = item.querySelector('h4') || item.querySelector('strong');
-    if (!titleEl) return;
-    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
-    const learned = getKP().includes(name);
-    item.classList.toggle('kp-learned', learned);
-    const mark = document.createElement('span');
-    mark.className = 'kp-mark' + (learned ? ' done' : '');
-    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
-    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
-    mark.title = '标记已学习';
-    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
-  });
-}
-document.addEventListener('DOMContentLoaded', kpInit);
+
 
 </script>
 
