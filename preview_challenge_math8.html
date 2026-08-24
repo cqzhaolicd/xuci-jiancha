@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<title>🎮 数学预习闯关 · 八年级上册 · 北师大版</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:#e74c3c; --green:#2ecc71; --gold:#f1c40f; --blue:#3498db; --brown:#8e5a2b;
+  --bg:#1a1a2e; --card:#222244; --text:#eee; --pixel:'Press Start 2P',monospace; --body:'Noto Sans SC',sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+  font-family:var(--body); background:var(--bg); color:var(--text); min-height:100vh;
+  background-image:radial-gradient(circle at 20% 20%, rgba(52,152,219,.12) 0, transparent 30%),
+                   radial-gradient(circle at 80% 70%, rgba(46,204,113,.1) 0, transparent 30%);
+}
+.clouds { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.cloud { position:absolute; background:rgba(255,255,255,.05); border-radius:50px; animation:float 20s linear infinite; }
+.cloud:nth-child(1) { width:180px;height:40px;top:10%;left:-200px; }
+.cloud:nth-child(2) { width:120px;height:30px;top:30%;left:-150px; animation-duration:28s; animation-delay:-8s; }
+.cloud:nth-child(3) { width:220px;height:50px;top:55%;left:-250px; animation-duration:35s; animation-delay:-15s; }
+.cloud:nth-child(4) { width:90px;height:25px;top:75%;left:-120px; animation-duration:22s; animation-delay:-4s; }
+@keyframes float { from { transform:translateX(0); } to { transform:translateX(calc(100vw + 400px)); } }
+#app { position:relative; z-index:1; max-width:860px; margin:0 auto; padding:16px; }
+.hud { display:flex; justify-content:space-between; align-items:center; background:var(--card); border:3px solid #333; border-radius:12px; padding:10px 16px; margin-bottom:14px; font-family:var(--pixel); font-size:11px; }
+.hud .hud-item { display:flex; align-items:center; gap:6px; }
+.hud .coin { color:var(--gold); } .hud .star { color:var(--green); }
+.screen { animation:fadeIn .4s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+/* ===== 地图页 ===== */
+.map-header { text-align:center; padding:18px 0 8px; }
+.map-header h1 { font-family:var(--pixel); font-size:20px; color:var(--gold); text-shadow:3px 3px 0 rgba(0,0,0,.5); }
+.map-header p { color:#aaa; font-size:13px; margin-top:6px; }
+.world-list { display:flex; flex-direction:column; gap:12px; margin-top:16px; }
+.world-item { display:flex; align-items:center; gap:14px; background:var(--card); border:3px solid #333; border-radius:12px; padding:14px 16px; cursor:pointer; transition:all .2s; }
+.world-item:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.4); border-color:var(--gold); }
+.world-item.locked { opacity:.45; cursor:not-allowed; }
+.world-item .w-icon { font-size:28px; }
+.world-item .w-info { flex:1; }
+.world-item .w-name { font-weight:700; font-size:15px; }
+.world-item .w-npc { color:#aaa; font-size:12px; margin-top:2px; }
+.world-item .w-status { font-family:var(--pixel); font-size:10px; }
+.world-item .w-status .ok { color:var(--green); }
+.world-item .w-status .lock { color:#888; }
+.map-buttons { display:flex; gap:10px; margin-top:18px; justify-content:center; }
+.btn { font-family:var(--body); font-weight:700; border:none; border-radius:10px; padding:10px 22px; cursor:pointer; font-size:14px; transition:all .2s; }
+.btn:hover { transform:translateY(-2px); }
+.btn-gold { background:var(--gold); color:#333; }
+.btn-blue { background:var(--blue); color:#fff; }
+.btn-green { background:var(--green); color:#fff; }
+.btn-red { background:var(--red); color:#fff; }
+.btn-gray { background:#555; color:#ccc; }
+/* ===== 教学页 ===== */
+.teach-page { background:var(--card); border:3px solid #333; border-radius:14px; padding:22px; }
+.teach-page h2 { font-size:20px; color:var(--gold); margin-bottom:14px; }
+.teach-npc { display:flex; gap:12px; background:rgba(241,196,15,.08); border-left:4px solid var(--gold); border-radius:8px; padding:12px; margin-bottom:16px; }
+.teach-npc .npc-icon { font-size:30px; }
+.teach-npc .npc-text { font-size:14px; line-height:1.7; color:#ffd; }
+.teach-body { font-size:15px; line-height:1.9; color:#ddd; }
+.teach-body p { margin-bottom:10px; }
+.teach-nav { display:flex; justify-content:space-between; margin-top:20px; }
+/* ===== 答题页 ===== */
+.quiz-page { background:var(--card); border:3px solid #333; border-radius:14px; padding:22px; }
+.quiz-page .q-num { font-family:var(--pixel); font-size:11px; color:var(--gold); margin-bottom:8px; }
+.quiz-page .q-text { font-size:17px; font-weight:700; margin-bottom:16px; line-height:1.6; }
+.opt { display:block; width:100%; text-align:left; background:#2a2a4a; border:2px solid #444; color:var(--text); border-radius:10px; padding:12px 14px; margin-bottom:10px; font-size:14px; cursor:pointer; transition:all .15s; font-family:var(--body); }
+.opt:hover { border-color:var(--gold); }
+.opt.correct { background:var(--green); border-color:var(--green); color:#fff; }
+.opt.wrong { background:var(--red); border-color:var(--red); color:#fff; }
+.explanation { display:none; background:rgba(52,152,219,.1); border-left:4px solid var(--blue); border-radius:8px; padding:12px; margin-top:10px; font-size:14px; line-height:1.7; }
+.explanation.show { display:block; animation:fadeIn .3s; }
+.quiz-footer { display:flex; justify-content:space-between; margin-top:16px; align-items:center; }
+/* ===== BOSS ===== */
+.boss-page { text-align:center; padding:30px 16px; }
+.boss-title { font-family:var(--pixel); font-size:22px; color:var(--red); text-shadow:3px 3px 0 rgba(0,0,0,.6); animation:pulse 1.5s infinite; }
+@keyframes pulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.06); } }
+.boss-avatar { font-size:72px; margin:24px 0; animation:bounce 1s infinite; display:inline-block; }
+@keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+.hearts { font-size:26px; margin:12px 0; }
+.hearts .lost { opacity:.25; }
+/* BOSS 胜利动画 */
+.screen-shake { animation:shake .5s; }
+@keyframes shake { 0%,100% { transform:translateX(0); } 20% { transform:translateX(-12px); } 40% { transform:translateX(12px); } 60% { transform:translateX(-8px); } 80% { transform:translateX(8px); } }
+.boss-defeated { font-family:var(--pixel); font-size:28px; color:var(--gold); margin:20px 0; animation:blink .6s infinite; }
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:.2; } }
+.trophy { font-size:64px; display:inline-block; animation:trophyScale 1s forwards; transform:scale(0.05); filter:drop-shadow(0 0 20px gold); }
+@keyframes trophyScale { 0% { transform:scale(0.05); } 70% { transform:scale(1.35); } 100% { transform:scale(1.15); } }
+.confetti { position:fixed; width:10px; height:14px; z-index:99; pointer-events:none; animation:confettiFall 2.5s ease-out forwards; }
+@keyframes confettiFall { 0% { transform:translateY(-20px) rotate(0); opacity:1; } 100% { transform:translateY(100vh) rotate(720deg); opacity:0; } }
+.stat-panel { background:var(--card); border:3px solid var(--gold); border-radius:14px; padding:20px; margin-top:20px; text-align:left; animation:fadeIn .5s .4s both; }
+.stat-panel h3 { color:var(--gold); margin-bottom:10px; }
+.stat-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed #444; font-size:14px; }
+/* ===== 错题本 ===== */
+.wrongbook { background:var(--card); border:3px solid #333; border-radius:14px; padding:20px; }
+.wrongbook h2 { color:var(--gold); margin-bottom:14px; }
+.wrong-item { background:#2a2a4a; border-radius:10px; padding:14px; margin-bottom:12px; }
+.wrong-item .wq { font-weight:700; margin-bottom:6px; }
+.wrong-item .wa { color:#99ffcc; font-size:13px; }
+.wrong-item .we { color:#aaa; font-size:13px; margin-top:4px; }
+.empty-tip { text-align:center; color:#888; padding:30px 0; }
+/* ===== 确认弹窗 ===== */
+.modal-mask { position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:100; display:flex; align-items:center; justify-content:center; animation:fadeIn .2s; }
+.modal-card { background:var(--card); border:3px solid var(--gold); border-radius:14px; padding:24px; max-width:340px; width:90%; text-align:center; }
+.modal-card p { margin-bottom:18px; font-size:15px; }
+.modal-btns { display:flex; gap:10px; justify-content:center; }
+/* ===== 结果页 ===== */
+.result-page { text-align:center; padding:30px 16px; }
+.result-title { font-family:var(--pixel); font-size:20px; color:var(--gold); margin-bottom:16px; }
+.result-stars { font-size:30px; margin:14px 0; }
+.result-stars .off { opacity:.2; }
+.result-detail { background:var(--card); border-radius:12px; padding:16px; margin:14px auto; max-width:400px; }
+/* ===== 响应式 ===== */
+@media (max-width:680px) {
+  .hud { font-size:9px; padding:8px 10px; }
+  .map-header h1 { font-size:16px; }
+  .world-item .w-name { font-size:14px; }
+  .teach-page, .quiz-page { padding:16px; }
+}
+</style>
+</head>
+<body>
+<div class="clouds"><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div></div>
+<div id="app"></div>
+<script>
+// ===== 音效（Web Audio 8-bit）=====
+let audioCtx = null;
+function playTone(freq, dur, type='square', vol=0.08, when=0) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const t = audioCtx.currentTime + when;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type; osc.frequency.setValueAtTime(freq, t);
+    gain.gain.setValueAtTime(vol, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(t); osc.stop(t + dur + 0.02);
+  } catch(e) {}
+}
+const sfx = {
+  jump: () => playTone(392, .12, 'square', .06),
+  coin: () => { playTone(988, .08); playTone(1319, .12, 'square', .06, .06); },
+  correct: () => { playTone(523, .1); playTone(659, .1, 'square', .07, .09); playTone(784, .18, 'square', .07, .18); },
+  wrong: () => { playTone(220, .2, 'sawtooth', .07); playTone(175, .25, 'sawtooth', .06, .15); },
+  fanfare: () => { [523,659,784,1047].forEach((f,i)=>playTone(f,.15,'square',.08,i*.12)); },
+  bossHit: () => { playTone(98, .3, 'sawtooth', .1); playTone(82, .4, 'sawtooth', .08, .15); }
+};
+
+// ===== 数据 =====
+const SUBJECT = "数学";
+const VERSION = "八年级上册 · 北师大版";
+const WORLDS = [{"name": "勾股定理山谷", "npc": "商高爷爷：勾三股四弦五，千古第一定理！", "teach": [{"title": "勾股定理", "text": "直角三角形两直角边a、b的平方和等于斜边c的平方：a²+b²=c²。我国古代称'勾三股四弦五'。已知两直角边可求斜边：c=√(a²+b²)。"}, {"title": "勾股数", "text": "满足a²+b²=c²的三个正整数叫做勾股数，如3、4、5；5、12、13；8、15、17。勾股数同时扩大相同倍数仍是勾股数，如6、8、10。"}, {"title": "逆定理与应用", "text": "若三角形三边满足a²+b²=c²，则它是直角三角形，这就是勾股定理的逆定理。应用：求斜边c=√(a²+b²)，求直角边a=√(c²-b²)。"}], "quiz": [{"q": "直角三角形两直角边为3和4，斜边长是？", "opts": ["5", "7", "12", "25"], "ans": 0, "exp": "c=√(3²+4²)=√25=5。注意25是c²，不是斜边长。"}, {"q": "勾股定理的表达式是（a、b为直角边，c为斜边）？", "opts": ["a+b=c", "a²-b²=c²", "a²+b²=c²", "a×b=c"], "ans": 2, "exp": "两直角边的平方和等于斜边的平方：a²+b²=c²。"}, {"q": "下列哪组数是勾股数？", "opts": ["3,4,5", "2,3,4", "1,2,3", "4,5,6"], "ans": 0, "exp": "3²+4²=9+16=25=5²，满足a²+b²=c²；其余三组都不满足。"}, {"q": "三角形三边长分别为6、8、10，这个三角形是？", "opts": ["锐角三角形", "直角三角形", "钝角三角形", "不能确定"], "ans": 1, "exp": "6²+8²=36+64=100=10²，满足勾股定理逆定理，是直角三角形。"}]}, {"name": "实数王国", "npc": "√2小精灵：无理数也有自己的地盘！", "teach": [{"title": "无理数与平方根", "text": "无限不循环小数叫做无理数，如√2≈1.414…、π。平方根：若x²=a（a≥0），则x叫做a的平方根，记作±√a。正数有两个平方根，它们互为相反数。"}, {"title": "算术平方根与立方根", "text": "正数a的正平方根叫做算术平方根，记作√a（√a≥0）。立方根：若x³=a，则x叫做a的立方根，记作∛a。负数没有平方根，但有立方根，如∛(-8)=-2。"}, {"title": "实数分类与近似值", "text": "有理数和无理数统称实数。近似值：√2≈1.414，√3≈1.732，π≈3.14。实数和数轴上的点一一对应。"}], "quiz": [{"q": "下列哪个数是无理数？", "opts": ["4", "1/2", "0.5", "√2"], "ans": 3, "exp": "√2=1.414…是无限不循环小数，是无理数；4、0.5、1/2都是有理数。"}, {"q": "√4 的值是？", "opts": ["-2", "±2", "2", "16"], "ans": 2, "exp": "√4表示4的算术平方根，只取非负值，所以√4=2。"}, {"q": "(-3)² 的平方根是？", "opts": ["3", "±3", "9", "-3"], "ans": 1, "exp": "(-3)²=9，9的平方根是±3。"}, {"q": "27 的立方根是？", "opts": ["9", "±3", "√3", "3"], "ans": 3, "exp": "因为3³=27，所以∛27=3。"}]}, {"name": "坐标迷宫", "npc": "象限向导：先横后纵，找准位置！", "teach": [{"title": "平面直角坐标系", "text": "平面内两条互相垂直、原点重合的数轴组成平面直角坐标系。水平的叫x轴（横轴），竖直的叫y轴（纵轴），它们的交点叫原点O(0,0)。"}, {"title": "象限", "text": "两条坐标轴把平面分成四个象限：第一象限(+,+)，第二象限(-,+)，第三象限(-,-)，第四象限(+,-)。坐标轴上的点不属于任何象限。"}, {"title": "对称与坐标", "text": "关于x轴对称：横坐标不变、纵坐标互为相反数，即(x,y)→(x,-y)；关于y轴对称：(-x,y)；关于原点对称：(-x,-y)。"}], "quiz": [{"q": "点(-3,4)在第几象限？", "opts": ["第一象限", "第二象限", "第三象限", "第四象限"], "ans": 1, "exp": "横坐标-3为负、纵坐标4为正，符号为(-,+)的是第二象限。"}, {"q": "原点的坐标是？", "opts": ["(0,0)", "(1,1)", "(0,1)", "(1,0)"], "ans": 0, "exp": "x轴与y轴的交点叫原点，坐标为(0,0)。"}, {"q": "点(3,5)关于x轴对称的点的坐标是？", "opts": ["(3,-5)", "(-3,5)", "(-3,-5)", "(5,3)"], "ans": 0, "exp": "关于x轴对称：横坐标不变，纵坐标变为相反数，得(3,-5)。"}, {"q": "x轴上的点具有什么坐标特征？", "opts": ["纵坐标为0", "横坐标为0", "横纵坐标相等", "纵坐标为1"], "ans": 0, "exp": "x轴上所有点的纵坐标都是0，如(5,0)。"}]}, {"name": "函数山脉", "npc": "斜率老师：k定增减，b定高低！", "teach": [{"title": "函数与一次函数", "text": "在一个变化过程中有两个变量x、y，对于x的每一个确定值，y都有唯一确定的值与之对应，那么y是x的函数。一次函数：y=kx+b（k≠0）。"}, {"title": "正比例函数与增减性", "text": "当b=0时，y=kx叫做正比例函数。k>0时，y随x的增大而增大；k<0时，y随x的增大而减小。"}, {"title": "图象与交点", "text": "一次函数的图象是一条直线。图象与y轴的交点是(0,b)；与x轴的交点：令y=0解出x。k决定直线的倾斜方向，b决定直线与y轴交点的位置。"}], "quiz": [{"q": "下列函数中，是一次函数的是？", "opts": ["y=x²", "y=2x+1", "y=3/x", "y=√x"], "ans": 1, "exp": "y=kx+b（k≠0）是一次函数；y=x²是二次函数，y=3/x是反比例函数。"}, {"q": "正比例函数的一般形式是？", "opts": ["y=kx+b", "y=kx(k≠0)", "y=ax²", "y=k/x"], "ans": 1, "exp": "正比例函数是b=0时的一次函数，形式为y=kx（k≠0）。"}, {"q": "一次函数y=-3x+2中，y随x的增大而？", "opts": ["增大", "减小", "不变", "先增后减"], "ans": 1, "exp": "k=-3<0，所以y随x的增大而减小。"}, {"q": "一次函数y=2x+1的图象与y轴的交点坐标是？", "opts": ["(1,0)", "(0,0)", "(0,1)", "(0,2)"], "ans": 2, "exp": "令x=0，则y=2×0+1=1，与y轴交于点(0,1)。"}]}, {"name": "方程组城堡", "npc": "消元大师：代入加减，化繁为简！", "teach": [{"title": "二元一次方程", "text": "含有两个未知数，并且含未知数的项的次数都是1的整式方程叫做二元一次方程，如x+y=5。由两个二元一次方程组成的方程组叫做二元一次方程组。"}, {"title": "代入消元法", "text": "把方程组中一个方程变形为y=…（或x=…）的形式，代入另一个方程，消去一个未知数，转化为一元一次方程求解，这就是代入消元法。"}, {"title": "加减消元法", "text": "当两个方程中某个未知数的系数相同或互为相反数时，把两个方程相减或相加，消去该未知数。系数相同用减法，互为相反数用加法。"}], "quiz": [{"q": "方程组 {x+y=5, x-y=1} 的解是？", "opts": ["x=2,y=3", "x=3,y=2", "x=4,y=1", "x=1,y=4"], "ans": 1, "exp": "两式相加得2x=6，x=3；代入得y=2。检验：3+2=5，3-2=1。"}, {"q": "用代入法解 {y=x+1, x+y=5}，第一步应？", "opts": ["两式相加", "把y=x+1代入x+y=5", "两式相减", "先算x+y的值"], "ans": 1, "exp": "代入法：把y=x+1代入另一个方程x+y=5，得x+(x+1)=5。"}, {"q": "解 {2x+y=7, x-y=2} 用加减消元法，应？", "opts": ["两式相减", "两式相加", "两式相乘", "无法消元"], "ans": 1, "exp": "y的系数互为相反数，两式相加消去y：3x=9，x=3，再得y=1。"}, {"q": "下列方程中，是二元一次方程的是？", "opts": ["x²+y=3", "xy=3", "x+y=3", "x+1=3"], "ans": 2, "exp": "x+y=3含两个未知数且次数都是1；x²+y、xy的次数是2，x+1=3只有一个未知数。"}]}, {"name": "数据与证明塔", "npc": "推理骑士：用证据说话，用数据服人！", "teach": [{"title": "平均数 中位数 众数", "text": "平均数：所有数据之和÷数据个数。中位数：把数据从小到大排列，最中间的数（偶数个时取中间两个数的平均数）。众数：出现次数最多的数。"}, {"title": "方差", "text": "方差s²=[(x₁-x̄)²+(x₂-x̄)²+…+(xₙ-x̄)²]÷n，用来衡量数据的波动大小。方差越小，数据越稳定。"}, {"title": "平行线与三角形", "text": "判定两直线平行：同位角相等、内错角相等、同旁内角互补。三角形内角和为180°；三角形的一个外角等于与它不相邻的两个内角之和。"}], "quiz": [{"q": "数据 3、5、5、7、10 的平均数是？", "opts": ["5", "6", "7", "8"], "ans": 1, "exp": "(3+5+5+7+10)÷5=30÷5=6。"}, {"q": "数据 2、4、4、4、6、8 的中位数是？", "opts": ["4", "4.5", "5", "6"], "ans": 0, "exp": "按大小排列，中间两个数是4和4，中位数=(4+4)÷2=4。"}, {"q": "一组数据的方差越小，说明这组数据？", "opts": ["波动越大", "越稳定", "平均数越大", "中位数越大"], "ans": 1, "exp": "方差衡量数据的波动大小，方差越小数据越稳定。"}, {"q": "若∠1和∠2是同位角且∠1=∠2，则可以判定？", "opts": ["a⊥b", "a∥b", "∠1=∠3", "两直线相交"], "ans": 1, "exp": "同位角相等，两直线平行，所以a∥b。"}]}];
+const BOSS = {"name": "魔王殿 · 数学总决战", "npc": "大魔王：六关的知识，你掌握了吗？！", "quiz": [{"q": "一次函数y=2x-4的图象与x轴的交点坐标是？", "opts": ["(0,-4)", "(2,0)", "(4,0)", "(-2,0)"], "ans": 1, "exp": "令y=0，得2x-4=0，x=2，交点坐标为(2,0)。"}, {"q": "直角三角形两直角边为5和12，斜边长是？", "opts": ["17", "13", "60", "7"], "ans": 1, "exp": "c=√(5²+12²)=√169=13。17是5+12，注意别和勾股定理混淆。"}, {"q": "方程组 {x+y=7, x-y=3} 的解是？", "opts": ["x=2,y=5", "x=5,y=2", "x=4,y=3", "x=6,y=1"], "ans": 1, "exp": "两式相加得2x=10，x=5；代入得y=2。检验：5+2=7，5-2=3。"}, {"q": "点(2,-3)关于y轴对称的点的坐标是？", "opts": ["(2,3)", "(-2,3)", "(-2,-3)", "(3,-2)"], "ans": 2, "exp": "关于y轴对称：横坐标变为相反数，纵坐标不变，得(-2,-3)。"}]};
+const LS = {
+  coins: 'preview_coins_' + SUBJECT,
+  stars: 'preview_stars_' + SUBJECT,
+  unlocked: 'preview_unlocked_' + SUBJECT,
+  cleared: 'preview_cleared_' + SUBJECT,
+  wrong: 'preview_wrong_' + SUBJECT,
+  boss: 'preview_boss_' + SUBJECT
+};
+
+// ===== 状态 =====
+let state = {
+  coins: 0, stars: 0,
+  unlocked: [0],
+  cleared: [],
+  wrong: {},
+  bossBeaten: false,
+  curWorld: 0,
+  curTeach: 0,
+  curQ: 0,
+  hearts: 3,
+  worldStars: 0,
+  isBoss: false
+};
+
+function lsGet(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch(e) { return def; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+function loadState() {
+  state.coins = lsGet(LS.coins, 0);
+  state.stars = lsGet(LS.stars, 0);
+  state.unlocked = lsGet(LS.unlocked, [0]);
+  state.cleared = lsGet(LS.cleared, []);
+  state.wrong = lsGet(LS.wrong, {});
+  state.bossBeaten = lsGet(LS.boss, false);
+}
+function saveState() {
+  lsSet(LS.coins, state.coins); lsSet(LS.stars, state.stars);
+  lsSet(LS.unlocked, state.unlocked); lsSet(LS.cleared, state.cleared);
+  lsSet(LS.wrong, state.wrong); lsSet(LS.boss, state.bossBeaten);
+}
+function resetGame() {
+  state = { coins:0, stars:0, unlocked:[0], cleared:[], wrong:{}, bossBeaten:false, curWorld:0, curTeach:0, curQ:0, hearts:3, worldStars:0, isBoss:false };
+  saveState(); renderHUD(); showMap();
+}
+
+// ===== 渲染 =====
+const app = document.getElementById('app');
+function renderHUD() {
+  document.getElementById('hud-coins').textContent = state.coins;
+  document.getElementById('hud-stars').textContent = state.stars;
+  document.getElementById('hud-total').textContent = totalStars();
+}
+function totalStars() {
+  let n = 0;
+  WORLDS.forEach((w,i) => n += (state.cleared.includes(i) ? w.quiz.length : 0));
+  if (state.bossBeaten) n += BOSS.quiz.length;
+  return n;
+}
+
+function showMap() {
+  sfx.jump();
+  const worldsHtml = WORLDS.map((w, i) => {
+    const locked = !state.unlocked.includes(i);
+    const cleared = state.cleared.includes(i);
+    const stars = cleared ? w.quiz.length : 0;
+    return `<div class="world-item ${locked ? 'locked' : ''}" onclick="${locked ? '' : 'startWorld(' + i + ')'}">
+      <div class="w-icon">${locked ? '🔒' : (cleared ? '⭐' : '🏰')}</div>
+      <div class="w-info">
+        <div class="w-name">第 ${i+1} 关 · ${w.name}</div>
+        <div class="w-npc">${w.npc}</div>
+      </div>
+      <div class="w-status">${locked ? '<span class="lock">🔒 未解锁</span>' : (cleared ? '<span class="ok">★ ' + stars + '/' + w.quiz.length + '</span>' : '🆕 挑战')}</div>
+    </div>`;
+  }).join('');
+  const bossLocked = !(WORLDS.every((w,i) => state.cleared.includes(i)));
+  const bossHtml = `<div class="world-item ${bossLocked ? 'locked' : ''}" onclick="${bossLocked ? '' : 'startBoss()'}">
+    <div class="w-icon">${bossLocked ? '🔒' : (state.bossBeaten ? '👑' : '👹')}</div>
+    <div class="w-info">
+      <div class="w-name">BOSS 关 · ${BOSS.name}</div>
+      <div class="w-npc">${BOSS.npc}</div>
+    </div>
+    <div class="w-status">${bossLocked ? '<span class="lock">🔒 需通关全部关卡</span>' : (state.bossBeaten ? '<span class="ok">👑 已击败</span>' : '⚔️ 决战')}</div>
+  </div>`;
+  app.innerHTML = `<div class="screen">
+    <div class="map-header">
+      <h1>🎮 ${SUBJECT} 预习闯关</h1>
+      <p>${VERSION} · 打通所有关卡，击败大魔王！</p>
+    </div>
+    <div class="world-list">${worldsHtml}${bossHtml}</div>
+    <div class="map-buttons">
+      <button class="btn btn-blue" onclick="showWrongBook()">📝 错题本</button>
+      <button class="btn btn-gray" onclick="confirmReset()">🔄 重新开始</button>
+    </div>
+  </div>`;
+}
+
+function startWorld(i) {
+  state.curWorld = i; state.curTeach = 0; state.curQ = 0; state.worldStars = 0;
+  renderTeach();
+}
+function startBoss() {
+  state.isBoss = true; state.curQ = 0; state.hearts = 3; state.worldStars = 0;
+  renderBossIntro();
+}
+
+// ===== 教学页 =====
+function renderTeach() {
+  const w = WORLDS[state.curWorld];
+  const t = w.teach[state.curTeach];
+  const total = w.teach.length;
+  const isLast = state.curTeach === total - 1;
+  app.innerHTML = `<div class="screen teach-page">
+    <h2>第 ${state.curWorld+1} 关 · ${w.name}（教学 ${state.curTeach+1}/${total}）</h2>
+    <div class="teach-npc"><div class="npc-icon">🧙</div><div class="npc-text">${w.npc}</div></div>
+    <div class="teach-body">
+      <h3 style="color:#fff;margin-bottom:8px;">${t.title}</h3>
+      <p>${t.text}</p>
+    </div>
+    <div class="teach-nav">
+      <button class="btn btn-gray" onclick="showMap()">← 返回地图</button>
+      <button class="btn btn-gold" onclick="${isLast ? 'startQuiz()' : 'nextTeach()'}">${isLast ? '开始答题 ⚔️' : '下一页 →'}</button>
+    </div>
+  </div>`;
+  sfx.jump();
+}
+function nextTeach() {
+  state.curTeach++;
+  renderTeach();
+}
+
+// ===== 答题 =====
+function shuffleArr(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function startQuiz() {
+  state.curQ = 0; state.worldStars = 0;
+  // 选项随机打乱
+  const w = WORLDS[state.curWorld];
+  w.quiz.forEach(q => {
+    const idxs = [0,1,2,3];
+    shuffleArr(idxs);
+    q._opts = idxs.map(i => q.opts[i]);
+    q._ans = idxs.indexOf(q.ans);
+  });
+  renderQuiz();
+}
+function renderQuiz() {
+  const w = WORLDS[state.curWorld];
+  const q = w.quiz[state.curQ];
+  const total = w.quiz.length;
+  const answered = q._answered;
+  app.innerHTML = `<div class="screen quiz-page">
+    <div class="q-num">Q${state.curQ+1}/${total} · 第 ${state.curWorld+1} 关</div>
+    <div class="q-text">${q.q}</div>
+    ${q._opts.map((o, i) => `
+      <button class="opt ${answered ? (i === q._ans ? 'correct' : (i === q._picked ? 'wrong' : '')) : ''}" ${answered ? 'disabled' : ''} onclick="selQ(${i})">
+        ${'ABCD'[i]}. ${o}
+      </button>`).join('')}
+    <div class="explanation ${answered ? 'show' : ''}" id="expl">✅ ${q.exp}</div>
+    <div class="quiz-footer">
+      <button class="btn btn-gray" onclick="showMap()">← 返回</button>
+      <span class="q-stars">⭐ ${state.worldStars}/${total}</span>
+      ${answered ? (state.curQ < total-1 ? '<button class="btn btn-gold" onclick="nextQ()">下一题 →</button>' : '<button class="btn btn-gold" onclick="finishWorld()">查看结果 🏁</button>') : ''}
+    </div>
+  </div>`;
+}
+function selQ(i) {
+  const w = WORLDS[state.curWorld];
+  const q = w.quiz[state.curQ];
+  if (q._answered) return;
+  q._picked = i;
+  if (i === q._ans) {
+    q._answered = true;
+    state.worldStars++;
+    state.coins += 10;
+    state.stars++;
+    sfx.correct();
+  } else {
+    q._answered = true;
+    sfx.wrong();
+    // 错题导入
+    if (!state.wrong[state.curWorld]) state.wrong[state.curWorld] = [];
+    state.wrong[state.curWorld].push({ q: q.q, ans: q.opts[q.ans], exp: q.exp, world: w.name });
+  }
+  saveState();
+  renderQuiz();
+}
+function nextQ() {
+  state.curQ++;
+  renderQuiz();
+}
+function finishWorld() {
+  const w = WORLDS[state.curWorld];
+  const total = w.quiz.length;
+  const got = state.worldStars;
+  const passed = got === total;
+  if (passed) {
+    sfx.fanfare();
+    if (!state.cleared.includes(state.curWorld)) {
+      state.cleared.push(state.curWorld);
+      const nxt = state.curWorld + 1;
+      if (!state.unlocked.includes(nxt) && nxt < WORLDS.length) state.unlocked.push(nxt);
+      state.coins += 50;
+    }
+  } else {
+    sfx.wrong();
+  }
+  saveState();
+  app.innerHTML = `<div class="screen result-page">
+    <div class="result-title">${passed ? '🎉 闯关成功！' : '💔 闯关失败'}</div>
+    <div class="result-stars">${[...Array(total)].map((_,i) => `<span class="${i < got ? '' : 'off'}">⭐</span>`).join('')}</div>
+    <div class="result-detail">
+      <p>答对 ${got}/${total} 题</p>
+      <p style="margin-top:8px;">${passed ? '✅ 全部答对，解锁下一关！+50金币' : '❌ 需全部答对才能通过，加油再战！'}</p>
+    </div>
+    <div class="map-buttons" style="margin-top:20px;">
+      ${passed ? '<button class="btn btn-green" onclick="showMap()">继续闯关 🏰</button>' : '<button class="btn btn-gold" onclick="startQuiz()">重新挑战 🔄</button>'}
+      <button class="btn btn-blue" onclick="showMap()">地图</button>
+    </div>
+  </div>`;
+  renderHUD();
+}
+
+// ===== BOSS =====
+function renderBossIntro() {
+  app.innerHTML = `<div class="screen boss-page">
+    <div class="boss-title">⚠️ BOSS 战 ⚠️</div>
+    <div class="boss-avatar">👹</div>
+    <p style="margin-bottom:14px;color:#ff9;">${BOSS.npc}</p>
+    <p style="color:#aaa;font-size:14px;">3 条命（♥），答错扣命，0 命需重打！</p>
+    <div class="map-buttons" style="margin-top:20px;">
+      <button class="btn btn-gray" onclick="showMap()">← 撤退</button>
+      <button class="btn btn-red" onclick="startBossQuiz()">⚔️ 开战！</button>
+    </div>
+  </div>`;
+  sfx.jump();
+}
+function startBossQuiz() {
+  state.curQ = 0; state.hearts = 3; state.worldStars = 0;
+  BOSS.quiz.forEach(q => {
+    const idxs = [0,1,2,3];
+    shuffleArr(idxs);
+    q._opts = idxs.map(i => q.opts[i]);
+    q._ans = idxs.indexOf(q.ans);
+  });
+  renderBossQuiz();
+}
+function renderBossQuiz() {
+  if (state.hearts <= 0) {
+    sfx.wrong();
+    app.innerHTML = `<div class="screen boss-page">
+      <div class="boss-title" style="color:var(--red);">💀 挑战失败</div>
+      <div class="boss-avatar">👹</div>
+      <p style="margin:14px 0;color:#aaa;">生命值为 0，BOSS 还在咆哮…</p>
+      <button class="btn btn-red" onclick="startBossQuiz()">🔄 重新挑战</button>
+      <button class="btn btn-gray" style="margin-left:10px;" onclick="showMap()">地图</button>
+    </div>`;
+    return;
+  }
+  const q = BOSS.quiz[state.curQ];
+  const total = BOSS.quiz.length;
+  const answered = q._answered;
+  app.innerHTML = `<div class="screen quiz-page">
+    <div class="q-num" style="color:var(--red);">☠️ BOSS 战 · Q${state.curQ+1}/${total}</div>
+    <div class="hearts">${[...Array(3)].map((_,i) => `<span class="${i < state.hearts ? '' : 'lost'}">♥</span>`).join('')}</div>
+    <div class="q-text">${q.q}</div>
+    ${q._opts.map((o, i) => `
+      <button class="opt ${answered ? (i === q._ans ? 'correct' : (i === q._picked ? 'wrong' : '')) : ''}" ${answered ? 'disabled' : ''} onclick="selBossQ(${i})">
+        ${'ABCD'[i]}. ${o}
+      </button>`).join('')}
+    <div class="explanation ${answered ? 'show' : ''}">✅ ${q.exp}</div>
+    <div class="quiz-footer">
+      <button class="btn btn-gray" onclick="showMap()">← 撤退</button>
+      ${answered ? (state.curQ < total-1 ? '<button class="btn btn-red" onclick="nextBossQ()">下一题 →</button>' : '<button class="btn btn-red" onclick="finishBoss()">⚔️ 终结 BOSS</button>') : ''}
+    </div>
+  </div>`;
+}
+function selBossQ(i) {
+  const q = BOSS.quiz[state.curQ];
+  if (q._answered) return;
+  q._picked = i;
+  if (i === q._ans) {
+    q._answered = true;
+    state.worldStars++;
+    state.coins += 20;
+    state.stars++;
+    sfx.correct();
+  } else {
+    q._answered = true;
+    state.hearts--;
+    state.coins = Math.max(0, state.coins - 5);
+    sfx.bossHit();
+    if (!state.wrong['boss']) state.wrong['boss'] = [];
+    state.wrong['boss'].push({ q: q.q, ans: q.opts[q.ans], exp: q.exp, world: 'BOSS关' });
+  }
+  saveState();
+  renderBossQuiz();
+}
+function nextBossQ() {
+  state.curQ++;
+  renderBossQuiz();
+}
+function finishBoss() {
+  if (state.worldStars === BOSS.quiz.length) {
+    state.bossBeaten = true;
+    state.coins += 100;
+    saveState();
+    bossVictory();
+  } else {
+    sfx.wrong();
+    app.innerHTML = `<div class="screen boss-page">
+      <div class="boss-title">😤 还差一点！</div>
+      <p style="margin:14px;color:#aaa;">需全部答对才能击败 BOSS（当前 ${state.worldStars}/${BOSS.quiz.length}）</p>
+      <button class="btn btn-red" onclick="startBossQuiz()">🔄 再战</button>
+    </div>`;
+  }
+}
+function bossVictory() {
+  sfx.fanfare();
+  document.body.classList.add('screen-shake');
+  // 三波纸屑
+  spawnConfetti(0); spawnConfetti(500); spawnConfetti(1500);
+  setTimeout(() => document.body.classList.remove('screen-shake'), 600);
+  app.innerHTML = `<div class="screen boss-page">
+    <div class="boss-defeated">BOSS DEFEATED!</div>
+    <div class="trophy">🏆</div>
+    <div class="stat-panel">
+      <h3>🎊 恭喜通关 ${SUBJECT} 预习！</h3>
+      <div class="stat-row"><span>总星星</span><span>⭐ ${state.stars}</span></div>
+      <div class="stat-row"><span>金币</span><span>🪙 ${state.coins}</span></div>
+      <div class="stat-row"><span>已掌握关卡</span><span>${WORLDS.length}/${WORLDS.length} + BOSS</span></div>
+    </div>
+    <div class="map-buttons" style="margin-top:20px;">
+      <button class="btn btn-gold" onclick="showMap()">🏰 返回地图</button>
+      <button class="btn btn-blue" onclick="showWrongBook()">📝 错题本</button>
+    </div>
+  </div>`;
+  renderHUD();
+}
+function spawnConfetti(delay) {
+  const colors = ['#e74c3c','#f1c40f','#2ecc71','#3498db','#9b59b6','#e67e22'];
+  setTimeout(() => {
+    for (let i = 0; i < 24; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti';
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.top = '0';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 0.5) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 3500);
+    }
+  }, delay);
+}
+
+// ===== 错题本 =====
+function showWrongBook() {
+  const entries = [];
+  Object.keys(state.wrong).forEach(k => {
+    (state.wrong[k] || []).forEach(e => entries.push(e));
+  });
+  const html = entries.length === 0
+    ? '<div class="empty-tip">🎉 还没有错题，继续保持！</div>'
+    : entries.map(e => `<div class="wrong-item">
+        <div class="wq">📝 ${e.q}</div>
+        <div class="wa">✅ 正确答案：${e.ans}</div>
+        <div class="we">💡 ${e.exp}（${e.world}）</div>
+      </div>`).join('');
+  app.innerHTML = `<div class="screen wrongbook">
+    <h2>📝 错题本（${entries.length}）</h2>
+    ${html}
+    <div class="map-buttons" style="margin-top:16px;">
+      <button class="btn btn-blue" onclick="showMap()">← 返回地图</button>
+    </div>
+  </div>`;
+}
+
+// ===== 重置确认 =====
+function confirmReset() {
+  const mask = document.createElement('div');
+  mask.className = 'modal-mask';
+  mask.innerHTML = `<div class="modal-card">
+    <p>确定要重新开始吗？<br>所有星星、金币、进度将清零！</p>
+    <div class="modal-btns">
+      <button class="btn btn-gray" id="cancel-reset">取消</button>
+      <button class="btn btn-red" id="ok-reset">确定重置</button>
+    </div>
+  </div>`;
+  document.body.appendChild(mask);
+  mask.querySelector('#cancel-reset').onclick = () => mask.remove();
+  mask.querySelector('#ok-reset').onclick = () => { mask.remove(); resetGame(); };
+}
+
+// ===== 启动 =====
+loadState();
+app.innerHTML = `<div class="hud">
+  <div class="hud-item">🪙 <span id="hud-coins" style="color:var(--gold)">${state.coins}</span></div>
+  <div class="hud-item">⭐ <span id="hud-stars" style="color:var(--green)">${state.stars}</span></div>
+  <div class="hud-item">🎯 <span id="hud-total" style="color:#fff">${totalStars()}</span></div>
+</div>`;
+showMap();
+</script>
+</body>
+</html>

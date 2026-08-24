@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<title>🎮 英语预习闯关 · 八年级上册 · 人教版 Go for it</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:#e74c3c; --green:#2ecc71; --gold:#f1c40f; --blue:#3498db; --brown:#8e5a2b;
+  --bg:#1a1a2e; --card:#222244; --text:#eee; --pixel:'Press Start 2P',monospace; --body:'Noto Sans SC',sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+  font-family:var(--body); background:var(--bg); color:var(--text); min-height:100vh;
+  background-image:radial-gradient(circle at 20% 20%, rgba(52,152,219,.12) 0, transparent 30%),
+                   radial-gradient(circle at 80% 70%, rgba(46,204,113,.1) 0, transparent 30%);
+}
+.clouds { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.cloud { position:absolute; background:rgba(255,255,255,.05); border-radius:50px; animation:float 20s linear infinite; }
+.cloud:nth-child(1) { width:180px;height:40px;top:10%;left:-200px; }
+.cloud:nth-child(2) { width:120px;height:30px;top:30%;left:-150px; animation-duration:28s; animation-delay:-8s; }
+.cloud:nth-child(3) { width:220px;height:50px;top:55%;left:-250px; animation-duration:35s; animation-delay:-15s; }
+.cloud:nth-child(4) { width:90px;height:25px;top:75%;left:-120px; animation-duration:22s; animation-delay:-4s; }
+@keyframes float { from { transform:translateX(0); } to { transform:translateX(calc(100vw + 400px)); } }
+#app { position:relative; z-index:1; max-width:860px; margin:0 auto; padding:16px; }
+.hud { display:flex; justify-content:space-between; align-items:center; background:var(--card); border:3px solid #333; border-radius:12px; padding:10px 16px; margin-bottom:14px; font-family:var(--pixel); font-size:11px; }
+.hud .hud-item { display:flex; align-items:center; gap:6px; }
+.hud .coin { color:var(--gold); } .hud .star { color:var(--green); }
+.screen { animation:fadeIn .4s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+/* ===== 地图页 ===== */
+.map-header { text-align:center; padding:18px 0 8px; }
+.map-header h1 { font-family:var(--pixel); font-size:20px; color:var(--gold); text-shadow:3px 3px 0 rgba(0,0,0,.5); }
+.map-header p { color:#aaa; font-size:13px; margin-top:6px; }
+.world-list { display:flex; flex-direction:column; gap:12px; margin-top:16px; }
+.world-item { display:flex; align-items:center; gap:14px; background:var(--card); border:3px solid #333; border-radius:12px; padding:14px 16px; cursor:pointer; transition:all .2s; }
+.world-item:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.4); border-color:var(--gold); }
+.world-item.locked { opacity:.45; cursor:not-allowed; }
+.world-item .w-icon { font-size:28px; }
+.world-item .w-info { flex:1; }
+.world-item .w-name { font-weight:700; font-size:15px; }
+.world-item .w-npc { color:#aaa; font-size:12px; margin-top:2px; }
+.world-item .w-status { font-family:var(--pixel); font-size:10px; }
+.world-item .w-status .ok { color:var(--green); }
+.world-item .w-status .lock { color:#888; }
+.map-buttons { display:flex; gap:10px; margin-top:18px; justify-content:center; }
+.btn { font-family:var(--body); font-weight:700; border:none; border-radius:10px; padding:10px 22px; cursor:pointer; font-size:14px; transition:all .2s; }
+.btn:hover { transform:translateY(-2px); }
+.btn-gold { background:var(--gold); color:#333; }
+.btn-blue { background:var(--blue); color:#fff; }
+.btn-green { background:var(--green); color:#fff; }
+.btn-red { background:var(--red); color:#fff; }
+.btn-gray { background:#555; color:#ccc; }
+/* ===== 教学页 ===== */
+.teach-page { background:var(--card); border:3px solid #333; border-radius:14px; padding:22px; }
+.teach-page h2 { font-size:20px; color:var(--gold); margin-bottom:14px; }
+.teach-npc { display:flex; gap:12px; background:rgba(241,196,15,.08); border-left:4px solid var(--gold); border-radius:8px; padding:12px; margin-bottom:16px; }
+.teach-npc .npc-icon { font-size:30px; }
+.teach-npc .npc-text { font-size:14px; line-height:1.7; color:#ffd; }
+.teach-body { font-size:15px; line-height:1.9; color:#ddd; }
+.teach-body p { margin-bottom:10px; }
+.teach-nav { display:flex; justify-content:space-between; margin-top:20px; }
+/* ===== 答题页 ===== */
+.quiz-page { background:var(--card); border:3px solid #333; border-radius:14px; padding:22px; }
+.quiz-page .q-num { font-family:var(--pixel); font-size:11px; color:var(--gold); margin-bottom:8px; }
+.quiz-page .q-text { font-size:17px; font-weight:700; margin-bottom:16px; line-height:1.6; }
+.opt { display:block; width:100%; text-align:left; background:#2a2a4a; border:2px solid #444; color:var(--text); border-radius:10px; padding:12px 14px; margin-bottom:10px; font-size:14px; cursor:pointer; transition:all .15s; font-family:var(--body); }
+.opt:hover { border-color:var(--gold); }
+.opt.correct { background:var(--green); border-color:var(--green); color:#fff; }
+.opt.wrong { background:var(--red); border-color:var(--red); color:#fff; }
+.explanation { display:none; background:rgba(52,152,219,.1); border-left:4px solid var(--blue); border-radius:8px; padding:12px; margin-top:10px; font-size:14px; line-height:1.7; }
+.explanation.show { display:block; animation:fadeIn .3s; }
+.quiz-footer { display:flex; justify-content:space-between; margin-top:16px; align-items:center; }
+/* ===== BOSS ===== */
+.boss-page { text-align:center; padding:30px 16px; }
+.boss-title { font-family:var(--pixel); font-size:22px; color:var(--red); text-shadow:3px 3px 0 rgba(0,0,0,.6); animation:pulse 1.5s infinite; }
+@keyframes pulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.06); } }
+.boss-avatar { font-size:72px; margin:24px 0; animation:bounce 1s infinite; display:inline-block; }
+@keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+.hearts { font-size:26px; margin:12px 0; }
+.hearts .lost { opacity:.25; }
+/* BOSS 胜利动画 */
+.screen-shake { animation:shake .5s; }
+@keyframes shake { 0%,100% { transform:translateX(0); } 20% { transform:translateX(-12px); } 40% { transform:translateX(12px); } 60% { transform:translateX(-8px); } 80% { transform:translateX(8px); } }
+.boss-defeated { font-family:var(--pixel); font-size:28px; color:var(--gold); margin:20px 0; animation:blink .6s infinite; }
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:.2; } }
+.trophy { font-size:64px; display:inline-block; animation:trophyScale 1s forwards; transform:scale(0.05); filter:drop-shadow(0 0 20px gold); }
+@keyframes trophyScale { 0% { transform:scale(0.05); } 70% { transform:scale(1.35); } 100% { transform:scale(1.15); } }
+.confetti { position:fixed; width:10px; height:14px; z-index:99; pointer-events:none; animation:confettiFall 2.5s ease-out forwards; }
+@keyframes confettiFall { 0% { transform:translateY(-20px) rotate(0); opacity:1; } 100% { transform:translateY(100vh) rotate(720deg); opacity:0; } }
+.stat-panel { background:var(--card); border:3px solid var(--gold); border-radius:14px; padding:20px; margin-top:20px; text-align:left; animation:fadeIn .5s .4s both; }
+.stat-panel h3 { color:var(--gold); margin-bottom:10px; }
+.stat-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed #444; font-size:14px; }
+/* ===== 错题本 ===== */
+.wrongbook { background:var(--card); border:3px solid #333; border-radius:14px; padding:20px; }
+.wrongbook h2 { color:var(--gold); margin-bottom:14px; }
+.wrong-item { background:#2a2a4a; border-radius:10px; padding:14px; margin-bottom:12px; }
+.wrong-item .wq { font-weight:700; margin-bottom:6px; }
+.wrong-item .wa { color:#99ffcc; font-size:13px; }
+.wrong-item .we { color:#aaa; font-size:13px; margin-top:4px; }
+.empty-tip { text-align:center; color:#888; padding:30px 0; }
+/* ===== 确认弹窗 ===== */
+.modal-mask { position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:100; display:flex; align-items:center; justify-content:center; animation:fadeIn .2s; }
+.modal-card { background:var(--card); border:3px solid var(--gold); border-radius:14px; padding:24px; max-width:340px; width:90%; text-align:center; }
+.modal-card p { margin-bottom:18px; font-size:15px; }
+.modal-btns { display:flex; gap:10px; justify-content:center; }
+/* ===== 结果页 ===== */
+.result-page { text-align:center; padding:30px 16px; }
+.result-title { font-family:var(--pixel); font-size:20px; color:var(--gold); margin-bottom:16px; }
+.result-stars { font-size:30px; margin:14px 0; }
+.result-stars .off { opacity:.2; }
+.result-detail { background:var(--card); border-radius:12px; padding:16px; margin:14px auto; max-width:400px; }
+/* ===== 响应式 ===== */
+@media (max-width:680px) {
+  .hud { font-size:9px; padding:8px 10px; }
+  .map-header h1 { font-size:16px; }
+  .world-item .w-name { font-size:14px; }
+  .teach-page, .quiz-page { padding:16px; }
+}
+</style>
+</head>
+<body>
+<div class="clouds"><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div></div>
+<div id="app"></div>
+<script>
+// ===== 音效（Web Audio 8-bit）=====
+let audioCtx = null;
+function playTone(freq, dur, type='square', vol=0.08, when=0) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const t = audioCtx.currentTime + when;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type; osc.frequency.setValueAtTime(freq, t);
+    gain.gain.setValueAtTime(vol, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(t); osc.stop(t + dur + 0.02);
+  } catch(e) {}
+}
+const sfx = {
+  jump: () => playTone(392, .12, 'square', .06),
+  coin: () => { playTone(988, .08); playTone(1319, .12, 'square', .06, .06); },
+  correct: () => { playTone(523, .1); playTone(659, .1, 'square', .07, .09); playTone(784, .18, 'square', .07, .18); },
+  wrong: () => { playTone(220, .2, 'sawtooth', .07); playTone(175, .25, 'sawtooth', .06, .15); },
+  fanfare: () => { [523,659,784,1047].forEach((f,i)=>playTone(f,.15,'square',.08,i*.12)); },
+  bossHit: () => { playTone(98, .3, 'sawtooth', .1); playTone(82, .4, 'sawtooth', .08, .15); }
+};
+
+// ===== 数据 =====
+const SUBJECT = "英语";
+const VERSION = "八年级上册 · 人教版 Go for it";
+const WORLDS = [{"name": "假期与过去时", "npc": "旅行家小马：用过去时聊聊你的假期吧！", "teach": [{"title": "一般过去时（规则动词）", "text": "一般过去时表示过去发生的动作或状态，常与 yesterday、last week、two days ago 连用。规则动词直接加 -ed：play→played, visit→visited；以辅音字母+y 结尾变 y 为 i 加 -ed：study→studied。否定：didn't + 动词原形；疑问：Did + 主语 + 动词原形？"}, {"title": "不规则动词过去式", "text": "许多常用动词是不规则变化，需要逐个记忆：go→went, have/has→had, see→saw, eat→ate, buy→bought, take→took, write→wrote, read→read。例如：I went to the beach last summer.（我去年夏天去了海滩。）"}, {"title": "不定代词与频度副词", "text": "不定代词：someone/anyone（某人/任何人）、something/anything、nothing/nobody。some- 用于肯定句，any- 用于否定句和疑问句。频度副词按频率从高到低：always(总是) > usually > often > sometimes > never(从不)。问频率用 How often：—How often do you exercise? —Twice a week.（一周两次。）"}], "quiz": [{"q": "—Where did you go on vacation? —I ___ to Beijing with my family.", "opts": ["go", "went", "gone", "going"], "ans": 1, "exp": "一般过去时用不规则动词过去式 went（go 的过去式）。"}, {"q": "I'm hungry. Is there ___ to eat in the fridge?", "opts": ["someone", "anyone", "something", "anything"], "ans": 3, "exp": "疑问句中用 anything（任何东西），some- 一般用于肯定句。"}, {"q": "把频度副词按频率从高到低正确排序：", "opts": ["always > often > sometimes > never", "often > always > never > sometimes", "never > always > often > sometimes", "sometimes > often > always > never"], "ans": 0, "exp": "频率从高到低：always(总是) > usually > often > sometimes > never(从不)。"}, {"q": "—___ do you go swimming? —Three times a week.", "opts": ["How long", "How often", "How many", "How much"], "ans": 1, "exp": "回答 Three times a week 表示频率，问频率用 How often（多久一次）。"}]}, {"name": "比较级与最高级", "npc": "比较大师：两两相比用 -er，三者夺冠用 -est！", "teach": [{"title": "比较级（两者比较）", "text": "比较级用于两者比较：A + be + 比较级 + than + B。规则：短词加 -er（tall→taller）；以 e 结尾加 -r（nice→nicer）；辅音字母+y 变 y 为 i 加 -er（easy→easier）；重读闭音节双写末字母加 -er（big→bigger）；多音节词前加 more（more interesting）。"}, {"title": "最高级（三者及以上）", "text": "最高级用于三者及以上比较，前面加 the：A + be + the + 最高级 + in/of...。规则：短词加 -est（tall→tallest）；多音节词前加 most（the most beautiful）。比较级前可用 much / a little 修饰，如：much taller（高得多）。"}, {"title": "不规则变化与 as...as", "text": "不规则变化：good/well→better→best；bad→worse→worst；many/much→more→most；little→less→least。as...as（和…一样…）：A + be + as + 原级 + as + B，如：Tom is as tall as Jack.（汤姆和杰克一样高。）否定：not as/so...as（不如…）。"}], "quiz": [{"q": "Tom is ___ than his brother.", "opts": ["tall", "taller", "tallest", "more tall"], "ans": 1, "exp": "有 than 表示两者比较，用比较级 taller（tall 加 -er）。"}, {"q": "This movie is ___ interesting than that one.", "opts": ["more", "most", "much", "very"], "ans": 0, "exp": "interesting 是多音节词，比较级用 more interesting。"}, {"q": "Mary is the ___ student in our class.", "opts": ["good", "better", "best", "well"], "ans": 2, "exp": "in our class 表示三者以上范围，用最高级，good 的最高级是 best。"}, {"q": "下列说法正确的是？", "opts": ["Lucy is taller of the two girls.", "Of the three boys, Tom is the tallest.", "She is the taller of the three.", "He is best than me."], "ans": 1, "exp": "三者比较用最高级：Of the three boys, Tom is the tallest. 正确。"}]}, {"name": "娱乐与偏好", "npc": "电视迷小美：want to do 和 be going to 用起来！", "teach": [{"title": "动词不定式作宾语", "text": "动词不定式 = to + 动词原形。want to do sth.（想要做某事）、plan to do sth.（计划做）、decide to do sth.（决定做）、hope to do sth.（希望做）。如：I want to watch a movie tonight.（我今晚想看电影。）否定：don't want to do。注意 want 后不能直接接动词原形。"}, {"title": "Do you want to watch...? 征求意见", "text": "Do you want to watch the news?（你想看新闻吗？）回答：Yes, I do. / No, I don't. 询问看法：What do you think of...?（你觉得…怎么样？）回答：I like/love it.（我喜欢。）/ I don't mind it.（我不介意。）/ I can't stand it.（我无法忍受。）"}, {"title": "be going to 将来计划", "text": "be going to + 动词原形，表示打算/计划做某事：I am going to study computer science.（我打算学习计算机科学。）结构：am/is/are going to do。否定：am not / isn't / aren't going to；疑问：Be + 主语 + going to...? 与 will 相比，be going to 更强调事先的计划。"}], "quiz": [{"q": "I want ___ a new computer game.", "opts": ["buy", "to buy", "buying", "bought"], "ans": 1, "exp": "want to do sth.，不定式用 to + 动词原形：want to buy。"}, {"q": "—What do you think of talk shows? —I ___ them. They're boring.", "opts": ["love", "don't mind", "can't stand", "enjoy"], "ans": 2, "exp": "觉得无聊（boring）说明无法忍受，用 can't stand（不能忍受）。"}, {"q": "He ___ going to play basketball tomorrow.", "opts": ["am", "is", "are", "be"], "ans": 1, "exp": "主语 He 是第三人称单数，be 用 is：He is going to play...。"}, {"q": "下列哪个是将来时的标志词？", "opts": ["yesterday", "last week", "tomorrow", "every day"], "ans": 2, "exp": "tomorrow（明天）是将来时标志；yesterday / last week 是过去时标志；every day 是一般现在时标志。"}]}, {"name": "食物与制作", "npc": "小厨师：祈使句 + 量词，跟我做香蕉奶昔！", "teach": [{"title": "可数名词与不可数名词", "text": "可数名词有复数形式（apples, bananas），用 how many 提问：How many apples do you need?（你需要多少个苹果？）不可数名词没有复数（honey 蜂蜜、milk、water、bread），用 how much 提问：How much honey do we need?（我们需要多少蜂蜜？）"}, {"title": "祈使句与量词", "text": "祈使句以动词原形开头，表示命令或建议：Peel the bananas.（剥香蕉。）Cut up the bananas.（切碎香蕉。）Pour the milk into the blender.（把牛奶倒进搅拌机。）量词搭配：a cup of（一杯）、a teaspoon of（一茶匙）、two pieces of bread（两片面包）。"}, {"title": "Will 将来时", "text": "will + 动词原形，表示将来的动作或预测：There will be more robots in the future.（将来会有更多机器人。）否定：won't（will not）；疑问：Will there be...? 回答：Yes, there will. / No, there won't. 常与 in the future、in 20 years、next year 连用。"}], "quiz": [{"q": "—How ___ honey do we need? —One cup.", "opts": ["many", "much", "often", "long"], "ans": 1, "exp": "honey 是不可数名词，用 how much 提问数量。"}, {"q": "—How many ___ do you need? —Three.", "opts": ["apple", "apples", "milk", "honey"], "ans": 1, "exp": "how many 后接可数名词复数，apples 正确。"}, {"q": "___ the bananas and put them into the blender.", "opts": ["Peel", "Peeling", "Peels", "To peel"], "ans": 0, "exp": "祈使句以动词原形开头：Peel the bananas.（剥香蕉。）"}, {"q": "There ___ be fewer trees in the future.", "opts": ["is", "are", "will", "was"], "ans": 2, "exp": "in the future 是将来时标志，用 will + 动词原形：There will be...。"}]}, {"name": "邀请与回应", "npc": "派对小精灵：会发邀请，更要会礼貌回应！", "teach": [{"title": "发出邀请 Can you come to...?", "text": "Can you come to my party?（你能来参加我的聚会吗？）Would you like to come?（你愿意来吗？）Can you come over to my house?（你能来我家吗？）常见的肯定回答：Sure, I'd love to.（当然，我很乐意。）"}, {"title": "接受与拒绝邀请", "text": "接受：Sure, I'd love to. / Yes, I'd like to. / That sounds great.（听起来不错。）拒绝：Sorry, I can't. I have to...（很抱歉我不能，我必须…）/ I'm afraid not.（恐怕不行。）/ I have too much homework.（我作业太多。）拒绝时通常要给出理由，并常说 Thank you for asking.（谢谢你的邀请。）"}, {"title": "If 条件句（主将从现）", "text": "if 引导条件状语从句时，主句用一般将来时（will），从句用一般现在时——主将从现：If it rains tomorrow, we will stay at home.（如果明天下雨，我们就待在家。）can/may 表示允许或可能性：You can play after you finish your homework.（作业做完后你可以玩。）"}], "quiz": [{"q": "—Can you come to my birthday party? —___", "opts": ["Sure, I'd love to.", "Yes, I have to.", "Sorry, I will.", "No, I'd love to."], "ans": 0, "exp": "接受邀请：Sure, I'd love to.（当然，我很乐意。）"}, {"q": "—Can you come to my party this Saturday? —Sorry, I can't. I ___ look after my sister.", "opts": ["have to", "can", "would", "may"], "ans": 0, "exp": "拒绝时给出理由，用 have to（必须）：I have to look after my sister."}, {"q": "If it ___ sunny tomorrow, we ___ go hiking.", "opts": ["is; will", "will be; will", "is; go", "will be; go"], "ans": 0, "exp": "if 条件句主将从现：从句用一般现在时 is，主句用 will go。"}, {"q": "You ___ watch TV after you finish your homework.", "opts": ["can", "mustn't", "would", "shouldn't"], "ans": 0, "exp": "can 表示允许/可能性：作业做完后你可以看电视。"}]}, {"name": "综合语法复习", "npc": "语法大管家：把一学期的语法串起来！", "teach": [{"title": "名词所有格", "text": "名词所有格表示所属关系：有生命的名词加 's（Tom's book 汤姆的书）；以 s 结尾的复数名词只加 '（the students' books 学生们的书）；无生命的事物用 of 结构（the name of the movie 电影的名字）。"}, {"title": "will 与 be going to 的区别", "text": "will 多表示临时决定或预测：The phone is ringing. I'll answer it.（电话响了，我去接。）be going to 表示事先的计划或打算：I'm going to visit my grandparents this weekend.（我打算这周末去看望祖父母。）两者后面都接动词原形。"}, {"title": "比较级最高级与不定代词综合", "text": "比较级：A 比 B 更…，用 than；最高级：三者中最…，用 the + -est/most。如：The more you read, the more you know.（读得越多，知道得越多。）不定代词：肯定句用 some-（something），否定句和疑问句用 any-（anything）；nothing 表示什么都没有。"}], "quiz": [{"q": "选择正确形式：This is ___ book.", "opts": ["Tom", "Tom's", "Toms'", "the Tom"], "ans": 1, "exp": "有生命名词的所有格加 's：Tom's book（汤姆的书）。"}, {"q": "时态判断：Look at the clouds! It ___ rain.", "opts": ["is going to", "will going to", "goes to", "going to"], "ans": 0, "exp": "根据现有迹象（乌云密布）预测，用 be going to：It is going to rain."}, {"q": "句型转换：He is taller than any other student in his class.（改为同义句）", "opts": ["He is the tallest student in his class.", "He is taller than all the students.", "He is as tall as his class.", "He is the taller student."], "ans": 0, "exp": "比较级 + than any other 相当于最高级：He is the tallest student in his class."}, {"q": "I'm so hungry because I ate ___ this morning.", "opts": ["something", "anything", "nothing", "everything"], "ans": 2, "exp": "今早什么都没吃所以很饿：ate nothing（什么都没吃）。"}]}];
+const BOSS = {"name": "魔王殿 · 英语总决战", "npc": "大魔王：过去时、比较级、将来时、条件句，全都要会！", "quiz": [{"q": "Last summer, I ___ to the beach and ___ a lot of photos.", "opts": ["go; take", "went; took", "go; took", "went; take"], "ans": 1, "exp": "last summer 是过去时标志，go 和 take 都是不规则动词：went, took。"}, {"q": "—Which do you like ___, apples or oranges? —Apples. But of all fruits, I like watermelons ___.", "opts": ["better; best", "best; better", "more; most", "better; better"], "ans": 0, "exp": "两者比较（apples or oranges）用比较级 better；三者以上（of all fruits）用最高级 best。"}, {"q": "If you ___ hard, you ___ good grades.", "opts": ["study; will get", "will study; get", "studied; get", "study; get"], "ans": 0, "exp": "if 条件句主将从现：从句 study（一般现在时），主句 will get。"}, {"q": "—What are you going to do this weekend? —I ___ visit my grandparents.", "opts": ["am going to", "will going to", "going to", "am going"], "ans": 0, "exp": "be going to + 动词原形表示计划：I am going to visit...。"}]};
+const LS = {
+  coins: 'preview_coins_' + SUBJECT,
+  stars: 'preview_stars_' + SUBJECT,
+  unlocked: 'preview_unlocked_' + SUBJECT,
+  cleared: 'preview_cleared_' + SUBJECT,
+  wrong: 'preview_wrong_' + SUBJECT,
+  boss: 'preview_boss_' + SUBJECT
+};
+
+// ===== 状态 =====
+let state = {
+  coins: 0, stars: 0,
+  unlocked: [0],
+  cleared: [],
+  wrong: {},
+  bossBeaten: false,
+  curWorld: 0,
+  curTeach: 0,
+  curQ: 0,
+  hearts: 3,
+  worldStars: 0,
+  isBoss: false
+};
+
+function lsGet(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch(e) { return def; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+function loadState() {
+  state.coins = lsGet(LS.coins, 0);
+  state.stars = lsGet(LS.stars, 0);
+  state.unlocked = lsGet(LS.unlocked, [0]);
+  state.cleared = lsGet(LS.cleared, []);
+  state.wrong = lsGet(LS.wrong, {});
+  state.bossBeaten = lsGet(LS.boss, false);
+}
+function saveState() {
+  lsSet(LS.coins, state.coins); lsSet(LS.stars, state.stars);
+  lsSet(LS.unlocked, state.unlocked); lsSet(LS.cleared, state.cleared);
+  lsSet(LS.wrong, state.wrong); lsSet(LS.boss, state.bossBeaten);
+}
+function resetGame() {
+  state = { coins:0, stars:0, unlocked:[0], cleared:[], wrong:{}, bossBeaten:false, curWorld:0, curTeach:0, curQ:0, hearts:3, worldStars:0, isBoss:false };
+  saveState(); renderHUD(); showMap();
+}
+
+// ===== 渲染 =====
+const app = document.getElementById('app');
+function renderHUD() {
+  document.getElementById('hud-coins').textContent = state.coins;
+  document.getElementById('hud-stars').textContent = state.stars;
+  document.getElementById('hud-total').textContent = totalStars();
+}
+function totalStars() {
+  let n = 0;
+  WORLDS.forEach((w,i) => n += (state.cleared.includes(i) ? w.quiz.length : 0));
+  if (state.bossBeaten) n += BOSS.quiz.length;
+  return n;
+}
+
+function showMap() {
+  sfx.jump();
+  const worldsHtml = WORLDS.map((w, i) => {
+    const locked = !state.unlocked.includes(i);
+    const cleared = state.cleared.includes(i);
+    const stars = cleared ? w.quiz.length : 0;
+    return `<div class="world-item ${locked ? 'locked' : ''}" onclick="${locked ? '' : 'startWorld(' + i + ')'}">
+      <div class="w-icon">${locked ? '🔒' : (cleared ? '⭐' : '🏰')}</div>
+      <div class="w-info">
+        <div class="w-name">第 ${i+1} 关 · ${w.name}</div>
+        <div class="w-npc">${w.npc}</div>
+      </div>
+      <div class="w-status">${locked ? '<span class="lock">🔒 未解锁</span>' : (cleared ? '<span class="ok">★ ' + stars + '/' + w.quiz.length + '</span>' : '🆕 挑战')}</div>
+    </div>`;
+  }).join('');
+  const bossLocked = !(WORLDS.every((w,i) => state.cleared.includes(i)));
+  const bossHtml = `<div class="world-item ${bossLocked ? 'locked' : ''}" onclick="${bossLocked ? '' : 'startBoss()'}">
+    <div class="w-icon">${bossLocked ? '🔒' : (state.bossBeaten ? '👑' : '👹')}</div>
+    <div class="w-info">
+      <div class="w-name">BOSS 关 · ${BOSS.name}</div>
+      <div class="w-npc">${BOSS.npc}</div>
+    </div>
+    <div class="w-status">${bossLocked ? '<span class="lock">🔒 需通关全部关卡</span>' : (state.bossBeaten ? '<span class="ok">👑 已击败</span>' : '⚔️ 决战')}</div>
+  </div>`;
+  app.innerHTML = `<div class="screen">
+    <div class="map-header">
+      <h1>🎮 ${SUBJECT} 预习闯关</h1>
+      <p>${VERSION} · 打通所有关卡，击败大魔王！</p>
+    </div>
+    <div class="world-list">${worldsHtml}${bossHtml}</div>
+    <div class="map-buttons">
+      <button class="btn btn-blue" onclick="showWrongBook()">📝 错题本</button>
+      <button class="btn btn-gray" onclick="confirmReset()">🔄 重新开始</button>
+    </div>
+  </div>`;
+}
+
+function startWorld(i) {
+  state.curWorld = i; state.curTeach = 0; state.curQ = 0; state.worldStars = 0;
+  renderTeach();
+}
+function startBoss() {
+  state.isBoss = true; state.curQ = 0; state.hearts = 3; state.worldStars = 0;
+  renderBossIntro();
+}
+
+// ===== 教学页 =====
+function renderTeach() {
+  const w = WORLDS[state.curWorld];
+  const t = w.teach[state.curTeach];
+  const total = w.teach.length;
+  const isLast = state.curTeach === total - 1;
+  app.innerHTML = `<div class="screen teach-page">
+    <h2>第 ${state.curWorld+1} 关 · ${w.name}（教学 ${state.curTeach+1}/${total}）</h2>
+    <div class="teach-npc"><div class="npc-icon">🧙</div><div class="npc-text">${w.npc}</div></div>
+    <div class="teach-body">
+      <h3 style="color:#fff;margin-bottom:8px;">${t.title}</h3>
+      <p>${t.text}</p>
+    </div>
+    <div class="teach-nav">
+      <button class="btn btn-gray" onclick="showMap()">← 返回地图</button>
+      <button class="btn btn-gold" onclick="${isLast ? 'startQuiz()' : 'nextTeach()'}">${isLast ? '开始答题 ⚔️' : '下一页 →'}</button>
+    </div>
+  </div>`;
+  sfx.jump();
+}
+function nextTeach() {
+  state.curTeach++;
+  renderTeach();
+}
+
+// ===== 答题 =====
+function shuffleArr(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function startQuiz() {
+  state.curQ = 0; state.worldStars = 0;
+  // 选项随机打乱
+  const w = WORLDS[state.curWorld];
+  w.quiz.forEach(q => {
+    const idxs = [0,1,2,3];
+    shuffleArr(idxs);
+    q._opts = idxs.map(i => q.opts[i]);
+    q._ans = idxs.indexOf(q.ans);
+  });
+  renderQuiz();
+}
+function renderQuiz() {
+  const w = WORLDS[state.curWorld];
+  const q = w.quiz[state.curQ];
+  const total = w.quiz.length;
+  const answered = q._answered;
+  app.innerHTML = `<div class="screen quiz-page">
+    <div class="q-num">Q${state.curQ+1}/${total} · 第 ${state.curWorld+1} 关</div>
+    <div class="q-text">${q.q}</div>
+    ${q._opts.map((o, i) => `
+      <button class="opt ${answered ? (i === q._ans ? 'correct' : (i === q._picked ? 'wrong' : '')) : ''}" ${answered ? 'disabled' : ''} onclick="selQ(${i})">
+        ${'ABCD'[i]}. ${o}
+      </button>`).join('')}
+    <div class="explanation ${answered ? 'show' : ''}" id="expl">✅ ${q.exp}</div>
+    <div class="quiz-footer">
+      <button class="btn btn-gray" onclick="showMap()">← 返回</button>
+      <span class="q-stars">⭐ ${state.worldStars}/${total}</span>
+      ${answered ? (state.curQ < total-1 ? '<button class="btn btn-gold" onclick="nextQ()">下一题 →</button>' : '<button class="btn btn-gold" onclick="finishWorld()">查看结果 🏁</button>') : ''}
+    </div>
+  </div>`;
+}
+function selQ(i) {
+  const w = WORLDS[state.curWorld];
+  const q = w.quiz[state.curQ];
+  if (q._answered) return;
+  q._picked = i;
+  if (i === q._ans) {
+    q._answered = true;
+    state.worldStars++;
+    state.coins += 10;
+    state.stars++;
+    sfx.correct();
+  } else {
+    q._answered = true;
+    sfx.wrong();
+    // 错题导入
+    if (!state.wrong[state.curWorld]) state.wrong[state.curWorld] = [];
+    state.wrong[state.curWorld].push({ q: q.q, ans: q.opts[q.ans], exp: q.exp, world: w.name });
+  }
+  saveState();
+  renderQuiz();
+}
+function nextQ() {
+  state.curQ++;
+  renderQuiz();
+}
+function finishWorld() {
+  const w = WORLDS[state.curWorld];
+  const total = w.quiz.length;
+  const got = state.worldStars;
+  const passed = got === total;
+  if (passed) {
+    sfx.fanfare();
+    if (!state.cleared.includes(state.curWorld)) {
+      state.cleared.push(state.curWorld);
+      const nxt = state.curWorld + 1;
+      if (!state.unlocked.includes(nxt) && nxt < WORLDS.length) state.unlocked.push(nxt);
+      state.coins += 50;
+    }
+  } else {
+    sfx.wrong();
+  }
+  saveState();
+  app.innerHTML = `<div class="screen result-page">
+    <div class="result-title">${passed ? '🎉 闯关成功！' : '💔 闯关失败'}</div>
+    <div class="result-stars">${[...Array(total)].map((_,i) => `<span class="${i < got ? '' : 'off'}">⭐</span>`).join('')}</div>
+    <div class="result-detail">
+      <p>答对 ${got}/${total} 题</p>
+      <p style="margin-top:8px;">${passed ? '✅ 全部答对，解锁下一关！+50金币' : '❌ 需全部答对才能通过，加油再战！'}</p>
+    </div>
+    <div class="map-buttons" style="margin-top:20px;">
+      ${passed ? '<button class="btn btn-green" onclick="showMap()">继续闯关 🏰</button>' : '<button class="btn btn-gold" onclick="startQuiz()">重新挑战 🔄</button>'}
+      <button class="btn btn-blue" onclick="showMap()">地图</button>
+    </div>
+  </div>`;
+  renderHUD();
+}
+
+// ===== BOSS =====
+function renderBossIntro() {
+  app.innerHTML = `<div class="screen boss-page">
+    <div class="boss-title">⚠️ BOSS 战 ⚠️</div>
+    <div class="boss-avatar">👹</div>
+    <p style="margin-bottom:14px;color:#ff9;">${BOSS.npc}</p>
+    <p style="color:#aaa;font-size:14px;">3 条命（♥），答错扣命，0 命需重打！</p>
+    <div class="map-buttons" style="margin-top:20px;">
+      <button class="btn btn-gray" onclick="showMap()">← 撤退</button>
+      <button class="btn btn-red" onclick="startBossQuiz()">⚔️ 开战！</button>
+    </div>
+  </div>`;
+  sfx.jump();
+}
+function startBossQuiz() {
+  state.curQ = 0; state.hearts = 3; state.worldStars = 0;
+  BOSS.quiz.forEach(q => {
+    const idxs = [0,1,2,3];
+    shuffleArr(idxs);
+    q._opts = idxs.map(i => q.opts[i]);
+    q._ans = idxs.indexOf(q.ans);
+  });
+  renderBossQuiz();
+}
+function renderBossQuiz() {
+  if (state.hearts <= 0) {
+    sfx.wrong();
+    app.innerHTML = `<div class="screen boss-page">
+      <div class="boss-title" style="color:var(--red);">💀 挑战失败</div>
+      <div class="boss-avatar">👹</div>
+      <p style="margin:14px 0;color:#aaa;">生命值为 0，BOSS 还在咆哮…</p>
+      <button class="btn btn-red" onclick="startBossQuiz()">🔄 重新挑战</button>
+      <button class="btn btn-gray" style="margin-left:10px;" onclick="showMap()">地图</button>
+    </div>`;
+    return;
+  }
+  const q = BOSS.quiz[state.curQ];
+  const total = BOSS.quiz.length;
+  const answered = q._answered;
+  app.innerHTML = `<div class="screen quiz-page">
+    <div class="q-num" style="color:var(--red);">☠️ BOSS 战 · Q${state.curQ+1}/${total}</div>
+    <div class="hearts">${[...Array(3)].map((_,i) => `<span class="${i < state.hearts ? '' : 'lost'}">♥</span>`).join('')}</div>
+    <div class="q-text">${q.q}</div>
+    ${q._opts.map((o, i) => `
+      <button class="opt ${answered ? (i === q._ans ? 'correct' : (i === q._picked ? 'wrong' : '')) : ''}" ${answered ? 'disabled' : ''} onclick="selBossQ(${i})">
+        ${'ABCD'[i]}. ${o}
+      </button>`).join('')}
+    <div class="explanation ${answered ? 'show' : ''}">✅ ${q.exp}</div>
+    <div class="quiz-footer">
+      <button class="btn btn-gray" onclick="showMap()">← 撤退</button>
+      ${answered ? (state.curQ < total-1 ? '<button class="btn btn-red" onclick="nextBossQ()">下一题 →</button>' : '<button class="btn btn-red" onclick="finishBoss()">⚔️ 终结 BOSS</button>') : ''}
+    </div>
+  </div>`;
+}
+function selBossQ(i) {
+  const q = BOSS.quiz[state.curQ];
+  if (q._answered) return;
+  q._picked = i;
+  if (i === q._ans) {
+    q._answered = true;
+    state.worldStars++;
+    state.coins += 20;
+    state.stars++;
+    sfx.correct();
+  } else {
+    q._answered = true;
+    state.hearts--;
+    state.coins = Math.max(0, state.coins - 5);
+    sfx.bossHit();
+    if (!state.wrong['boss']) state.wrong['boss'] = [];
+    state.wrong['boss'].push({ q: q.q, ans: q.opts[q.ans], exp: q.exp, world: 'BOSS关' });
+  }
+  saveState();
+  renderBossQuiz();
+}
+function nextBossQ() {
+  state.curQ++;
+  renderBossQuiz();
+}
+function finishBoss() {
+  if (state.worldStars === BOSS.quiz.length) {
+    state.bossBeaten = true;
+    state.coins += 100;
+    saveState();
+    bossVictory();
+  } else {
+    sfx.wrong();
+    app.innerHTML = `<div class="screen boss-page">
+      <div class="boss-title">😤 还差一点！</div>
+      <p style="margin:14px;color:#aaa;">需全部答对才能击败 BOSS（当前 ${state.worldStars}/${BOSS.quiz.length}）</p>
+      <button class="btn btn-red" onclick="startBossQuiz()">🔄 再战</button>
+    </div>`;
+  }
+}
+function bossVictory() {
+  sfx.fanfare();
+  document.body.classList.add('screen-shake');
+  // 三波纸屑
+  spawnConfetti(0); spawnConfetti(500); spawnConfetti(1500);
+  setTimeout(() => document.body.classList.remove('screen-shake'), 600);
+  app.innerHTML = `<div class="screen boss-page">
+    <div class="boss-defeated">BOSS DEFEATED!</div>
+    <div class="trophy">🏆</div>
+    <div class="stat-panel">
+      <h3>🎊 恭喜通关 ${SUBJECT} 预习！</h3>
+      <div class="stat-row"><span>总星星</span><span>⭐ ${state.stars}</span></div>
+      <div class="stat-row"><span>金币</span><span>🪙 ${state.coins}</span></div>
+      <div class="stat-row"><span>已掌握关卡</span><span>${WORLDS.length}/${WORLDS.length} + BOSS</span></div>
+    </div>
+    <div class="map-buttons" style="margin-top:20px;">
+      <button class="btn btn-gold" onclick="showMap()">🏰 返回地图</button>
+      <button class="btn btn-blue" onclick="showWrongBook()">📝 错题本</button>
+    </div>
+  </div>`;
+  renderHUD();
+}
+function spawnConfetti(delay) {
+  const colors = ['#e74c3c','#f1c40f','#2ecc71','#3498db','#9b59b6','#e67e22'];
+  setTimeout(() => {
+    for (let i = 0; i < 24; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti';
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.top = '0';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 0.5) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 3500);
+    }
+  }, delay);
+}
+
+// ===== 错题本 =====
+function showWrongBook() {
+  const entries = [];
+  Object.keys(state.wrong).forEach(k => {
+    (state.wrong[k] || []).forEach(e => entries.push(e));
+  });
+  const html = entries.length === 0
+    ? '<div class="empty-tip">🎉 还没有错题，继续保持！</div>'
+    : entries.map(e => `<div class="wrong-item">
+        <div class="wq">📝 ${e.q}</div>
+        <div class="wa">✅ 正确答案：${e.ans}</div>
+        <div class="we">💡 ${e.exp}（${e.world}）</div>
+      </div>`).join('');
+  app.innerHTML = `<div class="screen wrongbook">
+    <h2>📝 错题本（${entries.length}）</h2>
+    ${html}
+    <div class="map-buttons" style="margin-top:16px;">
+      <button class="btn btn-blue" onclick="showMap()">← 返回地图</button>
+    </div>
+  </div>`;
+}
+
+// ===== 重置确认 =====
+function confirmReset() {
+  const mask = document.createElement('div');
+  mask.className = 'modal-mask';
+  mask.innerHTML = `<div class="modal-card">
+    <p>确定要重新开始吗？<br>所有星星、金币、进度将清零！</p>
+    <div class="modal-btns">
+      <button class="btn btn-gray" id="cancel-reset">取消</button>
+      <button class="btn btn-red" id="ok-reset">确定重置</button>
+    </div>
+  </div>`;
+  document.body.appendChild(mask);
+  mask.querySelector('#cancel-reset').onclick = () => mask.remove();
+  mask.querySelector('#ok-reset').onclick = () => { mask.remove(); resetGame(); };
+}
+
+// ===== 启动 =====
+loadState();
+app.innerHTML = `<div class="hud">
+  <div class="hud-item">🪙 <span id="hud-coins" style="color:var(--gold)">${state.coins}</span></div>
+  <div class="hud-item">⭐ <span id="hud-stars" style="color:var(--green)">${state.stars}</span></div>
+  <div class="hud-item">🎯 <span id="hud-total" style="color:#fff">${totalStars()}</span></div>
+</div>`;
+showMap();
+</script>
+</body>
+</html>
