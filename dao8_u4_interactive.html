@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第四单元 维护国家利益 · 8年级上道德与法治</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#9b59b6;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 第四单元 维护国家利益 · 8年级上道德与法治</h1>
+    <div class="meta">第四单元 维护国家利益 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>认识国家利益</h4><p>国家利益是一个主权国家在国际社会中生存需求和发展需求的总和，它关系民族生存、国家兴亡。国家利益涉及政治、经济、文化、社会、军事等领域，包括安全利益、政治利益、经济利益、文化利益等。国家的核心利益包括：国家主权、国家安全、领土完整、国家统一、宪法确立的国家政治制度和社会大局稳定、经济社会可持续发展的基本保障。</p></div><div class="k-item"><h4>国家利益与人民利益</h4><p>在我们国家，国家利益反映广大人民的共同需求，是人民利益的集中表现。国家利益至上，人民利益高于一切，二者相辅相成：人民利益只有上升、集中到国家利益，运用国家的工具，才能得到真正的维护；国家利益只有反映人民利益，依靠人民艰苦奋斗，才能得到真正的实现。在当代中国，国家利益与人民利益是高度统一的。</p></div><div class="k-item"><h4>树立维护国家利益意识</h4><p>坚持国家利益至上，要心怀爱国之情，牢固树立国家利益至上观念，以热爱祖国为荣，以危害祖国为耻；要树立和增强危机意识和防范意识，对危害国家利益、威胁国家生存和发展的行为时刻保持警惕；要增强维护国家利益的责任感和使命感，努力学习，提高素质，为维护国家利益贡献力量。</p></div><div class="k-item"><h4>捍卫国家利益</h4><p>国家利益与集体利益、个人利益既有区别，又相互联系，从根本上说是一致的。当国家利益同集体利益、个人利益发生矛盾时，我们应当着眼长远、顾全大局，以国家利益为重，把国家利益放在第一位。为了国家利益，有时不仅需要放弃个人利益，甚至要献出自己的生命。要用理性、务实、文明的心态，合法有序地表达爱国情感。</p></div><div class="k-item"><h4>国家安全与我们息息相关</h4><p>国家安全是指国家政权、主权、统一和领土完整、人民福祉、经济社会可持续发展和国家其他重大利益相对处于没有危险和不受内外威胁的状态，以及保障持续安全状态的能力。国家安全是国家生存与发展的重要保障，是人民幸福安康的前提：只有国家安定，我们才能拥有良好的学习环境和生产、生活环境。</p></div><div class="k-item"><h4>坚持总体国家安全观</h4><p>坚持总体国家安全观，以人民安全为宗旨，以政治安全为根本，以经济安全为基础，以军事、科技、文化、社会安全为保障，以促进国际安全为依托，走出一条中国特色国家安全道路。要构建涵盖政治、军事、国土、经济、文化、社会、科技、网络、生态、资源、核、海外利益、太空、深海、极地、生物等诸多领域的国家安全体系。</p></div><div class="k-item"><h4>人人都是维护国家安全的主角</h4><p>维护国家安全，人人可为，是我们的共同责任。要增强国家安全意识，树立国家安全利益高于一切的观念；认真学习有关国家安全和保密工作的法律法规、规章制度，增强维护国家安全的法治意识；严格遵守有关国家安全的法律规定，积极履行维护国家安全的法定义务（遵守法律法规、及时报告线索、如实提供证据、保守国家秘密等）；不断增强防范意识、提高防范能力，善于识别危害国家安全的各种伪装。坚持党对人民军队的绝对领导，全面推进国防和军队现代化。</p></div><div class="k-item"><h4>建设美好祖国</h4><p>我国经济发展成就显著，已经成为世界第二大经济体；民主法治建设深入推进，人民的权利和自由得到切实保障；文化建设让中华文明焕发出新的蓬勃生机；科技创新成就斐然；综合国力显著提升。同时要正视发展中面临的问题：人均国内生产总值的世界排名还不高，发展不平衡、不协调、不可持续问题仍然突出，居民收入差距依然较大。国家正采取各种积极措施，稳增长、促改革、调结构、惠民生、防风险。天下兴亡，匹夫有责：劳动是财富的源泉，也是幸福的源泉；实干创造未来，我们要努力学习，勇做走在时代前列的学习者、劳动者、奉献者。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 统编版（人教版）八年级上册 · 第四单元 维护国家利益 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_dao8_u4_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第四单元 维护国家利益',chapter:'第四单元 维护国家利益',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'勾股定理,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "国家利益是一个主权国家在国际社会中（　）的总和", "opts": ["A. 生存需求和发展需求", "B. 物质需求和精神需求", "C. 个人需求和社会需求", "D. 经济需求和政治需求"], "ans": 0, "exp": "国家利益是一个主权国家在国际社会中生存需求和发展需求的总和，它关系民族生存、国家兴亡。"}, {"q": "国家的核心利益包括（　）①国家主权、国家安全 ②领土完整、国家统一 ③宪法确立的国家政治制度和社会大局稳定 ④经济社会可持续发展的基本保障", "opts": ["A. ①②③", "B. ②③④", "C. ①②③④", "D. ①③④"], "ans": 2, "exp": "国家的核心利益包括国家主权、国家安全、领土完整、国家统一、宪法确立的国家政治制度和社会大局稳定、经济社会可持续发展的基本保障，四项都正确。"}, {"q": "在我们国家，国家利益是（　）的集中表现", "opts": ["A. 个人利益", "B. 人民利益", "C. 集体利益", "D. 企业利益"], "ans": 1, "exp": "在我们国家，国家利益反映广大人民的共同需求，是人民利益的集中表现。国家利益至上，人民利益高于一切，二者相辅相成。"}, {"q": "关于国家利益与人民利益的关系，下列说法正确的是（　）", "opts": ["A. 二者矛盾不可调和", "B. 人民利益可以脱离国家利益", "C. 国家利益是人民利益的集中表现，二者相辅相成", "D. 国家利益就是个人利益的总和"], "ans": 2, "exp": "国家利益是人民利益的集中表现；人民利益只有上升、集中到国家利益才能得到真正的维护，国家利益只有反映人民利益、依靠人民艰苦奋斗才能得到真正的实现，二者相辅相成，在当代中国高度统一。"}, {"q": "坚持国家利益至上，我们要（　）①心怀爱国之情 ②树立和增强危机意识和防范意识 ③增强维护国家利益的责任感和使命感 ④用理性、务实、文明的心态表达爱国情感", "opts": ["A. ①②③", "B. ②③④", "C. ①②④", "D. ①②③④"], "ans": 3, "exp": "坚持国家利益至上，要心怀爱国之情、树立和增强危机意识和防范意识、增强维护国家利益的责任感和使命感，同时用理性、务实、文明的心态，合法有序地表达爱国情感，四项都正确。"}, {"q": "当国家利益与个人利益发生矛盾时，我们应该（　）", "opts": ["A. 只考虑个人利益", "B. 逃避责任", "C. 放弃一切", "D. 着眼长远、顾全大局，以国家利益为重，把国家利益放在第一位"], "ans": 3, "exp": "国家利益与集体利益、个人利益从根本上说是一致的。发生矛盾时，我们应当着眼长远、顾全大局，以国家利益为重，把国家利益放在第一位。"}, {"q": "国家安全是国家（　）的重要保障，是人民幸福安康的前提", "opts": ["A. 个人发展", "B. 经济繁荣", "C. 生存与发展", "D. 文化进步"], "ans": 2, "exp": "国家安全是国家生存与发展的重要保障：国家政权和主权受到威胁，国家的生存就会受到挑战；国家安全是人民幸福安康的前提，只有国家安定，我们才能拥有良好的学习环境和生产、生活环境。"}, {"q": "坚持总体国家安全观，要以（　）为宗旨", "opts": ["A. 政治安全", "B. 经济安全", "C. 军事安全", "D. 人民安全"], "ans": 3, "exp": "坚持总体国家安全观，以人民安全为宗旨，以政治安全为根本，以经济安全为基础，以军事、科技、文化、社会安全为保障，以促进国际安全为依托。"}, {"q": "总体国家安全观以政治安全为根本，以（　）为基础", "opts": ["A. 军事安全", "B. 经济安全", "C. 科技安全", "D. 文化安全"], "ans": 1, "exp": "总体国家安全观：以人民安全为宗旨，以政治安全为根本，以经济安全为基础，以军事、科技、文化、社会安全为保障，以促进国际安全为依托。"}, {"q": "下列属于维护国家安全正确做法的是（　）", "opts": ["A. 在军事禁区随意拍照", "B. 泄露国家秘密", "C. 为境外人员搜集情报", "D. 及时报告危害国家安全活动的线索"], "ans": 3, "exp": "国家安全法规定，公民应当履行维护国家安全的义务：及时报告危害国家安全活动的线索，如实提供证据，保守国家秘密等。在军事禁区拍照、泄密、为境外搜集情报都是危害国家安全的行为。"}, {"q": "我国经济发展成就显著，已经成为世界（　）大经济体", "opts": ["A. 第一", "B. 第三", "C. 第二", "D. 第四"], "ans": 2, "exp": "我国经济发展成就显著，已经成为世界第二大经济体；民主法治建设深入推进，人民的权利和自由得到切实保障；综合国力显著提升。"}, {"q": "在看到我国取得巨大成就的同时，我们要正视发展中面临的问题，如（　）", "opts": ["A. 人均国内生产总值的世界排名还不高", "B. 已经全面建成现代化强国", "C. 发展没有任何问题", "D. 发展已经完美无缺"], "ans": 0, "exp": "我们要正视发展中面临的问题：人均国内生产总值的世界排名还不高，发展不平衡、不协调、不可持续问题仍然突出，居民收入差距依然较大，部分群众生活面临一些困难等。"}, {"q": "国家正在采取各种积极措施解决发展中的问题，包括（　）", "opts": ["A. 稳增长、促改革、调结构、惠民生、防风险", "B. 只追求经济增长", "C. 减少社会保障", "D. 停止对外开放"], "ans": 0, "exp": "国家正在采取各种积极措施，稳增长、促改革、调结构、惠民生、防风险，着力解决各种发展中的问题，不断取得积极成效，这让我们对国家的未来发展更加充满信心和期待。"}, {"q": "劳动是（　）的源泉，也是（　）的源泉", "opts": ["A. 财富　幸福", "B. 金钱　地位", "C. 名誉　利益", "D. 生活　工作"], "ans": 0, "exp": "劳动是财富的源泉，也是幸福的源泉。人世间的美好梦想，都是通过劳动实现的；生命里的一切辉煌，都是通过劳动铸就的。"}, {"q": "下列属于维护国家安全行为的是（　）", "opts": ["A. 在军事禁区偷拍照片", "B. 拒绝报告危害国家安全的线索", "C. 保守所知悉的国家秘密", "D. 向境外组织提供资助"], "ans": 2, "exp": "保守所知悉的国家秘密是国家安全法规定的公民义务。在军事禁区偷拍、拒绝报告线索、向境外组织提供资助都是危害国家安全的行为。"}];const flashcards=[{"q": "国家利益", "a": "一个主权国家在国际社会中生存需求和发展需求的总和，关系民族生存、国家兴亡"}, {"q": "国家核心利益", "a": "国家主权、国家安全、领土完整、国家统一、宪法确立的国家政治制度和社会大局稳定、经济社会可持续发展的基本保障"}, {"q": "国家利益与人民利益", "a": "国家利益是人民利益的集中表现；国家利益至上，人民利益高于一切，二者相辅相成；在当代中国二者高度统一"}, {"q": "树立维护国家利益意识", "a": "心怀爱国之情；树立和增强危机意识和防范意识；增强维护国家利益的责任感和使命感"}, {"q": "理性爱国", "a": "用理性、务实、文明的心态，合法有序地表达爱国情感；不围堵、不打砸、不简单抵制"}, {"q": "捍卫国家利益", "a": "着眼长远、顾全大局，以国家利益为重，把国家利益放在第一位；必要时放弃个人利益甚至献出生命"}, {"q": "国家安全", "a": "国家政权、主权、统一和领土完整、人民福祉、经济社会可持续发展等重大利益处于没有危险和不受内外威胁的状态及保障能力"}, {"q": "总体国家安全观", "a": "以人民安全为宗旨，以政治安全为根本，以经济安全为基础，以军事、科技、文化、社会安全为保障，以促进国际安全为依托"}, {"q": "维护国家安全人人可为", "a": "为国家安全工作提供便利和协助、积极建言献策、检举制止危害国家安全的行为、监督维护国家安全工作的开展"}, {"q": "公民维护国家安全义务", "a": "遵守法律法规、及时报告线索、如实提供证据、保守国家秘密、为国家安全工作提供便利和协助"}, {"q": "强军目标", "a": "党对人民军队的绝对领导；听党指挥、能打胜仗、作风优良；2035年基本实现国防和军队现代化，本世纪中叶全面建成世界一流军队"}, {"q": "实干创造未来", "a": "劳动是财富的源泉也是幸福的源泉；每个劳动者都值得我们尊敬和学习；努力学习，勇做走在时代前列的学习者、劳动者、奉献者"}];const errors=[{"title": "❌ 国家利益与个人利益对立化", "wrong": "认为维护国家利益就必须牺牲一切个人利益。", "right": "国家利益与集体利益、个人利益既有区别又相互联系，从根本上说是一致的。发生矛盾时着眼长远、顾全大局，以国家利益为重，把国家利益放在第一位。"}, {"title": "❌ 国家核心利益内容记不全", "wrong": "认为国家核心利益只有国家主权和领土完整。", "right": "核心利益包括：国家主权、国家安全、领土完整、国家统一、宪法确立的国家政治制度和社会大局稳定、经济社会可持续发展的基本保障，共六个方面。"}, {"title": "❌ 总体国家安全观记混", "wrong": "认为总体国家安全观以政治安全为宗旨。", "right": "以人民安全为宗旨，以政治安全为根本，以经济安全为基础，以军事、科技、文化、社会安全为保障，以促进国际安全为依托——「宗旨、根本、基础、保障、依托」一一对应，不可混淆。"}, {"title": "❌ 爱国等于盲目冲动", "wrong": "认为爱国就可以围堵企业、打砸车辆、抵制外国商品。", "right": "爱国要用理性、务实、文明的心态，合法有序地表达爱国情感。围堵和打砸行为扰乱了社会秩序，损害了他人和社会利益，应当受到法律处罚。"}, {"title": "❌ 国家安全与我无关", "wrong": "认为国家安全是国家机关的事，与中学生无关。", "right": "国家安全与每个人息息相关，维护国家安全人人可为、人人有责：及时报告危害国家安全的线索，保守所知悉的国家秘密，善于识别危害国家安全的各种伪装。"}, {"title": "❌ 只看到成就看不到问题", "wrong": "认为国家已经非常完美，不存在发展问题。", "right": "要正视发展中面临的问题：人均国内生产总值的世界排名还不高，发展不平衡、不协调、不可持续问题仍然突出，居民收入差距依然较大；国家正采取措施稳增长、促改革、调结构、惠民生、防风险。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_dao8_u4_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

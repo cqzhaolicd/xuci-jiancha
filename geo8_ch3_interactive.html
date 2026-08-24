@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>中国的自然资源</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#3498db;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 中国的自然资源</h1>
+    <div class="meta">第3章 中国的自然资源 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>自然资源分类</h4><p>土地、阳光、森林、水和水能等，可以在较短时间内更新、再生，或者可以循环使用，称为可再生资源；煤炭、石油、铁矿等，形成、再生过程非常缓慢，几乎不可再生，用一点就少一点，称为非可再生资源。</p></div><div class="k-item"><h4>总量丰富，人均不足</h4><p>陆地面积居世界第三位，人均土地占有量不足世界平均水平的1/2；已探明矿产资源总量居世界第三位，人均不到世界平均水平的1/2；耕地面积居世界第四位，人均只有世界平均水平的2/5；河流年径流量居世界第六位，人均仅为世界平均水平的1/4；森林面积居世界第五位，人均仅为世界平均水平的1/3。</p></div><div class="k-item"><h4>土地资源特点</h4><p>土地利用类型齐全（耕地、草地、林地、建设用地等），有利于因地制宜发展生产。但耕地少，而荒漠、石山、永久积雪等通常情况下难以利用的土地较多，后备耕地不足（全国后备土地资源约1亿公顷，可供开垦种植农作物的只有1300多万公顷）。</p></div><div class="k-item"><h4>土地资源分布</h4><p>耕地和林地的90%以上集中分布在东部湿润、半湿润区；南方耕地以水田为主，北方耕地以旱地为主；林地主要分布在山区。草地主要分布在西部干旱、半干旱区，主要用于牧业；沙漠、戈壁等难以利用的土地也主要分布在西部内陆，西部土地利用程度较低。</p></div><div class="k-item"><h4>土地问题与基本国策</h4><p>我国土地利用中存在耕地面积减少、质量下降等突出问题。我国把"十分珍惜、合理利用土地和切实保护耕地"作为一项基本国策，人均耕地已从20世纪50年代初的0.2公顷降至目前的0.09公顷，耕地总面积逼近18亿亩（1.2亿公顷）红线。</p></div><div class="k-item"><h4>水资源时空分布不均</h4><p>空间上南丰北缺：大致以长江流域北界为界，南方水资源占全国的80%以上，北方不足20%，华北和西北地区缺水最为严重。时间上夏秋季降水丰沛为丰水期，冬春季降水少为枯水期，且年际变化大，容易造成水旱灾害。</p></div><div class="k-item"><h4>水资源调配工程</h4><p>解决水资源季节变化大的措施是兴建水库（如三峡工程、小浪底水利枢纽）；解决水资源地区分布不均的有效办法是跨流域调水。南水北调工程分三条线路：东线从长江下游扬州江都抽引长江水，主要利用京杭运河输送，北达山东与天津；中线从丹江口水库引水自流北上，北达北京；西线把长江上游的水引入黄河，补充西北地区的水资源。另有引滦入津、引黄入晋等工程。</p></div><div class="k-item"><h4>节约用水，保护水资源</h4><p>我国农业用水占总用水量的60%以上，但有效利用的水只占农业灌溉用水总量的1/3左右；工业万元产值的耗水量比发达国家多一倍。节水比调水更重要：农业推广喷灌、滴灌，工业重复循环用水，家庭一水多用、使用节水器具。我国人均水资源仅为世界平均水平的1/4，"人多水更少"。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 人教版八年级上册 · 第3章 中国的自然资源 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_geo8_ch3_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第3章 中国的自然资源',chapter:'第3章 中国的自然资源',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'勾股定理,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "下列资源中属于可再生资源的是", "opts": ["A. 煤炭", "B. 石油", "C. 水能", "D. 铁矿"], "ans": 2, "exp": "土地、阳光、森林、水和水能等属于可再生资源；煤炭、石油、铁矿等属于非可再生资源。"}, {"q": "下列资源中属于非可再生资源的是", "opts": ["A. 森林", "B. 天然气", "C. 水", "D. 太阳能"], "ans": 1, "exp": "煤炭、石油、天然气、铁矿等形成再生过程非常缓慢，几乎不可再生，属于非可再生资源。"}, {"q": "我国人均耕地面积只有世界平均水平的", "opts": ["A. 1/2", "B. 1/3", "C. 2/5", "D. 1/4"], "ans": 2, "exp": "我国耕地面积居世界第四位，但人均耕地面积只有世界平均水平的2/5。"}, {"q": "我国人均河流年径流量仅为世界平均水平的", "opts": ["A. 1/4", "B. 1/2", "C. 2/5", "D. 1/3"], "ans": 0, "exp": "我国河流年径流量居世界第六位，但人均径流量仅为世界平均水平的1/4。"}, {"q": "我国土地利用类型的构成特点是", "opts": ["A. 类型齐全，耕地少，难以利用土地较多", "B. 只有耕地和草地", "C. 耕地面积居世界第一", "D. 后备耕地充足"], "ans": 0, "exp": "我国土地类型齐全，但耕地少，荒漠、石山、永久积雪等难以利用的土地较多，后备耕地不足。"}, {"q": "我国耕地和林地主要分布在", "opts": ["A. 西部干旱、半干旱区", "B. 东部湿润、半湿润区", "C. 青藏高原区", "D. 西北内陆地区"], "ans": 1, "exp": "我国耕地和林地的90%以上集中分布在东部湿润、半湿润区，这里是我国农、林、渔业的主要分布区。"}, {"q": "我国南方耕地以什么为主，北方耕地以什么为主", "opts": ["A. 南方旱地、北方水田", "B. 南方水田、北方旱地", "C. 南方草地、北方林地", "D. 都是旱地"], "ans": 1, "exp": "南方耕地以水田为主，北方耕地以旱地为主；林地则主要分布在山区。"}, {"q": "我国草地主要分布在", "opts": ["A. 东部湿润区", "B. 西部干旱、半干旱区", "C. 南方丘陵区", "D. 东北平原"], "ans": 1, "exp": "草地主要分布在西部干旱、半干旱区，主要用于牧业；沙漠、戈壁等难以利用的土地也主要分布在西部内陆。"}, {"q": "我国土地的基本国策是", "opts": ["A. 围湖造田，扩大耕地", "B. 十分珍惜、合理利用土地和切实保护耕地", "C. 大量开垦草地", "D. 全部退耕还林"], "ans": 1, "exp": "我国把\"十分珍惜、合理利用土地和切实保护耕地\"作为一项基本国策，并制定法律、法规加强土地资源的管理和保护。"}, {"q": "我国水资源空间分布的特点是", "opts": ["A. 北丰南缺", "B. 南丰北缺", "C. 东西均匀", "D. 全国都很丰富"], "ans": 1, "exp": "从空间分布看，我国水资源南丰北缺。大致以长江流域北界为界，南方水资源占全国的80%以上，北方不足20%。"}, {"q": "我国水资源时间分配的特点是", "opts": ["A. 全年均匀", "B. 夏秋多、冬春少，年际变化大", "C. 冬春多、夏秋少", "D. 各年相同"], "ans": 1, "exp": "夏秋季我国大部分地区降水丰沛，河流处于丰水期；冬春季降水少，河流处于枯水期；由于降水年际变化大，河流流量年际变化也较大。"}, {"q": "南水北调中线工程目前从什么水库引水", "opts": ["A. 三峡水库", "B. 丹江口水库", "C. 小浪底水库", "D. 万家寨水库"], "ans": 1, "exp": "中线工程目前从丹江口水库引水，沿线开挖渠道，自流北上，北达北京。"}, {"q": "南水北调东线工程主要利用什么水道输送", "opts": ["A. 长江干流", "B. 淮河", "C. 京杭运河", "D. 黄河"], "ans": 2, "exp": "东线工程从长江下游扬州江都抽引长江水，主要利用京杭运河输送，北达山东与天津。"}, {"q": "解决水资源季节变化大的主要措施是", "opts": ["A. 跨流域调水", "B. 兴建水库", "C. 海水淡化", "D. 人工降雨"], "ans": 1, "exp": "兴建水库可以在河流洪水期蓄水、枯水期放水，调节河流水量的时间变化；跨流域调水解决的是地区分布不均的问题。"}, {"q": "我国缺水最严重的地区是", "opts": ["A. 东南沿海", "B. 华北和西北地区", "C. 东北平原", "D. 长江中下游地区"], "ans": 1, "exp": "华北平原耕地面积约占全国的23%，但水资源量仅占全国的3.8%；北方平原广阔、耕地面积大、人口密集，人均水资源量少，华北和西北地区缺水最为严重。"}];const flashcards=[{"q": "可再生资源", "a": "土地、阳光、森林、水和水能等，可在较短时间内更新、再生或循环使用。但利用不合理也会减少甚至枯竭。"}, {"q": "非可再生资源", "a": "煤炭、石油、铁矿等，形成、再生非常缓慢，几乎不可再生，用一点就少一点，应珍惜和节约使用。"}, {"q": "总量与人均", "a": "总量居世界前列（陆地第三、矿产第三、耕地第四、径流第六、森林第五），人均远低于世界平均：土地<1/2、耕地2/5、径流1/4、森林1/3。"}, {"q": "土地利用类型", "a": "农业用地（耕地、草地、林地）、建设用地（城乡建设用地、工矿用地、交通用地）、难以利用土地（沙漠、戈壁、石山、永久积雪等）。"}, {"q": "土地分布", "a": "耕地林地90%以上在东部湿润半湿润区（南方水田、北方旱地）；草地主要在西部干旱半干旱区；难以利用土地主要在西部内陆。"}, {"q": "土地基本国策", "a": "\"十分珍惜、合理利用土地和切实保护耕地\"；人均耕地0.09公顷，逼近18亿亩（1.2亿公顷）耕地红线。"}, {"q": "水资源空间分布", "a": "南丰北缺：以长江流域北界为界，南方占全国80%以上，北方不足20%；华北、西北缺水最严重。"}, {"q": "水资源时间分配", "a": "夏秋丰水期、冬春枯水期，年际变化大；是造成水旱灾害频繁、农业生产不稳定的主要原因。"}, {"q": "南水北调三线", "a": "东线：扬州江都抽长江水经京杭运河到山东、天津；中线：丹江口水库自流北上到北京；西线：长江上游水引入黄河补充西北。"}, {"q": "水库的作用", "a": "洪水期蓄水、枯水期放水，调节河流水量的时间（季节）变化；代表：三峡工程、小浪底水利枢纽。"}, {"q": "节水比调水更重要", "a": "农业用水占总用水量60%以上，有效利用仅1/3；工业万元产值耗水比发达国家多一倍。推广喷灌、滴灌，一水多用。"}, {"q": "其他调水工程", "a": "引滦入津（河北滦河→天津）；引黄入晋（黄河万家寨水库→太原、大同、朔州）；还有引汉济渭等。"}];const errors=[{"title": "可再生资源\"取之不尽\"？", "wrong": "认为可再生资源用不完，可以随意浪费。", "right": "可再生资源如果利用不合理、不注意保护和培育，也会减少甚至枯竭。例如太湖蓝藻污染导致水荒、过度捕捞使渔业资源枯竭。对可再生资源要合理利用并注意保护和培育。"}, {"title": "人均数据张冠李戴", "wrong": "把人均耕地2/5、人均径流1/4、人均森林1/3、人均土地不足1/2这些数据记混。", "right": "口诀记忆：土地<1/2、矿产<1/2、耕地2/5、径流1/4、森林1/3。总量排名：陆地第三、矿产第三、耕地第四、径流第六、森林第五。"}, {"title": "水资源南北分界线", "wrong": "把\"南方水资源占80%\"的分界说成秦岭—淮河一线。", "right": "我国水资源南丰北缺，大致以长江流域北界为界，南方水资源占全国的80%以上，北方不足20%。注意与气温带分界（秦岭—淮河）区分。"}, {"title": "水库与调水的作用混淆", "wrong": "说\"兴建水库可以解决水资源地区分布不均\"。", "right": "兴建水库解决的是水资源季节（时间）变化大的问题（洪水期蓄水、枯水期放水）；跨流域调水（如南水北调）解决的是地区分布不均的问题。"}, {"title": "南水北调东线与中线调换", "wrong": "把东线说成从丹江口引水，或把中线说成利用京杭运河。", "right": "东线：扬州江都抽长江水，利用京杭运河输送，到山东和天津；中线：从丹江口水库引水，自流北上到北京；西线：长江上游引水入黄河，补充西北。"}, {"title": "耕地红线单位换算", "wrong": "把18亿亩耕地红线记成1.2亿亩或1200万公顷。", "right": "18亿亩=1.2亿公顷（1公顷=15亩）。我国耕地总面积已逼近18亿亩红线，人均耕地从20世纪50年代初的0.2公顷降至目前的0.09公顷。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_geo8_ch3_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

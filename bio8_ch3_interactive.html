@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>动物在生物圈中的作用</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 动物在生物圈中的作用</h1>
+    <div class="meta">第五单元第3章 动物在生物圈中的作用 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>动物是生物圈中的消费者</h4><p>动物不能像植物那样通过光合作用制造有机物，只能直接或间接地以植物为食，通过消耗现成的有机物来维持生存，因此动物在生态系统中属于消费者。动物在生物圈中的作用包括：维持生态平衡、促进生态系统的物质循环、帮助植物传粉和传播种子。</p></div><div class="k-item"><h4>生态平衡的概念</h4><p>在生态系统中，生物的种类、各种生物的数量和所占的比例总是维持在相对稳定的状态，这种现象就叫作生态平衡。动物在维持生态平衡中起着重要作用：生态系统中各种生物之间由于食物关系形成食物链，许多食物链交错连接形成食物网，某种动物数量急剧变化，会通过食物链和食物网影响整个生态系统的稳定。</p></div><div class="k-item"><h4>动物维持生态平衡的实例</h4><p>在食物链'草→鹿→狼'中，如果大量捕杀狼，鹿的数量会因失去天敌而剧增，导致草场被过度啃食而退化，最终鹿也会因食物短缺而数量减少。又如麻雀等鸟类被大量捕杀后，农林害虫失去天敌会大量繁殖，造成虫害。可见不能随意捕杀某种动物，否则会破坏生态平衡。</p></div><div class="k-item"><h4>动物促进生态系统的物质循环</h4><p>动物作为消费者，直接或间接地以植物为食，通过消化和吸收，将摄取的有机物变成自身能够利用的物质。这些有机物在动物体内经过分解，释放能量，同时也产生二氧化碳、尿素等物质，这些物质可以被生产者（植物）利用。动物排出的粪便或遗体经过分解者的分解后，也能释放出二氧化碳、含氮的无机盐等物质。可见，动物能促进生态系统的物质循环。</p></div><div class="k-item"><h4>动物帮助植物传粉</h4><p>自然界中的许多植物依靠动物传粉，如蜜蜂、蝴蝶等昆虫在采食花蜜和花粉时，身上沾上花粉，飞到另一朵花上时就把花粉传到了柱头上。动物能够帮助植物传粉，使这些植物顺利地繁殖后代。苹果、桃、油菜等许多植物都依赖昆虫等动物传粉。</p></div><div class="k-item"><h4>动物帮助植物传播种子</h4><p>动物能够帮助植物传播果实和种子，有利于扩大植物的分布范围。例如苍耳等植物的果实表面有钩刺，可以挂在动物的皮毛上被带到远处；松鼠等动物储存松子等果实，被遗忘的种子就可能萌发成新植株；鸟类取食浆果后，种子随粪便排出，也能传播到远处。</p></div><div class="k-item"><h4>动物数量过多也会危害植物</h4><p>动物对植物的影响有利也有弊：当某些动物数量过多时，也会对植物造成危害。例如蝗灾暴发时，成群的蝗虫啃食农作物和牧草，使庄稼颗粒无收、草场变成荒地。所以在利用和保护动物资源时，要维持动物数量的相对稳定。</p></div><div class="k-item"><h4>动物与人类生活的关系和仿生</h4><p>动物与人类生活密切相关：为人类提供肉、蛋、奶等食物和皮毛等原料；蝎、蜈蚣、蛇毒等可入药；导盲犬、警犬、军马是人类得力的助手。仿生是模仿生物的形态结构和生理功能研制发明创造：模仿蝙蝠的回声定位发明了雷达；模仿萤火虫的发光原理发明了冷光（荧光灯）；模仿乌龟的背甲结构发明了薄壳建筑；模仿长颈鹿皮肤紧绷的结构研制了宇航服（抗荷服）。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 人教版八年级上册 · 第五单元第3章 动物在生物圈中的作用 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_bio8_ch3_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第五单元第3章 动物在生物圈中的作用',chapter:'第五单元第3章 动物在生物圈中的作用',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第五单元第3章 动物在生物圈中的作用'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "在生态系统中，动物属于（　）", "opts": ["A. 生产者", "B. 消费者", "C. 分解者", "D. 非生物部分"], "ans": 1, "exp": "动物不能像植物那样通过光合作用制造有机物，只能直接或间接地以植物为食，通过消耗现成的有机物维持生存，因此动物是生态系统中的消费者。绿色植物是生产者，细菌和真菌大多数是分解者。"}, {"q": "下列对生态平衡的理解，正确的是（　）", "opts": ["A. 生态系统中各种生物的数量恒定不变", "B. 生物的种类、各种生物的数量和所占比例总是维持在相对稳定的状态", "C. 生态系统中只有一种生物", "D. 生态系统中没有动物也能维持平衡"], "ans": 1, "exp": "生态平衡是指生态系统中生物的种类、各种生物的数量和所占的比例总是维持在相对稳定的状态。它是一种动态的平衡，不是数量绝对不变。动物是生态系统的消费者，在维持生态平衡中起重要作用。"}, {"q": "在食物链'草→鹿→狼'中，如果大量捕杀狼，短期内鹿的数量会（　）", "opts": ["A. 急剧减少", "B. 先增多后减少", "C. 保持不变", "D. 先减少后增多"], "ans": 1, "exp": "狼是鹿的天敌，大量捕杀狼后，鹿失去天敌的制约，数量会剧增，草场被过度啃食而退化，随后鹿又因食物短缺而数量减少。这说明动物在维持生态平衡中起重要作用，不能随意捕杀某种动物。"}, {"q": "麻雀等食虫鸟类被大量捕杀后，农林害虫往往会大量繁殖，这说明了（　）", "opts": ["A. 鸟类对人类有害", "B. 动物在维持生态平衡中的重要作用", "C. 鸟类与害虫没有关系", "D. 害虫繁殖与鸟类无关"], "ans": 1, "exp": "麻雀等鸟类捕食农林害虫，是害虫的天敌。大量捕杀鸟类后，害虫失去天敌的制约而大量繁殖，造成虫害，破坏生态平衡。这说明动物在维持生态平衡中起着重要作用。"}, {"q": "动物作为消费者，在生态系统的物质循环中起的作用是（　）", "opts": ["A. 制造有机物", "B. 促进物质循环（把有机物分解为二氧化碳、尿素等）", "C. 吸收二氧化碳", "D. 把无机物合成有机物"], "ans": 1, "exp": "动物通过消化和吸收把摄取的有机物变成自身能利用的物质，这些有机物在动物体内经过分解释放能量，同时产生二氧化碳、尿素等物质，可被生产者利用；动物的粪便和遗体经分解者分解后也能释放二氧化碳和含氮无机盐。可见动物能促进生态系统的物质循环。"}, {"q": "在生态系统的物质循环中，动植物遗体中的有机物最终被什么分解成二氧化碳、水和无机盐（　）", "opts": ["A. 动物", "B. 植物", "C. 细菌和真菌", "D. 病毒"], "ans": 2, "exp": "大多数细菌和真菌是生态系统中的分解者，它们能够把动植物遗体分解成二氧化碳、水和无机盐，这些物质又能被植物吸收利用，进而制造有机物。动物（消费者）则通过呼吸作用等把有机物分解，同样参与物质循环。"}, {"q": "动物帮助植物传粉，对植物的意义是（　）", "opts": ["A. 使植物顺利繁殖后代", "B. 使植物长得更高", "C. 为植物提供营养", "D. 帮助植物进行光合作用"], "ans": 0, "exp": "蜜蜂、蝴蝶等昆虫在采食花蜜和花粉时，身上沾上花粉，飞到另一朵花上时把花粉传到柱头上，帮助植物完成传粉，使这些植物能够顺利地繁殖后代。苹果、桃、油菜等许多植物都依赖动物传粉。"}, {"q": "苍耳果实表面有钩刺，松鼠储存松子，鸟类取食浆果后种子随粪便排出，这些现象说明动物能够（　）", "opts": ["A. 帮助植物传播果实和种子，有利于扩大植物的分布范围", "B. 危害植物", "C. 帮助植物传粉", "D. 为植物提供养料"], "ans": 0, "exp": "苍耳的果实可挂在动物皮毛上被带到远处，松鼠储存松子（被遗忘的种子可萌发），鸟取食浆果后种子随粪便排出传播到远处。这些都是动物帮助植物传播果实和种子的例子，有利于扩大植物的分布范围。"}, {"q": "下列现象说明动物数量过多会对植物造成危害的是（　）", "opts": ["A. 蜜蜂采蜜帮助桃树传粉", "B. 蝗灾暴发时庄稼颗粒无收", "C. 松鼠储存松子", "D. 鸟取食浆果传播种子"], "ans": 1, "exp": "当某些动物数量过多时，也会对植物造成危害，蝗灾就是典型例子：成群的蝗虫啃食农作物和牧草，使庄稼颗粒无收、草场退化。其余三项都是动物对植物有利的一面。"}, {"q": "下列关于动物与植物的关系，说法正确的是（　）", "opts": ["A. 动物对植物只有利没有害", "B. 动物对植物只有害没有利", "C. 动物既能帮助植物传粉、传播种子，数量过多时也会危害植物", "D. 动物与植物没有关系"], "ans": 2, "exp": "动物与植物的关系是辩证的：一方面动物帮助植物传粉、传播种子，有利于植物的繁殖和分布；另一方面，当某些动物数量过多时（如蝗灾），也会对植物造成危害。所以应保持动物数量的相对稳定。"}, {"q": "下列动物中，能为人类提供动物蛋白的重要食物来源的是（　）", "opts": ["A. 苍蝇", "B. 家禽和家畜", "C. 蟑螂", "D. 蚊虫"], "ans": 1, "exp": "家禽（鸡、鸭、鹅）和家畜（猪、牛、羊等）是人类食物中动物蛋白的重要来源，它们是由野生动物驯养而来的。此外虾、蟹等也为人类提供动物蛋白，蝎、蜈蚣、蝉蜕等可以入药。"}, {"q": "科学家模仿蝙蝠的回声定位原理发明了雷达，这种技术称为（　）", "opts": ["A. 克隆技术", "B. 转基因技术", "C. 仿生", "D. 发酵技术"], "ans": 2, "exp": "仿生是模仿生物的形态结构和生理功能研制发明创造。模仿蝙蝠的回声定位发明雷达、模仿萤火虫发明冷光、模仿乌龟背甲发明薄壳建筑、模仿长颈鹿的皮肤结构研制宇航服等，都属于仿生。"}, {"q": "下列哪项不是动物与仿生的实例（　）", "opts": ["A. 蝙蝠→雷达", "B. 萤火虫→冷光（荧光灯）", "C. 乌龟背甲→薄壳建筑", "D. 青蛙→除草机"], "ans": 3, "exp": "仿生实例：模仿蝙蝠的回声定位发明雷达；模仿萤火虫的发光原理发明冷光；模仿乌龟的背甲结构发明薄壳建筑；模仿长颈鹿紧绷的皮肤结构研制宇航服。'青蛙→除草机'不是课本中的仿生实例。"}, {"q": "下列关于'动物在生物圈中的作用'的叙述，不正确的是（　）", "opts": ["A. 动物在维持生态平衡中起重要作用", "B. 动物能促进生态系统的物质循环", "C. 动物能帮助植物传粉和传播种子", "D. 动物是生态系统中的生产者"], "ans": 3, "exp": "动物在生物圈中的作用：维持生态平衡、促进生态系统的物质循环、帮助植物传粉和传播种子。动物是消费者而不是生产者，生产者是能进行光合作用制造有机物的绿色植物。"}, {"q": "保护动物多样性、维持生态平衡，下列做法合理的是（　）", "opts": ["A. 大量捕杀狼以保护鹿群", "B. 随意引进外来动物", "C. 合理利用动物资源，维持动物数量的相对稳定", "D. 彻底消灭所有害虫"], "ans": 2, "exp": "动物在维持生态平衡中起重要作用，不能随意捕杀或消灭某种动物，否则会破坏食物链和生态平衡；引进外来物种要慎重，可能破坏本地生态。合理利用动物资源、维持动物数量相对稳定才是合理的做法。"}];const flashcards=[{"q": "动物在生物圈中的作用", "a": "维持生态平衡；促进生态系统的物质循环；帮助植物传粉、传播种子"}, {"q": "生态平衡", "a": "在生态系统中，生物的种类、各种生物的数量和所占的比例总是维持在相对稳定的状态"}, {"q": "食物链", "a": "生态系统中各种生物之间由于食物关系形成的链状联系，如草→鹿→狼"}, {"q": "食物网", "a": "生态系统中许多食物链交错连接形成的网状结构，动物数量的变化会沿食物链和食物网传递影响"}, {"q": "物质循环", "a": "动物把摄取的有机物分解产生二氧化碳、尿素等，粪便和遗体经分解者分解成无机物，供生产者利用"}, {"q": "帮助植物传粉", "a": "蜜蜂、蝴蝶等采食花蜜花粉时把花粉传到柱头上，使植物顺利繁殖后代"}, {"q": "帮助植物传播种子", "a": "苍耳果实钩刺挂皮毛、松鼠储存松子、鸟取食浆果种子随粪便排出，有利于扩大植物分布范围"}, {"q": "动物对植物的危害", "a": "某些动物数量过多时会危害植物，如蝗灾暴发使庄稼颗粒无收"}, {"q": "消费者与分解者", "a": "动物是消费者（直接或间接以植物为食）；细菌和真菌大多是分解者（分解动植物遗体）"}, {"q": "仿生", "a": "模仿生物的形态结构和生理功能研制发明创造，如蝙蝠→雷达、萤火虫→冷光"}, {"q": "仿生实例", "a": "蝙蝠回声定位→雷达；萤火虫→冷光；乌龟背甲→薄壳建筑；长颈鹿皮肤→宇航服"}, {"q": "动物与人类生活", "a": "提供肉蛋奶等食物和皮毛原料；蝎、蜈蚣、蛇毒等入药；导盲犬、警犬、军马是人类得力助手"}];const errors=[{"title": "生态平衡是绝对不变吗", "wrong": "认为生态平衡就是各种生物的数量和比例绝对不变、固定不变。", "right": "生态平衡是一种动态的、相对的稳定：生物的种类、各种生物的数量和所占的比例总是维持在相对稳定的状态，会因季节、环境等因素在一定范围内波动。如果波动超过限度（如大量捕杀某种动物），平衡就会被破坏。"}, {"title": "动物是分解者吗", "wrong": "把动物当作分解者，认为动物能把有机物分解成无机物所以是分解者。", "right": "动物是消费者（直接或间接以植物为食，不能制造有机物）。分解者是细菌和真菌等微生物，它们把动植物遗体分解成二氧化碳、水和无机盐。动物虽然也参与物质循环（呼吸作用产生二氧化碳等），但角色是消费者。"}, {"title": "动物促进物质循环=制造有机物", "wrong": "认为动物通过消化吸收'制造'了有机物，或者说动物能像植物一样制造有机物。", "right": "动物不能制造有机物，只能把摄取的有机物变成自身能利用的物质，并在体内分解有机物释放能量，产生二氧化碳、尿素等无机物，这些物质被生产者利用——这才是'促进物质循环'的含义。制造有机物的只有生产者（绿色植物）。"}, {"title": "只有蜜蜂能传粉", "wrong": "认为帮助植物传粉的动物只有蜜蜂。", "right": "帮助植物传粉的动物很多：蜜蜂、蝴蝶、蛾类、蝇类等昆虫，以及蜂鸟等鸟类都能帮助植物传粉。它们采食花蜜花粉时把花粉传到柱头上，使植物顺利繁殖后代。"}, {"title": "动物越多越好", "wrong": "认为动物对人类和植物都是有益的，数量越多越好。", "right": "动物数量过多也会对植物和人类造成危害，如蝗灾使庄稼颗粒无收、鼠类猖獗危害农林牧业。动物的数量需要维持在相对稳定的状态（生态平衡），过多或过少都会破坏平衡。"}, {"title": "仿生=模仿外形", "wrong": "认为仿生就是简单模仿动物的外形制造玩具或模型。", "right": "仿生是模仿生物的形态结构和生理功能研制发明创造，核心是借鉴生物的结构和功能原理，如模仿蝙蝠的回声定位（生理功能）发明雷达，模仿乌龟背甲（结构）发明薄壳建筑，模仿长颈鹿皮肤结构研制宇航服。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_bio8_ch3_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>
