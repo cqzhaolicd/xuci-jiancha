@@ -105,6 +105,15 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
 @media(max-width:768px){#quizModeInfo{display:none}}
 
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.3rem;right:.3rem;cursor:pointer;font-size:.7rem;color:#999;transition:all .2s;z-index:5}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.68rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
 </style>
 .toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
 .toast-success{background:var(--success,#48bb78)}
@@ -198,7 +207,26 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 八上早背晚默 · 第3章 物态变化 | 天元教育 · 初二暑假博学班</div>
 
-<script>
+<script>function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i>' : '<i class="far fa-circle"></i>') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i>' : '<i class="far fa-circle"></i>') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+
 const questions=[
   {"q": "[第121条] 温度的单位摄氏度… 请选出正确内容", "opts": ["\n1.温度的单位摄氏度，符号℃。", "\n2.固态、液态、气态是物质常见的三种状态。", "\n3.实验室温度计要等到示数稳定后读数，读数时温度计要留在被测液体中。", "\n4.冰冻的衣服也能晾干属于升华现象。"], "ans": 0, "exp": "第121条：温度的单位摄氏度，符号℃。"},
   {"q": "[第122条] 摄氏温度的划分，把在标准大气压下，冰水混合物的温度定为____ 摄氏度… 请选出正确内容", "opts": ["\n1.熔化是吸热的，凝固是放热的。", "\n2.温度计的种类包括实验室温度计、寒暑表和体温计。", "\n3.摄氏温度的划分，把在标准大气压下，冰水混合物的温度定为0 摄氏度，沸水的温度定为100 摄氏度，分别用0℃和100℃来表示；0℃和100℃之间分成100 个等份，每个等份代表1℃。", "\n4.实验室温度计要等到示数稳定后读数，读数时温度计要留在被测液体中。"], "ans": 2, "exp": "第122条：摄氏温度的划分，把在标准大气压下，冰水混合物的温度定为0 摄氏度，沸水的温度定为100 摄氏度，分别用0℃和100℃来表示；0℃和100℃之间分成100 个等份，每个等份代表1℃。"},
@@ -432,7 +460,7 @@ function toggleKP(name, el) {
   const i = arr.indexOf(name);
   if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
   localStorage.setItem(KP_KEY, JSON.stringify(arr));
-  const item = el.closest('.k-item, .knowledge-card li');
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
   if (item) item.classList.toggle('kp-learned', arr.includes(name));
   const mark = el.querySelector('.kp-mark') || el;
   if (mark) {

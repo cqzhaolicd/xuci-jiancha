@@ -105,6 +105,15 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
 @media(max-width:768px){#quizModeInfo{display:none}}
 
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.3rem;right:.3rem;cursor:pointer;font-size:.7rem;color:#999;transition:all .2s;z-index:5}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.68rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
 </style>
 .toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
 .toast-success{background:var(--success,#48bb78)}
@@ -198,7 +207,26 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 八上早背晚默 · 第4章 光现象 | 天元教育 · 初二暑假博学班</div>
 
-<script>
+<script>function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i>' : '<i class="far fa-circle"></i>') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i>' : '<i class="far fa-circle"></i>') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+
 const questions=[
   {"q": "[第174条] 光的直线传播例子有人影树影手影皮影（水中倒影不是直线传播… 请选出正确内容", "opts": ["\n1.平面镜成像特点：①像和物的大小相等；②像和物到平面镜的距离相等；③像和物的对应点连线与镜面垂直；④平面镜成虚像。", "\n2.红外线具有热效应，能使被照射的物体发热。", "\n3.下列光现象利用了光的什么原理：", "\n4.光的直线传播例子有人影树影手影皮影（水中倒影不是直线传播，是反射）、小孔成像（成倒立实像，且像与小孔形状无关）、日食和月食、激光准直、木匠测木、三点一线、站队看齐、形影不离、井底之蛙、一叶障目等。"], "ans": 3, "exp": "第174条：光的直线传播例子有人影树影手影皮影（水中倒影不是直线传播，是反射）、小孔成像（成倒立实像，且像与小孔形状无关）、日食和月食、激光准直、木匠测木、三点一线、站队看齐、形影不离、井底之蛙、一叶障目等。"},
   {"q": "[第175条] 电磁波速度和光速一样，都是____ m/s… 请选出正确内容", "opts": ["\n1.斜插入水中的直尺看起来，水中的部分向上弯折，直尺刻度变密了，这是因为光从水中射入空气中发生折射造成的（看水中物体时，光线都是从水中到空气中）。", "\n2.平面镜成像实验用点燃的蜡烛还是未点燃的蜡烛？点燃的。", "\n3.电磁波速度和光速一样，都是3×10⁸ m/s", "\n4.彩色电视机屏幕上的色彩是由红、绿、蓝三种颜色合成，这也是色光的三原色。"], "ans": 2, "exp": "第175条：电磁波速度和光速一样，都是3×10⁸ m/s"},
@@ -476,7 +504,7 @@ function toggleKP(name, el) {
   const i = arr.indexOf(name);
   if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
   localStorage.setItem(KP_KEY, JSON.stringify(arr));
-  const item = el.closest('.k-item, .knowledge-card li');
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
   if (item) item.classList.toggle('kp-learned', arr.includes(name));
   const mark = el.querySelector('.kp-mark') || el;
   if (mark) {
