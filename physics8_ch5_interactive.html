@@ -160,13 +160,12 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
     </div>
 
         <div class="knowledge-grid">
-
       <div class="knowledge-card c1"><h3><i class="fas fa-search-plus" style="color:#667eea"></i> 透镜及其应用</h3><ul>
-        <li><strong>凸透镜</strong>：中间厚边缘薄，<span class="hl">会聚</span>光线</li>
-        <li><strong>凹透镜</strong>：中间薄边缘厚，<span class="hl">发散</span>光线</li>
-        <li><strong>成像规律</strong>：2倍焦距分大小、1倍焦距分虚实</li>
-        <li><strong>实像</strong>：异侧倒，<strong>虚像</strong>：同侧正</li>
-        <li><strong>眼睛</strong>：近视眼(凹透镜矫正)、远视眼(凸透镜矫正)</li>
+        <li><strong>凸透镜</strong>：中间厚边缘薄，<span class="hl">会聚</span>光线<br>三条特殊光线：①平行于主光轴的光→折射后过焦点②过焦点的光→折射后平行于主光轴射出③过光心的光→方向不变<br>表面越凸，焦距越短，会聚能力越强；应用：放大镜、照相机、投影仪</li>
+        <li><strong>凹透镜</strong>：中间薄边缘厚，<span class="hl">发散</span>光线<br>三条特殊光线：①平行于主光轴的光→折射后发散（反向延长线过焦点）②延长线过焦点的光→折射后平行射出③过光心的光→方向不变<br>应用：近视眼镜；判断凸凹方法：看形状（中间厚边缘薄为凸）或看是否起放大作用</li>
+        <li><strong>成像规律</strong>：2倍焦距分大小、1倍焦距分虚实<br>u&gt;2f：倒立缩小实像（照相机）；u=2f：倒立等大实像（可测焦距）；f&lt;u&lt;2f：倒立放大实像（投影仪）；u=f：不成像；u&lt;f：正立放大虚像（放大镜）<br>口诀：成实像时"物近像远像变大"；无论实像虚像，物体越靠近焦点像越大</li>
+        <li><strong>实像</strong>：异侧倒，<strong>虚像</strong>：同侧正<br>实像：实际光线会聚而成，能用光屏承接，倒立，物像在透镜异侧；虚像：光线反向延长线会聚而成，光屏不能承接，正立，物像在透镜同侧<br>判断方法：能否用光屏承接；眼睛看到的虚像位置在光线反向延长线的交点处</li>
+        <li><strong>眼睛</strong>：近视眼(凹透镜矫正)、远视眼(凸透镜矫正)<br>近视：晶状体太厚、折光能力太强，像成在视网膜<b>前</b>→戴凹透镜发散矫正；远视（老花）：晶状体太薄、折光太弱，像成在视网膜<b>后</b>→戴凸透镜会聚矫正<br>明视距离 25cm；眼结构：晶状体相当于凸透镜、视网膜相当于光屏、睫状体调节晶状体曲度</li>
       </ul></div>
     </div>
 
@@ -207,7 +206,52 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 八上早背晚默 · 第5章 透镜及其应用 | 天元教育 · 初二暑假博学班</div>
 
-<script>function fcMark(q) {
+<script>// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_physics8_ch5_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+function fcMark(q) {
   const learned = getKP().includes('fc:' + q);
   return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
 }
@@ -420,7 +464,7 @@ alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库�
 
 let fIdx=0;
 function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;const fc=flashcards[fIdx];
-document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front} ${fcMark(fc.front)}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
 <div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
 function toggleFC(){const el=document.getElementById('fc');if(el)el.classList.toggle('flipped');}
 function renderEC(){let s=localStorage.getItem('physics8_ch5_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
@@ -440,50 +484,7 @@ renderEC();initQ();renderFC();renderQ();
 // 点击音效
 (function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
 
-// ===== 知识点已学习标记 =====
-const KP_KEY = 'learned_kp_physics8_ch5_interactive';
-function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
-function toggleKP(name, el) {
-  let arr = getKP();
-  const i = arr.indexOf(name);
-  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
-  localStorage.setItem(KP_KEY, JSON.stringify(arr));
-  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
-  if (item) item.classList.toggle('kp-learned', arr.includes(name));
-  const mark = el.querySelector('.kp-mark') || el;
-  if (mark) {
-    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
-  }
-  try {
-    const ac = new (window.AudioContext || window.webkitAudioContext)();
-    const o = ac.createOscillator(), g = ac.createGain();
-    o.connect(g); g.connect(ac.destination);
-    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
-    g.gain.setValueAtTime(0.08, ac.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
-    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
-  } catch(e) {}
-}
-function kpMark(name) {
-  const learned = getKP().includes(name);
-  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
-}
-function kpInit() {
-  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
-    const titleEl = item.querySelector('h4') || item.querySelector('strong');
-    if (!titleEl) return;
-    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
-    const learned = getKP().includes(name);
-    item.classList.toggle('kp-learned', learned);
-    const mark = document.createElement('span');
-    mark.className = 'kp-mark' + (learned ? ' done' : '');
-    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
-    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
-    mark.title = '标记已学习';
-    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
-  });
-}
-document.addEventListener('DOMContentLoaded', kpInit);
+
 
 </script>
 

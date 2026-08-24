@@ -160,13 +160,12 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
     </div>
 
         <div class="knowledge-grid">
-
       <div class="knowledge-card c3"><h3><i class="fas fa-thermometer-half" style="color:#2ecc71"></i> 物态变化</h3><ul>
-        <li><strong>温度</strong>：摄氏度(℃)，原理为<span class="hl">热胀冷缩</span></li>
-        <li><strong>六种物态变化</strong>：熔/凝(固↔液)、汽/液(液↔气)、升/凝华(固↔气)</li>
-        <li><strong>晶体</strong>：有固定熔点（海波、金属、冰）</li>
-        <li><strong>蒸发</strong>：任何温度下进行，影响三因素</li>
-        <li><strong>液化方式</strong>：降温和压缩体积</li>
+        <li><strong>温度</strong>：摄氏度(℃)，原理为<span class="hl">热胀冷缩</span><br>摄氏温标：标准大气压下冰水混合物为 0℃，沸水为 100℃，其间 100 等分每份 1℃<br>使用：看量程分度值→玻璃泡全部浸入被测液体（不碰容器底壁）→示数稳定后读数，读数时不能离开液体、视线与液柱上表面相平；体温计：量程 35-42℃、分度值 0.1℃、有缩口可离开人体读数</li>
+        <li><strong>六种物态变化</strong>：熔/凝(固↔液)、汽/液(液↔气)、升/凝华(固↔气)<br>吸热：熔化、汽化、升华；放热：凝固、液化、凝华（口诀：熔汽升吸热）<br>判断方法：先找初态和末态再定名称，例：冰→水是熔化，水蒸气→冰花是凝华，冰→水蒸气是升华</li>
+        <li><strong>晶体</strong>：有固定熔点（海波、金属、冰）<br>熔化条件：温度达到熔点且继续吸热；熔化特点：吸热但温度保持不变（固液共存）<br>非晶体：无熔点（松香、玻璃、沥青、蜡），熔化时温度持续升高；图像：晶体熔化图有水平段，非晶体没有</li>
+        <li><strong>蒸发</strong>：任何温度下进行，影响三因素<br>蒸发：只在液体表面发生的缓慢汽化，任何温度下都能进行；三因素：①液体温度越高越快②表面积越大越快③表面空气流动越快越快<br>蒸发吸热制冷：扇风凉快、酒精擦身降温；与沸腾区别：沸腾需达到沸点，液体表面和内部同时剧烈汽化</li>
+        <li><strong>液化方式</strong>：降温和压缩体积<br>方式一降低温度：所有气体都可用（露、雾、"白气"、冰棒冒气）；方式二压缩体积：液化石油气、打火机、液化天然气<br>注意："白气"是液态小水滴（水蒸气遇冷液化），不是气态；液化放热</li>
       </ul></div>
     </div>
 
@@ -207,7 +206,52 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 八上早背晚默 · 第3章 物态变化 | 天元教育 · 初二暑假博学班</div>
 
-<script>function fcMark(q) {
+<script>// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_physics8_ch3_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+function fcMark(q) {
   const learned = getKP().includes('fc:' + q);
   return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
 }
@@ -432,7 +476,7 @@ alert(`✅ 已准备 ${items.length} 道错题！`);if(confirm('打开错题库�
 
 let fIdx=0;
 function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;const fc=flashcards[fIdx];
-document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front} ${fcMark(fc.front)}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
 <div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
 function toggleFC(){const el=document.getElementById('fc');if(el)el.classList.toggle('flipped');}
 function renderEC(){let s=localStorage.getItem('physics8_ch3_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
@@ -452,50 +496,7 @@ renderEC();initQ();renderFC();renderQ();
 // 点击音效
 (function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
 
-// ===== 知识点已学习标记 =====
-const KP_KEY = 'learned_kp_physics8_ch3_interactive';
-function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
-function toggleKP(name, el) {
-  let arr = getKP();
-  const i = arr.indexOf(name);
-  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
-  localStorage.setItem(KP_KEY, JSON.stringify(arr));
-  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
-  if (item) item.classList.toggle('kp-learned', arr.includes(name));
-  const mark = el.querySelector('.kp-mark') || el;
-  if (mark) {
-    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
-  }
-  try {
-    const ac = new (window.AudioContext || window.webkitAudioContext)();
-    const o = ac.createOscillator(), g = ac.createGain();
-    o.connect(g); g.connect(ac.destination);
-    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
-    g.gain.setValueAtTime(0.08, ac.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
-    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
-  } catch(e) {}
-}
-function kpMark(name) {
-  const learned = getKP().includes(name);
-  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
-}
-function kpInit() {
-  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
-    const titleEl = item.querySelector('h4') || item.querySelector('strong');
-    if (!titleEl) return;
-    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
-    const learned = getKP().includes(name);
-    item.classList.toggle('kp-learned', learned);
-    const mark = document.createElement('span');
-    mark.className = 'kp-mark' + (learned ? ' done' : '');
-    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
-    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
-    mark.title = '标记已学习';
-    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
-  });
-}
-document.addEventListener('DOMContentLoaded', kpInit);
+
 
 </script>
 
