@@ -201,6 +201,47 @@ body {
 .lecture-card.empty .lnum { background: var(--border) !important; color: var(--text-light); }
 .lecture-card.empty .info h4 { color: var(--text-light); }
 
+/* 已学习标记 */
+.lecture-card .learn-btn {
+  position: absolute; bottom: 6px; right: 8px;
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--text-light); font-size: 0.62rem; font-weight: 600;
+  padding: 0.18rem 0.5rem; border-radius: 20px;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 3px;
+  transition: all 0.2s; z-index: 2;
+}
+.lecture-card .learn-btn:hover { border-color: var(--success, #2ecc71); color: var(--success, #2ecc71); transform: scale(1.05); }
+.lecture-card .learn-btn.done { background: rgba(46,204,113,0.12); border-color: #2ecc71; color: #27ae60; }
+.lecture-card .learn-badge {
+  position: absolute; top: -5px; left: -5px;
+  background: #2ecc71; color: #fff;
+  font-size: 0.58rem; font-weight: 700;
+  padding: 0.12rem 0.42rem; border-radius: 7px;
+  display: inline-flex; align-items: center; gap: 3px;
+  z-index: 2;
+}
+.lecture-card.learned {
+  border-color: rgba(46,204,113,0.6);
+  background: linear-gradient(135deg, rgba(46,204,113,0.06), var(--card-bg));
+}
+.lecture-card.learned .info h4 { color: #27ae60; }
+.lecture-card.learned .lnum { opacity: 0.7; }
+
+/* tool-card 已学习样式 */
+.tool-card { position: relative; }
+.tool-card .learn-btn {
+  position: absolute; bottom: 6px; right: 8px;
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--text-light); font-size: 0.6rem; font-weight: 600;
+  padding: 0.15rem 0.45rem; border-radius: 20px;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 3px;
+  transition: all 0.2s; z-index: 2;
+}
+.tool-card .learn-btn:hover { border-color: #2ecc71; color: #27ae60; }
+.tool-card .learn-btn.done { background: rgba(46,204,113,0.12); border-color: #2ecc71; color: #27ae60; }
+.tool-card.learned { border-color: rgba(46,204,113,0.6); background: linear-gradient(135deg, rgba(46,204,113,0.06), var(--card-bg)); }
+.tool-card.learned .t-name { color: #27ae60; }
+
 /* Footer */
 .footer { text-align: center; padding: 1.5rem; color: var(--text-light); font-size: 0.82rem; }
 
@@ -462,25 +503,33 @@ function render() {
   // === 预习闯关 ===
   html += renderSection('预习闯关 · 八上', 'fa-gamepad', '#f39c12', 'badge-tools', `
     <div class="tool-grid">
-      <a href="preview_challenge_math8.html" class="tool-card t-training">
+      <a href="preview_challenge_math8.html" class="tool-card t-training ${isLearned('preview_challenge_math8.html') ? 'learned' : ''}">
+        <span class="learn-badge" style="display:${isLearned('preview_challenge_math8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
         <div class="t-icon"><i class="fas fa-calculator"></i></div>
         <div class="t-name">数学闯关</div>
         <div class="t-desc">北师大八上 · 勾股定理→一次函数</div>
+        ${learnedBtn('preview_challenge_math8.html')}
       </a>
-      <a href="preview_challenge_physics8.html" class="tool-card t-flow">
+      <a href="preview_challenge_physics8.html" class="tool-card t-flow ${isLearned('preview_challenge_physics8.html') ? 'learned' : ''}">
+        <span class="learn-badge" style="display:${isLearned('preview_challenge_physics8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
         <div class="t-icon"><i class="fas fa-flask"></i></div>
         <div class="t-name">物理闯关</div>
         <div class="t-desc">人教八上 · 机械运动→质量密度</div>
+        ${learnedBtn('preview_challenge_physics8.html')}
       </a>
-      <a href="preview_challenge_chinese8.html" class="tool-card t-print">
+      <a href="preview_challenge_chinese8.html" class="tool-card t-print ${isLearned('preview_challenge_chinese8.html') ? 'learned' : ''}">
+        <span class="learn-badge" style="display:${isLearned('preview_challenge_chinese8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
         <div class="t-icon"><i class="fas fa-book"></i></div>
         <div class="t-name">语文闯关</div>
         <div class="t-desc">统编八上 · 新闻→文言文</div>
+        ${learnedBtn('preview_challenge_chinese8.html')}
       </a>
-      <a href="preview_challenge_english8.html" class="tool-card t-add">
+      <a href="preview_challenge_english8.html" class="tool-card t-add ${isLearned('preview_challenge_english8.html') ? 'learned' : ''}">
+        <span class="learn-badge" style="display:${isLearned('preview_challenge_english8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
         <div class="t-icon"><i class="fas fa-language"></i></div>
         <div class="t-name">英语闯关</div>
         <div class="t-desc">人教八上 · 假期→条件句</div>
+        ${learnedBtn('preview_challenge_english8.html')}
       </a>
     </div>`);
 
@@ -537,14 +586,16 @@ function renderGrade(grade, gi, cnt) {
               </div>
               <div class="lecture-grid">
                 ${subj.lectures.map((lec, li) => `
-                <a href="${lec.url}" class="lecture-card">
+                <a href="${lec.url}" class="lecture-card ${isLearned(lec.url) ? 'learned' : ''}">
                   ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
+                  <span class="learn-badge" style="display:${isLearned(lec.url) ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
                   <div class="lnum" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
                   <div class="info">
                     <h4>${lec.title}</h4>
                     <div class="meta"><span>${lec.date}</span>${lec.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
                   </div>
                   <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                  ${learnedBtn(lec.url)}
                 </a>`).join('')}
               </div>
             </div>`;
@@ -571,14 +622,16 @@ function renderSubject(subj, si, cnt) {
       </div>
       <div class="lecture-grid">
         ${subj.lectures.map((lec, li) => `
-        <a href="${lec.url}" class="lecture-card">
+        <a href="${lec.url}" class="lecture-card ${isLearned(lec.url) ? 'learned' : ''}">
           ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
+          <span class="learn-badge" style="display:${isLearned(lec.url) ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
           <div class="lnum" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
           <div class="info">
             <h4>${lec.title}</h4>
             <div class="meta"><span>${lec.date}</span>${lec.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
           </div>
           <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+          ${learnedBtn(lec.url)}
         </a>`).join('')}
         <div class="lecture-card empty">
           <div class="lnum" style="background:var(--border);color:var(--text-light)">+</div>
@@ -629,6 +682,45 @@ function toggleSection(key, el) {
 }
 
 render();
+
+// ===== 已学习标记 =====
+const LEARNED_KEY = 'learned_pages';
+function getLearned() { try { return JSON.parse(localStorage.getItem(LEARNED_KEY) || '[]'); } catch(e) { return []; } }
+function isLearned(url) { return getLearned().includes(url); }
+function toggleLearned(url, ev) {
+  if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+  let arr = getLearned();
+  const i = arr.indexOf(url);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(url); }
+  localStorage.setItem(LEARNED_KEY, JSON.stringify(arr));
+  // 更新当前卡片 UI
+  const card = ev && ev.currentTarget ? ev.currentTarget.closest('.lecture-card, .tool-card') : null;
+  if (card) {
+    const learned = arr.includes(url);
+    card.classList.toggle('learned', learned);
+    const btn = card.querySelector('.learn-btn');
+    if (btn) {
+      btn.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="fas fa-circle"></i> 已学习';
+      btn.classList.toggle('done', learned);
+    }
+    const badge = card.querySelector('.learn-badge');
+    if (badge) badge.style.display = learned ? 'inline-flex' : 'none';
+  }
+  // 音效
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = learned ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function learnedBtn(url) {
+  const learned = isLearned(url);
+  return `<button class="learn-btn ${learned ? 'done' : ''}" onclick="toggleLearned('${url}', event)" title="标记已学习">${learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="fas fa-circle"></i> 已学习'}</button>`;
+}
 </script>
 <script>
 // 点击音效
