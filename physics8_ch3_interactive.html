@@ -205,13 +205,25 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 八上早背晚默 · 第3章 物态变化 | 天元教育 · 初二暑假博学班</div>
 
-<script>// ===== 知识点已学习标记 =====
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+// ===== 知识点已学习标记 =====
 const KP_KEY = 'learned_kp_physics8_ch3_interactive';
 function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
 function toggleKP(name, el) {
   let arr = getKP();
   const i = arr.indexOf(name);
-  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
   localStorage.setItem(KP_KEY, JSON.stringify(arr));
   const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
   if (item) item.classList.toggle('kp-learned', arr.includes(name));
@@ -438,7 +450,7 @@ h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class
 document.getElementById('quizArea').innerHTML=h;
 document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
 document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
-function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');if(oi===questions[idx].ans){speakDone();}
   if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
 renderQ();}
 function prevQ(){if(curQ>0){curQ--;renderQ();}}
