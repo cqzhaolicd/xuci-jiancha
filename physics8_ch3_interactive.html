@@ -107,7 +107,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 
 .flashcard{position:relative}
-.flashcard .fc-mark{position:absolute;top:.3rem;right:.3rem;cursor:pointer;font-size:.7rem;color:#999;transition:all .2s;z-index:5}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.62rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
 .flashcard .fc-mark.done{color:#27ae60}
 .flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
 .check-item{position:relative}
@@ -209,12 +209,12 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 
 <script>function fcMark(q) {
   const learned = getKP().includes('fc:' + q);
-  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i>' : '<i class="far fa-circle"></i>') + '</span>';
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
 }
 
 function ecMark(t) {
   const learned = getKP().includes('err:' + t);
-  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i>' : '<i class="far fa-circle"></i>') + '</span>';
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
 }
 
 // 事件委托：点击 .kp-mark 标记
@@ -464,7 +464,7 @@ function toggleKP(name, el) {
   if (item) item.classList.toggle('kp-learned', arr.includes(name));
   const mark = el.querySelector('.kp-mark') || el;
   if (mark) {
-    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i>' : '<i class="far fa-circle"></i>';
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
   }
   try {
     const ac = new (window.AudioContext || window.webkitAudioContext)();
@@ -478,7 +478,7 @@ function toggleKP(name, el) {
 }
 function kpMark(name) {
   const learned = getKP().includes(name);
-  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i>' : '<i class="far fa-circle"></i>') + '</span>';
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
 }
 function kpInit() {
   document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
@@ -489,7 +489,7 @@ function kpInit() {
     item.classList.toggle('kp-learned', learned);
     const mark = document.createElement('span');
     mark.className = 'kp-mark' + (learned ? ' done' : '');
-    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i>' : '<i class="far fa-circle"></i>';
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
     mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
     mark.title = '标记已学习';
     titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
