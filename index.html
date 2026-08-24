@@ -445,6 +445,31 @@ function render() {
       </a>`).join('')}
     </div>`);
 
+  // === 预习闯关 ===
+  html += renderSection('预习闯关 · 八上', 'fa-gamepad', '#f39c12', 'badge-tools', `
+    <div class="tool-grid">
+      <a href="preview_challenge_math8.html" class="tool-card t-training">
+        <div class="t-icon"><i class="fas fa-calculator"></i></div>
+        <div class="t-name">数学闯关</div>
+        <div class="t-desc">北师大八上 · 勾股定理→一次函数</div>
+      </a>
+      <a href="preview_challenge_physics8.html" class="tool-card t-flow">
+        <div class="t-icon"><i class="fas fa-flask"></i></div>
+        <div class="t-name">物理闯关</div>
+        <div class="t-desc">人教八上 · 机械运动→质量密度</div>
+      </a>
+      <a href="preview_challenge_chinese8.html" class="tool-card t-print">
+        <div class="t-icon"><i class="fas fa-book"></i></div>
+        <div class="t-name">语文闯关</div>
+        <div class="t-desc">统编八上 · 新闻→文言文</div>
+      </a>
+      <a href="preview_challenge_english8.html" class="tool-card t-add">
+        <div class="t-icon"><i class="fas fa-language"></i></div>
+        <div class="t-name">英语闯关</div>
+        <div class="t-desc">人教八上 · 假期→条件句</div>
+      </a>
+    </div>`);
+
   // === 学校学习 ===
   html += renderSection('学校学习', 'fa-school', '#2ecc71', 'badge-study',
     schoolSubjectsData.map((grade, gi) => {
