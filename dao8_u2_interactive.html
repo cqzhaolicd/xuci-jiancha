@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第二单元 遵守社会规则 · 8年级上道德与法治</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#9b59b6;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 第二单元 遵守社会规则 · 8年级上道德与法治</h1>
+    <div class="meta">第二单元 遵守社会规则 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>社会生活有秩序</h4><p>社会秩序是社会生活的一种有序化状态。与人们日常生活关系密切的社会秩序包括社会管理秩序、生产秩序、交通秩序和公共场所秩序等。社会正常运行需要秩序，社会秩序是人民安居乐业的保障——在有序、整洁、安全的社会环境中，我们享有人身自由和财产安全，享有公平的发展机遇。</p></div><div class="k-item"><h4>维护秩序靠规则</h4><p>社会规则是人们为了维护有秩序的社会环境，在逐渐达成默契与共识的基础上形成的。调节我们行为的规则有很多，如道德、纪律、法律等。社会规则明确社会秩序的内容，告诉我们应该如何安排社会生活各方面的关系；社会规则保障社会秩序的实现，明确破坏秩序时的处罚。</p></div><div class="k-item"><h4>自由与规则不可分</h4><p>社会规则划定了自由的边界。自由不是随心所欲，它受道德、纪律、法律等社会规则的约束。社会规则是人们享有自由的保障：人们建立规则的目的不是限制自由，而是保证每个人不越过自由的边界，促进社会有序运行。</p></div><div class="k-item"><h4>自觉遵守与维护改进规则</h4><p>自觉遵守规则：遵守社会规则需要他律和自律——他律是监督、提醒、奖惩等外在约束，自律是自我约束、严于律己、不断自我反省；要发自内心地敬畏规则，将规则内化于心、外化于行。坚定维护规则：从自己做起自觉遵守，在保证自身安全的前提下提醒、监督、帮助他人遵守规则。积极改进规则：规则不是一成不变的，要积极参与规则的改进和完善，积极为新规则的形成建言献策。</p></div><div class="k-item"><h4>尊重他人</h4><p>尊重即尊敬、重视，尊重他人是一个人内在修养的外在表现。尊重使社会生活和谐融洽，是维系良好人际关系的的前提，是文明社会的重要特征。做法：积极关注、重视他人；平等对待他人（每个人在人格和法律地位上都是平等的）；学会换位思考（己所不欲，勿施于人）；学会欣赏他人。</p></div><div class="k-item"><h4>以礼待人</h4><p>礼体现一个人的尊重、谦让、与人为善等良好品质，主要表现在语言文明、仪表端庄、举止文明等方面。文明有礼是一个人立身处世的前提，促进社会和谐，体现国家形象。做文明有礼的人：态度谦和、用语文明；仪表整洁、举止端庄；在社会生活中不断学习、观察、思考和践行。</p></div><div class="k-item"><h4>诚实守信</h4><p>诚信是社会主义核心价值观在公民个人层面的一个价值准则，是一种道德规范和品质，是中华民族的传统美德，也是一项民法原则。诚信是一个人安身立命之本，是企业的无形资产，促进社会文明、国家兴旺。践行诚信：树立诚信意识；运用诚信智慧（尊重他人隐私与对人诚实冲突时，遵循伦理原则和法律要求，权衡利弊）；珍惜个人的诚信记录。</p></div><div class="k-item"><h4>违法与犯罪</h4><p>违法行为是指违反法律、法规的规定，危害社会的行为。根据违反法律的类别分为民事违法行为、行政违法行为和刑事违法行为。民事违法和行政违法对社会危害相对轻微，是一般违法行为；刑事违法是违法行为中最严重的一种，即犯罪。犯罪是具有严重社会危害性、触犯了刑法、应当受到刑罚处罚的行为；三个基本特征是严重社会危害性（最本质特征）、刑事违法性（法律标志）、应受刑罚处罚性。刑罚分为主刑（管制、拘役、有期徒刑、无期徒刑、死刑）和附加刑（罚金、剥夺政治权利、没收财产、驱逐出境）。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 统编版（人教版）八年级上册 · 第二单元 遵守社会规则 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_dao8_u2_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第二单元 遵守社会规则',chapter:'第二单元 遵守社会规则',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'勾股定理,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "社会秩序是社会生活的一种（　）状态", "opts": ["A. 混乱无序", "B. 有序化", "C. 自由放任", "D. 一成不变"], "ans": 1, "exp": "社会秩序是社会生活的一种有序化状态，包括社会管理秩序、生产秩序、交通秩序和公共场所秩序等。"}, {"q": "下列不属于社会秩序的是（　）", "opts": ["A. 社会管理秩序", "B. 生产秩序", "C. 交通秩序", "D. 自然界的秩序"], "ans": 3, "exp": "与人们日常生活关系密切的社会秩序包括社会管理秩序、生产秩序、交通秩序和公共场所秩序等，自然界的秩序不属于社会秩序。"}, {"q": "法律是（　）的社会规则，不违法是人们行为的底线", "opts": ["A. 最温柔", "B. 最宽松", "C. 最刚性", "D. 最复杂"], "ans": 2, "exp": "法律是最刚性的社会规则，不违法是人们行为的底线。要做到不违法，就要了解什么是违法。"}, {"q": "「自由不是随心所欲，它受道德、纪律、法律等社会规则的约束。」这说明（　）", "opts": ["A. 社会规则划定了自由的边界", "B. 自由与规则相互对立", "C. 遵守规则就没有自由", "D. 自由可以脱离规则"], "ans": 0, "exp": "社会规则划定了自由的边界，自由不是随心所欲；同时规则也是人们享有自由的保障，保证每个人不越过自由的边界。"}, {"q": "遵守社会规则，既需要监督、提醒、奖惩等外在约束，即（　），又需要自我约束，即（　）", "opts": ["A. 自律　他律", "B. 他律　自律", "C. 纪律　道德", "D. 法律　道德"], "ans": 1, "exp": "遵守社会规则需要他律和自律：他律是监督、提醒、奖惩等外在约束；自律是自我约束，即严于律己，不断自我反省，做到自觉遵守规则。"}, {"q": "遵守规则要求我们（　）①发自内心地敬畏规则 ②将规则内化于心、外化于行 ③随心所欲 ④只要求他人遵守", "opts": ["A. ①②", "B. ②③", "C. ③④", "D. ①④"], "ans": 0, "exp": "遵守社会规则，需要我们发自内心地敬畏规则，将规则作为自己行动的准绳，无论何时何地都将规则内化于心、外化于行。"}, {"q": "劝导他人时，劝导无效且自身安全受到威胁时，应该（　）", "opts": ["A. 与对方硬拼", "B. 机智地向他人求助或拨打110报警", "C. 置之不理", "D. 妥协退让"], "ans": 1, "exp": "劝导要注意有「礼」、有「理」、有「节」，适可而止；如人身安全受到威胁，要机智地向他人求助，或拨打110报警电话寻求支援。"}, {"q": "尊重他人需要我们（　）①积极关注、重视他人 ②平等对待他人 ③学会换位思考 ④学会欣赏他人", "opts": ["A. ①②③④", "B. ②③④", "C. ①②④", "D. ①③④"], "ans": 0, "exp": "尊重他人的做法：积极关注、重视他人；平等对待他人；学会换位思考；学会欣赏他人，四项都正确。"}, {"q": "「己所不欲，勿施于人」体现了尊重他人要做到（　）", "opts": ["A. 积极关注、重视他人", "B. 平等对待他人", "C. 学会换位思考", "D. 学会欣赏他人"], "ans": 2, "exp": "学会换位思考，就是设身处地为他人着想，不把自己的意志强加给他人，将心比心，体会他人的感受，理解他人的难处，包容他人。"}, {"q": "礼主要表现在（　）等方面", "opts": ["A. 能言善辩", "B. 语言文明、仪表端庄、举止文明", "C. 穿着华丽", "D. 成绩优异"], "ans": 1, "exp": "礼体现一个人的尊重、谦让、与人为善等良好品质，社会生活中礼主要表现在语言文明、仪表端庄、举止文明等方面。"}, {"q": "文明有礼的意义有（　）①是一个人立身处世的前提 ②促进社会和谐 ③体现国家形象 ④可以随心所欲", "opts": ["A. ①②④", "B. ②③④", "C. ①③④", "D. ①②③"], "ans": 3, "exp": "文明有礼是一个人立身处世的前提；文明有礼促进社会和谐；文明有礼体现国家形象。④说法错误，故选①②③。"}, {"q": "诚信是社会主义核心价值观在公民个人层面的一个价值准则，也是一项（　）原则", "opts": ["A. 民法", "B. 刑法", "C. 行政法", "D. 宪法"], "ans": 0, "exp": "诚信是一种道德规范和品质，是中华民族的传统美德，也是一项民法原则。民法意义上的诚信原则更强调人们在社会活动中讲信用、守诺言、诚实不欺。"}, {"q": "根据违反法律的类别，违法行为分为（　）", "opts": ["A. 一般违法行为和犯罪", "B. 民事违法行为、行政违法行为、刑事违法行为", "C. 道德违法行为和法律违法行为", "D. 轻微违法和重大违法"], "ans": 1, "exp": "根据违反法律的类别，违法行为分为民事违法行为（如欠债不还）、行政违法行为（如扰乱社会治安）和刑事违法行为（如故意杀人）。"}, {"q": "犯罪的三个基本特征是（　）①严重社会危害性 ②刑事违法性 ③应受刑罚处罚性 ④违反道德规范", "opts": ["A. ①②④", "B. ②③④", "C. ①②③", "D. ①③④"], "ans": 2, "exp": "犯罪是具有严重社会危害性、触犯了刑法、应当受到刑罚处罚的行为。严重社会危害性是最本质特征，刑事违法性是法律标志，应受刑罚处罚性是必然法律后果。"}, {"q": "处理纠纷和应对侵害最正规、最权威的手段，维护合法权益的最后屏障是（　）", "opts": ["A. 协商", "B. 调解", "C. 忍气吞声", "D. 诉讼"], "ans": 3, "exp": "诉讼是人民法院在诉讼当事人参与下依照法定程序解决纠纷和冲突的活动，是处理纠纷和应对侵害最正规、最权威的手段，是维护合法权益的最后屏障。"}];const flashcards=[{"q": "社会秩序", "a": "社会生活的一种有序化状态：社会管理秩序、生产秩序、交通秩序、公共场所秩序；是人民安居乐业的保障"}, {"q": "社会规则", "a": "为维护有秩序的社会环境在默契与共识基础上形成；如道德、纪律、法律；明确秩序内容、保障秩序实现"}, {"q": "自由与规则", "a": "规则划定自由的边界；自由受道德、纪律、法律约束；规则是享有自由的保障"}, {"q": "他律与自律", "a": "他律=监督、提醒、奖惩等外在约束；自律=自我约束，严于律己、自我反省"}, {"q": "敬畏规则", "a": "发自内心地敬畏规则，将规则内化于心、外化于行——「梨虽无主，我心有主」"}, {"q": "维护与改进规则", "a": "自觉遵守+在保证自身安全前提下提醒监督帮助他人；规则不是一成不变，积极建言献策"}, {"q": "尊重他人", "a": "尊重即尊敬、重视，是内在修养的外在表现；尊重使社会生活和谐融洽；敬人者，人恒敬之"}, {"q": "尊重他人的做法", "a": "积极关注重视他人、平等对待他人、换位思考（己所不欲勿施于人）、欣赏他人"}, {"q": "以礼待人", "a": "礼：语言文明、仪表端庄、举止文明；文明有礼是立身处世的前提、促进社会和谐、体现国家形象"}, {"q": "诚信", "a": "核心价值观个人层面价值准则、传统美德、民法原则；安身立命之本、企业无形资产、促进社会文明国家兴旺"}, {"q": "违法行为分类", "a": "民事违法（欠债不还）、行政违法（扰乱治安）、刑事违法（犯罪）；民事违法和行政违法是一般违法"}, {"q": "犯罪与刑罚", "a": "犯罪三特征：严重社会危害性（最本质）、刑事违法性（法律标志）、应受刑罚处罚性；刑罚分主刑（管制、拘役、有期徒刑、无期徒刑、死刑）和附加刑（罚金、剥夺政治权利、没收财产、驱逐出境）"}];const errors=[{"title": "❌ 秩序与规则混为一谈", "wrong": "把社会秩序等同于社会规则。", "right": "社会秩序是社会生活的一种有序化状态（社会管理、生产、交通、公共场所秩序）；社会规则是维护秩序形成的（道德、纪律、法律等），规则明确社会秩序的内容、保障社会秩序的实现。"}, {"title": "❌ 自由等于随心所欲", "wrong": "认为自由就是想干什么就干什么，规则限制了自由。", "right": "自由不是随心所欲，它受道德、纪律、法律等社会规则的约束；规则划定自由的边界，也是人们享有自由的保障。乘客堵车门导致列车延误被行政拘留就是例证。"}, {"title": "❌ 遵守规则只靠外在监督", "wrong": "认为没人看到、没人管就可以不遵守规则。", "right": "遵守社会规则既要他律，更要自律。要发自内心地敬畏规则，将规则内化于心、外化于行，做到「梨虽无主，我心有主」。"}, {"title": "❌ 尊重等于迎合讨好", "wrong": "认为尊重他人就是事事顺从、讨好他人。", "right": "尊重即尊敬、重视，尊重他人的人格、权利。做法是积极关注重视他人、平等对待他人、换位思考、欣赏他人，而不是无原则的迎合。"}, {"title": "❌ 一般违法不算违法", "wrong": "认为谎报险情、欠债不还只是「小错」，不违法。", "right": "谎报险情、破坏铁路封闭网是违反治安管理处罚法的行政违法行为；欠债不还、侵犯他人著作权是民事违法行为。一般违法也要承担法律责任。"}, {"title": "❌ 未成年人犯罪不用负责", "wrong": "认为年龄小，违法犯罪也没关系。", "right": "已满十六周岁的人犯罪应当负刑事责任；已满十四周岁不满十六周岁的人犯故意杀人、抢劫、贩卖毒品等罪应负刑事责任。预防犯罪要杜绝不良行为，防患于未然。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_dao8_u2_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

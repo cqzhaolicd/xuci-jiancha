@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>生物的多样性及其保护</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 生物的多样性及其保护</h1>
+    <div class="meta">第六单元 生物的多样性及其保护 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>生物分类的依据</h4><p>对生物进行分类时，要根据生物之间在形态结构和生理功能上的相似程度进行分类。对植物进行分类要仔细观察植物的形态结构，如被子植物的根、茎、叶、花、果实和种子的形态结构；在被子植物中，花、果实和种子往往作为分类的重要依据。动物的分类除了要比较形态结构，往往还要比较生理功能。例如根据有无种子、种子有无果皮包被等可对植物逐级分类。</p></div><div class="k-item"><h4>分类的等级：从界到种</h4><p>生物分类从大到小的等级依次是：界、门、纲、目、科、属、种。生物学家根据生物之间在形态结构和生理功能上的相似程度，把它们分成不同等级的分类单位。'种'是最基本的分类单位，同种生物的亲缘关系是最密切的。分类单位越小，所包含的生物种类越少，生物之间的共同特征越多，亲缘关系越近。</p></div><div class="k-item"><h4>狼在分类中的位置</h4><p>以狼为例：所有的狼都属于同一个物种（犬属、狼种）；狼和郊狼同属犬属；狼、郊狼、狐同属犬科；狼、郊狼、狐、虎都有尖锐的犬齿，同属食肉目；它们与马、兔、蝙蝠等都具有胎生、哺乳的特征，同属哺乳纲；这些动物都有脊椎骨构成的脊柱，同属脊索动物门脊椎动物亚门。狼属于动物界。</p></div><div class="k-item"><h4>生物种类的多样性</h4><p>生物多样性的内涵包括三个层次：生物种类的多样性、基因的多样性和生态系统的多样性。生物种类的多样性是指地球上生物种类的丰富程度。我国是生物种类最丰富的国家之一，如我国已知的裸子植物约占世界裸子植物的30%以上，因此我国有'裸子植物的故乡'之称。多种多样的生物是生态系统的重要成员，是一座座独特的基因库。</p></div><div class="k-item"><h4>基因的多样性</h4><p>每种生物都是一个丰富的基因库：一个物种的个体数量很多，这些个体的基因组成是有差别的，它们共同构成了一个基因库。不同种生物的基因有较大差别，同种生物的基因组成也有差别。生物种类的多样性实质上就是基因的多样性。如我国科学家利用野生稻与栽培稻杂交培育出优良水稻品种（袁隆平的杂交水稻），就是利用了基因的多样性。</p></div><div class="k-item"><h4>生态系统的多样性</h4><p>地球上不同的环境中生活着不同的生物，森林、草原、荒漠、湿地、海洋、湖泊等生态系统多种多样，这就是生态系统的多样性。生物种类越丰富，生态系统的结构往往越复杂，自动调节能力越强。保护生物的栖息环境，保护生态系统的多样性，是保护生物多样性的根本措施。</p></div><div class="k-item"><h4>生物多样性面临的威胁</h4><p>由于人类活动的影响，生物多样性面临严重威胁，物种灭绝速度加快。我国特有的珍稀动植物有：金丝猴、白鳍豚、朱鹮、扬子鳄、银杉、珙桐（'植物界的大熊猫'）等。造成生物多样性面临威胁的原因：乱砍滥伐和乱捕滥杀（偷猎）、栖息环境的破坏和丧失（最主要的原因）、环境污染，以及外来物种入侵（如水葫芦、薇甘菊等外来物种疯长，使本地物种失去生存空间）。</p></div><div class="k-item"><h4>保护生物多样性的措施</h4><p>保护生物多样性的措施：①就地保护：建立自然保护区，是保护生物多样性最为有效的措施，如保护大熊猫的四川卧龙、王朗自然保护区，保护朱鹮的陕西洋县自然保护区，保护银杉的广西花坪自然保护区；②迁地保护：把濒危物种迁出原地，移入动物园、植物园、水族馆和濒危动物繁育中心，进行特殊的保护和管理；③建立精子库、种子库等，利用生物技术对濒危物种的基因进行保护；④法制管理：颁布《中华人民共和国森林法》《中华人民共和国野生动物保护法》《中国自然保护纲要》等法律法规，依法保护生物多样性。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 人教版八年级上册 · 第六单元 生物的多样性及其保护 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_bio8_ch6_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第六单元 生物的多样性及其保护',chapter:'第六单元 生物的多样性及其保护',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第六单元 生物的多样性及其保护'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "对生物进行分类时，最主要的依据是（　）", "opts": ["A. 生活环境", "B. 生物之间在形态结构和生理功能上的相似程度", "C. 生物个体的大小", "D. 生物数量的多少"], "ans": 1, "exp": "生物分类主要是根据生物的相似程度（包括形态结构和生理功能等）把生物划分为种和属等不同的等级。生活环境、个体大小、数量多少都不是分类的主要依据。"}, {"q": "在对被子植物进行分类时，往往作为重要分类依据的器官是（　）", "opts": ["A. 根和茎", "B. 花、果实和种子", "C. 叶和茎", "D. 根和叶"], "ans": 1, "exp": "在被子植物中，花、果实和种子往往作为分类的重要依据，因为它们受环境影响较小、形态结构相对稳定，能较好地反映植物间的亲缘关系。根、茎、叶的形态结构也可作为分类依据，但花、果实和种子更重要。"}, {"q": "生物分类从大到小的等级依次是（　）", "opts": ["A. 界、门、纲、目、科、属、种", "B. 种、属、科、目、纲、门、界", "C. 界、门、目、纲、科、属、种", "D. 门、界、纲、目、科、属、种"], "ans": 0, "exp": "生物分类从大到小的等级依次是：界、门、纲、目、科、属、种。界是最大的分类单位，种是最基本的分类单位。可用口诀'界门纲目科属种'记忆。"}, {"q": "生物分类中最基本的分类单位是（　）", "opts": ["A. 界", "B. 门", "C. 属", "D. 种"], "ans": 3, "exp": "'种'是最基本的分类单位，一种生物便是一个物种，同种生物的亲缘关系是最密切的。界是最大的分类单位，包含的生物种类最多、共同特征最少。"}, {"q": "下列关于分类单位的叙述，正确的是（　）", "opts": ["A. 分类单位越大，包含的生物种类越多，共同特征越多", "B. 分类单位越小，包含的生物种类越少，共同特征越多", "C. 同属的生物一定同种", "D. 不同种的生物之间没有共同特征"], "ans": 1, "exp": "分类单位越小（如种），包含的生物种类越少，生物之间的共同特征越多、亲缘关系越近；分类单位越大（如界），包含的生物种类越多，共同特征越少。属包含若干种，同属的生物不一定同种。"}, {"q": "狼与郊狼同属犬属，与狐同属犬科，与虎同属食肉目，与马、兔同属哺乳纲。据此判断，与狼亲缘关系最近的是（　）", "opts": ["A. 马", "B. 兔", "C. 郊狼", "D. 虎"], "ans": 2, "exp": "分类单位越小，亲缘关系越近。狼与郊狼同属（犬属），分类单位最小，亲缘关系最近；与狐同科、与虎同目、与马兔同纲，分类单位越来越大，亲缘关系越来越远。"}, {"q": "生物多样性主要包括哪三个层次（　）", "opts": ["A. 生物种类的多样性、基因的多样性、生态系统的多样性", "B. 生物种类的多样性、数量的多样性、分布的多样性", "C. 基因的多样性、细胞的多样性、组织的多样性", "D. 生态系统的多样性、环境的多样性、气候的多样性"], "ans": 0, "exp": "生物多样性的内涵包括三个层次：生物种类的多样性（物种多样性）、基因的多样性（遗传多样性）和生态系统的多样性。三者相互联系，保护生物的栖息环境、保护生态系统的多样性是保护生物多样性的根本措施。"}, {"q": "生物种类的多样性实质上是指（　）", "opts": ["A. 生态系统的多样性", "B. 基因的多样性", "C. 数量的多样性", "D. 环境的多样性"], "ans": 1, "exp": "每种生物都是一个丰富的基因库，不同种生物的基因有较大差别，同种生物的基因组成也有差别。生物种类的多样性实质上就是基因的多样性。"}, {"q": "我国科学家利用野生水稻与普通栽培水稻多次杂交，培育出产量很高的杂交水稻新品种，这利用了（　）", "opts": ["A. 生物种类的多样性", "B. 基因的多样性", "C. 生态系统的多样性", "D. 栖息环境的多样性"], "ans": 1, "exp": "野生水稻与栽培水稻属于同一物种的不同品种，它们的基因组成有差别，利用它们杂交培育新品种，利用了基因（遗传）的多样性。这也说明我国丰富的基因资源为育种提供了材料。"}, {"q": "保护生物多样性的根本措施是（　）", "opts": ["A. 迁地保护", "B. 建立精子库、种子库", "C. 保护生物的栖息环境，保护生态系统的多样性", "D. 加强法制管理"], "ans": 2, "exp": "生物必须生活在一定的环境中，栖息环境的破坏和丧失是生物多样性面临威胁的最主要原因。因此保护生物的栖息环境，保护生态系统的多样性，是保护生物多样性的根本措施。"}, {"q": "保护生物多样性最为有效的措施是（　）", "opts": ["A. 就地保护（建立自然保护区）", "B. 迁地保护（移入动物园、植物园）", "C. 人工饲养繁殖", "D. 制定法律法规"], "ans": 0, "exp": "建立自然保护区是就地保护的主要形式，把保护对象（珍稀动植物及其栖息环境）就地保护起来，是保护生物多样性最为有效的措施。如四川卧龙保护区保护大熊猫，陕西洋县保护区保护朱鹮。"}, {"q": "我国特有的、被称为'植物界的大熊猫'的珍稀植物是（　）", "opts": ["A. 银杉", "B. 珙桐", "C. 水杉", "D. 银杏"], "ans": 1, "exp": "珙桐是我国特有的珍稀植物，开花时花序基部有白色大苞片，形如鸽子的翅膀，被称为'中国鸽子树'，又有'植物界的大熊猫'之称。我国特有的珍稀动植物还有金丝猴、白鳍豚、朱鹮、扬子鳄、银杉等。"}, {"q": "下列哪项不是生物多样性面临威胁的原因（　）", "opts": ["A. 栖息环境的破坏和丧失", "B. 乱捕滥杀、乱砍滥伐", "C. 环境污染", "D. 生物多样性的自动调节"], "ans": 3, "exp": "生物多样性面临威胁的原因：栖息环境的破坏和丧失（最主要）、乱捕滥杀和乱砍滥伐、环境污染、外来物种入侵等。生物多样性是长期进化的结果，其本身没有'自动调节'之说，威胁主要来自人类活动。"}, {"q": "外来物种入侵对本地生物多样性的影响是（　）", "opts": ["A. 增加本地生物种类，丰富生物多样性", "B. 与本地物种争夺空间和食物，破坏本地生态，威胁生物多样性", "C. 没有影响", "D. 只影响植物不影响动物"], "ans": 1, "exp": "外来物种入侵后，由于没有天敌制约，往往大量繁殖（如水葫芦疯长），与本地物种争夺生存空间和食物，使本地物种失去生存空间，破坏本地生态，威胁生物多样性。外来物种入侵是生物多样性面临威胁的重要原因之一。"}, {"q": "我国为保护生物多样性颁布的法律法规不包括（　）", "opts": ["A. 《中华人民共和国森林法》", "B. 《中华人民共和国野生动物保护法》", "C. 《中国自然保护纲要》", "D. 《中华人民共和国义务教育法》"], "ans": 3, "exp": "我国颁布的保护生物多样性的法律法规有《中华人民共和国森林法》《中华人民共和国野生动物保护法》和《中国自然保护纲要》等。《义务教育法》是教育领域的法律，与生物多样性保护无关。"}];const flashcards=[{"q": "生物分类", "a": "根据生物在形态结构和生理功能上的相似程度，把生物划分为种和属等不同等级，以弄清亲缘关系和进化关系"}, {"q": "分类等级", "a": "从大到小：界、门、纲、目、科、属、种。种是最基本的分类单位，同种生物亲缘关系最密切"}, {"q": "种（物种）", "a": "最基本的分类单位，一种生物便是一个物种，同种生物的亲缘关系最密切"}, {"q": "分类单位大小规律", "a": "分类单位越小→包含生物种类越少→共同特征越多→亲缘关系越近"}, {"q": "被子植物分类依据", "a": "根、茎、叶、花、果实和种子的形态结构，其中花、果实和种子往往作为重要依据"}, {"q": "生物种类的多样性", "a": "地球上生物种类的丰富程度。我国是生物种类最丰富的国家之一，有'裸子植物的故乡'之称"}, {"q": "基因的多样性", "a": "每种生物都是一个丰富的基因库，生物种类的多样性实质上就是基因的多样性"}, {"q": "生态系统的多样性", "a": "森林、草原、荒漠、湿地、海洋等生态系统多种多样；保护栖息环境、保护生态系统多样性是保护生物多样性的根本措施"}, {"q": "就地保护", "a": "建立自然保护区，保护珍稀动植物及其栖息环境，是保护生物多样性最为有效的措施"}, {"q": "迁地保护", "a": "把濒危物种迁出原地，移入动物园、植物园、水族馆和濒危动物繁育中心进行特殊保护和管理"}, {"q": "外来物种入侵", "a": "外来物种无天敌制约而大量繁殖（如水葫芦），与本地物种争夺生存空间，威胁生物多样性"}, {"q": "我国珍稀动植物", "a": "金丝猴、白鳍豚、朱鹮、扬子鳄、银杉、珙桐（'植物界的大熊猫'）等"}];const errors=[{"title": "最基本的分类单位", "wrong": "认为'界'是最基本的分类单位，因为界排在分类等级最前面。", "right": "界是最大的分类单位，'种'才是最基本的分类单位，一种生物便是一个物种，同种生物的亲缘关系最密切。分类单位越小，包含的生物种类越少，共同特征越多。"}, {"title": "分类单位大小与特征的关系", "wrong": "认为分类单位越大，生物之间的共同特征越多。", "right": "正好相反：分类单位越大（如界），包含的生物种类越多，共同特征越少；分类单位越小（如种），包含的生物种类越少，共同特征越多，亲缘关系越近。"}, {"title": "多样性的实质", "wrong": "认为生物种类多样性的实质是生态系统多样性或环境多样性。", "right": "每种生物都是一个丰富的基因库，不同种生物的基因有较大差别，因此生物种类的多样性实质上就是基因的多样性。生态系统多样性是生物与环境构成的统一整体层面的多样性。"}, {"title": "保护的根本措施与最有效措施", "wrong": "把保护生物多样性的'根本措施'和'最为有效的措施'混为一谈，如认为建立自然保护区是根本措施。", "right": "根本措施：保护生物的栖息环境，保护生态系统的多样性（因为栖息环境破坏是威胁的最主要原因）。最为有效的措施：就地保护，即建立自然保护区。两者要区分清楚。"}, {"title": "外来物种的'好处'", "wrong": "认为引进外来物种能增加本地生物种类、丰富生物多样性。", "right": "外来物种由于在当地没有天敌制约，往往大量繁殖，与本地物种争夺生存空间和食物（如水葫芦疯长），破坏本地生态，反而威胁生物多样性。外来物种入侵是生物多样性面临威胁的重要原因之一，不能随意引进。"}, {"title": "保护=禁止利用", "wrong": "认为保护生物多样性就是完全禁止开发和利用生物资源。", "right": "保护生物多样性不等于禁止利用，而是合理利用：既要保护生物的栖息环境和珍稀物种（就地保护、迁地保护、法制管理），也要合理开发和利用生物资源，使利用与保护相协调，实现可持续发展。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_bio8_ch6_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

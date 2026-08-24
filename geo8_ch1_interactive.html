@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>从世界看中国</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#3498db;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 从世界看中国</h1>
+    <div class="meta">第1章 从世界看中国 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>优越的地理位置</h4><p>从东、西半球看，我国位于东半球；从南、北半球看，位于北半球。大部分地区位于北温带，南部部分地区位于热带，没有地区位于寒带，光热条件好。</p></div><div class="k-item"><h4>海陆兼备的大国</h4><p>我国位于世界最大的大陆——亚欧大陆的东部、世界最大的大洋——太平洋的西岸，海陆兼备。西部深入亚欧大陆腹地，与许多国家接壤；东部海域广阔，有众多的岛屿和港湾。</p></div><div class="k-item"><h4>疆域四至点</h4><p>最南端：海南省南沙群岛中的曾母暗沙；最北端：黑龙江省漠河市北端的黑龙江主航道中心线上；最西端：新疆维吾尔自治区的帕米尔高原上；最东端：黑龙江省黑龙江与乌苏里江主航道中心线的汇合处。</p></div><div class="k-item"><h4>领土与邻国</h4><p>陆地领土面积约960万平方千米，仅次于俄罗斯和加拿大，居世界第三位。陆上国界线长达2.2万多千米，与14个国家相邻；大陆海岸线长1.8万多千米，与6个国家隔海相望。我国与朝鲜、越南既陆上相邻，又隔海相望。</p></div><div class="k-item"><h4>海洋国土与内海</h4><p>大陆濒临的海洋从北到南依次为渤海、黄海、东海、南海，台湾岛东岸直接濒临太平洋。领海范围从领海基线起算向海上延伸到12海里。被辽东半岛和山东半岛环抱的渤海，以及雷州半岛和海南岛之间的琼州海峡，是我国的内海。</p></div><div class="k-item"><h4>行政区划</h4><p>基本实行省（自治区、直辖市、特别行政区）、县（市、自治县）、乡（镇、民族乡）三级行政区划。目前有23个省、5个自治区、4个直辖市和2个特别行政区，共计34个省级行政区域。北京是中华人民共和国的首都。</p></div><div class="k-item"><h4>人口与人口政策</h4><p>根据2020年第七次全国人口普查，我国人口总数为14.12亿，约占世界人口的1/5，是世界上人口最多的国家。计划生育是我国一项基本国策。2016年起全面实施一对夫妻可生育两个孩子的政策，2021年开始实施一对夫妻可以生育三个子女的政策。</p></div><div class="k-item"><h4>人口与民族分布</h4><p>人口分布以黑龙江黑河到云南腾冲一线为界：东南部面积占全国43%，人口占94%；西北部面积占57%，人口占6%。56个民族中汉族约占91%，壮族人口最多（超1600万）。民族分布具有"大杂居、小聚居、交错居住"的特点，少数民族主要分布在西南、西北和东北地区。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 人教版八年级上册 · 第1章 从世界看中国 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_geo8_ch1_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第1章 从世界看中国',chapter:'第1章 从世界看中国',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'勾股定理,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "从半球位置看，我国位于", "opts": ["A. 东半球、北半球", "B. 西半球、北半球", "C. 东半球、南半球", "D. 西半球、南半球"], "ans": 0, "exp": "从东、西半球看，我国位于东半球；从南、北半球看，我国位于北半球。"}, {"q": "我国大部分地区位于地球五带中的", "opts": ["A. 热带", "B. 北温带", "C. 南温带", "D. 寒带"], "ans": 1, "exp": "我国大部分地区位于北温带，南部部分地区位于热带，没有地区位于寒带，光热条件好。"}, {"q": "我国领土的最南端是", "opts": ["A. 海南岛", "B. 台湾岛", "C. 南沙群岛中的曾母暗沙", "D. 西沙群岛"], "ans": 2, "exp": "我国领土最南端为海南省南沙群岛中的曾母暗沙；最北端在黑龙江省漠河市北端的黑龙江主航道中心线上。"}, {"q": "我国陆地领土面积约为", "opts": ["A. 960万平方千米", "B. 860万平方千米", "C. 1200万平方千米", "D. 560万平方千米"], "ans": 0, "exp": "我国陆地领土面积约960万平方千米，仅次于俄罗斯和加拿大，居世界第三位，与欧洲的面积差不多。"}, {"q": "与我国陆上相邻的国家共有", "opts": ["A. 6个", "B. 14个", "C. 15个", "D. 20个"], "ans": 1, "exp": "我国陆上国界线长达2.2万多千米，与14个国家相邻。"}, {"q": "与我国隔海相望的国家共有", "opts": ["A. 6个", "B. 14个", "C. 4个", "D. 8个"], "ans": 0, "exp": "我国大陆海岸线长1.8万多千米，与6个国家隔海相望。此外，我国与朝鲜、越南既陆上相邻，又隔海相望。"}, {"q": "我国的内海是", "opts": ["A. 渤海和琼州海峡", "B. 黄海和东海", "C. 东海和南海", "D. 渤海和黄海"], "ans": 0, "exp": "被辽东半岛和山东半岛所环抱的渤海，以及雷州半岛和海南岛之间的琼州海峡，是我国的内海。"}, {"q": "我国大陆濒临的海洋，从北到南依次为", "opts": ["A. 渤海、黄海、东海、南海", "B. 黄海、渤海、东海、南海", "C. 渤海、东海、黄海、南海", "D. 南海、东海、黄海、渤海"], "ans": 0, "exp": "我国大陆濒临的海洋，从北到南依次为渤海、黄海、东海、南海，台湾岛东岸直接濒临太平洋。"}, {"q": "我国共有多少个省级行政区域", "opts": ["A. 23个", "B. 30个", "C. 34个", "D. 36个"], "ans": 2, "exp": "我国有23个省、5个自治区、4个直辖市和2个特别行政区，共计34个省级行政区域。"}, {"q": "我国的5个自治区不包括", "opts": ["A. 新疆维吾尔自治区", "B. 西藏自治区", "C. 内蒙古自治区", "D. 宁夏回族自治区之外的青海"], "ans": 3, "exp": "5个自治区是新疆维吾尔自治区、西藏自治区、内蒙古自治区、宁夏回族自治区和广西壮族自治区，青海省不是自治区。"}, {"q": "根据2020年第七次全国人口普查，我国人口总数约为", "opts": ["A. 10亿", "B. 12.66亿", "C. 14.12亿", "D. 16亿"], "ans": 2, "exp": "2020年第七次全国人口普查我国人口总数为14.12亿，约占世界人口的1/5，是世界上人口最多的国家。"}, {"q": "我国人口分布的地理界线大致是", "opts": ["A. 秦岭—淮河一线", "B. 漠河—腾冲一线", "C. 黑河—腾冲一线", "D. 大兴安岭—阴山一线"], "ans": 2, "exp": "从黑龙江黑河到云南腾冲画一条直线，此线东南部人口稠密，西北部人口稀疏，这就是胡焕庸提出的\"胡焕庸线\"。"}, {"q": "黑河—腾冲一线东南部的人口约占全国总人口的", "opts": ["A. 43%", "B. 57%", "C. 94%", "D. 6%"], "ans": 2, "exp": "黑河—腾冲一线的东南部面积占全国土地总面积的43%，人口占全国总人口的94%；西北部面积占57%，人口占6%。"}, {"q": "我国少数民族中人口最多的是", "opts": ["A. 回族", "B. 壮族", "C. 满族", "D. 苗族"], "ans": 1, "exp": "壮族人口最多，超过1600万；满族、回族、苗族、维吾尔族、土家族、彝族、蒙古族、藏族人口都超过500万。"}, {"q": "我国民族分布的特点是", "opts": ["A. 汉族集中分布在西部", "B. 少数民族集中分布在东部", "C. 大杂居、小聚居、交错居住", "D. 每个县市都由单一民族构成"], "ans": 2, "exp": "汉族人口遍布全国各地，少数民族人口主要分布在西南、西北和东北地区。我国民族分布具有\"大杂居、小聚居、交错居住\"的特点，没有一个县或市是由单一民族构成的。"}];const flashcards=[{"q": "半球位置", "a": "东半球、北半球。大部分位于北温带，南部部分地区位于热带，无寒带，光热条件好。"}, {"q": "海陆位置", "a": "亚欧大陆东部、太平洋西岸，海陆兼备；西部深入亚欧大陆腹地，东部海域广阔。"}, {"q": "疆域四至点", "a": "最南：曾母暗沙（南沙群岛）；最北：漠河黑龙江主航道中心线；最西：帕米尔高原；最东：黑龙江与乌苏里江主航道中心线汇合处。"}, {"q": "陆地面积", "a": "约960万平方千米，仅次于俄罗斯和加拿大，居世界第三位。"}, {"q": "邻国与海岸线", "a": "陆上国界线2.2万多千米，14个陆上邻国；大陆海岸线1.8万多千米，6个国家隔海相望。"}, {"q": "内海", "a": "渤海（辽东半岛与山东半岛环抱）和琼州海峡（雷州半岛与海南岛之间）；领海12海里。"}, {"q": "行政区划", "a": "省、县、乡三级；23省+5自治区+4直辖市+2特别行政区=34个省级行政区域。"}, {"q": "人口", "a": "2020年七普14.12亿，约占世界1/5，世界最多；计划生育是基本国策，2021年起可生育三孩。"}, {"q": "胡焕庸线", "a": "黑龙江黑河—云南腾冲一线：东南部占43%面积、94%人口；西北部占57%面积、6%人口。"}, {"q": "民族构成", "a": "56个民族，汉族约占91%；壮族人口最多（超1600万）；宪法规定民族不论大小一律平等。"}, {"q": "民族分布", "a": "\"大杂居、小聚居、交错居住\"；少数民族主要分布在西南、西北和东北地区；实行民族区域自治制度。"}, {"q": "省级行政区记忆法", "a": "顺口溜：两湖两广两河山，五江二宁青陕甘，云贵西四北上天，内重台海福吉安，还有港澳好河山。"}];const errors=[{"title": "960万平方千米的含义", "wrong": "把960万平方千米说成是我国的\"领土总面积\"。", "right": "960万平方千米是指陆地领土面积。我国陆地面积居世界第三位（仅次于俄罗斯、加拿大），此外还有辽阔的海域。"}, {"title": "陆上邻国与隔海相望国家混淆", "wrong": "分不清14个陆上邻国和6个隔海相望的国家，把日本算成陆上邻国。", "right": "陆上国界线2.2万多千米，与14个国家相邻；隔海相望的是6个国家。特别记住：朝鲜、越南既陆上相邻又隔海相望；日本、韩国、菲律宾、马来西亚、文莱、印度尼西亚是隔海相望的国家。"}, {"title": "内海记错", "wrong": "把黄海或东海当成我国的内海。", "right": "我国的内海只有两个：渤海（被辽东半岛和山东半岛环抱）和琼州海峡（雷州半岛与海南岛之间）。黄海、东海、南海是濒临的大洋边缘海。"}, {"title": "胡焕庸线端点记错", "wrong": "把人口地理界线记成\"漠河—腾冲一线\"。", "right": "正确端点是黑龙江黑河（旧称瑷珲）—云南腾冲一线。东南部面积占43%、人口占94%；西北部面积占57%、人口占6%。"}, {"title": "省级行政区域数量构成", "wrong": "算错34个省级行政区域的构成，如漏算2个特别行政区或把直辖市记成5个。", "right": "34个=23个省+5个自治区+4个直辖市+2个特别行政区。直辖市：北京、天津、上海、重庆；特别行政区：香港、澳门。"}, {"title": "人口分布比例记反", "wrong": "把黑河—腾冲线两侧的面积、人口比例记反（如说东南部面积占57%）。", "right": "东南部：面积占43%、人口占94%（地少人多）；西北部：面积占57%、人口占6%（地广人稀）。记忆：东南部\"四三面积、九四人口\"。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_geo8_ch1_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

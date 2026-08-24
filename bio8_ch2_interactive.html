@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>动物的运动和行为</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 动物的运动和行为</h1>
+    <div class="meta">第五单元第2章 动物的运动和行为 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>运动系统的组成</h4><p>哺乳动物的运动系统主要由骨、关节和肌肉（骨骼肌）组成。骨与骨之间通过关节等方式相连形成骨骼，附着在骨骼上的肌肉称为骨骼肌。骨骼肌中间较粗的部分叫肌腹，两端较细的呈乳白色的部分叫肌腱，肌腱可绕过关节连在不同的骨上。人体骨骼由206块骨连接而成，骨骼肌有600多块。</p></div><div class="k-item"><h4>关节：活动的骨连接</h4><p>关节是骨与骨之间的一种连接方式，由关节头、关节窝、关节囊和关节腔组成，关节头和关节窝表面覆盖着关节软骨。关节囊把相邻的两骨牢固地联系起来；关节囊内壁分泌滑液，贮存在密闭的关节腔中，可以减少骨与骨之间的摩擦。关节既牢固又灵活，使骨的运动更加灵活。骨与骨之间的连接方式还有骨缝（不能活动）和椎间盘（活动范围小）。</p></div><div class="k-item"><h4>骨、关节和肌肉的协调配合</h4><p>骨的位置变化产生运动，但骨本身不能运动，要靠骨骼肌的牵拉。骨骼肌受神经传来的刺激收缩时，就会牵动骨绕关节活动，躯体的相应部位便产生运动。与骨连接的肌肉至少有两组相互配合：一组收缩牵拉骨改变位置，另一组收缩使骨复位。屈肘时肱二头肌收缩、肱三头肌舒张；伸肘时肱三头肌收缩、肱二头肌舒张。</p></div><div class="k-item"><h4>运动需要多个系统的配合</h4><p>运动并不是仅靠运动系统来完成的，还需要其他系统的调节和配合：骨骼肌的收缩受神经系统的调节；运动所需的能量，有赖于消化系统、呼吸系统和循环系统等系统的配合（消化系统提供营养物质，呼吸系统提供氧气，循环系统运输物质和氧气）。强大的运动能力有利于动物寻觅食物、躲避敌害、争夺栖息地和繁殖后代，以适应复杂多变的环境。</p></div><div class="k-item"><h4>先天性行为</h4><p>动物生来就有的，由动物体内的遗传物质所决定的行为。如刚出生的小袋鼠就能爬到母袋鼠腹部的育儿袋中吃奶、蜘蛛出生就会结网、婴儿出生就会吃奶、红雀把昆虫喂到鲤鱼嘴里（小鸟喂鱼）。先天性行为使动物能适应环境，得以生存和繁殖后代。但它也有局限性，不能随环境改变而改变。</p></div><div class="k-item"><h4>学习行为</h4><p>在遗传因素的基础上，通过环境因素的作用，由生活经验和学习而获得的行为。如蚯蚓走迷宫（约200次尝试学会直接爬向暗室）、大山雀偷喝牛奶、黑猩猩堆木箱摘香蕉、小鼠走迷宫。先天性行为是学习行为的基础。动物越高等，学习能力越强，学习行为越复杂，越能适应复杂环境的变化。研究动物行为的方法主要有观察法和实验法及两者的结合。</p></div><div class="k-item"><h4>社会行为：组织、分工与等级</h4><p>社会行为的特征：群体内部往往形成一定的组织，成员之间有明确的分工，有的群体中还形成等级。如白蚁群体中有蚁后（专职产卵）、雄蚁（与蚁后交配）、工蚁（觅食、筑巢、照料蚁后等）、兵蚁（专司保卫）；蜜蜂群体中有蜂王、雄蜂和工蜂。群体内的分工合作使动物能更好地适应环境。</p></div><div class="k-item"><h4>群体中的信息交流</h4><p>群体中的动物通过动作、声音、气味等进行信息交流。如蜜蜂发现蜜源后通过舞蹈（如圆形舞、摆尾舞）向同伴传递蜜源的位置和距离；蝶蛾类昆虫的雌虫体表腺体能分泌性外激素吸引雄虫前来交尾；蚂蚁通过气味（分泌物）进行通讯。人们利用性外激素作引诱剂，可以诱杀农业害虫，或干扰雌雄虫交尾，从而控制害虫数量。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 人教版八年级上册 · 第五单元第2章 动物的运动和行为 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_bio8_ch2_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第五单元第2章 动物的运动和行为',chapter:'第五单元第2章 动物的运动和行为',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第五单元第2章 动物的运动和行为'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "哺乳动物的运动系统主要由哪几部分组成（　）", "opts": ["A. 骨、关节和肌肉", "B. 骨骼和骨骼肌", "C. 骨、骨骼肌和神经", "D. 关节和肌肉"], "ans": 0, "exp": "哺乳动物的运动系统主要是由骨、关节和肌肉组成的。骨与骨之间通过关节等方式相连形成骨骼，附着在骨骼上的肌肉称为骨骼肌。注意B项漏掉了关节，运动系统由骨、关节、肌肉三部分组成。"}, {"q": "关节腔内含有滑液，其主要作用是（　）", "opts": ["A. 牢固连接两骨", "B. 减少骨与骨之间的摩擦", "C. 营养关节软骨", "D. 使关节固定不动"], "ans": 1, "exp": "关节囊把相邻的两骨牢固地联系起来，关节囊内壁分泌的滑液贮存在密闭的关节腔中，可以减小骨与骨之间的摩擦，使关节运动灵活。牢固连接靠关节囊，灵活靠滑液和关节软骨。"}, {"q": "骨骼肌中间较粗的部分和两端较细的乳白色部分分别是（　）", "opts": ["A. 肌腹、肌腱", "B. 肌腱、肌腹", "C. 肌腹、韧带", "D. 肌腱、关节囊"], "ans": 0, "exp": "骨骼肌中间较粗的部分叫肌腹，两端较细的呈乳白色的部分叫肌腱。肌腱可绕过关节连在不同的骨上，当骨骼肌受刺激收缩时，就能牵动骨绕关节运动。"}, {"q": "做屈肘动作时，肱二头肌和肱三头肌的状态是（　）", "opts": ["A. 肱二头肌收缩，肱三头肌收缩", "B. 肱二头肌收缩，肱三头肌舒张", "C. 肱二头肌舒张，肱三头肌收缩", "D. 肱二头肌舒张，肱三头肌舒张"], "ans": 1, "exp": "屈肘时，肱二头肌收缩，肱三头肌舒张，肘部弯曲；伸肘时则相反，肱三头肌收缩，肱二头肌舒张。与骨连接的肌肉中，至少有两组相互配合完成运动。"}, {"q": "当你做任何一个动作时，都会包括以下步骤：①骨绕关节转动 ②相应的骨受到牵引 ③骨骼肌收缩 ④骨骼肌接受神经传来的兴奋。正确的顺序是（　）", "opts": ["A. ①②③④", "B. ④③②①", "C. ③④①②", "D. ②①③④"], "ans": 1, "exp": "骨骼肌受神经传来的刺激（④）收缩（③），就会牵动骨绕关节活动（②牵拉骨、①骨绕关节转动），于是躯体产生运动。正确顺序为④③②①，即神经传来兴奋→肌肉收缩→牵动骨→绕关节运动。"}, {"q": "下列关于运动的叙述，不正确的是（　）", "opts": ["A. 运动仅靠运动系统就能完成", "B. 骨骼肌的收缩受神经系统的调节", "C. 运动所需能量有赖于消化、呼吸、循环系统的配合", "D. 强大的运动能力有利于动物寻觅食物、躲避敌害"], "ans": 0, "exp": "运动并不是仅靠运动系统来完成的，还需要神经系统的调节，以及消化系统、呼吸系统、循环系统等提供和运输能量物质。动物运动的意义包括寻觅食物、躲避敌害、争夺栖息地和繁殖后代。"}, {"q": "下列属于先天性行为的是（　）", "opts": ["A. 蚯蚓走迷宫", "B. 大山雀偷喝牛奶", "C. 刚出生的小袋鼠爬到母袋鼠的育儿袋中吃奶", "D. 黑猩猩堆叠木箱摘香蕉"], "ans": 2, "exp": "刚出生的小袋鼠爬到育儿袋中吃奶是生来就有的，由遗传物质决定，属于先天性行为（本能）。蚯蚓走迷宫、大山雀喝牛奶、黑猩猩堆木箱都是通过生活经验和学习获得的，属于学习行为。"}, {"q": "蚯蚓走迷宫要经过约200次尝试才能学会直接爬向潮湿暗室，而小鼠学习走迷宫用的次数要少得多，这说明（　）", "opts": ["A. 蚯蚓没有学习能力", "B. 动物越高等，学习能力越强，学习行为越复杂", "C. 学习行为与遗传因素无关", "D. 所有动物的学习能力相同"], "ans": 1, "exp": "小鼠属于哺乳动物，比环节动物蚯蚓高等，学习能力更强，'尝试与错误'的次数更少。一般来说，动物越高等，学习能力越强，学习行为越复杂，适应复杂环境变化的能力越强。"}, {"q": "下列关于先天性行为和学习行为的叙述，正确的是（　）", "opts": ["A. 两者截然不同、互不相关", "B. 先天性行为是学习行为的基础", "C. 学习行为一旦形成就不会改变", "D. 先天性行为比学习行为更复杂"], "ans": 1, "exp": "先天性行为是动物生来就有的、由遗传物质决定的行为，是学习行为的基础。学习行为是在遗传因素的基础上通过生活经验和学习获得的，会随环境变化而改变。动物的学习行为越复杂，适应环境的能力越强。"}, {"q": "研究动物行为的方法主要有（　）", "opts": ["A. 观察法和实验法", "B. 调查法和测量法", "C. 解剖法和培养法", "D. 分类法和比较法"], "ans": 0, "exp": "研究动物行为的方法主要有观察法和实验法，以及这两种方法的结合。例如探究小鼠走迷宫获取食物的学习行为就采用了实验法，观察小鼠的日常活动则用到观察法。"}, {"q": "下列动物群体中，具有社会行为的是（　）", "opts": ["A. 一群鱼在水中游动", "B. 一群麻雀在树上觅食", "C. 白蚁群体中的蚁后、雄蚁、工蚁和兵蚁", "D. 一群野鸭在湖面游水"], "ans": 2, "exp": "社会行为的特征是群体内部形成一定的组织，成员之间有明确的分工，有的群体中还形成等级。白蚁群体中蚁后专职产卵、雄蚁与蚁后交配、工蚁觅食筑巢、兵蚁专司保卫，分工明确，具有社会行为。鱼群、麻雀群、野鸭群没有明确分工和等级，不具有社会行为。"}, {"q": "在白蚁群体中，负责筑巢、觅食、照料蚁后等工作的成员是（　）", "opts": ["A. 蚁后", "B. 雄蚁", "C. 工蚁", "D. 兵蚁"], "ans": 2, "exp": "白蚁群体中蚁后专职产卵，雄蚁负责与蚁后交配，工蚁负责觅食、筑巢、照料蚁后等，兵蚁专司保卫蚁穴的职责。成员之间分工明确，体现了社会行为的特征。"}, {"q": "蜜蜂发现蜜源后，向同伴传递蜜源位置和距离等信息的方式是（　）", "opts": ["A. 分泌性外激素", "B. 舞蹈（动作）", "C. 发出叫声", "D. 释放气味"], "ans": 1, "exp": "蜜蜂通过舞蹈（如圆形舞、摆尾舞）等动作向同伴传递蜜源的位置和距离等信息。蝶蛾类昆虫的雌虫分泌性外激素吸引雄虫，蚂蚁靠气味通讯，这些都是动物群体间的信息交流方式。"}, {"q": "利用性外激素作引诱剂诱杀农业害虫，依据的原理是（　）", "opts": ["A. 性外激素能毒杀害虫", "B. 干扰雌雄虫之间的信息交流（交尾）", "C. 性外激素能促进害虫繁殖", "D. 害虫对性外激素过敏"], "ans": 1, "exp": "性外激素是雌虫分泌的吸引雄虫前来交尾的物质。人们利用性外激素作引诱剂，可以诱杀农业害虫，或干扰雌雄虫之间的信息交流，使其无法正常交尾，从而控制害虫数量。"}, {"q": "动物行为的多种多样，下列哪项不属于动物的行为（　）", "opts": ["A. 孔雀开屏", "B. 蜜蜂采蜜", "C. 大雁迁徙", "D. 植物向光生长"], "ans": 3, "exp": "动物的行为是指动物所进行的有利于它们生存和繁殖后代的活动，如取食行为、防御行为、攻击行为、繁殖行为、迁徙行为等。植物向光生长是植物的生命活动，不属于动物的行为。"}];const flashcards=[{"q": "运动系统", "a": "主要由骨、关节和肌肉组成。骨与骨通过关节等方式相连形成骨骼，附着在骨骼上的肌肉称为骨骼肌"}, {"q": "关节", "a": "活动的骨连接，由关节头、关节窝、关节囊和关节腔组成，关节腔内含滑液可减少摩擦，关节软骨使运动更灵活"}, {"q": "骨骼肌", "a": "中间较粗的部分叫肌腹，两端乳白色的部分叫肌腱，肌腱可绕过关节连在不同的骨上，受刺激收缩牵动骨运动"}, {"q": "屈肘与伸肘", "a": "屈肘：肱二头肌收缩、肱三头肌舒张；伸肘：肱三头肌收缩、肱二头肌舒张。至少两组肌肉配合完成运动"}, {"q": "运动的意义", "a": "有利于动物寻觅食物、躲避敌害、争夺栖息地和繁殖后代，以适应复杂多变的环境"}, {"q": "先天性行为", "a": "生来就有的、由遗传物质决定的行为，如蜘蛛结网、小袋鼠爬进育儿袋、婴儿吃奶"}, {"q": "学习行为", "a": "在遗传因素基础上通过生活经验和学习获得的行为，如蚯蚓走迷宫、大山雀喝牛奶、黑猩猩堆箱摘香蕉"}, {"q": "先天性行为与学习行为的关系", "a": "先天性行为是学习行为的基础；动物越高等，学习能力越强，学习行为越复杂"}, {"q": "研究动物行为的方法", "a": "观察法和实验法以及两者的结合，如探究小鼠走迷宫采用实验法，观察小鼠活动采用观察法"}, {"q": "社会行为", "a": "群体内部形成一定的组织，成员之间有明确的分工，有的群体中还形成等级，如白蚁、蜜蜂群体"}, {"q": "白蚁群体分工", "a": "蚁后专职产卵、雄蚁与蚁后交配、工蚁觅食筑巢照料蚁后、兵蚁专司保卫"}, {"q": "信息交流", "a": "动物通过动作、声音、气味等进行信息交流，如蜜蜂跳舞、蛾类分泌性外激素、蚂蚁靠气味通讯"}];const errors=[{"title": "运动系统的组成", "wrong": "认为哺乳动物的运动系统只由骨和肌肉组成，或把关节漏掉。", "right": "运动系统主要由骨、关节和肌肉三部分组成。骨与骨之间通过关节等方式相连形成骨骼，附着在骨骼上的肌肉叫骨骼肌。三者协调配合才能完成运动。"}, {"title": "运动只靠运动系统", "wrong": "认为只要运动系统完好，动物就能正常运动。", "right": "运动不仅靠运动系统，还需要其他系统的配合：骨骼肌收缩受神经系统调节，运动所需能量依赖消化系统（营养）、呼吸系统（氧气）、循环系统（运输）的配合。神经系统或供能系统出问题都会影响运动。"}, {"title": "肌肉的收缩与复位", "wrong": "认为一块骨骼肌收缩就能完成屈伸动作，或认为肌肉能主动将骨复位。", "right": "骨骼肌只能收缩牵拉骨改变位置，而不能将骨复位，骨的复位要靠另一组骨骼肌的收缩牵拉。所以与骨连接的肌肉至少有两组相互配合，如屈肘时肱二头肌收缩、肱三头肌舒张。"}, {"title": "先天性行为与学习行为无关", "wrong": "认为先天性行为和学习行为是两种截然不同、互不相关的行为类型。", "right": "先天性行为是学习行为的基础，学习行为是在遗传因素的基础上、通过环境因素的作用和生活经验学习获得的。两者有联系，不能截然分开。"}, {"title": "学习行为一成不变", "wrong": "认为动物的学习行为一旦形成，就不会改变。", "right": "学习行为会随环境的变化而改变（如不断强化或消退），它是动物适应复杂多变环境的重要手段。动物越高等，学习能力越强，学习行为越复杂。"}, {"title": "群居≠社会行为", "wrong": "把成群结队生活的动物（如鱼群、麻雀群）都认为具有社会行为。", "right": "社会行为必须具有'群体内形成一定组织、成员间有明确分工、有的还形成等级'的特征。白蚁、蜜蜂等群体才是社会行为。鱼群、鸟群只是简单的聚集，没有明确分工和等级，不属于社会行为。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_bio8_ch2_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

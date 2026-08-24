@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>从国共合作到国共对立 · 中华民族的抗日战争</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e67e22;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 从国共合作到国共对立 · 中华民族的抗日战争</h1>
+    <div class="meta">第五、六单元</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>国共合作与北伐战争（1924—1927）</h4><p>1924年1月中国国民党一大在广州召开，确立了联俄、联共、扶助农工三大政策，标志国共两党合作正式建立；1924年5月孙中山创办黄埔军校（蒋介石任校长、周恩来任政治部主任）。1926年7月国民革命军誓师北伐（蒋介石任总司令），主要对象是吴佩孚、孙传芳、张作霖，叶挺独立团赢得“铁军”美誉。1927年4月蒋介石发动四一二反革命政变，国民革命失败；1928年底张学良“改易旗帜”，南京政府在名义上统一全国。</p></div><div class="k-item"><h4>南昌起义与井冈山道路</h4><p>1927年8月1日周恩来、贺龙、叶挺、朱德、刘伯承领导南昌起义，打响武装反抗国民党反动派的第一枪，标志中国共产党独立领导革命战争、创建人民军队和武装夺取政权的开端（8月1日成为建军节）。八七会议确定土地革命和武装起义方针，毛泽东提出“政权是由枪杆子中取得”。1927年9月秋收起义打出“工农革命军”旗帜，三湾改编从组织上确立党对军队的领导；10月毛泽东创建第一个农村革命根据地——井冈山根据地。1928年4月朱毛会师，合编为中国工农红军第四军。</p></div><div class="k-item"><h4>红军长征（1934.10—1936.10）</h4><p>原因：第五次反“围剿”失败（博古、李德“左”的错误）。1934年10月中央红军8万多人开始长征，湘江战役后仅剩3万多人。1935年1月遵义会议纠正“左”的错误，肯定毛泽东的正确军事主张，开始确立以毛泽东为主要代表的马克思主义正确路线在中共中央的领导地位，是中国共产党历史上一个生死攸关的转折点。随后四渡赤水、巧渡金沙江、强渡大渡河、飞夺泸定桥、爬雪山过草地。1935年10月中央红军到达吴起镇，1936年10月红军三大主力在甘肃会宁会师，长征胜利结束。</p></div><div class="k-item"><h4>九一八事变与华北危机</h4><p>1931年9月18日，日本关东军炸毁沈阳北郊柳条湖附近南满铁路的一段路轨，反诬中国军队破坏，炮轰北大营、占领沈阳，九一八事变爆发，成为中国人民抗日战争的起点，揭开了世界反法西斯战争的序幕。1932年日本扶植溥仪在长春建立伪满洲国，杨靖宇等组织抗日游击队，东北抗日联军战斗在白山黑水之间。1935年日本策动“华北自治运动”，12月9日北平学生发动一二·九运动，促进全国抗日救亡运动新高潮的到来。</p></div><div class="k-item"><h4>西安事变（1936.12.12）</h4><p>在中共抗日民族统一战线政策感召下，张学良、杨虎城与红军停战，要求联共抗日，但蒋介石坚持“攘外必先安内”。1936年12月12日张、杨在西安扣押蒋介石，实行“兵谏”，通电要求停止内战、一致抗日。中国共产党从全民族的利益出发主张和平解决，派周恩来到西安谈判。西安事变的和平解决，揭开了国共两党由内战到联合抗日的序幕，成为扭转时局的关键，十年内战基本停止，抗日民族统一战线初步形成。</p></div><div class="k-item"><h4>七七事变与全民族抗战</h4><p>1937年7月7日日军炮轰卢沟桥，中国守军奋起抵抗，七七事变（卢沟桥事变）标志着中国全民族抗战的开始，赵登禹、佟麟阁壮烈殉国。国共实现第二次合作：红军主力改编为八路军（朱德任总指挥），南方八省游击队改编为新四军（叶挺任军长）；1937年9月国共合作宣言发表，抗日民族统一战线正式建立。淞沪会战（1937年8—11月）打破日本3个月灭亡中国的迷梦；1937年12月13日日军攻陷南京，屠杀中国军民30万人以上，国民政府迁都重庆。</p></div><div class="k-item"><h4>正面战场与敌后战场</h4><p>正面战场：台儿庄战役（1938年3月，李宗仁指挥）歼敌1万余人，是抗战以来中国正面战场取得的最大的一场胜仗；武汉会战后抗日战争进入战略相持阶段；第三次长沙会战（1941年12月）在国内外产生积极影响。敌后战场：平型关大捷（1937年9月，八路军115师）是全民族抗战爆发后中国军队主动对日作战取得的第一个重大胜利，粉碎了日军“不可战胜”的神话；1938年毛泽东发表《论持久战》；百团大战（1940年8月—1941年1月，彭德怀指挥100多个团）破袭日军交通线，有力打击了日军的侵略气焰；延安是敌后战场的战略总后方和指挥中枢。</p></div><div class="k-item"><h4>抗日战争的胜利（1945）</h4><p>1945年4—6月中共七大在延安召开，确立毛泽东思想为中国共产党的指导思想并写入党章。1945年8月6日、9日美国向日本广岛、长崎各投下一枚原子弹；8月8日苏联对日宣战，出兵中国东北；8月15日日本天皇被迫宣布无条件投降，9月2日正式签署投降书，台湾回到祖国怀抱。中国共产党在全民族抗战中发挥了中流砥柱作用，这是抗战取得完全胜利的决定性因素。抗日战争是近代以来中国人民反抗外敌入侵第一次取得完全胜利的民族解放斗争，中国战场是世界反法西斯战争的东方主战场。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 统编版（人教版）八年级上册中国历史 · 第五、六单元 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_hist8_u3_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第五、六单元',chapter:'第五、六单元',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'中国历史,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "标志着国共两党合作正式建立的事件是", "opts": ["A. 黄埔军校的创办", "B. 国民党一大的召开", "C. 北伐战争的开始", "D. 中共三大的召开"], "ans": 1, "exp": "1924年1月中国国民党第一次全国代表大会在广州召开，大会宣言对三民主义作出新解释，确立联俄、联共、扶助农工三大政策，标志着国共两党合作的正式建立。"}, {"q": "北伐战争的主要对象不包括", "opts": ["A. 吴佩孚", "B. 孙传芳", "C. 张作霖", "D. 袁世凯"], "ans": 3, "exp": "1926年北伐的主要对象是吴佩孚、孙传芳、张作霖等北洋军阀；袁世凯早在1916年就已死去。"}, {"q": "打响武装反抗国民党反动派第一枪的事件是", "opts": ["A. 秋收起义", "B. 南昌起义", "C. 广州起义", "D. 武昌起义"], "ans": 1, "exp": "1927年8月1日南昌起义打响武装反抗国民党反动派的第一枪，标志着中国共产党独立领导革命战争、创建人民军队和武装夺取政权的开端。"}, {"q": "1927年9月，毛泽东领导秋收起义时打出的旗帜是", "opts": ["A. 中国工农红军", "B. 国民革命军", "C. 工农革命军", "D. 八路军"], "ans": 2, "exp": "1927年9月毛泽东在湘赣边界打出“工农革命军”的旗帜，举行秋收起义；朱毛会师后合编为中国工农红军第四军。"}, {"q": "中国共产党创建的第一个农村革命根据地是", "opts": ["A. 中央革命根据地", "B. 井冈山革命根据地", "C. 鄂豫皖革命根据地", "D. 陕甘革命根据地"], "ans": 1, "exp": "1927年10月毛泽东率领起义部队到达井冈山地区，创建了第一个农村革命根据地，拉开了中国革命从城市转入农村、建立根据地的序幕。"}, {"q": "确立“思想建党、政治建军”原则的会议是", "opts": ["A. 八七会议", "B. 古田会议", "C. 遵义会议", "D. 中共七大"], "ans": 1, "exp": "1929年12月红军第四军党的第九次代表大会在福建上杭古田召开，确立了思想建党、政治建军的原则；遵义会议是长征途中生死攸关的转折点。"}, {"q": "中国共产党历史上一个生死攸关的转折点是", "opts": ["A. 八七会议", "B. 古田会议", "C. 遵义会议", "D. 中共一大"], "ans": 2, "exp": "1935年1月遵义会议开始确立以毛泽东为主要代表的马克思主义正确路线在中共中央的领导地位，在极其危急的情况下挽救了党、挽救了红军、挽救了中国革命，是生死攸关的转折点。"}, {"q": "红军三大主力在甘肃会宁会师的时间是", "opts": ["A. 1935年10月", "B. 1936年10月", "C. 1935年1月", "D. 1937年7月"], "ans": 1, "exp": "1935年10月中央红军到达吴起镇与陕北红军会师；1936年10月红二方面军、红四方面军到达甘肃会宁，与红一方面军胜利会师，红军三大主力会师宣告长征胜利结束。"}, {"q": "九一八事变发生的时间和地点是", "opts": ["A. 1931年9月18日 沈阳", "B. 1937年7月7日 北平", "C. 1932年1月28日 上海", "D. 1935年12月9日 北平"], "ans": 0, "exp": "1931年9月18日夜，日本关东军炸毁沈阳北郊柳条湖附近南满铁路的一段路轨，以此为借口炮轰北大营、占领沈阳，九一八事变爆发。"}, {"q": "九一八事变成为中国人民抗日战争的起点，它同时揭开了下列哪场战争的序幕？", "opts": ["A. 第一次世界大战", "B. 第二次世界大战", "C. 世界反法西斯战争", "D. 太平洋战争"], "ans": 2, "exp": "课本明确指出：九一八事变成为中国人民抗日战争的起点，从此中国人民开始了艰苦卓绝的抗日战争，揭开了世界反法西斯战争的序幕。"}, {"q": "1935年12月9日，北平学生发动的爱国救亡运动是", "opts": ["A. 五四运动", "B. 一二·九运动", "C. 五卅运动", "D. 一二·二运动"], "ans": 1, "exp": "1935年12月9日，在中共领导下北平数千名学生举行请愿示威，高呼“打倒日本帝国主义”“反对华北自治”“停止内战，一致对外”，即一二·九运动，促进了全国抗日救亡运动新高潮的到来。"}, {"q": "西安事变的和平解决有何重大意义？", "opts": ["A. 标志着抗日民族统一战线正式建立", "B. 成为扭转时局的关键，十年内战基本停止，抗日民族统一战线初步形成", "C. 标志着中国全民族抗战的开始", "D. 标志着国共合作正式建立"], "ans": 1, "exp": "西安事变的和平解决揭开了国共两党由内战到联合抗日的序幕，成为扭转时局的关键，十年内战基本停止，抗日民族统一战线初步形成；正式建立以1937年9月国共合作宣言发表为标志。"}, {"q": "标志着中国全民族抗战开始的事件是", "opts": ["A. 九一八事变", "B. 西安事变", "C. 七七事变", "D. 八一三事变"], "ans": 2, "exp": "1937年7月7日七七事变（卢沟桥事变）标志着中国全民族抗战的开始；九一八事变是局部抗战的起点。"}, {"q": "抗战以来中国正面战场取得的最大的一场胜仗是", "opts": ["A. 平型关大捷", "B. 台儿庄战役", "C. 武汉会战", "D. 百团大战"], "ans": 1, "exp": "1938年3月台儿庄战役共歼敌1万余人，是抗战以来中国正面战场取得的最大的一场胜仗，振奋了中国军民的精神；平型关大捷和百团大战属于敌后战场。"}, {"q": "中国近代以来反抗外敌入侵第一次取得完全胜利的民族解放斗争是", "opts": ["A. 鸦片战争", "B. 甲午中日战争", "C. 抗日战争", "D. 解放战争"], "ans": 2, "exp": "抗日战争是近代以来中国人民反抗外敌入侵第一次取得完全胜利的民族解放斗争，1945年8月15日日本宣布无条件投降，9月2日正式签署投降书，台湾回到祖国怀抱。"}];const flashcards=[{"q": "国民党一大（1924.1）", "a": "在广州召开，确立联俄、联共、扶助农工三大政策，标志国共两党合作正式建立。"}, {"q": "黄埔军校（1924.5）", "a": "孙中山兼任总理，蒋介石任校长，周恩来任政治部主任，为国民革命军和北伐战争准备了军事政治人才。"}, {"q": "南昌起义（1927.8.1）", "a": "周恩来、贺龙、叶挺、朱德、刘伯承领导。打响武装反抗国民党反动派的第一枪，是创建人民军队的开端；8月1日成为建军节。"}, {"q": "井冈山道路", "a": "秋收起义受挫后毛泽东转向农村，1927年10月创建井冈山根据地；1928年4月朱毛会师成立红四军。开辟了农村包围城市、武装夺取政权的正确革命道路。"}, {"q": "遵义会议（1935.1）", "a": "纠正博古、李德“左”的错误，肯定毛泽东正确军事主张。开始确立毛泽东正确路线在中共中央的领导地位，是生死攸关的转折点。"}, {"q": "长征胜利", "a": "1935年10月中央红军到吴起镇；1936年10月三大主力在甘肃会宁会师。粉碎了国民党消灭红军的企图，使中国革命转危为安，铸就长征精神。"}, {"q": "九一八事变（1931.9.18）", "a": "柳条湖事件→炮轰北大营→占领沈阳。是中国人民抗日战争的起点，揭开世界反法西斯战争的序幕；局部抗战开始。"}, {"q": "西安事变（1936.12.12）", "a": "张学良、杨虎城扣押蒋介石实行“兵谏”。中共主张和平解决，派周恩来谈判。和平解决→十年内战基本停止，抗日民族统一战线初步形成。"}, {"q": "七七事变（1937.7.7）", "a": "卢沟桥事变，标志中国全民族抗战开始；赵登禹、佟麟阁殉国。此后国共合作宣言发表（1937.9），抗日民族统一战线正式建立。"}, {"q": "四大抗战战役", "a": "平型关大捷（1937.9，第一个重大胜利）；台儿庄战役（1938.3，正面战场最大胜仗）；武汉会战（1938.10后进入相持阶段）；百团大战（1940.8—1941.1，破袭交通线）。"}, {"q": "中共七大（1945.4—6）", "a": "延安召开，确立毛泽东思想为党的指导思想并写入党章，为争取抗日战争的最后胜利准备了条件。"}, {"q": "抗战胜利", "a": "1945年8月15日日本宣布无条件投降，9月2日正式签署投降书，台湾回到祖国怀抱。中共中流砥柱作用是决定性因素；中国战场是世界反法西斯战争的东方主战场。"}];const errors=[{"title": "“初步形成”与“正式建立”混淆", "wrong": "认为西安事变和平解决标志着抗日民族统一战线正式建立。", "right": "西安事变和平解决→抗日民族统一战线初步形成（1936年12月）；1937年9月国民党中央通讯社公开发表国共合作宣言→正式建立。"}, {"title": "南昌起义与武昌起义混淆", "wrong": "把1927年8月1日南昌起义与1911年10月10日武昌起义混为一谈。", "right": "武昌起义（1911）是辛亥革命爆发的标志，由湖北新军发动；南昌起义（1927）是中共打响武装反抗国民党反动派第一枪、创建人民军队的开端。"}, {"title": "长征会师地点记错", "wrong": "认为红军三大主力会师在吴起镇。", "right": "1935年10月中央红军（红一方面军）到达陕北吴起镇，与陕北红军会师；1936年10月红军三大主力（红一、二、四方面军）在甘肃会宁会师，标志长征胜利结束。"}, {"title": "正面战场与敌后战场战役混淆", "wrong": "把台儿庄战役说成敌后战场战役，或把平型关大捷说成正面战场战役。", "right": "正面战场（国民党军队）：淞沪会战、台儿庄战役、武汉会战、第三次长沙会战；敌后战场（共产党军队）：平型关大捷、百团大战。两战场相互配合，构成中国抗日战争的整体。"}, {"title": "抗日战争起点时间记错", "wrong": "认为抗日战争是从1937年七七事变算起，忽略1931年九一八事变。", "right": "九一八事变（1931）是中国人民抗日战争的起点、局部抗战开始；七七事变（1937）是全民族抗战的开始。抗战胜利是“14年抗战”（1931—1945）与“8年全民族浴血奋战”的统一。"}, {"title": "遵义会议内容误记", "wrong": "认为遵义会议确立了毛泽东思想为党的指导思想。", "right": "遵义会议（1935.1）开始确立以毛泽东为主要代表的马克思主义正确路线在中共中央的领导地位；确立毛泽东思想为党的指导思想并写入党章是中共七大（1945年）的贡献。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_hist8_u3_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

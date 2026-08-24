@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>人民解放战争 · 近代经济、社会生活与教育文化事业的发展</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e67e22;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 人民解放战争 · 近代经济、社会生活与教育文化事业的发展</h1>
+    <div class="meta">第七、八单元</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>重庆谈判与双十协定（1945）</h4><p>抗战胜利后，蒋介石先后三次电邀毛泽东到重庆面商国家大计，其真实目的是为发动内战争取时间、把不愿和平的罪名强加给中共。为争取和平，毛泽东以惊人胆魄亲赴重庆。1945年10月10日国共双方签署《政府与中共代表会谈纪要》，即“双十协定”：坚决避免内战、建设独立自由富强的新中国、召开政治协商会议。1946年1月政治协商会议在重庆召开，确定避免内战、和平建国的方针。</p></div><div class="k-item"><h4>内战爆发与解放区自卫反击</h4><p>1946年6月蒋介石撕毁“双十协定”、撕毁政协决议，全力围攻中原解放区，发动全面内战（国民党军约430万对解放军约127万）。毛泽东提出“一切反动派都是纸老虎”的著名论断，解放区军民以运动战为主要方式、以歼灭敌人有生力量为主要目标，半年多粉碎全面进攻。1947年3月国民党军重点进攻陕北和山东解放区：西北野战军在青化砭、沙家店等战役中粉碎对陕北的进攻，华东野战军孟良崮战役消灭国民党王牌主力整编第七十四师。</p></div><div class="k-item"><h4>解放区土地改革</h4><p>1947年10月10日中共中央公布《中国土地法大纲》，各解放区先后开展土地改革运动。土地改革使农村的阶级关系和土地占有状况发生根本性变化，激发了农民革命和生产的积极性，翻身农民踊跃参军参战，为人民解放战争的胜利提供了重要的人力、物力保障。</p></div><div class="k-item"><h4>三大战役（1948.9—1949.1）</h4><p>1947年夏刘伯承、邓小平率晋冀鲁豫野战军千里跃进大别山，揭开人民解放军战略进攻的序幕。三大战役：辽沈战役（1948年9—11月，林彪、罗荣桓指挥，解放东北全境，歼敌47万余人）；淮海战役（1948年11月—1949年1月，刘伯承、陈毅、邓小平、粟裕、谭震林指挥，解放长江中下游以北广大地区，歼敌55万余人）；平津战役（1948年11月—1949年1月，傅作义接受和平改编，北平和平解放，华北全境基本解放）。三大战役共歼灭和改编国民党军队150多万人，国民党军队的主力基本被消灭。</p></div><div class="k-item"><h4>渡江战役与南京解放（1949）</h4><p>1949年3月中共七届二中全会在河北西柏坡召开，确定党的工作重心由乡村转向城市。1949年4月，人民解放军百万雄师兵分三路横渡长江，占领南京，结束了国民党在大陆的统治，国民党残余势力退往台湾。</p></div><div class="k-item"><h4>民族资本主义的发展</h4><p>19世纪六七十年代中国民族资本主义产生；甲午战争后，状元实业家张謇创办大生纱厂，走上“实业救国”道路。辛亥革命后掀起发展实业的热潮；第一次世界大战期间，西方列强忙于欧洲战事、暂时放松对华经济侵略，民族工业出现“短暂的春天”，发展最快的是纺织业和面粉业。特点：资金少、规模小、技术差，主要集中在轻工业部门，重工业基础极为薄弱；地区分布不平衡，主要集中在上海、武汉等沿海沿江大城市。著名企业家有荣氏兄弟、卢作孚、侯德榜等。</p></div><div class="k-item"><h4>新式交通与社会生活的变化</h4><p>19世纪70年代以后，火车、轮船、电车、汽车、飞机等新式交通工具相继传入中国，方便了人们的出行，促进了商品的流通。1905—1909年詹天佑主持建成京张铁路，是中国人独立自主建成的第一条铁路干线；1937年茅以升建成钱塘江大桥，是中国自行设计建造的第一座双层公路、铁路两用桥。辛亥革命后民国政府颁布剪辫、易服和劝禁缠足等法令，废除跪拜礼，代之以鞠躬、握手礼，取消“老爷”“大人”称谓，代之以“先生”。总体呈现新旧并呈、多元发展的特征。</p></div><div class="k-item"><h4>教育文化事业的发展</h4><p>洋务运动时期兴办新式学堂（如1862年京师同文馆），戊戌变法时期创办京师大学堂（辛亥革命后改名北京大学）；1905年清政府废除科举制度。新闻出版方面，1872年在上海创办的《申报》是近代中国存在时间最长的中文报纸，1897年创办的商务印书馆是近代中国人创办的第一个也是规模最大的文化出版机构。文学艺术：鲁迅《狂人日记》《阿Q正传》、茅盾《子夜》、齐白石、徐悲鸿《愚公移山》、聂耳《义勇军进行曲》、冼星海《黄河大合唱》等。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 统编版（人教版）八年级上册中国历史 · 第七、八单元 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_hist8_u4_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第七、八单元',chapter:'第七、八单元',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'中国历史,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "1945年10月10日，国共双方签署的文献是", "opts": ["A. 《停战协定》", "B. 《政府与中共代表会谈纪要》（双十协定）", "C. 《中国土地法大纲》", "D. 《共同纲领》"], "ans": 1, "exp": "1945年10月10日国共双方签署《政府与中共代表会谈纪要》，即“双十协定”，同意坚决避免内战，召开政治协商会议。"}, {"q": "重庆谈判中，毛泽东亲赴重庆的根本目的是", "opts": ["A. 为了尽一切可能争取和平", "B. 接受蒋介石的领导", "C. 与国民党共同执政", "D. 考察重庆的形势"], "ans": 0, "exp": "毛泽东亲赴重庆谈判，是为了尽一切可能争取和平，揭露蒋介石假和平真内战的阴谋；蒋介石的目的则是为发动内战争取时间、把不愿和平的罪名强加给中共。"}, {"q": "国民党发动全面内战、进攻解放区的标志性事件是", "opts": ["A. 1946年6月围攻中原解放区", "B. 1945年10月撕毁双十协定", "C. 1947年3月进攻陕北", "D. 1946年1月关闭政协会议"], "ans": 0, "exp": "1946年6月，蒋介石公然违背“双十协定”、撕毁政协决议，全力围攻中原解放区，发动了全面内战。"}, {"q": "全面内战爆发时，毛泽东提出的著名论断是", "opts": ["A. “政权是由枪杆子中取得”", "B. “一切反动派都是纸老虎”", "C. “星星之火，可以燎原”", "D. “宜将剩勇追穷寇”"], "ans": 1, "exp": "面对敌强我弱的实际情况，毛泽东提出了“一切反动派都是纸老虎”的著名论断，号召解放区军民以自卫战争粉碎国民党军队的进攻。"}, {"q": "揭开人民解放军战略进攻序幕的事件是", "opts": ["A. 三大战役", "B. 渡江战役", "C. 刘邓大军千里跃进大别山", "D. 孟良崮战役"], "ans": 2, "exp": "1947年夏刘伯承、邓小平率领晋冀鲁豫野战军主力千里跃进大别山，直接威胁南京、武汉，揭开了人民解放军战略进攻的序幕。"}, {"q": "辽沈战役解放了", "opts": ["A. 华北全境", "B. 东北全境", "C. 长江中下游以北广大地区", "D. 华东全境"], "ans": 1, "exp": "辽沈战役（1948年9—11月，林彪、罗荣桓指挥）首先攻占锦州切断敌人退路，随后攻占长春、沈阳，解放东北全境，共歼灭国民党军47万余人。"}, {"q": "三大战役中，以和平方式解放的城市是", "opts": ["A. 锦州", "B. 天津", "C. 北平", "D. 徐州"], "ans": 2, "exp": "平津战役中，北平国民党守军总司令傅作义在中国共产党的争取下接受和平改编，1949年初北平和平解放。"}, {"q": "三大战役共歼灭和改编国民党军队", "opts": ["A. 47万余人", "B. 55万余人", "C. 100余万人", "D. 150多万人"], "ans": 3, "exp": "辽沈战役歼敌47万余人、淮海战役55万余人、平津战役52万余人，三大战役共歼灭和改编国民党军队150多万人，国民党军队的主力基本被消灭。"}, {"q": "1949年4月，人民解放军占领南京的历史意义是", "opts": ["A. 标志着人民解放战争在全国的胜利", "B. 结束了国民党在大陆的统治", "C. 标志着三大战役的结束", "D. 标志着新中国的成立"], "ans": 1, "exp": "1949年4月人民解放军百万雄师横渡长江，占领南京，结束了国民党在大陆的统治，国民党残余势力退往台湾。"}, {"q": "19世纪六七十年代，中国民族资本主义产生；甲午战争后创办大生纱厂、走上“实业救国”道路的状元实业家是", "opts": ["A. 张之洞", "B. 张謇", "C. 荣宗敬", "D. 詹天佑"], "ans": 1, "exp": "状元实业家张謇主动放弃高官厚禄，回到家乡江苏南通创办大生纱厂，带动很多人走上“实业救国”道路。"}, {"q": "中国民族工业出现“短暂的春天”是在", "opts": ["A. 洋务运动时期", "B. 甲午战争后", "C. 第一次世界大战期间", "D. 抗日战争时期"], "ans": 2, "exp": "第一次世界大战期间，西方列强忙于欧洲战事，暂时放松了对中国的经济侵略，中国民族工业获得迅速发展良机，出现“短暂的春天”，其中发展最快的是纺织业和面粉业。"}, {"q": "中国近代民族工业的特点不包括", "opts": ["A. 资金少、规模小、技术差", "B. 主要集中在轻工业部门", "C. 重工业基础极为薄弱", "D. 地区分布均衡，遍及全国"], "ans": 3, "exp": "中国近代民族工业资金少、规模小、技术差，主要集中在轻工业部门，重工业基础极为薄弱；地区分布极不平衡，主要集中在上海、武汉等沿海沿江大城市。"}, {"q": "中国人独立自主建成的第一条铁路干线是", "opts": ["A. 淞沪铁路", "B. 京张铁路", "C. 京汉铁路", "D. 粤汉铁路"], "ans": 1, "exp": "1905—1909年，詹天佑主持建成京张铁路，是中国工程技术人员用自己的技术力量、由中国筹款独立自主建成的第一条铁路干线。"}, {"q": "1905年，清政府宣布废除的制度是", "opts": ["A. 八股取士", "B. 科举制度", "C. 行省制度", "D. 闭关锁国"], "ans": 1, "exp": "1905年清政府废除科举制度（延续约1300年），同时兴办新式学堂：洋务运动时期创办京师同文馆，戊戌变法时期创办京师大学堂。"}, {"q": "近代中国人创办的第一个也是规模最大的文化出版机构是", "opts": ["A. 《申报》", "B. 商务印书馆", "C. 《时务报》", "D. 《国闻报》"], "ans": 1, "exp": "1897年在上海创办的商务印书馆，是近代中国人创办的第一个也是规模最大的文化出版机构；《申报》是近代中国存在时间最长的中文报纸。"}];const flashcards=[{"q": "重庆谈判（1945.8—10）", "a": "毛泽东亲赴重庆谈判；10月10日签署“双十协定”：坚决避免内战、召开政协会议。为争取和平民主带来一线曙光。"}, {"q": "全面内战爆发（1946.6）", "a": "蒋介石撕毁“双十协定”和政协决议，围攻中原解放区。国民党军约430万对解放军约127万，国民党占明显优势。"}, {"q": "自卫反击两大重点进攻", "a": "1947年3月国民党重点进攻陕北（西北野战军青化砭、沙家店战役）和山东（孟良崮战役消灭整编第七十四师），均被粉碎。"}, {"q": "《中国土地法大纲》（1947）", "a": "各解放区开展土地改革，农民分得土地，激发革命和生产积极性，为解放战争胜利提供重要人力物力保障。"}, {"q": "三大战役一览", "a": "辽沈（1948.9—11，东北，歼敌47万）；淮海（1948.11—1949.1，长江中下游以北，歼敌55万）；平津（1948.11—1949.1，北平和平解放）。共歼敌改编150多万。"}, {"q": "渡江战役（1949.4）", "a": "百万雄师横渡长江占领南京，结束国民党在大陆的统治；残余势力退往台湾。"}, {"q": "张謇与大生纱厂", "a": "清末状元，甲午战败后“实业救国”创办大生纱厂，还创办学校、图书馆、博物苑（1905年南通博物苑是中国人自建的第一个公共博物馆）。"}, {"q": "民族工业“短暂的春天”", "a": "第一次世界大战期间，列强暂时放松对华经济侵略，民族工业迅速发展，纺织业和面粉业发展最快；战后帝国主义卷土重来，再度受挫。"}, {"q": "詹天佑与茅以升", "a": "詹天佑：1909年建成京张铁路（中国人自主修建的第一条铁路干线，“人”字形轨道）；茅以升：1937年建成钱塘江大桥（自行设计建造的第一座双层公路铁路两用桥）。"}, {"q": "社会生活新风尚", "a": "辛亥革命后：剪辫、易服、劝禁缠足；废除跪拜礼改鞠躬握手礼；取消“老爷”“大人”，改称“先生”；旗袍、中山装流行。总体新旧并呈、多元发展。"}, {"q": "科举废除与新式学堂", "a": "1905年清政府废除科举制度；洋务运动时期京师同文馆（1862）、戊戌变法时期京师大学堂（后改北京大学）。"}, {"q": "文艺大家", "a": "鲁迅《狂人日记》《阿Q正传》；茅盾《子夜》；徐悲鸿《愚公移山》；聂耳《义勇军进行曲》；冼星海《黄河大合唱》。"}];const errors=[{"title": "三大战役地点与指挥混淆", "wrong": "把淮海战役说成以北平为中心，或把辽沈战役说成解放华北。", "right": "辽沈战役在东北（解放东北全境，林彪、罗荣桓指挥）；淮海战役以徐州为中心（解放长江中下游以北，刘伯承、陈毅、邓小平、粟裕、谭震林指挥）；平津战役解放北平、天津（华北全境基本解放）。"}, {"title": "战略进攻序幕记错", "wrong": "认为三大战役揭开战略进攻的序幕。", "right": "1947年夏刘邓大军千里跃进大别山揭开战略进攻的序幕；三大战役（1948年9月—1949年1月）是战略决战，此时已处于战略进攻之后。"}, {"title": "“短暂的春天”时间记错", "wrong": "把民族工业“短暂的春天”说成发生在辛亥革命后。", "right": "辛亥革命后掀起了发展实业的热潮，但“短暂的春天”特指第一次世界大战期间（列强忙于欧洲战事、暂时放松对华经济侵略）。"}, {"title": "报刊与出版机构混淆", "wrong": "把《申报》说成“近代中国人创办的第一个文化出版机构”。", "right": "《申报》1872年在上海创办，是近代中国存在时间最长的中文报纸；商务印书馆1897年创办，才是近代中国人创办的第一个也是规模最大的文化出版机构。"}, {"title": "京张铁路与钱塘江大桥混淆", "wrong": "把詹天佑的京张铁路说成“第一座双层公路铁路两用桥”。", "right": "京张铁路（1909年通车）是中国人独立自主建成的第一条铁路干线；钱塘江大桥（1937年，茅以升设计）是中国自行设计建造的第一座双层公路、铁路两用桥。"}, {"title": "双十协定与政协决议混为一谈", "wrong": "认为《中国土地法大纲》是重庆谈判的成果。", "right": "重庆谈判的成果是“双十协定”（1945.10.10，避免内战、召开政协会议）；1946年1月政协会议通过决议；《中国土地法大纲》是1947年10月中共中央公布的土改纲领。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_hist8_u4_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

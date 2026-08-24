@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>动物的主要类群</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 动物的主要类群</h1>
+    <div class="meta">第五单元第1章 动物的主要类群 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>腔肠动物和扁形动物</h4><p>腔肠动物（水螅、水母、海葵、海蜇、珊瑚虫）：身体呈辐射对称，便于感知来自各个方向的刺激、从各方向捕获猎物和防御；体表有刺细胞（特有的攻击和防御利器，触手处尤其多）；有口无肛门，食物残渣仍从口排出。大多生活在海洋中，水螅生活在淡水中。扁形动物（涡虫自由生活，华枝睾吸虫、血吸虫、绦虫寄生生活）：身体呈两侧对称（能分出前后、左右、背腹，前端感觉器官集中，运动更准确迅速），背腹扁平，有口无肛门。寄生种类消化器官简单但生殖器官特别发达。海蜇可食用，珊瑚虫分泌的石灰质物质堆积构成珊瑚礁。</p></div><div class="k-item"><h4>线形动物和环节动物</h4><p>线形动物（蛔虫、蛲虫、钩虫、丝虫、线虫）：身体细长呈圆柱形，体表有角质层（起保护作用），有口有肛门。蛔虫寄生在小肠中，消化管结构简单、生殖器官发达，无专门运动器官；预防蛔虫病要注意个人饮食卫生（不喝生水、蔬菜水果洗净、饭前便后洗手）和管理好粪便。环节动物（蚯蚓、沙蚕、蛭）：身体呈圆筒形，由许多彼此相似的体节组成（分节使运动灵活），靠刚毛或疣足辅助运动。蚯蚓体壁有发达肌肉与刚毛配合运动，体壁密布毛细血管、靠湿润体表呼吸；能疏松土壤、提高土壤肥力。蛭的唾液含蛭素，可生产抗血栓药物。</p></div><div class="k-item"><h4>软体动物：外套膜与贝壳</h4><p>动物界第二大类群（已命名10万种以上）。代表动物：河蚌、扇贝、文蛤、缢蛏（双壳类）、石鳖、蜗牛、乌贼。主要特征：柔软的身体表面有外套膜，大多具有贝壳；运动器官是足。贝壳由外套膜分泌物形成；双壳类用足缓慢运动，通过入水管、出水管吸水排水，摄取水中食物颗粒并用鳃呼吸。外套膜受沙粒刺激分泌珍珠质包裹异物形成珍珠。钉螺是日本血吸虫的中间寄主。乌贼体内有退化的贝壳。</p></div><div class="k-item"><h4>节肢动物：最大的动物类群</h4><p>已命名种类120万种以上，占所有已知动物种数的80%以上，是最大的动物类群。主要特征：体表有坚韧的外骨骼；身体和附肢都分节。昆虫（蝗虫、蝴蝶、蜜蜂等）是节肢动物中种类最多的一类，基本特征：有一对触角、三对足，一般有两对翅。外骨骼既能保护身体、防止体内水分蒸发，又会限制发育长大，所以昆虫需要定期蜕皮。蜘蛛有4对足、无翅无触角，不属于昆虫。虾、蟹、蜈蚣也是节肢动物。</p></div><div class="k-item"><h4>鱼：水中生活的脊椎动物</h4><p>鱼是脊椎动物中种类最多的类群（占一半以上）。主要特征：生活在水中；体表常有鳞片覆盖；用鳃呼吸；通过尾部和躯干部的摆动以及鳍的协调作用游泳。体形通常呈流线型，减少水中运动阻力。鳃的主要部分是鳃丝，密布毛细血管，水从口流入经鳃丝完成气体交换后从鳃盖后缘流出。我国淡水鱼有1000多种（四大家鱼：青鱼、草鱼、鲢鱼、鳙鱼），海洋鱼约2000种（带鱼、大黄鱼等）。无脊椎动物体内无脊柱，脊椎动物体内有由脊椎骨组成的脊柱。</p></div><div class="k-item"><h4>两栖动物与爬行动物</h4><p>两栖动物（青蛙、蟾蜍、大鲵、蝾螈）：幼体生活在水中用鳃呼吸；成体大多生活在陆地上也可在水中游泳，用肺呼吸，皮肤可辅助呼吸（皮肤裸露湿润、密布毛细血管）。大鲵（娃娃鱼）是现存最大的两栖动物。爬行动物（蜥蜴、龟、鳖、蛇、鳄）是真正适应陆地环境的脊椎动物：体表覆盖角质的鳞片或甲；用肺呼吸；在陆地上产卵，卵表面有坚韧的卵壳，生殖和发育摆脱了对水环境的依赖。扬子鳄是我国特有的一级保护动物。</p></div><div class="k-item"><h4>鸟与哺乳动物：恒温动物</h4><p>鸟的主要特征：体表覆羽；前肢变成翼；有喙无齿；有气囊辅助肺呼吸。适于飞行的特点：流线型体形、翼上大型羽毛、骨骼轻薄坚固（有的中空）、龙骨突、胸肌发达、食量大消化能力强、有与肺相通的气囊（吸气呼气都能进行气体交换）。哺乳动物主要特征：体表被毛；胎生，哺乳；牙齿有门齿、犬齿和臼齿的分化。胎生哺乳提高后代成活率；牙齿分化提高摄取和消化食物的能力。鸟和哺乳动物体温恒定，是恒温动物，恒定的体温增强了对环境的适应能力。鲸是水生哺乳动物，蝙蝠会飞但属于哺乳动物。</p></div><div class="k-item"><h4>动物与人类生活的关系</h4><p>无脊椎动物：海蜇可食用；蚯蚓疏松土壤、提高土壤肥力，是蛋白质饲料；蛭素可制抗血栓药物；虾蟹提供动物蛋白；蜜蜂等为开花植物传播花粉；蝎、蜈蚣、蝉蜕等可入药；果蝇是经典实验材料；蚊、蜱、螨等传播疾病。脊椎动物：鱼类养殖和捕捞是国家重要产业；两栖动物是农田害虫天敌；爬行动物中鳖可食用入药、蛇毒能治病；家禽是动物蛋白重要来源；家畜由野生动物驯养而来。滥食野生动物会传播疾病，应革除陋习。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 人教版八年级上册 · 第五单元第1章 动物的主要类群 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_bio8_ch1_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第五单元第1章 动物的主要类群',chapter:'第五单元第1章 动物的主要类群',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第五单元第1章 动物的主要类群'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "水螅的身体经过纵轴可以有多个切面将其分为对称的两部分，这种体形称为（　）", "opts": ["A. 两侧对称", "B. 辐射对称", "C. 上下对称", "D. 不对称"], "ans": 1, "exp": "水螅营附着生活，猎物和捕食者可能来自各个方向，辐射对称的身体便于它感知来自各个方向的刺激，从各个方向捕获猎物和进行防御。"}, {"q": "腔肠动物的主要特征不包括（　）", "opts": ["A. 身体呈辐射对称", "B. 体表有刺细胞", "C. 有口无肛门", "D. 身体背腹扁平"], "ans": 3, "exp": "腔肠动物的主要特征是身体呈辐射对称、体表有刺细胞、有口无肛门。身体背腹扁平是扁形动物的特征，涡虫、华枝睾吸虫等扁形动物才是背腹扁平。"}, {"q": "涡虫的口长在腹面，食物在肠内消化，消化后的食物残渣仍从口排出，这说明涡虫（　）", "opts": ["A. 有口有肛门", "B. 有口无肛门", "C. 无口无肛门", "D. 靠体表消化食物"], "ans": 1, "exp": "涡虫属于扁形动物，有口无肛门，食物残渣仍从口排出。这也是扁形动物和腔肠动物共同的特征，而线形动物、环节动物等则有口有肛门。"}, {"q": "华枝睾吸虫、血吸虫等扁形动物适应寄生生活的特点是（　）", "opts": ["A. 消化器官特别发达", "B. 生殖器官特别发达", "C. 运动器官特别发达", "D. 感觉器官特别发达"], "ans": 1, "exp": "寄生的扁形动物消化器官很简单，有的甚至没有专门的消化器官，靠获取寄主体内的养料生活；而它们的生殖器官却特别发达，如华枝睾吸虫就因精巢发达、呈树枝状而得名。"}, {"q": "蛔虫寄生在人的小肠中，体表包裹着一层角质层，其作用是（　）", "opts": ["A. 帮助运动", "B. 消化食物", "C. 保护身体", "D. 辅助呼吸"], "ans": 2, "exp": "蛔虫体表的角质层起保护作用，能抵御消化液的侵蚀。蛔虫身体呈圆柱形，前端有口、后端有肛门，生殖器官发达，没有专门的运动器官，靠身体的弯曲和伸展缓慢蠕动。"}, {"q": "蚯蚓在糙纸上运动时，主要依靠（　）", "opts": ["A. 刚毛的伸缩", "B. 体壁肌肉与刚毛的配合", "C. 疣足的摆动", "D. 体表黏液的滑动"], "ans": 1, "exp": "蚯蚓体壁有发达的肌肉，肌肉与刚毛配合可以完成运动。身体分节可以使蚯蚓的躯体运动灵活。疣足是沙蚕等环节动物的运动器官。"}, {"q": "在观察蚯蚓的实验中，要经常用浸水的湿棉球轻擦蚯蚓体表，使其体表保持湿润，原因是（　）", "opts": ["A. 蚯蚓靠湿润的体表进行呼吸", "B. 湿润体表有利于蚯蚓运动", "C. 防止蚯蚓体内水分过多", "D. 便于观察蚯蚓的环带"], "ans": 0, "exp": "蚯蚓体壁密布毛细血管，氧气可溶于体表的黏液里进入体壁的血管，体内的二氧化碳也经体壁的毛细血管由体表排出，所以蚯蚓靠湿润的体表呼吸，实验时必须保持其体表湿润。"}, {"q": "软体动物缢蛏（双壳类）获取食物和进行气体交换的结构是（　）", "opts": ["A. 足和外套膜", "B. 入水管、出水管和鳃", "C. 贝壳和足", "D. 触手和口"], "ans": 1, "exp": "双壳类动物通过身体后端的入水管吸入水，再通过出水管排出体外。在吸入和排出水的过程中，摄取水中的食物颗粒并排出未消化的残渣，同时利用鳃与水流进行气体交换。"}, {"q": "下列关于节肢动物的叙述，正确的是（　）", "opts": ["A. 节肢动物是动物界中种类最多的类群", "B. 节肢动物都有两对翅", "C. 节肢动物的身体不分节", "D. 蜘蛛是昆虫纲的动物"], "ans": 0, "exp": "节肢动物是最大的动物类群，已命名的种类有120万种以上，占所有已知动物种数的80%以上。昆虫一般有两对翅，但蜘蛛有4对足、无翅无触角，不属于昆虫。节肢动物的身体和附肢都分节。"}, {"q": "昆虫的外骨骼会限制昆虫的发育和长大，因此昆虫需要（　）", "opts": ["A. 不断进食", "B. 定期蜕皮", "C. 更换外壳", "D. 增大呼吸量"], "ans": 1, "exp": "外骨骼不仅能保护身体、防止体内水分蒸发，还会限制昆虫的发育和长大，所以昆虫需要定期蜕皮。昆虫一生中蜕皮的次数一般是固定的，通常发育为成虫后就不再蜕皮。"}, {"q": "鱼在水中呼吸时，水从口流入，经过鳃丝时发生的变化是（　）", "opts": ["A. 水中的氧渗入鳃丝中的毛细血管，血液中的二氧化碳排入水中", "B. 水中的二氧化碳渗入鳃丝中的毛细血管，血液中的氧排入水中", "C. 水中的氧和二氧化碳都进入血液", "D. 水与血液之间不发生气体交换"], "ans": 0, "exp": "鳃丝中密布毛细血管。当水从口流进、经过鳃丝时，溶解在水里的氧渗入鳃丝中的毛细血管，血液里的二氧化碳则渗出毛细血管排到水中，随水从鳃盖后缘排出体外。鱼离开水后鳃丝黏结，无法呼吸，很快死亡。"}, {"q": "青蛙既能在陆地上生活，也能在水中活动，其辅助肺呼吸的结构是（　）", "opts": ["A. 鳃", "B. 湿润的皮肤", "C. 气囊", "D. 气管"], "ans": 1, "exp": "青蛙的肺结构简单、不发达，但皮肤裸露且能分泌黏液，湿润的皮肤里密布毛细血管，也可进行气体交换，以辅助肺呼吸。气囊辅助呼吸是鸟的特征，鳃是鱼和两栖动物幼体的呼吸器官。"}, {"q": "蜥蜴的生殖和发育能摆脱对水环境的依赖，重要原因是（　）", "opts": ["A. 皮肤干燥，覆盖角质鳞片", "B. 将受精卵产在陆地上，卵外有坚韧的卵壳", "C. 用肺呼吸", "D. 四肢短小，能贴地面迅速爬行"], "ans": 1, "exp": "蜥蜴将受精卵产在陆地上，受精卵较大、卵内养料较多并含有一定水分，卵外还有坚韧的卵壳保护，使卵能够在陆地环境中发育成幼蜥，因此生殖和发育摆脱了对水环境的依赖。"}, {"q": "下列哪一组是鸟特有的特征（　）", "opts": ["A. 体表覆羽、前肢变成翼、有气囊辅助肺呼吸", "B. 体温恒定、用肺呼吸", "C. 产卵繁殖后代、有坚硬的卵壳", "D. 善于飞行、食量大"], "ans": 0, "exp": "鸟的主要特征是体表覆羽、前肢变成翼、有喙无齿、有气囊辅助肺呼吸。体温恒定是鸟和哺乳动物共有的，产卵繁殖后代是爬行动物和鸟共有的，善于飞行不是所有鸟的特征（鸵鸟、企鹅不能飞行）。"}, {"q": "下列关于哺乳动物特征的叙述，不正确的是（　）", "opts": ["A. 体表被毛", "B. 胎生、哺乳", "C. 牙齿有门齿、犬齿和臼齿的分化", "D. 体温随环境温度变化而变化"], "ans": 3, "exp": "哺乳动物与鸟一样可以维持恒定的体温，是恒温动物，体温不随环境温度的变化而改变。哺乳动物的主要特征是体表被毛、胎生哺乳、牙齿有门齿犬齿和臼齿的分化。"}];const flashcards=[{"q": "腔肠动物", "a": "身体呈辐射对称，体表有刺细胞，有口无肛门。如水螅、水母、海葵、海蜇、珊瑚虫"}, {"q": "刺细胞", "a": "腔肠动物特有的攻击和防御利器，触手处尤其多，能弹出刺丝注入毒液麻醉或杀死猎物"}, {"q": "扁形动物", "a": "身体呈两侧对称，背腹扁平，有口无肛门。如涡虫、华枝睾吸虫、血吸虫、绦虫"}, {"q": "线形动物", "a": "身体细长呈圆柱形，体表有角质层，有口有肛门。如蛔虫、蛲虫、钩虫、丝虫"}, {"q": "环节动物", "a": "身体呈圆筒形，由许多彼此相似的体节组成，靠刚毛或疣足辅助运动。如蚯蚓、沙蚕、蛭"}, {"q": "软体动物", "a": "柔软的身体表面有外套膜，大多具有贝壳，运动器官是足。如河蚌、蜗牛、乌贼，动物界第二大类群"}, {"q": "节肢动物", "a": "体表有坚韧的外骨骼，身体和附肢都分节。最大的动物类群，占已知动物种数的80%以上"}, {"q": "昆虫", "a": "节肢动物中种类最多的一类，有一对触角、三对足，一般有两对翅。如蝗虫、蝴蝶、蜜蜂"}, {"q": "鱼", "a": "生活在水中，体表常有鳞片覆盖，用鳃呼吸，通过尾部和躯干部的摆动及鳍的协调作用游泳"}, {"q": "两栖动物", "a": "幼体生活在水中用鳃呼吸；成体大多生活在陆地上，用肺呼吸，皮肤可辅助呼吸。如青蛙、大鲵"}, {"q": "爬行动物", "a": "体表覆盖角质的鳞片或甲，用肺呼吸，在陆地上产卵、卵表面有坚韧的卵壳。如蜥蜴、龟、蛇、扬子鳄"}, {"q": "鸟和哺乳动物", "a": "恒温动物。鸟：体表覆羽、前肢变翼、有喙无齿、气囊辅助呼吸；哺乳动物：体表被毛、胎生哺乳、牙齿有分化"}];const errors=[{"title": "有口无肛门还是口肛门都有", "wrong": "认为腔肠动物、扁形动物和线形动物一样都有口有肛门。", "right": "腔肠动物和扁形动物都有口无肛门（食物残渣从口排出），线形动物开始才进化出肛门（有口有肛门），环节动物也有口有肛门。判断时可从进化的顺序帮助记忆。"}, {"title": "蚯蚓的呼吸方式", "wrong": "认为蚯蚓用鳃或肺呼吸，或者认为蚯蚓靠皮肤和肺共同呼吸。", "right": "蚯蚓体壁密布毛细血管，靠湿润的体表进行气体交换（体表分泌黏液，氧气溶于黏液进入血管）。所以观察蚯蚓时要常用湿棉球轻擦体表保持湿润。"}, {"title": "蜘蛛、蜈蚣、虾是昆虫吗", "wrong": "看到蜘蛛、蜈蚣、虾等节肢动物就认为是昆虫。", "right": "昆虫的基本特征是一对触角、三对足、一般有两对翅。蜘蛛有4对足、无翅无触角；蜈蚣、虾也不是昆虫。它们都属于节肢动物，但只有蝗虫、蝴蝶、蜜蜂等才是昆虫。"}, {"title": "软体动物都有贝壳吗", "wrong": "认为所有软体动物都有贝壳。", "right": "软体动物大多具有贝壳，但并非都有：乌贼身体内有退化的贝壳（海螵蛸），石鳖背部有8个覆瓦状排列的贝壳。软体动物的共同特征是身体柔软、表面有外套膜、运动器官是足。"}, {"title": "水陆两栖≠两栖动物", "wrong": "认为既能生活在水中又能生活在陆地上的动物就是两栖动物（如龟、鳖）。", "right": "两栖动物是指幼体生活在水中用鳃呼吸、成体用肺呼吸且皮肤辅助呼吸的动物。龟虽然也能水陆两栖，但它体表覆盖甲、用肺呼吸、在陆地上产卵有卵壳，属于爬行动物。判断依据是特征而不是生活环境。"}, {"title": "鲸、蝙蝠、企鹅的分类", "wrong": "认为鲸是鱼、蝙蝠是鸟、企鹅不会飞所以不是鸟。", "right": "鲸胎生哺乳、体表被毛退化，是哺乳动物（用肺呼吸）；蝙蝠胎生哺乳，也是哺乳动物；企鹅虽然不能飞行，但体表覆羽、前肢变成翼、有喙无齿、有气囊辅助呼吸，属于鸟。分类要看主要特征，不能只看生活环境和运动方式。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_bio8_ch1_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

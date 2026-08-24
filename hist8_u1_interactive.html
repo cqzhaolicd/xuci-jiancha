@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>中国开始沦为半殖民地半封建社会 · 近代化的早期探索</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e67e22;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 中国开始沦为半殖民地半封建社会 · 近代化的早期探索</h1>
+    <div class="meta">第一、二单元</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>鸦片战争（1840—1842）</h4><p>英国为开辟海外市场、扭转对华贸易逆差，向中国走私鸦片。1839年6月3—25日林则徐在虎门当众销毁鸦片110多万千克，虎门销烟是中国人民禁烟斗争的伟大胜利。1840年6月鸦片战争爆发，1842年8月清政府被迫签订中国近代史上第一个不平等条约《南京条约》。</p></div><div class="k-item"><h4>《南京条约》内容与影响</h4><p>内容：开放广州、福州、厦门、宁波、上海五处为通商口岸；割香港岛给英国；赔款2100万银元；英商进出口货物应纳税款须经双方协议。影响：中国独立主权的完整性遭到破坏，自然经济遭到破坏，开始沦为半殖民地半封建社会，鸦片战争成为中国近代史的开端。</p></div><div class="k-item"><h4>第二次鸦片战争（1856—1860）</h4><p>英、法以“亚罗号事件”“马神甫事件”为借口发动。1858年签订《天津条约》（公使进驻北京、增开汉口南京等十处通商口岸、外国商船军舰可在长江各口岸自由航行）；1860年英法联军火烧圆明园，签订《北京条约》（增开天津为商埠、割九龙司地方一区给英国）。沙俄趁机割占中国东北、西北150多万平方千米领土。</p></div><div class="k-item"><h4>太平天国运动（1851—1864）</h4><p>1843年洪秀全创立拜上帝会，1851年1月金田起义建号太平天国，1853年3月定都天京，颁布《天朝田亩制度》（按人口年龄平均分配土地，带有空想色彩）。1856年天京事变使太平天国由盛转衰；洪仁玕《资政新篇》提出向西方学习但未能实践。1864年天京陷落，运动失败。它是中国历史上规模最宏大的一次农民战争。</p></div><div class="k-item"><h4>洋务运动（19世纪60—90年代中期）</h4><p>口号“自强”“求富”，中央以恭亲王奕䜣为代表，地方有曾国藩、李鸿章、左宗棠、张之洞。创办军事工业：安庆内军械所、江南机器制造总局、福州船政局；民用企业：轮船招商局、开平煤矿、汉阳铁厂、湖北织布局。它是中国历史上第一次近代化运动，客观上促进了中国民族资本主义的产生，但没有使中国走上富强的道路。</p></div><div class="k-item"><h4>甲午中日战争与《马关条约》（1894—1895）</h4><p>1894年是农历甲午年，日本蓄意挑起侵华战争。平壤战役左宝贵牺牲，黄海海战致远舰管带邓世昌壮烈殉国，威海卫战役丁汝昌自杀殉国、北洋舰队全军覆没。1895年签订《马关条约》：割辽东半岛、台湾全岛及所有附属各岛屿、澎湖列岛给日本；赔款白银2亿两；开放沙市、重庆、苏州、杭州为商埠；允许日本在通商口岸开设工厂。大大加深了中国的半殖民地化程度。</p></div><div class="k-item"><h4>戊戌变法（1898）</h4><p>1895年康有为、梁启超联合1300多名举人“公车上书”，拉开变法维新运动序幕。1898年6月11日光绪帝颁布“明定国是”诏书宣布变法：裁撤冗官冗员、鼓励私人兴办工矿企业、废除八股改试策论、开办新式学堂、裁减绿营训练新式军队。9月21日慈禧太后发动政变，谭嗣同等“戊戌六君子”遇害，变法历时103天，史称“百日维新”。它虽失败，但在思想文化方面产生了广泛而持久的影响。</p></div><div class="k-item"><h4>八国联军侵华与《辛丑条约》（1900—1901）</h4><p>义和团运动提出“扶清灭洋”口号。1900年6月英、美、俄、日、法、德、意、奥八国联军发动侵华战争，8月14日攻陷北京。1901年9月签订《辛丑条约》：赔款白银4.5亿两（本息共9.8亿两）；严禁人民参加反帝活动；拆毁大沽炮台；允许外国军队驻扎北京到山海关铁路沿线要地；划定北京东交民巷为使馆界；改总理衙门为外务部。它是中国近代史上赔款数目最庞大、主权丧失最严重的不平等条约，清政府沦为帝国主义列强统治中国的工具，中国完全陷入半殖民地半封建社会的深渊。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 统编版（人教版）八年级上册中国历史 · 第一、二单元 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_hist8_u1_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第一、二单元',chapter:'第一、二单元',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'中国历史,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "1839年6月，主持虎门销烟的历史人物是", "opts": ["A. 琦善", "B. 林则徐", "C. 关天培", "D. 陈化成"], "ans": 1, "exp": "1838年底道光帝派力主禁烟的林则徐为钦差大臣前往广东查禁鸦片，1839年6月3日至25日，收缴的鸦片在虎门海滩被当众销毁。"}, {"q": "中国近代史上第一个丧权辱国的不平等条约是", "opts": ["A. 《南京条约》", "B. 《北京条约》", "C. 《马关条约》", "D. 《辛丑条约》"], "ans": 0, "exp": "1842年8月清政府与英国签订的中英《南京条约》，是中国近代史上第一个丧权辱国的不平等条约。"}, {"q": "《南京条约》中，清政府被迫割让给英国的是", "opts": ["A. 九龙司地方一区", "B. 香港岛", "C. 台湾全岛", "D. 澎湖列岛"], "ans": 1, "exp": "《南京条约》规定割香港岛给英国；《北京条约》割九龙司地方一区给英国；《马关条约》割台湾全岛及所有附属各岛屿、澎湖列岛给日本。"}, {"q": "英国发动鸦片战争的根本原因是", "opts": ["A. 林则徐虎门销烟", "B. 中国实行闭关锁国政策", "C. 英国为开辟海外市场、掠夺生产资料", "D. 中国禁止鸦片贸易"], "ans": 2, "exp": "19世纪中期英国完成工业革命后，为开拓海外市场和掠夺生产资料，把侵略矛头指向中国；虎门销烟只是英国发动战争的直接借口。"}, {"q": "1860年，英法联军对北京的哪座皇家园林进行了抢劫并纵火烧毁？", "opts": ["A. 颐和园", "B. 圆明园", "C. 承德避暑山庄", "D. 故宫"], "ans": 1, "exp": "1860年10月，英法联军对北京西北郊著名的皇家园林圆明园进行了大肆抢劫，之后又放火烧毁，大火连烧三天。"}, {"q": "第二次鸦片战争前后，割占中国东北和西北150多万平方千米领土的国家是", "opts": ["A. 英国", "B. 法国", "C. 日本", "D. 沙俄"], "ans": 3, "exp": "从19世纪50年代到80年代，沙俄强迫清政府签订一系列不平等条约（如《瑷珲条约》《北京条约》等），共割占了中国东北和西北150多万平方千米领土。"}, {"q": "太平天国运动兴起的标志是", "opts": ["A. 金田起义", "B. 定都天京", "C. 天京事变", "D. 永安建制"], "ans": 0, "exp": "1851年1月，洪秀全在广西桂平金田村发动武装起义，建号太平天国，起义军称“太平军”，标志太平天国运动兴起。"}, {"q": "太平天国运动中，颁布的体现农民要求获得土地愿望的纲领性文件是", "opts": ["A. 《资政新篇》", "B. 《天朝田亩制度》", "C. 《海国图志》", "D. 《四洲志》"], "ans": 1, "exp": "《天朝田亩制度》规定不分男女按人口和年龄平均分配土地，反映了千百年来农民要求得到土地的强烈愿望，但带有很大的空想色彩；《资政新篇》是洪仁玕提出向西方学习的方案。"}, {"q": "使太平天国由盛转衰的事件是", "opts": ["A. 金田起义", "B. 天京陷落", "C. 天京事变", "D. 北伐失败"], "ans": 2, "exp": "1856年秋的天京事变（杨秀清被杀、韦昌辉被处死、石达开率部出走）使太平天国损失惨重、人心士气受到严重影响，由盛转衰。"}, {"q": "洋务运动的口号是", "opts": ["A. “师夷长技以制夷”", "B. “自强”“求富”", "C. “变法图强”", "D. “实业救国”"], "ans": 1, "exp": "从19世纪60年代到90年代中期，洋务派掀起了一场旨在“自强”“求富”的洋务运动。"}, {"q": "甲午中日战争黄海海战中，下令开足马力冲向日舰“吉野号”、准备与敌人同归于尽的致远舰管带是", "opts": ["A. 邓世昌", "B. 左宝贵", "C. 丁汝昌", "D. 徐邦道"], "ans": 0, "exp": "黄海海战中，致远舰管带邓世昌在舰身严重受损、弹药将尽之际，下令冲向日舰“吉野号”，不幸被炮弹击中，200余名将士壮烈殉国。"}, {"q": "《马关条约》中，与《南京条约》相比最能体现列强侵华方式变化（由商品输出为主变为资本输出为主）的内容是", "opts": ["A. 割辽东半岛、台湾全岛给日本", "B. 赔款白银2亿两", "C. 开放沙市、重庆、苏州、杭州为商埠", "D. 允许日本在通商口岸开设工厂"], "ans": 3, "exp": "“允许日本在通商口岸开设工厂”是列强侵华方式由商品输出为主变为资本输出为主的标志，这是《马关条约》区别于以往条约的突出内容。"}, {"q": "揭开维新变法运动序幕的事件是", "opts": ["A. 强学会成立", "B. 公车上书", "C. 《时务报》创办", "D. “明定国是”诏书颁布"], "ans": 1, "exp": "1895年春康有为、梁启超等联合各省1300多名参加会试的举人上书光绪帝，请求拒和、迁都、变法，这就是著名的“公车上书”，拉开了变法维新运动的序幕。"}, {"q": "戊戌变法中，甘愿为变法流血牺牲、高呼“有之，请自嗣同始”的是", "opts": ["A. 康有为", "B. 梁启超", "C. 谭嗣同", "D. 严复"], "ans": 2, "exp": "政变发生后，谭嗣同拒绝出走，说“各国变法，无不从流血而成……有之，请自嗣同始”，后与刘光第、林旭、杨锐、杨深秀、康广仁一起被害，史称“戊戌六君子”。"}, {"q": "使中国完全陷入半殖民地半封建社会深渊的条约是", "opts": ["A. 《南京条约》", "B. 《天津条约》", "C. 《马关条约》", "D. 《辛丑条约》"], "ans": 3, "exp": "《辛丑条约》签订后，清政府沦为帝国主义列强统治中国的工具，中国完全陷入半殖民地半封建社会的深渊。《南京条约》使中国开始沦为半殖民地半封建社会，《马关条约》大大加深了中国的半殖民地化程度。"}];const flashcards=[{"q": "虎门销烟", "a": "1839年6月3—25日，林则徐在虎门海滩当众销毁鸦片110多万千克，是中国人民禁烟斗争的伟大胜利，显示了中华民族反抗外来侵略的坚强意志。"}, {"q": "《南京条约》（1842）", "a": "内容：五口通商（广州、福州、厦门、宁波、上海）、割香港岛、赔款2100万银元、协定关税。影响：中国开始沦为半殖民地半封建社会，是中国近代史的开端。"}, {"q": "《马关条约》（1895）", "a": "割辽东半岛、台湾全岛及附属岛屿、澎湖列岛；赔款白银2亿两；开放沙市、重庆、苏州、杭州；允许日本在通商口岸开设工厂。大大加深了中国的半殖民地化程度。"}, {"q": "《辛丑条约》（1901）", "a": "赔款白银4.5亿两（本息9.8亿两）；严禁反帝；拆毁大沽炮台；外国军队驻扎北京—山海关铁路沿线要地；东交民巷为使馆界；改总理衙门为外务部。中国完全陷入半殖民地半封建社会的深渊。"}, {"q": "《天朝田亩制度》", "a": "太平天国定都天京后颁布，不分男女按人口和年龄平均分配土地，带有空想色彩，但反映了农民要求土地的强烈愿望。"}, {"q": "洋务运动企业", "a": "军事工业（自强）：安庆内军械所、江南机器制造总局、福州船政局；民用企业（求富）：轮船招商局、开平煤矿、汉阳铁厂、湖北织布局。"}, {"q": "甲午战争殉国将领", "a": "平壤战役左宝贵；黄海海战邓世昌（致远舰）；威海卫战役丁汝昌（北洋舰队全军覆没）。"}, {"q": "公车上书", "a": "1895年《马关条约》签订消息传到北京，康有为、梁启超联合各省1300多名举人上书光绪帝请求拒和、迁都、变法，拉开变法维新运动序幕。"}, {"q": "戊戌六君子", "a": "谭嗣同、刘光第、林旭、杨锐、杨深秀、康广仁，1898年9月政变后被捕遇害。变法历时103天，又称“百日维新”。"}, {"q": "义和团运动", "a": "19世纪末兴起，提出“扶清灭洋”口号，具有盲目排外性。沉重打击了帝国主义瓜分中国的野心，使侵略者承认中国“尚含有无限蓬勃生气”。"}, {"q": "列强侵华四大条约与影响", "a": "《南京条约》→开始沦为半殖民地半封建社会；《北京条约》→半殖民地化程度进一步加深；《马关条约》→大大加深半殖民地化程度；《辛丑条约》→完全陷入半殖民地半封建社会深渊。"}, {"q": "林则徐与魏源", "a": "林则徐是“开眼看世界”的第一人（主持翻译西方书刊）；魏源据《四洲志》编成《海国图志》，提出“师夷长技以制夷”的思想。"}];const errors=[{"title": "四个条约影响混淆", "wrong": "认为《辛丑条约》使中国“开始沦为”半殖民地半封建社会。", "right": "《南京条约》→开始沦为；《北京条约》/第二次鸦片战争→程度进一步加深；《马关条约》→大大加深；《辛丑条约》→完全陷入深渊。按“开始—加深—大大加深—完全陷入”的递进顺序记忆。"}, {"title": "割地张冠李戴", "wrong": "把《南京条约》割香港岛记成《马关条约》，或把台湾误记为《南京条约》割让。", "right": "《南京条约》割香港岛给英国；《北京条约》割九龙司地方一区给英国；《马关条约》割辽东半岛、台湾全岛及所有附属各岛屿、澎湖列岛给日本。"}, {"title": "鸦片战争爆发原因记错", "wrong": "认为虎门销烟是鸦片战争爆发的根本原因。", "right": "根本原因是英国为开辟海外市场、掠夺生产资料而蓄意侵略中国；虎门销烟只是英国发动战争的直接借口。"}, {"title": "太平天国纲领混淆", "wrong": "认为《资政新篇》是平均分配土地的纲领，或认为《天朝田亩制度》得以实施。", "right": "《天朝田亩制度》主张平均分配土地（空想、未能施行）；《资政新篇》是洪仁玕提出向西方学习、改革内政的方案（受历史条件限制未能付诸实践）。"}, {"title": "洋务运动评价片面", "wrong": "认为洋务运动使中国走上了富强道路。", "right": "洋务运动是中国历史上第一次近代化运动，客观上促进了中国民族资本主义的产生，对外国资本入侵起到一定抵制作用；但因根本目的是维护和巩固清政府的统治，没有使中国走上富强的道路。"}, {"title": "“开工厂”条款归属记错", "wrong": "把“允许外国在通商口岸开设工厂”记成《南京条约》或《辛丑条约》的内容。", "right": "允许日本在通商口岸开设工厂是《马关条约》的内容，标志着列强侵华方式由商品输出为主变为资本输出为主。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_hist8_u1_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

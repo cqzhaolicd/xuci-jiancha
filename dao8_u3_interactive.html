@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第三单元 勇担社会责任 · 8年级上道德与法治</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#9b59b6;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 第三单元 勇担社会责任 · 8年级上道德与法治</h1>
+    <div class="meta">第三单元 勇担社会责任 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+<div class="k-item"><h4>责任的含义与来源</h4><p>责任是一个人分内应该做的事情。从已有的生活经历中不难发现，责任来自对他人的承诺、职业要求、道德规范、法律规定等。如顾客排队付款的责任来自道德规范，作为家庭成员尊老爱幼来自道德和法律，答应朋友的事尽力做到来自对他人的承诺。</p></div><div class="k-item"><h4>角色与责任</h4><p>在社会生活的舞台上，每个人都扮演着不同的角色。每一种角色都意味着承担相应的责任：作为子女，孝敬父母是我们的责任；作为学生，遵守学校纪律、认真学习是我们的责任；作为社会的一员，应该遵守社会规则、维护公共秩序。只有人人认识到自己扮演的角色、承担应尽的责任，才能构建各尽其能、各得其所而又和谐相处的社会。</p></div><div class="k-item"><h4>对自己负责</h4><p>作为社会的一员，我们每个人首先要对自己负责。小到按时完成作业、为自己的一次约定守时，大到终身信守承诺、认真做事，都是对自己负责任的表现。只有对自己负责的人，才能使自己的潜能得到充分挖掘和发挥，才有资格、有能力、有信心承担起时代和国家所赋予的使命。</p></div><div class="k-item"><h4>他人对我负责</h4><p>很多人在为我们的成长和幸福生活承担着责任：父母辛勤劳动，履行养育子女的责任；老师履行教书育人的责任；解放军战士用青春和热血承担保家卫国的责任。我们应该学会感恩，主动关心、帮助和服务他人，在辛苦付出中体验对他人负责的快乐和幸福。</p></div><div class="k-item"><h4>不言代价与回报</h4><p>承担责任不仅意味着付出时间、精力和金钱，而且意味着可能因为做得不好而受到责备，甚至受到处罚。承担责任往往伴随着获得回报的权利，这种回报既包括物质方面，又包括精神方面，对我们而言更重要的是精神方面的回报，如良好的自我感觉、获得新的知识和技能、赢得他人的尊重和赞许等。</p></div><div class="k-item"><h4>我承担　我无悔</h4><p>在很多情况下，我们可以选择自己承担的责任，一旦作出选择，就应该义无反顾地担当起应负的责任。有些应该做的事情不是我们自愿选择的，但我们仍然应该自觉承担相应的责任：不抱怨，不懈怠，全身心地投入，同样能够把事情做得很出色——我承担，我无悔。</p></div><div class="k-item"><h4>关爱他人</h4><p>关爱，就是关心爱护。关爱传递着美好情感，给人带来温暖和希望，是维系友好关系的桥梁；关爱是社会和谐稳定的润滑剂和正能量。关爱他人，收获幸福：关爱他人的人往往能够赢得他人的尊重，得到他人的关心和帮助，获得更多的发展机会。</p></div><div class="k-item"><h4>服务社会</h4><p>服务社会体现人生价值：一个人的价值应该看他贡献什么，而不应当看他得到什么，只有积极为社会作贡献，才能得到人们的尊重和认可，实现我们自身的价值。服务社会能够促进我们全面发展：视野不断拓展，知识不断丰富，能力不断提升，道德境界不断提高。服务和奉献社会，需要我们青年担当责任（中国共产主义青年团），积极参与社会公益活动（环境保护、社区服务等），热爱劳动、爱岗敬业。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为若琳定制的学习工具 | 统编版（人教版）八年级上册 · 第三单元 勇担社会责任 | 持续更新中</div>
+<script>
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_dao8_u3_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第三单元 勇担社会责任',chapter:'第三单元 勇担社会责任',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'勾股定理,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "责任是一个人（　）应该做的事情", "opts": ["A. 分内", "B. 分外", "C. 自愿", "D. 额外"], "ans": 0, "exp": "责任是一个人分内应该做的事情。责任来自对他人的承诺、职业要求、道德规范、法律规定等。"}, {"q": "责任来自（　）①对他人的承诺 ②职业要求 ③道德规范 ④法律规定", "opts": ["A. ①②③", "B. ②③④", "C. ①②④", "D. ①②③④"], "ans": 3, "exp": "责任来自对他人的承诺、职业要求、道德规范、法律规定等，四个方面都是责任的来源。"}, {"q": "「作为子女，孝敬父母是我们的责任；作为学生，遵守学校纪律、认真学习是我们的责任。」这说明（　）", "opts": ["A. 责任与角色无关", "B. 每一种角色都意味着承担相应的责任", "C. 只有学生才有责任", "D. 责任来自他人的强迫"], "ans": 1, "exp": "在社会生活的舞台上，每个人都扮演着不同的角色，每一种角色都意味着承担相应的责任。角色不同，承担的责任也不同。"}, {"q": "作为社会的一员，我们每个人首先要（　）", "opts": ["A. 对国家负责", "B. 对他人负责", "C. 对自己负责", "D. 对社会负责"], "ans": 2, "exp": "我们每个人首先要对自己负责。只有对自己负责的人，才能使自己的潜能得到充分挖掘和发挥，才有资格、有能力、有信心承担起时代和国家所赋予的使命。"}, {"q": "承担责任往往伴随着获得回报的权利，对我们而言更重要的是（　）方面的回报", "opts": ["A. 物质", "B. 精神", "C. 金钱", "D. 地位"], "ans": 1, "exp": "承担责任往往伴随着获得回报的权利，这种回报包括物质和精神两方面，对我们而言更重要的是精神方面的回报，如良好的自我感觉、获得新的知识和技能、赢得他人的尊重和赞许。"}, {"q": "承担责任意味着（　）①付出时间、精力和金钱 ②可能因为做得不好而受到责备甚至处罚 ③一定获得丰厚报酬 ④没有任何收获", "opts": ["A. ①③", "B. ②④", "C. ①②", "D. ③④"], "ans": 2, "exp": "承担责任不仅意味着付出时间、精力和金钱，而且意味着可能因为做得不好而受到责备，甚至受到处罚，①②正确；承担责任往往伴随着获得回报的权利，③④说法错误。"}, {"q": "面对并非自愿选择的责任，我们应该（　）", "opts": ["A. 推卸责任", "B. 敷衍了事", "C. 抱怨不满", "D. 自觉承担，不抱怨、不懈怠，全身心投入"], "ans": 3, "exp": "有些应该做的事情不是我们自愿选择的，但我们仍然应该自觉承担相应的责任。只要把它们当作一种不可推卸的责任担在肩头，不抱怨、不懈怠，全身心地投入，同样能够把事情做得很出色。"}, {"q": "关爱，就是（　）", "opts": ["A. 关心爱护", "B. 施舍怜悯", "C. 等价交换", "D. 同情可怜"], "ans": 0, "exp": "关爱，就是关心爱护。每个人都被他人关爱着，也都在关爱着他人。关爱无时不在，无处不在。"}, {"q": "关爱是社会和谐稳定的（　）", "opts": ["A. 负担", "B. 润滑剂和正能量", "C. 干扰因素", "D. 阻碍"], "ans": 1, "exp": "关爱是社会和谐稳定的润滑剂和正能量。点点滴滴的善行汇聚成爱的海洋，有利于形成良好的人际氛围，促进社会文明进步。"}, {"q": "关爱他人，要（　）①心怀善意 ②尽己所能 ③讲究策略 ④不考虑任何后果", "opts": ["A. ②③④", "B. ①②④", "C. ①③④", "D. ①②③"], "ans": 3, "exp": "关爱他人是一门艺术：要心怀善意，学会关心、体贴和帮助他人；要尽己所能，关爱不分大小，贵在有爱心；要讲究策略，考虑他人内心感受，不伤害他人自尊心。"}, {"q": "「一个人的价值应该看他贡献什么，而不应当看他得到什么。」这说明服务社会（　）", "opts": ["A. 促进全面发展", "B. 体现人生价值", "C. 获得物质回报", "D. 赢得个人名声"], "ans": 1, "exp": "服务社会体现人生价值：只有积极为社会作贡献，才能得到人们的尊重和认可，实现我们自身的价值。"}, {"q": "服务社会能够促进我们全面发展，表现在（　）①视野不断拓展 ②知识不断丰富 ③能力不断提升 ④道德境界不断提高", "opts": ["A. ①②③", "B. ②③④", "C. ①②③④", "D. ①②④"], "ans": 2, "exp": "在服务社会的过程中，我们的视野不断拓展，知识不断丰富，观察、分析、解决问题的能力以及人际交往能力不断提升，道德境界不断提高，四项都正确。"}, {"q": "服务和奉献社会，需要我们（　）①青年担当责任 ②积极参与社会公益活动 ③热爱劳动、爱岗敬业 ④只做轰轰烈烈的大事", "opts": ["A. ②③④", "B. ①②④", "C. ①②③", "D. ①③④"], "ans": 2, "exp": "服务和奉献社会，需要我们青年担当责任；需要我们积极参与社会公益活动（环境保护、社区服务等）；需要我们热爱劳动、爱岗敬业。④说法错误。"}, {"q": "关爱他人是一门艺术，帮助他人时要（　）", "opts": ["A. 宣扬自己的善行", "B. 要求对方回报", "C. 考虑他人的内心感受，不伤害他人的自尊心", "D. 居高临下地施舍"], "ans": 2, "exp": "帮助他人时，要考虑他人的内心感受，不伤害他人的自尊心；面对复杂情形，要善于作出明智的判断，增强安全防范意识和自我保护意识。"}, {"q": "下列属于关爱他人、服务社会行为的是（　）", "opts": ["A. 嘲笑他人", "B. 到科技馆、博物馆做志愿者", "C. 对他人困难视而不见", "D. 随地吐痰"], "ans": 1, "exp": "服务和奉献社会需要我们积极参与社会公益活动：可以到科技馆、博物馆做志愿者，可以在社区、公园、车站等公共场所纠正不文明行为，从实际出发，讲求实际效果。"}];const flashcards=[{"q": "责任", "a": "一个人分内应该做的事情；来自对他人的承诺、职业要求、道德规范、法律规定等"}, {"q": "角色与责任", "a": "每种角色都意味着承担相应的责任：子女→孝敬父母，学生→遵守纪律认真学习，社会成员→遵守规则维护秩序"}, {"q": "对自己负责", "a": "首先要对自己负责：按时完成作业、信守承诺；对自己负责才能承担起时代和国家赋予的使命"}, {"q": "感恩与回报", "a": "很多人在为我们承担责任（父母、老师、解放军战士等）；学会感恩，主动关心、帮助和服务他人"}, {"q": "不言代价与回报", "a": "付出时间、精力、金钱，可能受责备处罚；回报更重要的是精神方面：良好自我感觉、新知识技能、他人尊重赞许"}, {"q": "我承担　我无悔", "a": "作出选择就义无反顾担当；非自愿选择的责任也要自觉承担，不抱怨、不懈怠，全身心投入"}, {"q": "关爱他人", "a": "关爱就是关心爱护；传递美好情感，是维系友好关系的桥梁，是社会和谐稳定的润滑剂和正能量"}, {"q": "关爱他人·收获幸福", "a": "关爱他人的人赢得他人尊重和帮助，获得更多发展机会；关爱他人也是关爱和善待自己"}, {"q": "关爱是一门艺术", "a": "心怀善意、尽己所能、讲究策略；帮助他人考虑内心感受，不伤害自尊心，增强安全防范意识"}, {"q": "服务社会体现人生价值", "a": "一个人的价值应该看他贡献什么；积极为社会作贡献，才能得到尊重和认可，实现自身价值"}, {"q": "服务社会促进全面发展", "a": "视野拓展、知识丰富、能力提升、人际交往能力提升、道德境界提高"}, {"q": "奉献社会我践行", "a": "青年担当责任（共青团）；积极参与社会公益活动（环境保护、社区服务）；热爱劳动、爱岗敬业"}];const errors=[{"title": "❌ 责任来源记不全", "wrong": "认为责任只来自法律规定。", "right": "责任来自对他人的承诺、职业要求、道德规范、法律规定等多个方面。如赡养父母既来自道德也来自法律，答应朋友的事一定要尽力做到来自承诺。"}, {"title": "❌ 责任与角色脱节", "wrong": "认为责任是成年人的事，学生没有责任。", "right": "每一种角色都意味着承担相应的责任：作为学生要遵守学校纪律、认真学习，作为社会的一员要遵守社会规则、维护公共秩序。人人尽职尽责，社会才能各尽其能、各得其所。"}, {"title": "❌ 承担责任只看代价", "wrong": "认为承担责任只会付出，没有任何回报。", "right": "承担责任往往伴随着获得回报的权利，对我们而言更重要的是精神方面的回报：良好的自我感觉、获得新的知识和技能、赢得他人的尊重和赞许。"}, {"title": "❌ 非自愿的责任就推掉", "wrong": "认为不是自己自愿选择的事情，可以不做。", "right": "有些应该做的事情不是我们自愿选择的，但我们仍然应该自觉承担相应的责任，不抱怨、不懈怠，全身心投入——我承担，我无悔。"}, {"title": "❌ 关爱等于施舍", "wrong": "认为关爱他人就是给钱给物，可以居高临下。", "right": "关爱他人要心怀善意、尽己所能、讲究策略；帮助他人时要考虑他人的内心感受，不伤害他人的自尊心，在保护自己不受伤害的前提下采取理智行动。"}, {"title": "❌ 服务社会是大人的事", "wrong": "认为我们年纪小，服务社会等长大再说。", "right": "青少年也要担当责任：积极参与社会公益活动（到科技馆、博物馆做志愿者，参与环境保护、社区服务），热爱劳动、爱岗敬业，努力学习，增强劳动观念，培养敬业精神。"}];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_dao8_u3_interactive';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class=\"quiz-progress\"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:'+(curQ/questions.length*100)+'%\"></div></div><span>'+score+'/'+answered+'</span></div><div class=\"q-header\">'+(function(){var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+( _dp==='ok'?'ok':'no')+'">'+( _dp==='ok'?'✅已做':'❌已做')+'</span>':'';})()+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class=\"option\" onclick=\"selA('+i+')\">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(oi===questions[idx].ans)score++;else if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class=\"exp-box\">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class=\"btn btn-primary\" onclick=\"nextQ()\">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){document.getElementById('quizArea').innerHTML='<div class=\"result-card\"><div class=\"score\">'+score+'/'+questions.length+'</div><div class=\"sub\">答对'+score+'题 / 共'+questions.length+'题</div><div style=\"margin-top:.8rem\"><button class=\"btn btn-primary\" onclick=\"initQ();renderQ();\">重新测验</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>
