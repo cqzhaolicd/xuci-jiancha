@@ -105,7 +105,7 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
       <div class="k-item"><h4>勾股定理逆定理</h4><p>若三角形三边满足a²+b²=c²（c为最长边），则它是直角三角形。用于判定直角三角形。</p></div>
       <div class="k-item"><h4>勾股定理应用·求边长</h4><p>已知两边求第三边：c=√(a²+b²)；a=√(c²-b²)。注意分类讨论（第三边可能为直角边或斜边）。</p></div>
       <div class="k-item"><h4>勾股定理应用·面积</h4><p><strong>① 求斜边上的高</strong>（等面积法）：直角三角形面积 = ½ab = ½ch，所以 <strong>h = ab/c</strong>。如直角边3、4，斜边5，高 = 12/5 = 2.4。步骤：先勾股求斜边 → 用面积相等列方程 → 解高。<br><strong>② 求距离/最短路径</strong>：蚂蚁爬行、将军饮马类问题，<strong>把立体或折线展开成平面</strong>，两点间线段最短，用勾股定理求直线距离。例：长方体长4宽3高5，表面最短爬行距离 = 展开后 √((4+3)²+5²) 或 √((4+5)²+3²)，取较小值。<br><strong>③ 折叠问题</strong>：折叠前后对应边相等、对应角相等，设未知数 x 表示折叠后线段，在直角三角形中列勾股方程。例：矩形ABCD折叠使B落在AD上E处，设AE=x，则BE=BC-EC 用勾股解x。<br><strong>④ 实际应用</strong>：旗杆问题——旗杆折断倒在地上，用勾股求原高（折断部分+直立部分）；梯子问题——梯子长l靠墙，下滑/外移后重新列勾股方程求新距离。<strong>口诀：求高用面积，最短路展开，折叠设x列方程，实际画图找直角。</strong></p></div>
-      <p><strong>构图</strong>：四个全等直角三角形（直角边a、b，斜边c）拼成正方形，用<strong>等面积法</strong>证勾股定理。<br>
+      <div class="k-item"><h4>赵爽弦图·进阶</h4><p><strong>构图</strong>：四个全等直角三角形（直角边a、b，斜边c）拼成正方形，用<strong>等面积法</strong>证勾股定理。<br>
 <strong>外弦图</strong>（三角在外）：大正方形边长 <strong>a+b</strong>，中间小正方形边长 <strong>c</strong>（由斜边构成），S大=(a+b)²=c²+4×½ab → a²+b²=c²。<br>
 <strong>内弦图</strong>（三角在内）：大正方形边长 <strong>c</strong>（由斜边构成），中间小正方形边长 <strong>|a−b|</strong>，c²=(a−b)²+4×½ab → a²+b²=c²。<br>
 <strong>历史</strong>：三国·赵爽为《周髀算经》作注时创制，是最早的勾股定理严格证明之一。<br>
@@ -119,10 +119,10 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
   <polygon points="300,300 140,300 300,180" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
   <polygon points="20,300 140,300 20,180" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
   <polygon points="180,20 300,180 140,300 20,180" fill="#48bb7822" stroke="#48bb78" stroke-width="2.2"/>
-  <text x="100" y="42" font-size="16" fill="#c0392b" font-weight="bold" text-anchor="middle">a</text>
-  <text x="32" y="88" font-size="16" fill="#c0392b" font-weight="bold">b</text>
-  <text x="160" y="175" font-size="15" fill="#2f855a" font-weight="bold" text-anchor="middle">c</text>
-  <text x="160" y="318" font-size="14" fill="#555" text-anchor="middle">外弦图：大正方形边长 a+b，中间小正方形边长 c</text>
+  <text x="100" y="42" font-size="12" fill="#c0392b" font-weight="bold" text-anchor="middle">a</text>
+  <text x="32" y="88" font-size="12" fill="#c0392b" font-weight="bold">b</text>
+  <text x="160" y="175" font-size="11" fill="#2f855a" font-weight="bold" text-anchor="middle">c</text>
+  <text x="160" y="318" font-size="10" fill="#555" text-anchor="middle">外弦图：大正方形边长 a+b，中间小正方形边长 c</text>
   <!-- 分隔线 -->
   <line x1="340" y1="20" x2="340" y2="300" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4,4"/>
   <!-- 内弦图：大正方形 c=5，三角在内，小正方形 |a-b|=1（右移 340） -->
@@ -132,11 +132,11 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
   <polygon points="625,285 375,285 535,165" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
   <polygon points="375,285 375,35 495,195" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
   <polygon points="465,155 505,125 535,165 495,195" fill="#48bb7822" stroke="#48bb78" stroke-width="2.2"/>
-  <text x="500" y="28" font-size="16" fill="#c0392b" font-weight="bold" text-anchor="middle">c</text>
-  <text x="545" y="100" font-size="14" fill="#c0392b" font-weight="bold">a</text>
-  <text x="420" y="100" font-size="14" fill="#c0392b" font-weight="bold">b</text>
-  <text x="500" y="172" font-size="14" fill="#2f855a" font-weight="bold" text-anchor="middle">a−b</text>
-  <text x="500" y="318" font-size="14" fill="#555" text-anchor="middle">内弦图：大正方形边长 c，中间小正方形边长 |a−b|</text>
+  <text x="500" y="28" font-size="12" fill="#c0392b" font-weight="bold" text-anchor="middle">c</text>
+  <text x="545" y="100" font-size="11" fill="#c0392b" font-weight="bold">a</text>
+  <text x="420" y="100" font-size="11" fill="#c0392b" font-weight="bold">b</text>
+  <text x="500" y="172" font-size="11" fill="#2f855a" font-weight="bold" text-anchor="middle">a−b</text>
+  <text x="500" y="318" font-size="10" fill="#555" text-anchor="middle">内弦图：大正方形边长 c，中间小正方形边长 |a−b|</text>
 </svg>
 </div></div>
       <div class="k-item"><h4>常见题型·多解</h4><p><strong>① 等腰三角形腰/底不确定</strong>：题目只给两条边或两角时，先分类讨论（第三边可能是腰也可能是底），再验证是否满足三角形三边关系（两边之和大于第三边），排除不成立的情况。<br>例：等腰三角形两边为4和8，则第三边可能是4或8，但4+4=8不构成三角形（舍去），所以第三边=8，周长=20。<br><strong>② 高在三角形内/外</strong>：求等腰三角形腰上的高或底边上的高时，若只给两边长，高的位置可能在内（锐角）也可能在外（钝角），需分别列勾股方程。<br>例：等腰三角形腰长5、底边6，底边上的高=√(5²-3²)=4（在内部）；若改成两边5、6但未说明哪边是底，高可能在外部，需讨论。<br><strong>③ 答案可能是多个</strong>：如一边4、一边3，第三边可能是√(4²+3²)=5（直角边），也可能是√(4²-3²)=√7（斜边），还可能√41或3等。分类讨论后答案不唯一，<strong>写"答"时要把所有可能都写上</strong>。</p></div>
