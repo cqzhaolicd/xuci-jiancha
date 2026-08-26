@@ -1,0 +1,360 @@
+# -*- coding: utf-8 -*-
+"""生成 python_basics_interactive.html + ai_basics_interactive.html — 赵立 AI 学习互动页(轻量模板)"""
+import io, sys, json, subprocess
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
+# ================= 生成器 =================
+py_knowledge = [
+    ('Python 是什么', '解释型、面向对象、动态类型的编程语言，语法简洁、生态强大。缩进（通常4空格）是语法的一部分。常用解释器：CPython。'),
+    ('变量与赋值', '变量名 = 值，无需声明类型。命名规则：字母/下划线开头，区分大小写，不能是关键字（if、for、def 等）。如 name="赵立"、age=40。'),
+    ('基本数据类型', 'int 整数、float 浮点、str 字符串（单/双引号）、bool 布尔（True/False）、None 空值。用 type(x) 查看类型。'),
+    ('运算符', '算术：+ - * /(真除) //(整除) %(取余) **(幂)。比较：== != > < >= <=。逻辑：and or not。赋值：= += -=。'),
+    ('字符串', '拼接 +、重复 *、索引 s[0]、切片 s[1:3]、len(s) 长度、f-string 格式化：f"你好，{name}"。'),
+    ('列表 list', '有序可变集合：[1,2,3]。增 append/insert、删 remove/pop、索引/切片、len()、遍历 for x in lst。'),
+    ('字典 dict', '键值对：{"name":"赵立","age":40}。取值 d["name"] 或 d.get("name")，增改 d["k"]=v，遍历 for k,v in d.items()。'),
+    ('条件语句', 'if 条件: 缩进块 elif 条件: 缩进块 else: 缩进块。注意冒号和缩进，elif 可多个。'),
+    ('循环', 'for x in range(n) 或遍历容器；while 条件: 满足时循环。break 跳出、continue 跳过本次。'),
+    ('函数', 'def 函数名(参数): 缩进块 return 返回值。可设默认参数 def f(a, b=10)。函数让代码复用。'),
+    ('文件读写', 'open("文件","r/w/a")，用 with 自动关闭：with open("a.txt","r",encoding="utf-8") as f: data=f.read()。写：f.write()。'),
+    ('异常处理', 'try: 可能出错的代码 except Exception as e: 处理错误。防止程序崩溃，如文件不存在、除零。'),
+]
+
+py_questions = [
+    ("Python 中 `5 // 2` 的结果是", ["A. 2", "B. 2.5", "C. 3", "D. 2.0"], 0, "// 是整除（地板除），5//2=2，结果永远是整数（对正数）。"),
+    ("Python 中 `5 % 2` 的结果是", ["A. 1", "B. 2", "C. 2.5", "D. 0"], 0, "% 是取余运算符，5 除以 2 余 1。"),
+    ("`2 ** 3` 的值是", ["A. 6", "B. 8", "C. 9", "D. 5"], 1, "** 是幂运算，2 的 3 次方 = 8。"),
+    ("下列哪个是合法的变量名？", ["A. 2name", "B. my-name", "C. name_1", "D. for"], 2, "变量名不能以数字开头、不能含连字符、不能是关键字。name_1 合法。"),
+    ("`type(3.14)` 返回", ["A. int", "B. float", "C. str", "D. bool"], 1, "3.14 带小数点，是 float（浮点型）。"),
+    ("`len(\"hello\")` 的值是", ["A. 4", "B. 6", "C. 5", "D. 3"], 2, "len() 返回长度，hello 有 5 个字符。"),
+    ("`[1,2,3][1]` 的值是", ["A. 1", "B. 3", "C. 0", "D. 2"], 3, "列表索引从 0 开始，[1] 取第 2 个元素 = 2。"),
+    ("`{\"name\":\"赵立\"}[\"name\"]` 的值是", ["A. 赵立", "B. name", "C. 报错", "D. None"], 0, "字典用键取值，d[\"name\"] = \"赵立\"。"),
+    ("Python 中表示逻辑与的关键字是", ["A. &&", "B. and", "C. &", "D. 或"], 1, "Python 用 and / or / not，不用 && 和 ||。"),
+    ("`for i in range(3):` 会循环几次？", ["A. 2 次", "B. 3 次", "C. 4 次", "D. 1 次"], 1, "range(3) 生成 0,1,2，共 3 次。"),
+    ("函数定义的关键字是", ["A. function", "B. func", "C. def", "D. define"], 2, "Python 用 def 定义函数。"),
+    ("`\"ab\" * 3` 的结果是", ["A. ababab", "B. ab3", "C. 报错", "D. aabb"], 0, "字符串乘整数表示重复拼接：ab 重复 3 次 = ababab。"),
+    ("下列哪个判断语句写法正确？", ["A. if x = 5:", "B. if x == 5:", "C. if (x = 5)", "D. if x equals 5"], 1, "== 是比较，= 是赋值。if 后必须冒号。"),
+    ("`with open(\"a.txt\", \"r\") as f:` 的作用是", ["A. 读取文件并自动关闭", "B. 写入文件", "C. 删除文件", "D. 创建目录"], 0, "with 上下文管理器自动处理关闭，r 模式读取。"),
+    ("`bool(0)` 的值是", ["A. True", "B. False", "C. None", "D. 0"], 1, "0、空字符串、空列表在布尔判断中为 False。"),
+]
+
+py_flashcards = [
+    ("整除与取余", "5//2=2（整除），5%2=1（取余）。常用于判断奇偶：x%2==0 为偶数。"),
+    ("变量命名", "字母/下划线开头、区分大小写、不能是关键字。name_1 ✓ 2name ✗"),
+    ("字符串格式化", "f-string：f\"你好，{name}，今年{age}岁\"。最推荐的方式。"),
+    ("列表操作", "append 加尾、pop 删尾、s[0] 取首、s[-1] 取尾、切片 s[1:3]。"),
+    ("字典操作", "d[\"k\"] 取值（无则报错）、d.get(\"k\",默认) 安全取值、d.items() 遍历键值。"),
+    ("条件与循环", "if/elif/else 注意冒号缩进；for 遍历、while 条件循环；break/continue 控制流。"),
+    ("函数", "def 名(参数): ... return 值。默认参数、位置参数、关键字参数。"),
+    ("异常处理", "try/except 捕获错误防崩溃。except Exception as e: print(e) 看错误信息。"),
+]
+
+py_errors = [
+    ("缩进错误", "代码块不缩进或缩进不一致。", "Python 用缩进（4空格）表示代码块。统一用 4 空格，别混 Tab。"),
+    ("== 与 = 混淆", "if 条件里用 = 赋值。", "== 是比较是否相等；= 是赋值。判断时用 if x == 5:。"),
+    ("索引从 1 开始", "以为 lst[1] 是第一个元素。", "索引从 0 开始：lst[0] 第一个、lst[1] 第二个。想取最后一个用 lst[-1]。"),
+    ("列表/字典修改副作用", "函数内直接改全局列表没意识到影响。", "列表是可变对象，函数内修改会作用于原对象。需要副本时用 lst[:] 或 copy()。"),
+    ("字符串不能改", "尝试 s[0]=\"a\" 修改字符串。", "字符串是不可变对象，不能原地修改。要改就重新拼接或 replace()。"),
+]
+
+# ================= AI 应用内容 =================
+ai_knowledge = [
+    ('什么是 AI', '人工智能（AI）：让机器模拟人类智能。狭义上现在多指机器学习/深度学习驱动的系统：图像识别、语音、大模型对话等。'),
+    ('机器学习三要素', '数据（样本）、特征（描述维度）、算法（学习规则）。模型 = 从数据中学到的规律，用于预测新数据。'),
+    ('监督学习 vs 无监督', '监督：有标注数据（如带标签的图片）→ 分类/回归。无监督：无标注 → 聚类/降维。强化学习：通过奖惩学会策略。'),
+    ('大语言模型（LLM）', '基于 Transformer 架构、在海量文本上训练的语言模型，如 GPT、DeepSeek。能力：对话、写作、代码、翻译。本质是预测下一个词。'),
+    ('训练 vs 推理', '训练：用数据调整参数（算力密集，需 GPU）。推理：用训练好的模型生成回答（相对轻量）。普通人接触的是推理。'),
+    ('提示词工程', '给模型写清晰指令：角色 + 任务 + 上下文 + 格式要求。例：\"你是Python老师，用简单语言解释装饰器，给2个例子\"。'),
+    ('RAG（检索增强）', '先从知识库检索相关内容，再交给模型回答，减少幻觉、引用来源。适合企业私有知识问答。'),
+    ('Agent（智能体）', 'AI 自主规划、调用工具完成任务：拆解目标 → 调用工具（搜索/代码/API）→ 验证结果。如 Hermes 就是 Agent。'),
+    ('常见 AI 工具', '对话：DeepSeek/ChatGPT；编程：Copilot/Cursor；绘图：Midjourney/即梦；办公：飞书妙记/AI 文档；视频：可灵/Sora。'),
+    ('AI 应用场景', '写作、编程、数据分析、翻译、学习辅导、PPT/Excel 生成。核心：人给方向，AI 提效率，人负责判断。'),
+    ('数据与隐私', '敏感数据不要直接喂给云端模型。企业用私有化部署/本地模型（如 Ollama）。公共数据注意版权。'),
+    ('AI 学习路线', '① Python 基础 → ② 机器学习入门（scikit-learn）→ ③ 深度学习（PyTorch）→ ④ LLM 应用（API/Agent）。工具先行、原理跟上。'),
+]
+
+ai_questions = [
+    ("机器学习中，\"特征\"指的是", ["A. 数据中用于描述的属性", "B. 模型的输出", "C. 训练次数", "D. 显卡型号"], 0, "特征是样本的描述维度，如身高、体重、年龄。"),
+    ("下列属于监督学习的是", ["A. 给带标签的邮件分类垃圾邮件", "B. 把客户自动分成3组", "C. 压缩图片", "D. 生成随机数"], 0, "监督学习用带标签数据学习，垃圾邮件分类有明确标签。"),
+    ("大语言模型（LLM）的核心能力是", ["A. 预测下一个词", "B. 执行任意程序", "C. 上网浏览", "D. 控制硬件"], 0, "LLM 本质是根据上下文预测下一个 token，涌现出对话/写作/推理能力。"),
+    ("\"训练\"和\"推理\"的区别，正确的是", ["A. 训练要数据调参，推理用现成模型", "B. 两者一样", "C. 推理更耗算力", "D. 训练不需要 GPU"], 0, "训练调整模型参数（重），推理是使用模型（轻）。"),
+    ("提示词工程中，哪种写法更有效？", ["A. 角色+任务+格式要求", "B. 只写一个词", "C. 让模型猜你的意图", "D. 一段无重点的长文"], 0, "清晰的结构化提示词能显著提升输出质量。"),
+    ("RAG 技术主要解决的问题是", ["A. 减少幻觉、回答可引用来源", "B. 提高训练速度", "C. 压缩模型体积", "D. 生成图片"], 0, "RAG 从知识库检索后回答，降低编造，支持引用来源。"),
+    ("Agent（智能体）与普通对话 AI 的区别是", ["A. 能自主调用工具完成任务", "B. 只会聊天", "C. 没有区别", "D. 只能生成图片"], 0, "Agent 能规划、调工具（搜索/代码/API）、验证结果，主动完成任务。"),
+    ("下列哪项是 AI 的正确使用方式？", ["A. 把机密数据直接喂给公开模型", "B. AI 结果不核查直接发布", "C. AI 辅助草稿，人负责审核", "D. 完全依赖 AI 决策"], 2, "AI 是效率工具，人负责判断和审核，敏感数据注意隐私。"),
+    ("普通人入门 AI 编程，第一步应该学", ["A. Python 基础", "B. 分布式训练", "C. CUDA 编程", "D. 芯片设计"], 0, "Python 是 AI 生态的通用语言，先掌握基础语法和数据操作。"),
+    ("`import numpy as np` 中 numpy 常用于", ["A. 数值计算", "B. 网页渲染", "C. 数据库管理", "D. 游戏引擎"], 0, "NumPy 是 Python 数值计算基础库，AI/数据分析的基石。"),
+    ("深度学习常用的框架是", ["A. PyTorch", "B. Photoshop", "C. Excel", "D. AutoCAD"], 0, "PyTorch/TensorFlow 是主流深度学习框架。"),
+    ("下列哪个属于 AI 生成内容（AIGC）？", ["A. AI 写的文章", "B. 手抄笔记", "C. 打印文件", "D. 录音笔录的课"], 0, "AIGC = AI 生成内容：文本、图片、音频、视频。"),
+]
+
+ai_flashcards = [
+    ("AI 定义", "让机器模拟人类智能：学习、推理、感知、语言。现代主流 = 机器学习/深度学习。"),
+    ("机器学习流程", "收集数据 → 清洗 → 选特征 → 选算法 → 训练 → 评估 → 部署预测。"),
+    ("监督 vs 无监督", "监督=有标签(分类/回归)；无监督=无标签(聚类)；强化=奖惩策略。"),
+    ("LLM 原理一句话", "在海量文本上训练，学会预测下一个词，涌现出理解与生成能力。"),
+    ("提示词四要素", "角色 + 任务 + 上下文 + 格式。越清晰输出越好。"),
+    ("RAG 是什么", "检索增强生成：知识库检索 → 拼接上下文 → 模型回答 → 可引用。"),
+    ("Agent 是什么", "能自主规划、调用工具、验证结果的智能体（如 Hermes）。"),
+    ("学习路线", "Python → 机器学习(sklearn) → 深度学习(PyTorch) → LLM 应用(API/Agent)。"),
+]
+
+ai_errors = [
+    ("把 AI 当全知", "AI 会一本正经地编造（幻觉）。", "重要信息必须核查来源；用 RAG 引用、联网搜索、人工验证。"),
+    ("敏感数据直喂云端", "把公司机密、隐私直接发给公开模型。", "用本地模型（Ollama）或私有化部署；脱敏后再用。"),
+    ("只学概念不动手", "看一堆理论不写代码。", "编程是练出来的：每天写小脚本，用 AI 辅助但亲手敲。"),
+    ("提示词太模糊", "\"帮我写个东西\"。", "说清角色、任务、输入、输出格式、约束，效果天差地别。"),
+]
+
+# ================= 生成器 =================
+def build_page(fname, title, subtitle, kp_key, knowledge, questions, flashcards, errors, color='#667eea'):
+    kp_items = '\n'.join(f'      <div class="k-item"><h4>{t}</h4><p>{c}</p></div>' for t, c in knowledge)
+    q_arr = json.dumps([{"q": q, "opts": o, "ans": a, "exp": e} for q, o, a, e in questions], ensure_ascii=False)
+    fc_arr = json.dumps([{"q": q, "a": a} for q, a in flashcards], ensure_ascii=False)
+    err_arr = json.dumps([{"title": t, "wrong": w, "right": r} for t, w, r in errors], ensure_ascii=False)
+    n_q = len(questions); n_fc = len(flashcards); n_err = len(errors)
+    
+    html = f'''<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>{title} · 赵立AI学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{{--primary:{color};--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}}
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}}
+.navbar{{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}}
+.navbar .container{{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}}
+.navbar-brand{{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}}
+.navbar-nav{{display:flex;gap:.1rem}}
+.navbar-nav a{{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}}
+.navbar-nav a:hover,.navbar-nav a.active{{background:rgba(255,255,255,.2);color:#fff}}
+.container{{max-width:960px;margin:0 auto;padding:.5rem 1rem}}
+.hero{{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}}
+.hero h1{{font-size:1.25rem;font-weight:800;color:var(--text)}}
+.hero h1 i{{color:var(--primary);margin-right:.35rem}}
+.hero .meta{{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}}
+.tab-nav{{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}}
+.tab-btn{{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}}
+.tab-btn:hover,.tab-btn.active{{border-color:var(--primary);color:var(--primary)}}
+.tab-content{{display:none}}.tab-content.active{{display:block}}
+.card{{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}}
+.card-title{{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}}
+.knowledge-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}}
+.k-item{{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}}
+.k-item h4{{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}}
+.k-item p{{font-size:.74rem;color:var(--text-light);line-height:1.5}}
+.quiz-progress{{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}}
+.quiz-progress .progress-bar{{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}}
+.quiz-progress .progress-fill{{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}}
+.quiz-progress span{{font-size:.74rem;color:var(--text-light)}}
+.q-header{{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}}
+.option{{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}}
+.option:hover:not(.disabled){{border-color:var(--primary)}}
+.option.correct{{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}}
+.option.wrong{{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}}
+.option.disabled{{cursor:default;opacity:.7}}
+.exp-box{{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}}
+.result-card{{text-align:center;padding:1.5rem}}
+.result-card .score{{font-size:2.2rem;font-weight:900;color:var(--primary)}}
+.result-card .sub{{font-size:.82rem;color:var(--text-light);margin-top:.25rem}}
+.flashcard{{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}}
+.flashcard:hover{{border-color:var(--primary)}}
+.flashcard .front{{font-size:.9rem;font-weight:600;color:var(--text)}}
+.flashcard .back{{font-size:.8rem;color:var(--text-light);margin-top:.4rem}}
+.flashcard-nav{{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}}
+.flashcard-counter{{font-size:.78rem;color:var(--text-light)}}
+.check-item{{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}}
+.check-item strong{{color:#f56565}}
+.footer{{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}}
+.btn{{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}}
+.btn-primary{{background:var(--primary);color:#fff}}
+.btn-outline{{background:transparent;border:2px solid var(--border);color:#718096}}
+.btn-sm{{padding:.18rem .4rem;font-size:.7rem}}
+@media(max-width:768px){{.navbar-nav a span{{display:none}}.knowledge-grid{{grid-template-columns:1fr}}}}
+.quiz-mode-bar{{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm)}}
+.qm-btn{{border:1.5px solid var(--border);background:transparent;color:var(--text);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}}
+.qm-btn.qm-active{{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}}
+#quizModeInfo{{margin-left:auto;font-size:.74rem;color:var(--text-light);white-space:nowrap}}
+.done-badge{{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}}
+.done-badge.ok{{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}}
+.done-badge.no{{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}}
+@media(max-width:768px){{#quizModeInfo{{display:none}}}}
+.flashcard{{position:relative}}
+.flashcard .fc-mark{{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}}
+.flashcard .fc-mark.done{{color:#27ae60}}
+.flashcard.kp-learned{{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}}
+.check-item{{position:relative}}
+.check-item .ec-mark{{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}}
+.check-item .ec-mark.done{{color:#27ae60}}
+.check-item.kp-learned{{background:rgba(46,204,113,.12);border-left-color:#27ae60}}
+</style><style>.toast{{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}}
+.toast-success{{background:#48bb78}}
+.toast-warning{{background:#ed8936}}
+.toast-info{{background:#667eea}}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="zhaoli_index.html"><i class="fas fa-arrow-left"></i> AI学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> {title}</h1>
+    <div class="meta">{subtitle} · {n_q} 题 · {n_fc} 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+{kp_items}
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为赵立定制的 AI 学习工具 | {subtitle} | 持续更新中</div>
+<script>
+function speakDone(){{
+  try{{
+    if(!window.__voiceMuted && window.speechSynthesis){{
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }}
+  }}catch(e){{}}
+}}
+const KP_KEY = '{kp_key}';
+function getKP() {{ try {{ return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); }} catch(e) {{ return []; }} }}
+function toggleKP(name, el) {{
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) {{ arr.splice(i, 1); }} else {{ arr.push(name); speakDone(); }}
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {{
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }}
+  try {{
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  }} catch(e) {{}}
+}}
+function kpMark(name) {{
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}}
+function kpInit() {{
+  document.querySelectorAll('.k-item').forEach(item => {{
+    const titleEl = item.querySelector('h4');
+    if (!titleEl) return;
+    const name = titleEl.textContent.trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  }});
+}}
+document.addEventListener('DOMContentLoaded', kpInit);
+function fcMark(q) {{
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}}
+function ecMark(t) {{
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}}
+document.addEventListener('click', function(e) {{
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+}});
+function toast(msg,type){{type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){{el.style.opacity='0';setTimeout(function(){{el.remove();}},350);}},2600);}}
+const questions={q_arr}
+const flashcards={fc_arr}
+const errors={err_arr}
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){{return i;}}).sort(function(){{return Math.random()-0.5;}});
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_{kp_key}';
+function getQuizProg(){{try{{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{{}}')}}catch(e){{return {{}}}}}}
+function saveQuizProg(idx,res){{var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}}
+function updateModeInfo(){{var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){{if(p[k]==='wrong')wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}}
+function setQuizMode(m){{QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){{b.classList.toggle('qm-active',b.getAttribute('data-m')===m)}});initQ();if(shuffled.length)renderQ();}}
+function quizFilterIds(){{var ids=questions.map(function(_,i){{return i;}});if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){{return !(i in p)}});return ids.filter(function(i){{return p[i]==='wrong'}})}}
+function showQuizEmpty(){{var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}}
+function initQ(){{curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){{showQuizEmpty();shuffled=[];return;}}shuffled=ids.sort(function(){{return Math.random()-0.5;}});updateModeInfo();}}
+function renderQ(){{if(curQ>=questions.length){{showResult();return;}}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+(function(){{var _dp=getQuizProg()[shuffled[curQ]];return _dp?'<span class="done-badge '+(_dp==='ok'?'ok':'no')+'">'+(_dp==='ok'?'✅已做':'❌已做')+'</span>':'';}})()+q.q+'</div>'+
+q.opts.map(function(o,i){{return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}}).join('');}}
+function selA(oi){{var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){{b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');}});
+if(oi===questions[idx].ans){{score++;speakDone();}}else{{toast('❌ 记入错题','warning');}}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}}
+function nextQ(){{if(curQ<questions.length-1){{curQ++;renderQ();}}else showResult();}}
+function showResult(){{document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button></div></div>';}}
+function renderFC(dir){{if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class="flashcard" id="fc-card"><div class="front">'+fc.q+' '+fcMark(fc.q)+'</div><div class="back" style="display:block">'+fc.a+'</div></div><div class="flashcard-nav"><button class="btn btn-outline btn-sm" onclick="goPrev()"'+(fIdx===0?' disabled':'')+'><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">'+(fIdx+1)+'/'+flashcards.length+'</span><button class="btn btn-primary btn-sm" onclick="goNext()"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class="fas fa-arrow-right"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){{this.classList.toggle('flipped');}};}}
+function goPrev(){{fIdx--;renderFC(null);}}
+function goNext(){{fIdx++;renderFC(null);}}
+function renderEC(){{var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){{return '<div class="check-item"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style="color:#48bb78">→ '+e.right+'</span></div>';}}).join('');}}
+function switchTab(n){{document.querySelectorAll('.tab-content').forEach(function(e){{e.classList.remove('active');}});
+document.querySelectorAll('.tab-btn').forEach(function(e){{e.classList.remove('active');}});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){{var im={{knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'}};if(e.innerHTML.includes(im[n]))e.classList.add('active');}});}}
+renderFC();initQ();renderQ();renderEC();
+</script>
+</body></html>'''
+    open(fname, 'w', encoding='utf-8').write(html)
+    return len(html)
+
+# 生成两个页面
+n1 = build_page('python_basics_interactive.html', 'Python 基础语法', 'Python 编程 · 第1讲', 'zhaoli_python', py_knowledge, py_questions, py_flashcards, py_errors, color='#667eea')
+n2 = build_page('ai_basics_interactive.html', 'AI 与机器学习概览', 'AI 应用 · 第1讲', 'zhaoli_ai', ai_knowledge, ai_questions, ai_flashcards, ai_errors, color='#e67e22')
+
+print(f"python_basics_interactive.html: {n1} 字节")
+print(f"ai_basics_interactive.html: {n2} 字节")
+
+# JS 语法验证
+for f in ['python_basics_interactive.html', 'ai_basics_interactive.html']:
+    r = subprocess.run(["node", "-e", f"""
+const fs=require('fs');const html=fs.readFileSync('{f}','utf8');
+const re=/<script[^>]*>([\\s\\S]*?)<\\/script>/g;let m,ok=true;
+while((m=re.exec(html))){{try{{new Function(m[1])}}catch(e){{ok=false;console.log('ERR:',e.message)}}}}
+console.log('{f}:',ok?'JS OK':'JS FAIL');
+"""], capture_output=True, text=True)
+    print(r.stdout.strip() or r.stderr[:300])
