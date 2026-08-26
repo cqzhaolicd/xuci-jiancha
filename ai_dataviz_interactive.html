@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Python 基础语法 · 赵立AI学习</title>
+<title>数据可视化与 API · 赵立AI学习</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-:root{--primary:#667eea;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+:root{--primary:#e67e22;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
 .navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
@@ -86,8 +86,8 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 </div></nav>
 <div class="container">
   <div class="hero">
-    <h1><i class="fas fa-book-open"></i> Python 基础语法</h1>
-    <div class="meta">Python 编程 · 第1讲 · 20 题 · 10 卡牌</div>
+    <h1><i class="fas fa-book-open"></i> 数据可视化与 API</h1>
+    <div class="meta">AI 应用 · 第2讲 · 10 题 · 7 卡牌</div>
   </div>
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
@@ -96,23 +96,18 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
     <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
   </div>
   <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
-      <div class="k-item"><h4>Python 与运行方式</h4><p>解释型语言，语法简洁。Python 3.9+ 为佳；终端 `>>>` 提示符可运行代码片段（Windows 用 python，macOS/Linux 用 python3）。写 .py 文件用 `python hello.py` 运行。</p></div>
-      <div class="k-item"><h4>变量：标签模型</h4><p>变量是贴在值上的标签（不是盒子），值可随时更改，Python 始终跟踪当前值。命名：字母/下划线开头、不能含空格、避免关键字、小写+下划线。拼写不一致 → NameError（Python 不做拼写检查）。</p></div>
-      <div class="k-item"><h4>字符串与常用方法</h4><p>引号内都是字符串（单/双引号均可）。方法：title()/upper()/lower()、strip()/lstrip()/rstrip()（去空白，需重新赋值才永久）、removeprefix()/removesuffix()（删前后缀，如 URL 去 https://）。含撇号用双引号包住，否则 SyntaxError。</p></div>
-      <div class="k-item"><h4>f-string 格式化</h4><p>在开引号前加 f，用花括号 {} 插入变量或表达式：f"Hello, {name}!"。忘记 f 前缀 → 花括号原样输出。</p></div>
-      <div class="k-item"><h4>整数与浮点</h4><p>算术：+ - * /(真除，总返回浮点) **(幂)，遵循运算顺序。0.2+0.1=0.30000000000000004 是浮点精度问题（所有语言共有，不是 bug）。数字可加下划线分组：14_000_000_000。常量用全大写约定：MAX_CONNECTIONS=5000。</p></div>
-      <div class="k-item"><h4>列表 List</h4><p>方括号 [] 有序可变集合。索引从 0 开始，-1 取最后一个。增 append()/insert()、删 del/pop()/remove()、组织 sort()/sorted()/reverse()、len()。访问不存在索引 → IndexError。</p></div>
-      <div class="k-item"><h4>列表操作进阶</h4><p>for 循环遍历（缩进是语法！）。range(1,5) 含头不含尾。min()/max()/sum()。列表解析：[x**2 for x in range(1,11)]。切片 players[0:3] 含头不含尾，复制用 [:]（直接 = 只是同一列表两个名字）。</p></div>
-      <div class="k-item"><h4>元组 Tuple</h4><p>不可变列表，圆括号定义：dimensions=(200,50)。元素不可改（TypeError），但可整体重新赋值。单元素元组要尾随逗号 my_t=(3,)。存"不应改变的值"时用元组。</p></div>
-      <div class="k-item"><h4>if 条件语句</h4><p>条件测试：== 比较、= 赋值，别混淆！比较区分大小写（可用 lower() 忽略）。and/or 组合、in/not in 成员检查。if-elif-else 只执行第一个通过的分支；多个独立 if 检查所有条件。</p></div>
-      <div class="k-item"><h4>字典 Dict</h4><p>花括号键值对：{...}。取值 d["key"]（不存在→KeyError）或 d.get("key",默认值)（安全，默认 None）。增改 d["k"]=v，删除 del。遍历 items()/keys()/values()，sorted() 排序、set() 去重。嵌套：字典列表/字典中列表/字典中字典。</p></div>
-      <div class="k-item"><h4>input() 与 while</h4><p>input() 永远返回字符串，数值要 int() 转换（否则 TypeError）。while 条件循环，用退出值/flag/break/continue 控制。修改列表内容时用 while 而不是 for（如删除全部指定值）。</p></div>
-      <div class="k-item"><h4>函数 Function</h4><p>def 定义。形参=定义占位，实参=调用传入。位置实参/关键字实参(名=值)/默认值(必须放后面)。return 返回值。*args 收任意数量实参（元组），**kwargs 收任意关键字实参（字典）。可变默认参数陷阱：用 None 占位。</p></div>
-      <div class="k-item"><h4>模块与导入</h4><p>模块=存函数的 .py 文件。5 种导入：import pizza；from pizza import make_pizza；起别名 from pizza import make_pizza as mp / import pizza as p；from pizza import *（不推荐，可能覆盖同名函数）。</p></div>
-      <div class="k-item"><h4>文件读写 (第3版 pathlib)</h4><p>第3版用 pathlib.Path：path=Path("a.txt")，读 contents=path.read_text()（可加 encoding="utf-8"），写 path.write_text(contents)（覆盖！）。splitlines() 逐行。读出的都是字符串，数字要转换。</p></div>
-      <div class="k-item"><h4>异常处理</h4><p>try-except-else 捕获运行时错误（ZeroDivisionError、FileNotFoundError）。try 只放可能出错的行，else 放依赖成功的结果。except 里写 pass 静默失败。别用裸 except: 会吞掉所有错误包括自己的 bug。</p></div>
-      <div class="k-item"><h4>JSON 持久化</h4><p>json.dumps() 数据→JSON 字符串，json.loads() 读回。配文件对象用 dump/load。让程序重启后数据仍在。</p></div>
-      <div class="k-item"><h4>PEP 8 风格</h4><p>官方风格指南：4 空格缩进（别混 Tab）、每行 ≤79 字符、类用 CamelCase、变量小写下划线、import 放文件开头。"代码被阅读的次数远多于书写的次数"。</p></div>
+      <div class="k-item"><h4>matplotlib 基础</h4><p>import matplotlib.pyplot as plt；fig, ax = plt.subplots()；ax.plot(x, y) 折线、ax.scatter(x, y) 散点；plt.show() 显示。fig=整个图，ax=子图。</p></div>
+      <div class="k-item"><h4>图表定制</h4><p>ax.set_title/set_xlabel/set_ylabel；ax.tick_params(labelsize=14)；plt.style.use("seaborn") 内置样式；ax.axis([xmin,xmax,ymin,ymax]) 设范围。</p></div>
+      <div class="k-item"><h4>plot() 易错点</h4><p>只传一个序列时假设 x 从 0 开始。数据起点是 x=1 时要显式传 input_values：ax.plot(input_values, squares)。</p></div>
+      <div class="k-item"><h4>散点与 colormap</h4><p>scatter(x, y, s=10) 画点，s 是大小。colormap 强调数据模式：ax.scatter(x, y, c=y_values, cmap=plt.cm.Blues)。注意 c 不是 color！</p></div>
+      <div class="k-item"><h4>随机漫步 RandomWalk</h4><p>纯随机决策的路径。用 random.choice() 做决策：方向×距离=步长，x_step==0 且 y_step==0 时 continue 跳过。ax.set_aspect("equal") 保持形状真实。</p></div>
+      <div class="k-item"><h4>Plotly Express</h4><p>交互式浏览器图表。pip install plotly pandas。px.bar(x=..., y=...) 两行出图，fig.show() 渲染 HTML。px.scatter_geo() 世界地图。</p></div>
+      <div class="k-item"><h4>CSV 数据处理</h4><p>csv.reader 解析 CSV；datetime.strptime() 解析日期；try-except-else 处理缺失数据。先看表头结构再处理。</p></div>
+      <div class="k-item"><h4>API 调用</h4><p>requests.get(url) 发起请求；检查 status_code==200；r.json() 解析响应为 Python 字典。GitHub API: api.github.com/search/repositories?q=language:python+sort:stars。</p></div>
+      <div class="k-item"><h4>API 嵌套取值</h4><p>repo_dict["owner"]["login"] 多级取值，任意一级键名错→KeyError。用 try-except 跳过异常帖子。</p></div>
+      <div class="k-item"><h4>API 限流</h4><p>GitHub 搜索 API 未认证约 10 次/分钟。访问 api.github.com/rate_limit 查看。很多 API 需要注册获取 API key。</p></div>
+      <div class="k-item"><h4>Django 入门</h4><p>python -m venv 创建虚拟环境隔离包；django-admin startproject 建项目；models.py 定义模型；makemigrations/migrate 迁移建表；startapp 建应用。</p></div>
+      <div class="k-item"><h4>Django 模板</h4><p>定义 URL → 编写视图 → 编写模板 三步法。模板继承 base.html 复用布局。ModelForm 处理表单，@login_required 限制登录用户。</p></div>
   </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
     <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
     <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
@@ -129,7 +124,7 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
     <div id="errorChecklist"></div></div>
   </div>
 </div>
-<div class="footer">为赵立定制的 AI 学习工具 | Python 编程 · 第1讲 | 持续更新中</div>
+<div class="footer">为赵立定制的 AI 学习工具 | AI 应用 · 第2讲 | 持续更新中</div>
 <script>
 function speakDone(){
   try{
@@ -141,7 +136,7 @@ function speakDone(){
     }
   }catch(e){}
 }
-const KP_KEY = 'zhaoli_python';
+const KP_KEY = 'zhaoli_ai_viz';
 function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
 function toggleKP(name, el) {
   let arr = getKP();
@@ -200,12 +195,12 @@ document.addEventListener('click', function(e) {
   toggleKP(name, mark);
 });
 function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
-const questions=[{"q":"Python 中 `5 // 2` 的结果是","opts":["A. 3","B. 2","C. 2.0","D. 2.5"],"ans":1,"exp":"// 是整除（地板除），5//2=2，结果永远是整数。"},{"q":"Python 中 `5 % 2` 的结果是","opts":["A. 0","B. 1","C. 2.5","D. 2"],"ans":1,"exp":"% 是取余运算符，5 除以 2 余 1。常用于判断奇偶：x%2==0 为偶数。"},{"q":"`2 ** 3` 的值是","opts":["A. 5","B. 6","C. 8","D. 9"],"ans":2,"exp":"** 是幂运算，2 的 3 次方 = 8。"},{"q":"下列哪个是合法的变量名？","opts":["A. name_1","B. my-name","C. for","D. 2name"],"ans":0,"exp":"变量名不能以数字开头、不能含连字符（-）、不能是关键字（for）。name_1 合法。"},{"q":"`type(3.14)` 返回","opts":["A. float","B. str","C. bool","D. int"],"ans":0,"exp":"3.14 带小数点，是 float（浮点型）。"},{"q":"`\"Ada Lovelace\".title()` 的结果是","opts":["A. Ada lovelace","B. ada lovelace","C. ADA LOVELACE","D. Ada Lovelace"],"ans":3,"exp":"title() 把每个单词首字母大写 → Ada Lovelace。"},{"q":"`[1,2,3][1]` 的值是","opts":["A. 1","B. 3","C. 2","D. 0"],"ans":2,"exp":"列表索引从 0 开始，[1] 取第 2 个元素 = 2。"},{"q":"`[1,2,3,4,5][-1]` 的值是","opts":["A. 报错","B. 5","C. 1","D. 4"],"ans":1,"exp":"-1 永远返回最后一个元素 = 5。"},{"q":"`{\"name\":\"赵立\"}[\"name\"]` 的值是","opts":["A. name","B. None","C. 赵立","D. 报错"],"ans":2,"exp":"字典用键取值，d[\"name\"] = \"赵立\"。"},{"q":"`{\"a\":1}.get(\"b\", 99)` 的值是","opts":["A. 1","B. 99","C. 报错","D. None"],"ans":1,"exp":"get() 第二个参数是键不存在时的默认值；省略则返回 None。"},{"q":"`for i in range(3):` 会循环几次？","opts":["A. 2 次","B. 3 次","C. 4 次","D. 1 次"],"ans":1,"exp":"range(3) 生成 0,1,2 共 3 次。range(1,5) 含头不含尾 → 1,2,3,4。"},{"q":"`[x**2 for x in range(1,4)]` 的结果是","opts":["A. [1,4,9]","B. [1,4,9,16]","C. [2,4,6]","D. [1,2,3]"],"ans":0,"exp":"列表解析：x 取 1,2,3，x**2 → [1,4,9]。"},{"q":"函数定义的关键字是","opts":["A. func","B. function","C. def","D. define"],"ans":2,"exp":"Python 用 def 定义函数。"},{"q":"`def f(a, b=10):` 中 b=10 是","opts":["A. 返回值","B. 关键字实参","C. 默认值参数","D. 位置实参"],"ans":2,"exp":"b=10 是默认值参数，调用不传 b 时自动用 10；默认值参数必须放最后。"},{"q":"`\"ab\" * 3` 的结果是","opts":["A. ab3","B. ababab","C. aabb","D. 报错"],"ans":1,"exp":"字符串乘整数表示重复拼接：ab 重复 3 次 = ababab。"},{"q":"下列哪个判断语句写法正确？","opts":["A. if x equals 5","B. if x == 5:","C. if (x = 5)","D. if x = 5:"],"ans":1,"exp":"== 是比较，= 是赋值。if 后必须冒号。"},{"q":"`input()` 返回的值总是","opts":["A. 字符串","B. 布尔值","C. 整数","D. 浮点数"],"ans":0,"exp":"input() 永远返回字符串！要数值必须 int()/float() 转换，否则比较会 TypeError。"},{"q":"第3版教材读取文件的推荐方式是","opts":["A. 文件对象 + for","B. with open() as f","C. open() + read()","D. pathlib.Path + read_text()"],"ans":3,"exp":"第3版改用 pathlib：path=Path('a.txt'); contents=path.read_text()。open/with 是第2版写法。"},{"q":"`try:` 块中应该放","opts":["A. 整个程序","B. 所有 print","C. 只可能出错的那一行","D. 什么都行"],"ans":2,"exp":"try 只放可能引发异常的行，else 放依赖 try 成功的代码。"},{"q":"`from pizza import *` 为什么不推荐？","opts":["A. 太慢","B. 会报错","C. 可能覆盖同名函数","D. 不能导入"],"ans":2,"exp":"导入全部函数可能覆盖当前文件中的同名函数，应优先用 import pizza 或精确导入。"}]
-const flashcards=[{"q": "变量是标签", "a": "变量贴在值上，不是盒子。拼写不一致→NameError，Python 不做拼写检查只要求一致。"}, {"q": "字符串方法", "a": "title/upper/lower、strip/lstrip/rstrip（要重新赋值才永久）、removeprefix/removesuffix。含撇号用双引号。"}, {"q": "f-string", "a": "f\"Hello, {name}!\"。忘记 f 前缀→花括号原样输出。"}, {"q": "浮点精度", "a": "0.2+0.1=0.30000000000000004。所有语言共有，不是 bug。4/2=2.0（真除总返回浮点）。"}, {"q": "列表操作", "a": "索引从0，-1 取尾。append/pop/del/remove、sort/sorted/reverse、len。索引越界→IndexError。"}, {"q": "切片与复制", "a": "players[0:3] 含头不含尾；[:] 复制得到独立列表；直接 = 是同一列表两个名字。"}, {"q": "字典 get()", "a": "d[\"k\"] 不存在→KeyError；d.get(\"k\",默认) 安全；省略默认返回 None。"}, {"q": "*args/**kwargs", "a": "*args 收任意数量实参成元组，**kwargs 收关键字实参成字典；必须放参数最后。"}, {"q": "pathlib 读写", "a": "path=Path('a.txt'); read_text() 读、write_text() 写（覆盖！）。第3版标准方式。"}, {"q": "try-except-else", "a": "try 只放可能出错行，except 捕获错误，else 放依赖成功的结果。pass 静默失败。"}]
-const errors=[{"title": "缩进错误", "wrong": "代码块不缩进或缩进不一致。", "right": "Python 用缩进（4空格）表示代码块，缩进错误→IndentationError。统一 4 空格，别混 Tab。"}, {"title": "== 与 = 混淆", "wrong": "if 条件里用 = 赋值。", "right": "== 是比较是否相等；= 是赋值。判断时用 if x == 5:。"}, {"title": "索引从 1 开始", "wrong": "以为 lst[1] 是第一个元素。", "right": "索引从 0 开始：lst[0] 第一个、lst[-1] 最后一个。range(1,5) 也是含头不含尾。"}, {"title": "input() 忘转换", "wrong": "把 input() 的结果直接当数字比较。", "right": "input() 永远返回字符串，int()/float() 转换后才能做数值运算，否则 TypeError。"}, {"title": "复制列表用 =", "wrong": "friend_foods = my_foods 想复制列表。", "right": "直接 = 只是两个名字指向同一列表，互相影响。要用切片 my_foods[:] 得到独立副本。"}, {"title": "可变默认参数", "wrong": "def add(item, lst=[]) 用列表做默认值。", "right": "默认值只创建一次会被多次调用共享累积。应改用 None 占位：def add(item, lst=None)。"}, {"title": "单引号内撇号", "wrong": "message = 'One of Python's...' 报错。", "right": "单引号字符串里写撇号→SyntaxError。用双引号包住含撇号的字符串。"}, {"title": "f-string 忘 f", "wrong": "f\"{name}\" 少了 f 前缀。", "right": "忘记 f 前缀花括号会原样输出，不会替换成变量值。"}]
+const questions=[{"q":"matplotlib 中创建图形和子图的标准写法是","opts":["A. fig = plt.ax()","B. fig, ax = plt.subplots()","C. plt.figure()","D. ax = plt.plot()"],"ans":1,"exp":"subplots() 返回 fig(整个图) 和 ax(子图)，是自定义图表最常用的方式。"},{"q":"plot() 只传一个列表时，x 轴假设从几开始？","opts":["A. 1","B. 2","C. -1","D. 0"],"ans":3,"exp":"只传一个序列时假设第一个数据点 x=0；起点是 x=1 时要显式传 input_values。"},{"q":"scatter() 中用于颜色映射的参数是","opts":["A. s","B. cmap 单独","C. c","D. color"],"ans":2,"exp":"c 关联值序列与 colormap；color 是单一颜色。cmap 指定具体色图。"},{"q":"Plotly Express 出交互图需要先安装","opts":["A. 只 plotly","B. matplotlib","C. plotly 和 pandas","D. Django"],"ans":2,"exp":"Plotly Express 依赖 pandas，需一并安装：pip install plotly pandas。"},{"q":"随机漫步中 `x_step==0 and y_step==0` 时应该","opts":["A. pass 继续","B. continue 跳过","C. break 退出","D. 报错"],"ans":1,"exp":"两个方向都原地踏步就 continue 跳过，避免重复点。"},{"q":"requests 调用 API 后先检查什么？","opts":["A. status_code==200","B. 返回长度","C. 什么也不检查","D. 响应时间"],"ans":0,"exp":"必须先检查 status_code==200 再 r.json()，否则 4xx/5xx 时结构不是预期。"},{"q":"`r.json()` 把 API 响应转成","opts":["A. JSON 文件","B. 图片","C. Python 字典/列表","D. 字符串"],"ans":2,"exp":"r.json() 把 JSON 响应解析为 Python 数据结构（GitHub 返回字典，HN 返回列表）。"},{"q":"GitHub 搜索 API 未认证的限流约为","opts":["A. 10次/分钟","B. 100次/分钟","C. 无限","D. 1次/天"],"ans":0,"exp":"GitHub 搜索 API 未认证约 10 次/分钟；获取令牌后限额大幅提高。"},{"q":"Django 中创建虚拟环境的命令是","opts":["A. python manage.py runserver","B. django-admin startproject","C. python -m venv ll_env","D. pip install django"],"ans":2,"exp":"venv 创建隔离环境，激活后安装包不影响系统。ll_env 是两小写 L。"},{"q":"`repo_dict['owner']['login']` 中 owner 是","opts":["A. 嵌套字典","B. 字符串","C. 列表","D. 数字"],"ans":0,"exp":"owner 键的值是另一个字典，需二级取值。任意一级键名错→KeyError。"}]
+const flashcards=[{"q": "matplotlib 套路", "a": "subplots() → plot/scatter → set_title/labels → plt.show()。样式：plt.style.use('seaborn')。"}, {"q": "plot 单序列坑", "a": "只传一个序列从 x=0 开始；起点 x=1 显式传 input_values。"}, {"q": "随机漫步", "a": "choice() 决策；x_step=0 且 y_step=0 时 continue；set_aspect('equal')。"}, {"q": "Plotly", "a": "pip install plotly pandas；px.bar/scatter_geo；fig.show() 交互。"}, {"q": "CSV", "a": "csv.reader + datetime.strptime + try-except-else；先看表头。"}, {"q": "API 三步", "a": "requests.get(url) → 检查 status_code==200 → r.json() 解析。"}, {"q": "Django 三步", "a": "定义 URL → 编写视图 → 编写模板。MVT：Model/View/Template。"}]
+const errors=[{"title": "不检查 status_code", "wrong": "请求失败还继续 r.json()。", "right": "必须先断言 status_code==200，4xx/5xx 时响应结构不是预期。"}, {"title": "colormap 用 color", "wrong": "scatter 里用 color 做颜色映射。", "right": "c 关联值序列与 colormap，color 是单一颜色。cmap 指定色图。"}, {"title": "嵌套 KeyError", "wrong": "repo_dict['owner']['login'] 某级键名错。", "right": "多级取值用 try-except 跳过特殊数据，或先 print(keys()) 确认结构。"}, {"title": "忘了 API 限流", "wrong": "循环请求太多触发限流。", "right": "GitHub 搜索约 10次/分钟。先查 rate_limit，注意 incomplete_results 标志。"}, {"title": "Matplotlib 中文方框", "wrong": "标题含中文显示为方框。", "right": "默认字体不含中文字形，需配置中文字体或用英文标签。"}]
 let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
 var QUIZ_MODE='all';
-var QUIZ_PROG_KEY='quiz_progress_zhaoli_python';
+var QUIZ_PROG_KEY='quiz_progress_zhaoli_ai_viz';
 function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
 function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
 function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
