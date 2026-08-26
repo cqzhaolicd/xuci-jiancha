@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>项目1 外星人入侵(pygame) · 赵立AI学习</title>
+<title>第12章 飞船与子弹 · 赵立AI学习</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
@@ -86,8 +86,8 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 </div></nav>
 <div class="container">
   <div class="hero">
-    <h1><i class="fas fa-book-open"></i> 项目1 外星人入侵(pygame)</h1>
-    <div class="meta">Python 编程 · 项目1 · 8 题 · 5 卡牌</div>
+    <h1><i class="fas fa-book-open"></i> 第12章 飞船与子弹</h1>
+    <div class="meta">Python 编程 · 项目1 · 10 题 · 5 卡牌</div>
   </div>
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
@@ -96,17 +96,15 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
     <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
   </div>
   <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
-      <div class="k-item"><h4>pygame 基础</h4><p>pip install pygame。游戏循环: 处理事件→更新位置→绘制屏幕。窗口/事件循环/rect 定位。</p></div>
+      <div class="k-item"><h4>pygame 基础</h4><p>pip install pygame。游戏循环: 处理事件→更新位置→绘制屏幕。clock.tick(60) 控制帧率。</p></div>
       <div class="k-item"><h4>Settings 类</h4><p>把游戏设置集中到一个类(屏幕尺寸、颜色、速度), 便于统一修改。</p></div>
-      <div class="k-item"><h4>rect 定位</h4><p>pygame.Rect 用 rect.x/rect.y 控制位置, 支持 centerx/centery/midbottom 等属性定位。移动速度用 float 存, 再赋给 rect(避免精度问题)。</p></div>
-      <div class="k-item"><h4>按键移动</h4><p>事件循环里 KEYDOWN/KEYUP 检测方向键, 用 flag(moving_right=True) 跟踪按键状态。</p></div>
-      <div class="k-item"><h4>Bullet + Group</h4><p>子弹类继承 Sprite, pygame.sprite.Group 管理所有子弹。更新+绘制+删除出界子弹。</p></div>
-      <div class="k-item"><h4>外星人舰队</h4><p>用嵌套循环生成网格状舰队, 边缘转向(全部外星人右移并下降)。</p></div>
-      <div class="k-item"><h4>碰撞检测</h4><p>pygame.sprite.groupcollide(子弹, 外星人, True, True) 比较两组 rect, 返回碰撞字典。spritecollideany 检测飞船与外 星人。</p></div>
-      <div class="k-item"><h4>GameStats 与 game_active</h4><p>GameStats 类跟踪游戏统计(reset_stats 与 __init__ 分离: 每局重置 vs 全局)。game_active 控制游戏是否继续。</p></div>
-      <div class="k-item"><h4>计分系统</h4><p>groupcollide 返回的字典 value 是子弹命中的所有外星人列表, 遍历 values 用 len(aliens) 保证每次命中都计分。</p></div>
-      <div class="k-item"><h4>难度递增</h4><p>speedup_scale 随分数提高逐渐加快速度, 每波外星人消灭后升级。</p></div>
-      <div class="k-item"><h4>Play 按钮与最高分</h4><p>Play 按钮开始游戏; 最高分写入文件持久化; Scoreboard 类显示得分/最高分/等级。</p></div>
+      <div class="k-item"><h4>Ship 类</h4><p>飞船类: 加载图片 ship.bmp, rect 定位, 控制移动。位置在屏幕底部中央: rect.midbottom = screen_rect.midbottom。</p></div>
+      <div class="k-item"><h4>rect 定位</h4><p>pygame.Rect 用 rect.x/rect.y 控制位置, 支持 centerx/centery/midbottom 等属性。移动速度用 float 存再赋给 rect(避免精度问题)。</p></div>
+      <div class="k-item"><h4>按键移动</h4><p>事件循环里 KEYDOWN/KEYUP 检测方向键, 用 flag(moving_right=True) 跟踪按键状态, 实现平滑移动。</p></div>
+      <div class="k-item"><h4>事件循环</h4><p>pygame.event.get() 获取事件: QUIT 退出, KEYDOWN 按键按下, KEYUP 松开。</p></div>
+      <div class="k-item"><h4>Bullet 类</h4><p>子弹类继承 Sprite: 加载子弹图片/矩形, 向上移动(rect.y -= speed), 出界删除(rect.bottom < 0)。</p></div>
+      <div class="k-item"><h4>sprite.Group</h4><p>pygame.sprite.Group 管理所有子弹: group.add() 添加, group.update() 更新所有, group.draw(screen) 绘制全部。</p></div>
+      <div class="k-item"><h4>游戏主循环</h4><p>while True: 事件处理 → 更新(飞船/子弹) → 绘制屏幕 → clock.tick(60)。</p></div>
   </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
     <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
     <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
@@ -194,9 +192,9 @@ document.addEventListener('click', function(e) {
   toggleKP(name, mark);
 });
 function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
-const questions=[{"q":"pygame 游戏循环的典型顺序是","opts":["A. 绘制→处理→更新","B. 处理事件→更新→绘制","C. 随机","D. 更新→绘制→处理"],"ans":1,"exp":"游戏循环: 处理事件 → 更新位置 → 绘制屏幕。"},{"q":"pygame 中控制对象位置的类是","opts":["A. pygame.Rect","B. pygame.Sound","C. pygame.Font","D. pygame.Color"],"ans":0,"exp":"Rect 用 rect.x/rect.y 控制位置。"},{"q":"为什么移动速度用 float 存再赋给 rect?","opts":["A. 必须","B. 避免精度问题","C. 更快","D. 无原因"],"ans":1,"exp":"float 保证平滑移动, rect 需要整数坐标。"},{"q":"`pygame.sprite.groupcollide(bullets, aliens, True, True)` 中两个 True 表示","opts":["A. 只删子弹","B. 保留两者","C. 同时删除碰撞的子弹和外星人","D. 只删外星人"],"ans":2,"exp":"两个 True = 同时删除碰撞的子弹和外星人。"},{"q":"game_active 变量的作用是","opts":["A. 音效","B. 控制速度","C. 计分","D. 控制游戏是否继续"],"ans":3,"exp":"game_active 为 False 时游戏结束。"},{"q":"游戏统计中\"每局重置\"与\"全局不变\"分离用","opts":["A. 硬编码","B. reset_stats 与 __init__ 分离","C. 全局变量","D. 一个变量"],"ans":1,"exp":"GameStats 的 reset_stats() 与 __init__() 分离, 每局重置/全局区分。"},{"q":"宽子弹一次穿透多个外星人, 计分要","opts":["A. 只加一分","B. 随机","C. 不算","D. 遍历 value 列表用 len()"],"ans":3,"exp":"collisions 字典 value 是命中的外星人列表, len(aliens) 保证全计分。"},{"q":"游戏难度递增通过","opts":["A. speedup_scale 提高速度","B. 减小窗口","C. 降低帧率","D. 删除代码"],"ans":0,"exp":"每波消灭后 speedup_scale 加速, 难度递增。"}]
-const flashcards=[{"q": "游戏循环", "a": "处理事件 → 更新 → 绘制。"}, {"q": "Settings 类", "a": "集中管理所有设置, 便于统一修改。"}, {"q": "groupcollide", "a": "子弹vs外星人碰撞, True=True 双删。"}, {"q": "GameStats", "a": "reset_stats 每局重置, __init__ 全局统计。"}, {"q": "计分", "a": "遍历碰撞字典 values 用 len() 全计分。"}]
-const errors=[{"title": "整型移动", "wrong": "rect.x 直接加减整数导致移动不平滑。", "right": "用 float 存速度再赋给 rect。"}, {"title": "忘记删除出界子弹", "wrong": "子弹一直留着内存膨胀。", "right": "更新时删除 rect.bottom < 0 的子弹。"}, {"title": "碰撞只删一侧", "wrong": "groupcollide 参数设错。", "right": "两个 True 双删, 否则残留。"}]
+const questions=[{"q":"pygame 游戏循环的典型顺序是","opts":["A. 绘制→处理→更新","B. 更新→绘制→处理","C. 随机","D. 处理事件→更新→绘制"],"ans":3,"exp":"游戏循环: 处理事件 → 更新位置 → 绘制屏幕。"},{"q":"把飞船放在屏幕底部中央用","opts":["A. rect.bottom = 0","B. rect.center = screen_rect.center","C. rect.topleft = (0,0)","D. rect.midbottom = screen_rect.midbottom"],"ans":3,"exp":"midbottom 底部中央。"},{"q":"pygame 中控制对象位置的类是","opts":["A. pygame.Color","B. pygame.Font","C. pygame.Rect","D. pygame.Sound"],"ans":2,"exp":"Rect 用 rect.x/rect.y 控制位置。"},{"q":"移动速度用 float 存再赋给 rect 的原因是","opts":["A. 必须","B. 避免精度问题","C. 无原因","D. 更快"],"ans":1,"exp":"float 保证平滑移动, rect 需要整数坐标。"},{"q":"检测按键按下的事件是","opts":["A. QUIT","B. KEYDOWN","C. MOUSEBUTTONDOWN","D. KEYUP"],"ans":1,"exp":"KEYDOWN 按键按下, KEYUP 松开。"},{"q":"跟踪按键状态实现平滑移动用","opts":["A. flag(moving_right=True)","B. 定时器","C. 随机","D. 每次按一下动一下"],"ans":0,"exp":"flag 记录按键状态, 持续移动直到松开。"},{"q":"管理所有子弹的容器是","opts":["A. pygame.sprite.Group","B. list","C. dict","D. tuple"],"ans":0,"exp":"Group 统一管理: add/update/draw。"},{"q":"子弹出界后应","opts":["A. 反弹","B. 加速","C. 保留","D. 删除(rect.bottom < 0)"],"ans":3,"exp":"更新时删除出界子弹, 避免内存膨胀。"},{"q":"控制游戏帧率的调用是","opts":["A. time.wait(60)","B. sleep(60)","C. clock.tick(60)","D. fps(60)"],"ans":2,"exp":"clock.tick(60) 限制 60 帧/秒。"},{"q":"Ship 类加载图片用","opts":["A. pygame.image.load('ship.bmp')","B. Image.open()","C. load_image()","D. open('ship.bmp')"],"ans":0,"exp":"pygame.image.load() 加载图片, get_rect() 获取矩形。"}]
+const flashcards=[{"q": "游戏循环", "a": "处理事件 → 更新 → 绘制 → tick(60)。"}, {"q": "Settings 类", "a": "集中管理所有设置, 便于统一修改。"}, {"q": "rect 定位", "a": "x/y/centerx/midbottom; float 存速度。"}, {"q": "按键 flag", "a": "KEYDOWN 置 True, KEYUP 置 False。"}, {"q": "Group 管理", "a": "add/update/draw 统一管理子弹。"}]
+const errors=[{"title": "整型移动", "wrong": "rect.x 直接加减整数导致移动不平滑。", "right": "用 float 存速度再赋给 rect。"}, {"title": "忘记删除出界子弹", "wrong": "子弹一直留着内存膨胀。", "right": "更新时删除 rect.bottom < 0 的子弹。"}, {"title": "忘 tick", "wrong": "帧率不限制, 游戏太快。", "right": "clock.tick(60) 控制帧率。"}]
 let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
 var QUIZ_MODE='all';
 var QUIZ_PROG_KEY='quiz_progress_zhaoli_py_ch12';

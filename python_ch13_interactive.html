@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>第18章 Django 入门 · 赵立AI学习</title>
+<title>第13章 外星人! · 赵立AI学习</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+:root{--primary:#9b59b6;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
 .navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
@@ -86,8 +86,8 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 </div></nav>
 <div class="container">
   <div class="hero">
-    <h1><i class="fas fa-book-open"></i> 第18章 Django 入门</h1>
-    <div class="meta">Python 编程 · 项目3 · 10 题 · 5 卡牌</div>
+    <h1><i class="fas fa-book-open"></i> 第13章 外星人!</h1>
+    <div class="meta">Python 编程 · 项目1 · 8 题 · 6 卡牌</div>
   </div>
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
@@ -96,18 +96,17 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
     <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
   </div>
   <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
-      <div class="k-item"><h4>项目规格说明</h4><p>动手前先用文字明确项目目标(spec), 帮助开发聚焦不跑偏。本项目: 记录主题 + 为每个主题写日志条目。</p></div>
-      <div class="k-item"><h4>虚拟环境</h4><p>python -m venv ll_env 创建隔离环境; 激活: source ll_env/bin/activate(Windows: ll_env\Scriptsctivate); deactivate 退出。部署项目必需。</p></div>
-      <div class="k-item"><h4>安装 Django</h4><p>pip install django(本书用 Django 4.1, pip install django==4.1.* 可锁定)。Django 只在激活虚拟环境时可用。</p></div>
-      <div class="k-item"><h4>startproject</h4><p>django-admin startproject ll_project . 末尾点号很重要(当前目录即项目根, 方便部署)。生成 manage.py 和 ll_project/(settings.py/urls.py/wsgi.py)。</p></div>
-      <div class="k-item"><h4>migrate 建库</h4><p>python manage.py migrate 用 SQLite 自动建库(db.sqlite3), 创建 admin/auth/contenttypes/sessions 表。迁移=任何修改数据库的操作。</p></div>
-      <div class="k-item"><h4>runserver</h4><p>python manage.py runserver 本地开发服务器(localhost:8000), 仅本机可访问。端口占用用 8001。CTRL-C 停止。</p></div>
-      <div class="k-item"><h4>startapp</h4><p>python manage.py startapp learning_logs。项目=网站整体配置, 应用=完成具体功能的一组文件。models.py 定义数据, admin.py 注册后台, views.py 视图。</p></div>
-      <div class="k-item"><h4>定义模型</h4><p>class Topic(models.Model): 继承 models.Model。CharField 短文本(max_length 必填), DateTimeField 日期时间(auto_now_add=True 自动记录创建时刻), __str__() 定义字符串表示。</p></div>
-      <div class="k-item"><h4>激活模型三步</h4><p>①settings.py 的 INSTALLED_APPS 注册应用 ②python manage.py makemigrations learning_logs(生成迁移文件) ③python manage.py migrate(应用迁移建表)。修改数据固定三步: 改 models → makemigrations → migrate。</p></div>
-      <div class="k-item"><h4>管理后台</h4><p>python manage.py createsuperuser 创建超级用户(密码哈希存储); admin.py 注册自己的模型(Django 内置 User/Group 自动注册)。</p></div>
-      <div class="k-item"><h4>Django shell</h4><p>python manage.py shell 交互式探索数据。</p></div>
-      <div class="k-item"><h4>URL-视图-模板</h4><p>定义 URL → 编写视图 → 编写模板 三步法。模板继承 base.html 复用布局。</p></div>
+      <div class="k-item"><h4>Alien 类</h4><p>class Alien(Sprite): 继承 Sprite, 加载图片 alien.bmp, rect 定位。位置默认左上角(左边距=自身宽度, 上边距=自身高度)。只需精确跟踪水平位置 self.x。</p></div>
+      <div class="k-item"><h4>创建舰队</h4><p>嵌套循环: 内层按 x 填满一行(间距=一个外星人宽, 右留2宽), 外层按 y 逐行(行距=一个外星人高, 底部留3高给飞船)。每行结束重置 current_x、递增 current_y。</p></div>
+      <div class="k-item"><h4>舰队移动</h4><p>fleet_direction 用 1(右)/-1(左) 数值而非字符串, 方便直接乘坐标: self.x += alien_speed * fleet_direction。</p></div>
+      <div class="k-item"><h4>边缘转向</h4><p>check_edges() 检测是否碰到左右边缘; 碰到时整个舰队下移 fleet_drop_speed 并反转方向(fleet_direction *= -1, 只反转一次, 不在 for 内)。</p></div>
+      <div class="k-item"><h4>groupcollide 碰撞</h4><p>pygame.sprite.groupcollide(bullets, aliens, True, True) 比较两组 rect, 返回字典(key=子弹, value=被击中外星人列表)。两个 True=同时删除碰撞的子弹和外星人。</p></div>
+      <div class="k-item"><h4>舰队重建</h4><p>if not self.aliens: 空组求值为 False; 清掉剩余子弹 self.bullets.empty(), 重新生成舰队 _create_fleet()。</p></div>
+      <div class="k-item"><h4>spritecollideany</h4><p>pygame.sprite.spritecollideany(ship, aliens) 返回与飞船碰撞的第一个外星人(无碰撞返回 None)。</p></div>
+      <div class="k-item"><h4>GameStats 类</h4><p>单独成类跟踪游戏统计。reset_stats() 与 __init__() 分离: 每局重置(ships_left=ship_limit) vs 全局不变。</p></div>
+      <div class="k-item"><h4>_ship_hit()</h4><p>飞船被撞: ships_left -= 1, 清空子弹和外星人, 重建舰队, 飞船居中, time.sleep(0.5) 暂停半秒。整局只创建一个飞船实例, 被撞后重复居中复用。</p></div>
+      <div class="k-item"><h4>外星人触底</h4><p>逐只检查 alien.rect.bottom >= screen_height, 触底与撞船同等处理(调用 _ship_hit()), 找到一个即 break。</p></div>
+      <div class="k-item"><h4>game_active</h4><p>游戏状态标志。ships_left 用尽 → game_active = False。主循环中事件检查和画面更新始终执行, 元素位置更新仅在激活时执行。</p></div>
   </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
     <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
     <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
@@ -124,7 +123,7 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
     <div id="errorChecklist"></div></div>
   </div>
 </div>
-<div class="footer">为赵立定制的 AI 学习工具 | Python 编程 · 项目3 | 持续更新中</div>
+<div class="footer">为赵立定制的 AI 学习工具 | Python 编程 · 项目1 | 持续更新中</div>
 <script>
 function speakDone(){
   try{
@@ -136,7 +135,7 @@ function speakDone(){
     }
   }catch(e){}
 }
-const KP_KEY = 'zhaoli_py_ch18';
+const KP_KEY = 'zhaoli_py_ch13';
 function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
 function toggleKP(name, el) {
   let arr = getKP();
@@ -195,12 +194,12 @@ document.addEventListener('click', function(e) {
   toggleKP(name, mark);
 });
 function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
-const questions=[{"q":"创建虚拟环境的命令是","opts":["A. python manage.py runserver","B. django-admin startproject","C. pip install venv","D. python -m venv ll_env"],"ans":3,"exp":"venv 创建隔离环境。ll_env 是两小写 L。"},{"q":"`django-admin startproject ll_project .` 末尾点号的作用是","opts":["A. 创建隐藏文件","B. 当前目录即项目根","C. 必须删掉","D. 无作用"],"ans":1,"exp":"点号让新项目以当前目录为根, 方便部署; 忘记会导致部署配置问题。"},{"q":"首次迁移创建数据库用的引擎是","opts":["A. PostgreSQL","B. Oracle","C. SQLite","D. MySQL"],"ans":2,"exp":"migrate 用 SQLite 自动建库(db.sqlite3)。"},{"q":"`python manage.py runserver` 启动的是","opts":["A. 公网服务器","B. 数据库","C. 编辑器","D. 本地开发服务器"],"ans":3,"exp":"localhost 本地预览, 仅本机可访问。"},{"q":"`CharField` 必须指定","opts":["A. null","B. blank","C. max_length","D. default"],"ans":2,"exp":"CharField 存短文本, 必须指定 max_length。"},{"q":"`auto_now_add=True` 表示","opts":["A. 删除时间","B. 自动记录创建时刻","C. 每次更新都变","D. 手动填写"],"ans":1,"exp":"DateTimeField 的 auto_now_add=True 自动记录创建时刻。"},{"q":"模型修改后的固定三步是","opts":["A. 改views→改urls→改模板","B. 改models→makemigrations→migrate","C. 删除→重建→重启","D. 安装→卸载→安装"],"ans":1,"exp":"改 models.py → makemigrations → migrate。"},{"q":"创建管理后台超级用户的命令是","opts":["A. adduser","B. superuser","C. createadmin","D. createsuperuser"],"ans":3,"exp":"python manage.py createsuperuser, 密码以哈希存储。"},{"q":"`makemigrations learning_logs` 生成的是","opts":["A. 迁移文件","B. 模板","C. 数据库","D. 视图"],"ans":0,"exp":"生成 learning_logs/migrations/0001_initial.py, migrate 应用。"},{"q":"项目与应用的区分是","opts":["A. 一样","B. 应用更大","C. 无区别","D. 项目=整体配置, 应用=具体功能"],"ans":3,"exp":"项目是网站整体配置, 应用是完成具体功能的一组文件。"}]
-const flashcards=[{"q": "虚拟环境", "a": "python -m venv ll_env; source 激活; deactivate 退出。"}, {"q": "startproject .", "a": "末尾点号=当前目录即项目根。"}, {"q": "模型三步", "a": "改 models → makemigrations → migrate。"}, {"q": "CharField", "a": "短文本, 必须 max_length。"}, {"q": "三步法", "a": "定义 URL → 编写视图 → 编写模板。"}]
-const errors=[{"title": "忘点号", "wrong": "startproject 末尾漏 . 导致部署配置问题。", "right": "django-admin startproject ll_project . 点号必须有。"}, {"title": "迁移忘跑", "wrong": "改了 models 不迁移, 数据库没更新。", "right": "改 models → makemigrations → migrate 三步。"}, {"title": "在系统环境装 Django", "wrong": "不用虚拟环境, 包混乱。", "right": "先创建激活虚拟环境, 再 pip install。"}]
+const questions=[{"q":"Alien 类应继承","opts":["A. pygame.sprite.Sprite","B. object","C. pygame.Rect","D. pygame.Font"],"ans":0,"exp":"Alien(Sprite) 继承 Sprite, 可加入 sprite.Group 统一管理。"},{"q":"舰队方向用 1/-1 而不是字符串的好处是","opts":["A. 必须","B. 直接乘到坐标上","C. 更美观","D. 更快"],"ans":1,"exp":"fleet_direction 数值可直接乘: self.x += alien_speed * fleet_direction。"},{"q":"`pygame.sprite.groupcollide(bullets, aliens, True, True)` 两个 True 表示","opts":["A. 只删子弹","B. 只删外星人","C. 同时删除碰撞的子弹和外星人","D. 保留两者"],"ans":2,"exp":"两个 True = 双删。若子弹 False、外星人 True 就是穿透型\"强力子弹\"。"},{"q":"`if not self.aliens:` 判断的是","opts":["A. 分数","B. 外星人数量","C. 外星人组是否为空","D. 飞船状态"],"ans":2,"exp":"空 sprite.Group 求值为 False, not 取反 → 舰队全灭。"},{"q":"`pygame.sprite.spritecollideany(ship, aliens)` 返回","opts":["A. 所有外星人","B. 飞船","C. 碰撞的第一个外星人或 None","D. 布尔值"],"ans":2,"exp":"返回与指定精灵碰撞的组内第一个成员, 无碰撞返回 None。"},{"q":"GameStats 中 `reset_stats()` 与 `__init__()` 分离是为了","opts":["A. 无原因","B. 区分每局重置与全局统计","C. 加快速度","D. 减少代码"],"ans":1,"exp":"ships_left 每局重置; 最高分等全局不变。"},{"q":"`_ship_hit()` 中 `time.sleep(0.5)` 的作用是","opts":["A. 减少 CPU","B. 加载资源","C. 无作用","D. 暂停半秒让玩家看清碰撞"],"ans":3,"exp":"让玩家看清发生了什么再继续。"},{"q":"外星人触底时处理方式是","opts":["A. 忽略","B. 加速","C. 加分","D. 与撞船同等(调用 _ship_hit)"],"ans":3,"exp":"触底与撞船同等处理: _ship_hit(), 找到第一个即 break。"}]
+const flashcards=[{"q": "Alien(Sprite)", "a": "继承 Sprite, 加载图片, 精确跟踪 self.x。"}, {"q": "舰队生成", "a": "嵌套循环: 内层填行, 外层逐行。间距=外星人尺寸。"}, {"q": "fleet_direction", "a": "1/-1 数值控制方向, 直接乘坐标。"}, {"q": "groupcollide", "a": "子弹vs外星人, 双 True 双删; 返回碰撞字典。"}, {"q": "GameStats", "a": "reset_stats 每局重置 / __init__ 全局统计。"}, {"q": "game_active", "a": "ships_left 用尽游戏结束。"}]
+const errors=[{"title": "方向反转在 for 内", "wrong": "每只外星人都反转一次方向。", "right": "碰到边缘只反转一次: _change_fleet_direction 中循环外 fleet_direction *= -1。"}, {"title": "重建舰队忘清子弹", "wrong": "舰队重建后旧子弹残留。", "right": "self.bullets.empty() 清掉剩余子弹。"}, {"title": "碰撞只删一侧", "wrong": "groupcollide 参数设错。", "right": "两个 True 双删。"}]
 let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
 var QUIZ_MODE='all';
-var QUIZ_PROG_KEY='quiz_progress_zhaoli_py_ch18';
+var QUIZ_PROG_KEY='quiz_progress_zhaoli_py_ch13';
 function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
 function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
 function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
