@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>第18章 Django 入门 · 赵立AI学习</title>
+<title>第15章 生成数据 · 赵立AI学习</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+:root{--primary:#e67e22;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
 .navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
@@ -86,8 +86,8 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 </div></nav>
 <div class="container">
   <div class="hero">
-    <h1><i class="fas fa-book-open"></i> 第18章 Django 入门</h1>
-    <div class="meta">Python 编程 · 项目3 · 10 题 · 5 卡牌</div>
+    <h1><i class="fas fa-book-open"></i> 第15章 生成数据</h1>
+    <div class="meta">Python 编程 · 项目2 · 10 题 · 5 卡牌</div>
   </div>
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
@@ -96,18 +96,18 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
     <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
   </div>
   <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
-      <div class="k-item"><h4>项目规格说明</h4><p>动手前先用文字明确项目目标(spec), 帮助开发聚焦不跑偏。本项目: 记录主题 + 为每个主题写日志条目。</p></div>
-      <div class="k-item"><h4>虚拟环境</h4><p>python -m venv ll_env 创建隔离环境; 激活: source ll_env/bin/activate(Windows: ll_env\Scriptsctivate); deactivate 退出。部署项目必需。</p></div>
-      <div class="k-item"><h4>安装 Django</h4><p>pip install django(本书用 Django 4.1, pip install django==4.1.* 可锁定)。Django 只在激活虚拟环境时可用。</p></div>
-      <div class="k-item"><h4>startproject</h4><p>django-admin startproject ll_project . 末尾点号很重要(当前目录即项目根, 方便部署)。生成 manage.py 和 ll_project/(settings.py/urls.py/wsgi.py)。</p></div>
-      <div class="k-item"><h4>migrate 建库</h4><p>python manage.py migrate 用 SQLite 自动建库(db.sqlite3), 创建 admin/auth/contenttypes/sessions 表。迁移=任何修改数据库的操作。</p></div>
-      <div class="k-item"><h4>runserver</h4><p>python manage.py runserver 本地开发服务器(localhost:8000), 仅本机可访问。端口占用用 8001。CTRL-C 停止。</p></div>
-      <div class="k-item"><h4>startapp</h4><p>python manage.py startapp learning_logs。项目=网站整体配置, 应用=完成具体功能的一组文件。models.py 定义数据, admin.py 注册后台, views.py 视图。</p></div>
-      <div class="k-item"><h4>定义模型</h4><p>class Topic(models.Model): 继承 models.Model。CharField 短文本(max_length 必填), DateTimeField 日期时间(auto_now_add=True 自动记录创建时刻), __str__() 定义字符串表示。</p></div>
-      <div class="k-item"><h4>激活模型三步</h4><p>①settings.py 的 INSTALLED_APPS 注册应用 ②python manage.py makemigrations learning_logs(生成迁移文件) ③python manage.py migrate(应用迁移建表)。修改数据固定三步: 改 models → makemigrations → migrate。</p></div>
-      <div class="k-item"><h4>管理后台</h4><p>python manage.py createsuperuser 创建超级用户(密码哈希存储); admin.py 注册自己的模型(Django 内置 User/Group 自动注册)。</p></div>
-      <div class="k-item"><h4>Django shell</h4><p>python manage.py shell 交互式探索数据。</p></div>
-      <div class="k-item"><h4>URL-视图-模板</h4><p>定义 URL → 编写视图 → 编写模板 三步法。模板继承 base.html 复用布局。</p></div>
+      <div class="k-item"><h4>matplotlib 基础</h4><p>import matplotlib.pyplot as plt; fig, ax = plt.subplots(); ax.plot(squares) 折线图; plt.show() 显示。fig=整个图, ax=子图。</p></div>
+      <div class="k-item"><h4>plot() 易错点</h4><p>只给 plot() 一个序列时假设 x=0 开始; 数据起点 x=1 要显式传 input_values: ax.plot(input_values, squares)。</p></div>
+      <div class="k-item"><h4>图表定制</h4><p>ax.set_title/set_xlabel/set_ylabel; ax.tick_params(labelsize=14); linewidth 控制线宽; plt.style.use('seaborn') 内置样式。</p></div>
+      <div class="k-item"><h4>scatter() 散点</h4><p>ax.scatter(2, 4, s=200) 画点, s=点大小。传两个等长列表配对成点: ax.scatter(x_values, y_values, s=10)。</p></div>
+      <div class="k-item"><h4>colormap 颜色映射</h4><p>强调数据模式: ax.scatter(x, y, c=y_values, cmap=plt.cm.Blues, s=10)。注意 c 不是 color(c 关联值序列, color 是单一颜色)。</p></div>
+      <div class="k-item"><h4>savefig 保存</h4><p>plt.savefig('squares_plot.png', bbox_inches='tight') 自动保存; bbox_inches='tight' 裁掉多余空白。</p></div>
+      <div class="k-item"><h4>RandomWalk 随机漫步</h4><p>纯随机决策的路径。random.choice() 做决策: 方向×距离=步长; x_step==0 且 y_step==0 时 continue 跳过(拒绝原地踏步)。</p></div>
+      <div class="k-item"><h4>set_aspect('equal')</h4><p>默认 Matplotlib 独立缩放两轴会把漫步拉伸; set_aspect('equal') 保持形状真实。</p></div>
+      <div class="k-item"><h4>漫步美化</h4><p>按顺序着色(c=point_numbers + cmap=Blues + edgecolors='none'); 绿点起点红点终点(必须在 plt.show() 之前); 隐藏坐标轴; 增大点数 RandomWalk(50_000)。</p></div>
+      <div class="k-item"><h4>Plotly Express</h4><p>交互式浏览器图表。pip install plotly pandas。px.bar(x=..., y=...) 两行出图, fig.show() 渲染 HTML 文件。</p></div>
+      <div class="k-item"><h4>Die 类模拟骰子</h4><p>random.randint(1, num_sides) 返回 1 到面数之间随机整数。双骰子 max_result = die_1.num_sides + die_2.num_sides 通用计算。</p></div>
+      <div class="k-item"><h4>px.bar 直方图</h4><p>title 参数加标题, labels 字典定制轴标签; fig.update_layout(xaxis_dtick=1) 每根柱子都有刻度; fig.write_html() 保存 HTML。</p></div>
   </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
     <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
     <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
@@ -124,7 +124,7 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
     <div id="errorChecklist"></div></div>
   </div>
 </div>
-<div class="footer">为赵立定制的 AI 学习工具 | Python 编程 · 项目3 | 持续更新中</div>
+<div class="footer">为赵立定制的 AI 学习工具 | Python 编程 · 项目2 | 持续更新中</div>
 <script>
 function speakDone(){
   try{
@@ -136,7 +136,7 @@ function speakDone(){
     }
   }catch(e){}
 }
-const KP_KEY = 'zhaoli_py_ch18';
+const KP_KEY = 'zhaoli_py_ch15';
 function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
 function toggleKP(name, el) {
   let arr = getKP();
@@ -195,12 +195,12 @@ document.addEventListener('click', function(e) {
   toggleKP(name, mark);
 });
 function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
-const questions=[{"q":"创建虚拟环境的命令是","opts":["A. python manage.py runserver","B. django-admin startproject","C. pip install venv","D. python -m venv ll_env"],"ans":3,"exp":"venv 创建隔离环境。ll_env 是两小写 L。"},{"q":"`django-admin startproject ll_project .` 末尾点号的作用是","opts":["A. 创建隐藏文件","B. 当前目录即项目根","C. 必须删掉","D. 无作用"],"ans":1,"exp":"点号让新项目以当前目录为根, 方便部署; 忘记会导致部署配置问题。"},{"q":"首次迁移创建数据库用的引擎是","opts":["A. PostgreSQL","B. Oracle","C. SQLite","D. MySQL"],"ans":2,"exp":"migrate 用 SQLite 自动建库(db.sqlite3)。"},{"q":"`python manage.py runserver` 启动的是","opts":["A. 公网服务器","B. 数据库","C. 编辑器","D. 本地开发服务器"],"ans":3,"exp":"localhost 本地预览, 仅本机可访问。"},{"q":"`CharField` 必须指定","opts":["A. null","B. blank","C. max_length","D. default"],"ans":2,"exp":"CharField 存短文本, 必须指定 max_length。"},{"q":"`auto_now_add=True` 表示","opts":["A. 删除时间","B. 自动记录创建时刻","C. 每次更新都变","D. 手动填写"],"ans":1,"exp":"DateTimeField 的 auto_now_add=True 自动记录创建时刻。"},{"q":"模型修改后的固定三步是","opts":["A. 改views→改urls→改模板","B. 改models→makemigrations→migrate","C. 删除→重建→重启","D. 安装→卸载→安装"],"ans":1,"exp":"改 models.py → makemigrations → migrate。"},{"q":"创建管理后台超级用户的命令是","opts":["A. adduser","B. superuser","C. createadmin","D. createsuperuser"],"ans":3,"exp":"python manage.py createsuperuser, 密码以哈希存储。"},{"q":"`makemigrations learning_logs` 生成的是","opts":["A. 迁移文件","B. 模板","C. 数据库","D. 视图"],"ans":0,"exp":"生成 learning_logs/migrations/0001_initial.py, migrate 应用。"},{"q":"项目与应用的区分是","opts":["A. 一样","B. 应用更大","C. 无区别","D. 项目=整体配置, 应用=具体功能"],"ans":3,"exp":"项目是网站整体配置, 应用是完成具体功能的一组文件。"}]
-const flashcards=[{"q": "虚拟环境", "a": "python -m venv ll_env; source 激活; deactivate 退出。"}, {"q": "startproject .", "a": "末尾点号=当前目录即项目根。"}, {"q": "模型三步", "a": "改 models → makemigrations → migrate。"}, {"q": "CharField", "a": "短文本, 必须 max_length。"}, {"q": "三步法", "a": "定义 URL → 编写视图 → 编写模板。"}]
-const errors=[{"title": "忘点号", "wrong": "startproject 末尾漏 . 导致部署配置问题。", "right": "django-admin startproject ll_project . 点号必须有。"}, {"title": "迁移忘跑", "wrong": "改了 models 不迁移, 数据库没更新。", "right": "改 models → makemigrations → migrate 三步。"}, {"title": "在系统环境装 Django", "wrong": "不用虚拟环境, 包混乱。", "right": "先创建激活虚拟环境, 再 pip install。"}]
+const questions=[{"q":"matplotlib 创建图形和子图的标准写法是","opts":["A. fig = plt.ax()","B. plt.figure()","C. fig, ax = plt.subplots()","D. ax = plt.plot()"],"ans":2,"exp":"subplots() 返回 fig(整个图)和 ax(子图)。"},{"q":"plot() 只传一个列表时, x 轴假设从几开始?","opts":["A. 1","B. 2","C. -1","D. 0"],"ans":3,"exp":"只传一个序列假设第一个数据点 x=0; 起点 x=1 要显式传 input_values。"},{"q":"scatter() 中用于颜色映射的参数是","opts":["A. cmap 单独","B. c","C. color","D. s"],"ans":1,"exp":"c 关联值序列与 colormap; color 单一颜色; cmap 指定色图。"},{"q":"Plotly Express 出交互图需先安装","opts":["A. matplotlib","B. plotly 和 pandas","C. 只 plotly","D. Django"],"ans":1,"exp":"Plotly Express 依赖 pandas, 需一并安装。"},{"q":"随机漫步中两个方向都原地踏步时应该","opts":["A. 报错","B. continue 跳过","C. pass 继续","D. break 退出"],"ans":1,"exp":"x_step==0 且 y_step==0 时 continue 跳过, 避免重复点。"},{"q":"保持随机漫步形状真实用","opts":["A. ax.grid()","B. plt.legend()","C. ax.axis()","D. ax.set_aspect('equal')"],"ans":3,"exp":"set_aspect('equal') 让两轴刻度间距相等。"},{"q":"自动保存图片用","opts":["A. plt.savefig('x.png', bbox_inches='tight')","B. ax.export()","C. plt.write()","D. plt.store()"],"ans":0,"exp":"savefig 保存; bbox_inches='tight' 裁掉多余空白。"},{"q":"`random.randint(1, 6)` 返回","opts":["A. 1-6 的随机浮点","B. 报错","C. 1-6 的随机整数","D. 0-5 的整数"],"ans":2,"exp":"randint 返回 1 到 6 之间随机整数(含端点)。"},{"q":"`plt.style.use('seaborn')` 必须在什么时候调用?","opts":["A. 最后","B. subplots() 之前","C. subplots() 之后","D. 任意"],"ans":1,"exp":"在调用 subplots() 之前加一行即可启用内置样式。"},{"q":"双骰子求和的最大值应","opts":["A. 写死 12","B. 用 max_result 公式算, 不写死","C. 猜","D. 不设置"],"ans":1,"exp":"max_result = die_1.num_sides + die_2.num_sides 推广到任意面数。"}]
+const flashcards=[{"q": "matplotlib 套路", "a": "subplots() → plot/scatter → set_title/labels → plt.show()。"}, {"q": "plot 单序列坑", "a": "只传一个序列从 x=0 开始; 起点 x=1 显式传 input_values。"}, {"q": "随机漫步", "a": "choice() 决策; 原地踏步 continue; set_aspect('equal')。"}, {"q": "Plotly", "a": "pip install plotly pandas; px.bar; fig.show() 交互。"}, {"q": "colormap", "a": "c 关联值序列, color 单一颜色, cmap 指定色图。"}]
+const errors=[{"title": "plot 单序列 x 假设", "wrong": "数据起点 x=1 却从 0 画。", "right": "显式传 input_values: ax.plot(input_values, squares)。"}, {"title": "colormap 用 color", "wrong": "scatter 里用 color 做颜色映射。", "right": "用 c 关联值序列, cmap 指定色图。"}, {"title": "漫步原地踏步", "wrong": "x_step 和 y_step 同时为 0 不处理。", "right": "用 continue 跳过。"}, {"title": "起终点标注太晚", "wrong": "plt.show() 之后标注被盖住。", "right": "必须在 plt.show() 之前调用。"}, {"title": "Matplotlib 中文方框", "wrong": "标题含中文显示为方框。", "right": "默认字体无中文字形, 配置中文字体(SimHei)。"}]
 let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
 var QUIZ_MODE='all';
-var QUIZ_PROG_KEY='quiz_progress_zhaoli_py_ch18';
+var QUIZ_PROG_KEY='quiz_progress_zhaoli_py_ch15';
 function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
 function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
 function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}

@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>第18章 Django 入门 · 赵立AI学习</title>
+<title>第17章 使用 API · 赵立AI学习</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+:root{--primary:#e67e22;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
 .navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
@@ -86,8 +86,8 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 </div></nav>
 <div class="container">
   <div class="hero">
-    <h1><i class="fas fa-book-open"></i> 第18章 Django 入门</h1>
-    <div class="meta">Python 编程 · 项目3 · 10 题 · 5 卡牌</div>
+    <h1><i class="fas fa-book-open"></i> 第17章 使用 API</h1>
+    <div class="meta">Python 编程 · 项目2 · 10 题 · 5 卡牌</div>
   </div>
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
@@ -96,18 +96,17 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
     <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
   </div>
   <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
-      <div class="k-item"><h4>项目规格说明</h4><p>动手前先用文字明确项目目标(spec), 帮助开发聚焦不跑偏。本项目: 记录主题 + 为每个主题写日志条目。</p></div>
-      <div class="k-item"><h4>虚拟环境</h4><p>python -m venv ll_env 创建隔离环境; 激活: source ll_env/bin/activate(Windows: ll_env\Scriptsctivate); deactivate 退出。部署项目必需。</p></div>
-      <div class="k-item"><h4>安装 Django</h4><p>pip install django(本书用 Django 4.1, pip install django==4.1.* 可锁定)。Django 只在激活虚拟环境时可用。</p></div>
-      <div class="k-item"><h4>startproject</h4><p>django-admin startproject ll_project . 末尾点号很重要(当前目录即项目根, 方便部署)。生成 manage.py 和 ll_project/(settings.py/urls.py/wsgi.py)。</p></div>
-      <div class="k-item"><h4>migrate 建库</h4><p>python manage.py migrate 用 SQLite 自动建库(db.sqlite3), 创建 admin/auth/contenttypes/sessions 表。迁移=任何修改数据库的操作。</p></div>
-      <div class="k-item"><h4>runserver</h4><p>python manage.py runserver 本地开发服务器(localhost:8000), 仅本机可访问。端口占用用 8001。CTRL-C 停止。</p></div>
-      <div class="k-item"><h4>startapp</h4><p>python manage.py startapp learning_logs。项目=网站整体配置, 应用=完成具体功能的一组文件。models.py 定义数据, admin.py 注册后台, views.py 视图。</p></div>
-      <div class="k-item"><h4>定义模型</h4><p>class Topic(models.Model): 继承 models.Model。CharField 短文本(max_length 必填), DateTimeField 日期时间(auto_now_add=True 自动记录创建时刻), __str__() 定义字符串表示。</p></div>
-      <div class="k-item"><h4>激活模型三步</h4><p>①settings.py 的 INSTALLED_APPS 注册应用 ②python manage.py makemigrations learning_logs(生成迁移文件) ③python manage.py migrate(应用迁移建表)。修改数据固定三步: 改 models → makemigrations → migrate。</p></div>
-      <div class="k-item"><h4>管理后台</h4><p>python manage.py createsuperuser 创建超级用户(密码哈希存储); admin.py 注册自己的模型(Django 内置 User/Group 自动注册)。</p></div>
-      <div class="k-item"><h4>Django shell</h4><p>python manage.py shell 交互式探索数据。</p></div>
-      <div class="k-item"><h4>URL-视图-模板</h4><p>定义 URL → 编写视图 → 编写模板 三步法。模板继承 base.html 复用布局。</p></div>
+      <div class="k-item"><h4>API 概念</h4><p>API=网站中专供程序交互的部分。程序用特定 URL 请求信息(API call)。GitHub 示例: api.github.com/search/repositories?q=language:python+sort:stars。? 后是参数, + 连接。</p></div>
+      <div class="k-item"><h4>安装 Requests</h4><p>python -m pip install --user requests。</p></div>
+      <div class="k-item"><h4>requests.get</h4><p>r = requests.get(url, headers=headers); 检查 r.status_code==200 表示成功。headers 可指定 Accept。</p></div>
+      <div class="k-item"><h4>r.json()</h4><p>把 JSON 响应转成 Python 字典。GitHub 搜索响应只有三个键: total_count / incomplete_results / items。</p></div>
+      <div class="k-item"><h4>提取仓库详情</h4><p>repo_dicts = response_dict['items'] 仓库信息列表(每项78个键)。嵌套取值: repo_dict['owner']['login']。</p></div>
+      <div class="k-item"><h4>API 限流</h4><p>GitHub 搜索 API 未认证约 10 次/分钟。访问 api.github.com/rate_limit 查看。很多 API 需注册获取 API key。</p></div>
+      <div class="k-item"><h4>px.bar 可视化</h4><p>fig = px.bar(x=repo_names, y=stars, title=title, labels=labels) 两行出图。</p></div>
+      <div class="k-item"><h4>hover_name</h4><p>自定义悬停提示, 支持 HTML: 用 <br /> 换行拼接 owner 与描述。</p></div>
+      <div class="k-item"><h4>可点击链接</h4><p>用 <a href='URL'>text</a> 把 x 轴标签变超链接。</p></div>
+      <div class="k-item"><h4>update_traces</h4><p>trace=图表上一组数据; marker_ 开头参数作用于标记: fig.update_traces(marker_color='SteelBlue')。</p></div>
+      <div class="k-item"><h4>Hacker News API</h4><p>无需注册 key。item/{id}.json 返回详情; topstories.json 返回最多500个ID。用 itemgetter('comments') 按评论数排序。</p></div>
   </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
     <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
     <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
@@ -124,7 +123,7 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
     <div id="errorChecklist"></div></div>
   </div>
 </div>
-<div class="footer">为赵立定制的 AI 学习工具 | Python 编程 · 项目3 | 持续更新中</div>
+<div class="footer">为赵立定制的 AI 学习工具 | Python 编程 · 项目2 | 持续更新中</div>
 <script>
 function speakDone(){
   try{
@@ -136,7 +135,7 @@ function speakDone(){
     }
   }catch(e){}
 }
-const KP_KEY = 'zhaoli_py_ch18';
+const KP_KEY = 'zhaoli_py_ch17';
 function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
 function toggleKP(name, el) {
   let arr = getKP();
@@ -195,12 +194,12 @@ document.addEventListener('click', function(e) {
   toggleKP(name, mark);
 });
 function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
-const questions=[{"q":"创建虚拟环境的命令是","opts":["A. python manage.py runserver","B. django-admin startproject","C. pip install venv","D. python -m venv ll_env"],"ans":3,"exp":"venv 创建隔离环境。ll_env 是两小写 L。"},{"q":"`django-admin startproject ll_project .` 末尾点号的作用是","opts":["A. 创建隐藏文件","B. 当前目录即项目根","C. 必须删掉","D. 无作用"],"ans":1,"exp":"点号让新项目以当前目录为根, 方便部署; 忘记会导致部署配置问题。"},{"q":"首次迁移创建数据库用的引擎是","opts":["A. PostgreSQL","B. Oracle","C. SQLite","D. MySQL"],"ans":2,"exp":"migrate 用 SQLite 自动建库(db.sqlite3)。"},{"q":"`python manage.py runserver` 启动的是","opts":["A. 公网服务器","B. 数据库","C. 编辑器","D. 本地开发服务器"],"ans":3,"exp":"localhost 本地预览, 仅本机可访问。"},{"q":"`CharField` 必须指定","opts":["A. null","B. blank","C. max_length","D. default"],"ans":2,"exp":"CharField 存短文本, 必须指定 max_length。"},{"q":"`auto_now_add=True` 表示","opts":["A. 删除时间","B. 自动记录创建时刻","C. 每次更新都变","D. 手动填写"],"ans":1,"exp":"DateTimeField 的 auto_now_add=True 自动记录创建时刻。"},{"q":"模型修改后的固定三步是","opts":["A. 改views→改urls→改模板","B. 改models→makemigrations→migrate","C. 删除→重建→重启","D. 安装→卸载→安装"],"ans":1,"exp":"改 models.py → makemigrations → migrate。"},{"q":"创建管理后台超级用户的命令是","opts":["A. adduser","B. superuser","C. createadmin","D. createsuperuser"],"ans":3,"exp":"python manage.py createsuperuser, 密码以哈希存储。"},{"q":"`makemigrations learning_logs` 生成的是","opts":["A. 迁移文件","B. 模板","C. 数据库","D. 视图"],"ans":0,"exp":"生成 learning_logs/migrations/0001_initial.py, migrate 应用。"},{"q":"项目与应用的区分是","opts":["A. 一样","B. 应用更大","C. 无区别","D. 项目=整体配置, 应用=具体功能"],"ans":3,"exp":"项目是网站整体配置, 应用是完成具体功能的一组文件。"}]
-const flashcards=[{"q": "虚拟环境", "a": "python -m venv ll_env; source 激活; deactivate 退出。"}, {"q": "startproject .", "a": "末尾点号=当前目录即项目根。"}, {"q": "模型三步", "a": "改 models → makemigrations → migrate。"}, {"q": "CharField", "a": "短文本, 必须 max_length。"}, {"q": "三步法", "a": "定义 URL → 编写视图 → 编写模板。"}]
-const errors=[{"title": "忘点号", "wrong": "startproject 末尾漏 . 导致部署配置问题。", "right": "django-admin startproject ll_project . 点号必须有。"}, {"title": "迁移忘跑", "wrong": "改了 models 不迁移, 数据库没更新。", "right": "改 models → makemigrations → migrate 三步。"}, {"title": "在系统环境装 Django", "wrong": "不用虚拟环境, 包混乱。", "right": "先创建激活虚拟环境, 再 pip install。"}]
+const questions=[{"q":"`r.status_code == 200` 表示","opts":["A. 失败","B. 请求成功","C. 重定向","D. 超时"],"ans":1,"exp":"200 = 请求成功, 之后才能 r.json()。"},{"q":"`r.json()` 把响应转成","opts":["A. 图片","B. JSON 文件","C. Python 字典/列表","D. 字符串"],"ans":2,"exp":"把 JSON 响应解析为 Python 数据结构。"},{"q":"GitHub 搜索响应中仓库列表在","opts":["A. name 键","B. owner 键","C. items 键","D. total_count 键"],"ans":2,"exp":"response_dict['items'] 是仓库信息列表。"},{"q":"`repo_dict['owner']['login']` 中 owner 是","opts":["A. 字符串","B. 数字","C. 列表","D. 嵌套字典"],"ans":3,"exp":"owner 键的值是另一个字典, 需二级取值。"},{"q":"GitHub 搜索 API 未认证的限流约","opts":["A. 1次/天","B. 无限","C. 10次/分钟","D. 100次/分钟"],"ans":2,"exp":"未认证约 10 次/分钟; 获取令牌后限额大幅提高。"},{"q":"`fig.update_traces(marker_color='SteelBlue')` 中 marker_ 前缀作用于","opts":["A. 标题","B. 坐标轴","C. 图例","D. 数据标记"],"ans":3,"exp":"任何以 marker_ 开头的参数作用于标记。"},{"q":"Plotly 悬停提示支持","opts":["A. 图片","B. HTML(<br /> 换行)","C. 视频","D. 纯文本"],"ans":1,"exp":"hover_name 支持 HTML, 用 <br /> 换行拼接。"},{"q":"Hacker News API 的 topstories.json 返回","opts":["A. 用户信息","B. 最多500个文章ID列表","C. 文章内容","D. 评论"],"ans":1,"exp":"返回最多 500 个热门文章 ID 列表, 再逐条请求详情。"},{"q":"按评论数排序用","opts":["A. sum()","B. itemgetter('comments')","C. sorted 默认","D. max()"],"ans":1,"exp":"from operator import itemgetter; sorted(..., key=itemgetter('comments'), reverse=True)。"},{"q":"API 调用前必须先","opts":["A. 打印响应","B. 转换类型","C. 关闭连接","D. 检查 status_code"],"ans":3,"exp":"不检查 status_code, 4xx/5xx 时 r.json() 结构不是预期。"}]
+const flashcards=[{"q": "API 三步", "a": "requests.get(url) → 检查 status_code==200 → r.json()。"}, {"q": "GitHub API", "a": "search/repositories?q=language:python+sort:stars。"}, {"q": "嵌套取值", "a": "repo_dict['owner']['login'], 多级键名错→KeyError。"}, {"q": "限流", "a": "未认证约10次/分钟; rate_limit 查看。"}, {"q": "px.bar", "a": "x 名称 y 星数两行出图; hover_name 定制提示。"}]
+const errors=[{"title": "不检查 status", "wrong": "4xx/5xx 还 r.json()。", "right": "先断言 status_code==200。"}, {"title": "嵌套 KeyError", "wrong": "多级键名写错。", "right": "用 try-except 跳过, 或先 print(keys())。"}, {"title": "限流触发", "wrong": "循环请求太多。", "right": "先查 rate_limit; 注意 incomplete_results 标志。"}]
 let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
 var QUIZ_MODE='all';
-var QUIZ_PROG_KEY='quiz_progress_zhaoli_py_ch18';
+var QUIZ_PROG_KEY='quiz_progress_zhaoli_py_ch17';
 function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
 function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
 function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
