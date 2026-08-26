@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 赵立 · AI 学习中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --primary: #667eea;
+  --secondary: #764ba2;
+  --success: #48bb78;
+  --warning: #ecc94b;
+  --danger: #f56565;
+  --info: #4299e1;
+  --bg: #f0f2f5;
+  --card-bg: #ffffff;
+  --text: #1a202c;
+  --text-light: #718096;
+  --border: #e2e8f0;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+.header {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  padding: 2rem 1rem 1.5rem;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 2px 20px rgba(102,126,234,0.3);
+}
+.header h1 { font-size: 1.6rem; font-weight: 900; }
+.header p { opacity: 0.85; margin-top: 0.3rem; font-size: 0.9rem; }
+.container { max-width: 920px; margin: 0 auto; padding: 1.2rem 1rem; }
+
+/* Toolbar */
+.toolbar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; justify-content: center; }
+.toolbar a {
+  text-decoration: none; color: var(--text); padding: 0.5rem 1rem; border-radius: var(--radius-sm);
+  font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 0.4rem;
+  transition: all 0.2s; background: var(--card-bg); border: 2px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.toolbar a:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: var(--primary); color: var(--primary); }
+.toolbar a i { color: var(--primary); }
+
+/* Section */
+.section { margin-bottom: 2rem; }
+.section-title {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 1rem; font-weight: 700; margin-bottom: 0;
+  padding: 0.6rem 0.8rem; border-radius: var(--radius-sm);
+  cursor: pointer; user-select: none; transition: all 0.2s;
+  background: var(--bg); color: var(--text);
+  border: 2px solid var(--border);
+}
+.section-title:hover { border-color: var(--primary); }
+.section-title .s-toggle { font-size: 0.75rem; opacity: 0.5; transition: transform 0.3s ease; }
+.section-title .s-toggle.open { transform: rotate(180deg); }
+.section-title .s-badge {
+  font-size: 0.7rem; font-weight: 600; padding: 0.1rem 0.6rem;
+  border-radius: 10px; color: #fff; margin-left: auto;
+}
+.section-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
+  opacity: 0;
+  margin-top: 0;
+}
+.section-content.open {
+  max-height: 10000px;
+  opacity: 1;
+  margin-top: 0.8rem;
+}
+.badge-study { background: var(--success); }
+.badge-training { background: #e67e22; }
+.badge-tools { background: var(--danger); }
+
+/* Tool cards */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; }
+.tool-card {
+  background: var(--card-bg); border-radius: var(--radius-sm);
+  padding: 0.8rem; text-decoration: none; color: var(--text);
+  text-align: center; border: 2px solid var(--border);
+  transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+}
+.tool-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.tool-card .t-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; }
+.tool-card .t-name { font-size: 0.85rem; font-weight: 600; }
+.tool-card .t-desc { font-size: 0.7rem; color: var(--text-light); }
+.tool-card.t-add .t-icon { background: #e74c3c; }
+.tool-card.t-list .t-icon { background: #3498db; }
+.tool-card.t-review .t-icon { background: #2ecc71; }
+.tool-card.t-training .t-icon { background: #e67e22; }
+.tool-card.t-print .t-icon { background: #9b59b6; }
+.tool-card.t-analysis .t-icon { background: #1abc9c; }
+.tool-card.t-flow .t-icon { background: #8e44ad; }
+.tool-card.t-brush .t-icon { background: #16a085; }
+
+/* Subject section */
+.subject-section { margin-bottom: 1.5rem; }
+.subject-header {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.7rem 1rem; border-radius: var(--radius);
+  color: var(--text); margin-bottom: 0;
+  background: var(--card-bg); border: 2px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  cursor: pointer; user-select: none; transition: all 0.2s;
+}
+.subject-header:hover { border-color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.subject-header .icon { font-size: 1.4rem; }
+.subject-header .icon i { color: var(--primary); }
+.grade-grid .subject-header .icon { font-size: 1rem; }
+.grade-grid .subject-header { padding: 0.5rem 0.7rem; border-radius: var(--radius-sm); }
+.grade-grid .subject-header h3 { font-size: 0.88rem; }
+.grade-grid .subject-section { margin-bottom: 0; }
+.subject-header h3 { font-size: 1rem; font-weight: 700; flex: 1; }
+.subject-header .count { font-size: 0.75rem; color: var(--text-light); background: var(--bg); padding: 0.15rem 0.6rem; border-radius: 10px; }
+.subject-header .toggle-icon { font-size: 0.8rem; opacity: 0.5; color: var(--text-light); transition: transform 0.3s ease; }
+.subject-header .toggle-icon.open { transform: rotate(180deg); }
+
+/* Subject header color accents */
+.subject-math { border-left: 4px solid #e74c3c; }
+.subject-math .icon i { color: #e74c3c; }
+.subject-physics { border-left: 4px solid #667eea; }
+.subject-physics .icon i { color: #667eea; }
+.subject-chinese { border-left: 4px solid #2ecc71; }
+.subject-chinese .icon i { color: #2ecc71; }
+
+.lecture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.6rem;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
+  opacity: 0;
+  margin-top: 0;
+}
+.lecture-grid.open {
+  max-height: 2000px;
+  opacity: 1;
+  margin-top: 0.6rem;
+}
+.grade-grid {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
+  opacity: 0;
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+.grade-grid.open {
+  max-height: 5000px;
+  opacity: 1;
+  margin-top: 0.6rem;
+}
+.subject-chinese { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+
+.lecture-card {
+  background: var(--card-bg); border-radius: var(--radius-sm);
+  padding: 0.8rem 1rem; text-decoration: none; color: var(--text);
+  display: flex; align-items: center; gap: 0.8rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 2px solid var(--border);
+  transition: all 0.2s; position: relative;
+}
+.lecture-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.lecture-card .lnum {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.lecture-card .info { flex: 1; }
+.lecture-card .info h4 { font-size: 0.88rem; font-weight: 600; }
+.lecture-card .info .meta { font-size: 0.72rem; color: var(--text-light); margin-top: 0.15rem; display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+.lecture-card .info .meta .tag { background: var(--bg); padding: 0.05rem 0.35rem; border-radius: 4px; font-size: 0.65rem; }
+.lecture-card .arrow { color: var(--text-light); font-size: 0.8rem; opacity: 0.5; transition: all 0.2s; }
+.lecture-card:hover .arrow { opacity: 1; transform: translateX(3px); }
+.lecture-card .badge-new {
+  position: absolute; top: -5px; right: -5px;
+  background: var(--danger); color: #fff;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 0.1rem 0.4rem; border-radius: 7px;
+}
+.lecture-card.empty {
+  opacity: 0.5; cursor: default; border-style: dashed;
+  justify-content: center; pointer-events: none;
+}
+.lecture-card.empty:hover { transform: none; box-shadow: none; }
+.lecture-card.empty .lnum { background: var(--border) !important; color: var(--text-light); }
+.lecture-card.empty .info h4 { color: var(--text-light); }
+
+/* 已学习标记 */
+.lecture-card .learn-btn {
+  position: absolute; bottom: 6px; right: 8px;
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--text-light); font-size: 0.62rem; font-weight: 600;
+  padding: 0.18rem 0.5rem; border-radius: 20px;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 3px;
+  transition: all 0.2s; z-index: 2;
+}
+.lecture-card .learn-btn:hover { border-color: var(--success, #2ecc71); color: var(--success, #2ecc71); transform: scale(1.05); }
+.lecture-card .learn-btn.done { background: rgba(46,204,113,0.12); border-color: #2ecc71; color: #27ae60; }
+.lecture-card .learn-badge {
+  position: absolute; top: -5px; left: -5px;
+  background: #2ecc71; color: #fff;
+  font-size: 0.58rem; font-weight: 700;
+  padding: 0.12rem 0.42rem; border-radius: 7px;
+  display: inline-flex; align-items: center; gap: 3px;
+  z-index: 2;
+}
+.lecture-card.learned {
+  border-color: rgba(46,204,113,0.6);
+  background: linear-gradient(135deg, rgba(46,204,113,0.06), var(--card-bg));
+}
+.lecture-card.learned .info h4 { color: #27ae60; }
+.lecture-card.learned .lnum { opacity: 0.7; }
+
+/* tool-card 已学习样式 */
+.tool-card { position: relative; }
+.tool-card .learn-btn {
+  position: absolute; bottom: 6px; right: 8px;
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--text-light); font-size: 0.6rem; font-weight: 600;
+  padding: 0.15rem 0.45rem; border-radius: 20px;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 3px;
+  transition: all 0.2s; z-index: 2;
+}
+.tool-card .learn-btn:hover { border-color: #2ecc71; color: #27ae60; }
+.tool-card .learn-btn.done { background: rgba(46,204,113,0.12); border-color: #2ecc71; color: #27ae60; }
+.tool-card.learned { border-color: rgba(46,204,113,0.6); background: linear-gradient(135deg, rgba(46,204,113,0.06), var(--card-bg)); }
+.tool-card.learned .t-name { color: #27ae60; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: var(--text-light); font-size: 0.82rem; }
+
+/* Animations */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in-up { animation: fadeInUp 0.35s ease; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.2rem; }
+  .tool-grid { grid-template-columns: repeat(3, 1fr); }
+  .lecture-grid { grid-template-columns: 1fr; }
+  .toolbar a { font-size: 0.78rem; padding: 0.4rem 0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><i class="fas fa-graduation-cap"></i> 赵立 · AI 学习中心</h1>
+  <p>Python 编程 · AI 应用 · 持续进化</p>
+</div>
+
+<div class="container" id="app">
+  <!-- Rendered by JS -->
+</div>
+
+<div class="footer">
+  <i class="fas fa-heart" style="color:var(--danger)"></i> 为赵立定制的 AI 学习工具 &nbsp;|&nbsp; 持续更新中
+</div>
+
+<script>
+// ===================== CONFIG =====================
+const BANK_BASE = ''; // 同域名，直接使用相对路径
+const tools = [
+  { name: 'Python 基础', icon: 'fa-code', desc: '变量/数据类型/控制流', cls: 't-add', url: 'python_basics_interactive.html' },
+  { name: 'AI 应用', icon: 'fa-robot', desc: '机器学习/大模型/提示词', cls: 't-training', url: 'ai_basics_interactive.html' },
+  { name: '学习路线', icon: 'fa-route', desc: '从零到 AI 应用路线图', cls: 't-flow', url: 'zhaoli_index.html#ai-route' },
+];
+
+// 🔵 AI 学习 — 课程目录（按模块分层）
+const trainingTerms = [
+  {
+    id: 'ai-python', name: 'Python 编程', icon: 'fa-code', cls: 'subject-physics',
+    subjects: [
+      {
+        id: 'python-basics', name: 'Python 基础', icon: 'fa-code', cls: 'subject-physics',
+        lectures: [
+          { num: '01', title: 'Python 基础语法', url: 'python_basics_interactive.html', date: '2026-08-25', tags: ['Python'], new: true },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'ai-apps', name: 'AI 应用', icon: 'fa-robot', cls: 'subject-math',
+    subjects: [
+      {
+        id: 'ai-basics', name: 'AI 应用入门', icon: 'fa-robot', cls: 'subject-math',
+        lectures: [
+          { num: '01', title: 'AI 与机器学习概览', url: 'ai_basics_interactive.html', date: '2026-08-25', tags: ['AI'], new: true },
+        ]
+      },
+    ]
+  },
+];
+const numColors = ['#e74c3c','#3498db','#2ecc71','#e67e22','#9b59b6','#1abc9c'];
+const schoolIcons = ['fa-calculator','fa-flask','fa-language','fa-flask','fa-leaf','fa-history','fa-globe','fa-gavel'];
+const schoolColors = ['#e74c3c','#667eea','#2ecc71','#9b59b6','#27ae60','#f39c12','#1abc9c','#34495e'];
+
+function render() {
+  let html = '';
+
+  // === 快捷工具栏 ===
+  html += `<div class="toolbar fade-in-up">
+    ${tools.map(t => `<a href="${BANK_BASE}${t.url}"><i class="fas ${t.icon}"></i> ${t.name}</a>`).join('')}
+  </div>`;
+
+  // === AI 学习目录 ===
+  html += renderSection('AI 学习', 'fa-robot', '#667eea', 'badge-training',
+    trainingTerms.map((term, ti) => {
+      const cnt = term.subjects.reduce((a, s) => a + s.lectures.length, 0);
+      return renderTrainingTerm(term, ti, cnt);
+    }).join(''));
+
+  document.getElementById('app').innerHTML = html;
+}
+
+function renderSection(title, icon, color, badgeClass, content) {
+  const key = 'sec_' + title;
+  const isOpen = localStorage.getItem(key) !== 'closed';
+  return `<div class="section fade-in-up">
+    <div class="section-title" onclick="toggleSection('${key}', this)">
+      <i class="fas ${icon}" style="color:${color}"></i> ${title}
+      <span class="s-badge ${badgeClass}">${content.split('subject-section').length - 1 || tools.length} 项</span>
+      <span class="s-toggle ${isOpen ? 'open' : ''}"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content ${isOpen ? 'open' : ''}">${content}</div>
+  </div>`;
+}
+
+function renderTrainingTerm(term, ti, cnt) {
+  return `
+    <div class="subject-section fade-in-up" style="animation-delay:${0.1 + ti * 0.06}s">
+      <div class="subject-header ${term.cls}" onclick="toggleSubject(this)">
+        <div class="icon"><i class="fas ${term.icon}"></i></div>
+        <h3>${term.name}</h3>
+        <span class="count">${cnt} 讲</span>
+        <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="grade-grid">
+        ${term.subjects.length > 0 ? term.subjects.map((subj, si) => `
+          <div class="subject-section" style="margin-bottom:0">
+            <div class="subject-header ${subj.cls}" onclick="toggleSubject(this)" style="cursor:pointer">
+              <div class="icon" style="font-size:1rem;color:var(--primary)"><i class="fas ${subj.icon}"></i></div>
+              <h3 style="font-size:0.88rem;font-weight:600;flex:1;margin:0;color:var(--text)">${subj.name}</h3>
+              <span style="font-size:0.7rem;color:var(--text-light)">${subj.lectures.length}项</span>
+              <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="lecture-grid">
+              ${subj.lectures.map((lec, li) => `
+              <a href="${lec.url}" class="lecture-card ${isLearned(lec.url) ? 'learned' : ''}">
+                ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
+                <span class="learn-badge" style="display:${isLearned(lec.url) ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
+                <div class="lnum" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
+                <div class="info">
+                  <h4>${lec.title}</h4>
+                  <div class="meta"><span>${lec.date}</span>${lec.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                </div>
+                <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                ${learnedBtn(lec.url)}
+              </a>`).join('')}
+            </div>
+          </div>`).join('') : `<div style="grid-column:1/-1;padding:1rem;text-align:center;color:var(--text-light);font-size:0.85rem">暂无内容 · 后续增加</div>`}
+      </div>
+    </div>`;
+}
+
+function toggleSubject(header) {
+  const grid = header.nextElementSibling;
+  const icon = header.querySelector('.toggle-icon');
+  if (!grid) return;
+  
+  // Close only peer grids at the same level (not ancestors)
+  const parent = grid.parentElement;
+  if (parent) {
+    parent.querySelectorAll(':scope > .lecture-grid.open, :scope > .grade-grid.open').forEach(el => {
+      if (el !== grid) {
+        el.classList.remove('open');
+        const h = el.previousElementSibling;
+        if (h) {
+          const ic = h.querySelector('.toggle-icon');
+          if (ic) ic.classList.remove('open');
+        }
+      }
+    });
+  }
+  
+  grid.classList.toggle('open');
+  if (icon) icon.classList.toggle('open');
+}
+
+function toggleSection(key, el) {
+  const content = el.nextElementSibling;
+  const icon = el.querySelector('.s-toggle');
+  if (!content) return;
+  const isOpen = content.classList.contains('open');
+  if (isOpen) {
+    content.classList.remove('open');
+    if (icon) icon.classList.remove('open');
+    localStorage.setItem(key, 'closed');
+  } else {
+    content.classList.add('open');
+    if (icon) icon.classList.add('open');
+    localStorage.setItem(key, 'open');
+  }
+}
+
+render();
+
+// ===== 已学习标记 =====
+const LEARNED_KEY = 'learned_pages';
+function getLearned() { try { return JSON.parse(localStorage.getItem(LEARNED_KEY) || '[]'); } catch(e) { return []; } }
+function isLearned(url) { return getLearned().includes(url); }
+function toggleLearned(url, ev) {
+  if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+  let arr = getLearned();
+  const i = arr.indexOf(url);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(url); }
+  localStorage.setItem(LEARNED_KEY, JSON.stringify(arr));
+  // 更新当前卡片 UI
+  const card = ev && ev.currentTarget ? ev.currentTarget.closest('.lecture-card, .tool-card') : null;
+  if (card) {
+    const learned = arr.includes(url);
+    card.classList.toggle('learned', learned);
+    const btn = card.querySelector('.learn-btn');
+    if (btn) {
+      btn.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="fas fa-circle"></i> 已学习';
+      btn.classList.toggle('done', learned);
+    }
+    const badge = card.querySelector('.learn-badge');
+    if (badge) badge.style.display = learned ? 'inline-flex' : 'none';
+  }
+  // 音效
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = learned ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function learnedBtn(url) {
+  const learned = isLearned(url);
+  return `<button class="learn-btn ${learned ? 'done' : ''}" onclick="toggleLearned('${url}', event)" title="标记已学习">${learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="fas fa-circle"></i> 已学习'}</button>`;
+}
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body>
+</html>
