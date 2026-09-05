@@ -497,7 +497,24 @@ const trainingTerms = [
   },
   {
     id: 'tyjy-2026fall', name: '2026年秋季', icon: 'fa-leaf', cls: 'subject-physics',
-    subjects: []
+    subjects: [
+      {
+        id: 'tyjy-chinese-fall', name: '语文', icon: 'fa-book', cls: 'subject-chinese',
+        lectures: []
+      },
+      {
+        id: 'tyjy-english-fall', name: '英语', icon: 'fa-language', cls: 'subject-math',
+        lectures: []
+      },
+      {
+        id: 'tyjy-math-fall', name: '数学', icon: 'fa-calculator', cls: 'subject-math',
+        lectures: []
+      },
+      {
+        id: 'tyjy-physics-fall', name: '物理', icon: 'fa-flask', cls: 'subject-physics',
+        lectures: []
+      },
+    ]
   },
 ];
 
@@ -640,7 +657,7 @@ function renderTrainingTerm(term, ti, cnt) {
       <div class="subject-header ${term.cls}" onclick="toggleSubject(this)">
         <div class="icon"><i class="fas ${term.icon}"></i></div>
         <h3>${term.name}</h3>
-        <span class="count">${cnt} 讲</span>
+        <span class="count">${cnt > 0 ? cnt + ' 讲' : (term.subjects.length > 0 ? term.subjects.length + ' 科' : '0 讲')}</span>
         <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
       </div>
       <div class="grade-grid">
@@ -653,7 +670,7 @@ function renderTrainingTerm(term, ti, cnt) {
               <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
             </div>
             <div class="lecture-grid">
-              ${subj.lectures.map((lec, li) => `
+              ${subj.lectures.length > 0 ? subj.lectures.map((lec, li) => `
               <a href="${lec.url}" class="lecture-card ${isLearned(lec.url) ? 'learned' : ''}">
                 ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
                 <span class="learn-badge" style="display:${isLearned(lec.url) ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
@@ -664,7 +681,7 @@ function renderTrainingTerm(term, ti, cnt) {
                 </div>
                 <div class="arrow"><i class="fas fa-chevron-right"></i></div>
                 ${learnedBtn(lec.url)}
-              </a>`).join('')}
+              </a>`).join('') : `<div style="grid-column:1/-1;padding:1rem;text-align:center;color:var(--text-light);font-size:0.85rem">暂无内容 · 后续增加</div>`}
             </div>
           </div>`).join('') : `<div style="grid-column:1/-1;padding:1rem;text-align:center;color:var(--text-light);font-size:0.85rem">暂无内容 · 后续增加</div>`}
       </div>
