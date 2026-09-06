@@ -1,0 +1,399 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌍 Holidays & Summer Vacation · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</style></head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 英语 · 第1讲</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-globe-asia"></i> Holidays &amp; Summer Vacation · 互动学习</h1>
+    <p>2026秋双语八年级 B班 · 第1讲 · 32 题 · 15 卡牌 | 双语英语</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 32道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 15张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第一讲 · Holidays &amp; Summer Vacation</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-book-open" style="color:#34495e"></i> 📖 话题精读 What is a holiday?</h3><ul>
+        <li>holiday = 纪念<strong class="hl">特别人物/历史事件</strong>的特殊时刻</li>
+        <li>假日上班的人：<strong class="hl">hard-working and great</strong></li>
+        <li>庆祝方式：相聚 spending time + <strong class="hl">parade 游行</strong></li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-puzzle-piece" style="color:#8e44ad"></i> 🧩 nothing but 结构</h3><ul>
+        <li>nothing but + <strong class="hl">名词</strong>：只是……</li>
+        <li>前谓语含 do → but + <strong class="hl">动词原形</strong>（could do nothing but stay）</li>
+        <li>前谓语不含 do → but + <strong class="hl">to do</strong>（had no choice but to wait）</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-code-branch" style="color:#3498db"></i> 🔀 against 一词多义</h3><ul>
+        <li>① 与……<strong class="hl">竞争</strong>：fight/play against</li>
+        <li>② <strong class="hl">反对</strong>（反义词 for）</li>
+        <li>③ <strong class="hl">靠着、倚着</strong>（表位置）</li>
+        <li>④ <strong class="hl">碰、撞</strong>：hit against the guardrail</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-balance-scale" style="color:#27ae60"></i> ⚖️ so/such…that</h3><ul>
+        <li>so + <strong class="hl">形/副</strong> + that（结果状语从句）</li>
+        <li>such + <strong class="hl">名词短语</strong> + that（such a boring movie）</li>
+        <li>转化：so hot that = <strong class="hl">too hot to</strong> = <strong class="hl">not cool enough to</strong></li>
+      </ul></div>
+      <div class="knowledge-card c5"><h3><i class="fas fa-boxes" style="color:#2980b9"></i> 📦 复合不定代词</h3><ul>
+        <li>some 系列：<strong class="hl">肯定句</strong>；any 系列：否定/疑问句</li>
+        <li>形容词<strong class="hl">后置</strong>：something beautiful / something unusual</li>
+        <li>someone → anyone（疑问句）；don't know anything = know nothing</li>
+      </ul></div>
+      <div class="knowledge-card c6"><h3><i class="fas fa-sun" style="color:#f39c12"></i> 🌊 完形背景：暑假的意义</h3><ul>
+        <li>过去：农场干活 vs 现在：<strong class="hl">课外班/运动/爱好</strong></li>
+        <li>观点一：玩太多 → 学业进步 slow</li>
+        <li>观点二：activities 帮助成长（Some say ↔ But others say）</li>
+      </ul></div>
+      <div class="knowledge-card c7"><h3><i class="fas fa-umbrella-beach" style="color:#16a085"></i> 🏖️ 短文填空：词形变化</h3><ul>
+        <li>stranger→<strong class="hl">strange</strong>、breathe→<strong class="hl">breath</strong>（take a deep breath）</li>
+        <li>comfortably→<strong class="hl">comfortable</strong>、boring→<strong class="hl">bored</strong></li>
+        <li>remind→reminded、make→<strong class="hl">made</strong>、no→<strong class="hl">None</strong>（句首大写）</li>
+      </ul></div>
+      <div class="knowledge-card c8"><h3><i class="fas fa-exchange-alt" style="color:#e74c3c"></i> 💬 句型句式转换</h3><ul>
+        <li>say nothing = walk out <strong class="hl">without saying anything</strong></li>
+        <li>don't know anything = know nothing</li>
+        <li>否定/疑问句：something → <strong class="hl">anything</strong></li>
+      </ul></div>
+    </div>
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone-alt"></i> 🎙️ 课堂要点 · 第一讲（Holidays &amp; Summer Vacation）</h4>
+      <p><strong>本讲核心</strong>：2026秋双语八年级 B班第1讲，话题 <strong>Holidays（节假日/暑假）</strong>。①精读：holiday 的定义与庆祝方式；②词汇 10 个：event / be derived from / religion / include / theme / of course / parade / kick off / attract / nearly；③语法四大考点：<strong>nothing but 结构、against 一词多义、so/such...that、复合不定代词</strong>。</p>
+      <p><strong>练习册重点</strong>：完形（暑假的意义——两种观点对比）+ 短文填空（海边度假，10 空有 7 空考<strong>词形变化</strong>）。做题技巧：完形抓转折对比词（lucky ↔ not so lucky、Some say ↔ But others say）；短文填空先把词库按词性归类，再结合时态/固定搭配变形。</p>
+      <p><strong>易错提醒</strong>：① nothing but 后动词形式（含 do → 原形）；② -ed/-ing 形容词 bored / boring；③ anything → something 陈述句转换；④ None 句首大写；⑤ ⚠️ 教材答案两处笔误——人称代词 I 误写成小写 l；"did nothing but lay down" 规范应为 lie down，以老师课堂讲解为准。</p>
+      <p><strong>🎓 老师课堂总结</strong> — 新学期起步课：假期话题阅读帮大家热身，10 个词汇短语要当堂消化；nothing but 与 so...that 是中考高频考点，句型转换要能熟练互变；不定代词注意 some/any 家族在肯定、否定、疑问句中的切换。订正练习册时词形变化错一个订正一个，把"词库原词 → 文中正确形式"成对记住。</p>
+    </div>
+    </div>
+    <div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 32</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共15张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 英语 · 第1讲 Holidays &amp; Summer Vacation | 双语英语 · 2026秋</div>
+
+<script>
+const questions = [
+  {"q":"Around the world, summer vacation means much free time... Also, there's something ___1___ to students — no school.","opts":["A. boring","B. important","C. difficult"],"ans":1,"exp":"破折号强调“不用上学”(no school) 对学生是<strong>重要的(important)</strong>；boring/difficult 与语境相反。"},
+  {"q":"Hundreds of years ago, students ___2___ the summer on the farm. They helped to grow vegetables and feed animals.","opts":["A. spent","B. cost","C. took"],"ans":0,"exp":"“度过(时间)”用 <strong>spend→spent</strong>；cost 主语为物表花钱；take 用于 It takes sb. time to do sth."},
+  {"q":"But today, students can do something ___3___ in summer vacation: after-school classes, sports or hobbies.","opts":["A. boring","B. different","C. useless"],"ans":1,"exp":"与过去“在农场干农活”对比，现在上课外班/运动/爱好——做的事情<strong>不同了(different)</strong>。"},
+  {"q":"If you're ___4___, in the weeks away from school, you can go on a trip or go camping.","opts":["A. lucky","B. scared","C. tired"],"ans":0,"exp":"与后文 “But if you're not so lucky” 呼应，此空填<strong>幸运的(lucky)</strong>。"},
+  {"q":"It's time to ___5___ new things. You can learn to play the guitar or play basketball.","opts":["A. make","B. look","C. try"],"ans":2,"exp":"<strong>try new things</strong>（尝试新事物）是常见搭配；make/look 语意不通。"},
+  {"q":"But if you're not so lucky, summer vacation may mean summer ___6___ — a long, hot summer inside the classroom.","opts":["A. schools","B. clubs","C. camps"],"ans":0,"exp":"后文“在教室里度过漫长炎热的夏天”→ <strong>summer schools</strong>（暑假学校/补课）。"},
+  {"q":"Some say that summer vacation means ___7___ academic progress(学业进步). They think having too much fun will make students forget their studies.","opts":["A. slow","B. real","C. much"],"ans":0,"exp":"后文是负面观点（玩多→忘记学习、难继续）→ 学业进步<strong>缓慢(slow)</strong>；下一句 But others say 形成转折。"},
+  {"q":"They think spending too much time having fun will make students ___8___ their studies. And it's hard for them to go on studying.","opts":["A. think of","B. forget about","C. help with"],"ans":1,"exp":"玩太多自然导致<strong>忘记(forget about)</strong>学习，符合因果逻辑。"},
+  {"q":"But others say that the ___9___ in summer vacation can help students to grow up.","opts":["A. activities","B. gifts","C. persons"],"ans":0,"exp":"暑假里做的事可统称为<strong>活动(activities)</strong>，帮助成长；gifts/persons 太片面。"},
+  {"q":"Learn something! Help someone! Make this summer a good one for you to ___10___.","opts":["A. see","B. remember","C. learn"],"ans":1,"exp":"结尾祝愿“让这个夏天值得<strong>记住(remember)</strong>”；see/learn 语意不通。"},
+  {"q":"短文填空①：Last summer my family went to a small coastal town. Everything there felt ___ to us at first because we had never been there.","opts":["A. strange","B. stranger","C. strangely","D. strangers"],"ans":0,"exp":"felt 是系动词，后接<strong>形容词 strange</strong>（陌生的）；词库 stranger 需还原成形容词。"},
+  {"q":"短文填空②：The sea air smelled fresh, and I took a deep ___ to enjoy it.","opts":["A. breathe","B. breathing","C. breathes","D. breath"],"ans":3,"exp":"固定搭配 <strong>take a deep breath</strong>（深呼吸）；动词 breathe 变名词 breath。"},
+  {"q":"短文填空③：Our hotel room was small but very ___.","opts":["A. comfortably","B. comfort","C. comfortable","D. comforted"],"ans":2,"exp":"修饰名词 room 用形容词 <strong>comfortable</strong>；comfortably 是副词需变形。"},
+  {"q":"短文填空④：My little brother kept asking, “Are you ___ to go to the beach now?” He was so excited.","opts":["A. ready","B. sick","C. bored","D. all"],"ans":0,"exp":"固定搭配 <strong>be ready to do sth.</strong>（准备好做某事），词库原词 ready 直接填。"},
+  {"q":"短文填空⑤：After two days of swimming and playing volleyball on the beach, I started to feel ___ with these activities.","opts":["A. boring","B. bored","C. bore","D. bores"],"ans":1,"exp":"-ed 形容词修饰人的感受：<strong>bored</strong>（感到无聊）；boring 修饰事物，此处搭配 feel 用人感受。"},
+  {"q":"短文填空⑥：Luckily, I could take a rest and enjoy the beautiful scenery. It ___ me of a painting that I had seen in an art book.","opts":["A. remind","B. reminded","C. reminds","D. reminding"],"ans":1,"exp":"全文过去时 → <strong>reminded</strong>；搭配 remind sb. of sth.（使某人想起）。"},
+  {"q":"短文填空⑦：One afternoon, we saw ___ unusual in the water — it was a dolphin!","opts":["A. anything","B. something","C. nothing","D. everything"],"ans":1,"exp":"肯定陈述句表“某件…事”用 <strong>something</strong>（由 anything 转换）；形容词 unusual 后置：something unusual。"},
+  {"q":"短文填空⑧：We were all amazed. ___ of us had ever seen a dolphin so close before.","opts":["A. No","B. Not","C. None","D. All"],"ans":2,"exp":"<strong>None of us</strong>（我们中没有人）；⚠️ 句首首字母必须大写 None。no 是形容词不能直接作主语。"},
+  {"q":"短文填空⑨：Suddenly, two local boys started to ___ about who saw the dolphin first.","opts":["A. fight","B. fought","C. fighting","D. fights"],"ans":0,"exp":"started to do → 填<strong>原形 fight</strong>；fight about = 为……争吵。"},
+  {"q":"短文填空⑩：Their argument (争论) ___ us all laugh. What a wonderful vacation!","opts":["A. make","B. makes","C. made","D. making"],"ans":2,"exp":"全文过去时 → <strong>made</strong>；make sb. do sth.（让某人做某事），宾语补足语用原形 laugh。"},
+  {"q":"游客们除了等下一班火车，什么也做不了。正确英译是","opts":["A. The tourists could do nothing but waiting for the next train.","B. The tourists could do nothing but waited for the next train.","C. The tourists could do nothing but to wait for the next train.","D. The tourists could do nothing but wait for the next train."],"ans":3,"exp":"谓语含 do（did nothing）→ <strong>nothing but + 动词原形 wait</strong>；等价写法：had no choice but to wait。"},
+  {"q":"我们昨天什么也没有做，只是静静地躺在草地上。规范英译是","opts":["A. We did nothing but lay down on the grass quietly yesterday.","B. We did nothing but lying down on the grass quietly yesterday.","C. We did nothing but lay down quietly on the grass yesterday.","D. We did nothing but lie down on the grass quietly yesterday."],"ans":3,"exp":"nothing but 前有 did → 后接<strong>动词原形 lie</strong> down。⚠️ 教材答案 B 写法 lay down 疑为笔误（lay 是及物“放置”或 lie 的过去式），规范作答写 lie down。"},
+  {"q":"Going against the traffic rules is dangerous. 句中 against 的含义是","opts":["A. 靠着","B. 违反","C. 反对","D. 碰；撞"],"ans":1,"exp":"against the traffic rules = <strong>违反</strong>交通规则（against 意为“违背/违反”）。"},
+  {"q":"The car skidded and hit against the guardrail(护栏). 句中 against 的含义是","opts":["A. 竞争","B. 碰；撞","C. 反对","D. 靠着"],"ans":1,"exp":"hit against the guardrail = 撞上护栏，against 表<strong>碰、撞</strong>。"},
+  {"q":"Many people are against the new tax law(税法). 句中 against 的含义是","opts":["A. 靠着","B. 违反","C. 竞争","D. 反对"],"ans":3,"exp":"be against = <strong>反对</strong>；against 的反义词是 for。"},
+  {"q":"这部电影太乏味了，以至于我看到一半就睡着了。用 so...that 翻译正确的是","opts":["A. The movie was such boring that I fell asleep halfway through.","B. The movie was so boring movie that I fell asleep halfway through.","C. The movie was so boring that I fell asleep halfway through.","D. The movie was so boring for me to fall asleep halfway through."],"ans":2,"exp":"so + 形容词 + that 从句：<strong>so boring that I fell asleep</strong>；可转化为 too boring for me to watch halfway。"},
+  {"q":"同一句用 such...that 表达，正确的是","opts":["A. It was so a boring movie that I fell asleep halfway through.","B. It was such a boring movie that I fell asleep halfway through.","C. It was a such boring movie that I fell asleep halfway through.","D. It was such boring a movie that I fell asleep halfway through."],"ans":1,"exp":"such + a(n) + 形容词 + 名词 + that：<strong>such a boring movie that…</strong>。"},
+  {"q":"—My family went to Taizhou to eat morning tea during the May Day holiday. —So did I. There are ___ many tourists that all the waiters ___ stopped to eat or rest the whole day.","opts":["A. so; mostly","B. such; nearly","C. such; highly","D. so; hardly"],"ans":3,"exp":"so many tourists（so+many+可数复数）+ hardly（几乎不）表否定：服务员们几乎整天没停下吃喝。"},
+  {"q":"She is new here, so we don't know anything about her.（同义句）She is new here, so we ___ about her.","opts":["A. don't know nothing","B. know nothing","C. know anything","D. not know something"],"ans":1,"exp":"don't know anything = <strong>know nothing</strong>（单重否定同义改写）。"},
+  {"q":"There is something wrong with the bike.（改否定句）","opts":["A. There is nothing not wrong with the bike.","B. There isn't something wrong with the bike.","C. There isn't anything wrong with the bike.","D. There doesn't be anything wrong with the bike."],"ans":2,"exp":"否定句把 something 改为 <strong>anything</strong>：There isn't anything wrong with the bike."},
+  {"q":"His mother said nothing and walked out.（同义句）His mother walked out ___ ___.","opts":["A. with saying nothing","B. without to say anything","C. without saying anything","D. without say anything"],"ans":2,"exp":"say nothing = walk out <strong>without saying anything</strong>（介词后接动名词）。"},
+  {"q":"She'd like something beautiful for her mother.（改一般疑问句）","opts":["A. Would she like something beautiful for her mother?","B. Does she like anything beautiful for her mother?","C. Would she like anything beautiful for her mother?","D. Would she likes anything beautiful for her mother?"],"ans":2,"exp":"一般疑问句 some → <strong>any</strong>：Would she like anything beautiful...?（would like 句型保留 would）"}
+];
+
+
+const flashcards = [
+  {"front":"What is a holiday?（话题核心）","back":"It's a special time to <strong>remember special people or events in history</strong>. 假日是纪念特别人物/历史事件的特殊时刻。"},
+  {"front":"对假日上班的人，作者怎么看？人们如何庆祝？","back":"They are <strong>hard-working and great</strong>. 庆祝方式：By spending time together and <strong>parading</strong>（相聚+游行）。"},
+  {"front":"event 的词性与词义","back":"event <strong>n. 事件</strong>（尤指重要/历史事件）。"},
+  {"front":"be derived from 什么意思？","back":"<strong>起源于</strong>（derive v. 来自、源于）。"},
+  {"front":"religion / include / theme 词义","back":"religion n. <strong>宗教</strong>；include v. <strong>包含</strong>；theme n. <strong>主题</strong>。"},
+  {"front":"parade / kick off / attract / nearly 词义","back":"parade n./v. <strong>游行</strong>；kick off <strong>开始</strong>；attract v. <strong>吸引</strong>；nearly adv. <strong>几乎，差不多</strong>。"},
+  {"front":"of course 的用法","back":"of course = <strong>当然</strong>，表示同意/肯定。"},
+  {"front":"nothing but 的三种搭配","back":"① nothing but + <strong>名词</strong>：只是……；② 前谓语含 do → but + <strong>动词原形</strong>（could do nothing but stay）；③ 前谓语不含 do → but + <strong>to do</strong>（had no choice but to wait）。"},
+  {"front":"against 的一词多义（4 义）","back":"① 与……<strong>竞争</strong>（fight/play against）；② <strong>反对</strong>（反义词 for）；③ <strong>靠着、倚着</strong>；④ <strong>碰、撞</strong>（hit against）。"},
+  {"front":"so...that 与 such...that 的区别","back":"so + <strong>形容词/副词</strong> + that；such + <strong>名词短语</strong> + that（such a boring movie）。转化：so hot that I can't touch = too hot for me to touch = not cool enough for me to touch。"},
+  {"front":"复合不定代词 some/any 家族怎么用？","back":"肯定句用 <strong>something / someone</strong>；否定/疑问句用 <strong>anything / anyone</strong>；形容词<strong>后置</strong>：something beautiful。"},
+  {"front":"breathe 与 breath 的区别","back":"breathe <strong>v. 呼吸</strong>；breath <strong>n. 呼吸</strong>。固定搭配：take a deep breath（深呼吸）。"},
+  {"front":"-ed / -ing 形容词：bored vs boring","back":"bored 修饰<strong>人</strong>（感到无聊）：I felt bored；boring 修饰<strong>事物</strong>：The movie is boring。"},
+  {"front":"None of us 的用法与易错点","back":"None of us = 我们中没有人；<strong>句首首字母大写</strong>；no 是形容词不能直接作主语。"},
+  {"front":"spend / cost / take 辨析","back":"spend：人作主语（度过时间/花钱，spend...on/in doing）；cost：物作主语（花费多少钱）；take：It takes sb. time to do sth."}
+];
+
+
+errors = [
+  {"title":"❌ nothing but 后动词用错形式","wrong":"写成 did nothing but waiting / waited / to wait。","right":"谓语含 do（did nothing）→ nothing but + <strong>动词原形 wait</strong>；不含 do 才用 to do：had no choice but to wait。"},
+  {"title":"❌ “躺下”写成 lay down","wrong":"教材答案写作 We did nothing but lay down...（lay 是及物“放置”或 lie 的过去式）。","right":"规范应写 <strong>We did nothing but lie down...</strong>（nothing but 后接动词原形 lie）。教材此处疑为笔误，以老师课堂讲解为准。"},
+  {"title":"❌ -ed / -ing 形容词混用","wrong":"I felt boring. 用 boring 形容人的感受。","right":"-ed 形容<strong>人</strong>的感受：I felt <strong>bored</strong>；-ing 形容<strong>事物</strong>：The movie is boring。"},
+  {"title":"❌ 肯定陈述句该用 something 却用 anything","wrong":"We saw anything unusual in the water.","right":"肯定陈述句表“某件…”用 <strong>something</strong>：We saw something unusual. anything 用于否定/疑问句。"},
+  {"title":"❌ None 首字母小写","wrong":"none of us had ever seen... 句首不大写。","right":"句首单词必须大写：<strong>None</strong> of us had ever seen a dolphin. 同时区分 no（形容词）/ none（代词）。"},
+  {"title":"❌ so / such 后接成分混淆","wrong":"The movie was such boring that... / It was so a boring movie that...","right":"so + <strong>形容词/副词</strong>（so boring / so many tourists）；such + <strong>名词短语</strong>（such a boring movie）。"},
+  {"title":"❌ 人称代词 I 写成小写 l","wrong":"教材答案手打笔误：Because l need time...（小写 l）。","right":"英语人称代词 <strong>I 永远大写</strong>；小写 l 是数字1/字母L，写作时注意。"},
+  {"title":"❌ spend / cost / take 三词混用","wrong":"He cost the summer on the farm. / The book took 30 yuan.","right":"人 + spend + 时间/钱（on sth./in doing）；物 + cost + 钱；It takes sb. time to do sth."}
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx,myAns){const q=questions[idx];const item={subject:'英语(双语B班)',chapter:'第1讲 Holidays & 暑假话题',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'英语,双语B班,第1讲,holiday,nothing but,against,so...that,不定代词,词形变化'};const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');if(ex.some(x=>x.content===item.content))return false;ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));return true;}
+const WRONG_HISTORY_KEY='quiz_english_lesson1_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();if(found.redo===undefined)found.redo=0;}
+  else h.push({idx,count:1,lastWrong:Date.now(),redo:0});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+function markRedoOk(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(!found)return;
+  found.redo=(found.redo||0)+1;
+  if(found.redo>=3){h=h.filter(x=>x.idx!==idx);toast('🎉 重做'+found.redo+'次，已合格！','success');}
+  else{toast('✅ 答对！重做'+found.redo+'/3','success');}
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_english_lesson1';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory().filter(x=>(x.redo||0)<3);
+  if(!h.length){alert('没有待重做的错题了，全部合格！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=(function(){if(_dp){const wh=loadWrongHistory();const rec=wh.find(x=>x.idx===idx);if(rec){const rr=(rec.redo||0);return `<span class="done-badge ${rr>=3?'ok':'no'}">${rr>=3?'✅已合格':'❌重做'+rr+'/3'}</span>`;}return `<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`;}return '';})();if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi===questions[idx].ans){const wh=loadWrongHistory();if(wh.some(x=>x.idx===idx))markRedoOk(idx);}
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'英语',chapter:'第1讲 Holidays & 暑假话题',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'英语,双语B班,第1讲,holiday,nothing but,against,so that,不定代词,词形变化'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('english_lesson1_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('english_lesson1_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('english_lesson1_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('english_lesson1_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('english_lesson1_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</div>
+</body></html>
