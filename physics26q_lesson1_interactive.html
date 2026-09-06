@@ -1,0 +1,379 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏃 运动学计算（一） · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</style></head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 第1讲</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-tachometer-alt"></i> 运动学计算（一） · 互动学习</h1>
+    <p>2026秋物理博学班 第1讲 · 16 题 · 12 卡牌 | 博学班物理</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 16道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 12张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 7大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第一讲 · 运动学计算（一）</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-arrows-alt-h" style="color:#34495e"></i> 参照物与相对运动</h3><ul>
+        <li>判断运动先选<strong class="hl">参照物</strong>；研究对象相对参照物位置改变则运动</li>
+        <li>不能选<strong class="hl">研究对象自己</strong>当参照物（永远“静止”）</li>
+        <li>甲看树东移 → 甲向西；乙相对甲向东 → 甲快于乙</li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-car" style="color:#8e44ad"></i> 相对速度</h3><ul>
+        <li>同向：相对速度 = <strong class="hl">原速度之差</strong>（方向取快者）</li>
+        <li>反向：相对速度 = <strong class="hl">原速度之和</strong></li>
+        <li>例：甲3m/s东、乙5m/s东 → 乙相对甲 2m/s 向东</li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-divide" style="color:#3498db"></i> 平均速度·一半一半</h3><ul>
+        <li>v̄ = <strong class="hl">总路程/总时间</strong>（不是速度的平均值）</li>
+        <li>半时间方案：v̄=(v₁+v₂)/2</li>
+        <li>半路程方案：v̄=2v₁v₂/(v₁+v₂)</li>
+        <li>结论：v₁≠v₂ 时<strong class="hl">半时间平均速度更大、用时更短</strong></li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-chart-area" style="color:#27ae60"></i> 运动图像</h3><ul>
+        <li>s-t 图：斜率 = <strong class="hl">速度</strong>（越陡越快）</li>
+        <li>v-t 图：图线与 t 轴围成<strong class="hl">面积 = 路程</strong></li>
+        <li>匀速直线：s-t 斜直线；v-t 水平线</li>
+      </ul></div>
+      <div class="knowledge-card c5"><h3><i class="fas fa-wave-square" style="color:#2980b9"></i> 心电图问题</h3><ul>
+        <li>纸带速度 v纸 已知 → 相邻心跳距离 S₀</li>
+        <li>一次心跳时间 t = <strong class="hl">S₀/v纸</strong></li>
+        <li>心率 = 60/t（次/分钟）；BPM 60-100 正常</li>
+      </ul></div>
+      <div class="knowledge-card c6"><h3><i class="fas fa-bug" style="color:#f39c12"></i> 蜻蜓点水</h3><ul>
+        <li>波纹半径 = v波 × 时间；蜻蜓位移 = v蜻 × 时间</li>
+        <li>内切：v蜻=v波；外切：v蜻<v波；后波超前：v蜻>v波</li>
+        <li>v蜻/v波 = S蜻/S波 = <strong class="hl">a₂/(R₁-R₂)</strong></li>
+      </ul></div>
+      <div class="knowledge-card c7"><h3><i class="fas fa-bolt" style="color:#16a085"></i> 追及问题</h3><ul>
+        <li>先出发者多走 Δs = v × Δt</li>
+        <li>追上时间 = <strong class="hl">Δs/(v追 - v被追)</strong></li>
+        <li>追上时离起点 = v追 × t追上</li>
+      </ul></div>
+      <div class="knowledge-card c8"><h3><i class="fas fa-sync-alt" style="color:#e74c3c"></i> 往返相遇模型</h3><ul>
+        <li>两端相向往返：第 n 次相遇合走 <strong class="hl">(2n-1)S</strong></li>
+        <li>静水湖两船：再遇共走 3S → S+600=3×800</li>
+        <li>速度比 = 各次相遇所走路程比（恒定）</li>
+      </ul></div>
+    </div>
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone-alt"></i> 🎙️ 课堂要点 · 第1讲（运动学计算（一））</h4>
+      <p><strong>本讲核心</strong>：2026秋物理博学班第1讲，机械运动章的<strong>计算与模型升级</strong>。四大块：①<strong>相对速度</strong>（同向差、反向和）；②<strong>一半一半</strong>平均速度（半时间用 (v₁+v₂)/2，半路程用 2v₁v₂/(v₁+v₂)，v₁≠v₂ 时半时间更快）；③<strong>图像</strong>（v-t 图面积=路程、s-t 图斜率=速度）；④<strong>创新题</strong>（心电图、蜻蜓点水、往返相遇、追及）。</p>
+      <p><strong>方法要点</strong>：平均速度永远用<strong>总路程÷总时间</strong>；追及先算先出发者多走的 Δs=vΔt 再除速度差；心电图把“两波距离÷纸速”得一次心跳时间，60÷t=心率；往返相遇记住<strong>第 n 次相遇合走 (2n-1)S</strong>，静水湖两船再遇=3S；速度比看各次相遇两人路程比（恒定）。</p>
+      <p><strong>易错提醒</strong>：①平均速度不是速度的平均；②相对速度同向/反向方向搞反；③v-t 图面积当成速度、s-t 图斜率看错；④追及忘了先出发的时间差；⑤往返相遇只算单程；⑥“以研究对象自己为参照物”得出永远静止的假象。</p>
+      <p><strong>🎓 老师课堂总结</strong> — 运动学计算的核心就一句：<strong>画图</strong>（行程图/图像），把文字变成线段。相向画合走、同向画差距，追及找 Δs，往返数相遇次数；速度题先统一单位，再代 v=s/t，平均速度用总路程总时间。</p>
+    </div>
+    </div>
+    <div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 16</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共12张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 第1讲 运动学计算（一） | 博学班 · 2026秋</div>
+
+<script>
+const questions = [
+  {"q":"甲、乙两人分别坐在并列的两列火车中，甲看见乙在向东行驶，路旁的树也向东运动。若以地面为参照物，则","opts":["A. 甲在向东行驶，乙在向东行驶","B. 甲、乙都向西行驶，但甲比乙快","C. 甲、乙都向西行驶，但乙比甲快","D. 甲、乙都向东行驶，但甲比乙快"],"ans":1,"exp":"甲看树向东 → 甲相对地向<strong>西</strong>；乙相对甲向东 → v甲＞v乙。故甲、乙都西行且<strong>甲比乙快</strong>（C）。"},
+  {"q":"甲以3m/s向东运动，乙以5m/s向东运动，则乙相对于甲的速度是","opts":["A. 2m/s，向西","B. 8m/s，向东","C. 2m/s，向东","D. 8m/s，向西"],"ans":2,"exp":"同向：相对速度 = 速度之差 = 5-3=<strong>2m/s</strong>，方向取快的乙的方向（<strong>向东</strong>）。"},
+  {"q":"甲以3m/s向东运动，丙以3m/s向西运动，则丙相对于甲的速度是","opts":["A. 6m/s，向东","B. 0","C. 3m/s，向西","D. 6m/s，向西"],"ans":3,"exp":"反向：相对速度 = 速度之和 = 3+3=<strong>6m/s</strong>，方向沿丙的运动方向（<strong>向西</strong>）。"},
+  {"q":"某物体前一半时间以 v₁ 运动、后一半时间以 v₂ 运动（v₁≠v₂），全程平均速度是","opts":["A. 2v₁v₂/(v₁+v₂)","B. (v₁+v₂)/2","C. v₁v₂/(v₁+v₂)","D. (v₁-v₂)/2"],"ans":1,"exp":"半时间方案：v̄=(v₁t+v₂t)/(2t)=<strong>(v₁+v₂)/2</strong>。"},
+  {"q":"某物体前一半路程以 v₁ 运动、后一半路程以 v₂ 运动（v₁≠v₂），全程平均速度是","opts":["A. (v₁+v₂)/2","B. 2v₁v₂/(v₁+v₂)","C. (v₁+v₂)/(v₁v₂)","D. v₁+v₂"],"ans":1,"exp":"半路程方案：v̄=2s/(s/v₁+s/v₂)=<strong>2v₁v₂/(v₁+v₂)</strong>。"},
+  {"q":"同一段路程，方案一：前一半时间 v₁、后一半时间 v₂；方案二：前一半路程 v₁、后一半路程 v₂（v₁≠v₂）。两次平均速度与用时比较，正确的是","opts":["A. 方案二平均速度大，用时长","B. 两者平均速度相等","C. 方案一平均速度大，用时短","D. 方案一平均速度小，用时长"],"ans":2,"exp":"(v₁+v₂)/2 − 2v₁v₂/(v₁+v₂) = (v₁−v₂)²/[2(v₁+v₂)] ＞ 0 → 方案一（半时间）平均速度<strong>更大、用时更短</strong>。"},
+  {"q":"v-t 图像中，图线与时间轴围成的面积表示","opts":["A. 速度","B. 时间","C. 路程（位移）","D. 加速度"],"ans":2,"exp":"v-t 图：<strong>面积 = 路程</strong>（如匀速 v·t、匀变速三角形 ½vt）。"},
+  {"q":"心电图图纸以25mm/s匀速移动，测得两次心跳的波峰距离为20mm，则此人心脏每分钟跳动次数约为","opts":["A. 60次","B. 100次","C. 50次","D. 75次"],"ans":3,"exp":"一次心跳时间 t=20mm÷25mm/s=<strong>0.8s</strong>；心率 = 60÷0.8 = <strong>75 次/min</strong>（属正常范围）。"},
+  {"q":"某人心率为60次/min，则他相邻两次心跳的时间间隔是","opts":["A. 0.8s","B. 1s","C. 60s","D. 0.5s"],"ans":1,"exp":"一次心跳时间 = 60s ÷ 60 次 = <strong>1s</strong>。心电图题先由纸速与波距求时间，再 60÷t 得心率。"},
+  {"q":"两个相同小球以相同速度分别滚入相同高度的凸形槽与凹形槽（初末速度相同），通过凸形槽时间 t₁、凹形槽时间 t₂，则","opts":["A. t₁=t₂","B. t₁＜t₂","C. t₁＞t₂","D. 无法确定"],"ans":2,"exp":"凸形槽先上坡减速，中途速度始终≤初速 → 平均速度小；凹形槽先下坡加速，平均速度大 → 同样长度<strong>t₁＞t₂</strong>。"},
+  {"q":"100m短跑中，小明比小华早1.5s到达终点，小明到终点时小华离终点还有10m。若每次训练平均速度不变，下列预测正确的是","opts":["A. 小华提前1.5s出发，小华将先到达终点","B. 小明起点后移10m，小华将先到达终点","C. 小华起点前移10m，小华将先到达终点","D. 小明推迟1.5s出发，二人将同时到达终点"],"ans":3,"exp":"小明用时 t=13.5s（小华 15s）。A：小明推迟1.5s → 13.5+1.5=15s 与小华同时到 ✓；B 应为同时到；C 小明后移10m需跑110m，110÷(100/13.5)=14.85s＜15s 小明先到；D 小华前移10m跑90m用13.5s与小明同时到。"},
+  {"q":"甲车3min内行驶1.08km，乙车0.4h内行驶7.2km（两车同向匀速），甲车的速度是","opts":["A. 5m/s","B. 18m/s","C. 3.6m/s","D. 6m/s"],"ans":3,"exp":"v甲 = 1080m ÷ 180s = <strong>6m/s</strong>；v乙 = 7200m ÷ 1440s = 5m/s。"},
+  {"q":"甲车（6m/s）与乙车（5m/s）同向行驶，乙车经过途中某路标比甲车早5min，则甲车追上乙车所需时间是","opts":["A. 150s","B. 1500s","C. 300s","D. 900s"],"ans":1,"exp":"甲到路标时乙已前行 Δs=5m/s×300s=<strong>1500m</strong>；追上时间 = 1500÷(6−5)=<strong>1500s</strong>（追上点离路标 9000m）。"},
+  {"q":"静水湖两岸有两只船同时相向垂直驶向对岸，第一次在离北岸800m处相遇；靠岸返航后又在离南岸600m处相遇（不计靠岸时间），湖面南北宽度是","opts":["A. 1800m","B. 1000m","C. 1200m","D. 1600m"],"ans":0,"exp":"第二次相遇两船共走 3S；北岸出发的船共走 800×3=2400m = S+600 → S=<strong>1800m</strong>。"},
+  {"q":"甲、乙分别从 a、b 两点同时出发直线折返跑，第一次相遇距 a 点25m，折返后第二次相遇距 a 点45m（速度大小不变），a、b 两点相距","opts":["A. 60m","B. 70m","C. 50m","D. 80m"],"ans":0,"exp":"速度比 = 25:(S−25) = (2S−45):(S+45) → S=<strong>60m</strong>（第二次相遇甲共走 2S−45、乙走 S+45）。"},
+  {"q":"上题中甲、乙的速度之比是","opts":["A. 7:5","B. 5:9","C. 1:1","D. 5:7"],"ans":3,"exp":"第一次相遇同时同地出发：路程比=速度比=25:(60−25)=25:35=<strong>5:7</strong>；第二次相遇用时为第一次的 3 倍。"}
+];
+
+
+const flashcards = [
+  {"front":"怎么判断物体运动还是静止？","back":"先选<strong>参照物</strong>，看研究对象相对参照物的位置是否改变；参照物不同，运动情况可能不同。"},
+  {"front":"相对速度怎么算？","back":"同向 = 速度<strong>之差</strong>（方向取快者）；反向 = 速度<strong>之和</strong>。例：甲3东乙5东 → 乙相对甲 2m/s 向东。"},
+  {"front":"平均速度公式？","back":"v̄ = <strong>总路程 ÷ 总时间</strong>。绝不是 (v₁+v₂)/2 的简单平均（只有半时间方案才恰为 (v₁+v₂)/2）。"},
+  {"front":"“一半一半”两方案？","back":"半时间：v̄=(v₁+v₂)/2；半路程：v̄=2v₁v₂/(v₁+v₂)。v₁≠v₂ 时<strong>半时间更快</strong>。"},
+  {"front":"v-t 图与 s-t 图怎么看？","back":"s-t 图：<strong>斜率=速度</strong>（越陡越快）；v-t 图：<strong>面积=路程</strong>。匀速直线：s-t 斜线、v-t 水平线。"},
+  {"front":"追及问题三步？","back":"①算先出发者领先距离 Δs=v×Δt；②追上时间 = Δs÷(v追−v被追)；③追上时离起点 = v追×t。"},
+  {"front":"心电图题怎么算心率？","back":"①找纸带速度 v纸；②量相邻两波峰距离 S₀；③一次心跳 t=S₀/v纸；④心率=60÷t（次/min）；BPM 60-100 正常。"},
+  {"front":"蜻蜓点水判断方向与速度比？","back":"后一次波纹：内切 v蜻=v波；外切 v蜻<v波；后波超出前波 v蜻>v波。v蜻/v波 = 蜻蜓位移/波纹半径差。"},
+  {"front":"两端往返相遇的规律？","back":"第 n 次相遇两船/人共走 <strong>(2n−1)S</strong>：第一次合走 S，第二次合走 3S，第三次 5S…"},
+  {"front":"静水湖两船经典题？","back":"北岸船第一次走 800m；第二次再遇共走 3S，北岸船共走 2400m=S+600 → S=1800m。"},
+  {"front":"凸形槽与凹形槽时间比较？","back":"凸形先减速后加速（中途慢）→ 平均速度小、<strong>t₁ 大</strong>；凹形先加速后减速 → t₂ 小。初末速度相同时结论仍成立。"},
+  {"front":"参照物选择禁忌？","back":"不能选<strong>研究对象自己</strong>做参照物（会永远“静止”）；判断谁动先想清楚以什么为参照。"}
+];
+
+
+errors = [
+  {"title":"❌ 平均速度当成速度平均值","wrong":"全程 v₁=2m/s、v₂=4m/s 直接写平均速度 3m/s。","right":"必须用<strong>总路程÷总时间</strong>；若各占一半路程，v̄=2v₁v₂/(v₁+v₂)，不是 3m/s。"},
+  {"title":"❌ 相对速度方向搞反","wrong":"甲3东乙5东，写“乙相对甲向西2m/s”。","right":"同向相减后方向取<strong>快者方向</strong>：乙快 → 向东；反向则相加。"},
+  {"title":"❌ v-t 图面积与 s-t 图斜率混淆","wrong":"看到 v-t 图线就说“速度=斜率”，或把 s-t 图两点高度差当路程。","right":"s-t 图看<strong>斜率</strong>（速度），v-t 图看<strong>面积</strong>（路程），两条轴先看清楚。"},
+  {"title":"❌ 追及漏算先出发时间","wrong":"乙早 5min 过路标，直接 1500÷(6−5) 却忘了乙已领先 5m/s×300s=1500m。","right":"追上时间=Δs÷速度差，Δs 必须包含<strong>先出发者提前走的距离</strong>。"},
+  {"title":"❌ 往返相遇只算单程","wrong":"静水湖两船再遇时只让两船各走一个河宽。","right":"第二次相遇两船<strong>共走 3S</strong>：北岸船走 3×800 = S+600 → S=1800m。"},
+  {"title":"❌ 心电图把距离当时间","wrong":"看到两次心跳 20mm 直接说一次心跳 20s。","right":"20mm 是<strong>距离</strong>，需除以纸带速度 25mm/s 得时间 0.8s，再 60÷0.8=75 次。"},
+  {"title":"❌ 以研究对象自身为参照物","wrong":"问“甲车上的人看甲车”说甲车在运动。","right":"参照物不能选研究对象自己；判断乙相对甲，就以甲为参照、看乙。"}
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx,myAns){const q=questions[idx];const item={subject:'物理(博学班)',chapter:'第1讲 运动学计算（一）',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'物理,博学班,2026秋,第1讲,相对速度,平均速度,图像,追及,心电图,往返相遇'};const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');if(ex.some(x=>x.content===item.content))return false;ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));return true;}
+const WRONG_HISTORY_KEY='quiz_physics26q_lesson1_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();if(found.redo===undefined)found.redo=0;}
+  else h.push({idx,count:1,lastWrong:Date.now(),redo:0});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+function markRedoOk(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(!found)return;
+  found.redo=(found.redo||0)+1;
+  if(found.redo>=3){h=h.filter(x=>x.idx!==idx);toast('🎉 重做'+found.redo+'次，已合格！','success');}
+  else{toast('✅ 答对！重做'+found.redo+'/3','success');}
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_physics26q_lesson1';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory().filter(x=>(x.redo||0)<3);
+  if(!h.length){alert('没有待重做的错题了，全部合格！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=(function(){if(_dp){const wh=loadWrongHistory();const rec=wh.find(x=>x.idx===idx);if(rec){const rr=(rec.redo||0);return `<span class="done-badge ${rr>=3?'ok':'no'}">${rr>=3?'✅已合格':'❌重做'+rr+'/3'}</span>`;}return `<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`;}return '';})();if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi===questions[idx].ans){const wh=loadWrongHistory();if(wh.some(x=>x.idx===idx))markRedoOk(idx);}
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'第1讲 运动学计算（一）',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'物理,博学班,2026秋,第1讲'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('physics26q_lesson1_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('physics26q_lesson1_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('physics26q_lesson1_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('physics26q_lesson1_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('physics26q_lesson1_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</div>
+</body></html>
