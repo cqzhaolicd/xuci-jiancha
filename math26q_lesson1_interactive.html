@@ -305,7 +305,7 @@ function loadWrongHistory(){
 function saveWrongHistoryItem(idx){
   let h=loadWrongHistory();
   const found=h.find(x=>x.idx===idx);
-  if(found){found.count++;found.lastWrong=Date.now();if(found.redo===undefined)found.redo=0;}
+  if(found){found.count++;found.lastWrong=Date.now();found.redo=0;}
   else h.push({idx,count:1,lastWrong:Date.now(),redo:0});
   localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
 }
