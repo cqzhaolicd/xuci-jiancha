@@ -995,8 +995,8 @@ function selectAnswer(oi) {
   if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});}
   else if(pr.s==='wrong'){
     if(correct){const nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});}
-    else{saveQuizProg(idx,{s:'wrong',r:pr.r||0});}
-  }else{saveQuizProg(idx,{s:'ok',r:pr.r||0});}
+    else{saveQuizProg(idx,{s:'wrong',r:0});}
+  }else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
   renderQuestion();
 }
 
