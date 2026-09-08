@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 4 · I used to be afraid of the dark. · 九年级英语</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> Unit 4 · I used to be afraid of the dark.</h1>
+    <div class="meta">人教九全 · Unit 4 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>单元概览 · 话题与课文</h4><p>本单元话题是“描述过去与现在的变化”（Talk about what you used to be like）。Section A 阅读 From Shy Girl to Pop Star 讲害羞女孩 Candy Wang 靠唱歌战胜羞怯、成为流行歌星；Section B 阅读 He Studies Harder Than He Used to 讲男孩李文在父母与老师帮助下改掉坏习惯、学习进步。贯穿全单元的核心结构是 used to do。</p></div>
+      <div class="k-item"><h4>used to do：过去常常，现在不再</h4><p>used to + 动词原形，表示过去经常发生的动作或经常存在的状态，而现在已不再如此。例：He used to be short, but now he is tall.（他过去很矮，现在高了。）She used to be afraid of the dark, but now she isn't.（她过去怕黑，现在不怕了。）</p></div>
+      <div class="k-item"><h4>used to 的否定、疑问与反意疑问</h4><p>否定式：didn't use to（最常用）或 used not to，后仍接动词原形：She didn't use to like tests. 一般疑问式：Did + 主语 + use to + 动词原形？— Yes, sb. did. / No, sb. didn't. 例：— Did you use to be afraid of the dark? — Yes, I did. 含 used to 的陈述句变反意疑问句，附加问句用 didn't（也可用 usedn't）：He used to be short, didn't he?</p></div>
+      <div class="k-item"><h4>三结构辨析：used to do / be used to doing / be used to do</h4><p>① used to do sth 过去常常做某事（现在不做了）；② be/get used to doing sth 习惯于做某事（get used to 强调从不习惯到习惯的转变），to 是介词，后接名词或动名词；③ be used to do sth 是“被用来做某事”的被动结构，相当于 be used for doing。例：I used to get up late.（过去常晚起）He is used to getting up early.（他习惯早起）Wood is used to make paper.（木头被用来造纸。）</p></div>
+      <div class="k-item"><h4>be afraid 的用法</h4><p>① be afraid of + 名词/代词：害怕某事物，如 be afraid of the dark；② be afraid of doing sth：害怕/担心（可能发生的事）；③ be afraid to do sth：因害怕而不敢做某事；④ be afraid (that) + 从句：担心……，口语中 I'm afraid (that)… 常用来委婉拒绝。答语可用 I'm afraid so. / I'm afraid not.</p></div>
+      <div class="k-item"><h4>反意疑问句要点</h4><p>规则是“前肯后否、前否后肯”，附加问句的人称、时态与陈述部分保持一致。陈述部分含 never, hardly, seldom, little, few 等否定意义的词时按否定句处理，附加问句用肯定式：He is hardly ever late, is he? 陈述部分含 used to 时，附加问句用 didn't（或 usedn't）：He used to be silent in class, didn't he?</p></div>
+      <div class="k-item"><h4>dare：敢</h4><p>dare 作实义动词时有人称、时态变化，后接带 to 的不定式：She dares to speak in public.（她敢当众发言。）否定、疑问中也可作情态动词（无人称变化），后接动词原形：He dare not go out alone.（他不敢独自外出。）Dare she tell the truth? 另注意 didn't dare (to) do 中 to 常省略。</p></div>
+      <div class="k-item"><h4>重点词汇 · 描述性格与外貌</h4><p>描述性格：humorous（幽默的）, silent（沉默的）, outgoing（外向的）, brave（勇敢的）, active（活跃的）, quiet（安静的）, helpful（乐于助人的）, serious（严肃的）；描述外貌：tall/short, heavy/thin, straight/curly hair。派生与活用：shy（害羞的）→shyness（害羞，名词）；ton（吨）→tons of（大量的）；appear（出现）→appearance（外貌）。</p></div>
+      <div class="k-item"><h4>重点短语</h4><p>used to（过去常常）, be afraid of（害怕）, from time to time（不时；偶尔）, give up（放弃；give up doing sth）, deal with（应对；处理）, in public（公开地；当众）, take up（开始从事；占用）, take pride in = be proud of（为……自豪）, in person（亲自）。如：Candy took up singing to deal with her shyness.（坎迪开始唱歌来克服她的羞怯。）</p></div>
+      <div class="k-item"><h4>写作与地道表达 · 描述变化</h4><p>写“我的变化”常用对比句型 used to…, but now…：I used to be shy, but now I'm outgoing. / I used to be afraid of speaking in public, but now I can give a speech. 注意时间状语 in the past, these days 的配合。课文地道句：Now she's not shy anymore and loves singing in front of crowds.（现在她不再害羞，而且喜欢在人群面前唱歌。）</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 统编版语文九年级全一册 · 第一单元 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_english9_u4_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+
+
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:"Unit 4 I used to be afraid of the dark.",chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:"Unit 4 I used to be afraid of the dark.,课堂练习"};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "He ___ short and quiet, but now he is tall and outgoing.", "opts": ["used to be", "is used to be", "used to being", "was used to be"], "ans": 0, "exp": "答案 A（used to be）。used to + 动词原形表示过去的状态，与 but now 呼应，说明现在已经改变；B、D 结构错误，只有 be used to doing 中的 to 后才接 doing。"}, {"q": "Tom ___ P.E. class in primary school, but now he enjoys sports very much.", "opts": ["didn't use to like", "didn't used to like", "wasn't use to like", "doesn't use to like"], "ans": 0, "exp": "答案 A（didn't use to like）。used to 的否定式是 didn't use to + 动词原形；B 的 didn't used to 是常见错误，助动词后用原形 use。"}, {"q": "— ___ you use to be afraid of the dark? — Yes, I did.", "opts": ["Did", "Do", "Were", "Are"], "ans": 0, "exp": "答案 A（Did）。used to 变一般疑问句：Did + 主语 + use to + 动词原形？答语 Yes, I did. / No, I didn't. 助动词后用原形 use。"}, {"q": "He used to be silent in class, ___?", "opts": ["didn't he", "doesn't he", "wasn't he", "isn't he"], "ans": 0, "exp": "答案 A（didn't he）。陈述部分含 used to（相当于过去时），反意疑问句的附加问句用 didn't he，也可写作 usedn't he。"}, {"q": "My grandfather is used to ___ up early in the morning.", "opts": ["get", "getting", "got", "gets"], "ans": 1, "exp": "答案 B（getting）。be used to doing sth 意为“习惯于做某事”，to 是介词，后接动名词；若想说“过去常常早起”，句中就不应有 is。"}, {"q": "In this factory, wood is used to ___ paper.", "opts": ["make", "making", "made", "makes"], "ans": 0, "exp": "答案 A（make）。be used to do sth 是被动结构，意为“被用来做某事”（相当于 be used for doing）；主语 wood 无生命，只能理解为“被用来”。注意与 be used to doing（习惯于）区分。"}, {"q": "The little girl is afraid ___ the dark, so she sleeps with the light on.", "opts": ["of", "to", "at", "with"], "ans": 0, "exp": "答案 A（of）。be afraid of + 名词/代词，表示“害怕某事物”：be afraid of the dark 怕黑。"}, {"q": "I'm afraid ___ I can't go to the party with you tonight.", "opts": ["that", "of", "to", "about"], "ans": 0, "exp": "答案 A（that）。be afraid (that) + 从句表示“恐怕/担心……”，口语中 I'm afraid (that)… 常用来委婉拒绝；of 后接名词或动名词，to 后接动词原形，都不能带一个完整的句子。"}, {"q": "He dare not ___ home alone at night.", "opts": ["to go", "go", "going", "went"], "ans": 1, "exp": "答案 B（go）。此处 dare 作情态动词用于否定句：dare not + 动词原形，无人称和数的变化。He dare not go home alone. 他不敢独自回家。"}, {"q": "She is very brave. She dares ___ in front of the whole school.", "opts": ["to speak", "speak", "speaking", "spoke"], "ans": 0, "exp": "答案 A（to speak）。这里 dare 作实义动词（第三人称单数 dares），后接带 to 的不定式 dare to do；情态动词 dare（后接原形）只用于否定句和疑问句，故选 A。"}, {"q": "Mr. Green is very ___. He often makes us laugh in class.", "opts": ["humorous", "silent", "helpful", "brave"], "ans": 0, "exp": "答案 A（humorous 幽默的）。后句“常在课堂上逗我们笑”说明他幽默；silent 沉默的、helpful 乐于助人的、brave 勇敢的均不合语境。"}, {"q": "After he retired, my grandfather took ___ painting as a hobby.", "opts": ["up", "off", "down", "away"], "ans": 0, "exp": "答案 A（up）。take up 意为“开始从事（某项活动）”，take up painting 开始学画画；take off 起飞/脱下，take down 取下，take away 带走，均不合题意。"}, {"q": "My father gave up ___ two years ago, and he feels much healthier now.", "opts": ["smoke", "smoking", "smoked", "to smoke"], "ans": 1, "exp": "答案 B（smoking）。give up 后接名词或动名词：give up smoking 戒烟。戒掉烟后身体更健康，语义自洽。"}, {"q": "— How do you usually deal ___ stress? — I listen to music.", "opts": ["with", "at", "for", "about"], "ans": 0, "exp": "答案 A（with）。deal with 意为“应对；处理”，常与疑问词 how 连用：How do you deal with…? 你怎样应对……？"}, {"q": "Her parents are very proud ___ her because she studies harder than before.", "opts": ["of", "for", "about", "at"], "ans": 0, "exp": "答案 A（of）。be proud of sb. 为某人感到自豪，同义短语是 take pride in sb.；harder than before 与课文标题 He Studies Harder Than He Used to 呼应。"}, {"q": "He is hardly ever late for school now, ___ he?", "opts": ["is", "isn't", "does", "doesn't"], "ans": 0, "exp": "答案 A（is）。hardly 意为“几乎不”，是否定副词，陈述部分按否定句处理，反意疑问句的附加问句要用肯定式；句中有 be 动词 is，故用 is he。"}]
+const flashcards=[{"q": "used to do sth 表示什么意思？", "a": "表示过去常常做某事或处于某种状态，而现在已不再如此。例：He used to be short, but now he is tall.（他过去很矮，现在高了。）"}, {"q": "used to 的否定形式怎么写？", "a": "两种：didn't use to（最常用）或 used not to，后接动词原形。例：She didn't use to be shy.（她过去不害羞。）注意不能说 didn't used to。"}, {"q": "used to 的一般疑问句和答语是什么？", "a": "Did + 主语 + use to + 动词原形？— Yes, sb. did. / No, sb. didn't. 例：— Did you use to be afraid of the dark? — Yes, I did."}, {"q": "“他过去很安静，不是吗？”反意疑问句怎么说？", "a": "He used to be quiet, didn't he? 陈述部分含 used to 时，附加问句用 didn't（也可用 usedn't）。"}, {"q": "used to do / be used to doing / be used to do 如何区分？", "a": "used to do 过去常常做（现在不做）；be used to doing 习惯于做某事（to 是介词）；be used to do 被用来做某事（被动结构）。例：He used to live here. / He is used to living here. / Wood is used to make paper."}, {"q": "“我还不习惯早上六点起床”怎么表达？", "a": "I'm not used to getting up at six in the morning (yet). 强调“从不习惯到习惯”的转变用 get used to：You will get used to it soon."}, {"q": "be afraid 后面可以接哪几类结构？", "a": "① of + 名词/动名词：be afraid of the dark / of going out；② to do：be afraid to ask（不敢问）；③ that 从句：I'm afraid (that) I can't come.；答语 I'm afraid so. / I'm afraid not."}, {"q": "dare 作实义动词和情态动词时分别怎么用？", "a": "实义动词有人称时态变化，后接带 to 的不定式：She dares to speak in public.（她敢当众发言。）否定/疑问用 didn't dare (to) do。情态动词用于否定/疑问句，无词形变化，后接动词原形：He dare not go out alone."}, {"q": "本单元“应对；处理”“开始从事”“放弃”“偶尔”分别是哪些短语？", "a": "deal with（How do you deal with stress?）、take up（took up painting 开始学画画）、give up（give up smoking 戒烟）、from time to time（= sometimes）。另外 be proud of = take pride in 为……自豪。"}, {"q": "写“过去与现在的变化”常用什么句型？", "a": "用 used to…, but now… 形成对比：I used to be shy, but now I'm outgoing. / She used to be afraid of the dark, but now she isn't. 可搭配 in the past / these days 等时间状语。"}]
+const errors=[{"title": "used to 后误接动词的 -ing 形式", "wrong": "He used to playing basketball when he was in middle school.（以为 used to 后接 doing）", "right": "used to + 动词原形：He used to play basketball…，表示“过去常打篮球，现在不打了”。表示“过去常常”时 to 后不能接 doing；“习惯于做某事”才用 be used to doing。"}, {"title": "否定式误写成 didn't used to", "wrong": "She didn't used to be shy.（在 didn't 后仍用 used）", "right": "否定式有两种：didn't use to（常用）和 used not to，后面都接动词原形。She didn't use to be shy. = She used not to be shy. 助动词 did 后必须用原形 use。"}, {"title": "把 be used to do（被动）误当成“习惯于”", "wrong": "This machine is used to making boxes.（想说“这台机器被用来做箱子”）", "right": "“被用来做某事”是被动结构 be used to do sth：This machine is used to make boxes. 只有当主语是能“习惯”的人且表“习惯于”时，才用 be used to doing：He is used to getting up early."}, {"title": "be afraid 后错接动词原形", "wrong": "The child is afraid of go out alone at night.（of 后接动词原形）", "right": "of 是介词，后接名词/代词或动名词：be afraid of the dark / be afraid of going out alone。“因害怕而不敢做”用 be afraid to do：be afraid to go out。“担心……”用 that 从句：I'm afraid (that) I can't come."}, {"title": "dare 的两种身份混用", "wrong": "She didn't dared to ask the teacher questions. 或 He dares not go out at night.（把情态用法安到实义动词上）", "right": "作实义动词（有人称、时态变化）：She didn't dare (to) ask…；Does he dare to ask…? 作情态动词（否定/疑问，无词形变化）：He dare not go out at night. 一般现在时第三人称肯定句要用 dares to do。"}, {"title": "反意疑问句：见到 hardly 仍加否定附加问句", "wrong": "He is hardly ever late for school now, isn't he?（把 hardly 当成肯定）", "right": "hardly, seldom, never 等词本身含否定意义，陈述部分按否定句处理，附加问句要用肯定式：He is hardly ever late, is he? 同理：She seldom goes out, does she? 含 used to 的句子附加问句用 didn't：He used to be quiet, didn't he?"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_english9_u4';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

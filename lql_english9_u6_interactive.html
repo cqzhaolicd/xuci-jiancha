@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 6 · When was it invented? · 九年级英语</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> Unit 6 · When was it invented?</h1>
+    <div class="meta">人教九全 · Unit 6 · 16 题 · 10 知识 · 10 卡 · 5 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>单元概览 · When was it invented?</h4><p>本单元话题是“发明与历史”，核心语法为一般过去时的被动语态（was/were + 过去分词）。重点句型：When was it invented?（什么时候发明的？）Who was it invented by?（被谁发明的？）What is it used for?（被用来做什么？）。课文涉及茶的偶然发明（An Accidental Invention）、篮球的诞生（Do You Know When Basketball Was Invented?）以及电话、拉链、薯片等发明的历史。学习要求：会用被动语态谈论发明的发明者、时间与用途。</p></div>
+      <div class="k-item"><h4>一般过去时被动语态：was / were + done</h4><p>结构：主语 + was/were + 及物动词的过去分词。主语是单数或不可数名词用 was，复数用 were。例句：The telephone was invented (by Alexander Graham Bell) in 1876.（电话是贝尔于1876年发明的。）The zipper was invented in 1893.（拉链是1893年发明的。）被动语态强调动作承受者，动作执行者用 by 短语引出，可省略。</p></div>
+      <div class="k-item"><h4>主动语态 → 被动语态 的改写方法</h4><p>三步法：① 原句宾语变主语；② 谓语动词改为 be + 过去分词，时态不变（一般过去时即 was/were + done）；③ 原句主语前加 by 变成状语（可省略）。例：Alexander Graham Bell invented the telephone in 1876. → The telephone was invented by Alexander Graham Bell in 1876. 若原主语是人称代词，变为宾格（I→by me）。</p></div>
+      <div class="k-item"><h4>by accident 偶然地，意外地</h4><p>by accident 意为“偶然地、意外地”，相当于 by chance / by mistake，常与 invent、discover 等动词连用。例句：Did you know that tea was invented by accident?（你知道吗，茶是偶然被发明的？）Potato chips were also invented by accident（by mistake）。（薯片也是偶然被发明的。）注意 by accident 是固定短语，accident 不加 -ly。</p></div>
+      <div class="k-item"><h4>be used for doing / be used to do 被用来做……</h4><p>句型：Sth. + be used for + doing sth. = Sth. + be used to + do sth.，意为“某物被用来做某事”。例句：The hot ice-cream scoop is used for serving really cold ice-cream.（热冰淇淋勺被用来舀真正冰凉的冰淇淋。）= The hot ice-cream scoop is used to serve really cold ice-cream. 注意与 used to do（过去常常，主动）区分。</p></div>
+      <div class="k-item"><h4>It is said / It is believed that ... 据说 / 人们相信……</h4><p>It is said that... 据说……；It is believed that... 人们相信……，后接陈述语序的从句。例句：It is said that a Chinese ruler called Shen Nong was the first to discover tea as a drink.（据说一位叫神农的中国统治者第一个发现茶可作饮品。）It is believed that the first basketball game in history was played on December 21, 1891.（人们相信历史上第一场篮球赛是在1891年12月21日举行的。）</p></div>
+      <div class="k-item"><h4>茶：一项偶然的发明（An Accidental Invention）</h4><p>茶（世界上最受欢迎的饮品之一）是偶然被发明的：约5000年前，中国统治者神农（Shen Nong）在火上烧水时，一些茶叶落入沸水并停留了一段时间，散发出清香，神农品尝后觉得美味可口，茶就这样诞生了。几千年后，被称作“the saint of tea（茶圣）”的陆羽（Lu Yu）在《茶经》（Cha Jing）中提到神农。茶在6—7世纪被传入朝鲜和日本；约1660年传到英国，不到100年便成为英国的国民饮品；19世纪中国与西方国家的茶叶贸易（tea trade）兴起。</p></div>
+      <div class="k-item"><h4>薯片：厨师的一次失误（The History of Potato Chips）</h4><p>薯片（potato chips）是偶然被发明的：1853年，一位名叫乔治·克拉姆（George Crum）的厨师发明了薯片。当时一位顾客抱怨炸土豆切得不够薄（not thin enough），Crum 便把土豆切得非常非常薄，又炸（煮）了很长时间直到酥脆（crispy），最后撒上很多盐使它们变咸（salty）。没想到顾客很满意，薯片从此流行起来。</p></div>
+      <div class="k-item"><h4>篮球的诞生（Basketball）</h4><p>篮球是美国马萨诸塞州的一位加拿大籍医生詹姆斯·奈史密斯（James Naismith，1861年生）发明的。他当大学老师时被要求想出一种能在冬天室内玩的游戏，于是发明了在硬地板上进行的篮球运动，把全班学生分成两队比赛。人们相信历史上第一场篮球赛于1891年12月21日举行；1936年篮球在柏林（Berlin）奥运会上成为正式比赛项目。美国最著名的职业联赛是 NBA，中国的是 CBA。</p></div>
+      <div class="k-item"><h4>电话与拉链（Telephone & Zipper）</h4><p>电话：1876年由亚历山大·格雷厄姆·贝尔（Alexander Graham Bell，1847年生）发明，他与托马斯·沃森（Thomas Watson）合作研究；贝尔在电话里说的第一句话是“Mr. Watson, come here; I want to see you.”。拉链：1893年由惠特科姆·贾德森（Whitcomb Judson）发明，但那时（at that time）没有被广泛使用，大约1917年才开始流行。日常补充：without doubt 毫无疑问；take place 发生；all of a sudden 突然。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 统编版语文九年级全一册 · 第一单元 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_english9_u6_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+
+
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:"Unit 6 When was it invented?",chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:"Unit 6 When was it invented?,课堂练习"};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "— When ___ the telephone invented? — I think it was invented in 1876.", "opts": ["was", "is", "did", "were"], "ans": 0, "exp": "问“电话是什么时候发明的？”用一般过去时的被动语态，主语 the telephone 是单数，be 用 was：was invented。答语 It was invented in 1876.（课文：贝尔于1876年发明电话。）"}, {"q": "— Who was the telephone invented ___? — Alexander Graham Bell.", "opts": ["by", "for", "in", "at"], "ans": 0, "exp": "询问“被谁发明的”用 by（被……），介词 by 后接动作执行者：was invented by Alexander Graham Bell。by 提问执行者时用 Who ... invented by?"}, {"q": "Tea was first ___ by Shen Nong about 5,000 years ago.", "opts": ["drunk", "drank", "drinking", "drinks"], "ans": 0, "exp": "一般过去时被动语态 was/were + 过去分词；drink 的过去分词是 drunk。句意：大约5000年前茶被神农第一次饮用。（课本3c原句）"}, {"q": "Tea, one of the world's favorite drinks, was invented ___ accident.", "opts": ["by", "in", "on", "with"], "ans": 0, "exp": "固定短语 by accident 意为“偶然地、意外地”。课文原句：tea ... was invented by accident（茶是偶然被发明的），即神农烧水时茶叶偶然落入沸水。"}, {"q": "Potato chips were invented by a cook ___ George Crum in 1853.", "opts": ["called", "calling", "calls", "to call"], "ans": 0, "exp": "过去分词 called 作后置定语，意为“名叫……的”：a cook called George Crum = a cook who was called George Crum。薯片是厨师 George Crum 在1853年偶然发明的。"}, {"q": "The customer said the fried potatoes were not thin ___, so George Crum cut them really, really thin.", "opts": ["enough", "too", "very", "so"], "ans": 0, "exp": "enough 修饰形容词/副词时后置：not thin enough 不够薄。顾客嫌薯条切得不够薄，Crum 才把土豆切得极薄并炸到酥脆，薯片由此诞生。"}, {"q": "Basketball was invented by James Naismith, a ___ doctor, in 1891.", "opts": ["Canadian", "American", "English", "Chinese"], "ans": 0, "exp": "课文原句：Basketball was invented by a Canadian doctor named James Naismith（篮球是由一位名叫詹姆斯·奈史密斯的加拿大医生发明的）。Naismith 1861年出生。"}, {"q": "It is believed that the first basketball game in history was played on December 21, ___.", "opts": ["1891", "1853", "1876", "1936"], "ans": 0, "exp": "课文原句：It is believed that the first basketball game in history was played on December 21, 1891.（人们相信历史上第一场篮球赛于1891年12月21日举行。）1853年是薯片发明年份，1876年是电话发明年份。"}, {"q": "Basketball became an event at the Olympics in Berlin in ___.", "opts": ["1936", "1891", "1927", "1971"], "ans": 0, "exp": "课文原句：Then in 1936 in Berlin, it became an event at the Olympics.（1936年在柏林，篮球成为奥运会比赛项目。）"}, {"q": "— What ___ the hot ice-cream scoop ___ for? — It's used for serving really cold ice-cream.", "opts": ["is; used", "was; used", "is; using", "did; use"], "ans": 0, "exp": "问用途用 What is ... used for?，答语 be used for doing sth.（被用来做……）。the hot ice-cream scoop（热冰淇淋勺）用于舀真正冰凉的冰淇淋，课文2b听力内容。"}, {"q": "The fridge is used for ___ food fresh and cold.", "opts": ["keeping", "keep", "kept", "to keeping"], "ans": 0, "exp": "be used for doing sth. 中 for 是介词，后接动名词 keeping：冰箱被用来保鲜、冷藏食物。若用不定式则说 be used to keep，故 to keeping 不成立。"}, {"q": "In the factory, this machine is used ___ bottles with water.", "opts": ["to fill", "filling", "filled", "fill"], "ans": 0, "exp": "be used to do sth. = be used for doing sth.，意为“被用来做某事”，后接动词原形构成不定式 to fill：这台机器被用来给瓶子装水。这是 be used to do 的正确用法。"}, {"q": "They sold the fridge at a low price. → The fridge ___ at a low price.", "opts": ["was sold", "is sold", "sold", "were sold"], "ans": 0, "exp": "主动句变被动：宾语 the fridge 作主语（单数用 was），动词变为 was + 过去分词 sold，原主语 They 不明确可省略。the fridge 是单数，故不用 were。"}, {"q": "Alexander Graham Bell worked ___ the invention of the telephone with Thomas Watson.", "opts": ["on", "in", "at", "for"], "ans": 0, "exp": "固定搭配 work on 意为“从事、致力于”。课文4c：Mr. Bell worked on the invention of the telephone with Thomas Watson.（贝尔与沃森一起致力于电话的发明。）"}, {"q": "The first sentence that ___ on the telephone by Mr. Bell was “Mr. Watson, come here; I want to see you.”", "opts": ["was said", "said", "was saying", "is said"], "ans": 0, "exp": "先行词 sentence 与 say 是被动关系（话被说出），且 by Mr. Bell 提示被动，用一般过去时被动 was said。这是贝尔在电话里说的第一句话。"}, {"q": "The hot ice-cream scoop runs on ___ and can scoop really cold ice-cream easily.", "opts": ["electricity", "electric", "electrical", "electronic"], "ans": 0, "exp": "on 是介词，后接名词 electricity：runs on electricity（靠电力运转）。electric 是形容词“电的”，electrical“电气的”，electronic“电子的”，均不能放在介词 on 后。"}]
+const flashcards=[{"q": "When was the telephone invented? Who was it invented by?", "a": "It was invented in 1876. / It was invented by Alexander Graham Bell.（电话是1876年由贝尔发明的。）"}, {"q": "by accident", "a": "偶然地，意外地（= by chance / by mistake）。Tea was invented by accident. 茶是偶然被发明的。注意是固定短语，不说 by accidently。"}, {"q": "be used for doing sth. = be used to do sth.", "a": "被用来做某事。The hot ice-cream scoop is used for serving really cold ice-cream.（热冰淇淋勺被用来舀冰凉的冰淇淋。）for 后接动名词，to 后接动词原形。"}, {"q": "一般过去时的被动语态结构", "a": "主语 + was/were + 及物动词的过去分词。The zipper was invented by Whitcomb Judson in 1893.（拉链是贾德森1893年发明的。）单数/不可数用 was，复数用 were。"}, {"q": "Shen Nong 神农", "a": "a Chinese ruler 中国统治者，约5000年前（about 5,000 years ago）第一个发现茶（discover tea as a drink）：烧水时茶叶偶然落入沸水，茶水清香可口。课文称 It is said that...（据说）。"}, {"q": "Lu Yu and his book Cha Jing", "a": "陆羽被称作“the saint of tea（茶圣）”，他在《茶经》中提到神农；该书讲述茶树如何种植与制茶、何处出产最好的茶叶等。茶在6—7世纪传入朝鲜和日本。"}, {"q": "George Crum and potato chips", "a": "George Crum 是厨师（a cook）。顾客嫌薯条 not thin enough（不够薄），他于1853年把土豆切得极薄、炸到酥脆（crispy）并加盐，薯片被偶然发明（invented by mistake / by accident）。"}, {"q": "James Naismith and basketball", "a": "詹姆斯·奈史密斯，加拿大医生（Canadian doctor，1861年生），1891年发明篮球；第一场比赛于1891年12月21日举行；1936年柏林奥运会成为比赛项目。美国职业联赛 NBA，中国 CBA。"}, {"q": "What is it used for?", "a": "它被用来做什么？（问用途）答：It is used for + doing. / It is used to + do. 例：It's used for serving really cold ice-cream."}, {"q": "It is said that ... / It is believed that ...", "a": "据说……/ 人们相信……，后接陈述语序从句。It is said that Shen Nong was the first to discover tea as a drink. / It is believed that the first basketball game was played on December 21, 1891."}]
+const errors=[{"title": "被动语态漏掉 be 或动词形式错误", "wrong": "把“电话是1876年发明的”写成 The telephone invented in 1876.（漏掉 was），或写成 was invent / was invented 混用动词原形。", "right": "一般过去时被动语态必须是 was/were + 过去分词：The telephone was invented in 1876. 主语单数用 was，复数用 were；主要动词一律用过去分词（invented），不可用原形或进行式。"}, {"title": "was / were 与主语不一致", "wrong": "The shoes with special heels was invented... / The zipper were invented in 1893.——be 动词不看“被谁发明”，而看主语单复数。", "right": "被动语态中 be 与句子的主语保持一致：The zipper was invented in 1893.（zipper 单数用 was）；The shoes with lights were invented...（shoes 复数用 were）。先找主语再定 was/were。"}, {"title": "by accident 写错形式", "wrong": "把“偶然地”写成 by an accident / by accidently / in accident，或与 in the accident（在事故中）混淆。", "right": "by accident 是固定短语，意为“偶然地、意外地”（= by chance / by mistake），中间不加冠词、accident 不加 -ly。Tea was invented by accident. 正确。"}, {"title": "used to do / be used to doing / be used to do 三组混淆", "wrong": "把“被用来做”写成 be used to doing：This knife is used to cutting bread.（误，本意是“这把刀被用来切面包”）；又把“过去常常”错说成 used to doing。", "right": "be used to do sth. = be used for doing sth. = 被用来做……（主语是物，被动）：This knife is used to cut / for cutting bread. 而 used to do 意为“过去常常”（主语是人，主动）：He used to get up late. 若表“习惯于”，才是 be used to doing。"}, {"title": "被动语态的一般疑问句 / 特殊疑问句结构错乱", "wrong": "把“电话是贝尔发明的吗？”写成 Did the telephone invented by Bell? 或 Was the telephone invent by Bell?（did 后接原形却出现过去分词，或 was 后仍用原形）。", "right": "被动语态疑问句把 be 动词（was/were）提前即可，过去分词保持不变：Was the telephone invented by Bell? 特殊疑问句：When was the telephone invented? Who was it invented by? 注意 by 不能省略，且用宾格 whom/who 提问时后面不再加其他词。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_english9_u6';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

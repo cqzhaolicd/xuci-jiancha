@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第17章 从指南针到磁浮列车 · 九年级物理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-bolt"></i> 第17章 从指南针到磁浮列车</h1>
+    <div class="meta">沪科九全 · 第17章 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>磁性、磁体与磁极</h4><p>磁体具有吸引铁、钴、镍等物质的性质，这种性质叫磁性；具有磁性的物体叫磁体。磁体上磁性最强的部分叫磁极，位于磁体两端。每个磁体都有两个磁极：南极（S）和北极（N）。</p></div>
+      <div class="k-item"><h4>磁极间的相互作用</h4><p>同名磁极相互排斥，异名磁极相互吸引。例如N极与N极靠近时相互排斥，N极与S极靠近时相互吸引。</p></div>
+      <div class="k-item"><h4>磁化</h4><p>使原来没有磁性的物体获得磁性的过程叫磁化。铁被磁化后磁性容易消失；钢被磁化后能长期保持磁性，常用来制作永磁体（如钢针被磁化后可作指南针）。</p></div>
+      <div class="k-item"><h4>磁场及其方向</h4><p>磁体周围存在磁场，磁场是真实存在的一种特殊物质，能对放入其中的磁体产生磁力作用。规定：小磁针在磁场中某点静止时N极所指的方向，就是该点的磁场方向。</p></div>
+      <div class="k-item"><h4>磁感线（假想曲线）</h4><p>为形象描述磁场而假想的曲线，实际并不真实存在。磁体外部磁感线从N极出发回到S极（内部从S极回到N极，形成闭合曲线）；磁感线不相交；磁感线越密表示该处磁场越强。</p></div>
+      <div class="k-item"><h4>地磁场与指南针</h4><p>地球周围存在的磁场叫地磁场。地磁的南极在地理北极附近，地磁的北极在地理南极附近，地磁两极与地理两极并不重合（存在磁偏角）。指南针（小磁针）静止时大致指向南北，是因为受到地磁场的作用。</p></div>
+      <div class="k-item"><h4>电流的磁场（奥斯特实验）</h4><p>奥斯特实验表明：通电导线周围存在磁场（电流周围有磁场），并且磁场方向与电流方向有关。它第一次揭示了电与磁之间的联系，说明电可以生磁。</p></div>
+      <div class="k-item"><h4>通电螺线管与安培定则</h4><p>通电螺线管周围存在磁场，其外部磁场与条形磁体的磁场相似。安培定则（右手螺旋定则）：用右手握住螺线管，让四指弯曲的方向跟螺线管中电流的方向一致，则大拇指所指的那端就是通电螺线管的N极。</p></div>
+      <div class="k-item"><h4>电磁铁与电磁继电器</h4><p>在通电螺线管中插入铁芯就构成电磁铁，铁芯被磁化后使磁性大大增强。电磁铁磁性强弱与电流大小、线圈匝数及有无铁芯有关：电流越大、匝数越多、有铁芯，磁性越强；磁性的有无可由通断电控制。电磁继电器是利用电磁铁来控制工作电路通断的开关，可用低电压、弱电流电路控制高电压、强电流电路。</p></div>
+      <div class="k-item"><h4>磁场对电流的作用与电动机</h4><p>通电导体在磁场中要受到力的作用，受力方向与电流方向、磁场方向有关。电动机的原理是通电线圈在磁场中受力转动；换向器的作用是当线圈刚转过平衡位置时自动改变线圈中的电流方向，使线圈持续转动。电动机工作时将电能转化为机械能。（注意区分：发电机利用电磁感应原理工作，将机械能转化为电能。）</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 北师大版九年级上册 · 第1章 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_physics9_ch17_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第17章 从指南针到磁浮列车',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第17章 从指南针到磁浮列车,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "条形磁体上磁性最强的部分是（　）", "opts": ["磁体两端", "磁体中间", "磁体上各处相同", "无法确定"], "ans": 0, "exp": "磁体上磁性最强的部分叫磁极，位于磁体的两端；磁体中间磁性最弱。"}, {"q": "将两个条形磁体的同名磁极（N极与N极）相互靠近，它们将（　）", "opts": ["相互排斥", "相互吸引", "没有相互作用", "先排斥后吸引"], "ans": 0, "exp": "磁极间相互作用规律：同名磁极相互排斥，异名磁极相互吸引。"}, {"q": "关于磁场和磁感线，下列说法正确的是（　）", "opts": ["磁场和磁感线都是真实存在的", "磁场是真实存在的特殊物质，磁感线是为描述磁场而假想的曲线", "磁场是假想的，磁感线是真实存在的曲线", "磁场和磁感线都是假想出来的"], "ans": 1, "exp": "磁场客观存在，是真实存在的特殊物质；磁感线是为形象描述磁场而假想的曲线，实际并不存在。"}, {"q": "条形磁体外部磁感线的方向是（　）", "opts": ["从N极出发回到S极", "从S极出发回到N极", "从N极出发不回到磁体", "没有确定方向"], "ans": 0, "exp": "磁体外部磁感线从N极出发回到S极；在磁体内部磁感线从S极回到N极，形成闭合曲线。"}, {"q": "关于地磁场，下列说法正确的是（　）", "opts": ["地磁的南极在地理北极附近", "地磁的北极在地理北极附近", "地磁两极与地理两极完全重合", "地球周围不存在磁场"], "ans": 0, "exp": "地磁的南极在地理北极附近，地磁的北极在地理南极附近，两者并不重合（存在磁偏角）。"}, {"q": "指南针（小磁针）静止时能指南北，是因为（　）", "opts": ["受到地磁场的作用", "受到重力的作用", "磁体自身就会指向南北，与外界无关", "受到空气流动的作用"], "ans": 0, "exp": "地球周围存在地磁场，指南针静止时N极大致指向地理北方，是因为异名磁极相吸，N极被位于地理北极附近的地磁南极吸引。"}, {"q": "奥斯特实验表明（　）", "opts": ["通电导线周围存在磁场，说明电与磁有联系", "通电导线在磁场中会受力运动", "磁可以生电（电磁感应）", "磁体周围存在磁感线"], "ans": 0, "exp": "奥斯特实验发现通电导线周围存在磁场（电流的磁场），第一次揭示了电与磁之间的联系。'磁生电'是法拉第后来发现的电磁感应。"}, {"q": "通电直导线周围的磁场方向与电流方向的关系是（　）", "opts": ["始终不变", "随电流方向的改变而改变", "电流方向改变后磁场消失", "与电流方向无关"], "ans": 1, "exp": "电流的磁场方向与电流方向有关：电流方向改变，其周围磁场方向也随之改变。"}, {"q": "用安培定则判断通电螺线管的磁极，下列做法正确的是（　）", "opts": ["用右手握住螺线管，四指弯曲方向与电流方向一致，大拇指所指的那端是N极", "用左手握住螺线管，四指弯曲方向与电流方向一致，大拇指所指的那端是N极", "用右手握住螺线管，大拇指指向电流方向，四指所指的那端是N极", "用右手握住螺线管，四指弯曲方向与电流方向一致，大拇指所指的那端是S极"], "ans": 0, "exp": "安培定则：用右手握住螺线管，让四指弯曲的方向跟电流的方向一致，大拇指所指的那端就是通电螺线管的N极。必须用右手，且四指对电流、拇指对N极。"}, {"q": "通电螺线管水平放置，从它的右端看去，线圈中电流沿逆时针方向流动，则该螺线管的N极在（　）", "opts": ["左端", "右端", "螺线管中间", "无法确定"], "ans": 1, "exp": "用安培定则：右手拇指所指的一端为N极。从右端看去电流沿逆时针方向，相当于拇指指向右端，故右端为N极，左端为S极。"}, {"q": "通电螺线管水平放置，从它的左端看去，线圈中电流沿顺时针方向流动，则该螺线管的N极在（　）", "opts": ["右端", "左端", "螺线管中间", "无法确定"], "ans": 0, "exp": "从螺线管的一端看，电流沿顺时针方向绕行的一端是S极（沿逆时针方向绕行的一端是N极）。左端电流顺时针，左端为S极，所以N极在右端。"}, {"q": "在通电螺线管中插入铁芯后，螺线管的磁性将（　）", "opts": ["大大增强", "减弱", "不变", "先减弱后增强"], "ans": 0, "exp": "铁芯被通电螺线管的磁场磁化后也具有磁性，与线圈的磁场叠加，使电磁铁磁性大大增强。"}, {"q": "电磁铁磁性的强弱与下列哪些因素有关（　）", "opts": ["只与电流大小有关", "只与线圈匝数有关", "与电流大小、线圈匝数及有无铁芯均有关", "与三者都无关"], "ans": 2, "exp": "电磁铁磁性强弱与电流大小、线圈匝数及有无铁芯有关：电流越大、匝数越多、有铁芯，磁性越强。"}, {"q": "电动机的工作原理是（　）", "opts": ["通电线圈在磁场中受力转动", "电磁感应", "电流的热效应", "同名磁极相互排斥"], "ans": 0, "exp": "电动机是利用通电线圈在磁场中受力转动来工作的（不是电磁感应！）；电磁感应是发电机的工作原理。"}, {"q": "电动机工作时，主要的能量转化是（　）", "opts": ["电能转化为机械能", "机械能转化为电能", "电能转化为内能", "化学能转化为电能"], "ans": 0, "exp": "电动机把电能转化为机械能；发电机才把机械能转化为电能，二者能量转化方向相反，不要混淆。"}, {"q": "直流电动机中换向器的作用是（　）", "opts": ["线圈刚转过平衡位置时自动改变线圈中的电流方向，使线圈持续转动", "增大线圈中的电流，使线圈转得更快", "改变磁体的磁极方向", "把机械能转化为电能"], "ans": 0, "exp": "换向器的作用：当线圈刚转过平衡位置时，自动改变线圈中的电流方向，使线圈受力方向改变，从而持续转动下去。"}]
+const flashcards=[{"q": "什么是磁性、磁体和磁极？磁体上磁性最强的部位在哪里？", "a": "磁体吸引铁、钴、镍等物质的性质叫磁性，具有磁性的物体叫磁体。磁体上磁性最强的部分叫磁极，位于磁体两端；每个磁体都有两个磁极：南极（S）和北极（N）。"}, {"q": "磁极间的相互作用规律是什么？", "a": "同名磁极相互排斥，异名磁极相互吸引。"}, {"q": "什么是磁化？铁和钢被磁化后有什么不同？", "a": "使原来没有磁性的物体获得磁性的过程叫磁化。铁被磁化后磁性容易消失；钢被磁化后能长期保持磁性，常用来制作永磁体。"}, {"q": "磁场是真实存在的吗？磁场方向如何规定？", "a": "磁场是磁体周围真实存在的一种特殊物质，能对放入其中的磁体产生力的作用。规定：小磁针在磁场中某点静止时N极所指的方向就是该点的磁场方向。"}, {"q": "磁感线是真实存在的吗？它有什么特点？", "a": "磁感线不是真实存在的，是为形象描述磁场而假想的曲线。磁体外部磁感线从N极出发回到S极；磁感线不相交；磁感线越密表示磁场越强。"}, {"q": "地磁的南北极分别在哪里？指南针为什么能指南北？", "a": "地磁的南极在地理北极附近，地磁的北极在地理南极附近，两者并不重合（存在磁偏角）。指南针受地磁场作用，静止时N极大致指向地理北方。"}, {"q": "奥斯特实验说明了什么？有什么意义？", "a": "通电导线周围存在磁场（电流周围有磁场），且磁场方向与电流方向有关。奥斯特实验第一次揭示了电与磁之间的联系。"}, {"q": "什么是安培定则？通电螺线管的磁场与什么相似？", "a": "用右手握住螺线管，让四指弯曲的方向跟螺线管中电流的方向一致，大拇指所指的那端就是通电螺线管的N极。通电螺线管的外部磁场与条形磁体的磁场相似。"}, {"q": "电磁铁磁性的强弱与哪些因素有关？插入铁芯后磁性为什么会增强？", "a": "与电流大小、线圈匝数有关：电流越大、匝数越多，磁性越强；有无铁芯也会影响磁性。插入的铁芯被磁化后也产生磁性，与线圈磁场叠加，使电磁铁磁性大大增强。"}, {"q": "电动机的原理和能量转化是什么？换向器有何作用？和发电机有什么不同？", "a": "电动机的原理是通电线圈在磁场中受力转动，工作时把电能转化为机械能；换向器的作用是当线圈刚转过平衡位置时自动改变线圈中电流的方向，使线圈持续转动。发电机利用电磁感应原理工作，把机械能转化为电能，与电动机相反。"}]
+const errors=[{"title": "磁感线是真实存在的曲线？", "wrong": "认为磁感线是真实存在的曲线，磁感线就是磁场本身；还说磁体外部磁感线从S极出发回到N极。", "right": "磁感线是为形象描述磁场而假想的曲线，实际并不存在，磁场才是客观存在的。磁体外部磁感线从N极出发回到S极（内部从S极到N极，形成闭合曲线）；磁感线不相交，越密表示磁场越强。"}, {"title": "把地磁极的位置记反了", "wrong": "认为“地磁的北极在地理北极附近”，以为指南针的N极是指向地磁北极。", "right": "地磁的南极在地理北极附近，地磁的北极在地理南极附近。指南针N极指向地理北方，正是因为异名磁极相吸——N极被位于地理北极附近的地磁南极吸引。地磁两极与地理两极不重合，存在磁偏角。"}, {"title": "电动机当成发电机：原理与能量转化搞混", "wrong": "认为电动机的原理是电磁感应，工作时把机械能转化为电能。", "right": "电动机的原理是通电线圈在磁场中受力转动，工作时把电能转化为机械能；利用电磁感应、把机械能转化为电能的是发电机。两者原理和能量转化方向都相反，切勿混淆。"}, {"title": "安培定则用错手或指错方向", "wrong": "用左手去握螺线管，或者让四指指向N极、让大拇指指向电流方向。", "right": "安培定则必须用右手：右手握住螺线管，四指弯曲的方向与电流方向一致，大拇指所指的那端才是N极。手用错或方向指反都会把N、S极判颠倒。"}, {"title": "把奥斯特实验理解成“磁生电”", "wrong": "认为奥斯特实验证明的是“磁能生电”（电磁感应），或者只把它当成电流发热之类的现象。", "right": "奥斯特实验第一次证明通电导线周围存在磁场，揭示了电与磁的联系，是“电生磁”；“磁生电”（电磁感应）是法拉第后来发现的，两者方向相反。"}, {"title": "电磁铁磁性只由电流大小决定？", "wrong": "认为想让电磁铁磁性更强只能增大电流，线圈匝数和铁芯无所谓；还认为把铁芯拔掉磁性不会变。", "right": "电磁铁磁性强弱由电流大小、线圈匝数和有无铁芯共同决定：电流越大、匝数越多、有铁芯，磁性越强。铁芯被磁化后与线圈磁场叠加，所以插铁芯后磁性会大大增强。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_physics9_ch17';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第13章 内能与热机 · 九年级物理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-bolt"></i> 第13章 内能与热机</h1>
+    <div class="meta">沪科九全 · 第13章 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>物体的内能</h4><p>物体内所有分子无规则运动的动能与分子势能的总和，叫做物体的内能，单位是焦耳(J)。分子在永不停息地做无规则运动，因此一切物体在任何温度下都具有内能——0 ℃的冰也有内能。</p></div>
+      <div class="k-item"><h4>内能与温度的关系</h4><p>温度越高，分子无规则运动越剧烈，分子的动能越大。体积变化不大时，同一物体的温度升高，其内能增大；温度降低，其内能减小。注意：内能增大的过程温度不一定升高，如晶体熔化时吸热、温度保持熔点不变。</p></div>
+      <div class="k-item"><h4>改变内能的两种方式</h4><p>做功和热传递都能改变物体的内能，二者对改变内能是等效的。做功是能量的转化：弯折铁丝发热、压缩空气点燃硝化棉，是机械能转化为内能；高温高压燃气膨胀推动活塞做功，是内能转化为机械能。热传递是内能的转移，如晒棉被、烤火、暖风机供暖。</p></div>
+      <div class="k-item"><h4>热量与热传递的实质</h4><p>在热传递过程中，物体间内能转移的多少叫做热量，用Q表示，单位是焦耳(J)。热传递的条件是存在温度差，其实质是能量(内能)从高温物体转移到低温物体，转移的是能量而不是温度。热量是过程量，只能说“吸收”或“放出”，不能说物体“含有”热量。</p></div>
+      <div class="k-item"><h4>物质的比热容</h4><p>一定质量的某种物质，温度升高(或降低)时吸收(或放出)的热量，与它的质量和升高(或降低)温度的乘积之比，叫做这种物质的比热容，符号为c，国际单位是焦每千克摄氏度，即J/(kg·℃)，由定义可得 c=Q/[m(t2-t1)]。比热容是物质的一种特性，与质量、温度变化、吸放热多少无关。</p></div>
+      <div class="k-item"><h4>水的比热容及其应用</h4><p>水的比热容是4.2×10³ J/(kg·℃)，物理意义是：1 kg水温度升高(或降低)1 ℃所吸收(或放出)的热量是4.2×10³ J，它在常见物质中较大。应用实例：沿海地区昼夜温差小；暖气(散热器)用水作介质供暖；汽车发动机用水循环冷却；夜间向稻田灌水防止秧苗被冻坏。</p></div>
+      <div class="k-item"><h4>热量的计算 Q=cmΔt</h4><p>物体吸、放热公式：Q吸=cm(t2-t1)，Q放=cm(t1-t2)，其中Δt是温度变化量，为末温与初温之差的绝对值。代入计算时单位要统一：m用kg，c用J/(kg·℃)，Δt用℃。例：2 kg水从20 ℃加热到70 ℃，Q吸=cmΔt=4.2×10³×2×50 J=4.2×10⁵ J。</p></div>
+      <div class="k-item"><h4>热机与内燃机</h4><p>把燃料燃烧时释放的内能转变为机械能的装置叫做热机。燃料直接在气缸内燃烧产生动力的热机叫做内燃机，最常见的是汽油机和柴油机。汽油机主要由气缸、活塞、进气阀、排气阀、火花塞、曲轴连杆和飞轮等组成；活塞在气缸内做一次单向运动叫做一个冲程。</p></div>
+      <div class="k-item"><h4>汽油机的四个冲程</h4><p>汽油机一个工作循环依次经历吸气、压缩、做功、排气四个冲程：吸气冲程，进气阀开、活塞下行，吸入空气和汽油的混合气；压缩冲程，两阀关闭、活塞上行压缩混合气，机械能→内能，缸内温度、压强升高；做功冲程，压缩冲程末火花塞点火，燃气爆发性膨胀推动活塞下行，内能→机械能，是唯一对外做功的冲程；排气冲程，排气阀开、活塞上行排出废气。一个工作循环活塞往复2次、曲轴转2圈、对外做功1次，除做功冲程外都依靠飞轮的惯性完成。</p></div>
+      <div class="k-item"><h4>热值、热机效率与环境保护</h4><p>某种燃料完全燃烧放出的热量与所用该燃料的质量之比，叫做这种燃料的热值q，单位是J/kg，Q放=mq；燃料燃烧的过程是化学能转化为内能的过程。热机效率η=对外做的有用功/燃料完全燃烧放出的热量，总小于100%，因为存在燃料未完全燃烧、废气带走热量、克服摩擦、机械传热等损失(蒸汽机6%~15%、汽油机20%~30%、柴油机30%~40%)。汽车尾气、烟尘污染空气，二氧化硫和氮氧化合物会形成酸雨；液态氢热值大、污染小，是火箭的理想燃料。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 北师大版九年级上册 · 第1章 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_physics9_ch13_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第13章 内能与热机',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第13章 内能与热机,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "关于温度、热量和内能，下列说法正确的是（　）", "opts": ["0 ℃的冰块不具有内能", "温度高的物体，内能不一定大", "物体的温度越高，所含的热量越多", "任何两个物体之间都会发生热传递"], "ans": 1, "exp": "一切物体在任何温度下都有内能，A错；热量是过程量，只能说“吸收”或“放出”，不能说“含有”多少热量，C错；热传递的条件是存在温度差，没有温度差的两物体间不发生热传递，D错。内能还与质量、状态有关，故温度高的物体内能不一定大，B对。"}, {"q": "0 ℃的冰在熔化过程中（不计水的蒸发），下列说法正确的是（　）", "opts": ["温度升高，内能增大", "温度不变，内能不变", "温度不变，内能增大", "温度降低，内能减小"], "ans": 2, "exp": "冰是晶体，熔化时不断吸热但温度保持0 ℃不变；吸收的热量转化为分子势能，故内能增大。这正说明“内能增大时，温度不一定升高”。"}, {"q": "冬天，男孩用力搓手取暖，女孩抱着热水袋取暖。他们改变内能的方式分别是（　）", "opts": ["男孩和女孩都是通过做功", "男孩和女孩都是通过热传递", "男孩通过热传递，女孩通过做功", "男孩通过做功，女孩通过热传递"], "ans": 3, "exp": "搓手是克服摩擦做功，机械能转化为内能，属做功改变内能；抱热水袋是热水袋的内能通过热传递转移给手，属热传递改变内能。"}, {"q": "下列改变物体内能的事例中，属于通过热传递实现的是（　）", "opts": ["反复弯折铁丝，弯折处温度升高", "用打气筒给轮胎打气，筒壁发热", "棉被在阳光下晒得暖烘烘的", "钻木取火"], "ans": 2, "exp": "晒棉被是太阳通过热辐射(热传递)把内能传给棉被。弯折铁丝、打气筒打气、钻木取火都是通过做功(克服摩擦或压缩气体)把机械能转化为内能。"}, {"q": "下列过程中，属于内能转化为机械能的是（　）", "opts": ["双手摩擦生热", "衣服在阳光下暴晒升温", "水烧开时，水蒸气把壶盖顶起", "压缩筒内空气，使硝化棉燃烧"], "ans": 2, "exp": "水蒸气膨胀推动壶盖做功，把自身的内能转化为壶盖的机械能。摩擦生热、压缩空气点燃硝化棉都是机械能转化为内能；暴晒升温是热传递改变内能。"}, {"q": "汽油机工作过程中，进、排气门均关闭，活塞向上运动，气缸内混合气体的温度升高、压强增大。此时正处于（　）", "opts": ["吸气冲程", "压缩冲程", "做功冲程", "排气冲程"], "ans": 1, "exp": "两气门都关闭且活塞上行，说明缸内混合气被压缩，机械能转化为内能，温度升高、压强增大——这是压缩冲程的特点。做功冲程活塞向下运动；吸气冲程进气门打开；排气冲程排气门打开。"}, {"q": "汽油机工作时，气缸顶部的火花塞发出电火花，缸内混合气体爆发性燃烧，高温高压气体迅速膨胀，推动活塞向下运动。这一过程属于（　）", "opts": ["吸气冲程", "压缩冲程", "做功冲程", "排气冲程"], "ans": 2, "exp": "火花塞在压缩冲程结束时产生电火花点燃混合气，燃气燃烧产生的高温高压气体膨胀推动活塞向下运动，是做功冲程，内能转化为机械能、对外做功。若问“火花塞点火发生在什么时候”，则对应压缩冲程的末尾。"}, {"q": "汽油机工作中，排气门打开、进气门关闭，活塞向上运动，把废气排出气缸。这一冲程是（　）", "opts": ["吸气冲程", "压缩冲程", "做功冲程", "排气冲程"], "ans": 3, "exp": "排气门打开、活塞上行把废气推出缸外，是排气冲程的标志。排气冲程依靠飞轮的惯性完成，不做功。"}, {"q": "四冲程汽油机在吸气冲程中，被吸入气缸的是（　）", "opts": ["纯净的空气", "空气和柴油的混合物", "空气和汽油的混合物", "汽油和柴油的混合物"], "ans": 2, "exp": "汽油机吸入的是空气和汽油的混合气，用火花塞点燃式点火；柴油机只吸入纯空气，压缩冲程末由喷油嘴喷油压燃。两者吸入的气体不同，不能混淆。"}, {"q": "四冲程汽油机工作时，活塞向上运动并依靠飞轮的惯性来完成运转的冲程是（　）", "opts": ["吸气冲程和做功冲程", "压缩冲程和做功冲程", "做功冲程和排气冲程", "压缩冲程和排气冲程"], "ans": 3, "exp": "做功冲程由燃气膨胀推动活塞对外做功，其余吸气、压缩、排气三个冲程都依靠飞轮的惯性完成。四个冲程中活塞向上运动的是压缩冲程和排气冲程，故选D。"}, {"q": "一台四冲程汽油机的飞轮转速为2400 r/min，则该汽油机每秒钟对外做功（　）", "opts": ["10次", "20次", "40次", "80次"], "ans": 1, "exp": "2400 r/min=2400÷60 r/s=40 r/s。四冲程汽油机一个工作循环曲轴(飞轮)转2圈、对外做功1次，所以每秒做功40÷2=20次。"}, {"q": "关于比热容，下列说法正确的是（　）", "opts": ["物体温度升高得越多，它的比热容越大", "一杯水喝掉一半后，水的比热容变为原来的一半", "比热容是物质的一种特性，与质量和温度变化无关", "物体吸收的热量越多，它的比热容越大"], "ans": 2, "exp": "比热容反映物质的吸放热本领，只由物质的种类和状态决定，与质量、温度变化、吸放热多少无关，就像密度一样：水倒掉一半，密度和比热容都不变。A、D都把比热容误认为随温度、热量多少而变。"}, {"q": "沿海地区昼夜温差较小，而内陆沙漠地区昼夜温差较大，主要是因为（　）", "opts": ["海水的密度小，砂石的密度大", "海水的比热容大，砂石的比热容小", "海水的内能多，砂石的内能少", "海水吸收的热量少，砂石吸收的热量多"], "ans": 1, "exp": "相同质量的海水与砂石，白天吸收(夜晚放出)的热量基本相同时，比热容大的海水温度变化小，比热容小的砂石温度变化大，所以沿海昼夜温差小、沙漠昼夜温差大。这是水的比热容大的应用。"}, {"q": "下列事例中，不是利用“水的比热容较大”这一特性的是（　）", "opts": ["让流动的热水流过散热器(暖气片)供暖", "汽车发动机用循环水来冷却", "夜间向稻田灌水，防止秧苗被冻坏", "夏天向地面洒水来降温"], "ans": 3, "exp": "暖气用水作介质供暖、发动机用水冷却、夜间向稻田灌水防冻，都是利用水比热容大：同样条件下水的温度变化较小，降温时能放出较多的热量。夏天洒水降温主要依靠水蒸发吸热，与比热容无关。"}, {"q": "质量为2 kg的水，温度从20 ℃升高到70 ℃，吸收的热量是〔c水=4.2×10³ J/(kg·℃)〕（　）", "opts": ["4.2×10⁵ J", "2.1×10⁵ J", "8.4×10⁵ J", "4.2×10⁴ J"], "ans": 0, "exp": "Δt=t2-t1=70 ℃-20 ℃=50 ℃，Q吸=cmΔt=4.2×10³ J/(kg·℃)×2 kg×50 ℃=4.2×10⁵ J。漏乘质量2 kg会得2.1×10⁵ J，把Δt误取100 ℃会得8.4×10⁵ J。"}, {"q": "酒精的热值是3.0×10⁷ J/kg，完全燃烧0.1 kg酒精放出的热量是（　）", "opts": ["3.0×10⁶ J", "3.0×10⁵ J", "3.0×10⁷ J", "3.0×10⁸ J"], "ans": 0, "exp": "Q放=mq=0.1 kg×3.0×10⁷ J/kg=3.0×10⁶ J。3.0×10⁷ J是1 kg酒精完全燃烧放出的热量，本题质量是0.1 kg，必须乘以0.1。"}]
+const flashcards=[{"q": "什么是物体的内能？0 ℃的物体有内能吗？", "a": "物体内所有分子无规则运动的动能与分子势能的总和叫内能，单位是焦耳(J)。一切物体在任何温度下都有内能，0 ℃的冰也有内能，因为分子在永不停息地做无规则运动。"}, {"q": "改变物体内能的两种方式是什么？热传递的实质是什么？", "a": "做功和热传递。热传递的实质是能量(内能)从高温物体向低温物体转移，转移的是能量而不是温度；发生热传递的条件是存在温度差。"}, {"q": "同一物体温度升高，内能一定增大吗？反过来，内能增大温度一定升高吗？", "a": "同一物体(状态不变)温度升高，内能一定增大；但内能增大时温度不一定升高——如晶体(冰)熔化时吸热，内能增大而温度保持熔点(0 ℃)不变。"}, {"q": "水的比热容是多少？它的物理意义是什么？", "a": "c水=4.2×10³ J/(kg·℃)。物理意义：1 kg水温度升高(或降低)1 ℃，吸收(或放出)的热量是4.2×10³ J。水的比热容在常见物质中较大。"}, {"q": "计算：质量为2 kg的水从20 ℃加热到70 ℃，需要吸收多少热量？〔c水=4.2×10³ J/(kg·℃)〕", "a": "Δt=70 ℃-20 ℃=50 ℃，Q吸=cmΔt=4.2×10³ J/(kg·℃)×2 kg×50 ℃=4.2×10⁵ J。"}, {"q": "水的比热容较大，在生产、生活中有哪些应用？", "a": "①沿海地区昼夜温差比内陆沙漠地区小；②暖气(散热器)用水作介质供暖；③汽车发动机用水循环冷却；④夜间向稻田灌水，防止秧苗被冻坏。"}, {"q": "汽油机一个工作循环经历哪几个冲程？曲轴转几圈、对外做功几次？", "a": "吸气→压缩→做功→排气四个冲程，顺序不可颠倒。一个工作循环中活塞往复运动2次、曲轴(飞轮)转2圈、燃气燃烧爆发1次、对外做功1次。"}, {"q": "压缩冲程和做功冲程中的能量转化分别是什么？", "a": "压缩冲程：活塞压缩混合气做功，机械能转化为内能，缸内温度升高、压强增大。做功冲程：火花塞点火后燃气膨胀推动活塞，内能转化为机械能，对外做功。"}, {"q": "汽油机和柴油机主要有哪些不同？", "a": "①构造：汽油机气缸顶部有火花塞，柴油机用喷油嘴；②吸入气体：汽油机吸入空气和汽油的混合气，柴油机只吸入空气；③点火方式：汽油机点燃式(火花塞点火)，柴油机压燃式(压缩末喷油自燃)，柴油机压缩程度更大、缸内温度压强更高。"}, {"q": "怎样计算燃料完全燃烧放出的热量和热机效率？热机效率为什么达不到100%？", "a": "Q放=mq(q为热值，单位J/kg)；热机效率η=对外做的有用功/燃料完全燃烧放出的热量。因为有燃料未完全燃烧、废气带走热量、克服摩擦、机械传热等能量损失，所以效率总小于100%。"}]
+const errors=[{"title": "0 ℃的物体没有内能？", "wrong": "误以为0 ℃时分子停止运动，认为0 ℃的冰不具有内能。", "right": "分子在永不停息地做无规则运动，一切物体在任何温度下都有内能，0 ℃的冰、-10 ℃的冰也一样。温度只影响分子热运动的剧烈程度，不决定内能的有无。"}, {"title": "内能增大，温度一定升高？", "wrong": "把内能变化与温度变化画等号，认为凡是内能增大的过程，温度一定升高。", "right": "“同一物体温度升高→内能增大”成立；反过来“内能增大→温度升高”不一定成立。晶体熔化时不断吸热，内能增大而温度保持熔点(如冰的0 ℃)不变，吸收的热量转化为分子势能。"}, {"title": "温度高的物体内能一定大？", "wrong": "只凭温度高低判断内能大小，认为温度高的物体内能一定比温度低的物体大。", "right": "内能是物体内所有分子动能与势能的总和，还与物体的质量、种类和状态有关。一滴100 ℃的水的内能不一定比一盆20 ℃的水大；比较内能大小须先限定“同一物体”或“质量相同”等条件。"}, {"title": "热传递传递的是温度？", "wrong": "误认为热传递把“温度”从高温物体传给低温物体，或说物体“含有”多少热量。", "right": "热传递转移的是能量(内能)，不是温度，温度只是发生热传递的条件；其方向是从高温物体到低温物体。热量是过程量，只能说物体吸收或放出热量，不能说物体含有、具有多少热量。"}, {"title": "倒去一半，比热容也减半？", "wrong": "把比热容当成与质量有关的量，认为煤油(或水)倒去一半后，比热容变为原来的一半。", "right": "比热容是物质的一种特性，只由物质的种类和状态决定，与质量、体积、温度变化和吸放热多少无关，这一点与密度类似。一瓶煤油倒去一半，密度和比热容都不变。"}, {"title": "曲轴每转一圈就对外做功一次？", "wrong": "把循环规律记成“转1圈做功1次”，或认为做功冲程也靠飞轮惯性完成。", "right": "四冲程汽油机一个工作循环曲轴(飞轮)转2圈、对外做功1次；只有做功冲程由燃气膨胀推动活塞对外做功，其余三个冲程靠飞轮惯性完成。若飞轮转速为2400 r/min(40 r/s)，则每秒做功20次。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_physics9_ch13';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""生成 english9_u3.json — 人教九全 Unit 3 Could you please tell me where the restrooms are?
+结构: hero_title / meta_desc / knowledge[10] / questions[16] / flashcards[10] / errors[6]
+"""
+import json, os
+
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'english9_u3.json')
+
+knowledge = [
+    {"t": "第三单元概览", "d": "本单元话题是「礼貌地问路、询问信息（Ask for information politely）与指路（Follow directions）」，场景围绕 Fun Times Park、商场、书店、邮局、博物馆等展开。语言目标：学会用 Could you please tell me...? / Do you know...? / I wonder if... 等委婉句式向陌生人询问地点，并听懂、说出 turn left/right、go along、on your right 等指路用语。语法核心：特殊疑问词引导的宾语从句（用陈述语序）；功能核心：礼貌请求。中考常以「宾语从句语序 + 情景对话题」形式考查本单元。", },
+    {"t": "宾语从句（wh- 疑问词引导）——陈述语序", "d": "由 where / how / when / what 等疑问词引导的宾语从句，从句部分必须用「疑问词 + 主语 + 谓语」的陈述语序，不能像直接问句那样倒装，句末也不用问号。Could you please tell me where the restrooms are?（✅ 不是 where are the restrooms）；Do you know how I can get there?（✅ 不是 how can I get there）。规律：先找疑问词，再按「谁 + 做什么」的正序把剩余部分写出来。", },
+    {"t": "宾语从句——连接词与时态呼应", "d": "宾语从句的连接词三类：that（陈述句，可省略）、if/whether（一般疑问句，表「是否」）、疑问词（特殊疑问句，保留原义）。时态呼应：主句是一般现在时，从句按实际需要选时态；主句是一般过去时，从句通常用相应的过去时（could/would 等），但客观真理仍用一般现在时。例：He asked me where the post office was.（他问我邮局在哪里。）", },
+    {"t": "礼貌请求句式（Polite requests）", "d": "请求别人帮忙时，Could you please...? / Would you mind doing...? / May I ask...? / I wonder if you can... 比 Can you...? 或直接问句更礼貌、更委婉。向陌生人开口前先加 Excuse me / Pardon me / I'm sorry to trouble you 等过渡语，说完记得说 Thank you。例：Excuse me, could you please tell me how to get to the bookstore?；I wonder if you can help me. 直接问句（Where are the restrooms?）语法没错，但听上去唐突。", },
+    {"t": "疑问词 + 不定式", "d": "疑问词 what / where / how / when + to do 可以作宾语，意义与相应的宾语从句相同，常可互换：Could you please tell me how to get to the bookstore? = Could you please tell me how I can get to the bookstore?；Do you know where to buy stamps? = Do you know where I can buy stamps?。句型还有 show/tell sb. how to do sth.（教/告诉某人怎样做某事）。", },
+    {"t": "指路与方位表达", "d": "指路常用语：Go along/up Main Street 沿主街走；Go past / pass by the bank 走过/路过银行；Turn left/right at the second crossing 在第二个路口左/右转；It's on your right/left 在右边/左边；beside/next to 紧挨着；between A and B 在 A 和 B 之间；opposite 在……对面；at/on the corner of 在……的拐角处；go east/west 向东/西走。为了让对方放心，常说 You can't miss it.（你不会找不到的。）", },
+    {"t": "词汇辨义：restroom / toilet / washroom / bathroom", "d": "restroom 是美式英语，指公共建筑物（商场、公园、电影院等）里的洗手间/公共厕所，语气委婉礼貌（课文 2d 中 Alice 用 restroom，He Wei 先误以为要「休息」）；toilet 直白常用（英式）；washroom 指盥洗室、洗手间；bathroom 主要指家里带浴缸/淋浴的浴室卫生间。在中国说英语时，常用 toilet 或 washroom。公共场合问「洗手间在哪」：Excuse me, where is the restroom (美) / toilet?", },
+    {"t": "词汇：convenient / polite 及其反义词", "d": "convenient 方便的（be convenient for sb. 对某人方便；It's convenient for sb. to do sth. 某人做某事很方便），反义词 inconvenient（不方便的），名词 convenience（便利）。polite 礼貌的，反义词 impolite（不礼貌的）；direct 直接的、直率的，反义词 indirect（间接的）。注意这三个词的否定前缀都是 in-：polite→impolite、convenient→inconvenient、direct→indirect，不是 un-。", },
+    {"t": "口语功能：听懂并礼貌地追问", "d": "没听清对方的话，可以用 Pardon me?（对不起，请再说一遍）礼貌地请对方重复；I'm sorry to trouble you, but... 是求助前非常客气的开场白。对话中常用 You don't need to rush.（不用急）劝人别匆忙。in a hurry 匆忙地（= in a rush）：He left in a hurry. 结合场景：向 staff（工作人员）/ clerk（店员）问路时，先礼貌称呼再开口，效果更好。", },
+    {"t": "本单元重点词汇与短语清单", "d": "核心名词：restroom stamp postcard bathroom rush staff grape east mall clerk corner speaker request direction address course underground；形容词：polite impolite direct correct convenient underground；动词：rush。短语：pass by 路过、经过；pardon me 请再说一遍/对不起；in a hurry 匆忙；excuse me 劳驾、打扰了。其中 underground 既可作名词（地铁，英式=subway）也可作形容词（地下的）。", },
+]
+
+questions = [
+    {"q": "— Excuse me, could you please tell me ___? — Sure. Go to the second floor. They're next to the bookstore.",
+     "opts": ["A. where are the restrooms", "B. where the restrooms are", "C. where the restroom are", "D. where the restrooms be"],
+     "ans": 1, "exp": "答案 B。宾语从句要用陈述语序：疑问词 where + 主语 the restrooms + 谓语 are，不能像直接问句那样说 where are the restrooms。A 是疑问语序，C 主谓不一致（单数 restroom 不能配 are），D 动词形式错误。句意：——劳驾，你能告诉我洗手间在哪里吗？——当然，上二楼，就在书店旁边。", },
+    {"q": "— Excuse me, do you know ___? — Sure. Go along this street and turn left at the bank.",
+     "opts": ["A. how can I get to the park", "B. how I can get to the park", "C. how I get can to the park", "D. what I can get to the park"],
+     "ans": 1, "exp": "答案 B。do you know 后的宾语从句用陈述语序 how + 主语 I + 情态动词 can + get to the park；how can I get to the park 是直接问句语序，只能单独成句，不能作从句。句意：——劳驾，你知道我怎么去公园吗？——沿着这条街走，在银行处左转。", },
+    {"q": "— Could you tell me ___? — Sure. There's a bookstore between the bank and the supermarket.",
+     "opts": ["A. where can I buy some postcards", "B. where I buy can some postcards", "C. where I can buy some postcards", "D. what I can buy some postcards"],
+     "ans": 2, "exp": "答案 C。宾语从句语序：疑问词 where + I + can buy...（陈述语序）；A 倒装，B 词序混乱（can 应放在 buy 前），D 疑问词用错（问地点用 where，不用 what）。句意：——你能告诉我在哪儿能买到明信片吗？——银行和超市之间有家书店。", },
+    {"q": "— Excuse me, could you tell us ___ this evening? — Eight o'clock. Please come a little earlier.",
+     "opts": ["A. when the band starts playing", "B. when does the band start playing", "C. when the band started playing", "D. when the band will starts playing"],
+     "ans": 0, "exp": "答案 A。宾语从句用陈述语序（排除 B）；时间表、节目安排等表示将来时间常用一般现在时，the band 是第三人称单数，用 starts（排除 D 的双将来形式）。句意：——请问你能告诉我们乐队今晚几点开始演出吗？——八点，请早点来占座。C 用过去式与 this evening 的将来语境不符。", },
+    {"q": "We have visited Space World. I wonder ___ next.",
+     "opts": ["A. where should we go", "B. where we should go", "C. where we go should", "D. what we should go"],
+     "ans": 1, "exp": "答案 B。I wonder 后接宾语从句用陈述语序：where + 主语 we + 情态动词 should + go。A 是疑问语序，C 词序错误，D 句意不通（应为 go where，what 后需接及物动词的宾语）。句意：我们已经逛过太空世界了，我想知道接下来该去哪儿。", },
+    {"q": "— Excuse me. I wonder ___ you can help me. — Of course. What can I do for you?",
+     "opts": ["A. that", "B. if", "C. what", "D. when"],
+     "ans": 1, "exp": "答案 B。I wonder if/whether... 表示「我想知道是否……」，是向陌生人求助时非常礼貌的开场白（相当于「请问您能帮我吗？」）。if 引导的从句用陈述语序。that 用于陈述句内容，what/when 与句意不符。", },
+    {"q": "Which of the following sounds most polite when you ask a stranger for help?",
+     "opts": ["A. Can you tell me where the bookstore is?", "B. Could you please tell me where the bookstore is?", "C. Where is the bookstore?", "D. Tell me where the bookstore is."],
+     "ans": 1, "exp": "答案 B。Could you please...? 比 Can you...? 更礼貌委婉（情态动词 could 语气更客气，please 再添礼貌）；直接问句 C 和祈使句 D 都很唐突。注意 B 的从句部分仍是陈述语序 where the bookstore is。", },
+    {"q": "You want to ask your English teacher about the school trip. Which is more polite?",
+     "opts": ["A. When is the school trip?", "B. Tell me when the school trip is.", "C. Excuse me, Mr. West. Do you know when the school trip is?", "D. Mr. West, when is the school trip?"],
+     "ans": 2, "exp": "答案 C。对老师等长辈要用礼貌的间接问句：Excuse me + 称呼 + Do you know + 宾语从句（陈述语序 when the school trip is）。直接问句 A 或 D 语气生硬，B 是命令口吻，都不礼貌。", },
+    {"q": "— Would you mind ___ me the way to the nearest bank? — Not at all. It's next to the mall.",
+     "opts": ["A. telling", "B. tell", "C. to tell", "D. told"],
+     "ans": 0, "exp": "答案 A。Would you mind + 动名词（doing）？意为「你介意……吗？」，是礼貌的请求，答语用 Not at all / Of course not（不介意）。句意：——你介意告诉我去最近的银行怎么走吗？——一点也不，它就在商场隔壁。", },
+    {"q": "— Do you know how ___ to the new museum? — Yes. Go east along this street.",
+     "opts": ["A. to get", "B. getting", "C. get", "D. got"],
+     "ans": 0, "exp": "答案 A。疑问词 how + 不定式（how to get to...）作 know 的宾语，等于宾语从句 how I can get to the new museum。疑问词后必须接 to + 动词原形，不能是动名词或原形。句意：——你知道怎么去新博物馆吗？——沿着这条街往东走。", },
+    {"q": "In American English, a \"restroom\" is a polite word for ___.",
+     "opts": ["A. a room where you can have a rest", "B. a public washroom or toilet", "C. a room where you can eat", "D. a place to buy stamps"],
+     "ans": 1, "exp": "答案 B。restroom 是美式英语，指公共洗手间/厕所，是委婉礼貌的说法。课文 2d 中 Alice 说 restroom，He Wei 起初误以为是「休息（rest）的屋子」。a washroom or bathroom 是 Alice 自己的解释，实指 the toilet。注意 restroom 不是休息室。", },
+    {"q": "My home is far from the subway station, so it is not ___ for me to go to school by subway.",
+     "opts": ["A. convenient", "B. inconvenient", "C. impolite", "D. direct"],
+     "ans": 0, "exp": "答案 A。convenient 意为「方便的」。家住得离地铁站远，坐地铁上学「不方便」，即 not convenient；若选 B inconvenient，not inconvenient 就成了「方便」，与句意相反。句意：我家离地铁站很远，所以坐地铁上学对我来说不方便。convenient 的反义词是 inconvenient。", },
+    {"q": "In many countries, it is often not ___ to ask very ___ questions when you meet someone for the first time.",
+     "opts": ["A. polite; direct", "B. impolite; direct", "C. polite; indirect", "D. direct; polite"],
+     "ans": 0, "exp": "答案 A。句意：在许多国家，初次见面就问非常直接的问题往往不礼貌。not polite = impolite（不礼貌的）；direct questions 直接的问题，与 polite/indirect 相对。B 中 not impolite 变成「并非不礼貌」，意思反了；C、D 搭配不合逻辑。", },
+    {"q": "Go ___ Main Street and turn right ___ the second crossing. The bank is ___ your right.",
+     "opts": ["A. along; at; on", "B. along; on; at", "C. on; at; along", "D. on; along; at"],
+     "ans": 0, "exp": "答案 A。固定搭配：go along the street（沿着街走）、turn right at the second crossing（在第二个十字路口右转）、on your right（在你的右边）。介词搭配不要混淆。句意：沿着主街走，在第二个路口右转，银行就在你右边。", },
+    {"q": "— Excuse me, where is the supermarket? — It's ___ the flower store and the bookstore. You can't miss it.",
+     "opts": ["A. between", "B. next", "C. on", "D. from"],
+     "ans": 0, "exp": "答案 A。between...and... 意为「在……和……之间」，是成对搭配，只能选 between。句意：超市在花店和书店之间，你不会找不到的。You can't miss it. 是让对方放心的常用语。若说「紧挨着」则用 next to（不能只用 next）。", },
+    {"q": "— Could you tell me where the new shopping mall is? — Sure. It's on the ___ of Main Street and Center Street, opposite the bank.",
+     "opts": ["A. corner", "B. center", "C. middle", "D. cross"],
+     "ans": 0, "exp": "答案 A。at/on the corner of A and B 意为「在 A 街和 B 街的拐角处」，是地点方位搭配。句意：新购物中心在主街和中心街的拐角处，银行对面。opposite the bank 在银行对面。B、C 与 of 连用表「中心」，但不是路口拐角；D 词性不对。", },
+]
+
+flashcards = [
+    {"q": "由疑问词引导的宾语从句，语序要遵守什么规则？各举一例。", "a": "从句一律用「疑问词 + 主语 + 谓语」的陈述语序，不能倒装、不加问号。例：Could you please tell me where the restrooms are?（不能说 where are the restrooms）；Do you know how I can get there?（不能说 how can I get there）。先找疑问词，再按正常语序补出后面的内容。", },
+    {"q": "怎样把直接问句 Where are the restrooms? 改写成礼貌的间接问句？", "a": "在句首加礼貌主句，从句保留疑问词并改成陈述语序：Excuse me, could you please tell me where the restrooms are? 同理：Where can I buy some stamps? → Do you know where I can buy some stamps?；When does the bookstore close? → Could you tell me when the bookstore closes? 直接问句正确但生硬，间接问句更委婉。", },
+    {"q": "礼貌请求有哪些常用句式？为什么 Can you...? 不算最礼貌？", "a": "常用：Could you please...? / Would you mind doing...? / May I ask...? / I wonder if you can...。向陌生人开口先加 Excuse me、Pardon me 或 I'm sorry to trouble you。Can you...? 和直接问句语法正确却太直接、显得唐突，语气不如 could/would/may 委婉；礼貌的问句通常更长、更间接。", },
+    {"q": "Would you mind 后面接什么形式？怎么回答？", "a": "Would you mind + 动名词（doing）。例：Would you mind telling me the way to the mall?（你介意告诉我去商场怎么走吗？）表示「不介意、愿意」时答 Not at all. / Of course not.；介意时才说 I'm sorry, but...。注意不能说 Would you mind to tell / tell me。", },
+    {"q": "「疑问词 + 不定式」与宾语从句如何互换？", "a": "疑问词（how/where/when/what）+ to do 作宾语 ≈ 疑问词引导的宾语从句：Could you please tell me how to get to the bookstore? = Could you please tell me how I can get to the bookstore?；Do you know where to buy stamps? = Do you know where I can buy stamps? 不定式前省略了主语，须用 to + 动词原形。", },
+    {"q": "本单元指路、说方位有哪些常用表达？", "a": "Go along/up Main Street 沿主街走；Go past / pass by the bank 路过银行；Turn left/right at the second crossing 在第二个路口左/右转；go east/west 往东/西走；It's on your right/left 在你的右/左边；between A and B 在 A 与 B 之间；next to / beside 紧挨着；opposite 在……对面；on the corner of 在……拐角处；最后常补一句 You can't miss it.（你不会找不到的。）", },
+    {"q": "restroom / toilet / washroom / bathroom 有什么区别？", "a": "restroom 是美式英语，指公共洗手间/公共厕所，最委婉礼貌；toilet 直白，英式常用；washroom 也指盥洗室/洗手间（课文说在中国常说 toilet 或 washroom）；bathroom 主要指家里带浴缸或淋浴的浴室卫生间。Alice 在课文里用 restroom 指 washroom/bathroom，即 the toilet——公共场合说 restroom（美）或 toilet 都行。", },
+    {"q": "convenient 什么意思？反义词怎么变？常用句型是什么？", "a": "convenient 方便的，反义词 inconvenient 不方便的（注意前缀是 in-，不是 un-），名词 convenience 便利。句型：It is convenient for sb. to do sth.（某人做某事很方便）；The place is convenient for me.（这地方对我来说很方便。）例：The underground makes it very convenient to travel around the city. 乘地铁让城里出行很方便。", },
+    {"q": "polite / impolite / direct / indirect 各是什么意思？礼貌请求有何特点？", "a": "polite 礼貌的 → impolite 不礼貌的；direct 直接的 → indirect 间接的（否定前缀都是 in-）。直接问句短而直接，不够礼貌；礼貌请求更长、更间接，常用 Could you please...? / May I ask...? / I wonder if...，并视对象加称呼。例：When is the school trip? → Excuse me, Mr. West. Do you know when the school trip is? 后者礼貌得多。", },
+    {"q": "本单元有哪些重点词汇和短语？", "a": "名词：restroom 洗手间 stamp 邮票 postcard 明信片 bathroom 浴室 toilet 厕所 rush 匆忙 staff 职员 grape 葡萄 mall 商场 clerk 店员 corner 拐角 speaker 发言者 request 请求 direction 方向 address 地址 course 课程 underground 地铁；形容词：polite 礼貌的 impolite 不礼貌的 direct 直接的 correct 正确的 convenient 方便的 underground 地下的。短语：pass by 路过、pardon me 请再说一遍、in a hurry 匆忙、excuse me 劳驾。", },
+]
+
+errors = [
+    {"title": "宾语从句误用疑问语序（倒装）", "wrong": "把 Could you please tell me where the restrooms are? 写成 where are the restrooms；把 Do you know how I can get there? 写成 how can I get there。误以为「问句的从句也要倒装」。", "right": "宾语从句永远用陈述语序（疑问词 + 主语 + 谓语），即使整句是问句也不倒装：where the restrooms are（the restrooms 是主语，are 是谓语）、how I can get there。只有主句部分（Could you tell me / Do you know）才用疑问语序。", },
+    {"title": "对陌生人说话太直接、不够礼貌", "wrong": "向陌生店员直接问 Where is the restroom?，或开口就是 Can you tell me where the mall is? / Tell me the way! 语法没错，但唐突失礼。", "right": "向陌生人或长辈求助要用委婉句式：Could you please tell me...? / Do you know...? / I wonder if you can... / Would you mind doing...?，开头加 Excuse me / Pardon me，事后说 Thank you。越正式越礼貌，Can you... 和直接问句尽量少对陌生人用。", },
+    {"title": "宾语从句时态不呼应（主句过去时）", "wrong": "叙述过去的事时写 She asked me where the bookstore is.（主句 asked 是过去时，从句却仍用 is）；或 I didn't know where the restroom was 说成 I didn't know where the restroom is。", "right": "主句是一般过去时，从句要用相应的过去时：She asked me where the bookstore was.（她问我书店在哪里。）I didn't know if he could help me. 但客观真理、自然现象不变：The teacher said the earth goes around the sun. 主句是现在时则从句按实际时态来。", },
+    {"title": "Would you mind 后误接原形或不定式", "wrong": "把 Would you mind telling me...? 写成 Would you mind tell me...? 或 Would you mind to tell me...?。", "right": "mind 后接动名词（doing）：Would you mind telling me the way to the bank?（你介意告诉我去银行怎么走吗？）这是一个礼貌的请求句型，答语 Not at all. / Of course not. 表示「不介意、好的」。", },
+    {"title": "把 restroom 当成「休息室」", "wrong": "看到 rest 就以为 restroom 是「休息室」；或以为 bathroom 可以放心用在任何公共场合。课文里 He Wei 就误把 restroom 听成「去休息」。", "right": "restroom（美式英语）= 洗手间/公共厕所，是委婉说法，Alice 解释它 a washroom or bathroom，实指 the toilet；在中国说英语常说 toilet 或 washroom。bathroom 主要指家里的浴室卫生间。rest 是「休息」，但 restroom 不是休息室，别望文生义。", },
+    {"title": "否定前缀写错：unpolite / unconvenient", "wrong": "把 polite 的反义词写成 unpolite，把 convenient 的反义词写成 unconvenient，把 direct 的反义词写成 undirect。", "right": "本单元这三个词的反义词前缀都是 in-：polite → impolite（不礼貌的）、convenient → inconvenient（不方便的）、direct → indirect（间接的）。注意拼写：impolite 不双写 l，inconvenient 是 in + convenient。看到 un- 开头的拼写要警惕改回 in-。", },
+]
+
+data = {
+    "hero_title": "Unit 3 · Could you please tell me where the restrooms are?",
+    "meta_desc": "人教九全 · Unit 3",
+    "knowledge": knowledge,
+    "questions": questions,
+    "flashcards": flashcards,
+    "errors": errors,
+}
+
+os.makedirs(os.path.dirname(OUT), exist_ok=True)
+with open(OUT, 'w', encoding='utf-8') as f:
+    json.dump(data, f, ensure_ascii=False, indent=1)
+
+# 校验：写回再读
+with open(OUT, encoding='utf-8') as f:
+    chk = json.load(f)
+print('✅ written:', OUT)
+print('knowledge:', len(chk['knowledge']))
+print('questions:', len(chk['questions']))
+print('flashcards:', len(chk['flashcards']))
+print('errors:', len(chk['errors']))

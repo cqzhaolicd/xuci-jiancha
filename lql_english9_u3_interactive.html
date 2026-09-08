@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 3 · Could you please tell me where the restrooms are? · 九年级英语</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> Unit 3 · Could you please tell me where the restrooms are?</h1>
+    <div class="meta">人教九全 · Unit 3 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>第三单元概览</h4><p>本单元话题是「礼貌地问路、询问信息（Ask for information politely）与指路（Follow directions）」，场景围绕 Fun Times Park、商场、书店、邮局、博物馆等展开。语言目标：学会用 Could you please tell me...? / Do you know...? / I wonder if... 等委婉句式向陌生人询问地点，并听懂、说出 turn left/right、go along、on your right 等指路用语。语法核心：特殊疑问词引导的宾语从句（用陈述语序）；功能核心：礼貌请求。中考常以「宾语从句语序 + 情景对话题」形式考查本单元。</p></div>
+      <div class="k-item"><h4>宾语从句（wh- 疑问词引导）——陈述语序</h4><p>由 where / how / when / what 等疑问词引导的宾语从句，从句部分必须用「疑问词 + 主语 + 谓语」的陈述语序，不能像直接问句那样倒装，句末也不用问号。Could you please tell me where the restrooms are?（✅ 不是 where are the restrooms）；Do you know how I can get there?（✅ 不是 how can I get there）。规律：先找疑问词，再按「谁 + 做什么」的正序把剩余部分写出来。</p></div>
+      <div class="k-item"><h4>宾语从句——连接词与时态呼应</h4><p>宾语从句的连接词三类：that（陈述句，可省略）、if/whether（一般疑问句，表「是否」）、疑问词（特殊疑问句，保留原义）。时态呼应：主句是一般现在时，从句按实际需要选时态；主句是一般过去时，从句通常用相应的过去时（could/would 等），但客观真理仍用一般现在时。例：He asked me where the post office was.（他问我邮局在哪里。）</p></div>
+      <div class="k-item"><h4>礼貌请求句式（Polite requests）</h4><p>请求别人帮忙时，Could you please...? / Would you mind doing...? / May I ask...? / I wonder if you can... 比 Can you...? 或直接问句更礼貌、更委婉。向陌生人开口前先加 Excuse me / Pardon me / I'm sorry to trouble you 等过渡语，说完记得说 Thank you。例：Excuse me, could you please tell me how to get to the bookstore?；I wonder if you can help me. 直接问句（Where are the restrooms?）语法没错，但听上去唐突。</p></div>
+      <div class="k-item"><h4>疑问词 + 不定式</h4><p>疑问词 what / where / how / when + to do 可以作宾语，意义与相应的宾语从句相同，常可互换：Could you please tell me how to get to the bookstore? = Could you please tell me how I can get to the bookstore?；Do you know where to buy stamps? = Do you know where I can buy stamps?。句型还有 show/tell sb. how to do sth.（教/告诉某人怎样做某事）。</p></div>
+      <div class="k-item"><h4>指路与方位表达</h4><p>指路常用语：Go along/up Main Street 沿主街走；Go past / pass by the bank 走过/路过银行；Turn left/right at the second crossing 在第二个路口左/右转；It's on your right/left 在右边/左边；beside/next to 紧挨着；between A and B 在 A 和 B 之间；opposite 在……对面；at/on the corner of 在……的拐角处；go east/west 向东/西走。为了让对方放心，常说 You can't miss it.（你不会找不到的。）</p></div>
+      <div class="k-item"><h4>词汇辨义：restroom / toilet / washroom / bathroom</h4><p>restroom 是美式英语，指公共建筑物（商场、公园、电影院等）里的洗手间/公共厕所，语气委婉礼貌（课文 2d 中 Alice 用 restroom，He Wei 先误以为要「休息」）；toilet 直白常用（英式）；washroom 指盥洗室、洗手间；bathroom 主要指家里带浴缸/淋浴的浴室卫生间。在中国说英语时，常用 toilet 或 washroom。公共场合问「洗手间在哪」：Excuse me, where is the restroom (美) / toilet?</p></div>
+      <div class="k-item"><h4>词汇：convenient / polite 及其反义词</h4><p>convenient 方便的（be convenient for sb. 对某人方便；It's convenient for sb. to do sth. 某人做某事很方便），反义词 inconvenient（不方便的），名词 convenience（便利）。polite 礼貌的，反义词 impolite（不礼貌的）；direct 直接的、直率的，反义词 indirect（间接的）。注意这三个词的否定前缀都是 in-：polite→impolite、convenient→inconvenient、direct→indirect，不是 un-。</p></div>
+      <div class="k-item"><h4>口语功能：听懂并礼貌地追问</h4><p>没听清对方的话，可以用 Pardon me?（对不起，请再说一遍）礼貌地请对方重复；I'm sorry to trouble you, but... 是求助前非常客气的开场白。对话中常用 You don't need to rush.（不用急）劝人别匆忙。in a hurry 匆忙地（= in a rush）：He left in a hurry. 结合场景：向 staff（工作人员）/ clerk（店员）问路时，先礼貌称呼再开口，效果更好。</p></div>
+      <div class="k-item"><h4>本单元重点词汇与短语清单</h4><p>核心名词：restroom stamp postcard bathroom rush staff grape east mall clerk corner speaker request direction address course underground；形容词：polite impolite direct correct convenient underground；动词：rush。短语：pass by 路过、经过；pardon me 请再说一遍/对不起；in a hurry 匆忙；excuse me 劳驾、打扰了。其中 underground 既可作名词（地铁，英式=subway）也可作形容词（地下的）。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 统编版语文九年级全一册 · 第一单元 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_english9_u3_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+
+
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:"Unit 3 Could you please tell me where the restrooms are?",chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:"Unit 3 Could you please tell me where the restrooms are?,课堂练习"};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "— Excuse me, could you please tell me ___? — Sure. Go to the second floor. They're next to the bookstore.", "opts": ["A. where are the restrooms", "B. where the restrooms are", "C. where the restroom are", "D. where the restrooms be"], "ans": 1, "exp": "答案 B。宾语从句要用陈述语序：疑问词 where + 主语 the restrooms + 谓语 are，不能像直接问句那样说 where are the restrooms。A 是疑问语序，C 主谓不一致（单数 restroom 不能配 are），D 动词形式错误。句意：——劳驾，你能告诉我洗手间在哪里吗？——当然，上二楼，就在书店旁边。"}, {"q": "— Excuse me, do you know ___? — Sure. Go along this street and turn left at the bank.", "opts": ["A. how can I get to the park", "B. how I can get to the park", "C. how I get can to the park", "D. what I can get to the park"], "ans": 1, "exp": "答案 B。do you know 后的宾语从句用陈述语序 how + 主语 I + 情态动词 can + get to the park；how can I get to the park 是直接问句语序，只能单独成句，不能作从句。句意：——劳驾，你知道我怎么去公园吗？——沿着这条街走，在银行处左转。"}, {"q": "— Could you tell me ___? — Sure. There's a bookstore between the bank and the supermarket.", "opts": ["A. where can I buy some postcards", "B. where I buy can some postcards", "C. where I can buy some postcards", "D. what I can buy some postcards"], "ans": 2, "exp": "答案 C。宾语从句语序：疑问词 where + I + can buy...（陈述语序）；A 倒装，B 词序混乱（can 应放在 buy 前），D 疑问词用错（问地点用 where，不用 what）。句意：——你能告诉我在哪儿能买到明信片吗？——银行和超市之间有家书店。"}, {"q": "— Excuse me, could you tell us ___ this evening? — Eight o'clock. Please come a little earlier.", "opts": ["A. when the band starts playing", "B. when does the band start playing", "C. when the band started playing", "D. when the band will starts playing"], "ans": 0, "exp": "答案 A。宾语从句用陈述语序（排除 B）；时间表、节目安排等表示将来时间常用一般现在时，the band 是第三人称单数，用 starts（排除 D 的双将来形式）。句意：——请问你能告诉我们乐队今晚几点开始演出吗？——八点，请早点来占座。C 用过去式与 this evening 的将来语境不符。"}, {"q": "We have visited Space World. I wonder ___ next.", "opts": ["A. where should we go", "B. where we should go", "C. where we go should", "D. what we should go"], "ans": 1, "exp": "答案 B。I wonder 后接宾语从句用陈述语序：where + 主语 we + 情态动词 should + go。A 是疑问语序，C 词序错误，D 句意不通（应为 go where，what 后需接及物动词的宾语）。句意：我们已经逛过太空世界了，我想知道接下来该去哪儿。"}, {"q": "— Excuse me. I wonder ___ you can help me. — Of course. What can I do for you?", "opts": ["A. that", "B. if", "C. what", "D. when"], "ans": 1, "exp": "答案 B。I wonder if/whether... 表示「我想知道是否……」，是向陌生人求助时非常礼貌的开场白（相当于「请问您能帮我吗？」）。if 引导的从句用陈述语序。that 用于陈述句内容，what/when 与句意不符。"}, {"q": "Which of the following sounds most polite when you ask a stranger for help?", "opts": ["A. Can you tell me where the bookstore is?", "B. Could you please tell me where the bookstore is?", "C. Where is the bookstore?", "D. Tell me where the bookstore is."], "ans": 1, "exp": "答案 B。Could you please...? 比 Can you...? 更礼貌委婉（情态动词 could 语气更客气，please 再添礼貌）；直接问句 C 和祈使句 D 都很唐突。注意 B 的从句部分仍是陈述语序 where the bookstore is。"}, {"q": "You want to ask your English teacher about the school trip. Which is more polite?", "opts": ["A. When is the school trip?", "B. Tell me when the school trip is.", "C. Excuse me, Mr. West. Do you know when the school trip is?", "D. Mr. West, when is the school trip?"], "ans": 2, "exp": "答案 C。对老师等长辈要用礼貌的间接问句：Excuse me + 称呼 + Do you know + 宾语从句（陈述语序 when the school trip is）。直接问句 A 或 D 语气生硬，B 是命令口吻，都不礼貌。"}, {"q": "— Would you mind ___ me the way to the nearest bank? — Not at all. It's next to the mall.", "opts": ["A. telling", "B. tell", "C. to tell", "D. told"], "ans": 0, "exp": "答案 A。Would you mind + 动名词（doing）？意为「你介意……吗？」，是礼貌的请求，答语用 Not at all / Of course not（不介意）。句意：——你介意告诉我去最近的银行怎么走吗？——一点也不，它就在商场隔壁。"}, {"q": "— Do you know how ___ to the new museum? — Yes. Go east along this street.", "opts": ["A. to get", "B. getting", "C. get", "D. got"], "ans": 0, "exp": "答案 A。疑问词 how + 不定式（how to get to...）作 know 的宾语，等于宾语从句 how I can get to the new museum。疑问词后必须接 to + 动词原形，不能是动名词或原形。句意：——你知道怎么去新博物馆吗？——沿着这条街往东走。"}, {"q": "In American English, a \"restroom\" is a polite word for ___.", "opts": ["A. a room where you can have a rest", "B. a public washroom or toilet", "C. a room where you can eat", "D. a place to buy stamps"], "ans": 1, "exp": "答案 B。restroom 是美式英语，指公共洗手间/厕所，是委婉礼貌的说法。课文 2d 中 Alice 说 restroom，He Wei 起初误以为是「休息（rest）的屋子」。a washroom or bathroom 是 Alice 自己的解释，实指 the toilet。注意 restroom 不是休息室。"}, {"q": "My home is far from the subway station, so it is not ___ for me to go to school by subway.", "opts": ["A. convenient", "B. inconvenient", "C. impolite", "D. direct"], "ans": 0, "exp": "答案 A。convenient 意为「方便的」。家住得离地铁站远，坐地铁上学「不方便」，即 not convenient；若选 B inconvenient，not inconvenient 就成了「方便」，与句意相反。句意：我家离地铁站很远，所以坐地铁上学对我来说不方便。convenient 的反义词是 inconvenient。"}, {"q": "In many countries, it is often not ___ to ask very ___ questions when you meet someone for the first time.", "opts": ["A. polite; direct", "B. impolite; direct", "C. polite; indirect", "D. direct; polite"], "ans": 0, "exp": "答案 A。句意：在许多国家，初次见面就问非常直接的问题往往不礼貌。not polite = impolite（不礼貌的）；direct questions 直接的问题，与 polite/indirect 相对。B 中 not impolite 变成「并非不礼貌」，意思反了；C、D 搭配不合逻辑。"}, {"q": "Go ___ Main Street and turn right ___ the second crossing. The bank is ___ your right.", "opts": ["A. along; at; on", "B. along; on; at", "C. on; at; along", "D. on; along; at"], "ans": 0, "exp": "答案 A。固定搭配：go along the street（沿着街走）、turn right at the second crossing（在第二个十字路口右转）、on your right（在你的右边）。介词搭配不要混淆。句意：沿着主街走，在第二个路口右转，银行就在你右边。"}, {"q": "— Excuse me, where is the supermarket? — It's ___ the flower store and the bookstore. You can't miss it.", "opts": ["A. between", "B. next", "C. on", "D. from"], "ans": 0, "exp": "答案 A。between...and... 意为「在……和……之间」，是成对搭配，只能选 between。句意：超市在花店和书店之间，你不会找不到的。You can't miss it. 是让对方放心的常用语。若说「紧挨着」则用 next to（不能只用 next）。"}, {"q": "— Could you tell me where the new shopping mall is? — Sure. It's on the ___ of Main Street and Center Street, opposite the bank.", "opts": ["A. corner", "B. center", "C. middle", "D. cross"], "ans": 0, "exp": "答案 A。at/on the corner of A and B 意为「在 A 街和 B 街的拐角处」，是地点方位搭配。句意：新购物中心在主街和中心街的拐角处，银行对面。opposite the bank 在银行对面。B、C 与 of 连用表「中心」，但不是路口拐角；D 词性不对。"}]
+const flashcards=[{"q": "由疑问词引导的宾语从句，语序要遵守什么规则？各举一例。", "a": "从句一律用「疑问词 + 主语 + 谓语」的陈述语序，不能倒装、不加问号。例：Could you please tell me where the restrooms are?（不能说 where are the restrooms）；Do you know how I can get there?（不能说 how can I get there）。先找疑问词，再按正常语序补出后面的内容。"}, {"q": "怎样把直接问句 Where are the restrooms? 改写成礼貌的间接问句？", "a": "在句首加礼貌主句，从句保留疑问词并改成陈述语序：Excuse me, could you please tell me where the restrooms are? 同理：Where can I buy some stamps? → Do you know where I can buy some stamps?；When does the bookstore close? → Could you tell me when the bookstore closes? 直接问句正确但生硬，间接问句更委婉。"}, {"q": "礼貌请求有哪些常用句式？为什么 Can you...? 不算最礼貌？", "a": "常用：Could you please...? / Would you mind doing...? / May I ask...? / I wonder if you can...。向陌生人开口先加 Excuse me、Pardon me 或 I'm sorry to trouble you。Can you...? 和直接问句语法正确却太直接、显得唐突，语气不如 could/would/may 委婉；礼貌的问句通常更长、更间接。"}, {"q": "Would you mind 后面接什么形式？怎么回答？", "a": "Would you mind + 动名词（doing）。例：Would you mind telling me the way to the mall?（你介意告诉我去商场怎么走吗？）表示「不介意、愿意」时答 Not at all. / Of course not.；介意时才说 I'm sorry, but...。注意不能说 Would you mind to tell / tell me。"}, {"q": "「疑问词 + 不定式」与宾语从句如何互换？", "a": "疑问词（how/where/when/what）+ to do 作宾语 ≈ 疑问词引导的宾语从句：Could you please tell me how to get to the bookstore? = Could you please tell me how I can get to the bookstore?；Do you know where to buy stamps? = Do you know where I can buy stamps? 不定式前省略了主语，须用 to + 动词原形。"}, {"q": "本单元指路、说方位有哪些常用表达？", "a": "Go along/up Main Street 沿主街走；Go past / pass by the bank 路过银行；Turn left/right at the second crossing 在第二个路口左/右转；go east/west 往东/西走；It's on your right/left 在你的右/左边；between A and B 在 A 与 B 之间；next to / beside 紧挨着；opposite 在……对面；on the corner of 在……拐角处；最后常补一句 You can't miss it.（你不会找不到的。）"}, {"q": "restroom / toilet / washroom / bathroom 有什么区别？", "a": "restroom 是美式英语，指公共洗手间/公共厕所，最委婉礼貌；toilet 直白，英式常用；washroom 也指盥洗室/洗手间（课文说在中国常说 toilet 或 washroom）；bathroom 主要指家里带浴缸或淋浴的浴室卫生间。Alice 在课文里用 restroom 指 washroom/bathroom，即 the toilet——公共场合说 restroom（美）或 toilet 都行。"}, {"q": "convenient 什么意思？反义词怎么变？常用句型是什么？", "a": "convenient 方便的，反义词 inconvenient 不方便的（注意前缀是 in-，不是 un-），名词 convenience 便利。句型：It is convenient for sb. to do sth.（某人做某事很方便）；The place is convenient for me.（这地方对我来说很方便。）例：The underground makes it very convenient to travel around the city. 乘地铁让城里出行很方便。"}, {"q": "polite / impolite / direct / indirect 各是什么意思？礼貌请求有何特点？", "a": "polite 礼貌的 → impolite 不礼貌的；direct 直接的 → indirect 间接的（否定前缀都是 in-）。直接问句短而直接，不够礼貌；礼貌请求更长、更间接，常用 Could you please...? / May I ask...? / I wonder if...，并视对象加称呼。例：When is the school trip? → Excuse me, Mr. West. Do you know when the school trip is? 后者礼貌得多。"}, {"q": "本单元有哪些重点词汇和短语？", "a": "名词：restroom 洗手间 stamp 邮票 postcard 明信片 bathroom 浴室 toilet 厕所 rush 匆忙 staff 职员 grape 葡萄 mall 商场 clerk 店员 corner 拐角 speaker 发言者 request 请求 direction 方向 address 地址 course 课程 underground 地铁；形容词：polite 礼貌的 impolite 不礼貌的 direct 直接的 correct 正确的 convenient 方便的 underground 地下的。短语：pass by 路过、pardon me 请再说一遍、in a hurry 匆忙、excuse me 劳驾。"}]
+const errors=[{"title": "宾语从句误用疑问语序（倒装）", "wrong": "把 Could you please tell me where the restrooms are? 写成 where are the restrooms；把 Do you know how I can get there? 写成 how can I get there。误以为「问句的从句也要倒装」。", "right": "宾语从句永远用陈述语序（疑问词 + 主语 + 谓语），即使整句是问句也不倒装：where the restrooms are（the restrooms 是主语，are 是谓语）、how I can get there。只有主句部分（Could you tell me / Do you know）才用疑问语序。"}, {"title": "对陌生人说话太直接、不够礼貌", "wrong": "向陌生店员直接问 Where is the restroom?，或开口就是 Can you tell me where the mall is? / Tell me the way! 语法没错，但唐突失礼。", "right": "向陌生人或长辈求助要用委婉句式：Could you please tell me...? / Do you know...? / I wonder if you can... / Would you mind doing...?，开头加 Excuse me / Pardon me，事后说 Thank you。越正式越礼貌，Can you... 和直接问句尽量少对陌生人用。"}, {"title": "宾语从句时态不呼应（主句过去时）", "wrong": "叙述过去的事时写 She asked me where the bookstore is.（主句 asked 是过去时，从句却仍用 is）；或 I didn't know where the restroom was 说成 I didn't know where the restroom is。", "right": "主句是一般过去时，从句要用相应的过去时：She asked me where the bookstore was.（她问我书店在哪里。）I didn't know if he could help me. 但客观真理、自然现象不变：The teacher said the earth goes around the sun. 主句是现在时则从句按实际时态来。"}, {"title": "Would you mind 后误接原形或不定式", "wrong": "把 Would you mind telling me...? 写成 Would you mind tell me...? 或 Would you mind to tell me...?。", "right": "mind 后接动名词（doing）：Would you mind telling me the way to the bank?（你介意告诉我去银行怎么走吗？）这是一个礼貌的请求句型，答语 Not at all. / Of course not. 表示「不介意、好的」。"}, {"title": "把 restroom 当成「休息室」", "wrong": "看到 rest 就以为 restroom 是「休息室」；或以为 bathroom 可以放心用在任何公共场合。课文里 He Wei 就误把 restroom 听成「去休息」。", "right": "restroom（美式英语）= 洗手间/公共厕所，是委婉说法，Alice 解释它 a washroom or bathroom，实指 the toilet；在中国说英语常说 toilet 或 washroom。bathroom 主要指家里的浴室卫生间。rest 是「休息」，但 restroom 不是休息室，别望文生义。"}, {"title": "否定前缀写错：unpolite / unconvenient", "wrong": "把 polite 的反义词写成 unpolite，把 convenient 的反义词写成 unconvenient，把 direct 的反义词写成 undirect。", "right": "本单元这三个词的反义词前缀都是 in-：polite → impolite（不礼貌的）、convenient → inconvenient（不方便的）、direct → indirect（间接的）。注意拼写：impolite 不双写 l，inconvenient 是 in + convenient。看到 un- 开头的拼写要警惕改回 in-。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_english9_u3';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第19章 走进信息时代 · 九年级物理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-bolt"></i> 第19章 走进信息时代</h1>
+    <div class="meta">沪科九全 · 第19章 · 14 题 · 8 知识 · 8 卡 · 5 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>信息与信息的记录存储</h4><p>文字、图像、声音、符号等都是信息的载体。记录和存储信息的形式随文明进步不断发展：大脑是天然的信息存储器，此后有了文字记载、印刷书籍；近代又出现磁记录（磁带、硬盘）、光记录（光盘）以及U盘等半导体存储，容量越来越大、存取越来越方便。</p></div>
+      <div class="k-item"><h4>信息的传播与发展</h4><p>早期人们靠面对面交流及驿马、烽火、信鸽等方式传递信息，速度慢、距离近、信息量小。电的使用使有线电报、有线电话得以发明，信息的传输方式发生了根本变化；此后无线电广播、电视、卫星通信和计算机网络相继出现，把世界联结成一张大网。</p></div>
+      <div class="k-item"><h4>电磁波及其传播</h4><p>电磁波是一种波，它的传播不需要介质，在真空中也能传播，传播速度等于光速：c=3×10⁸ m/s（空气中近似等于真空中光速）。这一点与需要介质传播的声波根本不同，所以太空、沙漠、海洋中都能靠电磁波通信。</p></div>
+      <div class="k-item"><h4>波长、波速与频率</h4><p>描述波的特征用三个物理量：波速c（传播快慢）、波长λ（相邻两个波峰或波谷间的距离，单位m）、频率f（每秒周期性变化的次数）。关系式 c=λf。频率单位换算：1 kHz=10³ Hz，1 MHz=10⁶ Hz。在真空中电磁波波速一定，所以频率越高波长越短，频率越低波长越长。</p></div>
+      <div class="k-item"><h4>电磁波谱</h4><p>按频率由低到高，电磁波依次为：无线电波（广播、通信）→微波（微波炉加热、卫星与移动通信）→红外线（遥控、夜视、测温）→可见光→紫外线（消毒杀菌、验钞）→X射线（医学透视、检查骨折）→γ射线（治疗肿瘤、做脑手术）。频率越高波长越短。</p></div>
+      <div class="k-item"><h4>电磁波传递信息</h4><p>我们生活在电磁波的海洋里。广播电台、电视台把声音、图像信号加载到电磁波上发射出去，收音机、电视机接收后还原出来；手机也是靠电磁波传递信号的。电磁波传播不需要介质，所以无线电波能穿过大气层实现太空通信。</p></div>
+      <div class="k-item"><h4>光纤通信</h4><p>光导纤维（光纤）是传输光信号的器件。光纤有内外两层，折射本领不同，光在内芯与界面上经多次全反射向前传播，不会跑到外层。光纤通信信息容量大（一根光纤可同时传输相当于上万根电线的信息量）、抗干扰能力强、信号衰减小，适合远距离、大容量传输。激光是电磁波（可见光等波段），常作光纤通信的光源。</p></div>
+      <div class="k-item"><h4>现代通信网络</h4><p>微波通信：微波大致沿直线传播，像接力赛一样每隔几十千米建一座接力站（中继站）接收、放大并继续传送信号。卫星通信：通信卫星把地面站送来的信号放大后转发给另一地面站，起空中中继作用。移动通信：手机用微波信号与按蜂窝布局的基地台联系，故也称蜂窝电话。互联网把全球的计算机连接起来，实现远程教育、远程医疗、网络电话等。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 北师大版九年级上册 · 第1章 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_physics9_ch19_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第19章 走进信息时代',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第19章 走进信息时代,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "在人类通信史上，使信息的传输方式发生根本变化的是（　）", "opts": ["语言的产生", "文字的发明", "印刷术的发明", "电报和电话的发明"], "ans": 3, "exp": "电的使用使有线电报和有线电话的发明成为可能，使信息的传输方式发生了根本变化，信息传得快、传得远、信息量大。语言、文字、印刷术的发明也都推动了信息传播，但引起根本变化的是电报和电话。"}, {"q": "关于电磁波，下列说法中正确的是（　）", "opts": ["电磁波的传播需要空气等介质", "电磁波在真空中的传播速度约为3×10⁸ m/s", "电磁波不能在真空中传播", "电磁波只能在固体中传播"], "ans": 1, "exp": "电磁波传播不需要介质，在真空中也能传播，且真空中速度最大，c=3×10⁸ m/s。宇航员在太空能通过电磁波与地面联系，正说明真空中可以传播电磁波；需要介质传播的是声波。"}, {"q": "下列事例中，利用电磁波传递信息的是（　）", "opts": ["用B超检查身体", "用声呐探测海底深度", "用收音机收听广播电台的节目", "蝙蝠依靠回声捕食"], "ans": 2, "exp": "收音机、电视机接收的是广播电台、电视台发射的电磁波（无线电波）。B超、声呐、蝙蝠捕食利用的都是超声波，超声波与声波一样需要介质传播，不是电磁波。"}, {"q": "某电磁波的频率为100 MHz（1 MHz=10⁶ Hz），它在真空中的波长约为（　）", "opts": ["3 m", "0.3 m", "30 m", "300 m"], "ans": 0, "exp": "先换算单位：100 MHz=100×10⁶ Hz=10⁸ Hz。由c=λf得 λ=c/f=3×10⁸ m/s÷10⁸ Hz=3 m。若把100 MHz误当成10⁶ Hz或10⁹ Hz，就会算错。"}, {"q": "关于真空中传播的电磁波，下列说法正确的是（　）", "opts": ["频率越高的电磁波波长越长", "频率越高的电磁波波长越短", "波长越长的电磁波传播速度越大", "不同频率电磁波的波长都相同"], "ans": 1, "exp": "真空中各种电磁波的波速一定，都等于c=3×10⁸ m/s，与频率、波长无关；由c=λf知，波速一定时频率与波长成反比，频率越高波长越短。"}, {"q": "下列电磁波按频率由低到高排列正确的是（　）", "opts": ["无线电波→红外线→可见光→紫外线→X射线→γ射线", "γ射线→X射线→紫外线→可见光→红外线→无线电波", "无线电波→可见光→红外线→紫外线→X射线→γ射线", "无线电波→红外线→紫外线→可见光→X射线→γ射线"], "ans": 0, "exp": "电磁波谱中，按频率由低到高（波长由长到短）的顺序是：无线电波（含微波）→红外线→可见光→紫外线→X射线→γ射线。记住口诀“无线红可紫X伽马”。"}, {"q": "医生给病人拍X光片来判断是否骨折，利用的是（　）", "opts": ["红外线", "紫外线", "X射线", "γ射线"], "ans": 2, "exp": "X射线穿透本领较强，能透过肌肉组织在胶片上成像，可用来做医学透视检查、拍X光片判断骨折等。γ射线用于治疗肿瘤等，二者不要混淆。"}, {"q": "紫外线的主要用途是（　）", "opts": ["遥控电视机", "消毒杀菌、验钞防伪", "给物体加热", "医学透视检查"], "ans": 1, "exp": "紫外线能使荧光物质发光，可用来验钞防伪；紫外线还能消毒杀菌，医院和日常生活中常用紫外线灯杀菌。遥控、夜视、加热是红外线的本领。"}, {"q": "电视机、空调等设备的遥控器是利用什么进行遥控的（　）", "opts": ["紫外线", "红外线", "微波", "X射线"], "ans": 1, "exp": "红外线热作用强、易被遥控器发射和接收，电视机、空调等遥控器都是利用红外线进行遥控的。紫外线主要用于消毒和验钞，注意区分。"}, {"q": "下列家用电器中，利用电磁波工作的是（　）", "opts": ["电熨斗", "电风扇", "微波炉", "洗衣机"], "ans": 2, "exp": "微波炉利用微波（电磁波）使食物内部分子振动生热来加热食物。电熨斗利用电流的热效应，电风扇、洗衣机利用电动机，它们工作时都不是靠电磁波。"}, {"q": "手机之间通话和收发信息，利用的是（　）", "opts": ["微波传送", "超声波传送", "光纤传送", "空气传送"], "ans": 0, "exp": "手机是移动电话，用微波信号（电磁波）与蜂窝式布局的基地台联系，再由电话网络转接，所以手机也被称为蜂窝电话。声音信号不是靠超声波或空气直接传的。"}, {"q": "关于光纤（光导纤维）通信，下列说法正确的是（　）", "opts": ["光纤中传播的是电流信号", "光在光纤中经多次全反射向前传播，不会跑到外层", "光纤能传输的信息量比电线少", "光纤通信容易受外界电磁干扰"], "ans": 1, "exp": "光纤由内外两层折射本领不同的材料组成，光在内芯界面处不断发生全反射而向前传播，即使光纤弯曲光也不会跑出外层。光纤通信信息容量大（一根光纤相当于上万根电线）、抗干扰能力强、信号衰减小。"}, {"q": "在光纤通信中，用来传递信号的激光属于（　）", "opts": ["超声波", "电磁波", "次声波", "机械波"], "ans": 1, "exp": "光本身就是电磁波，激光是频率很高、方向性好的电磁波（处于可见光等波段）。光纤中传输的光信号就是电磁波，因此激光可以在光纤中传播，而不是声波。"}, {"q": "医院用“伽马刀”做脑部手术、治疗肿瘤，主要利用的是（　）", "opts": ["红外线", "X射线", "紫外线", "γ射线"], "ans": 3, "exp": "γ射线穿透能力强、能量大，医生可用γ射线做脑手术、治疗肿瘤（如伽马刀）。X射线用于透视和拍片检查，红外线用于遥控和夜视，不要混淆。"}]
+const flashcards=[{"q": "人类传递信息的主要方式经历了怎样的发展过程？", "a": "由口头语言，到文字记载、印刷术，再到电报、电话，直至当今的广播电视和计算机网络（互联网）。电的利用使信息的传输方式发生了根本变化。"}, {"q": "描述波特征的三个物理量是什么？波长是怎样定义的？", "a": "波速（传播快慢）、波长、频率。波长是相邻两个波峰（或波谷）之间的距离，用λ表示，单位是m。"}, {"q": "电磁波传播需要介质吗？在真空中速度多大？", "a": "电磁波传播不需要介质，在真空中也能传播，真空中的波速等于光速 c=3×10⁸ m/s，空气中的光速近似等于真空中的光速。"}, {"q": "波速、波长和频率的关系式是什么？真空中频率与波长有何关系？", "a": "c=λf（c为波速，λ为波长，f为频率）。真空中电磁波波速一定，所以频率越高波长越短，频率越低波长越长，二者成反比。"}, {"q": "电磁波谱按频率由低到高是怎样排列的？", "a": "无线电波（含微波）→红外线→可见光→紫外线→X射线→γ射线，频率逐渐升高、波长逐渐变短。微波炉用微波，遥控夜视用红外线，消毒验钞用紫外线，透视拍片用X射线，治疗肿瘤用γ射线。"}, {"q": "红外线和紫外线的主要应用各有哪些？", "a": "红外线热作用强：遥控器遥控、夜视仪、红外测温等。紫外线：能使荧光物质发光（验钞防伪）、能消毒杀菌。两者本领不同，不能混淆。"}, {"q": "光在光纤中是怎样传播的？光纤通信有什么优点？", "a": "光纤有折射本领不同的内外两层，光在内芯界面上不断发生全反射，经多次全反射向前传播，不会跑到外层。优点：信息容量大（一根光纤可同时传输相当于上万根电线的信息量）、抗干扰能力强、信号衰减小，适合远距离大容量传输。"}, {"q": "广播、电视和手机是怎样传递信息的？", "a": "都是把声音、图像等信号加载到电磁波上传播：广播电台、电视台用无线电波（电视还可用微波、卫星）发射；手机通话和收发信息利用微波，由蜂窝式布局的基地台接收转发。"}]
+const errors=[{"title": "电磁波必须靠介质传播？", "wrong": "电磁波和声波一样，必须依靠空气等介质才能传播，真空中没有介质，电磁波无法传播。", "right": "电磁波传播不需要介质，在真空中也能传播，真空中速度c=3×10⁸ m/s。宇航员在太空中靠电磁波与地面联系，就证明电磁波能在真空中传播；需要介质传播的是声波。"}, {"title": "激光不是电磁波？", "wrong": "激光是一种很特殊的光，它不属于电磁波，所以光纤里传输的不是电磁波，只是普通的光。", "right": "光本身就是电磁波，激光是频率很高、方向性好的电磁波（处于可见光等波段）。光纤通信中传输的光信号就是电磁波，只是频率比无线电波高得多。"}, {"title": "频率越高波长越长？", "wrong": "电磁波的频率越高，波长就越长；而且频率越高，电磁波传播得越快。", "right": "在真空中，各种频率的电磁波传播速度都相同，都等于c=3×10⁸ m/s，与频率、波长无关。波速一定时，频率越高波长越短、越低越长，二者成反比。"}, {"title": "红外线、紫外线的本领混淆", "wrong": "红外线能杀菌消毒、验钞防伪；紫外线热作用强，电视机遥控器用的是紫外线。", "right": "热作用强、用于遥控和夜视的是红外线；紫外线能使荧光物质发光（验钞）、能消毒杀菌。杀菌验钞靠紫外线、遥控夜视靠红外线，说反就错了。"}, {"title": "光在光纤中沿直线传播？", "wrong": "光纤是一根根直的细玻璃丝，光在里面和空气中一样沿直线一下子传到远方。", "right": "光纤由折射本领不同的内外两层组成，光在内芯与界面上不断发生全反射，经多次全反射“之”字形向前传播，即使光纤弯曲，光也不会跑到外层。光纤通信信息量大、抗干扰能力强，是它成为“信息高速公路”的原因。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_physics9_ch19';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

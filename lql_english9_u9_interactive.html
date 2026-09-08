@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 9 · I like music that I can dance to. · 九年级英语</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> Unit 9 · I like music that I can dance to.</h1>
+    <div class="meta">人教九全 · Unit 9 · 16 题 · 10 知识 · 10 卡 · 5 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>单元话题 · 音乐、电影与喜好</h4><p>本单元围绕“谈论喜欢的音乐和电影”展开，功能句型是用定语从句说明自己偏爱的原因：I like music that I can dance to.（我喜欢能跟着跳舞的音乐。）I like music that has great lyrics. I prefer movies that give me something to think about. 常用表达：dance to 随着……跳舞、sing along with 跟着（一起）唱、in one's spare time 在某人空闲时间。</p></div>
+      <div class="k-item"><h4>定语从句 · 先行词与关系词</h4><p>定语从句放在名词（先行词）之后起修饰作用，引导词叫关系词，本单元学关系代词 that / which / who。关系词有三重身份：代替先行词、在从句中充当句子成分（主语或宾语）、把主句和从句连接成一个句子。合并两步：先找到两个句子中相同的名词，再用关系词替换从句中的它。例：I love the music. The music is quiet. → I love the music that/which is quiet.</p></div>
+      <div class="k-item"><h4>先行词指物 → 关系词用 that / which</h4><p>先行词是物（music、movie、book 等）时，用 that 或 which 都可以：The music that/which I like is quiet.（我喜欢的音乐很安静。）I like music that has great lyrics.（我喜欢歌词优美的音乐。）关系词在从句中作主语时不能省略：the music that is quiet 中的 that 不可省。注意区分：先行词是人时不能误用 which。</p></div>
+      <div class="k-item"><h4>先行词指人 → 关系词用 who / that</h4><p>先行词是人（singer、musician、writer 等）时，用 who 或 that：I like the singer who writes his own songs.（我喜欢自己写歌的歌手。）教材听力原句：Carmen likes musicians who play different kinds of music. 关系词在从句中作主语时同样不能省略，且从句谓语动词的单复数要与先行词一致：musicians who play（复数）、the singer who writes（第三人称单数）。</p></div>
+      <div class="k-item"><h4>关系词在从句中作宾语 → 可以省略</h4><p>关系词在从句中作宾语时，that / which / who 可以省略，句意不变：The book (that) I read yesterday is interesting.（我昨天读的那本书很有趣。）该句也可说 The book which I read yesterday is interesting.。若从句谓语是动词短语（动词+介词），介词要留在句末不能丢：This is the song (that) she sings along with.（with 不能省。）拓展了解：当先行词被 only、序数词或最高级修饰时，习惯上只用 that，如 the most moving piece of music that I have ever heard——本单元不作深入要求，记住作宾语可省略、拿不准时用 that 最保险即可。</p></div>
+      <div class="k-item"><h4>prefer 的三种结构</h4><p>prefer 意为“更喜欢”，相当于 like ... better：①prefer A to B 比起 B 更喜欢 A：I prefer tea to coffee.（比起咖啡我更喜欢茶。）②prefer doing A to doing B 比起做 B 更愿意做 A：He prefers staying at home to going out.（他宁愿待在家也不愿外出。）③prefer to do A rather than do B 宁愿做 A 也不做 B：She prefers to walk rather than ride a bike.。注意 to 和 rather than 后面的形式前后要一致；prefer 的过去式是 preferred（重读闭音节双写 r）。</p></div>
+      <div class="k-item"><h4>would rather do sth</h4><p>would rather do sth 意为“宁愿做某事”，后接动词原形：I would rather stay at home.（我宁愿待在家里。）对比选择用 would rather do A than do B：I would rather listen to music than watch TV. 否定式是 would rather not do sth：I would rather not go out today.（我今天宁愿不出门。）它与 prefer to do rather than do 表达相近的意思，可互换。</p></div>
+      <div class="k-item"><h4>介词 + which / whom（介词后不用 that）</h4><p>当先行词在从句中作介词的宾语且介词提到关系词前时，指物用 which、指人用 whom，绝不能用 that：I like the music to which I can dance. = I like the music (that) I can dance to.（两种说法都正确，介词保留在句末时用 that 或省略。）这是本单元最基本的要求：介词后面只能接 which / whom，in which 表示“在其中”，可理解为 where 的正式说法。注意别把 in that case（那样的话）误当成“介词+that”的定语从句——in that case 是固定短语，that 不是关系词。</p></div>
+      <div class="k-item"><h4>Section A 3a · What Do You Feel Like Watching Today?</h4><p>课文谈“今天想看什么电影”要随心情而定，句式 feel like doing sth 想要做某事：What do you feel like watching today? 文中出现多句定语从句：When I'm down or tired, I prefer movies that can cheer me up. 并介绍了各类电影：comedies 喜剧片、documentaries 纪录片、dramas 剧情片、action movies 动作片、cartoons 动画片，以及 funny dialogs 有趣的台词、a happy ending 圆满的结局、provide plenty of information 提供大量信息。</p></div>
+      <div class="k-item"><h4>Section B 2b · Sad but Beautiful（阿炳与《二泉映月》）</h4><p>阅读讲作者听中国民间音乐会（a concert of Chinese folk music）时，被一首二胡（erhu）曲深深打动（moved me）。乐曲的名字是 Erquan Yingyue（《二泉映月》），音乐悲伤而美丽（sad but beautiful），令人感受到强烈的悲伤与痛苦（a strong sadness and pain）。演奏者是阿炳：他一生坎坷，父亲去世后生活困苦，后来患病失明，一度流落街头以演奏为生（perform on the streets），婚后仍坚持街头演奏。如今《二泉映月》成为中国国宝（one of China's national treasures），被二胡大师们演奏和称赞（praise）。它的悲伤之美不仅描绘了阿炳的一生，也让人想起自己内心深处的伤痛（recall their deepest wounds）。遗憾（pity）的是，他演奏过的乐曲只有少数被录制保存下来。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 统编版语文九年级全一册 · 第一单元 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_english9_u9_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+
+
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:"Unit 9 I like music that I can dance to.",chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:"Unit 9 I like music that I can dance to.,课堂练习"};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "—What kind of music do you like? —I like music ____ I can dance to.", "opts": ["that", "who", "where", "whose"], "ans": 0, "exp": "先行词 music 指物，从句中 dance to 缺少宾语（dance to the music），用 that/which 引导，也可直接省略：I like music I can dance to. 本句是单元标题句：我喜欢能跟着跳舞的音乐。"}, {"q": "The music ____ I like is quiet.", "opts": ["who", "that", "whose", "what"], "ans": 1, "exp": "先行词 music 指物，关系词在从句中作 like 的宾语，可用 that 或 which，也可省略：The music I like is quiet. 该句是教材核心例句：我喜欢的音乐很安静。"}, {"q": "I like the singer ____ writes his own songs.", "opts": ["which", "whom", "who", "whose"], "ans": 2, "exp": "先行词 singer 指人，关系词在从句中作主语，用 who（也可用 that），不能省略；whom 只能作宾语，which 只指物。教材例句：我喜欢自己写歌的歌手。"}, {"q": "I like movies ____ have a happy ending.", "opts": ["whom", "whose", "where", "that"], "ans": 3, "exp": "先行词 movies 指物，关系词在从句中作主语（have 的主语），用 that（也可用 which），且作主语时不能省略。句意：我喜欢结局圆满的电影。"}, {"q": "The book ____ I read yesterday is interesting.", "opts": ["whose", "that", "who", "where"], "ans": 1, "exp": "先行词 book 指物，关系词作 read 的宾语，用 that/which，且作宾语时可省略：The book I read yesterday is interesting.（我昨天读的那本书很有趣。）"}, {"q": "This is the school in ____ my father taught ten years ago.", "opts": ["that", "what", "which", "who"], "ans": 2, "exp": "先行词 school 指物，介词 in 提前到关系词前时只能用 which，不能用 that：in which my father taught（我父亲曾在那里教书）。也可说 the school (that) my father taught in. 介词后接 that 是错误的。"}, {"q": "I prefer tea ____ coffee.", "opts": ["than", "for", "over", "to"], "ans": 3, "exp": "prefer A to B 表示“比起 B 更喜欢 A”，介词固定用 to，不能用 than。句意：比起咖啡我更喜欢茶。"}, {"q": "He prefers ____ at home to going out on weekends.", "opts": ["stay", "staying", "to stay", "stayed"], "ans": 1, "exp": "prefer doing A to doing B：比起做 B 更愿意做 A，前后都用动名词，与后面的 going out 保持一致，故选 staying。句意：他周末宁愿待在家也不愿外出。"}, {"q": "She prefers to walk to school rather than ____ a bike.", "opts": ["rides", "rode", "riding", "ride"], "ans": 3, "exp": "prefer to do A rather than do B 意为“宁愿做 A 也不做 B”，rather than 后用动词原形与 to walk 平行，故选 ride。句意：她宁愿走路去上学也不骑车。"}, {"q": "I would rather ____ TV at home than go shopping in such bad weather.", "opts": ["to watch", "watch", "watching", "watched"], "ans": 1, "exp": "would rather do A than do B 表示“宁愿做 A 也不做 B”，would rather 后接动词原形，故选 watch。句意：天气这么糟，我宁愿待在家看电视也不去购物。"}, {"q": "—I'm afraid I can't go to the concert with you tonight. —____ I'll go with Li Lei instead.", "opts": ["In the end", "In a word", "In that case", "In public"], "ans": 2, "exp": "in that case 意为“那样的话”，根据上文“不能一起去听音乐会”，下文顺理成章用 In that case（那样的话我就和李雷去）。In the end 最后、In a word 总之、In public 公开地均不合语境。"}, {"q": "I can't go out to play because there is ____ homework to do this weekend.", "opts": ["a few", "plenty of", "little", "many"], "ans": 1, "exp": "plenty of 意为“大量的”，可修饰可数名词复数或不可数名词。homework 是不可数名词，且“不能出去玩”说明作业多，故选 plenty of；a few/many 只修饰可数名词复数，little 表“几乎没有”与句意相反。"}, {"q": "I usually listen to pop music, but ____ I enjoy a quiet piece of erhu music instead.", "opts": ["in that case", "at the same time", "once in a while", "as soon as"], "ans": 2, "exp": "once in a while 意为“偶尔、间或”，句意：我通常听流行音乐，但偶尔也会换换口味听一曲安静的二胡曲。in that case 那样的话、as soon as 一……就（需接从句）、at the same time 同时均不合句意。"}, {"q": "—Will Jane come to our party tomorrow? —I suppose ____, because she told me she would be free.", "opts": ["not", "so", "it", "that"], "ans": 1, "exp": "I suppose so. 意为“我想是的”，是简略回答用语，与 I think so. 用法相同；由“她说明天有空”可知答案肯定，故选 so，不能用 not（表否定）。"}, {"q": "The erhu music was so ____ that it moved many people at the concert to tears.", "opts": ["moved", "moving", "move", "moves"], "ans": 1, "exp": "music 作主语，需用现在分词转化来的形容词 moving 表“令人感动的”；moved 表“被感动的”，主语通常是人。句意：二胡曲如此动人，音乐会上许多人被感动得落泪。"}, {"q": "I like this song because it has beautiful ____ that I can sing along with.", "opts": ["letters", "voices", "pictures", "lyrics"], "ans": 3, "exp": "lyrics 意为“歌词”（常用复数），sing along with the lyrics 跟着歌词一起唱。letters 字母/信、voices 嗓音、pictures 图片均不合句意。句意：我喜欢这首歌，因为它的歌词优美，我可以跟着唱。"}]
+const flashcards=[{"q": "什么是定语从句？先行词和关系词是什么？", "a": "定语从句修饰它前面的名词，被修饰的名词叫先行词，连接词叫关系词。关系词代替先行词，并在从句中作成分：I love the music. The music is quiet. → I love the music that/which is quiet.（两句合一：music 是先行词，that 在从句中作主语。）"}, {"q": "先行词是“物”时用什么关系词？", "a": "用 that 或 which：The music that/which I like is quiet.（我喜欢的音乐很安静。）I like music that has great lyrics.（我喜欢歌词优美的音乐。）that 比 which 更常用、更保险。"}, {"q": "先行词是“人”时用什么关系词？", "a": "用 who（或 that）：I like the singer who writes his own songs.（我喜欢自己写歌的歌手。）关系词在从句中作主语时不能省略，从句谓语要与先行词一致：musicians who play different kinds of music（乐手们演奏不同种类的音乐）。"}, {"q": "关系词什么时候可以省略？", "a": "关系词在从句中作宾语时可以省略：The book (that) I read yesterday is interesting.（我昨天读的那本书很有趣。）The music (that) I listened to was great.（我听的音乐很棒——介词 to 保留在句末，不能丢。）作主语时不能省：the music that is quiet。"}, {"q": "介词提到关系词前怎么用？", "a": "介词提前时，指物用 which、指人用 whom，绝不能用 that：the music to which I can dance（= the music (that) I can dance to）。介词后接 that 是常见错误；in which 表“在其中”。注意 in that case（那样的话）是固定短语，不是定语从句。"}, {"q": "prefer 的三种常用结构怎么用？", "a": "①prefer A to B：I prefer tea to coffee. ②prefer doing A to doing B：He prefers staying at home to going out. ③prefer to do A rather than do B：She prefers to walk rather than ride a bike. 口诀：to 或 rather than 前后形式要一致。prefer 过去式 preferred（双写 r）。"}, {"q": "would rather 怎么用？", "a": "would rather do sth 宁愿做某事（后接动词原形）：I would rather stay at home. 对比：would rather do A than do B 宁愿做 A 也不做 B：I would rather listen to music than watch TV. 否定：would rather not do sth：I would rather not go out today. 与 prefer to do rather than do 意思相近。"}, {"q": "表达喜好有哪些功能句型（Section A 1b/2a）？", "a": "I like music that I can dance to. / I like music that I can sing along with. / I like music that has great lyrics. 教材听力例句：Carmen likes musicians who play different kinds of music. Xu Fei prefers groups that play quiet and slow songs. 谈论电影：I prefer movies that give me something to think about."}, {"q": "两篇课文的关键表达（3a 与 2b）", "a": "3a：feel like doing sth 想要做某事（What do you feel like watching today?）；cheer me up 使我振作；a happy ending 圆满结局；movies that make me laugh；电影类型：comedy/documentary/drama/action movie/cartoon。2b：Chinese folk music 中国民间音乐；erhu 二胡；the music moved me 音乐打动了我；moving 令人感动的；sense a strong sadness and pain 感受到强烈的悲伤与痛苦；Erquan Yingyue（《二泉映月》）；one of China's national treasures 中国的国宝之一；It is a pity that... 遗憾的是……"}, {"q": "本单元重点词汇与短语串记", "a": "prefer 更喜欢；lyrics 歌词；Australian 澳大利亚的；electronic 电子的；suppose 假定、猜想（I suppose so. 我想是的）；smooth 平滑的、悦耳的；spare 空闲的（in one's spare time）；director 导演；case 情况、箱子；war 战争；documentary 纪录片；drama 戏剧、剧情片；plenty 大量（plenty of）；shut 关闭（shut-shut-shut）；superhero 超级英雄。短语：dance to 随……起舞；sing along with 跟着唱；in that case 那样的话；plenty of 大量的；once in a while 偶尔。"}]
+const errors=[{"title": "关系词指代错位：物用 who / 人用 which", "wrong": "把 The music who I like is quiet. 或 I like the singer which sings well. 当成正确句子。", "right": "先行词指物用 that/which：The music that/which I like is quiet. 先行词指人用 who/that：I like the singer who sings well. 口诀：人用 who，物用 which/that，先看先行词是人是物再选关系词。"}, {"title": "从句中画蛇添足再加宾语 it", "wrong": "写成 The book that I read it yesterday is interesting. 或 This is the song that I sang along with it.", "right": "关系词 that 已代替先行词在从句中充当宾语，从句中不能再出现 it：The book (that) I read yesterday is interesting. 记住：有关系词（或省略关系词）时，从句宾语位置不能再填代词；介词要保留：the song (that) I sang along with。"}, {"title": "介词后误用 that", "wrong": "写成 This is the school in that my father taught. 或 the music to that I can dance.", "right": "介词提前到关系词前时，只能用 which（指物）或 whom（指人），不能用 that：the school in which my father taught；the music to which I can dance。更口语化的说法是把介词放回从句末尾：the music (that) I can dance to. 介词后接 that 是本单元最常见的错误。"}, {"title": "prefer 后用 than 表比较", "wrong": "把 I prefer tea than coffee. / He prefers playing basketball than watching TV. 当成正确句子。", "right": "prefer 的比较介词固定用 to：I prefer tea to coffee.（比起咖啡更喜欢茶。）结构：prefer A to B；prefer doing A to doing B；prefer to do A rather than do B（只有 rather than 结构里才用 than）。"}, {"title": "would rather 后误接 to do / doing", "wrong": "把 I would rather to stay at home. 或 She would rather going out than staying in. 当成正确句子。", "right": "would rather 后接动词原形：I would rather stay at home. 对比结构 than 前后都用原形：She would rather go out than stay in. 否定：would rather not do sth（不说 would not rather do）。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_english9_u9';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>
