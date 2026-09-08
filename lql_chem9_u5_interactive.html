@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第五单元 · 化学方程式 · 九年级化学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-flask"></i> 第五单元 · 化学方程式</h1>
+    <div class="meta">人教九上 · 第5单元 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>质量守恒定律的内容与适用范围</h4><p>参加化学反应的各物质的质量总和，等于反应后生成的各物质的质量总和。它只适用于【化学变化】，物理变化不能用它解释：10 g 水加热变成 10 g 水蒸气，前后质量虽然不变，但只是状态改变、没有新物质生成，不属于质量守恒定律。定律中的“参加反应”强调：反应物有剩余时，剩余部分的质量不能计入。还要注意：质量守恒是“总质量”守恒，不是体积守恒，也不是分子数目守恒。</p></div>
+      <div class="k-item"><h4>蜡烛变轻、镁条变重的真相</h4><p>蜡烛在空气中燃烧后“变轻”，是因为生成的 CO2 和水蒸气逸散到空气中，留在原处的固体自然变少——若设法把生成的气体全部收集起来称量，总质量与参加反应的蜡烛、氧气的质量之和相等，仍然守恒。镁条燃烧后“变重”，则是因为 O2 参加了反应（2Mg+O2=点燃=2MgO），生成物里多了氧元素的质量。两种情况都严格遵守质量守恒定律，表面的增减只是“称量范围不同”造成的假象。</p></div>
+      <div class="k-item"><h4>质量守恒的微观实质</h4><p>化学反应的实质是分子分裂成原子、原子重新组合成新分子。反应前后：原子的种类、数目、质量都不变，所以元素种类、元素质量和物质总质量都不变；而分子的种类一定改变（生成了新物质），分子的数目可能改变。判断时抓住“原子三不变”即可，如 2H2 + O2 =点燃= 2H2O：原子种类、数目、质量都不变，但分子从 3 个变成 2 个、种类也变了。</p></div>
+      <div class="k-item"><h4>验证质量守恒定律的三个经典实验</h4><p>① 白磷在密闭锥形瓶中燃烧（4P+5O2=点燃=2P2O5），前后总质量相等；② 铁钉放入硫酸铜溶液（Fe+CuSO4=FeSO4+Cu，铁钉表面析出红色铜），敞口烧杯即可，因为这个反应无气体参加也无气体生成；③ 盐酸与碳酸钠（Na2CO3+2HCl=2NaCl+H2O+CO2↑）有 CO2 气体生成，必须在密闭容器中进行。结论：有气体参加或生成的反应，验证时必须在密闭容器中，防止气体逸散或进入而影响称量。</p></div>
+      <div class="k-item"><h4>化学方程式的意义——以 4P+5O2=点燃=2P2O5 为例</h4><p>化学方程式可以表示：① 质的方面——磷和氧气在点燃条件下生成五氧化二磷；② 量的方面——每 124 份质量的磷与 160 份质量的氧气恰好完全反应，生成 284 份质量的五氧化二磷（质量比 124:160:284，即 31:40:71）；③ 微观方面——4 个磷原子和 5 个氧分子反应生成 2 个五氧化二磷分子。它同时体现质量守恒定律：反应前后原子种类、数目都不变。</p></div>
+      <div class="k-item"><h4>书写化学方程式的原则、步骤与化合价</h4><p>两条原则：① 以客观事实为基础，不能臆造不存在的反应和产物（铁在氧气中燃烧生成 Fe3O4 而不是 Fe2O3；过氧化氢分解生成水和氧气而不是氢气和氧气）；② 遵守质量守恒定律，通过配平使反应前后各原子数目相等。书写步骤：写（正确写出化学式，单质磷写 P、氧气写 O2）→ 配（配平）→ 注（注明反应条件）→ 等（把短线改成等号）。判断化学式正误可借助化合价：单质中元素的化合价为 0（O2 中的氧、Fe 中的铁都是 0 价）；化合物中各元素正负化合价的代数和为 0，所以镁（+2 价）和氧（-2 价）形成的氧化物是 MgO，而不是 MgO2。</p></div>
+      <div class="k-item"><h4>配平方法：最小公倍数法与观察法</h4><p>最小公倍数法：找出反应前后某原子个数相差较大、又在化学式中出现次数较少的元素，求出两边该原子个数的最小公倍数，先配这种物质。如配 P+O2——P2O5：左边氧原子 2 个、右边 5 个，最小公倍数为 10，O2 前配 5、P2O5 前配 2，再配磷为 4，得 4P+5O2=点燃=2P2O5。需要重点记牢的配平结果：2H2O2=MnO2=2H2O+O2↑；2KMnO4=△=K2MnO4+MnO2+O2↑；2KClO3=MnO2/△=2KCl+3O2↑；2H2+O2=点燃=2H2O。配平只能改化学式前的系数，绝不能改动化学式中右下角的数字，且系数要化为最简整数比。</p></div>
+      <div class="k-item"><h4>气体“↑”、沉淀“↓”与反应条件的标注</h4><p>气体符号“↑”的使用规则：只有当反应物中没有气体、生成物中有气体时，才在气体物质的化学式右边标“↑”；若反应物中已有气体，生成物中的气体不标。例如 C+O2=点燃=CO2、S+O2=点燃=SO2 都不标↑；而 2KMnO4=△=K2MnO4+MnO2+O2↑、2KClO3=MnO2/△=2KCl+3O2↑、2H2O=通电=2H2↑+O2↑ 都必须标↑。溶液中的反应若生成沉淀则标“↓”。反应条件（点燃、加热△、高温、通电、催化剂 MnO2）写在等号上、下方。</p></div>
+      <div class="k-item"><h4>利用化学方程式计算的步骤与规范</h4><p>一般步骤（口诀：设、写、标、列、解、答）：① 设未知数（x 不带单位）；② 写出正确的化学方程式；③ 标出相关物质的相对分子质量总和以及已知量、未知量（写在对应化学式正下方）；④ 列出比例式；⑤ 求出未知数（结果要带单位）；⑥ 简明作答。注意事项：代入的必须是参加反应的纯净物质量，含杂质的、溶液中的溶质之外的、气体的体积都不能直接代入；各物质单位要一致。例如 2H2O=通电=2H2↑+O2↑ 的相对分子质量总和为 36:4:32，电解 18 g 水可得 H2 2 g、O2 16 g。</p></div>
+      <div class="k-item"><h4>典型计算题与守恒巧算</h4><p>抓住“相对分子质量总和之比 = 实际质量之比”可以快速心算：① 12 g 碳完全燃烧需 O2 32 g、生成 CO2 44 g（C+O2=点燃=CO2，质量比 12:32:44）；② 24.5 g 氯酸钾完全分解得 O2 9.6 g（2KClO3=MnO2/△=2KCl+3O2↑，质量比 245:149:96）；③ 31.6 g 高锰酸钾受热分解得 O2 3.2 g（2KMnO4=△=K2MnO4+MnO2+O2↑，质量比 316:32）；④ 制取 3.2 g O2 至少需 H2O2 6.8 g（2H2O2=MnO2=2H2O+O2↑，质量比 68:36:32）。做选择题还可用元素守恒快速检验，如电解水所得 H2 的质量就等于水中氢元素的质量。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 人教版九年级上册 · 第五单元第1章 动物的主要类群 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_chem9_u5_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第五单元 化学方程式',chapter:'第五单元第1章 动物的主要类群',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第五单元第1章 动物的主要类群'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[[{"q": "下列现象或事实中，能用质量守恒定律解释的是（　）", "opts": ["A. 镁条在空气中燃烧后，生成物的质量比镁条的质量大", "B. 10 g 水加热变成 10 g 水蒸气，质量不变", "C. 将 10 g 食盐溶解在 100 g 水中，得到 110 g 食盐水", "D. 酒精敞口放置一段时间后质量减小"], "ans": 0, "exp": "质量守恒定律只适用于化学变化。B 中水变水蒸气只是状态改变，是物理变化；C 中食盐溶解、D 中酒精挥发也都是物理变化，都不能用质量守恒定律解释。A：镁条燃烧 2Mg+O2=点燃=2MgO，生成物是镁与参加反应的氧气化合而成，质量比镁条大，是化学变化且遵守质量守恒定律。"}, {"q": "蜡烛在空气中燃烧后质量变小，对此现象的正确解释是（　）", "opts": ["A. 燃烧使蜡烛中的原子凭空消失了", "B. 蜡烛燃烧不遵守质量守恒定律", "C. 蜡烛燃烧是物理变化，与化学变化无关", "D. 蜡烛燃烧遵守质量守恒定律，只是生成的 CO2 和水蒸气逸散到空气中；若把生成物全部收集起来称量，总质量不变"], "ans": 3, "exp": "蜡烛燃烧是石蜡与 O2 的化学变化，一定遵守质量守恒定律。变轻是因为生成的 CO2 和水蒸气逸散到空气中，留在原处的固体才减少；若把生成的气体全部收集称量，总质量 = 参加反应的蜡烛质量 + 消耗的氧气质量。A 违背“原子不能凭空消失”，B 结论错误，C 中燃烧是化学变化。故选 D。"}, {"q": "化学反应前后，一定不变的是（　）", "opts": ["A. 分子的种类", "B. 分子的数目", "C. 原子的种类、数目和质量", "D. 物质的种类"], "ans": 2, "exp": "化学反应的实质是原子重新组合：原子的种类、数目、质量都不变，所以元素种类、元素质量和物质总质量也不变。分子的种类一定改变、数目可能改变（如 2H2+O2=点燃=2H2O 中分子总数由 3 个变为 2 个），物质的种类也一定改变。故“一定不变”的只有 C。"}, {"q": "白磷在空气中燃烧的化学方程式，书写正确的是（　）", "opts": ["A. P + O2 =点燃= P2O5", "B. P2 + O5 =点燃= P2O5", "C. 4P + 5O2 =点燃= P2O5", "D. 4P + 5O2 =点燃= 2P2O5"], "ans": 3, "exp": "白磷燃烧生成五氧化二磷。配平：左边氧原子 2 个、右边 5 个，最小公倍数为 10，O2 前配 5、P2O5 前配 2，再配磷为 4，得 4P+5O2=点燃=2P2O5。A、C 未配平（磷、氧原子数左右不等）；B 把单质磷、氧气写成 P2、O5，违背客观事实——单质磷的化学式写 P，氧气写 O2。"}, {"q": "下列化学方程式中，书写正确的是（　）", "opts": ["A. 2H2O2 =MnO2= 2H2O + O2↑", "B. 2H2O2 =MnO2= 2H2↑ + O2↑", "C. C + O2 =点燃= CO2↑", "D. 2KClO3 =MnO2/△= 2KCl + O2↑"], "ans": 0, "exp": "A：过氧化氢在 MnO2 催化下分解为水和氧气，已配平且正确标↑，2H2O2=MnO2=2H2O+O2↑。B 生成物写错，过氧化氢分解生成水而不是氢气；C 中反应物 O2 已是气体，生成物 CO2 不应标↑，应为 C+O2=点燃=CO2；D 氧原子不守恒，右边 2KCl+O2↑ 只有 2 个氧原子而左边有 6 个，应配 3O2↑。"}, {"q": "铁丝在氧气中燃烧的化学方程式，书写正确的是（　）", "opts": ["A. 2Fe + 3O2 =点燃= 2Fe2O3", "B. 3Fe + 2O2 =点燃= Fe3O4", "C. Fe + O2 =点燃= Fe3O4", "D. 3Fe + 4O2 =点燃= Fe3O4"], "ans": 1, "exp": "铁丝在氧气中剧烈燃烧、火星四射，生成黑色固体四氧化三铁 Fe3O4，配平后为 3Fe+2O2=点燃=Fe3O4。A 的产物 Fe2O3 违背客观事实（那是铁缓慢氧化生锈的成分，不是燃烧产物）；C、D 未配平，反应前后原子数目不相等。"}, {"q": "下列关于化学方程式中“↑”“↓”符号使用的说法，正确的是（　）", "opts": ["A. 只要生成物中有气体，就一定要在气体化学式右边标“↑”", "B. 反应物中没有气体、生成物中有气体时才标“↑”；若反应物中已有气体，生成物中的气体不标", "C. 反应物和生成物中都有气体时，生成物的气体也要标“↑”", "D. 生成物中有气体标“↓”，有沉淀标“↑”"], "ans": 1, "exp": "气体符号规则如 B：反应物中无气体、生成物中有气体才标↑，如 2KMnO4=△=K2MnO4+MnO2+O2↑（反应物都是固体）；反应物中已有气体则不标，如 C+O2=点燃=CO2、S+O2=点燃=SO2。A、C 会把 SO2 错写成 SO2↑；D 把两个符号说反了：生成物中有沉淀才标“↓”。"}, {"q": "电解 18 g 水，可得到氢气和氧气的质量分别是（　）", "opts": ["A. 4 g、14 g", "B. 2 g、32 g", "C. 1 g、17 g", "D. 2 g、16 g"], "ans": 3, "exp": "设生成 H2 的质量为 x。2H2O=通电=2H2↑+O2↑，相对分子质量总和为 36:4:32。36:4=18 g:x，x=18×4÷36=2 g；再设 O2 为 y：36:32=18 g:y，y=18×32÷36=16 g（也可由质量守恒直接得 18-2=16 g）。故选 D。A、B、C 的比例都不符合 36:4:32。"}, {"q": "12 g 碳在氧气中完全燃烧，需要消耗氧气的质量为（　）", "opts": ["A. 8 g", "B. 16 g", "C. 44 g", "D. 32 g"], "ans": 3, "exp": "C+O2=点燃=CO2，质量比 12:32:44。设需要氧气的质量为 x：12:32=12 g:x，x=12×32÷12=32 g。故选 D。C 选项 44 g 是生成的 CO2 的质量，不要与消耗的 O2 混淆。"}, {"q": "在 MnO2 催化并加热的条件下，分解 24.5 g 氯酸钾（KClO3），可制得氧气的质量为（　）（相对原子质量：K=39，Cl=35.5，O=16）", "opts": ["A. 4.8 g", "B. 9.6 g", "C. 14.9 g", "D. 19.2 g"], "ans": 1, "exp": "2KClO3=MnO2/△=2KCl+3O2↑。KClO3 的相对分子质量为 39+35.5+16×3=122.5，则 2KClO3 的总相对分子质量为 2×122.5=245，3O2 为 3×32=96，质量比 245:96。设生成 O2 的质量为 x：245:96=24.5 g:x，x=24.5×96÷245=9.6 g。C 的 14.9 g 是同时生成的 KCl 的质量（质量比 245:149）；D 的 19.2 g 是漏乘系数 2、把总质量当 122.5 算错的结果。"}, {"q": "实验室用过氧化氢溶液制取氧气，要制得 3.2 g 氧气，至少需要过氧化氢（H2O2）的质量为（　）（相对原子质量：H=1，O=16）", "opts": ["A. 1.6 g", "B. 3.4 g", "C. 6.8 g", "D. 32 g"], "ans": 2, "exp": "2H2O2=MnO2=2H2O+O2↑。H2O2 的相对分子质量为 1×2+16×2=34，2H2O2 的总相对分子质量为 68，O2 为 32，质量比 68:32。设需要 H2O2 的质量为 x：68:32=x:3.2 g，x=68×3.2÷32=6.8 g。B 的 3.4 g 是丢掉系数 2、按 34:32 错算的结果。"}, {"q": "31.6 g 高锰酸钾（KMnO4）受热完全分解，可制得氧气的质量为（　）（相对原子质量：K=39，Mn=55，O=16）", "opts": ["A. 3.2 g", "B. 6.4 g", "C. 1.6 g", "D. 15.8 g"], "ans": 0, "exp": "2KMnO4=△=K2MnO4+MnO2+O2↑。KMnO4 的相对分子质量为 39+55+16×4=158，2KMnO4 的总相对分子质量为 316，O2 为 32，质量比 316:32。设生成 O2 的质量为 x：316:32=31.6 g:x，x=31.6×32÷316=3.2 g。故选 A。B 的 6.4 g 是漏乘系数 2、把 2KMnO4 的总质量错当成 158 算得的结果。"}, {"q": "在反应 2Mg + O2 =点燃= 2MgO 中，Mg、O2、MgO 的质量比为（　）（相对原子质量：Mg=24，O=16）", "opts": ["A. 3:2:5", "B. 2:1:2", "C. 24:32:40", "D. 6:4:5"], "ans": 0, "exp": "各物质的质量比 = 相对分子质量与其化学式前系数的乘积之比：2Mg 为 2×24=48，O2 为 32，2MgO 为 2×(24+16)=80，质量比为 48:32:80，化简为 3:2:5。B 的 2:1:2 是分子个数比（系数比），不能当质量比；C 漏乘了系数；D 是 MgO 忘乘系数 2 的结果。"}, {"q": "下列关于元素化合价的说法，正确的是（　）", "opts": ["A. 在 O2 中氧元素显 -2 价", "B. 化合物中各元素正负化合价的代数和等于 1", "C. 单质中元素的化合价都为 0，如 O2 中的氧、磷单质中的磷都是 0 价", "D. 在 P2O5 中磷元素显 +2 价"], "ans": 2, "exp": "单质中元素的化合价为 0，O2、P、Fe 等单质中的元素都显 0 价，C 正确。化合物中各元素正负化合价的代数和为 0（B 错）；氧在化合物中通常显 -2 价，但单质 O2 中的氧是 0 价（A 错）；设 P2O5 中磷为 x 价：2x+5×(-2)=0，x=+5，不是 +2 价（D 错）。"}, {"q": "用白磷燃烧验证质量守恒定律（锥形瓶口套气球，密闭体系），下列说法正确的是（　）", "opts": ["A. 白磷燃烧后锥形瓶内物质总质量变大，说明不遵守质量守恒定律", "B. 必须在敞口容器中点燃白磷，才能验证质量守恒定律", "C. 白磷燃烧前后物质总质量相等，因为反应在密闭容器中进行，反应前后所有物质都被称量，没有物质逸出或进入", "D. 该实验说明化学反应中原子可以再分"], "ans": 2, "exp": "白磷燃烧 4P+5O2=点燃=2P2O5，反应本身遵守质量守恒定律；放入密闭容器中是为了让反应前后体系内所有物质（包括气体）都被称到，排除空气进入、生成物逸散的影响，所以总质量相等，C 正确。A 中若实验操作规范，总质量并不变大；B 说反了，验证应密闭；D 错误，化学变化中原子只是重新组合，不可再分。"}, {"q": "向装有碳酸钠粉末的锥形瓶中倒入稀盐酸，产生大量气泡。若反应在敞口容器中进行，反应后称量发现质量减小，原因是（　）", "opts": ["A. 该反应不遵守质量守恒定律", "B. 生成的 CO2 气体逸散到空气中，没有参与称量", "C. 稀盐酸的质量在反应中消失了", "D. 该反应是物理变化，前后质量不守恒"], "ans": 1, "exp": "Na2CO3+2HCl=2NaCl+H2O+CO2↑：生成的 NaCl、H2O 留在容器中，CO2 气体逸出散失，敞口称量才会变小；若在密闭容器中进行，总质量不变，反应同样遵守质量守恒定律。B 正确。A 把“没称到”误当成“不守恒”；C 中盐酸中的元素都转化到生成物里，没有消失；D 中该反应是化学变化。"}]];const flashcards=[[{"q": "质量守恒定律的内容是？", "a": "参加化学反应的各物质的质量总和，等于反应后生成的各物质的质量总和。它只适用于化学变化，10 g 水变成 10 g 水蒸气不算。"}, {"q": "化学反应前后总质量不变，微观原因是什么？", "a": "反应前后原子的种类、数目、质量都不变，元素种类和元素质量也不变；分子的种类一定改变，分子的数目可能改变。"}, {"q": "蜡烛燃烧变轻、镁条燃烧变重，为什么不违背质量守恒？", "a": "蜡烛生成的 CO2 和水蒸气逸散到空气中，全收集则总质量不变；镁条增重是因为吸收了氧气（2Mg+O2=点燃=2MgO）。守恒是普遍的，变的只是称量范围。"}, {"q": "验证质量守恒定律，什么时候必须用密闭容器？", "a": "有气体参加或生成的反应（白磷燃烧、盐酸与碳酸钠）必须在密闭容器中验证；铁钉与硫酸铜溶液无气体参加、也无气体生成，敞口即可。"}, {"q": "配平化学方程式有哪两条硬规矩？", "a": "① 只能在化学式前面配系数，绝不能改动化学式右下角的数字；② 系数应为最简整数比，使反应前后各原子数目相等。"}, {"q": "铁、磷在氧气中燃烧的化学方程式？", "a": "3Fe+2O2=点燃=Fe3O4（产物是 Fe3O4，不是 Fe2O3）；4P+5O2=点燃=2P2O5。"}, {"q": "生成的气体什么时候才标“↑”？", "a": "反应物中没有气体、生成物中有气体时才标↑，如 2KMnO4=△=K2MnO4+MnO2+O2↑、2KClO3=MnO2/△=2KCl+3O2↑；反应物中已有气体就不标，如 C+O2=点燃=CO2、S+O2=点燃=SO2。"}, {"q": "利用化学方程式计算的步骤口诀？", "a": "设、写、标、列、解、答——设未知数不带单位，代入的必须是纯净物的质量，各物质单位要一致。"}, {"q": "电解 18 g 水，各得多少 H2 和 O2？", "a": "2H2O=通电=2H2↑+O2↑，质量比 36:4:32，得 H2 2 g、O2 16 g。"}, {"q": "24.5 g KClO3、31.6 g KMnO4 分解各得多少 O2？", "a": "2KClO3=MnO2/△=2KCl+3O2↑，质量比 245:96，24.5 g 得 O2 9.6 g；2KMnO4=△=K2MnO4+MnO2+O2↑，质量比 316:32，31.6 g 得 O2 3.2 g。"}]];const errors=[[{"title": "把物理变化当成质量守恒 ❌", "wrong": "认为 10 g 水加热变成 10 g 水蒸气，前后质量相等，也是质量守恒定律的体现。", "right": "质量守恒定律只适用于化学变化。水变水蒸气只是状态改变、没有新物质生成，属于物理变化，质量不变是物质固有的属性，不能算质量守恒；只有 2H2O=通电=2H2↑+O2↑ 这类有新物质生成的变化才谈质量守恒。"}, {"title": "蜡烛变轻 = 不守恒？ ❌", "wrong": "看到蜡烛燃烧后质量明显减小，就断言蜡烛燃烧不遵守质量守恒定律。", "right": "蜡烛燃烧是化学变化，一定遵守质量守恒。变轻只是因为生成的 CO2 和水蒸气逸散到空气中，没有收集进称量范围；若把全部生成物收集起来称量，总质量 = 蜡烛质量 + 消耗的氧气质量，仍然守恒。"}, {"title": "镁条燃烧变重 = 无中生有？ ❌", "wrong": "镁条燃烧后固体质量反而变大，认为是“无中生有”，说不守恒。", "right": "燃烧是镁与氧气化合：2Mg+O2=点燃=2MgO。生成物氧化镁的质量 = 镁的质量 + 参加反应的氧气的质量，当然比镁条重——这恰恰证明了质量守恒。判断守恒不能只看称量的“某一部分”，要看参加反应与生成的全部物质。"}, {"title": "铁在氧气中燃烧写成 Fe2O3 ❌", "wrong": "把铁在氧气中燃烧的产物写成 Fe2O3：2Fe+3O2=点燃=2Fe2O3。", "right": "铁丝在氧气中剧烈燃烧、火星四射，生成黑色固体四氧化三铁：3Fe+2O2=点燃=Fe3O4。书写方程式必须以客观事实为基础，Fe2O3 是铁缓慢氧化（生锈）的成分，不能套用到燃烧反应上。"}, {"title": "微观实质记反了 ❌", "wrong": "认为化学反应前后分子的种类和数目都不变，或认为原子的种类可能改变。", "right": "反应前后变的是分子的种类（一定变）和数目（可能变）；不变的是原子的种类、数目、质量，以及元素的种类、质量。分子是保持物质化学性质的最小粒子，有新物质生成，分子的种类必然改变。"}, {"title": "计算漏乘化学式前的系数 ❌", "wrong": "计算 KClO3 分解时，把 2KClO3 的相对分子质量总和直接当成 122.5 代入，算得 24.5 g KClO3 生成 O2 19.2 g。", "right": "相关物质的质量 = 相对分子质量 × 化学式前的系数：2KClO3 = 2×122.5 = 245，3O2 = 3×32 = 96，质量比 245:96。代入比例式：245:96 = 24.5 g:x，x = 24.5×96÷245 = 9.6 g。列式前先核对方程式系数和对应物质，别漏乘。"}]];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_chem9_u5_interactive';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

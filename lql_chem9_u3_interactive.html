@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第三单元 · 物质构成的奥秘 · 九年级化学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-flask"></i> 第三单元 · 物质构成的奥秘</h1>
+    <div class="meta">人教九上 · 第3单元 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>物质由微观粒子构成</h4><p>科学实验证明，物质是由分子、原子等微观粒子构成的。用扫描隧道显微镜可以观察到分子、原子，还能移动原子。通常分子的质量和体积都很小：1 个水分子的质量约 3×10⁻²⁶ kg，1 滴水中约含 1.67×10²¹ 个水分子。</p></div>
+      <div class="k-item"><h4>分子的性质：小、动、隔、同</h4><p>①质量和体积都很小；②总在不断地运动：花香扩散、湿衣服晾干、品红在水中扩散，都是分子运动的结果，温度越高，分子运动速率越快（品红在热水中扩散更快）；③分子之间有间隔：气体容易被压缩（6000 L 氧气可装入 40 L 钢瓶），是因为气体分子间隔大；④同种分子化学性质相同。</p></div>
+      <div class="k-item"><h4>化学变化的实质：分子可分、原子不可分</h4><p>由过氧化氢分解制氧气、氧化汞分解等实验可知：化学变化中，分子分裂成原子，原子不再分，重新组合成新的分子。化学变化的实质是：分子分裂成原子，原子重新组合成新分子。化学变化前后分子种类一定改变，原子种类和数目不变。物理变化（如水蒸发）中分子本身不变，只是分子间的间隔改变。</p></div>
+      <div class="k-item"><h4>分子与原子的概念</h4><p>由分子构成的物质，分子是保持其化学性质的最小粒子（如水分子保持水的化学性质）；原子是化学变化中的最小粒子。分子由原子构成：1 个氧分子由 2 个氧原子构成，1 个二氧化碳分子由 1 个碳原子和 2 个氧原子构成，1 个氨分子由 1 个氮原子和 3 个氢原子构成。</p></div>
+      <div class="k-item"><h4>原子的构成</h4><p>原子由居于中心的原子核与核外电子构成，原子核由质子和中子构成。每个质子带 1 个单位正电荷，每个电子带 1 个单位负电荷，中子不带电；氢原子核内只有 1 个质子，没有中子。原子核体积很小（约为原子体积的十万分之一），却几乎集中了原子的全部质量。</p></div>
+      <div class="k-item"><h4>原子中的数量关系</h4><p>原子不显电性，是因为质子所带正电荷与核外电子所带负电荷数量相等、电性相反。因此：核电荷数＝质子数＝核外电子数。注意：质子数不一定等于中子数（如钠原子有 11 个质子、12 个中子）；不同种类的原子，质子数不同，这是区分不同原子的根本依据。</p></div>
+      <div class="k-item"><h4>核外电子排布与原子结构示意图</h4><p>核外电子分层运动（能量低的离核近）。排布规律：第一层最多 2 个，第二层最多 8 个，最外层不超过 8 个（第一层为最外层时不超过 2 个）。原子结构示意图中，圆圈内写“+11”表示原子核及核电荷数，弧线表示电子层，弧线上数字表示该层电子数，如钠原子核外电子排布为 2、8、1。最外层 8 个电子（氦为 2 个）是相对稳定结构，稀有气体化学性质稳定；钠、镁、铝等金属原子最外层电子一般少于 4 个，反应中易失去最外层电子。</p></div>
+      <div class="k-item"><h4>相对原子质量</h4><p>以一种碳原子（碳 12，核内有 6 个质子和 6 个中子）质量的 1/12 作为标准，其他原子的质量与它相比所得的比，叫做这种原子的相对原子质量（符号 Ar）。相对原子质量是一个比值，单位是 1，通常省略不写。因为质子、中子的相对质量都约等于 1，电子的质量很小可忽略，所以：相对原子质量（近似整数值）≈ 质子数 + 中子数。如钠：11 + 12 = 23。</p></div>
+      <div class="k-item"><h4>元素</h4><p>元素是质子数（核电荷数）相同的一类原子的总称。氧分子和二氧化碳分子中都含氧原子，这些氧原子核内都有 8 个质子，统称为氧元素。元素只讲种类，不讲个数，用于描述物质的宏观组成（如“二氧化碳由碳、氧两种元素组成”）；化学反应前后，元素种类不变。元素与原子不同：原子既讲种类又讲个数，用于微观描述。</p></div>
+      <div class="k-item"><h4>地壳与化学细胞中的元素、元素符号、元素周期表</h4><p>地壳中含量居前四位的元素：氧(O)＞硅(Si)＞铝(Al)＞铁(Fe)，含量最多的非金属元素是氧、最多的金属元素是铝；化学细胞（包括人体）中含量较多的元素：氧＞碳＞氢＞氮。元素符号书写：由一个字母表示的要大写（H、O、C），由两个字母表示的“一大二小”（Na、Ca、Al、Fe）。元素周期表有 7 个横行、18 个纵列，横行叫周期，纵列叫族；单元格中左上角数字是原子序数，原子序数＝核电荷数＝质子数。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 人教版九年级上册 · 第五单元第1章 动物的主要类群 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_chem9_u3_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第三单元 物质构成的奥秘',chapter:'第五单元第1章 动物的主要类群',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第五单元第1章 动物的主要类群'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[[{"q": "走过花圃能闻到花香，这一现象说明分子（　）", "opts": ["很小", "在不断地运动", "之间有间隔", "可以再分"], "ans": 1, "exp": "花香的分子扩散到空气中，被人闻到，说明分子总在不断地运动。闻到气味是分子运动的典型现象，与分子大小、间隔关系不大。"}, {"q": "6000 L 氧气加压后可装入容积为 40 L 的钢瓶中，说明（　）", "opts": ["分子体积很小", "分子在不断地运动", "分子可以再分", "分子之间有间隔"], "ans": 3, "exp": "氧气能被压缩，是因为分子之间有间隔，加压时分子间的间隔变小。气体分子间隔大，所以气体最容易被压缩。"}, {"q": "品红在热水中比在冷水中扩散得更快，说明（　）", "opts": ["热水中的分子比冷水中的分子小", "温度越高，分子运动速率越快", "品红分子受热后分解成更小的粒子", "只有热水中的分子才在不断运动"], "ans": 1, "exp": "分子总在不断地运动，温度升高时分子能量增大、运动速率加快，所以品红在热水中扩散更快。分子的大小不随温度改变，冷水中分子同样在运动。"}, {"q": "由分子构成的物质，保持其化学性质的最小粒子是（　）", "opts": ["原子", "分子", "离子", "质子"], "ans": 1, "exp": "由分子构成的物质，分子是保持其化学性质的最小粒子，如水分子保持水的化学性质。原子是在化学变化中的最小粒子。"}, {"q": "化学变化的实质是（　）", "opts": ["分子间间隔发生改变", "原子种类发生改变", "分子分裂成原子，原子重新组合成新的分子", "分子受热后变成更大的分子"], "ans": 2, "exp": "化学变化的实质：分子分裂成原子，原子重新组合成新的分子。化学变化中分子种类一定改变，但原子只是重新组合，原子种类不变。"}, {"q": "下列变化中，分子本身没有改变的是（　）", "opts": ["过氧化氢分解制取氧气", "氢气在氧气中燃烧生成水", "电解水生成氢气和氧气", "水受热蒸发变成水蒸气"], "ans": 3, "exp": "水蒸发是物理变化，水分子本身没有改变，改变的只是分子间的间隔。其余三项都生成了新物质，是化学变化，分子本身发生了改变。"}, {"q": "化学变化中的最小粒子是（　）", "opts": ["分子", "离子", "原子", "电子"], "ans": 2, "exp": "化学变化中，分子分裂成原子，原子不再分，只是重新组合，所以原子是化学变化中的最小粒子。原子还可以再分，但那是化学变化之外的范畴。"}, {"q": "原子中不带电的粒子是（　）", "opts": ["中子", "质子", "电子", "原子核"], "ans": 0, "exp": "质子带 1 个单位正电荷，电子带 1 个单位负电荷，中子不带电；原子核因含质子而带正电。"}, {"q": "某原子的核电荷数为 11，则该原子核外的电子数为（　）", "opts": ["10", "12", "23", "11"], "ans": 3, "exp": "原子中：核电荷数＝质子数＝核外电子数，故核外电子数为 11（该原子是钠原子，中子数为 12，相对原子质量约为 23）。"}, {"q": "关于氢原子的构成，下列说法正确的是（　）", "opts": ["氢原子核内只有 1 个质子，没有中子", "氢原子核内含有 1 个质子和 1 个中子", "氢原子核是由质子和电子构成的", "氢原子核内没有质子，只有 1 个电子"], "ans": 0, "exp": "由教材表 3-1 可知：氢原子核内只有 1 个质子，没有中子，核外有 1 个电子。氢原子是“无中子原子”的典型例子。"}, {"q": "原子的相对原子质量（近似整数值）约等于（　）", "opts": ["质子数 + 中子数", "质子数", "中子数", "质子数 + 电子数"], "ans": 0, "exp": "质子和中子的相对质量都约等于 1，电子的质量很小、可忽略不计，所以相对原子质量（近似整数值）≈ 质子数 + 中子数，如碳 12：6 + 6 = 12。"}, {"q": "某原子核内有 11 个质子和 12 个中子，它的相对原子质量约为（　）", "opts": ["11", "23", "12", "34"], "ans": 1, "exp": "相对原子质量 ≈ 质子数 + 中子数 = 11 + 12 = 23（该原子为钠原子）。"}, {"q": "地壳中含量最多的非金属元素和金属元素分别是（　）", "opts": ["氧、硅", "铝、铁", "氧、铝", "硅、铁"], "ans": 2, "exp": "地壳中元素含量由多到少前四位是氧＞硅＞铝＞铁：非金属元素中氧最多，金属元素中铝最多（铁排第四）。"}, {"q": "人体（化学细胞）中含量最多的元素是（　）", "opts": ["氧", "碳", "氢", "氮"], "ans": 0, "exp": "化学细胞（包括人体）中元素含量：氧＞碳＞氢＞氮，含量最多的是氧元素，不是碳。"}, {"q": "下列说法中，正确的是（　）", "opts": ["元素是具有相同中子数的一类原子的总称", "二氧化碳中含有两个氧元素", "元素既讲种类，又讲个数", "元素是质子数（核电荷数）相同的一类原子的总称"], "ans": 3, "exp": "元素是质子数（核电荷数）相同的一类原子的总称，只讲种类、不讲个数；“二氧化碳中含有两个氧元素”应说“二氧化碳由碳、氧两种元素组成”。"}, {"q": "下列元素符号书写正确的一项是（　）", "opts": ["钠：NA", "铁：Fe", "钙：ca", "铝：AL"], "ans": 1, "exp": "两个字母表示的元素符号必须“一大二小”：钠 Na、钙 Ca、铝 Al、铁 Fe。NA、ca、AL 都是错误写法。"}]];const flashcards=[[{"q": "分子有哪些基本性质？（由分子构成的物质）", "a": "①质量和体积都很小；②总在不断地运动，温度越高运动速率越快；③分子之间有间隔，气体分子间隔大、易被压缩；④同种分子化学性质相同。"}, {"q": "能用分子运动的观点解释哪些现象？", "a": "走过花圃闻到花香（花香的分子运动扩散）；湿衣服晾干（水分子运动挥发）；品红在水中扩散；浓氨水使罩着的酚酞溶液变红（氨分子运动到烧杯 A 中）。共同原因：分子总在不断地运动。"}, {"q": "化学变化的实质是什么？变化前后什么不变、什么变？", "a": "实质：分子分裂成原子，原子重新组合成新的分子。化学变化前后：分子种类一定改变；原子种类和数目不变，元素种类不变。"}, {"q": "分子、原子分别在什么前提下才是“最小”粒子？", "a": "由分子构成的物质，分子是保持其化学性质的最小粒子；原子是化学变化中的最小粒子（化学变化中分子可分、原子不可分）。注意前提：分子的可分性指化学变化中，物理变化里分子不变、只变间隔。"}, {"q": "原子的构成是怎样的？各粒子带什么电？", "a": "原子＝原子核＋核外电子；原子核＝质子＋中子。质子带 1 个单位正电荷，电子带 1 个单位负电荷，中子不带电；氢原子核内只有 1 个质子、没有中子。"}, {"q": "原子中核电荷数、质子数、核外电子数有什么关系？", "a": "原子不显电性：核电荷数＝质子数＝核外电子数。质子数不一定等于中子数（如钠：11 个质子、12 个中子）；不同种原子的根本区别是质子数不同。"}, {"q": "什么是相对原子质量？近似整数值怎么算？", "a": "以一种碳原子（碳 12）质量的 1/12 为标准，其他原子质量与它相比所得的比。它是比值，单位是 1（通常省略）。近似整数值 ≈ 质子数 + 中子数，如钠：11 + 12 = 23。"}, {"q": "什么是元素？元素与原子有何不同？", "a": "元素是质子数（核电荷数）相同的一类原子的总称，只讲种类、不讲个数，用于描述物质（宏观）的组成，如“二氧化碳由碳、氧两种元素组成”；化学反应前后元素种类不变。原子既讲种类又讲个数，用于描述分子等微观构成。"}, {"q": "地壳中和化学细胞中含量居前四位的元素分别是什么？", "a": "地壳中：氧＞硅＞铝＞铁（含量最多的非金属元素是氧，最多的金属元素是铝）。化学细胞（包括人体）中：氧＞碳＞氢＞氮（含量最多的是氧）。"}, {"q": "常见元素符号怎么记？书写规则是什么？", "a": "氢 H、氧 O、碳 C、铁 Fe、钠 Na、钙 Ca、铝 Al。书写规则：一个字母的大写；两个字母的“一大二小”，如 Na 不能写成 NA 或 na。"}]];const errors=[[{"title": "把“运动”和“间隔”两个性质用混", "wrong": "解释“品红在水中扩散、湿衣服晾干、闻到花香”时，写成“分子间的间隔变大了”。", "right": "这些现象是分子总在不断地运动的结果；“分子间有间隔”对应的典型现象是气体易被压缩（6000 L 氧气装入 40 L 钢瓶）等。运动（扩散、挥发）和间隔（压缩）是分子的两个不同性质，要按现象对号入座。"}, {"title": "把“原子不可再分”说成无条件成立", "wrong": "直接说“原子是不能再分的粒子”。", "right": "必须带上“化学变化中”这个前提：化学变化中分子可分、原子不可分，原子是化学变化中的最小粒子；原子本身还可再分（由质子、中子、电子构成），那是化学变化之外的范畴。"}, {"title": "数量关系记错，误以为原子带电", "wrong": "认为原子核带负电荷、原子中质子数等于中子数，或以为原子显电性。", "right": "原子不显电性：核电荷数＝质子数＝核外电子数（质子带正电与电子带负电恰好抵消）；原子核因含质子带正电。质子数不一定等于中子数，氢原子核内只有 1 个质子、没有中子就是反例。"}, {"title": "相对原子质量的意义与单位弄错", "wrong": "认为相对原子质量就是原子的实际质量，单位是 kg（或 g），直接用实际质量比较大小。", "right": "相对原子质量是以碳 12 原子质量的 1/12 为标准求得的比值，单位是 1、通常省略不写；近似整数值 ≈ 质子数 + 中子数（如钠约 23）。原子实际质量极小（约 10⁻²⁶ kg 级），不用于日常比较。"}, {"title": "元素“讲个数”，宏观微观混用", "wrong": "说“二氧化碳中含有两个氧元素”“水是由两个氢元素和一个氧元素组成的”。", "right": "元素只讲种类、不讲个数：应说“二氧化碳由碳、氧两种元素组成”（宏观）；讲个数要用原子：“一个二氧化碳分子由 1 个碳原子和 2 个氧原子构成”（微观）。"}, {"title": "地壳与化学体中元素含量记反", "wrong": "认为地壳中含量最多的金属元素是铁，或认为人体中含量最多的元素是碳。", "right": "地壳中含量前四位：氧＞硅＞铝＞铁，含量最多的金属元素是铝（铁只排第四）；化学细胞（包括人体）中含量前四位：氧＞碳＞氢＞氮，含量最多的是氧。记住口诀“地壳氧硅铝铁、细胞氧碳氢氮”。"}]];let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_chem9_u3_interactive';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

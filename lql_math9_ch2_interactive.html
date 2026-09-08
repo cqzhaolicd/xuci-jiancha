@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第2章 一元二次方程 · 九年级数学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-calculator"></i> 第2章 一元二次方程</h1>
+    <div class="meta">北师大九上 · 第2章 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>一元二次方程的认识</h4><p>只含一个未知数、未知数的最高次数是 2 的整式方程叫一元二次方程，一般形式为 ax²+bx+c=0（a≠0）。判断三步：先化简；必须是整式方程；化简后最高次数为 2 且二次项系数不能为 0。如 x²-6x+8=0 中 a=1，b=-6，c=8。</p></div>
+      <div class="k-item"><h4>二次项、一次项与常数项</h4><p>一般形式 ax²+bx+c=0 中，ax² 叫二次项、a 叫二次项系数，bx 叫一次项、b 叫一次项系数，c 叫常数项。系数要连同符号一起读：x²-6x+8=0 的一次项是 -6x，一次项系数是 -6 而不是 6。</p></div>
+      <div class="k-item"><h4>方程的解（根）与检验</h4><p>使方程左右两边相等的未知数的值叫一元二次方程的解（根）。一个一元二次方程最多有两个实数根。判断某数是不是方程的根，直接把它代入方程验算即可；解方程后也应代回检验。</p></div>
+      <div class="k-item"><h4>配方法求解</h4><p>配方法步骤：把二次项系数化为 1（本题型已满足）→ 移项把常数项移到右边 → 两边同时加上“一次项系数一半的平方” → 左边写成完全平方式 → 开平方求解。如 x²-6x+8=0：移项 x²-6x=-8，两边加 (6/2)²=9，得 (x-3)²=1，开方 x-3=±1，所以 x=2 或 x=4。注意 (x+2)²=x²+4x+4，完全平方展开不能漏掉中间项 2ab。</p></div>
+      <div class="k-item"><h4>公式法求解</h4><p>先把方程化为一般形式 ax²+bx+c=0，确定 a、b、c（连同符号），再代入求根公式 x=[-b±√(b²-4ac)]/(2a)。例：x²-5x+6=0 中 a=1，b=-5，c=6，Δ=25-24=1，x=(5±1)/2，得 x=3 或 x=2。公式法对所有一元二次方程都适用。</p></div>
+      <div class="k-item"><h4>根的判别式 Δ=b²-4ac</h4><p>Δ=b²-4ac 决定根的情况：Δ>0 时有两个不相等的实数根；Δ=0 时有两个相等的实数根；Δ<0 时没有实数根。例：x²+2x+5=0，Δ=2²-4×1×5=4-20=-16<0，所以没有实数根。判别式在“含参方程有几个根”问题中最常用。</p></div>
+      <div class="k-item"><h4>因式分解法求解</h4><p>把方程一边化为 0，另一边分解成两个一次因式的乘积，令每个因式为 0 即可。依据：ab=0 ⇔ a=0 或 b=0。例：x²-5x=0 → x(x-5)=0 → x=0 或 x=5；x²-4x+3=0 → (x-1)(x-3)=0 → x=1 或 x=3。关键前提：等号右边必须先化为 0。</p></div>
+      <div class="k-item"><h4>根与系数的关系（*选学）</h4><p>若一元二次方程 ax²+bx+c=0（a≠0）有实数根 x₁、x₂，则 x₁+x₂=-b/a，x₁·x₂=c/a（韦达定理）。此节在北师大教材中带 * 号，为选学内容，了解会用即可；对能分解因式的方程，直接解出两根验算也一样。</p></div>
+      <div class="k-item"><h4>增长率模型与平均变化率</h4><p>设平均增长率为 x，经过两年：a(1+x)²=b；若是下降，则 a(1-x)²=b。解出的两个根要按实际取舍：增长率通常是正数且不能为负。例：50(1+x)²=72 → (1+x)²=1.44 → 1+x=±1.2，x=0.2 或 x=-2.2（负值舍去），平均年增长率为 20%。</p></div>
+      <div class="k-item"><h4>面积等应用问题的一般步骤</h4><p>设未知数 → 找等量关系列方程 → 解方程 → 检验并作答。检验要过两关：代入原方程验算成立；符合实际意义——长度、宽度、人数等不能为负。如矩形地面长 8 m、宽 5 m，中央铺面积 18 m² 的地毯、四周留边宽 x m，则 (8-2x)(5-2x)=18，解得 x=1 或 x=5.5，因 8-2×5.5<0，x=5.5 不合实际应舍去，故留边宽为 1 m。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 北师大版九年级上册 · 第1章 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_math9_ch2_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第2章 一元二次方程',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第2章 一元二次方程,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "方程 x²-6x+8=0 的一次项系数是（　）", "opts": ["6", "-6", "1", "8"], "ans": 1, "exp": "一般形式 ax²+bx+c=0 中一次项是 bx。这里一次项为 -6x，一次项系数 b 连同符号读作 -6；写成 6 是漏了负号的常见错误，a=1，c=8。"}, {"q": "下列方程中，属于一元二次方程的是（　）", "opts": ["x²+3x=x²-1", "2x²-1=3x", "x²-3/x=0", "x(x-1)=x²+2"], "ans": 1, "exp": "先化简再判断：A 化简得 3x=-1，是一次方程；B 化为 2x²-3x-1=0，符合 ax²+bx+c=0（a≠0），正确；C 分母含未知数，是分式方程，不是整式方程；D 化简得 -x=2，也是一次方程。"}, {"q": "用配方法解 x²-6x+8=0，配方后得到的方程是（　）", "opts": ["(x-3)²=1", "(x-3)²=17", "(x+3)²=1", "(x-3)²=-1"], "ans": 0, "exp": "移项：x²-6x=-8；两边同时加“一次项系数一半的平方”(6/2)²=9：x²-6x+9=-8+9=1，即 (x-3)²=1。开方 x-3=±1，得 x=4 或 x=2；检验：16-24+8=0 ✓、4-12+8=0 ✓。选 17 是把常数项符号弄错（-8+9 才是 1）。"}, {"q": "用配方法解 x²+6x+4=0 时，方程两边应同时加上（　）", "opts": ["3", "6", "9", "36"], "ans": 2, "exp": "配方所加常数 =（一次项系数一半）²=(6/2)²=3²=9。加 3 是“一半”忘了平方，加 36 是拿整个一次项系数 6 去平方，都错。完整过程：x²+6x=-4，x²+6x+9=5，(x+3)²=5，x=-3±√5（此时 Δ=36-16=20>0，确有两根）。"}, {"q": "方程 x²-4x+3=0 的解是（　）", "opts": ["x=1 或 x=3", "x=-1 或 x=-3", "x=1 或 x=-3", "x=-1 或 x=3"], "ans": 0, "exp": "因式分解：(x-1)(x-3)=0，所以 x-1=0 或 x-3=0，得 x=1 或 x=3。检验：1-4+3=0 ✓、9-12+3=0 ✓。也可用公式法：Δ=16-12=4>0，x=(4±2)/2，同样得 x=3 或 x=1。"}, {"q": "方程 x²-5x=0 的解是（　）", "opts": ["x=5", "x=0 或 x=5", "x=0 或 x=-5", "x=5 或 x=-5"], "ans": 1, "exp": "提公因式 x：x(x-5)=0，由 ab=0 得 x=0 或 x-5=0，所以 x=0 或 x=5。选 A 漏掉了 x=0 这个根——两边同除以 x 会丢根，必须用因式分解。检验：0-0=0 ✓、25-25=0 ✓。"}, {"q": "一元二次方程 x²+2x+5=0 的根的情况是（　）", "opts": ["有两个不相等的实数根", "有两个相等的实数根", "没有实数根", "只有一个实数根"], "ans": 2, "exp": "Δ=b²-4ac=2²-4×1×5=4-20=-16<0，所以方程没有实数根。Δ<0 即无实根，无需再去套求根公式（根号下为负数）。"}, {"q": "关于 x 的方程 x²-2x+m=0 有两个相等的实数根，则 m 的值是（　）", "opts": ["2", "1", "-1", "0"], "ans": 1, "exp": "两个相等实根 ⇔ Δ=0。Δ=b²-4ac=(-2)²-4×1×m=4-4m=0，解得 m=1。此时方程 x²-2x+1=0 即 (x-1)²=0，两根均为 1，验证无误。"}, {"q": "用公式法解方程 x²-5x+6=0，它的解是（　）", "opts": ["x=2 或 x=3", "x=-2 或 x=-3", "x=1 或 x=6", "x=-1 或 x=-6"], "ans": 0, "exp": "a=1，b=-5，c=6，Δ=b²-4ac=25-24=1>0，代入求根公式 x=(5±1)/2，得 x=(5+1)/2=3、x=(5-1)/2=2，即 x=2 或 x=3。检验：4-10+6=0 ✓、9-15+6=0 ✓。"}, {"q": "下列计算正确的是（　）", "opts": ["(x+2)²=x²+4", "(x+2)²=x²+4x+4", "(x+2)²=x²+2x+4", "(x+2)²=x²+4x+2"], "ans": 1, "exp": "完全平方公式 (a+b)²=a²+2ab+b²：(x+2)²=x²+2·x·2+2²=x²+4x+4。漏掉中间项 2ab 或漏掉 b² 都是配方、展开时的高频错误——配方依据的就是这个公式。"}, {"q": "某企业 2023 年产值为 50 万元，2025 年产值达到 72 万元。设这两年产值年平均增长率为 x，则 x 的值是（　）", "opts": ["20%", "22%", "12%", "10%"], "ans": 0, "exp": "两年平均增长率模型 a(1+x)²=b：50(1+x)²=72，(1+x)²=1.44=1.2²，所以 1+x=±1.2，x=0.2 或 x=-2.2。增长率不能为负，舍去 -2.2，得 x=0.2=20%。检验：50×1.2×1.2=72 ✓。"}, {"q": "某商品原价 200 元，连续两次降价后售价为 128 元，设每次降价的百分率为 x，则 x 的值是（　）", "opts": ["36%", "20%", "30%", "18%"], "ans": 1, "exp": "两次降价模型 a(1-x)²=b：200(1-x)²=128，(1-x)²=0.64，1-x=±0.8，x=0.2 或 x=1.8。降价 180% 不可能，舍去 1.8，取 x=20%。36% 是“总降价率”(200-128)÷200，不是每次降价率，注意区分。"}, {"q": "矩形地面长 8 m、宽 5 m，在中央铺一块面积为 18 m² 的长方形地毯，四周未铺地毯的条形区域宽度相同，设为 x m，则可列方程为（　）", "opts": ["(8-x)(5-x)=18", "(8-2x)(5-2x)=18", "(8-2x)(5-x)=18", "(8-x)(5-2x)=18"], "ans": 1, "exp": "地毯两边各让出 x m：长变为 8-2x、宽变为 5-2x，地毯面积 (8-2x)(5-2x)=18。只减一个 x 表示只让一边留边，与实际“四周等宽”不符。"}, {"q": "解方程 (8-2x)(5-2x)=18 得 x=1 或 x=5.5，则四周留边宽度 x 应为（　）", "opts": ["1 m", "5.5 m", "1 m 或 5.5 m", "0.5 m"], "ans": 0, "exp": "展开得 4x²-26x+22=0，即 2x²-13x+11=0，(2x-11)(x-1)=0，x=1 或 x=5.5。但 x=5.5 时 8-2x=-3<0、5-2x=-6<0，长度不能为负，不合实际舍去。x=1 时 (8-2)(5-2)=6×3=18 ✓，故留边宽 1 m。"}, {"q": "设 x₁、x₂ 是方程 x²-7x+12=0 的两个根，则 x₁+x₂ 的值为（　）（*选学：根与系数的关系）", "opts": ["7", "-7", "12", "3"], "ans": 0, "exp": "方法一（选学内容）：x₁+x₂=-b/a=7。方法二（分解因式验算）：(x-3)(x-4)=0，两根为 3 和 4，3+4=7 ✓。12 是两根之积 x₁·x₂=c/a=12，勿与和混淆。教材此节带 * 号，选学了解即可。"}, {"q": "下列方程中，没有实数根的是（　）", "opts": ["x²=4", "x²+1=0", "x²-2x+1=0", "x²-x-2=0"], "ans": 1, "exp": "B 移项 x²=-1，负数没有平方根，无实数根（Δ=0²-4×1×1=-4<0）。A：x=±2；C：(x-1)²=0，x=1；D：(x-2)(x+1)=0，x=2 或 -1，均有实数根。判断根的情况用判别式 Δ=b²-4ac 最直接。"}]
+const flashcards=[{"q": "一元二次方程的一般形式是什么？有什么条件？", "a": "ax²+bx+c=0（a≠0）。条件是：整式方程、只含一个未知数、化简后未知数最高次数为 2，且二次项系数 a 不能为 0。"}, {"q": "x²-6x+8=0 中 a、b、c 分别是多少？", "a": "a=1，b=-6，c=8。一次项是 -6x，一次项系数是 -6，读系数时别丢掉负号。"}, {"q": "配方法求解时，方程两边要加什么数？", "a": "加“一次项系数一半的平方”。例：x²-6x+8=0 移项后两边加 (6/2)²=9，得 (x-3)²=1，开方解出 x=2 或 x=4。"}, {"q": "完全平方公式怎么写？(x+2)² 等于什么？", "a": "(a+b)²=a²+2ab+b²，所以 (x+2)²=x²+4x+4。不能只平方首尾写成 x²+4，也不能漏掉 b²。"}, {"q": "一元二次方程的求根公式是什么？", "a": "x=[-b±√(b²-4ac)]/(2a)（Δ=b²-4ac≥0 时适用）。使用前先把方程化为一般形式，正确确定 a、b、c。"}, {"q": "根的判别式 Δ=b²-4ac 与根有什么关系？", "a": "Δ>0：有两个不相等的实数根；Δ=0：有两个相等的实数根；Δ<0：没有实数根。如 x²+2x+5=0，Δ=4-20=-16<0，无实数根。"}, {"q": "用因式分解法解方程要注意什么？举例说明。", "a": "先把一边化为 0，再分解成一次因式乘积，令各因式为 0。x²-5x=0 → x(x-5)=0 → x=0 或 x=5，千万别两边同除以 x 丢掉 x=0 这个根。"}, {"q": "两年平均增长率（下降率）的模型公式是什么？", "a": "增长：a(1+x)²=b；下降：a(1-x)²=b（a 为原量，x 为平均变化率，b 为两年后的量）。解出的负值根（如 x=1.8 表示降 180%）要舍去。"}, {"q": "应用题解出的根为什么要检验？怎么检验？", "a": "方程的解未必符合题意。要代回原方程验算，再看实际意义：长度、宽度、人数等不能为负。如留边宽解得 x=1 或 5.5，x=5.5 时 8-2x<0 为负，舍去，取 x=1。"}, {"q": "根与系数的关系（韦达定理）是什么？（*选学）", "a": "若 ax²+bx+c=0（a≠0）有实数根 x₁、x₂，则 x₁+x₂=-b/a，x₁·x₂=c/a。北师大教材中为带 * 号的选学内容，了解会用即可。"}]
+const errors=[{"title": "看见 x² 就判“一元二次方程”", "wrong": "不先化简，看到式子含 x² 就直接下结论，把 x²+3x=x²-1 也当成一元二次方程。", "right": "判断三步缺一不可：先化简合并；必须是不含分式的整式方程；化简后最高次数为 2 且二次项系数 a≠0。x²+3x=x²-1 化简为 3x=-1，是一元一次方程。"}, {"title": "一次项系数丢掉负号", "wrong": "把 x²-6x+8=0 的一次项系数写成 6。", "right": "系数要连同符号一起读：一般形式 ax²+bx+c=0 中一次项是 -6x，b=-6。符号写错会直接导致配方、公式法结果全错。"}, {"title": "配方时加错了数", "wrong": "对 x²-6x+8=0 配方，两边加 3（一次项系数一半）或加 36（一次项系数的平方）。", "right": "应加“一次项系数一半的平方”：(6/2)²=9。x²-6x=-8，x²-6x+9=-8+9=1，即 (x-3)²=1，解为 x=2 或 x=4。"}, {"title": "把 (x+2)² 展开成 x²+4", "wrong": "用完全平方公式时只把 x 和 2 各自平方，丢掉中间的 2ab 项。", "right": "(a+b)²=a²+2ab+b²，(x+2)²=x²+2·x·2+4=x²+4x+4。口诀“首平方、尾平方、两倍首尾中间放”，这是配方与展开的共同基础。"}, {"title": "Δ 与根的情况对不上号", "wrong": "把“Δ<0”说成有两个不相等的实数根，或把 x²+2x+5=0 的判别式算成 Δ=4+20。", "right": "Δ=b²-4ac 中 4ac 带符号：4×1×5=20，Δ=2²-20=-16<0，无实数根。记牢：Δ>0 两不等实根，Δ=0 两相等实根，Δ<0 无实根。"}, {"title": "应用题不舍掉不合实际的根", "wrong": "算出全部根后直接作答，把 x=1.8（降价 180%）或 x=5.5（宽为负）也写进答案。", "right": "数学上解方程可得两个根，实际中必须取舍：增长率、宽度、长度等不能为负。200(1-x)²=128 中 x=1.8 舍去取 x=0.2；(8-2x)(5-2x)=18 中 x=5.5 使 8-2x=-3<0，舍去取 x=1，再代回验证。"}]
+
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_math9_ch2';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>
