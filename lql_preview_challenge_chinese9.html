@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<title>🎮 语文预习闯关 · 九年级上册 · 统编版</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:#e74c3c; --green:#2ecc71; --gold:#f1c40f; --blue:#3498db; --brown:#8e5a2b;
+  --bg:#1a1a2e; --card:#222244; --text:#eee; --pixel:'Press Start 2P',monospace; --body:'Noto Sans SC',sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+  font-family:var(--body); background:var(--bg); color:var(--text); min-height:100vh;
+  background-image:radial-gradient(circle at 20% 20%, rgba(52,152,219,.12) 0, transparent 30%),
+                   radial-gradient(circle at 80% 70%, rgba(46,204,113,.1) 0, transparent 30%);
+}
+.clouds { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.cloud { position:absolute; background:rgba(255,255,255,.05); border-radius:50px; animation:float 20s linear infinite; }
+.cloud:nth-child(1) { width:180px;height:40px;top:10%;left:-200px; }
+.cloud:nth-child(2) { width:120px;height:30px;top:30%;left:-150px; animation-duration:28s; animation-delay:-8s; }
+.cloud:nth-child(3) { width:220px;height:50px;top:55%;left:-250px; animation-duration:35s; animation-delay:-15s; }
+.cloud:nth-child(4) { width:90px;height:25px;top:75%;left:-120px; animation-duration:22s; animation-delay:-4s; }
+@keyframes float { from { transform:translateX(0); } to { transform:translateX(calc(100vw + 400px)); } }
+#app { position:relative; z-index:1; max-width:860px; margin:0 auto; padding:16px; }
+.hud { display:flex; justify-content:space-between; align-items:center; background:var(--card); border:3px solid #333; border-radius:12px; padding:10px 16px; margin-bottom:14px; font-family:var(--pixel); font-size:11px; }
+.hud .hud-item { display:flex; align-items:center; gap:6px; }
+.hud .coin { color:var(--gold); } .hud .star { color:var(--green); }
+.screen { animation:fadeIn .4s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+/* ===== 地图页 ===== */
+.map-header { text-align:center; padding:18px 0 8px; }
+.map-header h1 { font-family:var(--pixel); font-size:20px; color:var(--gold); text-shadow:3px 3px 0 rgba(0,0,0,.5); }
+.map-header p { color:#aaa; font-size:13px; margin-top:6px; }
+.world-list { display:flex; flex-direction:column; gap:12px; margin-top:16px; }
+.world-item { display:flex; align-items:center; gap:14px; background:var(--card); border:3px solid #333; border-radius:12px; padding:14px 16px; cursor:pointer; transition:all .2s; }
+.world-item:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.4); border-color:var(--gold); }
+.world-item.locked { opacity:.45; cursor:not-allowed; }
+.world-item .w-icon { font-size:28px; }
+.world-item .w-info { flex:1; }
+.world-item .w-name { font-weight:700; font-size:15px; }
+.world-item .w-npc { color:#aaa; font-size:12px; margin-top:2px; }
+.world-item .w-status { font-family:var(--pixel); font-size:10px; }
+.world-item .w-status .ok { color:var(--green); }
+.world-item .w-status .lock { color:#888; }
+.map-buttons { display:flex; gap:10px; margin-top:18px; justify-content:center; }
+.btn { font-family:var(--body); font-weight:700; border:none; border-radius:10px; padding:10px 22px; cursor:pointer; font-size:14px; transition:all .2s; }
+.btn:hover { transform:translateY(-2px); }
+.btn-gold { background:var(--gold); color:#333; }
+.btn-blue { background:var(--blue); color:#fff; }
+.btn-green { background:var(--green); color:#fff; }
+.btn-red { background:var(--red); color:#fff; }
+.btn-gray { background:#555; color:#ccc; }
+/* ===== 教学页 ===== */
+.teach-page { background:var(--card); border:3px solid #333; border-radius:14px; padding:22px; }
+.teach-page h2 { font-size:20px; color:var(--gold); margin-bottom:14px; }
+.teach-npc { display:flex; gap:12px; background:rgba(241,196,15,.08); border-left:4px solid var(--gold); border-radius:8px; padding:12px; margin-bottom:16px; }
+.teach-npc .npc-icon { font-size:30px; }
+.teach-npc .npc-text { font-size:14px; line-height:1.7; color:#ffd; }
+.teach-body { font-size:15px; line-height:1.9; color:#ddd; }
+.teach-body p { margin-bottom:10px; }
+.teach-nav { display:flex; justify-content:space-between; margin-top:20px; }
+/* ===== 答题页 ===== */
+.quiz-page { background:var(--card); border:3px solid #333; border-radius:14px; padding:22px; }
+.quiz-page .q-num { font-family:var(--pixel); font-size:11px; color:var(--gold); margin-bottom:8px; }
+.quiz-page .q-text { font-size:17px; font-weight:700; margin-bottom:16px; line-height:1.6; }
+.opt { display:block; width:100%; text-align:left; background:#2a2a4a; border:2px solid #444; color:var(--text); border-radius:10px; padding:12px 14px; margin-bottom:10px; font-size:14px; cursor:pointer; transition:all .15s; font-family:var(--body); }
+.opt:hover { border-color:var(--gold); }
+.opt.correct { background:var(--green); border-color:var(--green); color:#fff; }
+.opt.wrong { background:var(--red); border-color:var(--red); color:#fff; }
+.explanation { display:none; background:rgba(52,152,219,.1); border-left:4px solid var(--blue); border-radius:8px; padding:12px; margin-top:10px; font-size:14px; line-height:1.7; }
+.explanation.show { display:block; animation:fadeIn .3s; }
+.quiz-footer { display:flex; justify-content:space-between; margin-top:16px; align-items:center; }
+/* ===== BOSS ===== */
+.boss-page { text-align:center; padding:30px 16px; }
+.boss-title { font-family:var(--pixel); font-size:22px; color:var(--red); text-shadow:3px 3px 0 rgba(0,0,0,.6); animation:pulse 1.5s infinite; }
+@keyframes pulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.06); } }
+.boss-avatar { font-size:72px; margin:24px 0; animation:bounce 1s infinite; display:inline-block; }
+@keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+.hearts { font-size:26px; margin:12px 0; }
+.hearts .lost { opacity:.25; }
+/* BOSS 胜利动画 */
+.screen-shake { animation:shake .5s; }
+@keyframes shake { 0%,100% { transform:translateX(0); } 20% { transform:translateX(-12px); } 40% { transform:translateX(12px); } 60% { transform:translateX(-8px); } 80% { transform:translateX(8px); } }
+.boss-defeated { font-family:var(--pixel); font-size:28px; color:var(--gold); margin:20px 0; animation:blink .6s infinite; }
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:.2; } }
+.trophy { font-size:64px; display:inline-block; animation:trophyScale 1s forwards; transform:scale(0.05); filter:drop-shadow(0 0 20px gold); }
+@keyframes trophyScale { 0% { transform:scale(0.05); } 70% { transform:scale(1.35); } 100% { transform:scale(1.15); } }
+.confetti { position:fixed; width:10px; height:14px; z-index:99; pointer-events:none; animation:confettiFall 2.5s ease-out forwards; }
+@keyframes confettiFall { 0% { transform:translateY(-20px) rotate(0); opacity:1; } 100% { transform:translateY(100vh) rotate(720deg); opacity:0; } }
+.stat-panel { background:var(--card); border:3px solid var(--gold); border-radius:14px; padding:20px; margin-top:20px; text-align:left; animation:fadeIn .5s .4s both; }
+.stat-panel h3 { color:var(--gold); margin-bottom:10px; }
+.stat-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed #444; font-size:14px; }
+/* ===== 错题本 ===== */
+.wrongbook { background:var(--card); border:3px solid #333; border-radius:14px; padding:20px; }
+.wrongbook h2 { color:var(--gold); margin-bottom:14px; }
+.wrong-item { background:#2a2a4a; border-radius:10px; padding:14px; margin-bottom:12px; }
+.wrong-item .wq { font-weight:700; margin-bottom:6px; }
+.wrong-item .wa { color:#99ffcc; font-size:13px; }
+.wrong-item .we { color:#aaa; font-size:13px; margin-top:4px; }
+.empty-tip { text-align:center; color:#888; padding:30px 0; }
+/* ===== 确认弹窗 ===== */
+.modal-mask { position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:100; display:flex; align-items:center; justify-content:center; animation:fadeIn .2s; }
+.modal-card { background:var(--card); border:3px solid var(--gold); border-radius:14px; padding:24px; max-width:340px; width:90%; text-align:center; }
+.modal-card p { margin-bottom:18px; font-size:15px; }
+.modal-btns { display:flex; gap:10px; justify-content:center; }
+/* ===== 结果页 ===== */
+.result-page { text-align:center; padding:30px 16px; }
+.result-title { font-family:var(--pixel); font-size:20px; color:var(--gold); margin-bottom:16px; }
+.result-stars { font-size:30px; margin:14px 0; }
+.result-stars .off { opacity:.2; }
+.result-detail { background:var(--card); border-radius:12px; padding:16px; margin:14px auto; max-width:400px; }
+/* ===== 响应式 ===== */
+@media (max-width:680px) {
+  .hud { font-size:9px; padding:8px 10px; }
+  .map-header h1 { font-size:16px; }
+  .world-item .w-name { font-size:14px; }
+  .teach-page, .quiz-page { padding:16px; }
+}
+</style>
+</head>
+<body>
+<div class="clouds"><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div></div>
+<div id="app"></div>
+<script>
+// ===== 音效（Web Audio 8-bit）=====
+let audioCtx = null;
+function playTone(freq, dur, type='square', vol=0.08, when=0) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const t = audioCtx.currentTime + when;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type; osc.frequency.setValueAtTime(freq, t);
+    gain.gain.setValueAtTime(vol, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(t); osc.stop(t + dur + 0.02);
+  } catch(e) {}
+}
+const sfx = {
+  jump: () => playTone(392, .12, 'square', .06),
+  coin: () => { playTone(988, .08); playTone(1319, .12, 'square', .06, .06); },
+  correct: () => { playTone(523, .1); playTone(659, .1, 'square', .07, .09); playTone(784, .18, 'square', .07, .18); },
+  wrong: () => { playTone(220, .2, 'sawtooth', .07); playTone(175, .25, 'sawtooth', .06, .15); },
+  fanfare: () => { [523,659,784,1047].forEach((f,i)=>playTone(f,.15,'square',.08,i*.12)); },
+  bossHit: () => { playTone(98, .3, 'sawtooth', .1); playTone(82, .4, 'sawtooth', .08, .15); }
+};
+
+// ===== 数据 =====
+const SUBJECT = "语文";
+const VERSION = "九年级上册 · 统编版";
+const WORLDS = [{"name": "🌊 诗海灯塔 · 意象星域", "npc": "意象精灵：“诗以象寄情。点亮四座意象灯塔，你就是第一关的领航员！”", "teach": [{"title": "《沁园春·雪》", "text": "毛泽东作，词牌“沁园春”。上阕咏雪，状北国壮阔之景；下阕评古论今，“数风流人物，还看今朝”抒发开创未来的雄心，是诗言志的典范。"}, {"title": "《乡愁》", "text": "余光中（台湾诗人）作。以“邮票、船票、坟墓、海峡”四组意象，写母子、夫妻、生死、家国之别，乡愁由个人渐升华为家国情怀，层层递进。"}, {"title": "意象与抒情", "text": "艾青1938年作《我爱这土地》，借“土地、河流、风、黎明”等意象寄寓对祖国的挚爱；“为什么我的眼里常含泪水？因为我对这土地爱得深沉……”直抒胸臆。读懂诗歌要先抓住意象。"}], "quiz": [{"q": "《沁园春·雪》的作者是（　）", "opts": ["毛泽东", "艾青", "余光中", "林徽因"], "ans": 0, "exp": "毛泽东1936年2月创作的咏雪词。下阕“俱往矣，数风流人物，还看今朝”抒发豪迈自信。"}, {"q": "“后来啊／乡愁是一方矮矮的坟墓”，这一节寄托的是（　）", "opts": ["思念母亲的殷殷深情", "夫妻分离的淡淡哀愁", "母亲离世、阴阳两隔的悲痛", "两岸亲人隔海相望的乡愁"], "ans": 2, "exp": "《乡愁》四节按“小时候—长大后—后来啊—现在”推进：邮票、船票、坟墓、海峡，分别写母子、夫妻、生死、家国四重别离。"}, {"q": "“为什么我的眼里常含泪水？因为我对这土地爱得深沉……”出自（　）", "opts": ["艾青《我爱这土地》", "余光中《乡愁》", "毛泽东《沁园春·雪》", "林徽因《你是人间的四月天》"], "ans": 0, "exp": "艾青1938年作《我爱这土地》。这两句直抒胸臆，是全诗情感的高潮。"}, {"q": "关于《你是人间的四月天》，下列说法正确的一项是（　）", "opts": ["作者是台湾诗人余光中", "“四月天”象征美好、温暖与希望，作者是林徽因", "全诗赞美秋日丰收的景象", "这首词由苏轼创作"], "ans": 1, "exp": "《你是人间的四月天》作者是林徽因，她把“你”比作四月天，象征美好、温暖与希望，表达由衷的赞美。"}]}, {"name": "🔥 论证熔炉 · 观点山谷", "npc": "观点铁匠：“论点要立得住，论据要敲得响——把道理炼成铁，才配过此关！”", "teach": [{"title": "《敬业与乐业》", "text": "梁启超1922年在上海对职业学校学生的演讲。提出“敬业乐业是人类生活的不二法门”，分“有业—敬业—乐业”三层论述，多用举例论证与道理论证。"}, {"title": "雨果的信", "text": "法国作家雨果（《巴黎圣母院》《悲惨世界》）致巴特勒上尉的信。盛赞圆明园是世界奇迹，斥英法联军为“两个强盗”，用反语和对比表达对侵略的谴责。"}, {"title": "《论教养》·《精神的三间小屋》", "text": "《论教养》作者利哈乔夫（苏联）；《精神的三间小屋》作者毕淑敏，把心灵比作小屋：第一间安放爱和恨，第二间安放事业，第三间安放自身。"}], "quiz": [{"q": "《敬业与乐业》的作者是（　）", "opts": ["梁启超", "雨果", "顾颉刚", "毕淑敏"], "ans": 0, "exp": "梁启超是近代思想家、学者。文中引用《礼记》《庄子》等名句说理，阐明敬业乐业的精神。"}, {"q": "《就英法联军远征中国致巴特勒上尉的信》的作者雨果是（　）国作家", "opts": ["英国", "法国", "美国", "俄国"], "ans": 1, "exp": "雨果是法国浪漫主义文学代表作家，代表作有《巴黎圣母院》《悲惨世界》《九三年》。"}, {"q": "雨果在信中称掠夺圆明园的军队为“两个强盗”，指的是（　）", "opts": ["美国与日本", "英国与法国", "德国与俄国", "法国与西班牙"], "ans": 1, "exp": "1860年英法联军攻入北京，火烧并洗劫圆明园。雨果痛斥这一侵略行径，称两国军队为“两个强盗”。"}, {"q": "毕淑敏《精神的三间小屋》中，三间小屋分别安放（　）", "opts": ["爱与恨、事业、自身", "理想、现实、未来", "亲情、友情、爱情", "学业、工作、生活"], "ans": 0, "exp": "一间安放爱和恨，一间安放事业，一间安放自身——提醒人们经营好自己的精神家园。"}]}, {"name": "🏯 诗文名楼 · 文言雅境", "npc": "醉翁先生：“醉翁之意不在酒，在乎山水之间也。过关者，请与我同赏名句之美！”", "teach": [{"title": "《岳阳楼记》", "text": "范仲淹（北宋政治家、文学家）。名句“先天下之忧而忧，后天下之乐而乐”。注意字词：“属予作文”的“属”同“嘱”，嘱托；“春和景明”的“景”指日光。"}, {"title": "《醉翁亭记》", "text": "欧阳修，字永叔，自号醉翁，北宋“唐宋八大家”之一。“醉翁之意不在酒”的“意”是意趣、情趣；“名之者谁”的“名”是命名。主旨：与民同乐。"}, {"title": "《湖心亭看雪》", "text": "张岱，字宗子，明末清初文学家，课文选自《陶庵梦忆》。“雾凇沆砀，天与云与山与水，上下一白”以白描勾勒雪景，写作者痴迷山水的雅趣。"}], "quiz": [{"q": "“先天下之忧而忧，后天下之乐而乐”出自（　）", "opts": ["范仲淹《岳阳楼记》", "欧阳修《醉翁亭记》", "苏轼《水调歌头·明月几时有》", "李白《行路难》（其一）"], "ans": 0, "exp": "范仲淹是北宋政治家、文学家。这两句是《岳阳楼记》主旨，表现他忧国忧民、先忧后乐的胸怀。"}, {"q": "《醉翁亭记》中“醉翁之意不在酒”的“意”应解释为（　）", "opts": ["心意，想法", "意趣，情趣", "意愿，愿望", "意外"], "ans": 1, "exp": "句意：醉翁的情趣不在喝酒上，而在山水之间。“意”：意趣，情趣。作者是北宋的欧阳修。"}, {"q": "《岳阳楼记》中“属予作文以记之”的“属”应解释为（　）", "opts": ["属于", "同“嘱”，嘱托", "同“瞩”，注视", "接连"], "ans": 1, "exp": "句意：（滕子京）嘱托我写一篇文章来记述这件事。“属”是通假字，同“嘱”。"}, {"q": "关于《湖心亭看雪》，下列说法正确的一项是（　）", "opts": ["作者张岱是明末清初文学家，文章选自《陶庵梦忆》", "作者是北宋文学家范仲淹", "作者是欧阳修，自号醉翁", "文章选自吴敬梓的《儒林外史》"], "ans": 0, "exp": "张岱，字宗子，号陶庵，明末清初山阴（今浙江绍兴）人。《湖心亭看雪》选自《陶庵梦忆》。"}]}, {"name": "📖 人物风情镇 · 小说街", "npc": "说书老赵：“列位看官，小说一读人物，二读情节，三读环境——请听题！”", "teach": [{"title": "《故乡》", "text": "鲁迅1921年作，选自《呐喊》。少年闰土与中年闰土、杨二嫂的前后对比，写故乡衰败与人情隔膜；结尾“其实地上本没有路，走的人多了，也便成了路”寄托希望。"}, {"title": "《我的叔叔于勒》", "text": "莫泊桑（法国“短篇小说巨匠”）作。菲利普夫妇盼于勒、赞于勒，海上偶遇落魄卖牡蛎的于勒后仓皇躲避，前后态度对比，讽刺以金钱为转移的人际关系。"}, {"title": "《孤独之旅》", "text": "曹文轩《草房子》节选。杜小康家道中落，随父亲到芦荡放鸭，在孤独与暴风雨的磨炼中变得坚强。环境描写烘托人物心理、推动情节发展。"}], "quiz": [{"q": "《故乡》选自鲁迅的小说集（　）", "opts": ["《呐喊》", "《彷徨》", "《朝花夕拾》", "《野草》"], "ans": 0, "exp": "《故乡》写于1921年，选自小说集《呐喊》。少年闰土与中年闰土的对比是理解全文的钥匙。"}, {"q": "《我的叔叔于勒》的作者莫泊桑是（　）国作家，被誉为“短篇小说巨匠”", "opts": ["英国", "法国", "德国", "俄国"], "ans": 1, "exp": "莫泊桑是法国作家，与俄国契诃夫、美国欧·亨利并称“世界三大短篇小说巨匠”，代表作有《项链》《羊脂球》。"}, {"q": "小说的三要素是（　）", "opts": ["人物、情节、环境", "论点、论据、论证", "起因、经过、结果", "时间、地点、人物"], "ans": 0, "exp": "小说通过塑造人物形象、叙述故事情节、描写具体环境来反映社会生活。"}, {"q": "《孤独之旅》的主人公（　）随父亲放鸭，在孤独中完成了成长", "opts": ["闰土", "杜小康", "若瑟夫", "于勒"], "ans": 1, "exp": "曹文轩《孤独之旅》节选自《草房子》。杜小康家道中落，随父亲到芦荡放鸭，经历孤独与暴风雨，收获了成长的勇气。"}]}, {"name": "🛡️ 思辨烽火台 · 驳论关", "npc": "守关辩手：“事实胜于雄辩，证据不靠嗓门。接招吧，未来的小辩手！”", "teach": [{"title": "《中国人失掉自信力了吗》", "text": "鲁迅驳论文（选自《且介亭杂文》）。对方论据实为“他信力”“自欺力”；指出埋头苦干、拼命硬干、为民请命、舍身求法的人从不失掉自信，他们是“中国的脊梁”。"}, {"title": "《怀疑与学问》", "text": "顾颉刚（历史学家）作。中心论点：治学必须有怀疑精神。引程颐“学者先要会疑”、孟子“尽信书则不如无书”，从辨伪去妄与建设新学说两方面论证。"}, {"title": "《创造宣言》", "text": "陶行知（教育家）作，是演讲体议论文。批驳“环境太平凡”“年纪太小”等“不能创造”的借口，呼吁“处处是创造之地，天天是创造之时，人人是创造之人”。"}], "quiz": [{"q": "驳论文《中国人失掉自信力了吗》的作者是（　）", "opts": ["鲁迅", "顾颉刚", "陶行知", "罗迦·费·因格"], "ans": 0, "exp": "文章写于1934年，选自《且介亭杂文》，先驳对方的论据与论证，再确立自己的观点，属驳论文。"}, {"q": "鲁迅称赞“埋头苦干、拼命硬干、为民请命、舍身求法”的人为（　）", "opts": ["中国的脊梁", "风流人物", "时代先锋", "创造之神"], "ans": 0, "exp": "语出《中国人失掉自信力了吗》：他们有确信、不自欺，“这就是中国的脊梁”，喻指支撑民族的中坚力量。"}, {"q": "《怀疑与学问》的作者是（　）", "opts": ["顾颉刚", "梁启超", "鲁迅", "陶行知"], "ans": 0, "exp": "顾颉刚是历史学家，本文中心论点是“治学必须有怀疑精神”，引孟子“尽信书则不如无书”作论据。"}, {"q": "下列句子出自陶行知《创造宣言》的是（　）", "opts": ["处处是创造之地，天天是创造之时，人人是创造之人", "先天下之忧而忧，后天下之乐而乐", "但愿人长久，千里共婵娟", "醉翁之意不在酒，在乎山水之间也"], "ans": 0, "exp": "陶行知是教育家。他批驳种种“不能创造”的借口，呼唤人人创造、时时创造、处处创造。"}]}, {"name": "🏮 章回书坊 · 古典奇缘", "npc": "章回书生：“且说这一回，单表四座古典名著的奇缘——列位，请了！”", "teach": [{"title": "《智取生辰纲》", "text": "施耐庵《水浒传》（元末明初章回体白话小说，歌颂农民起义）。杨志押送生辰纲途经黄泥冈，吴用等人乔装客商、设计让军士喝下蒙汗药酒，智取成功。"}, {"title": "《范进中举》", "text": "吴敬梓《儒林外史》（清代长篇讽刺小说）。中举前胡屠户骂他是“现世宝”，中举后众人争相巴结；范进喜极而疯。讽刺科举制度对读书人的毒害与世态炎凉。"}, {"title": "《三顾茅庐》与《刘姥姥进大观园》", "text": "《三国演义》（罗贯中）写刘备三顾茅庐请诸葛亮出山；《红楼梦》（曹雪芹）写刘姥姥进大观园，众人宴中取笑，她朴拙风趣地凑趣，尽显世态人情。"}], "quiz": [{"q": "《智取生辰纲》节选自（　）的《水浒传》", "opts": ["施耐庵", "罗贯中", "吴敬梓", "曹雪芹"], "ans": 0, "exp": "施耐庵，元末明初小说家。《水浒传》是我国第一部歌颂农民起义的章回体长篇小说。"}, {"q": "下列说法正确的一项是（　）", "opts": ["《范进中举》选自清代吴敬梓的《儒林外史》", "《范进中举》选自明代罗贯中的《三国演义》", "《范进中举》选自清代曹雪芹的《红楼梦》", "《范进中举》选自施耐庵的《水浒传》"], "ans": 0, "exp": "《儒林外史》是我国古代讽刺文学的代表作。范进中举后喜极而疯，被岳父胡屠户一巴掌打醒，讽刺科举与世态。"}, {"q": "“三顾茅庐”讲的是（　）三次拜访诸葛亮、请他出山的故事", "opts": ["曹操", "刘备", "孙权", "袁绍"], "ans": 1, "exp": "出自罗贯中《三国演义》。刘备求贤若渴，三顾草庐，诸葛亮为他诚心所动，答应出山辅佐。"}, {"q": "《刘姥姥进大观园》选自（　）", "opts": ["曹雪芹《红楼梦》", "吴敬梓《儒林外史》", "蒲松龄《聊斋志异》", "罗贯中《三国演义》"], "ans": 0, "exp": "《红楼梦》作者是清代曹雪芹，它是我国古典小说的巅峰之作。刘姥姥被鸳鸯、王熙凤逗趣，索性自嘲凑趣，满堂大笑。"}]}];
+const BOSS = {"name": "👑 终极BOSS · 九上大满贯", "npc": "全能大儒：“六关已过，星辰归位。最后四问，考你九上语文的成色！”", "quiz": [{"q": "《水调歌头·明月几时有》的作者是（　）", "opts": ["李白", "苏轼", "杜甫", "刘禹锡"], "ans": 1, "exp": "苏轼，字子瞻，号东坡居士，北宋文学家。这首词写于中秋、怀念弟弟苏辙（字子由），“但愿人长久，千里共婵娟”寄托美好祝愿。"}, {"q": "“长风破浪会有时，直挂云帆济沧海”表达了诗人（　）", "opts": ["仕途失意的彻底绝望", "乐观自信、执着进取的信念", "归隐山林的愿望", "对朋友依依不舍之情"], "ans": 1, "exp": "李白《行路难》（其一）。借南朝宗悫“乘长风破万里浪”的典故，虽遇“冰塞川”“雪满山”般的困境，仍坚信理想终会实现。"}, {"q": "“沉舟侧畔千帆过，病树前头万木春”蕴含的哲理是（　）", "opts": ["时光易逝、青春难再的伤感", "新生事物必将取代旧事物，应豁达乐观", "只有历经磨难才能成功", "秋天草木凋零的萧瑟"], "ans": 1, "exp": "刘禹锡《酬乐天扬州初逢席上见赠》（“乐天”即白居易的字）。诗人以“沉舟”“病树”自喻，更见新事物蓬勃发展的乐观信念。"}, {"q": "《湖心亭看雪》中“天与云与山与水，上下一白”的“一”应解释为（　）", "opts": ["数量，一个", "全，都", "一样，相同", "专一"], "ans": 1, "exp": "教材注释：“上下一白”意为天色湖光全是白皑皑的，“一”是“全、都”。作者张岱，明末清初人，课文选自《陶庵梦忆》。"}]};
+const LS = {
+  coins: 'lql_preview9_coins_' + SUBJECT,
+  stars: 'lql_preview9_stars_' + SUBJECT,
+  unlocked: 'lql_preview9_unlocked_' + SUBJECT,
+  cleared: 'lql_preview9_cleared_' + SUBJECT,
+  wrong: 'lql_preview9_wrong_' + SUBJECT,
+  boss: 'lql_preview9_boss_' + SUBJECT
+};
+
+// ===== 状态 =====
+let state = {
+  coins: 0, stars: 0,
+  unlocked: [0],
+  cleared: [],
+  wrong: {},
+  bossBeaten: false,
+  curWorld: 0,
+  curTeach: 0,
+  curQ: 0,
+  hearts: 3,
+  worldStars: 0,
+  isBoss: false
+};
+
+function lsGet(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch(e) { return def; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+function loadState() {
+  state.coins = lsGet(LS.coins, 0);
+  state.stars = lsGet(LS.stars, 0);
+  state.unlocked = lsGet(LS.unlocked, [0]);
+  state.cleared = lsGet(LS.cleared, []);
+  state.wrong = lsGet(LS.wrong, {});
+  state.bossBeaten = lsGet(LS.boss, false);
+}
+function saveState() {
+  lsSet(LS.coins, state.coins); lsSet(LS.stars, state.stars);
+  lsSet(LS.unlocked, state.unlocked); lsSet(LS.cleared, state.cleared);
+  lsSet(LS.wrong, state.wrong); lsSet(LS.boss, state.bossBeaten);
+}
+function resetGame() {
+  state = { coins:0, stars:0, unlocked:[0], cleared:[], wrong:{}, bossBeaten:false, curWorld:0, curTeach:0, curQ:0, hearts:3, worldStars:0, isBoss:false };
+  saveState(); renderHUD(); showMap();
+}
+
+// ===== 渲染 =====
+const app = document.getElementById('app');
+function renderHUD() {
+  document.getElementById('hud-coins').textContent = state.coins;
+  document.getElementById('hud-stars').textContent = state.stars;
+  document.getElementById('hud-total').textContent = totalStars();
+}
+function totalStars() {
+  let n = 0;
+  WORLDS.forEach((w,i) => n += (state.cleared.includes(i) ? w.quiz.length : 0));
+  if (state.bossBeaten) n += BOSS.quiz.length;
+  return n;
+}
+
+function showMap() {
+  sfx.jump();
+  const worldsHtml = WORLDS.map((w, i) => {
+    const locked = !state.unlocked.includes(i);
+    const cleared = state.cleared.includes(i);
+    const stars = cleared ? w.quiz.length : 0;
+    return `<div class="world-item ${locked ? 'locked' : ''}" onclick="${locked ? '' : 'startWorld(' + i + ')'}">
+      <div class="w-icon">${locked ? '🔒' : (cleared ? '⭐' : '🏰')}</div>
+      <div class="w-info">
+        <div class="w-name">第 ${i+1} 关 · ${w.name}</div>
+        <div class="w-npc">${w.npc}</div>
+      </div>
+      <div class="w-status">${locked ? '<span class="lock">🔒 未解锁</span>' : (cleared ? '<span class="ok">★ ' + stars + '/' + w.quiz.length + '</span>' : '🆕 挑战')}</div>
+    </div>`;
+  }).join('');
+  const bossLocked = !(WORLDS.every((w,i) => state.cleared.includes(i)));
+  const bossHtml = `<div class="world-item ${bossLocked ? 'locked' : ''}" onclick="${bossLocked ? '' : 'startBoss()'}">
+    <div class="w-icon">${bossLocked ? '🔒' : (state.bossBeaten ? '👑' : '👹')}</div>
+    <div class="w-info">
+      <div class="w-name">BOSS 关 · ${BOSS.name}</div>
+      <div class="w-npc">${BOSS.npc}</div>
+    </div>
+    <div class="w-status">${bossLocked ? '<span class="lock">🔒 需通关全部关卡</span>' : (state.bossBeaten ? '<span class="ok">👑 已击败</span>' : '⚔️ 决战')}</div>
+  </div>`;
+  app.innerHTML = `<div class="screen">
+    <div class="map-header">
+      <h1>🎮 ${SUBJECT} 预习闯关</h1>
+      <p>${VERSION} · 打通所有关卡，击败大魔王！</p>
+    </div>
+    <div class="world-list">${worldsHtml}${bossHtml}</div>
+    <div class="map-buttons">
+      <button class="btn btn-blue" onclick="showWrongBook()">📝 错题本</button>
+      <button class="btn btn-gray" onclick="confirmReset()">🔄 重新开始</button>
+    </div>
+  </div>`;
+}
+
+function startWorld(i) {
+  state.curWorld = i; state.curTeach = 0; state.curQ = 0; state.worldStars = 0;
+  renderTeach();
+}
+function startBoss() {
+  state.isBoss = true; state.curQ = 0; state.hearts = 3; state.worldStars = 0;
+  renderBossIntro();
+}
+
+// ===== 教学页 =====
+function renderTeach() {
+  const w = WORLDS[state.curWorld];
+  const t = w.teach[state.curTeach];
+  const total = w.teach.length;
+  const isLast = state.curTeach === total - 1;
+  app.innerHTML = `<div class="screen teach-page">
+    <h2>第 ${state.curWorld+1} 关 · ${w.name}（教学 ${state.curTeach+1}/${total}）</h2>
+    <div class="teach-npc"><div class="npc-icon">🧙</div><div class="npc-text">${w.npc}</div></div>
+    <div class="teach-body">
+      <h3 style="color:#fff;margin-bottom:8px;">${t.title}</h3>
+      <p>${t.text}</p>
+    </div>
+    <div class="teach-nav">
+      <button class="btn btn-gray" onclick="showMap()">← 返回地图</button>
+      <button class="btn btn-gold" onclick="${isLast ? 'startQuiz()' : 'nextTeach()'}">${isLast ? '开始答题 ⚔️' : '下一页 →'}</button>
+    </div>
+  </div>`;
+  sfx.jump();
+}
+function nextTeach() {
+  state.curTeach++;
+  renderTeach();
+}
+
+// ===== 答题 =====
+function shuffleArr(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function startQuiz() {
+  state.curQ = 0; state.worldStars = 0;
+  // 选项随机打乱
+  const w = WORLDS[state.curWorld];
+  w.quiz.forEach(q => {
+    const idxs = [0,1,2,3];
+    shuffleArr(idxs);
+    q._opts = idxs.map(i => q.opts[i]);
+    q._ans = idxs.indexOf(q.ans);
+  });
+  renderQuiz();
+}
+function renderQuiz() {
+  const w = WORLDS[state.curWorld];
+  const q = w.quiz[state.curQ];
+  const total = w.quiz.length;
+  const answered = q._answered;
+  app.innerHTML = `<div class="screen quiz-page">
+    <div class="q-num">Q${state.curQ+1}/${total} · 第 ${state.curWorld+1} 关</div>
+    <div class="q-text">${q.q}</div>
+    ${q._opts.map((o, i) => `
+      <button class="opt ${answered ? (i === q._ans ? 'correct' : (i === q._picked ? 'wrong' : '')) : ''}" ${answered ? 'disabled' : ''} onclick="selQ(${i})">
+        ${'ABCD'[i]}. ${o}
+      </button>`).join('')}
+    <div class="explanation ${answered ? 'show' : ''}" id="expl">✅ ${q.exp}</div>
+    <div class="quiz-footer">
+      <button class="btn btn-gray" onclick="showMap()">← 返回</button>
+      <span class="q-stars">⭐ ${state.worldStars}/${total}</span>
+      ${answered ? (state.curQ < total-1 ? '<button class="btn btn-gold" onclick="nextQ()">下一题 →</button>' : '<button class="btn btn-gold" onclick="finishWorld()">查看结果 🏁</button>') : ''}
+    </div>
+  </div>`;
+}
+function selQ(i) {
+  const w = WORLDS[state.curWorld];
+  const q = w.quiz[state.curQ];
+  if (q._answered) return;
+  q._picked = i;
+  if (i === q._ans) {
+    q._answered = true;
+    state.worldStars++;
+    state.coins += 10;
+    state.stars++;
+    sfx.correct();
+  } else {
+    q._answered = true;
+    sfx.wrong();
+    // 错题导入
+    if (!state.wrong[state.curWorld]) state.wrong[state.curWorld] = [];
+    state.wrong[state.curWorld].push({ q: q.q, ans: q.opts[q.ans], exp: q.exp, world: w.name });
+  }
+  saveState();
+  renderQuiz();
+}
+function nextQ() {
+  state.curQ++;
+  renderQuiz();
+}
+function finishWorld() {
+  const w = WORLDS[state.curWorld];
+  const total = w.quiz.length;
+  const got = state.worldStars;
+  const passed = got === total;
+  if (passed) {
+    sfx.fanfare();
+    if (!state.cleared.includes(state.curWorld)) {
+      state.cleared.push(state.curWorld);
+      const nxt = state.curWorld + 1;
+      if (!state.unlocked.includes(nxt) && nxt < WORLDS.length) state.unlocked.push(nxt);
+      state.coins += 50;
+    }
+  } else {
+    sfx.wrong();
+  }
+  saveState();
+  app.innerHTML = `<div class="screen result-page">
+    <div class="result-title">${passed ? '🎉 闯关成功！' : '💔 闯关失败'}</div>
+    <div class="result-stars">${[...Array(total)].map((_,i) => `<span class="${i < got ? '' : 'off'}">⭐</span>`).join('')}</div>
+    <div class="result-detail">
+      <p>答对 ${got}/${total} 题</p>
+      <p style="margin-top:8px;">${passed ? '✅ 全部答对，解锁下一关！+50金币' : '❌ 需全部答对才能通过，加油再战！'}</p>
+    </div>
+    <div class="map-buttons" style="margin-top:20px;">
+      ${passed ? '<button class="btn btn-green" onclick="showMap()">继续闯关 🏰</button>' : '<button class="btn btn-gold" onclick="startQuiz()">重新挑战 🔄</button>'}
+      <button class="btn btn-blue" onclick="showMap()">地图</button>
+    </div>
+  </div>`;
+  renderHUD();
+}
+
+// ===== BOSS =====
+function renderBossIntro() {
+  app.innerHTML = `<div class="screen boss-page">
+    <div class="boss-title">⚠️ BOSS 战 ⚠️</div>
+    <div class="boss-avatar">👹</div>
+    <p style="margin-bottom:14px;color:#ff9;">${BOSS.npc}</p>
+    <p style="color:#aaa;font-size:14px;">3 条命（♥），答错扣命，0 命需重打！</p>
+    <div class="map-buttons" style="margin-top:20px;">
+      <button class="btn btn-gray" onclick="showMap()">← 撤退</button>
+      <button class="btn btn-red" onclick="startBossQuiz()">⚔️ 开战！</button>
+    </div>
+  </div>`;
+  sfx.jump();
+}
+function startBossQuiz() {
+  state.curQ = 0; state.hearts = 3; state.worldStars = 0;
+  BOSS.quiz.forEach(q => {
+    const idxs = [0,1,2,3];
+    shuffleArr(idxs);
+    q._opts = idxs.map(i => q.opts[i]);
+    q._ans = idxs.indexOf(q.ans);
+  });
+  renderBossQuiz();
+}
+function renderBossQuiz() {
+  if (state.hearts <= 0) {
+    sfx.wrong();
+    app.innerHTML = `<div class="screen boss-page">
+      <div class="boss-title" style="color:var(--red);">💀 挑战失败</div>
+      <div class="boss-avatar">👹</div>
+      <p style="margin:14px 0;color:#aaa;">生命值为 0，BOSS 还在咆哮…</p>
+      <button class="btn btn-red" onclick="startBossQuiz()">🔄 重新挑战</button>
+      <button class="btn btn-gray" style="margin-left:10px;" onclick="showMap()">地图</button>
+    </div>`;
+    return;
+  }
+  const q = BOSS.quiz[state.curQ];
+  const total = BOSS.quiz.length;
+  const answered = q._answered;
+  app.innerHTML = `<div class="screen quiz-page">
+    <div class="q-num" style="color:var(--red);">☠️ BOSS 战 · Q${state.curQ+1}/${total}</div>
+    <div class="hearts">${[...Array(3)].map((_,i) => `<span class="${i < state.hearts ? '' : 'lost'}">♥</span>`).join('')}</div>
+    <div class="q-text">${q.q}</div>
+    ${q._opts.map((o, i) => `
+      <button class="opt ${answered ? (i === q._ans ? 'correct' : (i === q._picked ? 'wrong' : '')) : ''}" ${answered ? 'disabled' : ''} onclick="selBossQ(${i})">
+        ${'ABCD'[i]}. ${o}
+      </button>`).join('')}
+    <div class="explanation ${answered ? 'show' : ''}">✅ ${q.exp}</div>
+    <div class="quiz-footer">
+      <button class="btn btn-gray" onclick="showMap()">← 撤退</button>
+      ${answered ? (state.curQ < total-1 ? '<button class="btn btn-red" onclick="nextBossQ()">下一题 →</button>' : '<button class="btn btn-red" onclick="finishBoss()">⚔️ 终结 BOSS</button>') : ''}
+    </div>
+  </div>`;
+}
+function selBossQ(i) {
+  const q = BOSS.quiz[state.curQ];
+  if (q._answered) return;
+  q._picked = i;
+  if (i === q._ans) {
+    q._answered = true;
+    state.worldStars++;
+    state.coins += 20;
+    state.stars++;
+    sfx.correct();
+  } else {
+    q._answered = true;
+    state.hearts--;
+    state.coins = Math.max(0, state.coins - 5);
+    sfx.bossHit();
+    if (!state.wrong['boss']) state.wrong['boss'] = [];
+    state.wrong['boss'].push({ q: q.q, ans: q.opts[q.ans], exp: q.exp, world: 'BOSS关' });
+  }
+  saveState();
+  renderBossQuiz();
+}
+function nextBossQ() {
+  state.curQ++;
+  renderBossQuiz();
+}
+function finishBoss() {
+  if (state.worldStars === BOSS.quiz.length) {
+    state.bossBeaten = true;
+    state.coins += 100;
+    saveState();
+    bossVictory();
+  } else {
+    sfx.wrong();
+    app.innerHTML = `<div class="screen boss-page">
+      <div class="boss-title">😤 还差一点！</div>
+      <p style="margin:14px;color:#aaa;">需全部答对才能击败 BOSS（当前 ${state.worldStars}/${BOSS.quiz.length}）</p>
+      <button class="btn btn-red" onclick="startBossQuiz()">🔄 再战</button>
+    </div>`;
+  }
+}
+function bossVictory() {
+  sfx.fanfare();
+  document.body.classList.add('screen-shake');
+  // 三波纸屑
+  spawnConfetti(0); spawnConfetti(500); spawnConfetti(1500);
+  setTimeout(() => document.body.classList.remove('screen-shake'), 600);
+  app.innerHTML = `<div class="screen boss-page">
+    <div class="boss-defeated">BOSS DEFEATED!</div>
+    <div class="trophy">🏆</div>
+    <div class="stat-panel">
+      <h3>🎊 恭喜通关 ${SUBJECT} 预习！</h3>
+      <div class="stat-row"><span>总星星</span><span>⭐ ${state.stars}</span></div>
+      <div class="stat-row"><span>金币</span><span>🪙 ${state.coins}</span></div>
+      <div class="stat-row"><span>已掌握关卡</span><span>${WORLDS.length}/${WORLDS.length} + BOSS</span></div>
+    </div>
+    <div class="map-buttons" style="margin-top:20px;">
+      <button class="btn btn-gold" onclick="showMap()">🏰 返回地图</button>
+      <button class="btn btn-blue" onclick="showWrongBook()">📝 错题本</button>
+    </div>
+  </div>`;
+  renderHUD();
+}
+function spawnConfetti(delay) {
+  const colors = ['#e74c3c','#f1c40f','#2ecc71','#3498db','#9b59b6','#e67e22'];
+  setTimeout(() => {
+    for (let i = 0; i < 24; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti';
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.top = '0';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 0.5) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 3500);
+    }
+  }, delay);
+}
+
+// ===== 错题本 =====
+function showWrongBook() {
+  const entries = [];
+  Object.keys(state.wrong).forEach(k => {
+    (state.wrong[k] || []).forEach(e => entries.push(e));
+  });
+  const html = entries.length === 0
+    ? '<div class="empty-tip">🎉 还没有错题，继续保持！</div>'
+    : entries.map(e => `<div class="wrong-item">
+        <div class="wq">📝 ${e.q}</div>
+        <div class="wa">✅ 正确答案：${e.ans}</div>
+        <div class="we">💡 ${e.exp}（${e.world}）</div>
+      </div>`).join('');
+  app.innerHTML = `<div class="screen wrongbook">
+    <h2>📝 错题本（${entries.length}）</h2>
+    ${html}
+    <div class="map-buttons" style="margin-top:16px;">
+      <button class="btn btn-blue" onclick="showMap()">← 返回地图</button>
+    </div>
+  </div>`;
+}
+
+// ===== 重置确认 =====
+function confirmReset() {
+  const mask = document.createElement('div');
+  mask.className = 'modal-mask';
+  mask.innerHTML = `<div class="modal-card">
+    <p>确定要重新开始吗？<br>所有星星、金币、进度将清零！</p>
+    <div class="modal-btns">
+      <button class="btn btn-gray" id="cancel-reset">取消</button>
+      <button class="btn btn-red" id="ok-reset">确定重置</button>
+    </div>
+  </div>`;
+  document.body.appendChild(mask);
+  mask.querySelector('#cancel-reset').onclick = () => mask.remove();
+  mask.querySelector('#ok-reset').onclick = () => { mask.remove(); resetGame(); };
+}
+
+// ===== 启动 =====
+loadState();
+app.innerHTML = `<div class="hud">
+  <div class="hud-item">🪙 <span id="hud-coins" style="color:var(--gold)">${state.coins}</span></div>
+  <div class="hud-item">⭐ <span id="hud-stars" style="color:var(--green)">${state.stars}</span></div>
+  <div class="hud-item">🎯 <span id="hud-total" style="color:#fff">${totalStars()}</span></div>
+</div>`;
+showMap();
+</script>
+</body>
+</html>

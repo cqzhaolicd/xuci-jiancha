@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<title>🎮 化学预习闯关 · 九年级上册 · 人教版</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:#e74c3c; --green:#2ecc71; --gold:#f1c40f; --blue:#3498db; --brown:#8e5a2b;
+  --bg:#1a1a2e; --card:#222244; --text:#eee; --pixel:'Press Start 2P',monospace; --body:'Noto Sans SC',sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+  font-family:var(--body); background:var(--bg); color:var(--text); min-height:100vh;
+  background-image:radial-gradient(circle at 20% 20%, rgba(52,152,219,.12) 0, transparent 30%),
+                   radial-gradient(circle at 80% 70%, rgba(46,204,113,.1) 0, transparent 30%);
+}
+.clouds { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.cloud { position:absolute; background:rgba(255,255,255,.05); border-radius:50px; animation:float 20s linear infinite; }
+.cloud:nth-child(1) { width:180px;height:40px;top:10%;left:-200px; }
+.cloud:nth-child(2) { width:120px;height:30px;top:30%;left:-150px; animation-duration:28s; animation-delay:-8s; }
+.cloud:nth-child(3) { width:220px;height:50px;top:55%;left:-250px; animation-duration:35s; animation-delay:-15s; }
+.cloud:nth-child(4) { width:90px;height:25px;top:75%;left:-120px; animation-duration:22s; animation-delay:-4s; }
+@keyframes float { from { transform:translateX(0); } to { transform:translateX(calc(100vw + 400px)); } }
+#app { position:relative; z-index:1; max-width:860px; margin:0 auto; padding:16px; }
+.hud { display:flex; justify-content:space-between; align-items:center; background:var(--card); border:3px solid #333; border-radius:12px; padding:10px 16px; margin-bottom:14px; font-family:var(--pixel); font-size:11px; }
+.hud .hud-item { display:flex; align-items:center; gap:6px; }
+.hud .coin { color:var(--gold); } .hud .star { color:var(--green); }
+.screen { animation:fadeIn .4s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+/* ===== 地图页 ===== */
+.map-header { text-align:center; padding:18px 0 8px; }
+.map-header h1 { font-family:var(--pixel); font-size:20px; color:var(--gold); text-shadow:3px 3px 0 rgba(0,0,0,.5); }
+.map-header p { color:#aaa; font-size:13px; margin-top:6px; }
+.world-list { display:flex; flex-direction:column; gap:12px; margin-top:16px; }
+.world-item { display:flex; align-items:center; gap:14px; background:var(--card); border:3px solid #333; border-radius:12px; padding:14px 16px; cursor:pointer; transition:all .2s; }
+.world-item:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.4); border-color:var(--gold); }
+.world-item.locked { opacity:.45; cursor:not-allowed; }
+.world-item .w-icon { font-size:28px; }
+.world-item .w-info { flex:1; }
+.world-item .w-name { font-weight:700; font-size:15px; }
+.world-item .w-npc { color:#aaa; font-size:12px; margin-top:2px; }
+.world-item .w-status { font-family:var(--pixel); font-size:10px; }
+.world-item .w-status .ok { color:var(--green); }
+.world-item .w-status .lock { color:#888; }
+.map-buttons { display:flex; gap:10px; margin-top:18px; justify-content:center; }
+.btn { font-family:var(--body); font-weight:700; border:none; border-radius:10px; padding:10px 22px; cursor:pointer; font-size:14px; transition:all .2s; }
+.btn:hover { transform:translateY(-2px); }
+.btn-gold { background:var(--gold); color:#333; }
+.btn-blue { background:var(--blue); color:#fff; }
+.btn-green { background:var(--green); color:#fff; }
+.btn-red { background:var(--red); color:#fff; }
+.btn-gray { background:#555; color:#ccc; }
+/* ===== 教学页 ===== */
+.teach-page { background:var(--card); border:3px solid #333; border-radius:14px; padding:22px; }
+.teach-page h2 { font-size:20px; color:var(--gold); margin-bottom:14px; }
+.teach-npc { display:flex; gap:12px; background:rgba(241,196,15,.08); border-left:4px solid var(--gold); border-radius:8px; padding:12px; margin-bottom:16px; }
+.teach-npc .npc-icon { font-size:30px; }
+.teach-npc .npc-text { font-size:14px; line-height:1.7; color:#ffd; }
+.teach-body { font-size:15px; line-height:1.9; color:#ddd; }
+.teach-body p { margin-bottom:10px; }
+.teach-nav { display:flex; justify-content:space-between; margin-top:20px; }
+/* ===== 答题页 ===== */
+.quiz-page { background:var(--card); border:3px solid #333; border-radius:14px; padding:22px; }
+.quiz-page .q-num { font-family:var(--pixel); font-size:11px; color:var(--gold); margin-bottom:8px; }
+.quiz-page .q-text { font-size:17px; font-weight:700; margin-bottom:16px; line-height:1.6; }
+.opt { display:block; width:100%; text-align:left; background:#2a2a4a; border:2px solid #444; color:var(--text); border-radius:10px; padding:12px 14px; margin-bottom:10px; font-size:14px; cursor:pointer; transition:all .15s; font-family:var(--body); }
+.opt:hover { border-color:var(--gold); }
+.opt.correct { background:var(--green); border-color:var(--green); color:#fff; }
+.opt.wrong { background:var(--red); border-color:var(--red); color:#fff; }
+.explanation { display:none; background:rgba(52,152,219,.1); border-left:4px solid var(--blue); border-radius:8px; padding:12px; margin-top:10px; font-size:14px; line-height:1.7; }
+.explanation.show { display:block; animation:fadeIn .3s; }
+.quiz-footer { display:flex; justify-content:space-between; margin-top:16px; align-items:center; }
+/* ===== BOSS ===== */
+.boss-page { text-align:center; padding:30px 16px; }
+.boss-title { font-family:var(--pixel); font-size:22px; color:var(--red); text-shadow:3px 3px 0 rgba(0,0,0,.6); animation:pulse 1.5s infinite; }
+@keyframes pulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.06); } }
+.boss-avatar { font-size:72px; margin:24px 0; animation:bounce 1s infinite; display:inline-block; }
+@keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+.hearts { font-size:26px; margin:12px 0; }
+.hearts .lost { opacity:.25; }
+/* BOSS 胜利动画 */
+.screen-shake { animation:shake .5s; }
+@keyframes shake { 0%,100% { transform:translateX(0); } 20% { transform:translateX(-12px); } 40% { transform:translateX(12px); } 60% { transform:translateX(-8px); } 80% { transform:translateX(8px); } }
+.boss-defeated { font-family:var(--pixel); font-size:28px; color:var(--gold); margin:20px 0; animation:blink .6s infinite; }
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:.2; } }
+.trophy { font-size:64px; display:inline-block; animation:trophyScale 1s forwards; transform:scale(0.05); filter:drop-shadow(0 0 20px gold); }
+@keyframes trophyScale { 0% { transform:scale(0.05); } 70% { transform:scale(1.35); } 100% { transform:scale(1.15); } }
+.confetti { position:fixed; width:10px; height:14px; z-index:99; pointer-events:none; animation:confettiFall 2.5s ease-out forwards; }
+@keyframes confettiFall { 0% { transform:translateY(-20px) rotate(0); opacity:1; } 100% { transform:translateY(100vh) rotate(720deg); opacity:0; } }
+.stat-panel { background:var(--card); border:3px solid var(--gold); border-radius:14px; padding:20px; margin-top:20px; text-align:left; animation:fadeIn .5s .4s both; }
+.stat-panel h3 { color:var(--gold); margin-bottom:10px; }
+.stat-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed #444; font-size:14px; }
+/* ===== 错题本 ===== */
+.wrongbook { background:var(--card); border:3px solid #333; border-radius:14px; padding:20px; }
+.wrongbook h2 { color:var(--gold); margin-bottom:14px; }
+.wrong-item { background:#2a2a4a; border-radius:10px; padding:14px; margin-bottom:12px; }
+.wrong-item .wq { font-weight:700; margin-bottom:6px; }
+.wrong-item .wa { color:#99ffcc; font-size:13px; }
+.wrong-item .we { color:#aaa; font-size:13px; margin-top:4px; }
+.empty-tip { text-align:center; color:#888; padding:30px 0; }
+/* ===== 确认弹窗 ===== */
+.modal-mask { position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:100; display:flex; align-items:center; justify-content:center; animation:fadeIn .2s; }
+.modal-card { background:var(--card); border:3px solid var(--gold); border-radius:14px; padding:24px; max-width:340px; width:90%; text-align:center; }
+.modal-card p { margin-bottom:18px; font-size:15px; }
+.modal-btns { display:flex; gap:10px; justify-content:center; }
+/* ===== 结果页 ===== */
+.result-page { text-align:center; padding:30px 16px; }
+.result-title { font-family:var(--pixel); font-size:20px; color:var(--gold); margin-bottom:16px; }
+.result-stars { font-size:30px; margin:14px 0; }
+.result-stars .off { opacity:.2; }
+.result-detail { background:var(--card); border-radius:12px; padding:16px; margin:14px auto; max-width:400px; }
+/* ===== 响应式 ===== */
+@media (max-width:680px) {
+  .hud { font-size:9px; padding:8px 10px; }
+  .map-header h1 { font-size:16px; }
+  .world-item .w-name { font-size:14px; }
+  .teach-page, .quiz-page { padding:16px; }
+}
+</style>
+</head>
+<body>
+<div class="clouds"><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div></div>
+<div id="app"></div>
+<script>
+// ===== 音效（Web Audio 8-bit）=====
+let audioCtx = null;
+function playTone(freq, dur, type='square', vol=0.08, when=0) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const t = audioCtx.currentTime + when;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type; osc.frequency.setValueAtTime(freq, t);
+    gain.gain.setValueAtTime(vol, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(t); osc.stop(t + dur + 0.02);
+  } catch(e) {}
+}
+const sfx = {
+  jump: () => playTone(392, .12, 'square', .06),
+  coin: () => { playTone(988, .08); playTone(1319, .12, 'square', .06, .06); },
+  correct: () => { playTone(523, .1); playTone(659, .1, 'square', .07, .09); playTone(784, .18, 'square', .07, .18); },
+  wrong: () => { playTone(220, .2, 'sawtooth', .07); playTone(175, .25, 'sawtooth', .06, .15); },
+  fanfare: () => { [523,659,784,1047].forEach((f,i)=>playTone(f,.15,'square',.08,i*.12)); },
+  bossHit: () => { playTone(98, .3, 'sawtooth', .1); playTone(82, .4, 'sawtooth', .08, .15); }
+};
+
+// ===== 数据 =====
+const SUBJECT = "化学";
+const VERSION = "九年级上册 · 人教版";
+const WORLDS = [{"name": "变化峡谷", "npc": "变化守门人：物理变化化学变化，辨清“有没有新物质生成”才能进门！", "teach": [{"title": "物理变化与化学变化", "text": "物理变化：没有新物质生成，只是形状、状态改变，如水结成冰。化学变化：有新物质生成，如蜡烛燃烧生成CO2和H2O。本质区别：有无新物质生成。发光放热、变色只是伴随现象，不是本质。"}, {"title": "化学性质", "text": "化学性质要通过化学变化才表现出来，如可燃性、氧化性、稳定性；物理性质如颜色、状态、气味、熔点、沸点、密度、硬度，不需化学变化即可表现。例：H2可燃是化学性质，O2助燃也是化学性质。"}, {"title": "仪器与基本操作", "text": "酒精灯用外焰加热（温度最高），用灯帽盖灭，不可用嘴吹；给试管加热先预热，管口不对人；量筒读数视线与凹液面最低处相平；闻气味用手扇，药品不尝、不摸、不凑近闻。"}], "quiz": [{"q": "下列变化中，属于化学变化的是（　）", "opts": ["湿衣服晾干", "食物腐败", "玻璃破碎", "冰雪融化"], "ans": 1, "exp": "食物腐败生成了新物质，是化学变化；晾干是水蒸发，玻璃破碎、冰雪融化只改变形状或状态，都没有新物质生成，属物理变化。"}, {"q": "下列关于化学变化的说法，正确的是（　）", "opts": ["化学变化一定伴随发光、放热现象", "爆炸一定是化学变化", "判断化学变化与物理变化的依据是有无颜色改变", "化学变化的本质特征是有新物质生成"], "ans": 3, "exp": "铁生锈是化学变化却不发光放热，A错；轮胎爆炸是物理变化，B错；变色不是判断依据，C错；只有D正确——有无新物质生成才是化学变化的本质。"}, {"q": "下列性质中，属于化学性质的是（　）", "opts": ["汽油易挥发", "铜能导电", "蜡烛能燃烧", "食盐是白色固体"], "ans": 2, "exp": "可燃性要在化学变化（燃烧）中才能表现出来，是化学性质；挥发、导电、颜色都是物理性质。"}, {"q": "下列实验操作正确的是（　）", "opts": ["熄灭酒精灯时用嘴吹灭", "给试管加热前先预热，使试管受热均匀", "把鼻孔凑到试剂瓶口闻药品气味", "读取量筒内液体体积时俯视读数"], "ans": 1, "exp": "熄灭酒精灯应用灯帽盖灭，A错；闻气味应用手在瓶口轻轻扇动，不能凑近瓶口，C错；量筒读数时视线应与凹液面最低处相平，D错。B正确。"}]}, {"name": "空气王国", "npc": "云朵向导：空气中78%的N2、21%的O2，还有看不见的CO2和稀有气体，来测一测O2的含量吧！", "teach": [{"title": "空气的成分", "text": "空气中各成分按体积计：N2约占78%，O2约占21%，稀有气体0.94%，CO2约0.03%。O2可供给呼吸、支持燃烧；N2化学性质不活泼，常用作保护气；稀有气体通电发光，可作电光源。"}, {"title": "纯净物与混合物", "text": "纯净物只由一种物质组成，有固定组成和化学式，如O2、N2、CO2；混合物由多种物质组成，没有固定化学式，空气是混合物。注意：冰水共存物仍是纯净物，因为都是H2O。"}, {"title": "测定空气中氧气含量", "text": "红磷燃烧：4P+5O2 点燃 2P2O5，产生白烟。冷却后打开弹簧夹，水倒流入瓶内约1/5，说明O2约占空气体积的1/5。红磷要足量，装置气密性要好，冷却后再读数。"}], "quiz": [{"q": "空气中含量最多的气体是（　）", "opts": ["氧气", "氮气", "二氧化碳", "稀有气体"], "ans": 1, "exp": "按体积计，N2约占78%、O2约占21%，所以含量最多的是氮气（N2）。"}, {"q": "下列物质属于纯净物的是（　）", "opts": ["空气", "矿泉水", "液氧", "澄清石灰水"], "ans": 2, "exp": "液氧是液态O2，只含一种物质，是纯净物；空气含N2、O2等，是混合物；矿泉水含多种矿物质，是混合物；澄清石灰水是Ca(OH)2的水溶液，也是混合物。"}, {"q": "用红磷燃烧测定空气中氧气含量的实验中，下列说法正确的是（　）", "opts": ["可以用木炭代替红磷", "红磷熄灭后应立即打开弹簧夹读数", "红磷要足量，以尽量耗尽瓶内的氧气", "冷却后打开弹簧夹，进入水的体积约占瓶内空气总体积的1/2"], "ans": 2, "exp": "红磷足量才能把O2耗尽，C对。木炭燃烧生成CO2气体，瓶内气压变化很小，水几乎不进入，A错；未冷却就打开弹簧夹，瓶内气体仍受热膨胀，进入的水偏少，B错；进入的水约为瓶内空气体积的1/5，说明O2约占空气体积的1/5，D错。"}, {"q": "下列关于氧气的说法，错误的是（　）", "opts": ["氧气能供给呼吸", "氧气能支持燃烧", "氧气的化学性质比较活泼", "氧气具有可燃性"], "ans": 3, "exp": "氧气能助燃（支持燃烧）但自身不能燃烧，没有可燃性，D错；氧气化学性质活泼，能与碳、硫、铁等多种物质反应，能供给呼吸。"}]}, {"name": "微观迷城", "npc": "原子精灵：分子可分原子不可分，质子数决定元素种类，跟我闯过这座微观迷宫！", "teach": [{"title": "分子与原子", "text": "分子是保持物质化学性质的最小粒子，如H2O分子；原子是化学变化中的最小粒子。化学变化中分子可分、原子不可分，分子由原子构成。温度升高，分子运动加快、间隔变大。"}, {"title": "原子结构", "text": "原子由原子核与核外电子构成，原子核含质子和中子（氢原子没有中子）。原子中：质子数=核电荷数=核外电子数，原子不显电性。相对原子质量≈质子数+中子数。"}, {"title": "元素、离子与化合价", "text": "元素是具有相同质子数的一类原子的总称。原子得失电子形成离子：Na失1个电子成Na+，Cl得1个电子成Cl-。化合物中正负化合价代数和为零，如H2O中H为+1价、O为-2价。"}], "quiz": [{"q": "下列关于分子、原子的说法，正确的是（　）", "opts": ["分子可分，原子不可分", "化学变化中，原子不能再分", "原子中一定含有质子、中子和电子", "分子一定比原子大"], "ans": 1, "exp": "只有在化学变化中才说分子可分、原子不可分，A漏掉了前提；普通氢原子核内没有中子，C错；不能笼统地说分子一定比原子大，D错。化学变化中原子不可再分，B对。"}, {"q": "某原子的原子核内有11个质子和12个中子，下列说法正确的是（　）", "opts": ["该原子的核电荷数为12", "该原子的核外电子数为11", "该原子的相对原子质量约为11", "该原子的核内共有23个质子"], "ans": 1, "exp": "原子中质子数=核电荷数=核外电子数，故核电荷数和核外电子数都是11，A错、B对；相对原子质量≈质子数+中子数=11+12=23，C错；核内质子只有11个，D错。"}, {"q": "决定元素种类的是（　）", "opts": ["质子数（核电荷数）", "中子数", "最外层电子数", "相对原子质量"], "ans": 0, "exp": "元素是质子数（核电荷数）相同的一类原子的总称，所以质子数决定元素种类；最外层电子数决定元素的化学性质。"}, {"q": "下列化学用语书写正确的是（　）", "opts": ["两个氢原子：H2", "钙离子：Ca+2", "一个氧分子：O2", "氧化镁：MgO2"], "ans": 2, "exp": "H2表示一个氢分子，两个氢原子应写2H，A错；离子所带电荷写在右上角且数字在前、符号在后，钙离子应写Ca2+，B错；镁为+2价、氧为-2价，氧化镁应为MgO，D错。O2既表示氧气，也表示一个氧分子。"}]}, {"name": "水滴秘境", "npc": "水之精灵：净水四步过滤吸附蒸馏，通电分解见氢氧——H2O的秘密等你揭晓！", "teach": [{"title": "爱护水资源", "text": "水是宝贵的自然资源：一要节约用水，如淘米水浇花、农业采用滴灌；二要防治水体污染——工业废水处理达标后排放，农业合理施用化肥农药，生活污水集中处理，不向河道乱倒垃圾。"}, {"title": "水的净化", "text": "净化方法：静置沉降（加明矾吸附悬浮杂质）→过滤（除不溶性杂质，玻璃棒引流）→活性炭吸附（除色素和异味，属物理变化）→蒸馏（净化程度最高）。用氯气消毒属于化学变化。"}, {"title": "硬水、软水与电解水", "text": "硬水含较多可溶性钙、镁化合物。肥皂水检验：泡沫多、浮渣少的是软水。煮沸可降低硬度。电解水：2H2O 通电 2H2↑+O2↑，正极出O2、负极出H2，体积比约1:2，说明水由H、O两种元素组成。"}], "quiz": [{"q": "进行过滤操作时，不需要用到的仪器是（　）", "opts": ["烧杯", "漏斗", "玻璃棒", "酒精灯"], "ans": 3, "exp": "过滤需要铁架台、漏斗、滤纸、烧杯和玻璃棒（引流），整个过程不需要加热，所以用不到酒精灯。"}, {"q": "下列关于硬水的说法，正确的是（　）", "opts": ["硬水是纯净物", "用肥皂水区分硬水和软水时，泡沫多、浮渣少的是硬水", "生活中常用煮沸的方法降低水的硬度", "过滤可以把硬水变成软水"], "ans": 2, "exp": "硬水中含较多可溶性钙、镁化合物，是混合物，A错；肥皂水泡沫多、浮渣少的是软水，B错；煮沸可使部分可溶性钙镁化合物转化为沉淀从而降低硬度，C对；过滤只能除去不溶性杂质，不能软化硬水，D错。"}, {"q": "电解水实验中，下列说法正确的是（　）", "opts": ["正极产生氢气，负极产生氧气", "正极产生氧气，负极产生氢气", "负极产生的气体能使带火星的木条复燃", "水是由氢气和氧气组成的"], "ans": 1, "exp": "电解水正极产生O2（带火星木条复燃检验）、负极产生H2（点燃有淡蓝色火焰），H2与O2体积比约2:1，A、C错；化学方程式2H2O 通电 2H2↑+O2↑，说明水由氢、氧两种元素组成，是化合物、氧化物，不是由氢气和氧气组成的，D错。"}, {"q": "关于水的净化，下列说法正确的是（　）", "opts": ["过滤可以除去水中的所有杂质", "活性炭可以吸附水中的色素和异味", "蒸馏得到的水是混合物", "明矾的作用是杀菌消毒"], "ans": 1, "exp": "过滤只能除去不溶性杂质，A错；活性炭疏松多孔，能吸附色素和异味，B对；蒸馏得到的是纯水（H2O），是纯净物，C错；明矾的作用是吸附水中悬浮杂质使其沉降，不是杀菌消毒，D错。"}]}, {"name": "守恒炼金塔", "npc": "炼金塔主：质量守恒是铁律，写方程式先配平，按比例算质量，一步都不能错！", "teach": [{"title": "质量守恒定律", "text": "参加化学反应的各物质的质量总和，等于反应后生成的各物质的质量总和。根本原因：反应前后原子的种类、数目、质量都不变。它适用于一切化学变化，不适用于物理变化。"}, {"title": "化学方程式的书写与配平", "text": "步骤：写（正确写出反应物、生成物）、配（配平，遵守质量守恒）、注（标条件：点燃、加热、MnO2等，标↑↓）、等。例：2H2O2 —MnO2— 2H2O+O2↑；2H2+O2 点燃 2H2O。"}, {"title": "根据化学方程式计算", "text": "依据：方程式中各物质的质量比等于相对分子质量与化学计量数乘积之比。步骤：设未知数→写方程式→标量→列比例→求解。例：2H2+O2 点燃 2H2O中三者质量比=4:32:36=1:8:9。"}], "quiz": [{"q": "下列说法正确的是（　）", "opts": ["10 g水加热变成10 g水蒸气，遵循质量守恒定律", "化学反应前后，分子的种类和数目都不改变", "蜡烛燃烧后质量减小，说明质量守恒定律不成立", "化学反应前后，原子的种类和数目都不变"], "ans": 3, "exp": "质量守恒定律只适用于化学变化，水汽化是物理变化，A错；化学变化中分子种类一定改变、数目可能改变，B错；蜡烛燃烧的产物CO2和水蒸气逸散到空气中，使剩余质量减小，但反应前后物质总质量仍然守恒，C错；原子种类、数目不变正是质量守恒的根本原因，D对。"}, {"q": "化学反应前后一定不变的是（　）①原子的种类 ②原子的数目 ③分子的数目 ④元素的种类 ⑤物质的种类 ⑥物质的总质量", "opts": ["①②③⑥", "①②④⑥", "②③④⑤", "①③⑤⑥"], "ans": 1, "exp": "反应前后原子种类、数目不变，元素种类不变，参加反应的物质与生成物总质量守恒，所以①、②、④、⑥一定不变；分子数目可能改变（如2H2+O2 点燃 2H2O由3个分子变成2个分子），物质种类一定改变（否则就不是化学变化）。故选B。"}, {"q": "下列化学方程式书写正确的是（　）", "opts": ["H2+O2 点燃 H2O", "4P+5O2 点燃 2P2O5", "KMnO4 加热 K2MnO4+MnO2+O2", "Fe+O2 点燃 Fe2O3"], "ans": 1, "exp": "A未配平，应为2H2+O2 点燃 2H2O；C未配平，应为2KMnO4 加热 K2MnO4+MnO2+O2↑；D产物错误，铁在氧气中燃烧生成四氧化三铁，应为3Fe+2O2 点燃 Fe3O4。B配平且正确。"}, {"q": "根据化学方程式 2H2+O2 点燃 2H2O，若氢气和氧气恰好完全反应生成18 g水，则参加反应的氢气和氧气的质量分别是（　）", "opts": ["2 g 和 16 g", "4 g 和 14 g", "16 g 和 2 g", "1 g 和 17 g"], "ans": 0, "exp": "各物质质量比=相对分子质量×化学计量数之比：2H2为4，O2为32，2H2O为36，即H2:O2:H2O=4:32:36=1:8:9。生成18 g水，则m(H2)=18×1/9=2 g，m(O2)=18×8/9=16 g，故选A。"}]}, {"name": "黑钻矿洞", "npc": "碳晶守卫：金刚石石墨同是碳，CO2与CO一字之差、性情两异，小心脚下！", "teach": [{"title": "碳的单质", "text": "金刚石是天然存在的最硬的物质，可切割玻璃；石墨质软、能导电，制铅笔芯和电极；C60由C60分子构成。三者都由碳元素组成，物理性质差异大，是因为碳原子的排列方式不同。"}, {"title": "CO2的制取与性质", "text": "实验室：大理石+稀盐酸 CaCO3+2HCl=CaCl2+H2O+CO2↑，向上排空气法收集。CO2+H2O=H2CO3；CO2+Ca(OH)2=CaCO3↓+H2O，能使石灰水变浑浊。"}, {"title": "一氧化碳与温室效应", "text": "CO无色无味、有毒、难溶于水，易与血红蛋白结合使人中毒。2CO+O2 点燃 2CO2；CO+CuO 加热 Cu+CO2，说明CO有还原性。CO2无毒但排放过多会加剧温室效应，应少开汽车、多植树。"}], "quiz": [{"q": "金刚石与石墨的物理性质差异很大，其原因是（　）", "opts": ["组成它们的元素不同", "碳原子的排列方式不同", "金刚石是纯净物，石墨是混合物", "碳原子的大小不同"], "ans": 1, "exp": "金刚石、石墨都由碳元素组成，都是碳的单质（纯净物），碳原子本身也相同，A、C、D错；金刚石中碳原子呈正八面体状排列、石墨呈层状排列，排列方式不同导致物理性质差异大。"}, {"q": "实验室制取二氧化碳，应选用的药品是（　）", "opts": ["大理石和稀硫酸", "碳酸钠和稀盐酸", "石灰石（大理石）和稀盐酸", "石灰石和浓盐酸"], "ans": 2, "exp": "稀硫酸与CaCO3反应生成的CaSO4微溶于水，覆盖在固体表面使反应停止，A错；碳酸钠与酸反应太快，不易收集，B错；浓盐酸有挥发性，会使CO2中混入HCl气体而不纯，D错。正确反应：CaCO3+2HCl=CaCl2+H2O+CO2↑。"}, {"q": "下列关于一氧化碳的说法，错误的是（　）", "opts": ["CO有毒，易与血红蛋白结合使人体缺氧", "CO可以燃烧，放出热量", "CO具有还原性，能把CuO还原成Cu", "CO能使澄清石灰水变浑浊"], "ans": 3, "exp": "能使澄清石灰水变浑浊的是CO2（与Ca(OH)2反应生成CaCO3沉淀），CO不能，D错。CO无色无味、有毒、难溶于水，能燃烧（2CO+O2 点燃 2CO2），有还原性（CO+CuO 加热 Cu+CO2）。"}, {"q": "下列关于二氧化碳的说法，正确的是（　）", "opts": ["二氧化碳有毒，属于空气污染物", "CO2的密度比空气小，应用向下排空气法收集", "干冰是固态的CO2，升华时吸收大量热，可用于人工降雨", "把CO2通入紫色石蕊溶液，溶液不变色"], "ans": 2, "exp": "CO2本身无毒，也不是空气污染物，A错；CO2密度比空气大，应用向上排空气法收集，B错；CO2与水反应生成碳酸：CO2+H2O=H2CO3，碳酸能使紫色石蕊溶液变红，D错。干冰升华吸热，可人工降雨、作制冷剂，C对。"}]}];
+const BOSS = {"name": "魔王殿 · 元素总决战", "npc": "九上大魔王：六关全通，元素之力由你执掌！接我四道综合题，赢了才配毕业！", "quiz": [{"q": "蜡烛燃烧时既有物理变化又有化学变化。下列说法正确的是（　）", "opts": ["蜡烛燃烧时只发生化学变化", "石蜡受热熔化属于化学变化", "蜡烛燃烧生成CO2和H2O，属于化学变化", "蜡烛燃烧生成的水和二氧化碳都是混合物"], "ans": 2, "exp": "燃烧生成了新物质CO2、H2O，是化学变化；同时石蜡受热熔化、汽化只是状态改变，属物理变化，所以A、B错；水和CO2都是纯净物，D错。化学变化的本质是有新物质生成。"}, {"q": "下列对实验现象的描述，正确的是（　）", "opts": ["红磷在空气中燃烧，产生大量白雾", "硫在氧气中燃烧，发出蓝紫色火焰，生成有刺激性气味的气体", "铁丝在空气中剧烈燃烧，火星四射，生成黑色固体", "木炭在氧气中燃烧，发出红光"], "ans": 1, "exp": "红磷燃烧生成P2O5固体小颗粒，是白烟不是白雾，A错；铁丝在空气中不能燃烧（需在纯氧中），C错；木炭在氧气中燃烧发出白光，D错。硫在氧气中燃烧发出明亮的蓝紫色火焰，生成有刺激性气味的SO2，B对。"}, {"q": "取24.5 g氯酸钾（KClO3）与少量二氧化锰混合加热至不再产生气体，可制得氧气的质量是（相对原子质量：K-39，Cl-35.5，O-16）（　）", "opts": ["9.6 g", "4.8 g", "19.2 g", "2.4 g"], "ans": 0, "exp": "方程式：2KClO3 —MnO2/加热— 2KCl+3O2↑。Mr(KClO3)=39+35.5+3×16=122.5，2KClO3的相对质量为2×122.5=245，3O2的相对质量为3×32=96。设生成氧气的质量为x：245:96=24.5:x，x=24.5×96/245=9.6 g。MnO2是催化剂，不参与生成O2的计算。选A。"}, {"q": "下列说法正确的是（　）", "opts": ["CO2有毒，会污染空气并加剧温室效应", "为减缓温室效应，应禁止使用化石燃料", "金刚石、石墨和C60都由碳原子直接构成", "干冰升华时吸收大量热，可作制冷剂用于人工降雨"], "ans": 3, "exp": "CO2本身无毒，也不属于空气污染物，A错；应减少化石燃料使用并开发新能源，但不能完全禁止，B错；金刚石、石墨由碳原子直接构成，而C60由C60分子构成，C错。干冰升华吸热，可用于人工降雨和冷藏食品，D对。"}]};
+const LS = {
+  coins: 'lql_preview9_coins_' + SUBJECT,
+  stars: 'lql_preview9_stars_' + SUBJECT,
+  unlocked: 'lql_preview9_unlocked_' + SUBJECT,
+  cleared: 'lql_preview9_cleared_' + SUBJECT,
+  wrong: 'lql_preview9_wrong_' + SUBJECT,
+  boss: 'lql_preview9_boss_' + SUBJECT
+};
+
+// ===== 状态 =====
+let state = {
+  coins: 0, stars: 0,
+  unlocked: [0],
+  cleared: [],
+  wrong: {},
+  bossBeaten: false,
+  curWorld: 0,
+  curTeach: 0,
+  curQ: 0,
+  hearts: 3,
+  worldStars: 0,
+  isBoss: false
+};
+
+function lsGet(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch(e) { return def; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+function loadState() {
+  state.coins = lsGet(LS.coins, 0);
+  state.stars = lsGet(LS.stars, 0);
+  state.unlocked = lsGet(LS.unlocked, [0]);
+  state.cleared = lsGet(LS.cleared, []);
+  state.wrong = lsGet(LS.wrong, {});
+  state.bossBeaten = lsGet(LS.boss, false);
+}
+function saveState() {
+  lsSet(LS.coins, state.coins); lsSet(LS.stars, state.stars);
+  lsSet(LS.unlocked, state.unlocked); lsSet(LS.cleared, state.cleared);
+  lsSet(LS.wrong, state.wrong); lsSet(LS.boss, state.bossBeaten);
+}
+function resetGame() {
+  state = { coins:0, stars:0, unlocked:[0], cleared:[], wrong:{}, bossBeaten:false, curWorld:0, curTeach:0, curQ:0, hearts:3, worldStars:0, isBoss:false };
+  saveState(); renderHUD(); showMap();
+}
+
+// ===== 渲染 =====
+const app = document.getElementById('app');
+function renderHUD() {
+  document.getElementById('hud-coins').textContent = state.coins;
+  document.getElementById('hud-stars').textContent = state.stars;
+  document.getElementById('hud-total').textContent = totalStars();
+}
+function totalStars() {
+  let n = 0;
+  WORLDS.forEach((w,i) => n += (state.cleared.includes(i) ? w.quiz.length : 0));
+  if (state.bossBeaten) n += BOSS.quiz.length;
+  return n;
+}
+
+function showMap() {
+  sfx.jump();
+  const worldsHtml = WORLDS.map((w, i) => {
+    const locked = !state.unlocked.includes(i);
+    const cleared = state.cleared.includes(i);
+    const stars = cleared ? w.quiz.length : 0;
+    return `<div class="world-item ${locked ? 'locked' : ''}" onclick="${locked ? '' : 'startWorld(' + i + ')'}">
+      <div class="w-icon">${locked ? '🔒' : (cleared ? '⭐' : '🏰')}</div>
+      <div class="w-info">
+        <div class="w-name">第 ${i+1} 关 · ${w.name}</div>
+        <div class="w-npc">${w.npc}</div>
+      </div>
+      <div class="w-status">${locked ? '<span class="lock">🔒 未解锁</span>' : (cleared ? '<span class="ok">★ ' + stars + '/' + w.quiz.length + '</span>' : '🆕 挑战')}</div>
+    </div>`;
+  }).join('');
+  const bossLocked = !(WORLDS.every((w,i) => state.cleared.includes(i)));
+  const bossHtml = `<div class="world-item ${bossLocked ? 'locked' : ''}" onclick="${bossLocked ? '' : 'startBoss()'}">
+    <div class="w-icon">${bossLocked ? '🔒' : (state.bossBeaten ? '👑' : '👹')}</div>
+    <div class="w-info">
+      <div class="w-name">BOSS 关 · ${BOSS.name}</div>
+      <div class="w-npc">${BOSS.npc}</div>
+    </div>
+    <div class="w-status">${bossLocked ? '<span class="lock">🔒 需通关全部关卡</span>' : (state.bossBeaten ? '<span class="ok">👑 已击败</span>' : '⚔️ 决战')}</div>
+  </div>`;
+  app.innerHTML = `<div class="screen">
+    <div class="map-header">
+      <h1>🎮 ${SUBJECT} 预习闯关</h1>
+      <p>${VERSION} · 打通所有关卡，击败大魔王！</p>
+    </div>
+    <div class="world-list">${worldsHtml}${bossHtml}</div>
+    <div class="map-buttons">
+      <button class="btn btn-blue" onclick="showWrongBook()">📝 错题本</button>
+      <button class="btn btn-gray" onclick="confirmReset()">🔄 重新开始</button>
+    </div>
+  </div>`;
+}
+
+function startWorld(i) {
+  state.curWorld = i; state.curTeach = 0; state.curQ = 0; state.worldStars = 0;
+  renderTeach();
+}
+function startBoss() {
+  state.isBoss = true; state.curQ = 0; state.hearts = 3; state.worldStars = 0;
+  renderBossIntro();
+}
+
+// ===== 教学页 =====
+function renderTeach() {
+  const w = WORLDS[state.curWorld];
+  const t = w.teach[state.curTeach];
+  const total = w.teach.length;
+  const isLast = state.curTeach === total - 1;
+  app.innerHTML = `<div class="screen teach-page">
+    <h2>第 ${state.curWorld+1} 关 · ${w.name}（教学 ${state.curTeach+1}/${total}）</h2>
+    <div class="teach-npc"><div class="npc-icon">🧙</div><div class="npc-text">${w.npc}</div></div>
+    <div class="teach-body">
+      <h3 style="color:#fff;margin-bottom:8px;">${t.title}</h3>
+      <p>${t.text}</p>
+    </div>
+    <div class="teach-nav">
+      <button class="btn btn-gray" onclick="showMap()">← 返回地图</button>
+      <button class="btn btn-gold" onclick="${isLast ? 'startQuiz()' : 'nextTeach()'}">${isLast ? '开始答题 ⚔️' : '下一页 →'}</button>
+    </div>
+  </div>`;
+  sfx.jump();
+}
+function nextTeach() {
+  state.curTeach++;
+  renderTeach();
+}
+
+// ===== 答题 =====
+function shuffleArr(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function startQuiz() {
+  state.curQ = 0; state.worldStars = 0;
+  // 选项随机打乱
+  const w = WORLDS[state.curWorld];
+  w.quiz.forEach(q => {
+    const idxs = [0,1,2,3];
+    shuffleArr(idxs);
+    q._opts = idxs.map(i => q.opts[i]);
+    q._ans = idxs.indexOf(q.ans);
+  });
+  renderQuiz();
+}
+function renderQuiz() {
+  const w = WORLDS[state.curWorld];
+  const q = w.quiz[state.curQ];
+  const total = w.quiz.length;
+  const answered = q._answered;
+  app.innerHTML = `<div class="screen quiz-page">
+    <div class="q-num">Q${state.curQ+1}/${total} · 第 ${state.curWorld+1} 关</div>
+    <div class="q-text">${q.q}</div>
+    ${q._opts.map((o, i) => `
+      <button class="opt ${answered ? (i === q._ans ? 'correct' : (i === q._picked ? 'wrong' : '')) : ''}" ${answered ? 'disabled' : ''} onclick="selQ(${i})">
+        ${'ABCD'[i]}. ${o}
+      </button>`).join('')}
+    <div class="explanation ${answered ? 'show' : ''}" id="expl">✅ ${q.exp}</div>
+    <div class="quiz-footer">
+      <button class="btn btn-gray" onclick="showMap()">← 返回</button>
+      <span class="q-stars">⭐ ${state.worldStars}/${total}</span>
+      ${answered ? (state.curQ < total-1 ? '<button class="btn btn-gold" onclick="nextQ()">下一题 →</button>' : '<button class="btn btn-gold" onclick="finishWorld()">查看结果 🏁</button>') : ''}
+    </div>
+  </div>`;
+}
+function selQ(i) {
+  const w = WORLDS[state.curWorld];
+  const q = w.quiz[state.curQ];
+  if (q._answered) return;
+  q._picked = i;
+  if (i === q._ans) {
+    q._answered = true;
+    state.worldStars++;
+    state.coins += 10;
+    state.stars++;
+    sfx.correct();
+  } else {
+    q._answered = true;
+    sfx.wrong();
+    // 错题导入
+    if (!state.wrong[state.curWorld]) state.wrong[state.curWorld] = [];
+    state.wrong[state.curWorld].push({ q: q.q, ans: q.opts[q.ans], exp: q.exp, world: w.name });
+  }
+  saveState();
+  renderQuiz();
+}
+function nextQ() {
+  state.curQ++;
+  renderQuiz();
+}
+function finishWorld() {
+  const w = WORLDS[state.curWorld];
+  const total = w.quiz.length;
+  const got = state.worldStars;
+  const passed = got === total;
+  if (passed) {
+    sfx.fanfare();
+    if (!state.cleared.includes(state.curWorld)) {
+      state.cleared.push(state.curWorld);
+      const nxt = state.curWorld + 1;
+      if (!state.unlocked.includes(nxt) && nxt < WORLDS.length) state.unlocked.push(nxt);
+      state.coins += 50;
+    }
+  } else {
+    sfx.wrong();
+  }
+  saveState();
+  app.innerHTML = `<div class="screen result-page">
+    <div class="result-title">${passed ? '🎉 闯关成功！' : '💔 闯关失败'}</div>
+    <div class="result-stars">${[...Array(total)].map((_,i) => `<span class="${i < got ? '' : 'off'}">⭐</span>`).join('')}</div>
+    <div class="result-detail">
+      <p>答对 ${got}/${total} 题</p>
+      <p style="margin-top:8px;">${passed ? '✅ 全部答对，解锁下一关！+50金币' : '❌ 需全部答对才能通过，加油再战！'}</p>
+    </div>
+    <div class="map-buttons" style="margin-top:20px;">
+      ${passed ? '<button class="btn btn-green" onclick="showMap()">继续闯关 🏰</button>' : '<button class="btn btn-gold" onclick="startQuiz()">重新挑战 🔄</button>'}
+      <button class="btn btn-blue" onclick="showMap()">地图</button>
+    </div>
+  </div>`;
+  renderHUD();
+}
+
+// ===== BOSS =====
+function renderBossIntro() {
+  app.innerHTML = `<div class="screen boss-page">
+    <div class="boss-title">⚠️ BOSS 战 ⚠️</div>
+    <div class="boss-avatar">👹</div>
+    <p style="margin-bottom:14px;color:#ff9;">${BOSS.npc}</p>
+    <p style="color:#aaa;font-size:14px;">3 条命（♥），答错扣命，0 命需重打！</p>
+    <div class="map-buttons" style="margin-top:20px;">
+      <button class="btn btn-gray" onclick="showMap()">← 撤退</button>
+      <button class="btn btn-red" onclick="startBossQuiz()">⚔️ 开战！</button>
+    </div>
+  </div>`;
+  sfx.jump();
+}
+function startBossQuiz() {
+  state.curQ = 0; state.hearts = 3; state.worldStars = 0;
+  BOSS.quiz.forEach(q => {
+    const idxs = [0,1,2,3];
+    shuffleArr(idxs);
+    q._opts = idxs.map(i => q.opts[i]);
+    q._ans = idxs.indexOf(q.ans);
+  });
+  renderBossQuiz();
+}
+function renderBossQuiz() {
+  if (state.hearts <= 0) {
+    sfx.wrong();
+    app.innerHTML = `<div class="screen boss-page">
+      <div class="boss-title" style="color:var(--red);">💀 挑战失败</div>
+      <div class="boss-avatar">👹</div>
+      <p style="margin:14px 0;color:#aaa;">生命值为 0，BOSS 还在咆哮…</p>
+      <button class="btn btn-red" onclick="startBossQuiz()">🔄 重新挑战</button>
+      <button class="btn btn-gray" style="margin-left:10px;" onclick="showMap()">地图</button>
+    </div>`;
+    return;
+  }
+  const q = BOSS.quiz[state.curQ];
+  const total = BOSS.quiz.length;
+  const answered = q._answered;
+  app.innerHTML = `<div class="screen quiz-page">
+    <div class="q-num" style="color:var(--red);">☠️ BOSS 战 · Q${state.curQ+1}/${total}</div>
+    <div class="hearts">${[...Array(3)].map((_,i) => `<span class="${i < state.hearts ? '' : 'lost'}">♥</span>`).join('')}</div>
+    <div class="q-text">${q.q}</div>
+    ${q._opts.map((o, i) => `
+      <button class="opt ${answered ? (i === q._ans ? 'correct' : (i === q._picked ? 'wrong' : '')) : ''}" ${answered ? 'disabled' : ''} onclick="selBossQ(${i})">
+        ${'ABCD'[i]}. ${o}
+      </button>`).join('')}
+    <div class="explanation ${answered ? 'show' : ''}">✅ ${q.exp}</div>
+    <div class="quiz-footer">
+      <button class="btn btn-gray" onclick="showMap()">← 撤退</button>
+      ${answered ? (state.curQ < total-1 ? '<button class="btn btn-red" onclick="nextBossQ()">下一题 →</button>' : '<button class="btn btn-red" onclick="finishBoss()">⚔️ 终结 BOSS</button>') : ''}
+    </div>
+  </div>`;
+}
+function selBossQ(i) {
+  const q = BOSS.quiz[state.curQ];
+  if (q._answered) return;
+  q._picked = i;
+  if (i === q._ans) {
+    q._answered = true;
+    state.worldStars++;
+    state.coins += 20;
+    state.stars++;
+    sfx.correct();
+  } else {
+    q._answered = true;
+    state.hearts--;
+    state.coins = Math.max(0, state.coins - 5);
+    sfx.bossHit();
+    if (!state.wrong['boss']) state.wrong['boss'] = [];
+    state.wrong['boss'].push({ q: q.q, ans: q.opts[q.ans], exp: q.exp, world: 'BOSS关' });
+  }
+  saveState();
+  renderBossQuiz();
+}
+function nextBossQ() {
+  state.curQ++;
+  renderBossQuiz();
+}
+function finishBoss() {
+  if (state.worldStars === BOSS.quiz.length) {
+    state.bossBeaten = true;
+    state.coins += 100;
+    saveState();
+    bossVictory();
+  } else {
+    sfx.wrong();
+    app.innerHTML = `<div class="screen boss-page">
+      <div class="boss-title">😤 还差一点！</div>
+      <p style="margin:14px;color:#aaa;">需全部答对才能击败 BOSS（当前 ${state.worldStars}/${BOSS.quiz.length}）</p>
+      <button class="btn btn-red" onclick="startBossQuiz()">🔄 再战</button>
+    </div>`;
+  }
+}
+function bossVictory() {
+  sfx.fanfare();
+  document.body.classList.add('screen-shake');
+  // 三波纸屑
+  spawnConfetti(0); spawnConfetti(500); spawnConfetti(1500);
+  setTimeout(() => document.body.classList.remove('screen-shake'), 600);
+  app.innerHTML = `<div class="screen boss-page">
+    <div class="boss-defeated">BOSS DEFEATED!</div>
+    <div class="trophy">🏆</div>
+    <div class="stat-panel">
+      <h3>🎊 恭喜通关 ${SUBJECT} 预习！</h3>
+      <div class="stat-row"><span>总星星</span><span>⭐ ${state.stars}</span></div>
+      <div class="stat-row"><span>金币</span><span>🪙 ${state.coins}</span></div>
+      <div class="stat-row"><span>已掌握关卡</span><span>${WORLDS.length}/${WORLDS.length} + BOSS</span></div>
+    </div>
+    <div class="map-buttons" style="margin-top:20px;">
+      <button class="btn btn-gold" onclick="showMap()">🏰 返回地图</button>
+      <button class="btn btn-blue" onclick="showWrongBook()">📝 错题本</button>
+    </div>
+  </div>`;
+  renderHUD();
+}
+function spawnConfetti(delay) {
+  const colors = ['#e74c3c','#f1c40f','#2ecc71','#3498db','#9b59b6','#e67e22'];
+  setTimeout(() => {
+    for (let i = 0; i < 24; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti';
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.top = '0';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 0.5) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 3500);
+    }
+  }, delay);
+}
+
+// ===== 错题本 =====
+function showWrongBook() {
+  const entries = [];
+  Object.keys(state.wrong).forEach(k => {
+    (state.wrong[k] || []).forEach(e => entries.push(e));
+  });
+  const html = entries.length === 0
+    ? '<div class="empty-tip">🎉 还没有错题，继续保持！</div>'
+    : entries.map(e => `<div class="wrong-item">
+        <div class="wq">📝 ${e.q}</div>
+        <div class="wa">✅ 正确答案：${e.ans}</div>
+        <div class="we">💡 ${e.exp}（${e.world}）</div>
+      </div>`).join('');
+  app.innerHTML = `<div class="screen wrongbook">
+    <h2>📝 错题本（${entries.length}）</h2>
+    ${html}
+    <div class="map-buttons" style="margin-top:16px;">
+      <button class="btn btn-blue" onclick="showMap()">← 返回地图</button>
+    </div>
+  </div>`;
+}
+
+// ===== 重置确认 =====
+function confirmReset() {
+  const mask = document.createElement('div');
+  mask.className = 'modal-mask';
+  mask.innerHTML = `<div class="modal-card">
+    <p>确定要重新开始吗？<br>所有星星、金币、进度将清零！</p>
+    <div class="modal-btns">
+      <button class="btn btn-gray" id="cancel-reset">取消</button>
+      <button class="btn btn-red" id="ok-reset">确定重置</button>
+    </div>
+  </div>`;
+  document.body.appendChild(mask);
+  mask.querySelector('#cancel-reset').onclick = () => mask.remove();
+  mask.querySelector('#ok-reset').onclick = () => { mask.remove(); resetGame(); };
+}
+
+// ===== 启动 =====
+loadState();
+app.innerHTML = `<div class="hud">
+  <div class="hud-item">🪙 <span id="hud-coins" style="color:var(--gold)">${state.coins}</span></div>
+  <div class="hud-item">⭐ <span id="hud-stars" style="color:var(--green)">${state.stars}</span></div>
+  <div class="hud-item">🎯 <span id="hud-total" style="color:#fff">${totalStars()}</span></div>
+</div>`;
+showMap();
+</script>
+</body>
+</html>

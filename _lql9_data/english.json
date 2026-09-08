@@ -1,0 +1,455 @@
+{
+ "title": "🎮 英语预习闯关 · 九年级 · 人教版",
+ "subject": "英语",
+ "sub_desc": "Go for it 九全 Unit1-6 · 语法直通",
+ "worlds": [
+  {
+   "name": "学习魔法森林 · Magic Forest",
+   "npc": "Hi, explorer! 🍄 我是向导 Lily。学好英语有什么秘诀？当然是 by doing！跟我闯关吧！",
+   "teach": [
+    {
+     "title": "by + doing",
+     "text": "介词 by 后接动名词，表“通过……方式”，常用来回答 How。例：I learn English by reading aloud. 我通过朗读学英语。"
+    },
+    {
+     "title": "How about…?",
+     "text": "How/What about + 动名词或名词 = 提建议“……怎么样？”。例：How about watching English movies? 看英文电影怎么样？"
+    },
+    {
+     "title": "Why don't you…?",
+     "text": "Why don't you + 动词原形？= Why not + 动词原形？表建议“为什么不……呢？”。例：Why don't you ask the teacher for help? 为何不向老师求助？"
+    }
+   ],
+   "quiz": [
+    {
+     "q": "I improve my English ___ reading aloud every morning.",
+     "opts": [
+      "A. by",
+      "B. in",
+      "C. on",
+      "D. with"
+     ],
+     "ans": 0,
+     "exp": "答案 A。by + 动名词表“通过……方式”，作方式状语；in/on/with 不合语境。句意：我通过每天早上大声朗读来提高英语。语法点：by doing 方式状语。"
+    },
+    {
+     "q": "How about ___ an English club after school?",
+     "opts": [
+      "A. join",
+      "B. joining",
+      "C. joined",
+      "D. joins"
+     ],
+     "ans": 1,
+     "exp": "答案 B。about 是介词，后接动名词 joining；How about + doing 表建议。句意：放学后加入英语俱乐部怎么样？"
+    },
+    {
+     "q": "Why don't you ___ to English songs to relax?",
+     "opts": [
+      "A. listen",
+      "B. listening",
+      "C. listened",
+      "D. to listen"
+     ],
+     "ans": 0,
+     "exp": "答案 A。Why don't you + 动词原形，表建议“为什么不……呢”。句意：你为什么不听英文歌放松一下？语法点：提建议句型。"
+    },
+    {
+     "q": "— ___ do you become a good learner? — By asking the teacher questions.",
+     "opts": [
+      "A. What",
+      "B. How",
+      "C. When",
+      "D. Where"
+     ],
+     "ans": 1,
+     "exp": "答案 B。答语用 by doing 表方式，提问式用疑问词 How。句意：——你是怎样成为优秀学习者的？——通过向老师提问。语法点：by doing 方式状语。"
+    }
+   ]
+  },
+  {
+   "name": "中秋灯笼镇 · Lantern Town",
+   "npc": "Welcome to Lantern Town! 🏮 你知道 I think that… 的魔法吗？月饼节知识大冒险开始！",
+   "teach": [
+    {
+     "title": "that-clause",
+     "text": "think 等动词后接 that 引导的宾语从句，that 可省略，从句用陈述语序。例：I think (that) mooncakes are delicious. 我认为月饼很好吃。"
+    },
+    {
+     "title": "Tense Agreement",
+     "text": "主句是一般过去时，从句通常用相应过去时态呼应。例：He said he liked the festival. 他说他喜欢这个节日。"
+    },
+    {
+     "title": "Festival Prepositions",
+     "text": "泛指节日期间用 at；指具体某天(带 Day)用 on。例：People eat mooncakes on Mid-Autumn Day. 人们中秋当天吃月饼。"
+    }
+   ],
+   "quiz": [
+    {
+     "q": "I think ___ the mooncakes are really delicious!",
+     "opts": [
+      "A. what",
+      "B. that",
+      "C. if",
+      "D. which"
+     ],
+     "ans": 1,
+     "exp": "答案 B。think 后接 that 引导的宾语从句，that 无实义可省略；what/if/which 不合语境。句意：我认为月饼真的很好吃！"
+    },
+    {
+     "q": "My aunt told me that she ___ the Spring Festival best.",
+     "opts": [
+      "A. liked",
+      "B. likes",
+      "C. is liking",
+      "D. will like"
+     ],
+     "ans": 0,
+     "exp": "答案 A。主句 told 为一般过去时，宾语从句用相应的过去时态 liked。句意：我姑姑告诉我她最喜欢春节。语法点：宾语从句时态呼应。"
+    },
+    {
+     "q": "Children love to get gifts ___ Christmas.",
+     "opts": [
+      "A. in",
+      "B. for",
+      "C. on",
+      "D. at"
+     ],
+     "ans": 3,
+     "exp": "答案 D。泛指“在圣诞节期间”用介词 at；at Christmas 为固定搭配。句意：孩子们喜欢在圣诞节收到礼物。语法点：节日介词。"
+    },
+    {
+     "q": "I ___ think the ghost story is true, because it is only a joke.",
+     "opts": [
+      "A. don't",
+      "B. doesn't",
+      "C. not",
+      "D. am not"
+     ],
+     "ans": 0,
+     "exp": "答案 A。主句主语为 I 且谓语是 think 表“认为”时，否定前移到主句：I don't think…=我认为……不……。句意：我认为这个鬼故事不是真的。语法点：否定前移。"
+    }
+   ]
+  },
+  {
+   "name": "彩虹问路城 · Rainbow City",
+   "npc": "Excuse me, could you tell me how to reach Rainbow City? 🗺️ 记住：宾语从句要用陈述语序哦！",
+   "teach": [
+    {
+     "title": "Wh- Clause Order",
+     "text": "疑问词引导的宾语从句用“主语+谓语”陈述语序，不倒装。例：Could you tell me where the restrooms are? 洗手间在哪里？"
+    },
+    {
+     "title": "Could you please…?",
+     "text": "礼貌请求用 Could you please + 动词原形，比 can 更委婉。例：Could you please help me? 你能帮帮我吗？"
+    },
+    {
+     "title": "Asking the Way",
+     "text": "问路指路用语：Excuse me、go along、turn left/right、on your right。例：Go along the street and turn left at the bank. 沿街走到银行处左转。"
+    }
+   ],
+   "quiz": [
+    {
+     "q": "Could you please tell me where ___ ?",
+     "opts": [
+      "A. the restrooms are",
+      "B. are the restrooms",
+      "C. were the restrooms",
+      "D. the restrooms were"
+     ],
+     "ans": 0,
+     "exp": "答案 A。宾语从句用陈述语序 the restrooms are；主句 could 表委婉，问现在的位置仍用一般现在时。句意：你能告诉我洗手间在哪里吗？语法点：宾语从句语序。"
+    },
+    {
+     "q": "Excuse me, do you know ___ ?",
+     "opts": [
+      "A. where is the museum",
+      "B. where the museum is",
+      "C. where was the museum",
+      "D. the museum is where"
+     ],
+     "ans": 1,
+     "exp": "答案 B。do you know 后接宾语从句，where 引导也要用陈述语序 where the museum is，不倒装。句意：打扰一下，你知道博物馆在哪里吗？语法点：宾语从句语序。"
+    },
+    {
+     "q": "Could you please ___ me the way to the library?",
+     "opts": [
+      "A. tells",
+      "B. telling",
+      "C. tell",
+      "D. told"
+     ],
+     "ans": 2,
+     "exp": "答案 C。Could you please + 动词原形；please 后不接三单、ing 或过去式。句意：请告诉我去图书馆的路好吗？语法点：礼貌请求句型。"
+    },
+    {
+     "q": "___ along this street, and you will find the museum on your right.",
+     "opts": [
+      "A. Going",
+      "B. Go",
+      "C. To go",
+      "D. Gone"
+     ],
+     "ans": 1,
+     "exp": "答案 B。指路用祈使句，动词原形 Go 开头：Go along…=沿着……走。句意：沿着这条街走，你会发现博物馆在你的右边。语法点：祈使句指路。"
+    }
+   ]
+  },
+  {
+   "name": "勇气星光谷 · Star Valley",
+   "npc": "I used to be afraid of the dark, too. 🌙 跟向导 Mimi 分清 used to 三兄弟，一起点亮星光吧！",
+   "teach": [
+    {
+     "title": "used to do",
+     "text": "used to + 动词原形 = 过去常常(现在不再)，否定为 didn't use to。例：I used to be afraid of the dark. 我过去怕黑。"
+    },
+    {
+     "title": "be used to doing",
+     "text": "be used to + 动名词/名词 = 习惯于，be 随时态变化。例：He is used to getting up early. 他习惯早起了。"
+    },
+    {
+     "title": "Three Brothers",
+     "text": "辨析：used to do 过去常常 / be used to doing 习惯于 / be used to do 被用来做。例：Wood is used to make paper. 木头被用来造纸。"
+    }
+   ],
+   "quiz": [
+    {
+     "q": "I ___ be afraid of the dark when I was a child.",
+     "opts": [
+      "A. used to",
+      "B. am used to",
+      "C. was used to",
+      "D. uses to"
+     ],
+     "ans": 0,
+     "exp": "答案 A。when I was a child 指过去，used to + 动词原形 be 表“过去害怕、现在不怕”；B/C 若选需接动名词 being。句意：我小时候害怕黑暗。语法点：used to do 表过去习惯。"
+    },
+    {
+     "q": "My grandfather ___ taking a walk after dinner now.",
+     "opts": [
+      "A. used to",
+      "B. is used to",
+      "C. was used to",
+      "D. is using to"
+     ],
+     "ans": 1,
+     "exp": "答案 B。now 提示“现在习惯”，be used to + 动名词 taking 表“习惯于”。句意：我爷爷现在习惯晚饭后散步。语法点：be used to doing。"
+    },
+    {
+     "q": "She didn't ___ to like vegetables, but now she eats them every day.",
+     "opts": [
+      "A. uses",
+      "B. used",
+      "C. use",
+      "D. using"
+     ],
+     "ans": 2,
+     "exp": "答案 C。used to 的否定式是 didn't use to，didn't 后用动词原形 use。句意：她过去不喜欢蔬菜，但现在每天都吃。语法点：used to 的否定形式。"
+    },
+    {
+     "q": "Wood is ___ to make paper in the factory.",
+     "opts": [
+      "A. using",
+      "B. used",
+      "C. use",
+      "D. uses"
+     ],
+     "ans": 1,
+     "exp": "答案 B。wood 是动作承受者，用被动 be used to do=被用来做；注意区分 used to do(过去常常) 与 be used to doing(习惯于)。句意：木头在工厂里被用来造纸。"
+    }
+   ]
+  },
+  {
+   "name": "万物材料国 · Material Kingdom",
+   "npc": "Welcome to Material Kingdom! 🧵 猜猜这件衬衫是什么做的？of? from? in? by? 快来学被动语态魔法！",
+   "teach": [
+    {
+     "title": "Passive Voice",
+     "text": "被动语态(一般现在时)：am/is/are + 过去分词，表“被……”。例：The shirts are made of cotton. 这些衬衫是棉做的。"
+    },
+    {
+     "title": "made of / from / in / by",
+     "text": "be made of 看得出原料 / from 化学变化看不出 / in + 产地 / by + 制作者。例：Butter is made from milk. 黄油由牛奶制成。"
+    },
+    {
+     "title": "Active to Passive",
+     "text": "主动→被动：宾语作主语，谓语变 be + 过去分词，时态不变。例：They grow tea. → Tea is grown. 茶被种植。"
+    }
+   ],
+   "quiz": [
+    {
+     "q": "This pair of gloves is made ___ wool, so it is very warm.",
+     "opts": [
+      "A. of",
+      "B. from",
+      "C. in",
+      "D. by"
+     ],
+     "ans": 0,
+     "exp": "答案 A。手套看得出原材料羊毛，用 be made of。句意：这副手套是羊毛做的，所以很暖和。语法点：be made of 看得出原材料。"
+    },
+    {
+     "q": "The wine is made ___ grapes, and it tastes sweet.",
+     "opts": [
+      "A. of",
+      "B. from",
+      "C. in",
+      "D. by"
+     ],
+     "ans": 1,
+     "exp": "答案 B。葡萄酒由葡萄酿成，发生化学变化、看不出原材料，用 be made from。句意：这种酒是用葡萄酿造的，喝起来很甜。语法点：be made from。"
+    },
+    {
+     "q": "Most of the toys in the shop are made ___ China.",
+     "opts": [
+      "A. of",
+      "B. from",
+      "C. in",
+      "D. by"
+     ],
+     "ans": 2,
+     "exp": "答案 C。be made in + 产地/国家，表“在某地制造”。句意：这家店里的大多数玩具是中国制造的。语法点：be made in + 产地。"
+    },
+    {
+     "q": "Tea ___ in Hangzhou and in many other places in China.",
+     "opts": [
+      "A. grows",
+      "B. is grown",
+      "C. grew",
+      "D. growing"
+     ],
+     "ans": 1,
+     "exp": "答案 B。tea 是 grow 的承受者，一般现在时被动 is grown=被种植。句意：茶种植在杭州和中国许多其他地方。语法点：am/is/are + 过去分词。"
+    }
+   ]
+  },
+  {
+   "name": "发明时光馆 · Invention Museum",
+   "npc": "Welcome! ⏰ 这里是发明时光馆。When was the zipper invented? 一起穿越到被动语态的过去时吧！",
+   "teach": [
+    {
+     "title": "Past Passive",
+     "text": "被动语态(一般过去时)：was/were + 过去分词，表过去“被……”。例：The telephone was invented by Bell. 电话由贝尔发明。"
+    },
+    {
+     "title": "When was it invented?",
+     "text": "被动疑问句：疑问词 + was/were + 主语 + 过去分词。例：When was the zipper invented? 拉链何时发明的？"
+    },
+    {
+     "title": "invent & friends",
+     "text": "invent 发明(v.) → invention 发明物 → inventor 发明家。例：Edison was a great inventor. 爱迪生是伟大的发明家。"
+    }
+   ],
+   "quiz": [
+    {
+     "q": "The telephone ___ by Alexander Graham Bell in 1876.",
+     "opts": [
+      "A. was invented",
+      "B. is invented",
+      "C. invented",
+      "D. was inventing"
+     ],
+     "ans": 0,
+     "exp": "答案 A。电话在 1876 年被发明，是过去发生的被动动作，单数主语用 was + 过去分词 invented。句意：电话是亚历山大·格雷厄姆·贝尔在 1876 年发明的。语法点：一般过去时被动。"
+    },
+    {
+     "q": "Potato chips were invented ___ mistake by a cook.",
+     "opts": [
+      "A. on",
+      "B. by",
+      "C. for",
+      "D. in"
+     ],
+     "ans": 1,
+     "exp": "答案 B。by mistake 是固定短语“意外地、错误地”，源自教材故事：薯片是厨师意外发明的。句意：薯片是一位厨师意外发明的。语法点：被动 + by 短语。"
+    },
+    {
+     "q": "The zipper was invented ___ 1893.",
+     "opts": [
+      "A. on",
+      "B. at",
+      "C. in",
+      "D. by"
+     ],
+     "ans": 2,
+     "exp": "答案 C。in + 年份表“在某一年”，年份前不用 on/at/by。句意：拉链是 1893 年发明的。语法点：was + 过去分词 + in + 时间。"
+    },
+    {
+     "q": "These old machines ___ over 100 years ago, and now they are in the museum.",
+     "opts": [
+      "A. were invented",
+      "B. was invented",
+      "C. are invented",
+      "D. invented"
+     ],
+     "ans": 0,
+     "exp": "答案 A。主语 these machines 是复数，且 over 100 years ago 是过去时间，用 were + 过去分词。句意：这些老机器是 100 多年前发明的，现在在博物馆里。语法点：were + 过去分词。"
+    }
+   ]
+  }
+ ],
+ "boss": {
+  "name": "语法魔王城 · Grammar Dragon Castle",
+  "npc": "ROAR! 🐉 我是语法魔王，宾语从句、被动语态、used to 全都别想逃！答对我的终极四题，才放你通关！",
+  "teach": [
+   {
+    "title": "Object Clause Review",
+    "text": "宾语从句：用陈述语序；主句过去时，从句用相应过去时；一般疑问句改用 if/whether。例：I wonder if he likes the film. 我想知道他是否喜欢这部电影。"
+   },
+   {
+    "title": "Passive Review",
+    "text": "被动总复习：现在时 am/is/are + 过去分词，过去时 was/were + 过去分词。例：The cake was made by my mother. 蛋糕是妈妈做的。"
+   },
+   {
+    "title": "used to Review",
+    "text": "used to do 过去习惯 / be used to doing 习惯于 / be used to do 被用来做。例：Now I am used to getting up early. 现在我习惯早起。"
+   }
+  ],
+  "quiz": [
+   {
+    "q": "Could you tell me when the first computer ___ ?",
+    "opts": [
+     "A. was invented",
+     "B. is invented",
+     "C. invented",
+     "D. was inventing"
+    ],
+    "ans": 0,
+    "exp": "答案 A。宾语从句(陈述语序) + 一般过去时被动组合：when the first computer was invented。句意：你能告诉我第一台电脑是什么时候被发明的吗？语法点：宾从 + 过去被动。"
+   },
+   {
+    "q": "My uncle ___ live in the countryside, but now he is used to ___ in the city.",
+    "opts": [
+     "A. was used to; living",
+     "B. used to; living",
+     "C. used to; live",
+     "D. is used to; live"
+    ],
+    "ans": 1,
+    "exp": "答案 B。前半表过去习惯用 used to + 动词原形 live；后半“现在习惯于”用 be used to + 动名词 living。句意：我叔叔过去住在农村，但现在习惯了住在城市。语法点：used to do vs be used to doing。"
+   },
+   {
+    "q": "I don't think the knives ___ made of steel, because they feel light.",
+    "opts": [
+     "A. are",
+     "B. is",
+     "C. be",
+     "D. was"
+    ],
+    "ans": 0,
+    "exp": "答案 A。I don't think 否定前移后接宾语从句，用陈述语序；主语 knives 是复数，一般现在时被动用 are made of。句意：我认为这些刀不是钢做的，因为它们感觉很轻。语法点：否定前移 + 被动语态。"
+   },
+   {
+    "q": "The old stone bridge ___ built more than 500 years ago, and it is still strong.",
+    "opts": [
+     "A. is",
+     "B. was",
+     "C. were",
+     "D. has"
+    ],
+    "ans": 1,
+    "exp": "答案 B。more than 500 years ago 是过去时间，主语 the bridge 为单数，一般过去时被动用 was built。句意：这座古老的石桥建于 500 多年前，现在依然坚固。语法点：was + 过去分词。"
+   }
+  ]
+ }
+}
