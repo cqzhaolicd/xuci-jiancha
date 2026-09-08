@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第四单元 · 小说 · 九年级上语文</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 第四单元 · 小说</h1>
+    <div class="meta">统编九上 · 第4单元 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>《故乡》作者与背景</h4><p>鲁迅（1881—1936），原名周树人，字豫才，浙江绍兴人。小说《故乡》写于1921年，选自小说集《呐喊》。以“我”回故乡搬家的见闻为线索，写故乡二十年间人物与景物的变化。</p></div>
+      <div class="k-item"><h4>闰土的对比</h4><p>少年闰土：天真活泼、机智勇敢、见多识广（月夜刺猹、雪地捕鸟）；中年闰土：麻木迟钝、恭敬卑微（称“我”为“老爷”）。变化根源：多子饥荒苛税兵匪官绅的压榨，揭示旧中国农民生活困苦、精神受摧残。</p></div>
+      <div class="k-item"><h4>杨二嫂的形象</h4><p>昔日“豆腐西施”，二十年后变得尖酸刻薄、自私贪小（顺手牵羊、诬陷闰土偷碗碟）。与闰土共同表现故乡人物在生活重压下的扭曲，也反映小市民的势利。</p></div>
+      <div class="k-item"><h4>“路”的哲理</h4><p>结尾：“希望是本无所谓有，无所谓无的。这正如地上的路；其实地上本没有路，走的人多了，也便成了路。”以路喻希望：希望要靠行动去实现，表达改造旧社会、创造新生活的决心。</p></div>
+      <div class="k-item"><h4>《我的叔叔于勒》作者</h4><p>莫泊桑（1850—1893），法国作家，被誉为“短篇小说巨匠”，代表作《项链》《羊脂球》。本文写于1883年，以“我”（若瑟夫）的视角叙述，增强了故事的真实感。</p></div>
+      <div class="k-item"><h4>菲利普夫妇的态度变化</h4><p>于勒穷→“全家唯一的希望”变成“恐怖”；于勒富（美洲来信）→“全家唯一的希望”，赞其正直有良心；船上认出穷于勒→惊恐躲避，改乘圣玛洛船返回。态度随钱变，揭露资本主义社会金钱至上的世态炎凉。</p></div>
+      <div class="k-item"><h4>《孤独之旅》出处与人物</h4><p>曹文轩，当代作家，北京大学教授，2016年国际安徒生奖获得者。《孤独之旅》节选自长篇小说《草房子》。主人公杜小康因家道中落，随父亲杜雍和到芦荡放鸭。</p></div>
+      <div class="k-item"><h4>孤独之旅的成长主题</h4><p>杜小康在空旷孤独的芦荡中经历暴风雨追赶鸭群，由恐惧孤独到战胜孤独、变得坚强成熟。题目“孤独之旅”既是放鸭的旅程，更是心灵的成长之旅。</p></div>
+      <div class="k-item"><h4>环境描写的作用</h4><p>小说中芦荡、风雨等环境描写：交代故事背景、渲染气氛、烘托人物心理（芦荡的“空旷”烘托杜小康的孤独恐惧，暴风雨推动情节、考验人物），为塑造人物与表现主题服务。</p></div>
+      <div class="k-item"><h4>人物描写方法</h4><p>刻画人物常用外貌、语言、动作、心理、神态描写及细节描写。如中年闰土的外貌变化、杨二嫂“圆规”式的站姿、菲利普夫妇的语言，都鲜明表现了人物性格。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 统编版语文九年级上册 · 第一单元 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_chinese9_u4_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+
+
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第一单元 新闻阅读',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第一单元 新闻阅读,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "《故乡》的作者是（　）", "opts": ["茅盾", "巴金", "鲁迅", "老舍"], "ans": 2, "exp": "《故乡》是鲁迅写于1921年的短篇小说，选自小说集《呐喊》。"}, {"q": "《故乡》中，“我”回故乡的主要原因是（　）", "opts": ["探望多年不见的闰土", "接母亲并处理搬家事宜", "寻找失去的土地", "躲避战乱"], "ans": 1, "exp": "小说开篇交代“我”冒着严寒回到相隔二千余里、别了二十余年的故乡，是为了搬家（接母亲、卖老屋）。"}, {"q": "少年闰土与中年闰土的变化，下列表述正确的一项是（　）", "opts": ["少年闰土麻木迟钝，中年闰土活泼勇敢", "少年闰土见多识广，中年闰土恭顺麻木", "少年闰土称“老爷”，中年闰土称“迅哥儿”", "变化主要源于闰土自己不努力"], "ans": 1, "exp": "少年闰土月夜刺猹、懂无穷希奇事；中年闰土叫“我”老爷、要香炉烛台，麻木恭顺。根源是农村经济凋敝与层层压榨，不是个人不努力。"}, {"q": "“哈！这模样了！胡子这么长了！”一种尖利的怪声突然大叫起来。这句话写的是（　）", "opts": ["闰土", "水生", "杨二嫂", "母亲"], "ans": 2, "exp": "尖利的怪声、讨要东西、讥讽“我”阔了，是杨二嫂出场时的语言描写，表现她的尖刻。"}, {"q": "杨二嫂被称为“圆规”是因为（　）", "opts": ["她身材高瘦，站姿像圆规", "她擅长画画", "她贩卖圆规", "她的名字叫圆规"], "ans": 0, "exp": "“凸颧骨，薄嘴唇……张着两脚，正像一个画图仪器里细脚伶仃的圆规。”以外貌比喻勾勒其瘦削刻薄的形象。"}, {"q": "《故乡》结尾“其实地上本没有路，走的人多了，也便成了路”意在（　）", "opts": ["鼓励人们多修路", "说明希望渺茫", "希望靠大家共同行动去实现，表达创造新生活的愿望", "感叹世路艰难"], "ans": 2, "exp": "以“路”比喻希望，强调希望要靠“走”（实践）来实现，表达改造旧社会、创造新生活的信心。"}, {"q": "《我的叔叔于勒》的作者莫泊桑是（　）国作家", "opts": ["英国", "美国", "法国", "俄国"], "ans": 2, "exp": "莫泊桑是法国作家，与俄国契诃夫、美国欧·亨利并称“世界三大短篇小说巨匠”。"}, {"q": "《我的叔叔于勒》以（　）的视角讲述故事", "opts": ["于勒", "若瑟夫（我）", "菲利普太太", "船长"], "ans": 1, "exp": "以“我”——若瑟夫的儿童视角叙述，既真切又含讽刺，使读者随“我”看清父母的势利。"}, {"q": "菲利普夫妇对于勒的态度变化过程是（　）", "opts": ["盼望→厌恶→躲避", "恐惧→盼望→躲避", "厌恶→盼望→躲避", "盼望→躲避→同情"], "ans": 2, "exp": "于勒败光家产→被看作“恐怖”；美洲来信发财→“全家唯一的希望”；船上相遇发现仍穷困→惊恐躲避。"}, {"q": "菲利普夫妇认出穷于勒后“改乘圣玛洛船回来”，这一细节表现他们（　）", "opts": ["体贴家人", "躲避于勒、唯恐被沾光，自私势利", "担心船长误会", "想尽快回家报平安"], "ans": 1, "exp": "改乘他船正是为了躲避穷于勒，暴露其金钱至上的势利心理。"}, {"q": "《我的叔叔于勒》的主题是（　）", "opts": ["赞扬于勒的坚强", "反映资本主义社会人与人之间赤裸裸的金钱关系", "描写海上风光的壮美", "歌颂兄弟情深"], "ans": 1, "exp": "通过菲利普夫妇对于勒前后态度的变化，批判以金钱为纽带的世态炎凉。"}, {"q": "《孤独之旅》节选自（　）", "opts": ["《山羊不吃天堂草》", "《草房子》", "《青铜葵花》", "《红瓦》"], "ans": 1, "exp": "曹文轩《孤独之旅》节选自长篇小说《草房子》。"}, {"q": "《孤独之旅》的主人公杜小康经历了（　）的考验后变得坚强", "opts": ["考试失利", "芦荡放鸭与暴风雨", "母亲病重", "独自上学"], "ans": 1, "exp": "杜小康家道中落，随父到芦荡放鸭，在孤独与暴风雨中追回鸭群，完成心灵成长。"}, {"q": "“鸭群在船前形成一个倒置的扇面形”等大量环境描写在《孤独之旅》中的作用是（　）", "opts": ["增加篇幅", "渲染气氛、烘托人物孤独恐惧的心理", "介绍鸭子的习性", "表现作者喜好"], "ans": 1, "exp": "芦荡的空旷、风雨的狂暴烘托杜小康的孤独、恐惧，也推动他直面困难、走向成熟。"}, {"q": "“杜小康的一只脚板底，还在一阵一阵地疼痛……”这句话运用的描写方法是（　）", "opts": ["外貌描写", "心理描写", "动作描写", "语言描写"], "ans": 2, "exp": "写“脚板底疼痛”等奔走寻鸭的举动与感受，属动作与细节描写，表现他的坚持。"}, {"q": "下列对“孤独之旅”含义理解最准确的一项是（　）", "opts": ["指一次孤单的旅行", "既指放鸭的孤独旅程，也指杜小康在孤独中磨炼成长的历程", "指父亲独自旅行", "指鸭群孤独地生活"], "ans": 1, "exp": "题目的深层含义是心灵之旅：杜小康在孤独中战胜恐惧、收获成长。"}];
+const flashcards=[{"q": "《故乡》选自鲁迅哪部小说集？", "a": "《呐喊》。《故乡》写于1921年。"}, {"q": "少年闰土给“我”讲了哪些趣事？", "a": "雪地捕鸟、海边拾贝、看瓜刺猹、看跳鱼儿等。"}, {"q": "中年闰土与“我”见面时称“我”什么？", "a": "称“老爷”。一声“老爷”使“我”感到我们之间已经隔了一层可悲的厚障壁。"}, {"q": "“豆腐西施”指谁？", "a": "杨二嫂。年轻时擦着白粉开豆腐店被人称为“豆腐西施”，二十年后尖酸刻薄。"}, {"q": "于勒信中说自己在那边做什么？", "a": "做买卖赚了钱，愿意赔偿哥哥的损失；后又说要去南美长期旅行。"}, {"q": "“这是我的叔叔，父亲的弟弟，我的亲叔叔”是谁的内心独白？", "a": "若瑟夫（我）。在确认老水手是于勒后，表现孩子的纯真与同情。"}, {"q": "《孤独之旅》作者是谁？", "a": "曹文轩，当代作家，国际安徒生奖得主。"}, {"q": "杜小康的父亲叫什么？", "a": "杜雍和。他带杜小康到芦荡放鸭谋生。"}, {"q": "暴风雨之夜杜小康做了什么？", "a": "与父亲分头追赶鸭群，独自在芦苇荡找回大部分鸭子，表现勇敢与成长。"}, {"q": "小说的三要素是什么？", "a": "人物、情节、环境。本单元三篇均以塑造人物、推动情节、描写环境反映社会与人生。"}];
+const errors=[{"title": "把《故乡》当散文", "wrong": "以“我”的见闻写故乡，便以为《故乡》是回忆性散文。", "right": "《故乡》是鲁迅创作的短篇小说，选自《呐喊》。“我”是小说中的叙述者，并非作者本人；作品通过人物与情节反映社会现实。"}, {"title": "误认为于勒是主人公", "wrong": "篇名《我的叔叔于勒》，便以为于勒是主人公、是赞颂对象。", "right": "主人公是菲利普夫妇（或说以他们为中心的“我”一家），于勒是线索人物。文章主旨是批判金钱至上的世态炎凉，而非赞美于勒。"}, {"title": "闰土称“老爷”的原因只归为穷", "wrong": "认为闰土变麻木仅仅因为穷。", "right": "表层是生活困苦（多子、饥荒、苛税、兵、匪、官、绅），深层是封建等级观念对人的精神奴役，使闰土默认尊卑，与“我”隔膜。"}, {"title": "把《孤独之旅》写成纯写景", "wrong": "看到大量芦荡风雨描写，以为课文重在写景。", "right": "环境描写服务于人物与主题：烘托杜小康的孤独，并在风雨考验中表现其成长。文章核心是“成长”，写景是为人物服务的。"}, {"title": "于勒穷时菲利普夫妇的态度", "wrong": "以为于勒败家后家人仍善待他。", "right": "于勒败光遗产后被视为“全家唯一的恐怖”，被送往美洲；只有来信“发财”后才被盼为“希望”。前后对比正暴露其势利。"}, {"title": "叙述人称与作用混淆", "wrong": "认为“我”的视角使故事不真实。", "right": "用第一人称“我”（若瑟夫）叙述反而增强真实感与亲切感，并借孩子视角反衬大人的冷漠势利，强化讽刺。"}];
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_chinese9_u4';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

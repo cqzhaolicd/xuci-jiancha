@@ -312,20 +312,33 @@ function buildSchoolData() {
     name: subject,
     icon: schoolIconsMap[subject] || 'fa-book',
     cls: schoolColorsMap[subject] || 'subject-math',
-    lectures: (GRADE9[subject] || []).map((c, i) => ({
-      num: String(i + 1).padStart(2, '0'),
-      title: c,
-      url: 'lql_school_interactive.html?level=' + encodeURIComponent('9年级') + '&subject=' + encodeURIComponent(subject) + '&chapter=' + encodeURIComponent(c),
-      date: '',
-      tags: [subject],
-      new: false
-    }))
+    lectures: (GRADE9[subject] || []).map((c, i) => {
+      // 支持对象条目 {t:标题, u:真实页面url, d:日期} 与字符串占位
+      if (c && typeof c === 'object') {
+        return { num: String(i + 1).padStart(2, '0'), title: c.t, url: c.u, date: c.d || '', tags: [subject], new: !!c.n };
+      }
+      return {
+        num: String(i + 1).padStart(2, '0'),
+        title: c,
+        url: 'lql_school_interactive.html?level=' + encodeURIComponent('9年级') + '&subject=' + encodeURIComponent(subject) + '&chapter=' + encodeURIComponent(c),
+        date: '',
+        tags: [subject],
+        new: false
+      };
+    })
   });
   const GRADE9 = {
-    '语文': ['九年级上 · 第1单元', '九年级上 · 第2单元', '九年级上 · 第3单元', '九年级上 · 第4单元', '九年级上 · 第5单元', '九年级上 · 第6单元', '九年级下 · 第1单元', '九年级下 · 第2单元', '九年级下 · 第3单元', '九年级下 · 第4单元', '九年级下 · 第5单元', '九年级下 · 第6单元'],
-    '数学': ['第21章 一元二次方程(九上)', '第22章 二次函数(九上)', '第23章 旋转(九上)', '第24章 圆(九上)', '第25章 概率初步(九上)', '第26章 反比例函数(九下)', '第27章 相似(九下)', '第28章 锐角三角函数(九下)', '第29章 投影与视图(九下)'],
+    '语文': [
+      { t: '第一单元 · 活动探究·诗歌', u: 'lql_chinese9_u1_interactive.html', d: '2026-09-08', n: true },
+      { t: '第二单元 · 议论性文章', u: 'lql_chinese9_u2_interactive.html', d: '2026-09-08', n: true },
+      { t: '第三单元 · 古诗文阅读', u: 'lql_chinese9_u3_interactive.html', d: '2026-09-08', n: true },
+      { t: '第四单元 · 小说', u: 'lql_chinese9_u4_interactive.html', d: '2026-09-08', n: true },
+      { t: '第五单元 · 议论与驳论', u: 'lql_chinese9_u5_interactive.html', d: '2026-09-08', n: true },
+      { t: '第六单元 · 古典小说', u: 'lql_chinese9_u6_interactive.html', d: '2026-09-08', n: true },
+      '九年级下 · 第1单元', '九年级下 · 第2单元', '九年级下 · 第3单元', '九年级下 · 第4单元', '九年级下 · 第5单元', '九年级下 · 第6单元'],
+    '数学': ['第1章 特殊平行四边形(九上)', '第2章 一元二次方程(九上)', '第3章 概率的进一步认识(九上)', '第4章 图形的相似(九上)', '第5章 投影与视图(九上)', '第6章 反比例函数(九上)', '九下 第1章 直角三角形的边角关系', '九下 第2章 二次函数', '九下 第3章 圆'],
     '英语': ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4', 'Unit 5', 'Unit 6', 'Unit 7', 'Unit 8', 'Unit 9', 'Unit 10', 'Unit 11', 'Unit 12', 'Unit 13', 'Unit 14'],
-    '物理': ['第13章 内能', '第14章 内能的利用', '第15章 电流和电路', '第16章 电压 电阻', '第17章 欧姆定律', '第18章 电功率', '第19章 生活用电', '第20章 电与磁', '第21章 信息的传递', '第22章 能源与可持续发展'],
+    '物理': ['第12章 温度与物态变化', '第13章 内能与热机', '第14章 了解电路', '第15章 探究电路', '第16章 电流做功与电功率', '第17章 从指南针到磁浮列车', '第18章 电能从哪里来', '第19章 走进信息时代', '第20章 能源、材料与社会'],
     '化学': ['绪言 化学使世界变得更加绚丽多彩', '第1单元 走进化学世界', '第2单元 我们周围的空气', '第3单元 物质构成的奥秘', '第4单元 自然界的水', '第5单元 化学方程式', '第6单元 碳和碳的氧化物', '第7单元 燃料及其利用', '第8单元 金属和金属材料', '第9单元 溶液', '第10单元 酸和碱', '第11单元 盐 化肥', '第12单元 化学与生活'],
     '历史': ['九年级上 · 第1单元', '九年级上 · 第2单元', '九年级上 · 第3单元', '九年级上 · 第4单元', '九年级上 · 第5单元', '九年级上 · 第6单元', '九年级上 · 第7单元', '九年级下 · 第1单元', '九年级下 · 第2单元', '九年级下 · 第3单元', '九年级下 · 第4单元', '九年级下 · 第5单元', '九年级下 · 第6单元'],
     '道法': ['九年级上 · 第1单元 富强与创新', '九年级上 · 第2单元 民主与法治', '九年级上 · 第3单元 文明与家园', '九年级上 · 第4单元 和谐与梦想', '九年级下 · 第1单元 我们共同的世界', '九年级下 · 第2单元 世界舞台上的中国', '九年级下 · 第3单元 走向未来的少年']
@@ -365,15 +378,6 @@ function buildSchoolData() {
       { num: '09', title: 'Unit 9 Can you come to my party?', url: 'lql_english8_u9_interactive.html', date: '2026-08-24', tags: ['英语'], new: true },
       { num: '10', title: 'Unit 10 If you go to the party...', url: 'lql_english8_u10_interactive.html', date: '2026-08-24', tags: ['英语'], new: true }
     ]},
-    { id: 'g8-物理', name: '物理', icon: 'fa-flask', cls: 'subject-physics', lectures: [
-      { num: '01', title: '第1章 机械运动', url: 'lql_physics8_ch1_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
-      { num: '02', title: '第2章 声现象', url: 'lql_physics8_ch2_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
-      { num: '03', title: '第3章 物态变化', url: 'lql_physics8_ch3_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
-      { num: '04', title: '第4章 光现象', url: 'lql_physics8_ch4_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
-      { num: '05', title: '第5章 透镜及其应用', url: 'lql_physics8_ch5_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
-      { num: '06', title: '第6章 质量与密度', url: 'lql_physics8_ch6_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
-      { num: '07', title: '八上物理 · 早背晚默(全册综合)', url: 'lql_physics8_interactive.html', date: '2026-07-28', tags: ['物理'], new: false }
-    ]},
     { id: 'g8-生物', name: '生物', icon: 'fa-leaf', cls: 'subject-chinese', lectures: [
       { num: '01', title: '第五单元 第1章 动物的主要类群', url: 'lql_bio8_ch1_interactive.html', date: '2026-08-24', tags: ['生物'], new: true },
       { num: '02', title: '第五单元 第2章 动物的运动和行为', url: 'lql_bio8_ch2_interactive.html', date: '2026-08-24', tags: ['生物'], new: true },
@@ -410,7 +414,6 @@ function buildSchoolData() {
     G7('数学', 'lql_数学_7grade_interactive.html'),
     G7('语文', 'lql_语文_7grade_interactive.html'),
     G7('英语', 'lql_英语_7grade_interactive.html'),
-    G7('物理', 'lql_物理_7grade_interactive.html'),
     G7('生物', 'lql_生物_7grade_interactive.html'),
     G7('地理', 'lql_地理_7grade_interactive.html')
   ]);
@@ -448,14 +451,14 @@ function render() {
         <span class="learn-badge" style="display:${isLearned('lql_preview_challenge_math9.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
         <div class="t-icon"><i class="fas fa-calculator"></i></div>
         <div class="t-name">数学闯关</div>
-        <div class="t-desc">人教九上 · 一元二次方程→概率初步</div>
+        <div class="t-desc">北师九上 · 特殊平行四边形→反比例函数</div>
         ${learnedBtn('lql_preview_challenge_math9.html')}
       </a>
       <a href="lql_preview_challenge_physics9.html" class="tool-card t-flow ${isLearned('lql_preview_challenge_physics9.html') ? 'learned' : ''}">
         <span class="learn-badge" style="display:${isLearned('lql_preview_challenge_physics9.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
         <div class="t-icon"><i class="fas fa-flask"></i></div>
         <div class="t-name">物理闯关</div>
-        <div class="t-desc">人教九全 · 内能→电功率</div>
+        <div class="t-desc">沪科九全 · 温度物态→电与磁</div>
         ${learnedBtn('lql_preview_challenge_physics9.html')}
       </a>
       <a href="lql_preview_challenge_chinese9.html" class="tool-card t-print ${isLearned('lql_preview_challenge_chinese9.html') ? 'learned' : ''}">
@@ -482,7 +485,7 @@ function render() {
     </div>`);
 
   // === 学校学习 ===
-  html += renderSection('学校学习 · 人教版教材(以课本为准)', 'fa-school', '#2ecc71', 'badge-study',
+  html += renderSection('学校学习 · 教材按校版本', 'fa-school', '#2ecc71', 'badge-study',
     schoolSubjectsData.map((grade, gi) => {
       const cnt = grade.subjects.reduce((a, s) => a + s.lectures.length, 0);
       return renderGrade(grade, gi, cnt);

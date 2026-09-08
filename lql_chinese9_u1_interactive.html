@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第一单元 · 活动探究·诗歌 · 九年级上语文</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 第一单元 · 活动探究·诗歌</h1>
+    <div class="meta">统编九上 · 第1单元 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>单元概览</h4><p>本单元是“活动·探究”单元，围绕诗歌设置学习鉴赏、诗歌朗诵、尝试创作三个任务，包含《沁园春·雪》等六首现代诗词，后附名著导读《艾青诗选》。</p></div>
+      <div class="k-item"><h4>《沁园春·雪》</h4><p>毛泽东1936年2月作于陕北清涧。“沁园春”是词牌名，“雪”是题目。上阕写北国雪景，下阕评古论今，“数风流人物，还看今朝”点明主旨。</p></div>
+      <div class="k-item"><h4>壮阔的雪景艺术</h4><p>上阕以“望”领起，视野纵横万里；“山舞银蛇，原驰蜡象”用比喻、拟人化静为动；“红装素裹，分外妖娆”写雪后初晴，境界雄浑壮阔。</p></div>
+      <div class="k-item"><h4>《周总理，你在哪里》</h4><p>柯岩悼念周恩来总理的抒情诗。以“你在哪里”的反复呼唤为线索，借山谷、大地、松涛、海浪、广场的“回音”，颂扬总理勤政爱民，永远活在人民心中。</p></div>
+      <div class="k-item"><h4>《我爱这土地》</h4><p>艾青1938年写于民族危亡之际。借“鸟”的形象与“土地、河流、风、黎明”等意象，含蓄表达对祖国的深沉挚爱，诗末直抒胸臆点明主题。</p></div>
+      <div class="k-item"><h4>《乡愁》</h4><p>余光中诗。借邮票、船票、坟墓、海峡四个意象，依次抒写母子、夫妻、生死、家国四重别离，乡愁层层加深，寄寓对祖国统一的期盼。</p></div>
+      <div class="k-item"><h4>《你是人间的四月天》</h4><p>林徽因诗，副题“一句爱的赞颂”。以四月天比喻“你”，云烟、细雨、花开、燕呢喃等意象清新明媚，赞颂爱、暖与希望，节奏轻快。</p></div>
+      <div class="k-item"><h4>《我看》</h4><p>穆旦（原名查良铮）诗。“我看”领起，描绘春风青草、飞鸟晴空、流云晚霞的春日画卷；“让我的呼吸与自然合流”，抒写对自然与生命的热爱。</p></div>
+      <div class="k-item"><h4>意象与抒情</h4><p>意象是融注了诗人情感的物象，如“邮票”寄乡愁、“土地”喻祖国。抒情分直接抒情与借景抒情、托物言志等间接抒情，把握意象是读懂诗歌的钥匙。</p></div>
+      <div class="k-item"><h4>名著导读《艾青诗选》</h4><p>艾青，原名蒋正涵，浙江金华人，成名作《大堰河——我的保姆》。其诗多写土地、太阳、火把，被称为“太阳与火把”的歌手，语言朴素生动，多用自由体。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 统编版语文九年级上册 · 第一单元 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_chinese9_u1_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+
+
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第一单元 新闻阅读',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第一单元 新闻阅读,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "《沁园春·雪》中，“沁园春”指的是这首词的（　）", "opts": ["题目", "作者的字号", "词牌名", "词集名称"], "ans": 2, "exp": "“沁园春”是词牌名，规定词的字数、句式等格律；“雪”才是题目，二者用间隔号隔开。词牌名与题目不能混淆。"}, {"q": "下列词语中加点字的注音完全正确的一项是（　）", "opts": ["妖娆(ráo)　折腰(zhé)", "妖娆(yáo)　折腰(zhé)", "妖娆(ráo)　折腰(shé)", "成吉思汗(hàn)　妖娆(yáo)"], "ans": 0, "exp": "妖娆读ráo，折腰读zhé；“成吉思汗”的“汗”读hán，“数风流人物”的“数”读shǔ。多音字须据义定音。"}, {"q": "“山舞银蛇，原驰蜡象”运用的主要修辞手法及其效果是（　）", "opts": ["比喻、排比，写出雪原绵延的静态", "比喻、拟人，化静为动，尽显雪景的壮美", "夸张、对偶，突出天气的严寒", "拟人、反复，表现山势的险峻"], "ans": 1, "exp": "群山如银蛇舞动、高原如蜡象奔跑，是比喻兼拟人，化静为动，展现出北国雪景的雄浑壮阔与勃勃生机。"}, {"q": "“俱往矣，数风流人物，还看今朝”表达了诗人（　）", "opts": ["对古代英雄的无限景仰", "对成吉思汗的特别推崇", "对往昔岁月的追忆与惋惜", "对当代英雄的赞美和自信豪迈的情怀"], "ans": 3, "exp": "下阕用“惜”字评论古人，批评中亦含肯定；“俱往矣”收束历史，指出今朝的风流人物才是历史真正的主人，豪情激荡。"}, {"q": "《周总理，你在哪里》的作者是（　），这是一首悼念周恩来总理的诗。", "opts": ["艾青，现代诗人", "柯岩，当代作家、诗人", "余光中，台湾诗人", "穆旦，诗人、翻译家"], "ans": 1, "exp": "柯岩（1929—2011），本名冯恺，当代作家、诗人。全诗深情呼唤“周总理，你在哪里”，抒发了人民对周总理的深切怀念。"}, {"q": "诗中“高山”“大地”“森林”“大海”“天安门广场”等处的回音，在表达上主要起什么作用？", "opts": ["以拟人手法让山河作答，表现周总理足迹遍布祖国大地、永远活在人民心中", "说明周总理喜爱游历名山大川", "以写实手法记录周总理的日常工作行程", "渲染山谷空旷，突出寻找总理的艰难"], "ans": 0, "exp": "山河、大海被赋予人的情感，拟人作答“他刚离去”，暗示总理刚刚还在群众中操劳，回应人民的呼唤，表现他永远活在人民心中。"}, {"q": "下列加点字注音完全正确的一组是（　）", "opts": ["嘶哑(shī)　摇曳(yè)　呢喃(ní)", "嘶哑(sī)　摇曳(yì)　呢喃(ní)", "嘶哑(sī)　摇曳(yè)　呢喃(lí)", "嘶哑(sī)　摇曳(yè)　呢喃(ní)"], "ans": 3, "exp": "嘶哑读sī yǎ，摇曳读yáo yè，呢喃读ní nán。勿按半边误读“嘶”，勿把“曳”读成yì、把“呢”读成lí。"}, {"q": "《我爱这土地》写于（　），诗人艾青借此表达对祖国的挚爱。", "opts": ["1949年，新中国成立前夕", "1938年，抗日战争时期", "1921年，中国共产党成立之时", "1976年，“文革”结束之后"], "ans": 1, "exp": "全诗作于1938年11月，正值抗日战争、民族危亡之际。诗人借“嘶哑”的鸟鸣，倾吐对遭受苦难的祖国的深沉爱恋。"}, {"q": "“为什么我的眼里常含泪水？因为我对这土地爱得深沉……”运用的抒情方式是（　）", "opts": ["直抒胸臆（直接抒情）", "借景抒情", "托物言志", "寓情于理，重在说理"], "ans": 0, "exp": "前八句借“鸟”与“土地”等意象含蓄抒情；结尾以自问自答直抒胸臆，将情感推向高潮，是全诗的主旨句。"}, {"q": "“这被暴风雨所打击着的土地”中，“土地”这一意象象征着（　）", "opts": ["农民赖以为生的耕地", "诗人出生的故乡", "正在遭受苦难的祖国大地", "诗人理想中的世外桃源"], "ans": 2, "exp": "“暴风雨”喻指侵略与灾难，“土地”象征灾难深重、遭践踏的祖国；“河流”“风”“黎明”分别象征悲愤、反抗与光明希望。"}, {"q": "《乡愁》中“邮票”“船票”“坟墓”“海峡”四个意象，依次抒写的是（　）", "opts": ["母子、夫妻、母子、兄弟之别离", "夫妻、母子、生死、乡邻之别离", "师生、朋友、父女、家国之别离", "母子、夫妻、生死、家国之别离"], "ans": 3, "exp": "四节分写小时候与母亲（邮票）、长大后与新娘（船票）、后来与亡母（坟墓）、现在与大陆（海峡），由个人之愁升华为家国之情。"}, {"q": "诗人把抽象的“乡愁”比作邮票、船票等具体事物，其妙处在于（　）", "opts": ["化抽象为具体，使乡愁可感可触，形象动人", "使诗句字数整齐，便于背诵", "避免直接抒情，让情感更加含蓄", "表明乡愁可以随车船寄送带走"], "ans": 0, "exp": "以日常事物作比并托物言情，把无形的乡愁化为可感的形象；四节句式相似、回环往复，也强化了乡愁绵长不绝之感。"}, {"q": "“你是爱，是暖，是希望，你是人间的四月天！”这几句表达了诗人（　）", "opts": ["对春光易逝的惋惜", "对四月天气的喜爱", "对“你”的赞美，对爱与希望的礼赞", "对人生无常的慨叹"], "ans": 2, "exp": "诗人以“四月天”喻“你”，连用“爱”“暖”“希望”直陈衷曲，倾注对“你”的深爱与赞美；全诗意象明媚，格调温馨明快。"}, {"q": "《我看》的作者穆旦，原名是（　）", "opts": ["蒋正涵", "查良铮", "查良镛", "冯恺"], "ans": 1, "exp": "穆旦（1918—1977），原名查良铮，生于天津，诗人、翻译家。蒋正涵是艾青原名，冯恺是柯岩本名，查良镛是金庸原名。"}, {"q": "“哦，让我的呼吸与自然合流！”表达了诗人怎样的愿望？", "opts": ["希望隐居山林，与世隔绝", "希望放缓呼吸，颐养身心", "渴望融入自然，与自然合一，热爱并思考生命", "希望摆脱尘世的一切烦恼"], "ans": 2, "exp": "面对春风青草、飞鸟晴空等春日景象，诗人愿“呼吸与自然合流”，让欢笑哀愁融入自然的节律，抒发对自然与生命的热爱。"}, {"q": "名著导读《艾青诗选》中，艾青因讴歌“太阳”“火把”等意象，被称为（　）", "opts": ["“土地的诗人”", "“光明与黑暗的歌者”", "“播种光明的园丁”", "“太阳与火把”的歌手“"], "ans": 3, "exp": "艾青的诗善借太阳、火把、黎明等意象抒写对光明与希望的追求，故有”太阳与火把的歌手“之称；其成名作是《大堰河——我的保姆》。"}];
+const flashcards=[{"q": "”沁园春·雪“中”雪“是词牌名吗？", "a": "不是。”沁园春“才是词牌名，”雪“是题目。"}, {"q": "”数风流人物“中的”数“该读什么？", "a": "读shǔ，意为”数得上、称得上“，不是shù。"}, {"q": "”山舞银蛇，原驰蜡象“有何表达效果？", "a": "比喻、拟人，化静为动，写出北国雪景的雄浑壮阔。"}, {"q": "《周总理，你在哪里》写的是什么内容？", "a": "柯岩悼念周恩来总理的诗，抒发人民对总理的深切怀念。"}, {"q": "诗中高山、大海为何会”回答“人们的呼唤？", "a": "拟人手法：山河回应”他刚离去“，暗写总理足迹遍布大地、活在人民心中。"}, {"q": "《我爱这土地》借”鸟“表达了什么？", "a": "借鸟的歌唱与牺牲，表达对祖国深沉执著的爱，写于1938年。"}, {"q": "《乡愁》中”坟墓“一节写的是哪种别离？", "a": "生死之别——与母亲的永别，是全诗最沉痛的一层。"}, {"q": "《你是人间的四月天》的副题是什么？", "a": "”——一句爱的赞颂“，赞颂爱与希望，作者是林徽因。"}, {"q": "《我看》的作者穆旦原名是什么？", "a": "查良铮，诗人、翻译家；其诗多思考自然与生命。"}, {"q": "艾青为何被称为”太阳与火把“的歌手？", "a": "其诗常借太阳、火把等意象讴歌光明与希望；成名作《大堰河——我的保姆》。"}];
+const errors=[{"title": "”沁园春“是题目？", "wrong": "以为”沁园春·雪“中”沁园春“是题目、”雪“是词牌名。", "right": "”沁园春“是词牌名，只规定词的格律；”雪“才是题目。二者以间隔号相连，不可颠倒。"}, {"title": "”数风流人物“读成shù", "wrong": "把”数“读第四声，当作”数量“来理解。", "right": "此处”数“是动词，意为”数得上、称得上“，读shǔ；”成吉思汗“的”汗“读hán，”分外“的”分“读fèn，同属多音字考点。"}, {"title": "把怀念诗当成写景诗", "wrong": "见诗中有高山、大海等景物，便以为《周总理，你在哪里》是写景抒怀之作。", "right": "这是柯岩的怀念诗：以反复呼唤与山河”回音“追念周总理，颂扬他勤政爱民、与人民同在，主旨是怀念而非写景。"}, {"title": "乡愁只有”小家“之愁", "wrong": "把《乡愁》理解成仅仅思念母亲、妻子等家人的个人情感。", "right": "诗歌由母子、夫妻、生死之愁逐层扩展到海峡两岸的家国之愁，寄寓对祖国统一的期盼，境界由小到大、层层加深。"}, {"title": "《我爱这土地》全是直抒胸臆", "wrong": "见结尾直抒胸臆，便以为全诗都是直接抒情。", "right": "诗的主体借”鸟“的形象和土地、河流、风、黎明等意象含蓄抒情，属间接抒情；仅诗末以自问自答直抒胸臆点明主题。"}, {"title": "把《我看》的作者当成艾青", "wrong": "混淆两首诗的作者，误以为《我看》是艾青所作。", "right": "《我看》的作者是穆旦（原名查良铮）；艾青（原名蒋正涵）写的是《我爱这土地》。两位现代诗人不可混淆。"}];
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_chinese9_u1';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>
