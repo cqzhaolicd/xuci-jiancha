@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第十二单元 · 化学与生活 · 九年级化学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-flask"></i> 第十二单元 · 化学与生活</h1>
+    <div class="meta">人教九下 · 第12单元 · 14 题 · 8 知识 · 8 卡 · 5 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>单元导览 · 营养物质与化学材料</h4><p>本单元设三个课题：课题1“人类重要的营养物质”（六大营养素：蛋白质、糖类、油脂、维生素、无机盐、水）；课题2“化学元素与人体健康”（常量元素与微量元素、缺素症状）；课题3“有机合成材料”（塑料、合成纤维、合成橡胶）。高频考点：六大营养素的分类与功能、缺钙缺铁缺碘等缺素症状、蛋白质变性（甲醛/重金属盐）、三大合成材料、热塑性vs热固性、灼烧法鉴别纤维、白色污染。</p></div>
+      <div class="k-item"><h4>六大营养素及其分类</h4><p>人体必需的六大营养素是：蛋白质、糖类、油脂、维生素、无机盐和水。其中蛋白质、糖类、油脂、维生素都含碳元素，属于有机物；无机盐和水不含碳，属于无机物。注意：含碳的化合物不一定是有机物，CO、CO₂、碳酸及碳酸盐等组成和性质特殊，仍属无机物。水约占人体质量的60%~70%，是人体内含量最多的物质；除供能物质外，均衡摄入各种营养素、合理营养对人体健康至关重要。</p></div>
+      <div class="k-item"><h4>糖类与油脂：主要供能与备用能源</h4><p>糖类由C、H、O三种元素组成，是人体最主要的供能物质（主要能量来源）。食物中的糖类主要是淀粉，米、面、薯类、玉米等含量丰富；白砂糖、蔗糖也属于糖类。淀粉在人体内经消化转变成葡萄糖（化学式C6H12O6）被吸收，葡萄糖在体内经缓慢氧化放出能量，供机体活动所需。葡萄糖还可用于医疗输液补充能量。 油脂是人体内重要的备用能源物质，贮存在皮下和内脏器官周围等处；当人体摄入的糖类不足时，油脂就分解供能。相同质量的油脂在体内氧化放出的能量约为糖类和蛋白质的两倍。含油脂丰富的食物有花生油、豆油、菜籽油和肥肉等；摄入过多油脂易造成肥胖，应适量食用。</p></div>
+      <div class="k-item"><h4>蛋白质：构成细胞的基本物质与变性</h4><p>蛋白质是构成细胞的基本物质，是机体生长及修补受损组织的主要原料，也能为人体提供能量。富含蛋白质的食物有奶类、蛋类、鱼类、肉类、大豆等。血红蛋白就是一种含铁元素的蛋白质，能运输氧气。蛋白质在受热、紫外线、酸、碱、重金属盐、甲醛等作用下，结构会被破坏、失去生理活性，即蛋白质变性，变性是不可逆的。甲醛的水溶液俗称福尔马林，用它浸泡水产品会使蛋白质变性，食用危害健康，国家明令禁止；误食重金属盐后可先喝牛奶或豆浆急救，再尽快就医。</p></div>
+      <div class="k-item"><h4>维生素与均衡营养</h4><p>维生素大多数在人体内不能合成，需从食物中摄取，蔬菜、水果中富含维生素。维生素的作用是调节新陈代谢、维持身体健康，它既不能构成细胞，也不能为人体提供能量。缺乏维生素A易患夜盲症；缺乏维生素C易患坏血病（牙龈出血等）。日常饮食应做到荤素搭配、粗细搭配，保证各种营养素均衡摄入。</p></div>
+      <div class="k-item"><h4>化学元素与人体健康（常量、微量元素及缺素症状）</h4><p>人体中含量超过0.01%的元素称为常量元素，如氧、碳、氢、氮、钙、磷、钾、硫、钠、氯、镁等；含量在0.01%以下的称为微量元素，如铁、锌、碘、氟、硒等。缺素症状：缺钙——儿童患佝偻病、老年人患骨质疏松；缺铁——缺铁性贫血（血红蛋白含铁，可多吃动物肝脏等）；缺碘——甲状腺肿大（地方性甲状腺肿，俗称大脖子病），幼儿缺碘影响生长发育和智力，可患呆小症，我国推广食用加碘食盐预防；缺锌——食欲不振、生长发育不良；缺氟——龋齿（含氟牙膏可防龋）。</p></div>
+      <div class="k-item"><h4>有机合成材料</h4><p>有机高分子化合物相对分子质量很大（从几万到几百万），如淀粉、纤维素、蛋白质、天然橡胶等属于天然有机高分子材料。由石油化工产品经化学反应制得的高分子化合物，可制成三大合成材料：塑料、合成纤维、合成橡胶。塑料分两类：聚乙烯（PE）等受热熔化、冷却凝固，可反复加工，具有热塑性（制食品袋、保鲜膜）；酚醛塑料（电木）、脲醛塑料（电玉）等一经加工成型，受热不再熔化，具有热固性（制插座、开关、锅柄）。合成纤维有锦纶（尼龙）、涤纶、腈纶等，强度高、弹性好、耐磨，但吸水透气性较差，常与棉、羊毛等混纺。</p></div>
+      <div class="k-item"><h4>鉴别纤维与“白色污染”</h4><p>区别天然纤维与合成纤维常用灼烧法：羊毛（蛋白质）灼烧有烧焦羽毛的气味；棉花（纤维素）灼烧有烧纸的气味；锦纶、涤纶、腈纶等合成纤维灼烧有特殊气味，灰烬常结成硬块。棉、羊毛、蚕丝、天然橡胶来自自然界，属于天然材料；塑料、合成纤维、合成橡胶属于合成材料。“白色污染”不是指白色的垃圾，而是指废弃塑料制品（塑料袋、一次性塑料餐具、农用地膜等）造成的污染——塑料在自然环境中难以降解，长期堆积会破坏土壤、污染环境。防治措施：减少使用塑料袋、回收利用废旧塑料、研制和推广可降解塑料等。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 人教版九年级上册 · 第五单元第1章 动物的主要类群 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_chem9_u12_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第十二单元 化学与生活',chapter:'第五单元第1章 动物的主要类群',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第十二单元 化学与生活,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "人体必需的六大营养素中，下列属于无机物的是（　）", "opts": ["A. 蛋白质", "B. 油脂", "C. 水", "D. 维生素"], "ans": 2, "exp": "六大营养素是蛋白质、糖类、油脂、维生素、无机盐和水。蛋白质、糖类、油脂、维生素都含碳元素，属于有机物；水和无机盐不含碳，属于无机物，故选水。注意：CO、CO₂、碳酸及碳酸盐虽含碳，但不属于有机物。"}, {"q": "人类食物中，为人体提供能量的最主要的物质是（　）", "opts": ["A. 蛋白质", "B. 油脂", "C. 维生素", "D. 糖类"], "ans": 3, "exp": "糖类是人体最主要的供能物质（主要能量来源）。油脂是备用能源物质，蛋白质是构成细胞的基本物质，维生素既不能构成细胞也不能提供能量。"}, {"q": "葡萄糖是人体可直接吸收利用的糖类，它的化学式是（　）", "opts": ["A. C6H12O6", "B. CH4", "C. C2H5OH", "D. CO2"], "ans": 0, "exp": "葡萄糖的化学式为C6H12O6。食物中的淀粉在人体内经消化转变成葡萄糖，葡萄糖在体内缓慢氧化放出能量供机体活动。CH4是甲烷、C2H5OH是乙醇、CO2是二氧化碳。"}, {"q": "人体内重要的备用能源物质是（　）", "opts": ["A. 糖类", "B. 油脂", "C. 蛋白质", "D. 维生素"], "ans": 1, "exp": "油脂是人体内重要的备用能源物质，贮存在皮下等处，糖类供能不足时才大量分解供能；相同质量的油脂氧化放出的能量约为糖类和蛋白质的两倍。花生油、豆油、肥肉等富含油脂。"}, {"q": "构成人体细胞的基本物质，也是机体生长及修补受损组织的主要原料的营养素是（　）", "opts": ["A. 糖类", "B. 油脂", "C. 蛋白质", "D. 维生素"], "ans": 2, "exp": "蛋白质是构成细胞的基本物质，是机体生长及修补受损组织的主要原料，也能为人体提供能量。鱼、肉、蛋、奶、大豆等食物富含蛋白质。"}, {"q": "人体中运输氧气的血红蛋白是一种含铁元素的蛋白质。人体缺铁，易患的疾病是（　）", "opts": ["A. 夜盲症", "B. 坏血病", "C. 缺铁性贫血", "D. 佝偻病"], "ans": 2, "exp": "血红蛋白是一种含铁元素的蛋白质，能结合并运输氧气。缺铁会使血红蛋白合成减少，引起缺铁性贫血，可多吃动物肝脏、瘦肉等含铁丰富的食物来预防。"}, {"q": "不法商贩用甲醛溶液（福尔马林）浸泡水产品以“防腐”，这种做法会使水产品中的蛋白质（　），危害人体健康，国家明令禁止", "opts": ["A. 变性，失去原有生理活性", "B. 转化为葡萄糖", "C. 分解为氨基酸，更易吸收", "D. 变得更加新鲜可口"], "ans": 0, "exp": "甲醛的水溶液俗称福尔马林。甲醛能破坏蛋白质的结构、使蛋白质变性，用福尔马林浸泡过的水产品不能食用。"}, {"q": "误食重金属盐引起中毒时，送往医院前可先采取的急救措施是（　）", "opts": ["A. 喝大量白开水", "B. 喝牛奶或豆浆", "C. 喝少量食盐水", "D. 喝碳酸饮料"], "ans": 1, "exp": "重金属盐能使人体中的蛋白质变性而中毒。牛奶、豆浆中富含蛋白质，喝入后重金属盐先与其中的蛋白质作用，可减轻对人体组织蛋白质的破坏，起到急救作用，同时要尽快送医院治疗。"}, {"q": "儿童长期缺钙，容易患的疾病是（　）", "opts": ["A. 骨质疏松症", "B. 佝偻病", "C. 甲状腺肿大", "D. 贫血"], "ans": 1, "exp": "钙是骨骼和牙齿的重要成分。儿童缺钙易患佝偻病，老年人缺钙易患骨质疏松症，青少年应多吃奶类、豆类等含钙丰富的食物。"}, {"q": "人体缺碘，容易患的疾病是（　）", "opts": ["A. 甲状腺肿大（地方性甲状腺肿）", "B. 龋齿", "C. 夜盲症", "D. 佝偻病"], "ans": 0, "exp": "碘是合成甲状腺激素的重要原料。人体缺碘会引起甲状腺肿大（地方性甲状腺肿，俗称大脖子病）；幼儿缺碘会影响生长发育和智力，甚至患呆小症。我国通过食用加碘食盐来预防缺碘。"}, {"q": "下列关于化学元素与人体健康的说法，错误的是（　）", "opts": ["A. 缺锌会引起食欲不振、生长发育不良", "B. 缺氟容易患龋齿", "C. 儿童缺钙易患佝偻病", "D. 缺铁易患甲状腺肿大"], "ans": 3, "exp": "缺铁会使血红蛋白减少，易患缺铁性贫血；引起甲状腺肿大的是缺碘。A、B、C均正确：缺锌——食欲不振、发育不良；缺氟——龋齿；儿童缺钙——佝偻病（老人缺钙——骨质疏松）。"}, {"q": "下列有关塑料的说法，正确的是（　）", "opts": ["A. 聚乙烯（PE）塑料受热熔化、冷却凝固，可反复加工成型，具有热塑性", "B. 电木（酚醛塑料）受热可熔化，能反复加工成型", "C. 棉花、羊毛、天然橡胶都属于合成材料", "D. 塑料、合成纤维、合成橡胶都属于天然有机高分子材料"], "ans": 0, "exp": "聚乙烯（PE，制食品袋、保鲜膜）受热熔化、冷却凝固，可反复加工，具有热塑性；酚醛塑料（电木）一经成型受热不再熔化，具有热固性，制插座、开关外壳等。塑料、合成纤维、合成橡胶是三大合成材料；棉花、羊毛、天然橡胶来自自然界，属天然材料。"}, {"q": "用灼烧法鉴别羊毛和棉纤维，羊毛灼烧时产生的气味是（　）", "opts": ["A. 烧焦羽毛的气味", "B. 烧纸的气味", "C. 特殊的气味", "D. 没有气味"], "ans": 0, "exp": "羊毛的主要成分是蛋白质，灼烧时有烧焦羽毛的气味；棉纤维（纤维素）灼烧时有烧纸的气味；锦纶、涤纶、腈纶等合成纤维灼烧时有特殊气味，灰烬常结成硬块。"}, {"q": "通常所说的“白色污染”，指的是（　）", "opts": ["A. 白色垃圾造成的污染", "B. 废弃塑料制品造成的污染", "C. 白色涂料挥发造成的污染", "D. 医疗废弃物造成的污染"], "ans": 1, "exp": "“白色污染”不是指白色的垃圾，而是指废弃塑料制品（塑料袋、一次性塑料餐具等）对环境造成的污染。塑料难以降解，长期堆积会破坏土壤、污染环境；应减少使用、回收利用、推广可降解塑料。"}]
+const flashcards=[{"q": "人体必需的六大营养素？哪些是有机物？", "a": "蛋白质、糖类、油脂、维生素、无机盐、水。蛋白质、糖类、油脂、维生素含碳，是有机物；无机盐和水是无机物。"}, {"q": "三大供能相关营养素的“分工”？葡萄糖化学式？", "a": "糖类——主要供能物质（淀粉→葡萄糖C6H12O6氧化放能）；油脂——备用能源；蛋白质——构成细胞的基本物质（也能供能）。"}, {"q": "维生素的功能与缺乏症？", "a": "调节新陈代谢、维持健康，多含于蔬菜水果，多数不能在人体内合成。缺维生素A→夜盲症；缺维生素C→坏血病。"}, {"q": "缺钙、缺铁、缺碘分别导致什么？", "a": "缺钙：儿童佝偻病、老人骨质疏松；缺铁：缺铁性贫血（血红蛋白含铁）；缺碘：甲状腺肿大（地方性甲状腺肿），幼儿缺碘可患呆小症（食盐加碘预防）。"}, {"q": "缺锌、缺氟分别导致什么？", "a": "缺锌：食欲不振、生长迟缓、发育不良；缺氟：龋齿。"}, {"q": "蛋白质变性与中毒急救？", "a": "甲醛（福尔马林）、重金属盐、强酸强碱、高温等会使蛋白质变性、失去生理活性。福尔马林浸泡的水产品不能食用；误食重金属盐可立即喝牛奶或豆浆急救并尽快就医。"}, {"q": "三大合成材料？热塑性与热固性？", "a": "塑料、合成纤维（锦纶、涤纶、腈纶）、合成橡胶。聚乙烯（PE）等受热熔化可反复加工——热塑性；酚醛塑料（电木）成型后受热不再熔化——热固性。"}, {"q": "灼烧法如何鉴别羊毛、棉、合成纤维？“白色污染”指什么？", "a": "羊毛（蛋白质）灼烧有烧焦羽毛气味；棉灼烧有烧纸气味；合成纤维灼烧有特殊气味。白色污染=废弃塑料制品对环境的污染。"}]
+const errors=[{"title": "福尔马林泡水产品“洗洗就能吃”？❌", "wrong": "认为福尔马林（甲醛溶液）能杀菌防腐，浸泡过的水产品洗一洗、煮熟后就可以放心食用。", "right": "甲醛溶液俗称福尔马林，能<span class=\"hl\">使蛋白质变性</span>、破坏蛋白质结构，且有毒性。用福尔马林浸泡的水产品<span class=\"hl\">不能食用</span>，我国法律明令禁止用甲醛浸泡食品。"}, {"title": "有机物与无机物的判断出错 ❌", "wrong": "以为含碳的物质都是有机物，把无机盐也算成有机物，或把CO₂、碳酸盐当成有机物。", "right": "蛋白质、糖类、油脂、维生素都含碳，属<span class=\"hl\">有机物</span>；<span class=\"hl\">无机盐和水不含碳，属无机物</span>。含碳的化合物不都是有机物：<span class=\"hl\">CO、CO₂、碳酸及碳酸盐</span>等组成和性质特殊，仍属无机物。"}, {"title": "缺素症状张冠李戴 ❌", "wrong": "把缺钙说成贫血，把缺铁说成得大脖子病，缺碘、缺锌、缺氟的症状也记混。", "right": "按元素对号入座：缺<span class=\"hl\">钙</span>——儿童佝偻病、老人骨质疏松；缺<span class=\"hl\">铁</span>——缺铁性贫血（血红蛋白含铁）；缺<span class=\"hl\">碘</span>——甲状腺肿大（地方性甲状腺肿）、幼儿呆小症；缺<span class=\"hl\">锌</span>——食欲不振、发育不良；缺<span class=\"hl\">氟</span>——龋齿。"}, {"title": "“白色污染”=白色的垃圾？❌", "wrong": "望文生义，以为白色污染指白色的垃圾或白色烟雾、白色涂料造成的污染。", "right": "“白色污染”<span class=\"hl\">不是指白色物品</span>，而是指<span class=\"hl\">废弃塑料制品</span>（塑料袋、一次性塑料餐具等）造成的污染——塑料难降解、长期堆积破坏土壤污染环境。防治：减少使用、回收利用、推广可降解塑料。"}, {"title": "电木和聚乙烯分不清热塑/热固 ❌", "wrong": "以为所有塑料受热都能熔化、反复加工，把电木（酚醛塑料）当成热塑性塑料。", "right": "<span class=\"hl\">聚乙烯（PE）</span>（食品袋、保鲜膜）受热熔化、冷却凝固、可反复加工，属<span class=\"hl\">热塑性</span>塑料；<span class=\"hl\">酚醛塑料（电木）</span>（插座、开关、锅柄）成型后受热<span class=\"hl\">不再熔化</span>，属<span class=\"hl\">热固性</span>塑料。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_chem9_u12_interactive';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

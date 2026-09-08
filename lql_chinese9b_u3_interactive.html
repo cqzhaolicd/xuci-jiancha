@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第三单元 · 古诗文 · 九年级下语文</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 第三单元 · 古诗文</h1>
+    <div class="meta">统编九下 · 第3单元 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>第三单元概览</h4><p>本单元是古诗文单元，共四篇课文：《鱼我所欲也》（孟子，谈生死抉择、舍生取义）、《唐雎不辱使命》（《战国策》，叙唐雎不辱使命、不畏强暴）、《送东阳马生序》（宋濂，述少年求学之艰）、《词四首》（范仲淹、苏轼、辛弃疾、秋瑾抒壮志豪情）。另有写作专题“布局谋篇”与名著导读《儒林外史》。学习时注意把握古诗文意蕴，积累常见文言词语。</p></div>
+      <div class="k-item"><h4>孟子与《鱼我所欲也》</h4><p>孟子，名轲，战国时期邹人，儒家学派代表人物，主张“仁政”，提出“民贵君轻”的思想。《鱼我所欲也》选自《孟子·告子上》，题目为编者所加。文章以“鱼与熊掌不可得兼”作比引出论点，主张当“生”与“义”不可兼得时应“舍生而取义”，批判见利忘义、失其本心的行为。</p></div>
+      <div class="k-item"><h4>《鱼我所欲也》论证思路与“本心”</h4><p>首段由鱼与熊掌的取舍类比引出“舍生取义”，再从正反两面论证“所欲有甚于生者，所恶有甚于死者”，“非独贤者有是心也，人皆有之，贤者能勿丧耳”；次段以“一箪食，一豆羹”宁死不受与“万钟则不辩礼义而受之”对比，又以“乡为身死而不受，今为……为之”的今昔对比收束，得出“此之谓失其本心”。“本心”指本性，即人的羞恶之心。</p></div>
+      <div class="k-item"><h4>《鱼我所欲也》重点词语</h4><p>蹴：踩踏（蹴尔而与之）；豆：古代盛食物的一种容器，形似高脚盘（一豆羹）；乡：同“向”，先前、从前（乡为身死而不受）；辩：同“辨”，辨别（万钟则不辩礼义而受之）；辟：同“避”，躲避（故患有所不辟）；得：同“德”，感恩、感激；与：同“欤”，语气词（所识穷乏者得我与）；万钟：优厚的俸禄；何加：有什么益处。</p></div>
+      <div class="k-item"><h4>《战国策》与《唐雎不辱使命》</h4><p>《战国策》是西汉刘向根据战国时期史料整理编辑的国别体史书，共33篇，分国编次。《唐雎不辱使命》选自《战国策·魏策四》，题目为后人所加。故事大意：秦王欲以五百里之地“易”安陵（实为吞并），安陵君以“受地于先王，愿终守之，弗敢易”婉拒，并派唐雎出使秦国。唐雎临危受命，最终不辱使命，维护了国家的利益和尊严。</p></div>
+      <div class="k-item"><h4>《唐雎不辱使命》斗争高潮与形象</h4><p>秦王以“天子之怒，伏尸百万，流血千里”威吓，并轻蔑地认为“布衣之怒”不过是“免冠徒跣，以头抢地”；唐雎举专诸刺王僚（彗星袭月）、聂政刺韩傀（白虹贯日）、要离刺庆忌（仓鹰击于殿上）的典故，说“与臣而将四矣”，宣布“若士必怒，伏尸二人，流血五步，天下缟素，今日是也”，随即“挺剑而起”。秦王“色挠”，“长跪而谢之”（直身跪着道歉）。秦王由“不说”而“怫然怒”而“色挠”，反衬出唐雎不畏强暴、有胆有识的“士”的形象。</p></div>
+      <div class="k-item"><h4>宋濂·赠序·《送东阳马生序》</h4><p>序是文体名，有书序与赠序之分，赠序即临别赠言。宋濂（1310—1381），字景濂，号潜溪，浦江（今属浙江）人，元末明初文学家。本文是作者写给同乡后学马君则（马生）的赠序。作者自述幼时家贫借书手抄、成年“尝趋百里外”求师、从师时“负箧曳屣”跋涉、“缊袍敝衣”而以学为乐的经历，勉励马生珍惜太学优越条件专心求学：“其业有不精、德有不成者，非天质之卑，则心不若余之专耳，岂他人之过哉？”</p></div>
+      <div class="k-item"><h4>《送东阳马生序》重点词语与对比手法</h4><p>重点词：致（得到）、假借（借）、走（跑）、逾约（超过约定期限）、汤（热水）、再（两次，“日再食”即每天供给两顿饭）、被（同“披”，穿）、支（同“肢”）、腰（名词用作动词，在腰间佩戴）、逆旅（旅店）、慕艳（羡慕）、缊袍敝衣（破旧的衣服）。课文多用对比：同舍生“被绮绣”“烨然若神人”与作者“缊袍敝衣”对比，自己昔日求学之难与太学生今日条件之优对比，突出“以中有足乐者，不知口体之奉不若人也”，说明为学贵在专心、勤奋。</p></div>
+      <div class="k-item"><h4>《词四首》词牌·题目·作者</h4><p>词又称“长短句”。渔家傲、江城子、破阵子、满江红都是词牌名，只决定格律曲调，与内容无关；秋思（《渔家傲·秋思》）、密州出猎（《江城子·密州出猎》）、为陈同甫赋壮词以寄之（《破阵子》）才是题目。作者：范仲淹《渔家傲·秋思》（镇守西北边塞时作）、苏轼《江城子·密州出猎》（密州知州任上出猎时作）、辛弃疾《破阵子·为陈同甫赋壮词以寄之》（寄好友陈亮，陈同甫即陈亮）、秋瑾《满江红》（1903年寓居北京时作）。秋瑾字璿卿，号竞雄，别署鉴湖女侠，中国民主革命烈士。</p></div>
+      <div class="k-item"><h4>名著导读《儒林外史》·写作“布局谋篇”</h4><p>《儒林外史》是清代吴敬梓所作的长篇讽刺小说，全书没有贯穿始终的中心人物与主要情节，由众多士人故事连缀而成，揭露科举制度与功名利禄对读书人灵魂的毒害；鲁迅称其为“中国古代最优秀的讽刺小说”。讽刺笔法有冷峻白描（如胡屠户一路低头为范进扯衣褶）、夸张变形、正反对比（王冕、杜少卿等正面人物与科举丑类对照）。本单元写作专题“布局谋篇”要求在审题立意、选材之后，对材料的组织、结构的安排作整体谋划，并列出写作提纲，做到言之有序、详略得当。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 统编版语文九年级下册 · 第一单元 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_chinese9b_u3_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+
+
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第三单元 古诗文',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第三单元 古诗文,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "《鱼我所欲也》中，表明作者观点、揭示全文主旨的句子是（　）", "opts": ["鱼，我所欲也；熊掌，亦我所欲也。二者不可得兼，舍鱼而取熊掌者也。", "生，亦我所欲也；义，亦我所欲也。二者不可得兼，舍生而取义者也。", "非独贤者有是心也，人皆有之，贤者能勿丧耳。", "万钟则不辩礼义而受之，万钟于我何加焉！"], "ans": 1, "exp": "孟子先以鱼与熊掌不可兼得作类比，引出“生、义不可兼得时应舍生而取义”的中心论点（默写本句须一字不差）。选项3说明人人皆有“羞恶之心”而贤者能不丧失；选项4斥责为宫室、妻妾等私利不辩礼义而受万钟、失其本心的行为。"}, {"q": "下列对“蹴尔而与之，乞人不屑也”中“蹴”的解释，正确的一项是（　）", "opts": ["踩踏", "奔跑", "聚集", "窥视"], "ans": 0, "exp": "课下注释：“〔蹴〕踩踏”。“蹴尔而与之”即用脚踩踏过再给人（吃），与“呼尔而与之”（没有礼貌地吆喝着给他）都是侮辱性的施舍，所以连乞丐也不屑接受——可见人有人格尊严，“所欲有甚于生者”。"}, {"q": "“万钟则不辩礼义而受之”中“辩”的正确理解是（　）", "opts": ["同“辨”，辨别", "辩解，为自己辩护", "同“变”，变化", "华丽，有文采"], "ans": 0, "exp": "课下注释：“〔辩〕同‘辨’，辨别”。全句意为：优厚的俸禄如果不辨别是否合乎礼义就接受它，（对自己）有什么益处呢？这正是“失其本心”的表现。"}, {"q": "“乡为身死而不受，今为宫室之美为之”中“乡”应解释为（　）", "opts": ["同“向”，先前、从前", "家乡，故乡", "地方，处所", "面对，朝向"], "ans": 0, "exp": "“乡”是通假字，同“向”，先前、从前。“乡为身死而不受”指先前（有人）为了“礼义”宁肯死也不接受施舍；“今为宫室之美为之”与之形成今昔对比，说明有些人因贪图私利而“失其本心”。"}, {"q": "下列关于《战国策》的说法，正确的一项是（　）", "opts": ["西汉刘向根据战国时期史料整理编辑，共33篇，分国编次，属国别体", "战国时期刘向编写，是我国第一部编年体史书", "西汉司马迁所著，是我国第一部纪传体通史", "记录孔子及其弟子言行的语录体著作"], "ans": 0, "exp": "《战国策》是西汉刘向根据战国时期史料整理编辑的国别体史书，共33篇，分国编次；《唐雎不辱使命》选自《战国策·魏策四》，题目是后人所加。纪传体通史是司马迁的《史记》，编年体如《左传》，语录体如《论语》。"}, {"q": "对“秦王色挠，长跪而谢之曰：‘先生坐！何至于此！’”理解正确的一项是（　）", "opts": ["“长跪”指秦王跪了很长时间，“谢之”是感谢唐雎指点", "“色挠”写秦王面露胆怯之色；“长跪而谢之”写他直身跪着向唐雎道歉，表现秦王被唐雎的凛然正气所折服", "说明秦王知错能改，虚心向唐雎请教治国安邦之策", "“谢之”是设宴答谢唐雎，秦王想以礼拉拢唐雎"], "ans": 1, "exp": "课下注释：“〔色挠〕面露胆怯之色；〔长跪而谢之〕直身跪着，向唐雎道歉。”秦王的“色挠”“长跪而谢”正是被唐雎“士之怒”的凛然正气折服的表现，与开头骄横傲慢的秦王形成鲜明对比。"}, {"q": "唐雎以“士之怒”回应秦王的“天子之怒”。下列最能体现“士之怒”威力的一句是（　）", "opts": ["布衣之怒，亦免冠徒跣，以头抢地尔。", "此三子者，皆布衣之士也，怀怒未发，休祲降于天。", "若士必怒，伏尸二人，流血五步，天下缟素，今日是也。", "寡人以五百里之地易安陵，安陵君不听寡人，何也？"], "ans": 2, "exp": "“免冠徒跣，以头抢地”是秦王心目中无能的“布衣之怒”；唐雎举专诸、聂政、要离三位布衣之士的事迹后说“与臣而将四矣”，“伏尸二人，流血五步，天下缟素”直陈“士之怒”将使国君丧命、天下戴孝，与秦王“天子之怒，伏尸百万，流血千里”针锋相对，随即“挺剑而起”。"}, {"q": "《送东阳马生序》的文体、作者理解正确的一项是（　）", "opts": ["“序”属赠序（临别赠言），本文是宋濂写给同乡后学马生的赠言；宋濂是元末明初文学家", "“序”属书序，本文是宋濂为自己的著作《宋濂全集》写的序言", "本文作者是明代小说家吴承恩，是写给东阳太守的应酬之作", "“序”即“叙说”，本文是宋濂追述家世的家谱序"], "ans": 0, "exp": "序有书序和赠序之分，赠序即临别赠言。宋濂（1310—1381），字景濂，号潜溪，元末明初文学家。本文是作者写给同乡晚辈、太学生马君则（马生）的赠序，借叙自己求学之难劝勉后学勤苦读书。"}, {"q": "“录毕，走送之，不敢稍逾约”中“走”的意思是（　）", "opts": ["跑（赶紧送还）", "行走，步行", "逃跑，逃走", "奔走，效力"], "ans": 0, "exp": "“走”是古今异义词，这里指“跑”。作者抄完书赶紧跑去送还，不敢稍微超过约定期限，因此“人多以书假余，余因得遍观群书”。今义“行走”是后起义，翻译文言时不能按今义理解。"}, {"q": "对“以中有足乐者，不知口体之奉不若人也”理解正确的一项是（　）", "opts": ["因为内心有足以快乐的事（读书求知），就不觉得吃的穿的不如别人，表现作者以学为乐、安贫乐道", "因为中间有足够的快乐，所以没有留意别人吃穿的好坏", "作者自恃学问高深，不屑与同舍生比较衣食", "因为心中快乐，所以感觉自己的吃穿很丰盛，不比别人差"], "ans": 0, "exp": "“中”指内心，“口体之奉”指吃穿的供给。同舍生“被绮绣”“烨然若神人”，作者“缊袍敝衣”却“略无慕艳意”，因为他以读书求道为乐，精神上的富足使他忘却了物质生活的艰苦。这正是他用以劝勉马生专心求学、不慕虚荣的核心所在。"}, {"q": "对“渔家傲·秋思”这一词题的理解，正确的一项是（　）", "opts": ["“渔家傲”是题目，“秋思”是词牌名", "“秋思”是题目，“渔家傲”是词牌名", "“渔家傲”“秋思”都是词牌名", "“渔家傲”指地点，“秋思”点明季节"], "ans": 1, "exp": "词题一般由“词牌名＋题目”构成。“渔家傲”是词牌名，只决定格律曲调，与内容无关；“秋思”才是题目，点明秋日思乡之情。同理《江城子·密州出猎》中“江城子”是词牌，“密州出猎”是题目，“破阵子”“满江红”也是词牌名。"}, {"q": "“浊酒一杯家万里，燕然未勒归无计”中，词人“归无计”的主要原因是（　）", "opts": ["战事吃紧，朝廷明令将士不得还乡", "离家万里，路途遥远艰险，难以成行", "边患未平、功业未成——尚未像窦宪那样“勒石燕然”，想归却不能归", "年老体衰，无力长途跋涉返乡"], "ans": 2, "exp": "“燕然未勒”用东汉窦宪追击匈奴至燕然山刻石记功的典故，指抗敌大功尚未建立。词人举杯思乡（浊酒一杯家万里），却因边患未平、功业未成而不能归，“归无计”道出了思乡念亲与壮志难酬交织的复杂心绪。"}, {"q": "“会挽雕弓如满月，西北望，射天狼”中，“天狼”喻指（　）", "opts": ["侵扰西北边境的西夏军队", "凶恶成群的野狼", "北方的辽国军队", "朝廷中的政敌"], "ans": 0, "exp": "课下注释：“天狼”是星名，传说主侵掠，词中喻指侵扰西北边境的西夏军队。“会”是“终将”，词人想象拉满雕弓射向西北，抒发了渴望杀敌卫国、建功立业的豪情壮志。全词以“狂”字为骨，用“亲射虎”“遣冯唐”“射天狼”等典故寄托报国之志。"}, {"q": "《破阵子·为陈同甫赋壮词以寄之》结尾“可怜白发生”表达的情感是（　）", "opts": ["词人因年老体衰无法再上战场的遗憾", "叹息时光流逝，劝友人珍惜青春年华", "抒发了壮志难酬、报国无门的悲愤，与梦中雄壮的军旅生活形成强烈反差", "表现词人功成名就、得偿夙愿后的欣慰"], "ans": 2, "exp": "前九句极写梦中（回忆中）的军旅雄姿与理想——“了却君王天下事，赢得生前身后名”，末句“可怜白发生”陡然跌回现实：白发已生而壮志未酬。以壮衬悲，“赋壮词”实则以悲作结，抒发了词人壮志难酬的悲愤。"}, {"q": "下列关于《满江红》（小住京华）及其作者的表述，正确的一项是（　）", "opts": ["作者秋瑾，字璿卿，号竞雄，别署鉴湖女侠，中国民主革命烈士", "作者秋瑾，字太白，号青莲居士，是唐代浪漫主义诗人", "作者秋瑾，清代小说家，著有讽刺小说《儒林外史》", "《满江红》是这首词的题目，写秋瑾中秋赏月、思念故乡"], "ans": 0, "exp": "秋瑾（1875—1907），字璿卿，号竞雄，别署鉴湖女侠，山阴（今浙江绍兴）人，中国民主革命烈士。本词作于1903年中秋前后、作者寓居北京时。“满江红”是词牌名。“身不得，男儿列；心却比，男儿烈”直抒不甘受“蛾眉”之困、愿投身革命的豪情。"}, {"q": "下列关于《儒林外史》的表述，正确的一项是（　）", "opts": ["作者是清代吴敬梓；小说没有贯穿全书的中心人物和主要情节，由众多故事连缀而成，讽刺科举制度对读书人的毒害", "作者是清代曹雪芹，与《红楼梦》同为世情小说，赞美科举取士制度", "作者是明代吴承恩；鲁迅称之为“中国古代最优秀的讽刺小说”", "小说以范进中举为全书主线，完整讲述范进的一生"], "ans": 0, "exp": "《儒林外史》是清代吴敬梓所作长篇讽刺小说，“秉持公心，指摘时弊”，全书没有贯穿始终的中心人物和主要情节，由众多士人故事连缀而成，揭露科举制度与功名利禄对读书人灵魂的毒害；鲁迅在《中国小说史略》中称其为“中国古代最优秀的讽刺小说”。“范进中举”只是其中一个精彩的片段。"}];
+const flashcards=[{"q": "《鱼我所欲也》中“蹴尔而与之，乞人不屑也”怎样翻译？“蹴”是什么意思？", "a": "“蹴”课下注释为“踩踏”。全句大意：用脚踩踏过再给人（吃），就连乞丐也会因轻视而不肯接受。“呼尔而与之”（没有礼貌地吆喝着给他）与“蹴尔而与之”都指侮辱性的施舍；宁可饿死也不受侮辱，可见人皆有所欲、所恶，“所欲有甚于生者”。"}, {"q": "解释《鱼我所欲也》中的“豆”“乡”“辩”三个字。", "a": "豆：古代盛食物的一种容器，形似高脚盘，“一豆羹”即一豆之羹，不是豆子；乡：同“向”，先前、从前，“乡为身死而不受”指先前宁死也不接受（施舍）；辩：同“辨”，辨别，“万钟则不辩礼义而受之”指不分辨是否合乎礼义就接受优厚的俸禄。"}, {"q": "《鱼我所欲也》的中心论点是什么？“本心”指什么？", "a": "中心论点（主旨句）：“生，亦我所欲也；义，亦我所欲也。二者不可得兼，舍生而取义者也。”文章以鱼与熊掌不可兼得类比引出论点。“本心”指本性，即人的羞恶之心；“非独贤者有是心也，人皆有之，贤者能勿丧耳”——贤者之所以为贤，在于能不失其本心。"}, {"q": "“秦王色挠，长跪而谢之”怎样翻译？这写出了秦王怎样的变化？", "a": "翻译：秦王面露胆怯之色，直身跪着，向唐雎道歉。“色挠”即面露胆怯之色，“谢”是道歉。由开头“秦王不说（不悦）”到“怫然怒”，再到此处“色挠”“长跪而谢之”，写出秦王由骄横凶暴到恐惧屈服的变化，反衬唐雎不畏强暴、有胆有识的“士”的形象。"}, {"q": "《唐雎不辱使命》中唐雎列举了哪三位刺客？他所说的“士之怒”与秦王所说的“布衣之怒”有何不同？", "a": "三位布衣之士：专诸（刺吴王僚，彗星袭月）、聂政（刺韩傀，白虹贯日）、要离（刺庆忌，仓鹰击于殿上）；唐雎说“与臣而将四矣”，暗示自己将效法三人。秦王认为“布衣之怒”不过是“免冠徒跣，以头抢地”；唐雎针锋相对：“若士必怒，伏尸二人，流血五步，天下缟素，今日是也。”（与“天子之怒，伏尸百万，流血千里”相对）随即“挺剑而起”。"}, {"q": "《送东阳马生序》的文体、作者和写作对象分别是什么？", "a": "文体是赠序（序有书序和赠序之分，赠序即临别赠言）。作者宋濂（1310—1381），字景濂，号潜溪，浦江（今属浙江）人，元末明初文学家。写作对象是作者的同乡后学、太学生马君则（马生）。作者借讲述自己年少时借书抄录、百里求师、忍冻受饥仍以学为乐的艰辛经历，勉励马生珍惜优越条件、专心刻苦求学。"}, {"q": "辨析《送东阳马生序》中“走、汤、再、被、腰、支”的词义。", "a": "走：跑（录毕，走送之）；汤：热水（媵人持汤沃灌），不是菜汤；再：两次（主人日再食，即每天供给两顿饭，“食”读sì，供养、给……吃）；被：同“披”，穿（被绮绣）；腰：名词用作动词，在腰间佩戴（腰白玉之环）；支：同“肢”（四支僵劲）。另有：假借＝借；臭（容臭）指香气；逆旅＝旅店。"}, {"q": "翻译“以中有足乐者，不知口体之奉不若人也”，并说说这句话的作用。", "a": "翻译：因为内心有值得快乐的事，就不觉得吃的穿的不如别人。“中”指内心，“口体之奉”指吃穿的供给。同舍生“被绮绣”“烨然若神人”，作者“缊袍敝衣”却“略无慕艳意”，可见他以读书求道为乐，精神的富足使他忘却了物质的艰苦。此句与太学诸生优越的条件构成对比，点明“其业有不精、德有不成者……则心不若余之专耳”的劝学主旨。"}, {"q": "《词四首》中“渔家傲”“江城子”“破阵子”与“秋思”“密州出猎”分别是什么？怎样区分词牌名与题目？", "a": "“渔家傲”“江城子”“破阵子”“满江红”都是词牌名，只决定格律曲调，与内容无关；“秋思”是《渔家傲·秋思》的题目，点明秋日思乡；“密州出猎”是《江城子·密州出猎》的题目，点明地点与事件；“为陈同甫赋壮词以寄之”是《破阵子》的题目，说明写作缘由（陈同甫即陈亮）。读词先切分“词牌·题目”，不要把词牌当成题目。"}, {"q": "默写《词四首》名句：“浊酒一杯家万里，燕然未勒归无计。”“会挽雕弓如满月，西北望，射天狼。”“了却君王天下事，赢得生前身后名。”并说说《破阵子》的“可怜白发生”与《满江红》的“青衫湿”各抒发了什么情感。", "a": "“可怜白发生”写梦中杀敌报国的理想与“白发已生”的现实形成强烈反差，抒发了壮志难酬、报国无门的悲愤（以壮衬悲）；“青衫湿”语出白居易《琵琶行》“江州司马青衫湿”，抒写“莽红尘何处觅知音”的苦闷。拓展：《满江红》名句“身不得，男儿列；心却比，男儿烈”直抒不甘为女子的豪情。作者秋瑾，号竞雄，别署鉴湖女侠，中国民主革命烈士。"}];
+const errors=[{"title": "通假字张冠李戴", "wrong": "把“乡为身死而不受”的“乡”当成“家乡、乡村”，把“万钟则不辩礼义而受之”的“辩”理解成“辩论”，把“所识穷乏者得我与”的“得”当成“得到”。", "right": "这三个都是通假字：“乡”同“向”，先前、从前；“辩”同“辨”，辨别；“得”同“德”，感恩、感激（“与”同“欤”，语气词）。本单元还见“辟”同“避”（故患有所不辟）、“支”同“肢”（四支僵劲）、“被”同“披”（被绮绣）、“仓”同“苍”（仓鹰击于殿上）。判断通假字要结合语境，不能望文生义。"}, {"title": "古今异义按今义误译", "wrong": "把“媵人持汤沃灌”的“汤”译成“菜汤”，把“录毕，走送之”的“走”译成“行走”，把“主人日再食”的“再”理解成“再吃一顿”，把“长跪而谢之”的“谢”译成“感谢”。", "right": "古义应为：“汤”是热水（沃灌是浇洗）；“走”是“跑”；“再”是“两次”（日再食＝每天供给两顿饭）；“谢”是“道歉”。同类还有“一豆羹”的“豆”（古代盛食物的器皿）、“容臭”的“臭”（香气）、“假借”的“假”（借）。翻译文言务必警惕今义干扰。"}, {"title": "“长跪而谢之”翻译错位", "wrong": "把“长跪而谢之”理解成“秦王长跪不起、感谢唐雎饶命”，或漏掉“直身”这一姿态细节。", "right": "“长跪而谢之”＝直身跪着，向唐雎道歉。古人席地而坐（两膝着地、臀部落在脚跟上），“长跪”是把腰挺直以示敬意，并非跪很久或叩拜；“谢”是“道歉”。此句紧承“秦王色挠”，写出秦王由骄横到屈服的变化。"}, {"title": "混淆“天子之怒”与“布衣之怒”", "wrong": "以为“伏尸百万，流血千里”是唐雎说的，或以为“免冠徒跣，以头抢地”是唐雎对“士之怒”的描述。", "right": "“天子之怒，伏尸百万，流血千里”是秦王炫耀武力、威吓唐雎之语；“免冠徒跣，以头抢地”是秦王心目中卑微的“布衣之怒”。唐雎则以专诸、聂政、要离三位布衣之士行刺的事迹（“与臣而将四矣”）证明“士之怒”的威力——“若士必怒，伏尸二人，流血五步，天下缟素，今日是也”，并“挺剑而起”。"}, {"title": "词牌名与题目不分", "wrong": "把“渔家傲”当成《渔家傲·秋思》的题目，把“密州出猎”当成词牌名，或以为“满江红”是秋瑾自拟的题目。", "right": "“渔家傲”“江城子”“破阵子”“满江红”都是词牌名，只决定格律、曲调，与内容无关；“秋思”是题目（点明秋日思乡），“密州出猎”是题目（地点＋事件），“为陈同甫赋壮词以寄之”是《破阵子》的题目（陈同甫即陈亮）。辨析词题先切分“词牌·题目”。"}, {"title": "《破阵子》“壮词”误读与默写失分", "wrong": "以为《破阵子·为陈同甫赋壮词以寄之》通篇豪壮、没有悲愁，或把“了却君王天下事，赢得生前身后名”中的“了却”写成“了结”、“赢得”写成“赢的”“营得”。", "right": "“赋壮词”确实大写军旅雄姿（醉里挑灯看剑、沙场秋点兵、马作的卢飞快、弓如霹雳弦惊），但末句“可怜白发生”陡然转悲：建功立业的理想与白发已生的现实形成巨大反差，抒发壮志难酬的悲愤——以“壮”衬“悲”才是全词题旨。默写须一字不差，注意“了却”“赢得”的字形。"}];
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_chinese9b_u3';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>
