@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第五单元 · 议论与驳论 · 九年级上语文</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 第五单元 · 议论与驳论</h1>
+    <div class="meta">统编九上 · 第5单元 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>单元概览 · 议论性文章</h4><p>第五单元四篇课文：《中国人失掉自信力了吗》（驳论文，针砭时弊）、《怀疑与学问》（谈治学）、《谈创造性思维》《创造宣言》（谈创造），另有写作「论证要合理」。学习重点：把握作者观点、分析观点与材料的联系、掌握论证方法、联系实际质疑探究。</p></div>
+      <div class="k-item"><h4>驳论文的特点</h4><p>先摆出（或引出）对方的错误观点，作为批驳的靶子；可针对对方的论点，也可针对其论据或论证过程进行反驳；驳倒错误观点后再确立自己的正确观点，先破后立。驳论也是一种论证，只是论证对方论点不正确。</p></div>
+      <div class="k-item"><h4>鲁迅与《且介亭杂文》</h4><p>鲁迅，原名周树人，字豫才，浙江绍兴人，文学家、思想家、革命家。《中国人失掉自信力了吗》选自他的杂文集《且介亭杂文》，写于1934年9月（“九一八”事变三周年之际），针对一些人对抗日前途的悲观论调而作。</p></div>
+      <div class="k-item"><h4>《中国人失掉自信力了吗》的思路</h4><p>先摆出对方观点“中国人失掉自信力了”及其三个“事实”（自夸地大物博、只希望着国联、一味求神拜佛怀古伤今）；再指出这些人先前信“地”、信“国联”，从未相信过“自己”，失掉的只是“他信力”，现在发展的则是“自欺力”——反驳对方的论据与论证过程；最后正面立论：“我们有并不失掉自信力的中国人在。”</p></div>
+      <div class="k-item"><h4>“中国的脊梁”与“地底下”</h4><p>“我们从古以来，就有埋头苦干的人，有拼命硬干的人，有为民请命的人，有舍身求法的人……这就是中国的脊梁。”“自信力的有无，状元宰相的文章是不足为据的，要自己去看地底下”——不要被表面的“脂粉”诓骗，要看社会底层脚踏实地的人民大众。</p></div>
+      <div class="k-item"><h4>“他信力”“自欺力”的妙用</h4><p>仿照“自信力”新造的词语，与“自信力”形成对照和辛辣的讽刺：只信外物（地、物、国联）而不信自己，是“他信”；一味求神拜佛、自我麻醉，是“自欺”。既击破了对方的论据，又揭露了论调的本质。</p></div>
+      <div class="k-item"><h4>顾颉刚与《怀疑与学问》</h4><p>顾颉刚（1893—1980），字铭坚，江苏苏州人，历史学家。课文开篇引程颐“学者先要会疑”、张载“学则须疑”。中心论点：治学必须有怀疑精神。分论点一：怀疑是消极方面辨伪去妄的必须步骤；分论点二：怀疑是积极方面建设新学说、启迪新发明的基本条件。结构完整，论证严密。</p></div>
+      <div class="k-item"><h4>罗迦·费·因格与《谈创造性思维》</h4><p>罗迦·费·因格，美国实业家，课文原题《事物的正确答案不止一个》。观点：生活中解决问题的方法并非只有一个，不满足于一个答案、不放弃探求，才能有所创造。创造性思维要素：①学识渊博（知识是形成新创意的素材）；②有探求新事物并活用知识的态度和意识，如何运用知识才是关键；③持之以恒地进行各种尝试。还强调任何人都拥有创造力，要留意自己细小的想法。</p></div>
+      <div class="k-item"><h4>陶行知与《创造宣言》</h4><p>陶行知（1891—1946），安徽歙县人，人民教育家，主张“生活教育”（生活即教育、社会即学校、教学做合一）。《创造宣言》先以“有人说……”摆出“环境太平凡、生活太单调、年纪太小、太无能、山穷水尽走投无路”等“不能创造”的借口，逐一驳倒，再正面提出“处处是创造之地，天天是创造之时，人人是创造之人”，号召用汗、血、热情去创造。</p></div>
+      <div class="k-item"><h4>论证方法 · 写作“论证要合理”</h4><p>论证方法主要有：举例论证、道理论证（含引用名言）、对比论证、比喻论证、类比论证。论证要合理：①合乎逻辑，观点一致、概念统一；②材料能支持论点，避免论据不相干或论据不足；③选用恰当的论证方法；④论证结构合理、思路清晰，可设分论点，或用“提出问题—分析问题—解决问题”的结构层层深入。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 统编版语文九年级上册 · 第一单元 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_chinese9_u5_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+
+
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第一单元 新闻阅读',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第一单元 新闻阅读,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "《中国人失掉自信力了吗》一文选自鲁迅的（　）", "opts": ["《呐喊》", "《朝花夕拾》", "《野草》", "《且介亭杂文》"], "ans": 3, "exp": "本文选自鲁迅的杂文集《且介亭杂文》（《鲁迅全集》第六卷）。《呐喊》是小说集，《朝花夕拾》是散文集，《野草》是散文诗集。"}, {"q": "课文中，作者要批驳的对方的观点是（　）", "opts": ["中国人失掉了自信力", "中国人有“他信力”", "中国人在发展“自欺力”", "中国人中有不失掉自信力的人"], "ans": 0, "exp": "文章开头先摆出当时舆论界的论调——“中国人失掉自信力了”，作为批驳的靶子，然后逐层反驳，最后正面立论。"}, {"q": "对文章开头连续列举的三个“事实”（自夸“地大物博”、只希望着“国联”、一味求神拜佛），理解正确的一项是（　）", "opts": ["它们证明中国人的确失掉了自信力", "作者据此指出这些人失掉的是“他信力”，现在又在发展“自欺力”", "它们说明中国人始终相信“自己”", "三个事实彼此矛盾，不足为据"], "ans": 1, "exp": "对方以三个“事实”为论据推出“中国人失掉自信力了”。作者针锋相对：这些人先前信“地”、信“物”、信“国联”，从来没有相信过“自己”，失掉的只是“他信力”；一味求神拜佛则是发展“自欺力”——这是针对对方的论据和论证过程进行反驳。"}, {"q": "文中“他信力”“自欺力”是仿照“自信力”新造的词语，这样写的表达效果是（　）", "opts": ["使文章显得幽默轻松，与议论无关", "意在说明中国人曾有过真正的自信力", "与“自信力”形成鲜明对照，辛辣讽刺那些只信外物、自欺欺人的人", "表明作者赞同求神拜佛的做法"], "ans": 2, "exp": "仿词“他信力”“自欺力”与“自信力”相对照，一针见血地揭穿：有些人所谓的“信”，只是信地、信物、信国联的“他信”，甚至发展成自我麻醉的“自欺”，讽刺极为犀利。"}, {"q": "批驳对方观点之后，作者在文中正面提出的观点是（　）", "opts": ["“我们有并不失掉自信力的中国人在”", "中国人全体都失掉了自信力", "只有埋头苦干的人才算有自信力", "自信力的有无要看状元宰相的文章"], "ans": 0, "exp": "第6段起作者转折立论：“然而，在这笼罩之下，我们有并不失掉自信力的中国人在。”并从古至今举出“中国的脊梁”加以证明，先破后立。"}, {"q": "下列说法中，属于“中国的脊梁”所指的一类人的是（　）", "opts": ["一味求神拜佛的“社会名流”", "自夸“地大物博”的官僚政客", "为帝王将相作家谱的“正史”中的帝王将相", "为民请命、舍身求法的人"], "ans": 3, "exp": "“我们从古以来，就有埋头苦干的人，有拼命硬干的人，有为民请命的人，有舍身求法的人……这就是中国的脊梁。”脊梁指脚踏实地、为民献身、默默奋斗的中国人民，即使“正史”也掩不住他们的光耀。"}, {"q": "结尾“自信力的有无，状元宰相的文章是不足为据的，要自己去看地底下”意在强调（　）", "opts": ["判断自信力应依据官方文章", "不要被自欺欺人的表面言论蒙蔽，要看社会底层真正苦干、硬干的人民大众", "状元宰相的话最有说服力", "只有到地底下去才能找到自信力"], "ans": 1, "exp": "“状元宰相”指为统治者说话的官方舆论，“地底下”喻指生活在社会底层的人民大众。作者告诫人们：判断自信力的有无，要看脚踏实地、苦干实干的人民，不要被自欺欺人的“脂粉”言论所蒙蔽。"}, {"q": "关于驳论文，下列说法正确的一项是（　）", "opts": ["驳论文只能针对对方的观点反驳，不能涉及论据和论证过程", "驳论文驳倒对方即可，无须表明自己的观点", "反驳对方的论点、论据或论证过程，都可以使对方的观点站不住脚", "驳论文与立论文写法完全不同，毫无联系"], "ans": 2, "exp": "驳论可以反驳对方的论点，也可以反驳其论据和论证过程；驳倒错误观点后常要确立自己的正确观点（先破后立），如本文第3—5段驳论据与论证，第6段起正面立论。写作提示也说：驳论也是一种论证，不过是论证对方论点不正确。"}, {"q": "《怀疑与学问》的作者顾颉刚是（　）", "opts": ["历史学家", "文学家", "教育家", "实业家"], "ans": 0, "exp": "顾颉刚（1893—1980），字铭坚，江苏苏州人，历史学家，毕生从事古史研究，以“层累地造成的中国古史”说影响深远。"}, {"q": "《怀疑与学问》的中心论点是（　）", "opts": ["学问的基础是事实和证据", "治学必须有怀疑精神（学则须疑）", "传说的话都不必相信", "怀疑只是辨伪去妄的一个步骤"], "ans": 1, "exp": "文章开篇引程颐“学者先要会疑”、张载“学则须疑”，提出中心论点：治学必须有怀疑精神。下文从两个分论点论证：怀疑是辨伪去妄的必须步骤，也是建设新学说、启迪新发明的基本条件。"}, {"q": "文中引用孟子的话“尽信书则不如无书”，意在说明（　）", "opts": ["书读得越少越好", "天下没有值得相信的书", "只有《尚书》不值得相信", "读书不要盲从、迷信，要有怀疑的精神"], "ans": 3, "exp": "“尽信书则不如无书”语出《孟子·尽心下》，原指完全相信《尚书》倒不如没有《尚书》。作者借此强调：无论什么书、什么学问，都要经过“怀疑—思索—辨别”，不能盲从或迷信。"}, {"q": "下列关于《怀疑与学问》论证方法的分析，正确的一项是（　）", "opts": ["引用程颐、张载、孟子的话，属于举例论证", "举戴震幼时读书发问的例子，属于比喻论证", "引用名言属于道理论证；举戴震等事例，引笛卡儿“我怀疑，所以我存在”，是举例论证与道理论证结合", "全文没有运用举例论证"], "ans": 2, "exp": "引用名言证明观点是道理论证（引证）；举清代大学问家戴震幼时质疑《大学章句》作者年代的事例是举例论证，论证“许多大学问家都是从怀疑中锻炼出来的”；笛卡儿的名言则属于道理论证，共同支撑“怀疑是建设新学说、启迪新发明的基本条件”这一分论点。"}, {"q": "下列对《谈创造性思维》主要观点的概括，正确的一项是（　）", "opts": ["事物的正确答案只有一个", "生活中解决问题的方法并非只有一个；不满足于一个答案、不放弃探求，才能有所创造", "只有科学家才具备创造力", "知识丰富就一定能产生新的创意"], "ans": 1, "exp": "文章由四种图形都可作“正确答案”开篇，指出生活中大部分事物答案不止一个，进而论述创造性思维的条件，最后指出任何人都能成为富有创造力的人。课文原题就是《事物的正确答案不止一个》。"}, {"q": "下列表述与《谈创造性思维》作者观点不相符的一项是（　）", "opts": ["光凭丰富的知识就能拥有创造力", "知识是形成新创意的素材，创造的关键在于如何运用知识", "创造性思维需要有探求新事物并活用知识的态度和意识", "要持之以恒地进行各种尝试，并留意自己细小的想法"], "ans": 0, "exp": "作者明确指出“知识是形成新创意的素材”“但这并不是说，光凭知识就能拥有创造力”。创造力来自活用知识、探求新思路、持之以恒的尝试；任何人都拥有创造力，要留意并发展自己细小的想法。"}, {"q": "《创造宣言》的作者陶行知提出的核心主张是（　）", "opts": ["环境太平凡，不能创造", "创造是少数天才的专利", "“处处是创造之地，天天是创造之时，人人是创造之人”", "教育者只需创造石像"], "ans": 2, "exp": "陶行知（1891—1946），安徽歙县人，人民教育家，提出“生活教育”思想。在《创造宣言》中他逐一批驳各种“不能创造”的借口，主张“处处是创造之地，天天是创造之时，人人是创造之人”。"}, {"q": "《创造宣言》中写“东山樵夫”割茅草却看不见泰山的奇伟，这一形象意在比喻（　）", "opts": ["勤劳朴实、任劳任怨的劳动者", "善于发现自然之美的旅行者", "永不停歇的创造者", "目光短浅、因循守旧而看不到也扼杀创造潜能的人"], "ans": 3, "exp": "樵夫眼中只有茅草，看不见泰山的奇峰怪石、参天大树，还随手拔掉想“换换环境”的树苗。文章以樵夫比喻目光短浅、因循守旧、轻视点滴创造的人，告诫人们不要让创造之神离开心中。"}];
+const flashcards=[{"q": "驳论文", "a": "先摆出对方的错误观点作靶子，可驳其论点、论据或论证过程，再确立自己的观点（先破后立）。如《中国人失掉自信力了吗》。"}, {"q": "他信力 / 自欺力", "a": "鲁迅仿“自信力”新造的词。信“地”、信“物”、信“国联”而不信自己，是“他信力”；一味求神拜佛、自我麻醉，是“自欺力”。"}, {"q": "中国的脊梁", "a": "“我们从古以来，就有埋头苦干的人，有拼命硬干的人，有为民请命的人，有舍身求法的人……这就是中国的脊梁。”"}, {"q": "状元宰相 / 地底下", "a": "“状元宰相”指为统治者说话的官方舆论；“地底下”喻指社会底层真正苦干实干的人民大众。判断自信力要看“地底下”。"}, {"q": "《怀疑与学问》中心论点", "a": "治学必须有怀疑精神（“学则须疑”）。分论点：怀疑是辨伪去妄的必须步骤；怀疑是建设新学说、启迪新发明的基本条件。"}, {"q": "尽信书则不如无书", "a": "语出《孟子》。完全相信书本还不如没有书——读书要经过“怀疑—思索—辨别”三步，不盲从、不迷信。"}, {"q": "创造性思维的要素", "a": "①学识渊博（知识是形成新创意的素材）；②有探求新事物并活用知识的态度和意识；③持之以恒地进行各种尝试。还要留意自己细小的想法——任何人都拥有创造力。"}, {"q": "《创造宣言》的主张", "a": "逐一批驳“平凡、单调、年纪小、无能、走投无路”等“不能创造”的借口，提出“处处是创造之地，天天是创造之时，人人是创造之人”。"}, {"q": "东山樵夫的比喻", "a": "只看见茅草、看不见泰山的奇伟，还拔掉想“换环境”的树苗——喻目光短浅、因循守旧、轻视点滴创造的人。"}, {"q": "论证方法（写作）", "a": "举例论证、道理论证（引用名言）、对比论证、比喻论证、类比论证。论证要合乎逻辑、材料支撑观点、方法恰当、结构清晰。"}];
+const errors=[{"title": "驳论文“只破不立”", "wrong": "认为驳论文只要把对方的观点驳倒就行，不必提出自己的观点。", "right": "驳论文通常先“破”后“立”：反驳错误观点之后，还要表明并确立自己的正确观点。如鲁迅驳倒“中国人失掉自信力了”的论调后，正面提出“我们有并不失掉自信力的中国人在”。"}, {"title": "把“他信力”当成“自信力”", "wrong": "把文中信“地”、信“物”、信“国联”理解成中国人曾经有过的“自信力”。", "right": "作者明言这些人“都没有相信过‘自己’”，所以失掉的只是“他信力”；对国联失望后转向求神拜佛，是发展“自欺力”。作者正是由此反驳对方论据，证明“失掉自信力”之说不能成立。"}, {"title": "“中国的脊梁”指错对象", "wrong": "把“中国的脊梁”理解为历史上称王称帝的统治者（“正史”里的人物）。", "right": "“脊梁”指埋头苦干、拼命硬干、为民请命、舍身求法的人——脚踏实地、默默奉献的中国人民，“正史”也往往掩不住他们的光耀。说中国人失掉自信力，“用以指一部分人则可，倘若加于全体，那简直是诬蔑”。"}, {"title": "误读“尽信书则不如无书”", "wrong": "把孟子“尽信书则不如无书”理解成“书本全不可信，干脆不读书”。", "right": "这句话是教人不要盲从迷信书本：读书要经过“怀疑—思索—辨别”，把书中的学问变成自己的学问。怀疑是建设新学说、启迪新发明的基本条件，不是消极地否定一切。"}, {"title": "创造力是天才的专利", "wrong": "认为创造力只是贝多芬、爱因斯坦、莎士比亚等少数天才的事，普通人没有；或以为知识渊博就自然拥有创造力。", "right": "《谈创造性思维》指出任何人都拥有创造力，关键是活用知识的态度和意识、不满足于一个答案、留意并发展自己细小的想法、持之以恒地尝试。知识只是“素材”，会不会运用才是关键。"}, {"title": "把“有人说”当成作者观点", "wrong": "读《创造宣言》时，把“有人说：环境太平凡了，不能创造”“生活太单调了，不能创造”等当成作者的主张。", "right": "这些是作者先摆出来作为批驳靶子的错误观点。陶行知认为“平凡单调，只是懒惰者之遁词”，主张“处处是创造之地，天天是创造之时，人人是创造之人”。"}];
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_chinese9_u5';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

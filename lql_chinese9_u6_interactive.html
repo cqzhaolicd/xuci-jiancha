@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第六单元 · 古典小说 · 九年级上语文</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 第六单元 · 古典小说</h1>
+    <div class="meta">统编九上 · 第6单元 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>单元概览 · 古典小说</h4><p>明清时期，我国古代白话小说发展到顶峰。本单元四篇课文都节选自经典长篇：施耐庵《水浒传》（英雄传奇）、吴敬梓《儒林外史》（儒林世相）、罗贯中《三国演义》（历史故事）、曹雪芹《红楼梦》（封建大家族生活）。学习时要抓住线索梳理情节、把握人物形象、了解古代白话小说的艺术特点。</p></div>
+      <div class="k-item"><h4>《智取生辰纲》· 出处与背景</h4><p>节选自《水浒传》第十六回，作者施耐庵（元末明初）。杨志受大名府留守梁中书差遣，押送为太师蔡京祝寿的“生辰纲”往汴梁。生辰纲即编队运送的成套寿礼，“纲”是宋代成批运输货物的组织。</p></div>
+      <div class="k-item"><h4>智取的过程与明暗双线</h4><p>晁盖、吴用等七人扮作贩枣客商，在黄泥冈设局；白胜挑酒来卖，吴用定计在酒中下蒙汗药，赚杨志一行上当。全文明线写杨志押送生辰纲，暗线写晁盖、吴用智取生辰纲，明暗交织、环环相扣。</p></div>
+      <div class="k-item"><h4>杨志的人物形象</h4><p>杨志精明谨慎、富有江湖经验——行程安排严密，起初也警惕卖酒有诈；但他急功近利、粗暴蛮横，动辄打骂军健，与老都管矛盾尖锐。队伍内部失和，是生辰纲被劫的重要原因。</p></div>
+      <div class="k-item"><h4>《范进中举》· 出处与作者</h4><p>节选自《儒林外史》第三回（人民文学出版社1958年版），题目是编者加的。作者吴敬梓（1701—1754），清代小说家。课文写范进中举后喜极而疯、被丈人胡屠户一巴掌打醒的闹剧。</p></div>
+      <div class="k-item"><h4>讽刺艺术与世态炎凉</h4><p>胡屠户中举前骂范进是“现世宝穷鬼”，中举后口称“贤婿老爷”，前倨后恭；张乡绅也来送房赠银。作者以夸张的喜剧笔法，讽刺科举制度对读书人的毒害，揭露趋炎附势、世态炎凉的社会现实；细节描写（如胡屠户替范进扯平后襟、收银子）含蓄而辛辣。</p></div>
+      <div class="k-item"><h4>《三顾茅庐》· 出处与内容</h4><p>节选自《三国演义》第三十八回，作者罗贯中（元末明初）。刘备不顾关羽、张飞劝阻，三次亲往隆中拜访诸葛亮，最终得见。写张飞急躁鲁莽、嚷着把诸葛亮“缚将来”，正是为了反衬刘备求贤若渴、礼贤下士。诸葛亮才识超群，初见即为刘备谋划三分天下（“隆中对”），后来辅佐刘备、鞠躬尽瘁，是智慧与忠诚的化身。</p></div>
+      <div class="k-item"><h4>《刘姥姥进大观园》· 出处与内容</h4><p>节选自《红楼梦》第四十回，作者曹雪芹（约1715—约1763），清代小说家。刘姥姥二进荣国府，凤姐、鸳鸯设局取笑她；刘姥姥明知被捉弄，却故意凑趣，逗得众人笑态百出，课文借此展现贾府生活的奢华排场。刘姥姥朴实善良、风趣机智（大智若愚），装傻凑趣并非真愚笨。</p></div>
+      <div class="k-item"><h4>写作 · 学习改写</h4><p>改写是以原作为基础进行再创作：可以改变文体（诗歌改散文、小说改剧本），可以改变语体（文言改白话、书面语改口语），也可以改变叙述角度（改人称、改叙述顺序）。改写不能背离原作随意“戏说”，要注意人称统一、行文协调，可灵活运用扩写、缩写的方法。</p></div>
+      <div class="k-item"><h4>名著常识 · 章回体白话小说</h4><p>《三国演义》是我国第一部章回体长篇历史演义小说；《水浒传》以北宋末年宋江起义为题材，是中国历史上第一部歌颂农民起义的长篇小说，主题“官逼民反”，结构先分后合（前四十回写单个英雄，后百川汇海聚义梁山，七十回后归顺朝廷走向失败）；《儒林外史》是清代长篇讽刺小说代表作；《红楼梦》是我国古代小说的巅峰之作。早期白话小说语言质朴生动、口语化，许多词语与现代汉语不同。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 统编版语文九年级上册 · 第一单元 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_chinese9_u6_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+
+
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第一单元 新闻阅读',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第一单元 新闻阅读,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "《智取生辰纲》一文节选自（　）", "opts": ["A. 《水浒传》", "B. 《三国演义》", "C. 《儒林外史》", "D. 《红楼梦》"], "ans": 0, "exp": "课文节选自《水浒传》第十六回（人民文学出版社1975年版），作者是施耐庵。"}, {"q": "杨志押送的“生辰纲”，是梁中书为（　）祝寿准备的贺礼", "opts": ["A. 高俅", "B. 蔡京", "C. 宋江", "D. 李逵"], "ans": 1, "exp": "梁中书为岳丈、当朝太师蔡京祝寿，派人编队运送成套寿礼，称“生辰纲”。“纲”是宋代成批运输货物的组织。"}, {"q": "智取生辰纲的计谋，主要是由（　）设计的", "opts": ["A. 刘唐", "B. 公孙胜", "C. 吴用", "D. 白胜"], "ans": 2, "exp": "“智多星”吴用定计：利用酷热天气和杨志一行的内部矛盾，让白胜卖下过蒙汗药的酒，赚他们上当。"}, {"q": "关于杨志的形象，下列说法正确的一项是（　）", "opts": ["A. 莽撞鲁钝，毫无心计", "B. 贪生怕死，临阵脱逃", "C. 阿谀奉承，见风使舵", "D. 精明谨慎，却又粗暴蛮横、不善于团结部下"], "ans": 3, "exp": "杨志有经验、行事谨慎（行程安排严密、起初警惕卖酒有诈），但他急功近利，动辄打骂军健，与老都管矛盾尖锐，队伍内部不和，最终中了吴用的计。"}, {"q": "《智取生辰纲》中“端的只是起五更趁早凉便行”一句里，“端的”的意思是（　）", "opts": ["A. 的确、确实", "B. 端端正正", "C. 到底、究竟", "D. 只不过"], "ans": 0, "exp": "“端的”是元明白话，意思是“的确、确实”。课文预习提示指出：本文语言是元明时期的白话，很多词语的意义和用法跟现代汉语不同。"}, {"q": "《智取生辰纲》有明暗两条线索，其中的暗线是（　）", "opts": ["A. 杨志押送生辰纲", "B. 晁盖、吴用智取生辰纲", "C. 老都管处处刁难杨志", "D. 杨志打骂厢禁军"], "ans": 1, "exp": "明线写杨志押送生辰纲（正面实写），暗线写晁盖、吴用智取生辰纲（侧面虚写），明暗交织、环环相扣。"}, {"q": "《范进中举》节选自（　）", "opts": ["A. 《水浒传》", "B. 《三国演义》", "C. 《儒林外史》", "D. 《红楼梦》"], "ans": 2, "exp": "课文节选自《儒林外史》第三回（人民文学出版社1958年版），题目是编者加的。"}, {"q": "《范进中举》的作者吴敬梓生活在（　）", "opts": ["A. 明代", "B. 元代", "C. 唐代", "D. 清代"], "ans": 3, "exp": "吴敬梓（1701—1754）是清代小说家，《儒林外史》是我国清代长篇讽刺小说的代表作。"}, {"q": "范进中举后喜极而疯，最终是被（　）打醒的", "opts": ["A. 胡屠户", "B. 张乡绅", "C. 报录人", "D. 魏好古"], "ans": 0, "exp": "报录人出主意：只需范进平日最怕的人打他一个嘴巴。动手打醒他的，正是他丈人胡屠户。"}, {"q": "胡屠户在范进中举前后态度判若两人，这主要反映了（　）", "opts": ["A. 胡屠户对女婿疼爱有加", "B. 趋炎附势、世态炎凉的社会现实", "C. 科举制度公平地选拔人才", "D. 范进家中日渐富裕"], "ans": 1, "exp": "胡屠户中举前骂范进是“现世宝穷鬼”，中举后口称“贤婿老爷”，前倨后恭，讽刺了科举制度下趋炎附势的世态炎凉。"}, {"q": "《三顾茅庐》节选自《三国演义》，作者是（　）", "opts": ["A. 施耐庵", "B. 吴敬梓", "C. 罗贯中", "D. 曹雪芹"], "ans": 2, "exp": "《三顾茅庐》节选自《三国演义》第三十八回。罗贯中是元末明初小说家、戏曲家。"}, {"q": "课文《三顾茅庐》写张飞急躁，嚷着要用麻绳把诸葛亮“缚将来”，这样写是为了（　）", "opts": ["A. 表现张飞武艺高强", "B. 说明诸葛亮徒有虚名", "C. 突出隆中路途遥远", "D. 反衬刘备求贤若渴、礼贤下士"], "ans": 3, "exp": "以张飞的急躁鲁莽反衬刘备的谦恭诚恳，突出刘备三顾茅庐、礼贤下士的诚意。"}, {"q": "《刘姥姥进大观园》节选自（　）", "opts": ["A. 《红楼梦》", "B. 《水浒传》", "C. 《三国演义》", "D. 《儒林外史》"], "ans": 0, "exp": "课文节选自《红楼梦》第四十回，作者是清代小说家曹雪芹。"}, {"q": "课文里凤姐、鸳鸯设局取笑刘姥姥，刘姥姥明知被捉弄却故意凑趣，这说明刘姥姥（　）", "opts": ["A. 愚蠢无知，处处出丑", "B. 朴实善良、风趣机智（大智若愚）", "C. 攀附权贵，赖在贾府不走", "D. 高傲自大，目无尊长"], "ans": 1, "exp": "刘姥姥是贫苦却善良风趣的农家老妇，她装傻凑趣是为了逗贾母开心，并非真愚笨；课文借此表现人物性格，也反衬贾府生活的奢华。"}, {"q": "《红楼梦》是我国古代小说的巅峰之作，小说以（　）为线索，讲述贾、史、王、薛四大家族的兴衰史", "opts": ["A. 梁山好汉的聚义", "B. 魏、蜀、吴三国的纷争", "C. 贾宝玉、林黛玉的爱情悲剧", "D. 读书人的科场沉浮"], "ans": 2, "exp": "《红楼梦》以贾宝玉、林黛玉的爱情悲剧为线索，反映封建社会晚期广阔的社会现实。选项B、C、D分别对应《水浒传》《三国演义》《儒林外史》的内容。"}, {"q": "名著导读告诉我们，《水浒传》是中国历史上第一部（　）", "opts": ["A. 章回体长篇历史演义小说", "B. 长篇讽刺小说", "C. 文言志怪小说", "D. 歌颂农民起义的长篇小说"], "ans": 3, "exp": "《水浒传》记述了梁山好汉从起义到兴盛再到失败的全过程，鲜明表现了“官逼民反”的主题，是中国历史上第一部歌颂农民起义的长篇小说。"}];
+const flashcards=[{"q": "智取生辰纲 · 出处作者", "a": "《水浒传》第十六回 · 施耐庵（元末明初）"}, {"q": "生辰纲是什么", "a": "梁中书为岳丈蔡京祝寿，编队运送的成套寿礼；“纲”是宋代成批运输货物的组织"}, {"q": "智取生辰纲 · 妙计", "a": "吴用（智多星）定计：扮贩枣客商 + 白胜卖酒 + 酒中下蒙汗药，黄泥冈劫纲"}, {"q": "明暗双线", "a": "明线：杨志押送生辰纲；暗线：晁盖、吴用智取生辰纲——明暗交织、环环相扣"}, {"q": "杨志形象与失纲原因", "a": "精明谨慎，但粗暴蛮横、不善团结部下；打骂军健、与老都管失和，内部矛盾 + 酷热中计"}, {"q": "范进中举 · 出处作者", "a": "《儒林外史》第三回 · 吴敬梓（清代）；中举喜极而疯，被胡屠户打醒"}, {"q": "儒林外史 · 主题", "a": "清代长篇讽刺小说代表作；讽刺科举制度毒害与世态炎凉；胡屠户前倨后恭"}, {"q": "三顾茅庐 · 出处作者", "a": "《三国演义》第三十八回 · 罗贯中（元末明初）；刘备三访隆中请诸葛亮，张飞反衬刘备求贤若渴"}, {"q": "刘姥姥进大观园 · 出处作者", "a": "《红楼梦》第四十回 · 曹雪芹（清代）；刘姥姥二进荣国府，装傻凑趣，众人笑态各异"}, {"q": "四大名著 · 一句话记住", "a": "《三国演义》：第一部章回体长篇历史演义小说；《水浒传》：第一部歌颂农民起义的长篇小说（官逼民反）；《儒林外史》：清代讽刺小说代表作；《红楼梦》：古代小说巅峰之作"}];
+const errors=[{"title": "出处与作者张冠李戴 ❌", "wrong": "把《智取生辰纲》记成出自《三国演义》，或把四位作者弄混。", "right": "记住对应关系：智取生辰纲—施耐庵《水浒传》；范进中举—吴敬梓《儒林外史》；三顾茅庐—罗贯中《三国演义》；刘姥姥进大观园—曹雪芹《红楼梦》，出处、作者必须一一对应。"}, {"title": "作者朝代记错 ❌", "wrong": "把吴敬梓、曹雪芹误当成明代人。", "right": "吴敬梓、曹雪芹都是<span class=\"hl\">清代</span>小说家（《儒林外史》《红楼梦》是清代作品）；施耐庵、罗贯中是<span class=\"hl\">元末明初</span>小说家。前者小说艺术成熟，后者是白话小说兴起期的代表。"}, {"title": "打醒范进的人弄错 ❌", "wrong": "以为是出主意的报录人打了范进。", "right": "报录人只出主意，<span class=\"hl\">动手打醒范进的是他丈人胡屠户</span>——他怕打“文曲星”遭报应，是壮着胆子才敢打的。"}, {"title": "把智取当成力取 ❌", "wrong": "以为晁盖等人是凭武力硬抢生辰纲。", "right": "生辰纲是“<span class=\"hl\">智</span>取”：吴用设计，利用酷热天气和杨志队伍的内部矛盾，由白胜卖掺了蒙汗药的酒，让杨志一行自己上当中计。"}, {"title": "杨志失纲原因单一化 ❌", "wrong": "把失败只归结为杨志疏忽大意。", "right": "杨志精明谨慎；失纲的内因是<span class=\"hl\">队伍内部失和</span>（他打骂军健、老都管掣肘、众人消极），外因是吴用抓住天气与人性弱点精心设局，内外因要结合起来分析。"}, {"title": "刘姥姥形象误读 ❌", "wrong": "认为刘姥姥真的愚蠢可笑，是被人捉弄的小丑。", "right": "刘姥姥<span class=\"hl\">朴实善良、风趣机智，是大智若愚</span>的贫苦农妇：她明知凤姐、鸳鸯取笑仍故意凑趣，是为哄贾母开心；课文借她的眼睛写贾府，也反衬出贵族生活的奢靡。"}];
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_chinese9_u6';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>
