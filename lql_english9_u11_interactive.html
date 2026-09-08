@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 11 · Sad movies make me cry. · 九年级英语</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> Unit 11 · Sad movies make me cry.</h1>
+    <div class="meta">人教九全 · Unit 11 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>单元话题 · 情绪与感受</h4><p>语言目标：谈论事物如何影响你的情绪（Talk about how things affect you）。单元标题 Sad movies make me cry.（悲伤的电影让我哭）就是全单元的语法核心句。功能句型：What makes you angry? — When people throw rubbish on the streets, it makes me angry. 情绪形容词可按褒贬归类：正面 happy / relaxed / comfortable / lucky；负面 sad / nervous / angry / uncomfortable / mad / uneasy / awful。Self Check 提示：健康、家庭、友谊（health, family, friendship）比名声、权力、财富更能让人真正快乐。</p></div>
+      <div class="k-item"><h4>make + 宾语 + 动词原形（省略 to）</h4><p>使役动词 make 后接“宾语 + 省略 to 的动词原形”作宾语补足语，表示“使某人做某事”，动作由宾语发出：Sad movies make me cry.（单元标题句。）She said that the sad movie made her cry.（Grammar Focus 原句——注意 made 表过去。）Sad movies don't make John cry. They just make him want to leave.（2b 听力：他只是想离开——want 是省 to 的原形，want 后面再带自己的 to leave。）要点：主动句中 to 必须省略，不能说 made me to cry。</p></div>
+      <div class="k-item"><h4>make + 宾语 + 形容词 / 名词</h4><p>make 后接“宾语 + 形容词”作宾补，表示“使某人/某物处于某种状态”：The loud music makes me nervous.（吵闹的音乐让我紧张——Grammar Focus 原句。）Money and fame don't always make people happy.（金钱和名声并不总能使人快乐。）But that music makes me sleepy.（1c：那种音乐让我犯困。）The awful pictures make Amy uncomfortable.（1b 听力。）注意：宾补用形容词而不用副词，不说 makes me happily；也可用比较级如 make our friendship stronger（2d：让我们的友谊更牢固）。</p></div>
+      <div class="k-item"><h4>被动语态 be made to do（to 还原）</h4><p>主动句中 make sb do sth 省略了 to，但变为被动语态时 to 必须还原，结构为 sb be made to do sth，意为“被迫/被要求做某事”：主动 The boss made me work late. → 被动 I was made to work late.（我被要求加班到很晚。）再如 He was made to apologize to his classmate. 注意还原后 to 后仍接动词原形。口诀：主动省 to，被动还 to。同类规则也适用于 see / hear / watch sb do → be seen / heard / watched to do。</p></div>
+      <div class="k-item"><h4>使役动词 vs 普通动词：宾语后接 do 还是 to do</h4><p>make / let / have 是使役动词，接“宾语 + 动词原形（省 to）”：make me cry、let me go、have him wait。而 ask / tell / want 是普通动词，接“宾语 + 带 to 的不定式”：ask sb to do、tell sb to do、want sb to do。教材 2d 例句：Why don't you ask Alice to join you each time you do something with Julie?（每次你和朱莉在一起时，何不邀请艾丽斯加入呢？）判断方法：表示“使/让/允许”的使役词省 to；表示“要求/告诉/想要”的普通词必须带 to——不能说 ask me help，也不能说 make me to cry。</p></div>
+      <div class="k-item"><h4>feel like doing sth 想要做某事</h4><p>feel like 意为“想要”，后接名词或动名词（doing），不能接动词原形或 to do：The king didn't feel like eating.（3a 原文：国王不想吃东西。）I feel like going for a walk.（我想去散散步。）4b 调查表里还有 What makes you feel like dancing? 注意另一用法：feel like + 句子 = “感觉好像”，如《The Winning Team》中 He felt like there was a heavy weight on his shoulders.（他感觉肩上像压着千斤重担。）想要做某事若要接 to do，改用 want to do / would like to do。</p></div>
+      <div class="k-item"><h4>would rather do A than do B 宁愿……而不愿……</h4><p>would rather（缩写 'd rather）意为“宁愿”，是情态性短语，后接动词原形，不受主语人称影响：I'd rather go to Blue Ocean because I like to listen to quiet music while I'm eating.（1c 对话 Amy 原句：我宁愿去蓝海餐厅……）比较取舍用 than，than 前后结构平行、都用动词原形：He would rather stay at home than go shopping.（他宁愿待在家也不去购物。）否定式 would rather not do sth。另学连词短语 rather than“而不是”，如 with courage rather than fear（2b：带着勇气而不是恐惧）。</p></div>
+      <div class="k-item"><h4>drive sb crazy / mad 使某人发疯</h4><p>drive 本义“驾驶”，引申为“驱使、逼迫”。drive sb crazy / mad 意为“把某人逼疯/逼得发狂”，等于 make sb crazy / mad：Waiting for Amy drove Tina crazy.（2b 听力原句：等艾米把蒂娜急疯了——drove 是 drive 的过去式。）The endless noise next door is driving me mad.（隔壁没完没了的噪音快把我逼疯了。）宾语后接形容词 crazy / mad 作宾补，不加 to、也不加 -ly（不说 drive me crazily）。记住变位 drive—drove—driven。</p></div>
+      <div class="k-item"><h4>the more…, the more… 越……越……</h4><p>结构“the + 比较级…, the + 比较级…”表示“越……就越……”，两部分都以比较级开头，后一部分是结果：The more I get to know Julie, the more I realize that we have a lot in common.（2d 对话原句：我越了解朱莉，就越发现我们有很多共同点。）又如 The more you practise, the better you will play. 注意：句首两个 the 都不能省略；比较级形式要写对——The more careful you are, the fewer mistakes you will make.（mistakes 是可数名词复数，用 fewer 而不用 less。）</p></div>
+      <div class="k-item"><h4>课文速览 · 快乐与团队</h4><p>Section A 3a《The Shirt of a Happy Man (Part I)》：富饶国度里住着不开心的国王——他睡不好、脸色苍白如粉笔（pale as chalk）、不想吃饭、无缘无故地哭。医生说他病在心里，需要穿上“一个快乐之人的衬衫”。可拥有权力的首相担心失去权力，拥有财富的银行家担心钱财被盗，有名的宫廷歌星担心被人追随——竟没有一个人快乐。将军受命三天之内找到快乐的人。启示：权力、财富、名声（power, wealth, fame）换不来快乐。Section B 2b《The Winning Team》：Peter 错过进球令球队失利，他担心被教练踢出球队（kick sb off the team）、觉得让全队失望（let his whole team down）。父亲的劝慰让他明白“足球靠的是团队努力（team effort），输赢只是比赛的一半，另一半是学会与队友沟通、从错误中学习”。第二天他鼓起勇气向队友道歉（with courage rather than fear），令他又惊又喜的是（to his surprise and relief）队友们点头同意（nodded in agreement）：“输球从来不只是某一个人的错。”大家齐心协力（pull together），Peter 感到自己正处在一支“制胜的队伍”里——友谊让球队赢得未来。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 统编版语文九年级全一册 · 第一单元 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_english9_u11_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+
+
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:"Unit 11 Sad movies make me cry.",chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:"Unit 11 Sad movies make me cry.,课堂练习"};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "Sad movies make me ____.", "opts": ["cry", "to cry", "crying", "cried"], "ans": 0, "exp": "单元标题句。make sb do sth：make 后接“宾语 + 省略 to 的动词原形”作宾补，不能说 made me to cry。口诀：看到 make/let/have + 人，宾补优先想动词原形。"}, {"q": "Sad movies don't make John cry. They just make him want to ____.", "opts": ["leave", "to leave", "leaving", "left"], "ans": 0, "exp": "2b 听力原句。make him want to leave 有两层：make sb do（want 是省略 to 的原形）+ want to leave（want 自己后接不定式 to leave）。题干空白处是 make him 后的省 to 原形，故选 leave。"}, {"q": "The awful pictures make Amy ____.", "opts": ["uncomfortable", "comfortable", "happily", "excited"], "ans": 0, "exp": "1b 听力原句：可怕的图片让艾米不舒服。make sb + 形容词作宾补；comfortable 是 uncomfortable 的反义词、happily 是副词不能作宾补、excited“兴奋的”与句意不符。"}, {"q": "Soft and quiet music makes me ____.", "opts": ["relax", "to relax", "relaxing", "relaxed"], "ans": 0, "exp": "Grammar Focus 原句：轻柔安静的音乐让我放松。make sb do sth——此处需要动词 relax 作省 to 的宾补；relaxed（感到放松的）和 relaxing（令人放松的）是形容词，若想表达“让我放松”状态可说 makes me relaxed，但按教材句式选动词 relax。"}, {"q": "He was made ____ the piano for two hours every day when he was a child.", "opts": ["play", "to play", "playing", "played"], "ans": 1, "exp": "make sb do sth 变为被动语态 be made to do sth 时，省略的 to 必须还原：He was made to play...（他小时候被迫每天练两小时钢琴。）口诀：主动省 to，被动还 to。"}, {"q": "Don't let the little children ____ in the street. It's dangerous.", "opts": ["play", "to play", "playing", "played"], "ans": 0, "exp": "let sb do sth，与 make 同类使役动词，宾语后接省略 to 的动词原形：let children play。否定祈使句 Don't let... 后同样省 to。"}, {"q": "The boss had the workers ____ ten hours a day to finish the work on time.", "opts": ["work", "to work", "working", "worked"], "ans": 0, "exp": "have sb do sth 使/让某人做某事，宾语 the workers 与动作 work 是主动关系，用省 to 的原形。注意与 have sth done 区分：宾语和动作是被动关系才用过去分词，如 have the car repaired。"}, {"q": "Why don't you ask Alice ____ you each time you do something with Julie?", "opts": ["join", "to join", "joining", "joined"], "ans": 1, "exp": "2d 对话原句。ask sb to do sth 邀请/要求某人做某事，后接带 to 的不定式，与 make/let/have sb do（省 to）形成对比——ask 属于“要求”类普通动词，必须带 to。"}, {"q": "My parents want me ____ a doctor in the future.", "opts": ["be", "to be", "being", "been"], "ans": 1, "exp": "want sb to do sth 想要某人做某事，后接带 to 的不定式。记住：只有 make/let/have 三个使役词才省 to，want/ask/tell 都要带 to。"}, {"q": "The unhappy king didn't feel like ____ anything.", "opts": ["eat", "to eat", "eating", "ate"], "ans": 2, "exp": "3a 课文原句：不开心的国王什么都不想吃。feel like doing sth 想要做某事，后接动名词，不接动词原形或 to do。"}, {"q": "I'd rather ____ to Blue Ocean because I like to listen to quiet music while I'm eating.", "opts": ["go", "to go", "going", "gone"], "ans": 0, "exp": "1c 对话原句（Amy）。would rather（'d rather）后接动词原形：would rather go to...，表示“宁愿去……”。"}, {"q": "He would rather walk to school ____ take a bus.", "opts": ["than", "to", "but", "and"], "ans": 0, "exp": "would rather do A than do B 宁愿做 A 而不愿做 B，than 前后动词都用原形、结构平行：would rather walk than take a bus。"}, {"q": "Waiting for Amy drove Tina ____.", "opts": ["crazy", "crazily", "madly", "angrily"], "ans": 0, "exp": "2b 听力原句：等艾米把蒂娜急疯了。drive sb crazy 使某人发疯，drove 是 drive 的过去式；crazy 是形容词作宾语补足语，不能用副词 crazily/madly。"}, {"q": "____ you eat, the fatter you will be.", "opts": ["The more", "More", "The most", "Much"], "ans": 0, "exp": "the + 比较级…, the + 比较级… 表示“越……就越……”，句首两个 the 都不能省略：The more you eat, the fatter you will be.（吃得越多越胖。）教材 2d 原句：The more I get to know Julie, the more I realize that we have a lot in common."}, {"q": "Peter was worried that his coach might kick him ____ the team.", "opts": ["off", "down", "out", "away"], "ans": 0, "exp": "2b 课文原句：教练可能把他踢出球队。kick sb off the team 把某人开除/撵出球队；若用 out 则要说 kick sb out of the team（of 不能省）。"}, {"q": "To his surprise and ____, his teammates all nodded in agreement.", "opts": ["relief", "wealth", "courage", "power"], "ans": 0, "exp": "2b 课文原句：令他既惊讶又宽慰的是，队友们都点头同意。relief 名词“宽慰”，to one's relief 令某人宽慰的是；wealth 财富、courage 勇气、power 权力均不合句意。"}]
+const flashcards=[{"q": "make sb do sth（使某人做某事 · 省略 to）", "a": "make + 宾语 + 动词原形：Sad movies make me cry.（单元标题句。）She said that the sad movie made her cry. Sad movies make him want to leave.（make 后 want 省 to，want 自己再带 to leave。）注意：主动句中 to 必须省略，不能说 made me to cry。"}, {"q": "make sb + 形容词（使某人处于……状态）", "a": "形容词作宾语补足语，说明宾语的状态：The loud music makes me nervous. Money and fame don't always make people happy. But that music makes me sleepy. The awful pictures make Amy uncomfortable. 宾补用形容词不用副词——不说 makes me happily；还可接比较级：make our friendship stronger."}, {"q": "被动语态 be made to do（to 还原）", "a": "主动 make sb do 省 to，变被动时 to 必须还原：He was made to apologize. / I was made to wait outside. 结构：sb + be made + to do sth（被迫做某事）。口诀：主动省 to，被动还 to。"}, {"q": "make / let / have sb do 与 ask / tell / want sb to do", "a": "使役词 make/let/have + 宾语 + 动词原形（省 to）：make me cry、let me go、have him wait。普通动词 ask/tell/want + 宾语 + 带 to 不定式：ask Alice to join you（2d）、tell him to stop、want you to come。记法：表“使/让/允许”的省 to；“要求/告诉/想要”的带 to。"}, {"q": "feel like doing sth（想要做某事）", "a": "feel like 想要，后接动名词或名词，绝不接 to do / 动词原形：The king didn't feel like eating.（3a）I feel like going for a walk. Do you feel like a cup of tea? 想要做某事若要接 to do，用 want to do / would like to do。另义：feel like + 句子 = 感觉好像：He felt like there was a heavy weight on his shoulders.（2b）"}, {"q": "would rather do A than do B（宁愿……而不愿……）", "a": "would rather（'d rather）+ 动词原形：I'd rather go to Blue Ocean.（1c）取舍句 would rather do A than do B，than 后也用动词原形：He would rather stay at home than go shopping. 否定：would rather not do sth. 另有连词短语 rather than = 而不是：with courage rather than fear（2b）。"}, {"q": "drive sb crazy / mad（使某人发疯）", "a": "drive（drive—drove—driven）除“驾驶”外表“驱使、逼迫”：Waiting for Amy drove Tina crazy.（2b 听力）The noise is driving me mad. 宾语后接形容词 crazy/mad 作宾补，不加 to、不加 -ly。同义：make sb crazy；习语 drive sb up the wall 把某人逼疯。"}, {"q": "the more…, the more…（越……越……）", "a": "结构：the + 比较级…, the + 比较级…，后一部分是结果：The more I get to know Julie, the more I realize that we have a lot in common.（2d 原句）The more you practise, the better you will play. 两个 the 不能省，比较级形式要写对：The more careful you are, the fewer mistakes you will make.（mistakes 可数用 fewer）"}, {"q": "《The Winning Team》词块（Section B 2b）", "a": "a heavy weight on his shoulders 肩头沉甸甸；miss scoring a goal 错过进球；let his whole team down 让全队失望；kick sb off the team 把某人踢出球队；be too hard on oneself 对自己太苛刻；team effort 团队努力；winning or losing is only half the game 输赢只是比赛的一半；with courage rather than fear 带着勇气而非恐惧；pull together 齐心协力；nod in agreement 点头同意；to his surprise and relief 令他既惊讶又宽慰的是；It's never just one person's fault. 绝不是某一个人的错。"}, {"q": "本单元词汇速记", "a": "rather 相当；宁愿（would rather）；drive 驾驶；驱使（drove/driven）；friendship 友谊；king 国王；power 权力；banker 银行家；pale 苍白的（pale as chalk 面如死灰）；examine 检查；wealth 财富；to start with 首先；grey 灰色的；lemon 柠檬；uncomfortable 不舒服的；weight 重量；shoulder 肩膀；goal 进球；目标；coach 教练；kick 踢；courage 勇气；pull 拉（pull together 齐心协力）；relief 宽慰（to one's relief）；agreement 同意；fault 过错；leave out 冷落；忽略；call in 召来（The doctor was called in. 医生被请来。）；take it easy 放轻松；let sb down 使某人失望。"}]
+const errors=[{"title": "make / let / have 后误加 to", "wrong": "把单元标题句写成 The sad movie made me to cry.，或把“妈妈让我做作业”写成 My mother let me to do my homework.", "right": "使役动词 make / let / have + 宾语 + 动词原形（省略 to）：made me cry；let me do my homework。但同一结构一旦变被动，to 必须还原：He was made to work late.（他被要求加班。）两步口诀：主动省 to，被动还 to。"}, {"title": "ask / tell / want 后漏掉 to", "wrong": "写成 My mother asked me go shopping. 或 The teacher told us keep quiet.", "right": "ask / tell / want sb to do sth，带 to 的不定式不能省：asked me to go shopping；told us to keep quiet。判别：只有表“使/让/允许”的 make / let / have 才省 to；表示“要求/告诉/想要”的普通动词必须带 to。别一看到中文“让”就省 to——得看它对应的是哪个英文动词。"}, {"title": "feel like 后误接 to do / 动词原形", "wrong": "把“我想去散步”写成 I feel like to go for a walk.，或把 3a 句写成 The king didn't feel like eat.", "right": "feel like doing sth 想要做某事，后接动名词或名词，不接 to do：The king didn't feel like eating.（3a 原文）；I feel like going for a walk. 想要做某事若要接 to do，改用 want to do / would like to do。另注意 feel like + 句子 = “感觉好像”：He felt like there was a heavy weight on his shoulders."}, {"title": "would rather 后误接 to do，than 前后不平行", "wrong": "写成 I'd rather to stay at home. 或 He would rather walk than to take a bus.", "right": "would rather 后接动词原形：I'd rather stay at home. 取舍句 would rather do A than do B，than 后同样用动词原形：He would rather walk than take a bus. 否定用 would rather not do sth：I would rather not tell her about it."}, {"title": "drive 变位错误 / 宾补误用副词", "wrong": "把 2b 句写成 Waiting for Amy drived me crazy.，或把 Grammar Focus 句写成 The loud music makes me happily. / The noise is driving me crazily.", "right": "drive 的过去式是 drove、过去分词 driven：Waiting for Amy drove Tina crazy. make / drive + 宾语 + 形容词（nervous / happy / crazy / mad）作宾补，副词不能作宾补：makes me happy，不是 makes me happily。"}, {"title": "the more…, the more… 漏 the 或比较级写错", "wrong": "写成 More you eat, fatter you will be.，或 The more you read, the more good your English will be.", "right": "结构为 the + 比较级…, the + 比较级…，两个 the 都不能省，比较级形式必须正确：The more you eat, the fatter you will be.（fatter 不是 fat）；The more you read, the better your English will be.（better 不是 more good）。越吃越胖、越读越好——前因后果两部分都要用比较级开头。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_english9_u11';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

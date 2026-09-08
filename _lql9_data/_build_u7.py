@@ -1,0 +1,267 @@
+# -*- coding: utf-8 -*-
+import json, collections
+
+data = {
+ "hero_title": "Unit 7 · Teenagers should be allowed to choose their own clothes.",
+ "meta_desc": "人教九全 · Unit 7",
+ "knowledge": [
+  {
+   "t": "单元话题 · 规则与允许",
+   "d": "本单元围绕“规则与允许”（rules and permission）展开：哪些事青少年应该被允许做、哪些不应该，以及和家人、学校规则的看法交流。谈论过去允许与否时还可用 allowed to 与 was/were 搭配。单元语法核心是情态动词的被动语态：should / can / may / must + be + 动词过去分词，表示“应该/可以/可能/必须被……”。"
+  },
+  {
+   "t": "情态动词被动语态 · 构成与用法",
+   "d": "结构：情态动词 + be + 及物动词的过去分词，如 should be allowed、must be done、can be seen。否定：not 放在情态动词之后，如 Sixteen-year-olds should not be allowed to drive.（十六岁的人不应该被允许开车——中国须年满 18 周岁才能考取驾照。）疑问：把情态动词提到句首，如 Should teenagers be allowed to choose their own clothes? 主动语态中带 to 的不定式，变为被动时 to 必须保留：allow sb to do sth → sb be allowed to do sth。"
+  },
+  {
+   "t": "allow 的用法家族",
+   "d": "①allow sb to do sth 允许某人做某事（主动）：My parents don't allow me to stay up late.②allow doing sth 允许做某事：Smoking is not allowed here.（此处不允许吸烟。）③be (not) allowed to do sth 被（不）允许做某事（被动）：Teenagers should be allowed to choose their own clothes.（青少年应该被允许选择自己的衣服。）注意：变被动后不定式符号 to 不能省略，to 后面接动词原形。"
+  },
+  {
+   "t": "have / get sth done 结构",
+   "d": "结构：have/get + 宾语 + 过去分词，表示“使某事被（别人）做”“让某事完成”，宾语和过去分词之间是动宾（被动）关系。典型：get one's ears pierced 打耳洞（让耳朵被扎孔）；have my hair cut 剪头发。教材例句：She wants to get her ears pierced. 注意不能说 get ears pierce / piercing。"
+  },
+  {
+   "t": "观点表达 · I agree / I disagree + because",
+   "d": "表达同意：I agree (with you). / I think so. 表达不同意：I disagree (with you). / I don't think so. 说明理由用 because + 完整句子：I disagree with you, because playing phones in class gets in the way of our study.（我不同意，因为在课上玩手机妨碍学习。）回答 Do you think teenagers should be encouraged to...? 可用 No, I don't think so, because they are too young to make their own decisions. 注意否定前移：I don't think 后从句不再用否定形式。"
+  },
+  {
+   "t": "易混辨析 · stop to do 与 stop doing",
+   "d": "stop to do sth 停下来（手头的事）去做另一件事：He was tired, so he stopped to have a rest.（他累了，于是停下来休息。）stop doing sth 停止正在做的事：Please stop talking.（请不要讲话了。）口诀：接 to do 的动作是“停”之后才去做的事；接 doing 的动作是正在发生、要被停止的事。同类记忆：remember/forget to do（记得/忘记去做）与 doing（记得/忘记做过）。"
+  },
+  {
+   "t": "Section A 3a · 诗歌《Mom Knows Best》",
+   "d": "课文是一首回忆妈妈的诗，按“婴儿—两岁—七岁—九岁—青少年”的时间线写出妈妈每时每刻的守护：我整夜哭闹时她唱歌守在床边（stayed by my side）；我摔倒时她拥抱我、把我抱起（gave me a hug and lifted me up）；我七岁咳嗽时她不给我吃冰淇淋（said no ice-cream for me）；我顶嘴（talk back）；我青少年和朋友外出时她叮嘱十点前回家（Please be back by ten!）。结尾点题：I regret talking back, not listening to Mom. Mom knows best——母爱是最了解孩子的。"
+  },
+  {
+   "t": "Section B 2b · Should I Be Allowed to Make My Own Decisions?",
+   "d": "阅读短文讲 15 岁山东男孩 Liu Yu 的烦恼：他酷爱跑步（be serious about running），梦想成为职业运动员（a professional runner），父母却担心训练会妨碍他的学业（get in the way of his schoolwork），坚持认为他必须努力上学、考上大学（work hard at school and enter university）要现实一点（be realistic）。Liu Yu 认为父母关心他，但相信自己只要每天练习（practice running every day）就有机会实现梦想（have a chance to achieve my dream），希望自己决定（make my own decisions）并得到支持。"
+  },
+  {
+   "t": "重点词汇 · 名词与形容词",
+   "d": "license 执照（driver's license 驾照）；safety 安全；earring 耳环；flash 闪光（灯）；poem 诗；chance 机会（have a chance to do sth）；society 社会；education 教育；choice 选择；smoke 既作动词“吸烟”又作名词“烟”；tiny 极小的；awful 很坏的、极讨厌的；part-time 兼职的（a part-time job）；own 自己的（one's own clothes）。"
+  },
+  {
+   "t": "重点短语速记",
+   "d": "stay by one's side 守在某人身边；keep sb from danger 使某人远离危险；lift sb up 扶起/举起某人；talk back 顶嘴；stay up (late) 熬夜；be back by ten 十点前回来；give up (doing) sth 放弃（做）某事；be strict with sb 对某人要求严格；be serious about sth 认真对待某事；get in the way of 妨碍；end up doing sth 以……告终；regret doing sth 后悔做过某事；make one's own decision(s) 自己做决定；at that age 在那个年纪。"
+  }
+ ],
+ "questions": [
+  {
+   "q": "Teenagers should be allowed ____ their own clothes.",
+   "opts": ["choose", "to choose", "choosing", "chose"],
+   "ans": 1,
+   "exp": "情态动词被动语态：should be allowed 之后接不定式，to 不能省略，to 后动词用原形。本句即单元核心句“青少年应该被允许自己选择衣服”。"
+  },
+  {
+   "q": "Sixteen-year-olds should not be allowed ____.",
+   "opts": ["drive", "driving", "to drive", "drove"],
+   "ans": 2,
+   "exp": "情态动词否定式被动：should not be allowed to do sth，not 放在情态动词之后。课本 Grammar Focus 句式：I don't think sixteen-year-olds should be allowed to drive. I agree. They aren't serious enough.（在中国须年满 18 周岁才能考驾照。）"
+  },
+  {
+   "q": "Parents shouldn't allow their children to stay up too late. → Children shouldn't be allowed ____ stay up too late.",
+   "opts": ["to", "/", "for", "at"],
+   "ans": 0,
+   "exp": "allow sb to do sth 变为被动语态 sb be allowed to do sth 时，不定式符号 to 必须保留：主动中的 to do 在被动句中仍是 to do。"
+  },
+  {
+   "q": "My parents don't allow me ____ out after ten o'clock at night.",
+   "opts": ["go", "going", "went", "to go"],
+   "ans": 3,
+   "exp": "allow sb to do sth 允许某人做某事，后接带 to 的不定式作宾语补足语：allow me to go out（让我出去）。"
+  },
+  {
+   "q": "—Mom, I want to get my ears ____. —No, you're too young.",
+   "opts": ["pierce", "piercing", "pierced", "to pierce"],
+   "ans": 2,
+   "exp": "get one's ears pierced 打耳洞：get/have + 宾语 + 过去分词（have/get sth done），表示“让某事被做”。耳朵是被扎孔的，故用过去分词 pierced。"
+  },
+  {
+   "q": "You'd better have your hair ____ before the job interview.",
+   "opts": ["cut", "to cut", "cutting", "cuts"],
+   "ans": 0,
+   "exp": "have sth done 让（别人）把某事做好：头发是“被剪”的，宾语 hair 与过去分词 cut 之间是动宾关系，故用 have your hair cut。"
+  },
+  {
+   "q": "Please stop ____. The baby is sleeping.",
+   "opts": ["to talk", "talking", "talk", "talked"],
+   "ans": 1,
+   "exp": "stop doing sth 停止正在做的事——停止说话（婴儿在睡觉，应停止讲话）；stop to do sth 才是“停下来去做另一件事”。"
+  },
+  {
+   "q": "He felt very tired, so he stopped ____ a short rest.",
+   "opts": ["having", "to have", "have", "had"],
+   "ans": 1,
+   "exp": "stop to do sth 停下（手头的事）去做另一件事：停下来休息一会儿。接 to do 的动作是“停”之后才去做的。"
+  },
+  {
+   "q": "—I think students should be allowed to use phones in class. —____. Because it gets in the way of our study.",
+   "opts": ["I agree with you", "I disagree with you", "That sounds great", "Good idea"],
+   "ans": 1,
+   "exp": "后面 because 说明“上课玩手机妨碍学习”，持反对意见，故选 I disagree with you。观点表达：I agree/disagree + because + 理由；get in the way of 意为“妨碍”。"
+  },
+  {
+   "q": "I don't think teenagers ____ allowed to smoke.",
+   "opts": ["should be", "shouldn't be", "should", "aren't"],
+   "ans": 0,
+   "exp": "否定前移：主句为 I don't think 时，从句不再用否定形式，不能说 shouldn't be allowed。smoke 是“被允许”的动作，用情态被动 should be allowed to smoke。"
+  },
+  {
+   "q": "You look sleepy. Did you stay ____ late last night?",
+   "opts": ["up", "on", "at", "for"],
+   "ans": 0,
+   "exp": "stay up 熬夜，stay up late 熬夜到很晚。教材诗歌中妈妈叮嘱“Please be back by ten!”，可对比记忆 stay up。"
+  },
+  {
+   "q": "The doctor told him to ____ fried food.",
+   "opts": ["keep away from", "stay up", "talk back to", "end up with"],
+   "ans": 0,
+   "exp": "keep away from 远离：医生建议他远离油炸食品。stay up 熬夜、talk back 顶嘴、end up with 以……告终，均不合句意。"
+  },
+  {
+   "q": "Liu Yu is serious ____ running, and he practices every day.",
+   "opts": ["in", "about", "with", "for"],
+   "ans": 1,
+   "exp": "be serious about sth 认真对待/热衷于某事。课文 Section B 中 Liu Yu 认真对待跑步，梦想成为职业运动员（professional runner）。"
+  },
+  {
+   "q": "Never ____ your dream, and you will succeed one day.",
+   "opts": ["give up", "give in", "give away", "give out"],
+   "ans": 0,
+   "exp": "give up (doing) sth 放弃（做）某事：give up your dream 放弃梦想。give in 屈服、give away 赠送/泄露、give out 分发，均不合句意。"
+  },
+  {
+   "q": "In China you can't get a driver's ____ until you are 18.",
+   "opts": ["license", "choice", "chance", "society"],
+   "ans": 0,
+   "exp": "driver's license 驾驶执照（驾照）。法定领证年龄是 18 周岁，所以十六岁的人不应该被允许开车。choice 选择、chance 机会、society 社会均不符。"
+  },
+  {
+   "q": "—Do you think teenagers should be encouraged to make their own decisions? —No, I don't think so. ____ they are too young to make their own decisions.",
+   "opts": ["Because", "But", "Although", "So"],
+   "ans": 0,
+   "exp": "观点表达句型（Grammar Focus）：回答 Do you think...? 用 No, I don't think so / I don't agree with this，再用 because 说明理由：they are too young to make their own decisions（太年轻而不能自己做决定）。too...to... 意为“太……而不能……”。"
+  }
+ ],
+ "flashcards": [
+  {
+   "q": "Teenagers should be allowed to choose their own clothes. 句型拆解",
+   "a": "情态动词被动语态：should + be + allowed（过去分词）+ to do。意思：青少年应该被允许选择自己的衣服。否定：should not be allowed to do；疑问：Should teenagers be allowed to...?"
+  },
+  {
+   "q": "Sixteen-year-olds should not be allowed to drive.",
+   "a": "十六岁的人不应该被允许开车。情态动词否定被动：not 放在情态动词之后（should not be allowed to do）。Sixteen-year-olds 连字符复合词作名词，表“十六岁的青少年”；我国须年满 18 周岁才能考驾照。"
+  },
+  {
+   "q": "allow 主动 ↔ 被动转换",
+   "a": "allow sb to do sth（允许某人做某事）→ 被动 sb be allowed to do sth。例：Parents allow me to watch TV after dinner. → I am allowed to watch TV after dinner. 变被动时 to 必须保留，to 后接动词原形。"
+  },
+  {
+   "q": "get one's ears pierced（打耳洞）",
+   "a": "have/get sth done 结构：get/have + 宾语 + 过去分词，表示“让某事被（别人）做”。例：She got her ears pierced last week. / I'll have my hair cut tomorrow. 不能说 get ears pierce / piercing。"
+  },
+  {
+   "q": "观点表达常用句型",
+   "a": "I agree (with you). / I disagree (with you). / I think so. / I don't think so. 说明理由用 because：I disagree, because it gets in the way of my study. 否定前移：I don't think teenagers should be allowed to smoke.（从句不再用否定。）"
+  },
+  {
+   "q": "stop doing 与 stop to do",
+   "a": "stop doing sth 停止正在做的事：Please stop talking.（请停止讲话。）stop to do sth 停下来去做另一件事：He stopped to have a rest.（他停下来休息。）口诀：to do 是“停后去做”，doing 是“停了正在做的事”。"
+  },
+  {
+   "q": "《Mom Knows Best》高频短语",
+   "a": "stay by my side 守在我身边；keep me from danger 使我远离危险；give me a hug 给我拥抱；lift me up 把我举起；say no ice-cream for me 不许我吃冰淇淋；talk back 顶嘴；Please be back by ten! 十点前回来！；I regret talking back.（我后悔顶嘴。）Mom knows best——妈妈最了解我。"
+  },
+  {
+   "q": "Liu Yu 课文短语（Section B 2b）",
+   "a": "be serious about running 认真对待跑步；a professional runner 职业运动员；get in the way of his schoolwork 妨碍他的学业；work hard at school and enter university 努力学习并考上大学；be realistic 现实一点；practice running every day 每天练习；have a chance to achieve my dream 有机会实现梦想；make my own decisions 自己做决定。"
+  },
+  {
+   "q": "易错形容词搭配",
+   "a": "be strict with sb 对某人严格要求（教材句：Parents should not be too strict with teenagers.）；be strict in sth 对某事要求严格；be serious about sth 对……认真；be strict / serious 后介词不可混淆。"
+  },
+  {
+   "q": "本单元高频词汇（一卡串记）",
+   "a": "license 驾照；safety 安全；smoke 吸烟/烟；part-time 兼职的；pierce 扎（孔）；earring 耳环；flash 闪光（灯）；tiny 极小的；lift 举起/电梯；awful 很坏的；regret 后悔（regret doing 后悔做过）；poem 诗；chance 机会；society 社会；education 教育；support 支持；enter 进入（enter university 上大学）；choice 选择。"
+  }
+ ],
+ "errors": [
+  {
+   "title": "be allowed to 后误接 doing",
+   "wrong": "把句子写成 Teenagers should be allowed choosing their own clothes. 或 Students are allowed playing games after school.",
+   "right": "be allowed to 后接动词原形：Teenagers should be allowed to choose their own clothes. 记法：被动结构由 allow sb to do sth 变来，to 后始终跟动词原形；allow doing sth 只用于主动句。"
+  },
+  {
+   "title": "情态动词被动漏掉 be",
+   "wrong": "写成 Sixteen-year-olds should not allowed to drive. 或 The work must finished today.",
+   "right": "情态动词被动语态结构是“情态动词 + be + 过去分词”，be 不能漏：should not be allowed to drive；must be finished。记住口诀：有情态动词，被动必带 be。"
+  },
+  {
+   "title": "I don't think 后画蛇添足加 not",
+   "wrong": "写成 I don't think teenagers shouldn't be allowed to smoke.（双重否定）",
+   "right": "否定前移：I don't think 已表否定，从句用肯定形式：I don't think teenagers should be allowed to smoke. 同样：I don't think they are right.（不说 aren't right。）"
+  },
+  {
+   "title": "stop to do 与 stop doing 混淆",
+   "wrong": "把 Please stop to talk.（请停下来去讲话）与 Please stop talking.（请不要讲话了）混为一谈。",
+   "right": "stop doing sth 停止正在做的事；stop to do sth 停下（手头的事）去做另一件事。判断方法：看“stop”后接的动作是本来就在做（用 doing，要停掉），还是要停下来之后才去做（用 to do）。"
+  },
+  {
+   "title": "get / have sth done 中误用动词原形",
+   "wrong": "把打耳洞说成 get my ears pierce / piercing，或把剪头发说成 have my hair cutted。",
+   "right": "get/have sth done 的 done 用过去分词，且不随人称时态变化：get my ears pierced；have my hair cut（cut 的过去分词仍是 cut，不能加 -ed）。"
+  },
+  {
+   "title": "固定搭配介词张冠李戴",
+   "wrong": "把 be strict with 写成 be strict in children，把 be serious about 说成 be serious with running，把 keep away from 说成 keep away junk food。",
+   "right": "对某人严格：be strict with sb；对某事严格：be strict in sth；认真对待：be serious about sth；远离：keep away from sth（from 不能省，后接名词/代词/动名词）。"
+  }
+ ]
+}
+
+path = "/home/administrator/xuci-jiancha/_lql9_data/english9_u7.json"
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, indent=1)
+
+with open(path, encoding="utf-8") as f:
+    back = json.load(f)
+
+print("reload OK:", back["hero_title"], "|", back["meta_desc"])
+for k in ["knowledge", "questions", "flashcards", "errors"]:
+    print(k, "=", len(back[k]))
+
+# structural checks
+for i, it in enumerate(back["knowledge"]):
+    assert set(it) == {"t", "d"} and it["t"] and it["d"], ("knowledge item", i)
+for i, it in enumerate(back["questions"]):
+    assert set(it) == {"q", "opts", "ans", "exp"}, ("question keys", i)
+    assert len(it["opts"]) == 4 and isinstance(it["ans"], int) and 0 <= it["ans"] < 4, ("question shape", i)
+for i, it in enumerate(back["flashcards"]):
+    assert set(it) == {"q", "a"} and it["q"] and it["a"], ("flashcard", i)
+for i, it in enumerate(back["errors"]):
+    assert set(it) == {"title", "wrong", "right"}, ("error item", i)
+
+# content hard checks
+s = json.dumps(back, ensure_ascii=False)
+must = [
+    "Teenagers should be allowed to choose their own clothes.",
+    "Sixteen-year-olds should not be allowed to drive.",
+    "allowed to choose",
+    "get one's ears pierced",
+    "get my ears pierced",
+    "I disagree with you",
+    "stop doing",
+    "stop to do",
+    "have your hair cut",
+    "get in the way of",
+    "keep away from",
+    "be strict with",
+    "stay up",
+]
+for m in must:
+    print("MUST", "OK " if m in s else "MISSING!", m)
+
+# count requirement windows
+lk, lq, lf, le = len(back["knowledge"]), len(back["questions"]), len(back["flashcards"]), len(back["errors"])
+print("counts in range:", (8 <= lk <= 10) and (14 <= lq <= 16) and (8 <= lf <= 10) and (4 <= le <= 6))

@@ -1,0 +1,294 @@
+{
+ "hero_title": "Unit 5 · What are the shirts made of?",
+ "meta_desc": "人教九全 · Unit 5",
+ "knowledge": [
+  {
+   "t": "单元话题 · 产品与材料产地",
+   "d": "本单元围绕“物品由什么制成、在哪里制造”展开：谈论衬衫、筷子、叉子、硬币、戒指、丝绸衬衫（blouse）等的材料（cotton 棉花、wood 木头、steel 钢、silver 银、silk 丝绸、glass 玻璃）与产地（泰国、韩国、美国、中国、法国、德国等）。核心词汇：chopstick 筷子、coin 硬币、fork 叉子、blouse 女式衬衫、silver 银、cotton 棉花、steel 钢、grass 草、leaf 叶子、material 材料、product 产品、produce 生产、process 加工、pack 打包、brand 品牌、avoid 避免、handbag 手提包、everyday 日常的、international 国际的、competitor 竞争者、paint 绘画、涂料。"
+  },
+  {
+   "t": "语法核心 · 被动语态（一般现在时）",
+   "d": "被动语态表示主语是动作的承受者，构成是 be(am/is/are) + 及物动词的过去分词，be 随主语的人称和数变化：主语是第三人称单数用 is，复数或 you/they 用 are。例：The shirts are made of cotton. 这些衬衫是由棉花做的（They 复数用 are）；This blouse is made of silk. 这件衬衫是丝绸做的（单数用 is）。否定在 be 后加 not，一般疑问句把 be 提到主语前：Are the chopsticks made of steel? 筷子是钢做的吗？"
+  },
+  {
+   "t": "be made of / be made from · 由……制成",
+   "d": "两者都表“由……制成”，区别在看能否认出原材料：能看得出原材料（成品保留原料的样子）用 be made of，如 The desk is made of wood.（桌子看得出是木头）；看不出原材料（原料已发生变化）用 be made from，如 Paper is made from wood.（纸里看不出木头）；The wine is made from grapes. 葡萄酒是由葡萄酿造的。"
+  },
+  {
+   "t": "be made in / be made by · 产地与制造者",
+   "d": "be made in + 地点，表“在某地制造”，如 It was made in Thailand. 它产于泰国。be made by + 人或机构，表“被……制造”，如 The little chair was made by my grandpa. 这把小椅子是我爷爷做的。另有 by hand 表“用手工”：The tea leaves are picked by hand. 茶叶是手工采摘的。"
+  },
+  {
+   "t": "主动句变被动句（一般现在时）",
+   "d": "三步法：①把主动句的宾语提前作新主语；②谓语改为 be + 过去分词，be 随新主语的人称和数变化；③原主语由 by 引出放在句末，当原主语是泛指的 people、they（人们）时可省略。例：They grow tea in Hangzhou. → Tea is grown in Hangzhou.（主语 they 泛指人们，省略 by them；tea 是单数不可数名词，be 用 is）。又如：People pick the leaves by hand. → The leaves are picked by hand."
+  },
+  {
+   "t": "no matter + 疑问词 · 让步状语从句",
+   "d": "no matter what/how/when/where/who 引导让步状语从句，意为“无论……都”，相当于 wh- + ever（no matter what = whatever，no matter how = however）。从句要用陈述语序，与主句之间用逗号隔开。例：No matter what you do, do it well. 无论你做什么，都要把它做好。（= Whatever you do, do it well.）；No matter how hard the work is, he never gives up. 无论工作多难，他都不放弃。"
+  },
+  {
+   "t": "重点表达 · 闻名与生产",
+   "d": "be known for / be famous for 意为“因……而闻名”，后接闻名的原因：China is famous for tea. 中国以茶闻名；Anxi and Hangzhou are widely known for their tea. 安溪和杭州因茶而广为人知。其他高频表达：be good at 擅长；as far as I know 据我所知；send sth. for processing 把……送去加工；produce 生产 → product 产品 → production 生产、产量；can hardly avoid doing sth. 几乎无法避免做某事。"
+  },
+  {
+   "t": "易混词 · 国家、语言与名词复数",
+   "d": "France 法国 → French 法国的、法语（French fries 炸薯条）；Germany 德国 → German 德国的、德语、（单数）德国人，德国人复数加 -s 为 Germans。名词复数：leaf 叶子 → leaves；chopsticks 筷子成对出现、习惯用复数，不说 a chopstick 表示一双筷子。everyday 是形容词“日常的”，后接名词（everyday things 日常用品），而 every day 是副词短语“每天”，作时间状语。"
+  },
+  {
+   "t": "阅读视野 · Made in China 与中国民间艺术",
+   "d": "3a 阅读讲述上海学生 Kang Jian 在美国的发现：商店里大量产品是中国制造的（made in China）——玩具虽是 American brands、篮球鞋、足球、手提包、手机，甚至美国国旗（American flags）都产自中国，美国人 hardly avoid buying products made in China。2b 阅读 Beauty in Common Things 介绍三种民间艺术：孔明灯 sky lanterns（竹子与纸制成）、剪纸 paper cutting（用红纸与剪刀）、中国泥塑 Chinese clay art（黏土手工塑形、晾干、烧制、上色）。最平常的材料（纸、黏土、竹子）被变成艺术之美：The most common things are turned into objects of beauty."
+  }
+ ],
+ "questions": [
+  {
+   "q": "— What are the shirts made of? — They ___ of cotton.",
+   "opts": [
+    "A. are made",
+    "B. is made",
+    "C. made",
+    "D. are making"
+   ],
+   "ans": 0,
+   "exp": "答案 A。被动语态由 be + 过去分词构成：主语 They 是复数，be 用 are；are made of cotton 意为“由棉花制成”。句意：——这些衬衫是由什么做的？——它们是由棉花做的。语法点：一般现在时被动 am/is/are + done。"
+  },
+  {
+   "q": "This blouse ___ of silk, and it feels very soft and light.",
+   "opts": [
+    "A. is made",
+    "B. are made",
+    "C. makes",
+    "D. is making"
+   ],
+   "ans": 0,
+   "exp": "答案 A。主语 This blouse（这件女式衬衫）是第三人称单数，被动语态用 is made；be made of 表“由……制成”，看得出材料。句意：这件衬衫是丝绸做的，摸起来又软又轻。语法点：被动语态 be 动词第三人称单数用 is。"
+  },
+  {
+   "q": "Paper is ___ wood, so we cannot see the wood in the paper.",
+   "opts": [
+    "A. made of",
+    "B. made from",
+    "C. made in",
+    "D. made by"
+   ],
+   "ans": 1,
+   "exp": "答案 B。看不出原材料、原料已发生变化时用 be made from：纸由木材制成，但纸里看不出木头。句意：纸是由木头制成的，所以我们在纸里看不到木头。对比：能看出原料用 be made of，如 The desk is made of wood."
+  },
+  {
+   "q": "The desk is ___ wood. You can see the wood grain clearly.",
+   "opts": [
+    "A. made of",
+    "B. made from",
+    "C. made in",
+    "D. made by"
+   ],
+   "ans": 0,
+   "exp": "答案 A。能直接看出原材料用 be made of：桌子还保留着木头的纹理，看得出是木头做的。句意：这张桌子是木头做的，你可以清楚地看到木纹。语法点：made of 看得出材料，made from 看不出材料。"
+  },
+  {
+   "q": "— Where was the ring made? — It ___ in Thailand.",
+   "opts": [
+    "A. was made",
+    "B. is made",
+    "C. made",
+    "D. was making"
+   ],
+   "ans": 0,
+   "exp": "答案 A。be made in + 产地表“在某地制造”；问句用过去时 was made，答句时态保持一致也用 was made。句意：——这个戒指是在哪里制造的？——它是在泰国制造的。语法点：made in + 地点。"
+  },
+  {
+   "q": "The little chair was made ___ my grandpa when I was five.",
+   "opts": [
+    "A. by",
+    "B. of",
+    "C. from",
+    "D. in"
+   ],
+   "ans": 0,
+   "exp": "答案 A。be made by + 制造者，表“被……制造”；by my grandpa 意为“被我爷爷（制造）”。句意：这把小椅子是我五岁时爷爷做的。语法点：made by 引出动作的执行者。"
+  },
+  {
+   "q": "The workers make machines in this factory, so the machines ___ in this factory.",
+   "opts": [
+    "A. are made",
+    "B. are making",
+    "C. make",
+    "D. made"
+   ],
+   "ans": 0,
+   "exp": "答案 A。这是主动变被动的考查：主动句 The workers make machines... 中宾语 machines 提前作主语（复数），谓语改为 are made，泛指的 the workers 无需保留。句意：工人们在这家工厂制造机器，所以这些机器是在这家工厂制造的。"
+  },
+  {
+   "q": "They grow tea on the sides of mountains in Hangzhou. Tea ___ on the sides of mountains there.",
+   "opts": [
+    "A. is grown",
+    "B. are grown",
+    "C. grows",
+    "D. is growing"
+   ],
+   "ans": 0,
+   "exp": "答案 A。主动句变被动：原主语 they 泛指“人们”，被动句中 by they 省略；新主语 tea 是不可数名词，be 用 is，故为 Tea is grown。句意：他们在杭州的山坡上种茶。茶被种在那里的山坡上。语法点：They grow tea in Hangzhou. → Tea is grown in Hangzhou."
+  },
+  {
+   "q": "When the tea leaves are ready, they ___ by hand and then are sent for processing.",
+   "opts": [
+    "A. are picked",
+    "B. pick",
+    "C. are picking",
+    "D. picked"
+   ],
+   "ans": 0,
+   "exp": "答案 A。leaves（叶子）是动作 pick 的承受者，用被动语态，主语 they 指 leaves 是复数，故用 are picked；by hand 意为“用手工”。句意：茶叶成熟后，被手工采摘，然后送去加工。语法点：被动语态 be(are) + 过去分词。"
+  },
+  {
+   "q": "___ what you may buy, you might think those products were made in those countries.",
+   "opts": [
+    "A. No matter",
+    "B. Even",
+    "C. Not only",
+    "D. Thanks to"
+   ],
+   "ans": 0,
+   "exp": "答案 A。no matter what 引导让步状语从句，意为“无论什么”。句意：无论你可能买什么，你都可能以为那些产品是在那些国家制造的。语法点：no matter + 疑问词 = 无论……（3a 课文原句）。"
+  },
+  {
+   "q": "No matter ___ hard the work is, he always does it well.",
+   "opts": [
+    "A. what",
+    "B. how",
+    "C. when",
+    "D. where"
+   ],
+   "ans": 1,
+   "exp": "答案 B。hard 是形容词，需用 no matter how（无论多么）修饰，相当于 however；no matter what 后接名词或动词，不能直接接 hard。句意：无论工作多么难，他总能做好。语法点：no matter how + 形容词/副词。"
+  },
+  {
+   "q": "China is famous for tea, and Anxi and Hangzhou are widely ___ for their tea.",
+   "opts": [
+    "A. known",
+    "B. knew",
+    "C. knowing",
+    "D. knows"
+   ],
+   "ans": 0,
+   "exp": "答案 A。be widely known for 意为“因……而广为人知”，known 是 know 的过去分词，与 are 构成被动（系表）结构，相当于 be famous for。句意：中国以茶闻名，安溪和杭州因茶而广为人知。语法点：be known for 因……而闻名（2d 课文原句）。"
+  },
+  {
+   "q": "— How is tea ___? — Tea plants are grown on the sides of mountains.",
+   "opts": [
+    "A. produced",
+    "B. painted",
+    "C. packed",
+    "D. practiced"
+   ],
+   "ans": 0,
+   "exp": "答案 A。How is tea produced? 意为“茶是怎样生产的？”，produced 是 produce（生产）的过去分词；其余选项 painting（绘画）、pack（打包）、practice（练习）均不合语境。句意：——茶是怎样生产的？——茶树被种在山坡上。语法点：produce 生产（2d 课文原句）。"
+  },
+  {
+   "q": "This car was made in ___, so it is a German car.",
+   "opts": [
+    "A. Germany",
+    "B. German",
+    "C. Germans",
+    "D. Germany's"
+   ],
+   "ans": 0,
+   "exp": "答案 A。介词 in 后接国家名，德国是 Germany；German 意为“德国的、德语、德国人”，Germans 是“德国人”复数。句意：这辆车是德国制造的，所以它是一辆德国车。语法点：Germany 德国 vs German 德国的/德国人。"
+  },
+  {
+   "q": "In autumn, the ___ on the trees turn yellow and fall to the ground.",
+   "opts": [
+    "A. leaf",
+    "B. leafs",
+    "C. leaves",
+    "D. leafes"
+   ],
+   "ans": 2,
+   "exp": "答案 C。leaf（叶子）的复数是不规则变化 leaves，类似 wife → wives；leafs、leafes 都是错误拼写。句意：秋天，树上的叶子变黄并落到地上。语法点：leaf → leaves（辅音字母 + f 结尾变 f 为 v 加 es）。"
+  },
+  {
+   "q": "Kang Jian realized that Americans can hardly avoid ___ products made in China.",
+   "opts": [
+    "A. buying",
+    "B. to buy",
+    "C. buy",
+    "D. bought"
+   ],
+   "ans": 0,
+   "exp": "答案 A。avoid 后接动名词，avoid doing sth. 意为“避免做某事”；can hardly 意为“几乎不能”。句意：康健意识到美国人几乎无法避免购买中国制造的产品。语法点：avoid doing sth.（3a 课文原句）。"
+  }
+ ],
+ "flashcards": [
+  {
+   "q": "一般现在时被动语态的构成？",
+   "a": "be(am/is/are) + 及物动词的过去分词；主语单数用 is，复数或 you/they 用 are。The shirts are made of cotton. 这些衬衫是棉做的。"
+  },
+  {
+   "q": "主语是第三人称单数时被动怎么变？",
+   "a": "be 用 is：This blouse is made of silk. 这件女式衬衫是丝绸做的。一般疑问句把 is 提前：Is the fork made of silver?"
+  },
+  {
+   "q": "be made of 还是 be made from？",
+   "a": "看得出原材料用 of：The desk is made of wood.（看得出木头）；看不出原材料、原料已变化用 from：Paper is made from wood.（纸里看不出木头）"
+  },
+  {
+   "q": "be made in / be made by 怎么用？",
+   "a": "in + 产地：It was made in Thailand. 产于泰国；by + 制造者/方式：The chair was made by my grandpa. 椅子是爷爷做的；The tea is picked by hand. 手工采摘。"
+  },
+  {
+   "q": "主动句变被动句的三步法？",
+   "a": "①宾语提前作主语；②动词变为 be + 过去分词（be 随新主语变化）；③原主语由 by 引出，泛指 they/people 时可省略。They grow tea in Hangzhou. → Tea is grown in Hangzhou."
+  },
+  {
+   "q": "no matter + 疑问词表示什么？",
+   "a": "引导让步状语从句，意为“无论……”，= wh- + ever（no matter what = whatever）；从句用陈述语序。No matter what you do, do it well. 无论你做什么，都要做好。"
+  },
+  {
+   "q": "be known for / be famous for？",
+   "a": "因……而闻名，后接闻名的原因。Anxi and Hangzhou are widely known for their tea. 安溪和杭州因茶而广为人知。China is famous for tea. 中国以茶闻名。"
+  },
+  {
+   "q": "Germany / German / Germans 的区别？",
+   "a": "Germany 德国（国家名）；German 德国的、德语、德国人（单数）；Germans 德国人（复数，直接加 -s）。This car was made in Germany. It is a German car."
+  },
+  {
+   "q": "France 与 French 的区别？",
+   "a": "France 法国（国家名）；French 法国的、法语、法国人（总称 the French）。These beautiful clothes were made in France. 这些漂亮衣服是法国制造的。"
+  },
+  {
+   "q": "leaf 和 chopsticks 的复数要注意什么？",
+   "a": "leaf → leaves（叶子变黄：The leaves turn yellow）；chopsticks 成对出现，习惯用复数形式，不用 a chopstick 表示“一双筷子”。"
+  }
+ ],
+ "errors": [
+  {
+   "title": "被动语态漏掉 be 动词 ❌",
+   "wrong": "想当然地写成 The shirts made of cotton.（直接用 made 作谓语），或误写成 The shirts are making of cotton.（把现在进行时当被动）。",
+   "right": "一般现在时被动必须是 <span class=\"hl\">be(am/is/are) + 过去分词</span>，两者缺一不可：The shirts are made of cotton.（made 是 make 的过去分词）。are making 表示“正在做”的进行时，与被动无关。"
+  },
+  {
+   "title": "made of 与 made from 混淆 ❌",
+   "wrong": "见到“由……制成”就填 made of，把 Paper is made from wood 错写成 Paper is made of wood。",
+   "right": "判断标准是<span class=\"hl\">能否看出原材料</span>：看不出原材料、原料已发生变化的用 from（Paper is made from wood 纸由木材制成，纸里看不出木头）；看得出原材料的用 of（The desk is made of wood）。"
+  },
+  {
+   "title": "主动变被动时 be 与数不一致、乱留 by ❌",
+   "wrong": "把 They grow tea in Hangzhou. 变成 Tea are grown in Hangzhou.（误用 are），或写成 Tea is grown in Hangzhou by they.。",
+   "right": "新主语 tea 是单数不可数名词，be 用 <span class=\"hl\">is</span>：Tea is grown in Hangzhou.；原主语 they 泛指“人们”，被动句中 <span class=\"hl\">by they 应省略</span>，只有具体的人或物才用 by 引出。"
+  },
+  {
+   "title": "no matter 从句错用疑问语序 ❌",
+   "wrong": "写成 No matter what do you do, do it well.（保留疑问语序），或把 no matter 与疑问词拆开：No matter you do what...。",
+   "right": "no matter 必须紧跟疑问词，且引导的从句用<span class=\"hl\">陈述语序</span>：No matter what you do, do it well. 无论你做什么，都要做好。（= Whatever you do, do it well.）"
+  },
+  {
+   "title": "国家名、语言、人三者混用 ❌",
+   "wrong": "把 Germany 当作“德国人”，写成 He comes from German.；或把德国人复数写成 Germen。",
+   "right": "国家名：Germany 德国、France 法国；German 既是“德国的、德语”也是“德国人”，复数直接加 -s 为 <span class=\"hl\">Germans</span>；French 意为“法国的、法语”。正确句子：He comes from Germany. He is a German engineer."
+  },
+  {
+   "title": "everyday 与 every day 混用 ❌",
+   "wrong": "把 everyday things（日常用品）写成 every day things，或把 I exercise every day（每天锻炼）写成 I exercise everyday。",
+   "right": "<span class=\"hl\">everyday 是形容词</span>“日常的”，后接名词（everyday things 日常用品）；every day 是副词短语“每天”，作时间状语：Kang Jian hopes China will get better at making everyday things."
+  }
+ ]
+}

@@ -1,0 +1,298 @@
+{
+ "hero_title": "Unit 8 · It must belong to Carla.",
+ "meta_desc": "人教九全 · Unit 8",
+ "knowledge": [
+  {
+   "t": "情态动词推测三档",
+   "d": "must 一定（几乎肯定）＞ may/might/could 可能 ＞ can't 不可能。例：It must be Carla's."
+  },
+  {
+   "t": "对现在的推测",
+   "d": "对现在情况推测：情态动词＋动词原形。It must be Mary's.（一定是玛丽的）名词所有格 's 表归属。"
+  },
+  {
+   "t": "belong to 的用法",
+   "d": "belong to 属于，后接名词或代词宾格：must belong to Carla. 不说 belong to hers / Carla's."
+  },
+  {
+   "t": "话题句型 Whose ...?",
+   "d": "问物品归属：Whose book is this? 答常用名词所有格：It must be Mary's."
+  },
+  {
+   "t": "语境推断法",
+   "d": "线索推断：有校服→must go to our school；有发带→can't be a boy；球场捡球→must belong to a player."
+  },
+  {
+   "t": "对过去的推测（了解）",
+   "d": "must/might/could + have done 推测过去：must have picked it up（一定有人捡走了）。知道含义即可。"
+  },
+  {
+   "t": "课文 3a · 小镇怪声",
+   "d": "Victor夜闻怪声：妻子猜 could be an animal，警察猜 might be the wind，Helen 断定 can't be a dog."
+  },
+  {
+   "t": "课文 2b · 巨石阵之谜",
+   "d": "Paul Stoker 认为\"神庙说\"can't be true（首领到得晚）；也有人猜 might be a calendar 或治病场所。"
+  },
+  {
+   "t": "重点词汇串记",
+   "d": "truck 卡车 picnic 野餐 attend 出席 valuable 贵重的 pink 粉红 noise 噪音 wolf 狼 coat 外套"
+  },
+  {
+   "t": "高频短语",
+   "d": "belong to 属于 hair band 发带 at the picnic 在野餐时 run after 追赶 must have done 对过去推测"
+  }
+ ],
+ "questions": [
+  {
+   "q": "—____ book is this? —It must be Mary's.",
+   "opts": [
+    "Whose",
+    "Who",
+    "Whom",
+    "Which"
+   ],
+   "ans": 0,
+   "exp": "询问\"谁的\"用 Whose，后接名词：Whose book is this? Who 问人（主语），Whom 是宾格，Which 表\"哪一个\"，都不能修饰 book。"
+  },
+  {
+   "q": "—Whose volleyball is this? —It ____ be Carla's. She loves volleyball.",
+   "opts": [
+    "might",
+    "must",
+    "can't",
+    "should"
+   ],
+   "ans": 1,
+   "exp": "卡拉爱打排球→见到排球几乎肯定\"一定是卡拉的\"，用 must；即 1a/1b 原句 It must be Carla's."
+  },
+  {
+   "q": "The toy truck must belong to ____. He was the only little kid at the picnic.",
+   "opts": [
+    "he",
+    "his",
+    "him",
+    "himself"
+   ],
+   "ans": 2,
+   "exp": "belong to 后接代词宾格：belong to him（属于他）。he 是主格、his 是物主代词、himself 是反身代词，均不能作 to 的宾语。"
+  },
+  {
+   "q": "—Whose book is this? —It must be ____. J. K. Rowling is her favorite writer.",
+   "opts": [
+    "Mary",
+    "of Mary",
+    "to Mary",
+    "Mary's"
+   ],
+   "ans": 3,
+   "exp": "must be 后用名词所有格表归属：It must be Mary's.（一定是玛丽的）。用 belong to 才说 belong to Mary，本句没有 belong to。"
+  },
+  {
+   "q": "—Whose hair band is this? —It could be Mei's, or it might ____ to Linda. They both have long hair.",
+   "opts": [
+    "belong",
+    "belongs",
+    "belonging",
+    "belonged"
+   ],
+   "ans": 0,
+   "exp": "Grammar Focus 原句：It might belong to Linda. might 是情态动词，后接动词原形 belong；两人都可能，故用 could/might 表\"可能\"。"
+  },
+  {
+   "q": "Here is a hair band in the schoolbag, so the person ____ be a boy.",
+   "opts": [
+    "can't",
+    "must",
+    "might",
+    "could"
+   ],
+   "ans": 0,
+   "exp": "发带是女孩常用之物→几乎肯定不是男孩，用 can't 表否定推测（2b 原句：the person can't be a boy）。"
+  },
+  {
+   "q": "There is a school T-shirt in the schoolbag, so the person ____ go to our school.",
+   "opts": [
+    "must",
+    "can't",
+    "needn't",
+    "may not"
+   ],
+   "ans": 0,
+   "exp": "校服是本校的→几乎肯定就读于我们学校，用 must（2b 原句：the person must go to our school）。"
+  },
+  {
+   "q": "After the basketball game, Sam found a basketball on the court. No one else was there. It ____ belong to one of the players.",
+   "opts": [
+    "mustn't",
+    "needn't",
+    "must",
+    "shouldn't"
+   ],
+   "ans": 2,
+   "exp": "刚打完球、球场无其他人→几乎肯定是某个球员落下的，用 must 表强推测。mustn't 表禁止、needn't 表不必、shouldn't 表不应该，均不用于推测。"
+  },
+  {
+   "q": "Mom: Do you have anything valuable in your schoolbag? Linda: No, just my books, my pink hair band and some tennis balls. Mom: So it ____ be stolen.",
+   "opts": [
+    "must",
+    "may",
+    "can't",
+    "could"
+   ],
+   "ans": 2,
+   "exp": "书包里没有值钱东西→几乎肯定不是被偷，用 can't 表否定推测（2d 原句：So it can't be stolen.）。"
+  },
+  {
+   "q": "—Whose CD is this? —It must ____ Grace. She always listens to pop music.",
+   "opts": [
+    "belonging to",
+    "belongs to",
+    "is belonged to",
+    "belong to"
+   ],
+   "ans": 3,
+   "exp": "情态动词 must 后接动词原形：must belong to Grace（一定属于格蕾丝）。belongs 用于无must的第三人称现在时；belonging 不能直接作谓语。"
+  },
+  {
+   "q": "—I can't find my schoolbag. —Don't worry. I think somebody must have ____ it up.",
+   "opts": [
+    "pick",
+    "picks",
+    "picking",
+    "picked"
+   ],
+   "ans": 3,
+   "exp": "对过去动作推测用 must have done：must have picked it up（一定有人捡走了），pick up 的过去分词是 picked（2d 原句）。"
+  },
+  {
+   "q": "Historian Paul Stoker thinks it ____ be true that Stonehenge was a temple, because the leaders arrived in England much later.",
+   "opts": [
+    "can't",
+    "must",
+    "might",
+    "could"
+   ],
+   "ans": 0,
+   "exp": "首领们到英国比巨石阵建成晚得多→\"神庙说\"几乎肯定不对，用 can't（课文原句：he thinks this can't be true）。"
+  },
+  {
+   "q": "Some people think the stones of Stonehenge can ____ illness and keep people healthy.",
+   "opts": [
+    "receive",
+    "express",
+    "prevent",
+    "circle"
+   ],
+   "ans": 2,
+   "exp": "prevent illness 预防疾病（课文原句：the stones can prevent illness and keep people healthy）。receive 收到、express 表达、circle 围成圈，均不合句意。"
+  },
+  {
+   "q": "Linda couldn't remember where she put her schoolbag because she ____ a concert yesterday.",
+   "opts": [
+    "attends",
+    "attended",
+    "will attend",
+    "is attending"
+   ],
+   "ans": 1,
+   "exp": "yesterday 表过去→用一般过去时 attended；attend a concert 出席音乐会（2d 原句：I attended a concert yesterday.）。"
+  },
+  {
+   "q": "The woman in the area said, \"I think it was too big to be a dog. Maybe it was a bear or a ____.\"",
+   "opts": [
+    "rabbit",
+    "duck",
+    "wolf",
+    "sheep"
+   ],
+   "ans": 2,
+   "exp": "3a 课文原句：Maybe it was a bear or a wolf.（也许是熊或狼）兔子、鸭子、羊都不可能被误认为巨大的黑影。"
+  },
+  {
+   "q": "—Where's Jean? —I'm not sure. She ____ be in the laboratory.",
+   "opts": [
+    "must",
+    "can't",
+    "might",
+    "should"
+   ],
+   "ans": 2,
+   "exp": "答话人自己都不确定（I'm not sure）→用 might 表把握较小的推测（4a 原题答案：She might be in the laboratory.）。"
+  }
+ ],
+ "flashcards": [
+  {
+   "q": "It must be Carla's. She loves volleyball.",
+   "a": "一定是卡拉的，她爱打排球。must 表几乎肯定的推测；Carla's = Carla's volleyball，名词所有格后可省略上文提过的名词。"
+  },
+  {
+   "q": "It could be Mei's hair band. Or it might belong to Linda.",
+   "a": "这可能是梅的发带，也可能属于琳达——两人都留长发，不能确定，用 could / might 表\"可能\"；belong to 后接人名或宾格代词。"
+  },
+  {
+   "q": "So it can't be stolen.",
+   "a": "所以它不可能是被偷的。can't 表否定推测（几乎肯定不是）。书包里没有贵重物品，故排除\"被偷\"。注意 mustn't 表禁止，不能用来表推测。"
+  },
+  {
+   "q": "Whose book is this? — It must be Mary's.",
+   "a": "这是谁的书？——一定是玛丽的。whose 询问归属；回答用名词所有格：must be Mary's（J. K. Rowling 是她最爱的作家，课文 1b）。"
+  },
+  {
+   "q": "belong to 的用法",
+   "a": "belong to 属于，to 是介词，后接名词或代词宾格：The hair band must belong to Carla. / It might belong to Linda. 不能说 belong to hers，也不能说 belong to Carla's。"
+  },
+  {
+   "q": "I think somebody must have picked it up.",
+   "a": "我想一定有人把它捡走了。对过去情况的推测用 must have done（一定做过某事）：somebody must have picked it up；pick up 捡起，其过去分词为 picked。"
+  },
+  {
+   "q": "3a 课文《Strange Happenings in My Town》各方观点",
+   "a": "Victor 妻子：could be an animal；Victor 和朋友：must be teenagers having fun；警察：might be the wind；Helen：先猜 dog 又排除 can't be a dog；一位妇人：too big to be a dog, maybe a bear or a wolf。"
+  },
+  {
+   "q": "Stonehenge 巨石阵的种种猜测",
+   "a": "曾用作 temple（与神沟通）→Paul Stoker 认为 can't be true；又猜 might be a calendar（夏至日出直照石阵中心）；或是治病场所（prevent illness）；但石块位置 must be for a special purpose."
+  },
+  {
+   "q": "高频短语速记",
+   "a": "belong to 属于；hair band 发带；at the picnic 在野餐时；run after 追赶（The alien is running after the man!）；too...to... 太……而不能……（too big to be a dog）。"
+  },
+  {
+   "q": "本单元核心词汇",
+   "a": "truck 卡车 picnic 野餐 attend 出席 valuable 贵重的 pink 粉红的 noise 噪音 policeman 警察 wolf 狼 laboratory 实验室 outdoors 在户外 coat 外套 sleepy 困倦的 land 着陆 suit 西装 express 表达 circle 圆圈 Britain 英国 receive 接待/收到 leader 首领 prevent 阻止 energy 能量 position 位置 victory 胜利 enemy 敌人 period 时期 mystery 奥秘 mysterious 神秘的"
+  }
+ ],
+ "errors": [
+  {
+   "title": "belong to 后误接物主代词或所有格",
+   "wrong": "把句子写成 The hair band must belong to hers. 或 This book must belong to Carla's.",
+   "right": "belong to 的 to 是介词，后接名词或代词宾格：belong to Carla / belong to her。hers 是名词性物主代词，Carla's 是所有格，都不能跟在介词 to 后面。"
+  },
+  {
+   "title": "把 mustn't 当作\"不可能\"用",
+   "wrong": "把\"书包不可能是被偷的\"写成 So it mustn't be stolen.",
+   "right": "否定推测（不可能）要用 can't：So it can't be stolen. mustn't 只表\"禁止、不准\"（You mustn't smoke here.），不用于推测。"
+  },
+  {
+   "title": "must be 后漏掉名词所有格 's",
+   "wrong": "回答 Whose book is this? 时写成 It must be Mary.（漏掉所有格）",
+   "right": "\"一定是玛丽的（书）\"要说 It must be Mary's.（Mary's = Mary's book），所有格 's 不能丢；只有 belong to 结构才接人名：It must belong to Mary."
+  },
+  {
+   "title": "情态动词后误加 to 或误用三单",
+   "wrong": "把 It might belong to Linda. 写成 It might to belong to Linda. 或 The magazine might belongs to Deng Wen.",
+   "right": "情态动词（must / could / might / can't）后一律接动词原形：might belong to。实义动词现在时第三人称单数才加 s：The magazine belongs to Deng Wen."
+  },
+  {
+   "title": "对过去推测漏掉 have done",
+   "wrong": "想表达\"一定有人捡走了书包\"却写成 I think somebody must picked it up.",
+   "right": "对过去动作的推测用 must / might / could + have + 过去分词：must have picked it up（picked 是 pick up 的过去分词）。情态动词后不能直接跟过去式。"
+  },
+  {
+   "title": "whose 与 who 混用",
+   "wrong": "问\"这是谁的书\"时写成 Who book is this?",
+   "right": "\"谁的\"用 whose：Whose book is this? who 意为\"谁\"（作主语），不能直接修饰名词；\"这本书是谁的\"可说 Whose is this book?（whose 独立作表语）。"
+  }
+ ]
+}

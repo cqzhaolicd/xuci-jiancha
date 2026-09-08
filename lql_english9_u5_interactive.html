@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 5 · What are the shirts made of? · 九年级英语</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> Unit 5 · What are the shirts made of?</h1>
+    <div class="meta">人教九全 · Unit 5 · 16 题 · 9 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>单元话题 · 产品与材料产地</h4><p>本单元围绕“物品由什么制成、在哪里制造”展开：谈论衬衫、筷子、叉子、硬币、戒指、丝绸衬衫（blouse）等的材料（cotton 棉花、wood 木头、steel 钢、silver 银、silk 丝绸、glass 玻璃）与产地（泰国、韩国、美国、中国、法国、德国等）。核心词汇：chopstick 筷子、coin 硬币、fork 叉子、blouse 女式衬衫、silver 银、cotton 棉花、steel 钢、grass 草、leaf 叶子、material 材料、product 产品、produce 生产、process 加工、pack 打包、brand 品牌、avoid 避免、handbag 手提包、everyday 日常的、international 国际的、competitor 竞争者、paint 绘画、涂料。</p></div>
+      <div class="k-item"><h4>语法核心 · 被动语态（一般现在时）</h4><p>被动语态表示主语是动作的承受者，构成是 be(am/is/are) + 及物动词的过去分词，be 随主语的人称和数变化：主语是第三人称单数用 is，复数或 you/they 用 are。例：The shirts are made of cotton. 这些衬衫是由棉花做的（They 复数用 are）；This blouse is made of silk. 这件衬衫是丝绸做的（单数用 is）。否定在 be 后加 not，一般疑问句把 be 提到主语前：Are the chopsticks made of steel? 筷子是钢做的吗？</p></div>
+      <div class="k-item"><h4>be made of / be made from · 由……制成</h4><p>两者都表“由……制成”，区别在看能否认出原材料：能看得出原材料（成品保留原料的样子）用 be made of，如 The desk is made of wood.（桌子看得出是木头）；看不出原材料（原料已发生变化）用 be made from，如 Paper is made from wood.（纸里看不出木头）；The wine is made from grapes. 葡萄酒是由葡萄酿造的。</p></div>
+      <div class="k-item"><h4>be made in / be made by · 产地与制造者</h4><p>be made in + 地点，表“在某地制造”，如 It was made in Thailand. 它产于泰国。be made by + 人或机构，表“被……制造”，如 The little chair was made by my grandpa. 这把小椅子是我爷爷做的。另有 by hand 表“用手工”：The tea leaves are picked by hand. 茶叶是手工采摘的。</p></div>
+      <div class="k-item"><h4>主动句变被动句（一般现在时）</h4><p>三步法：①把主动句的宾语提前作新主语；②谓语改为 be + 过去分词，be 随新主语的人称和数变化；③原主语由 by 引出放在句末，当原主语是泛指的 people、they（人们）时可省略。例：They grow tea in Hangzhou. → Tea is grown in Hangzhou.（主语 they 泛指人们，省略 by them；tea 是单数不可数名词，be 用 is）。又如：People pick the leaves by hand. → The leaves are picked by hand.</p></div>
+      <div class="k-item"><h4>no matter + 疑问词 · 让步状语从句</h4><p>no matter what/how/when/where/who 引导让步状语从句，意为“无论……都”，相当于 wh- + ever（no matter what = whatever，no matter how = however）。从句要用陈述语序，与主句之间用逗号隔开。例：No matter what you do, do it well. 无论你做什么，都要把它做好。（= Whatever you do, do it well.）；No matter how hard the work is, he never gives up. 无论工作多难，他都不放弃。</p></div>
+      <div class="k-item"><h4>重点表达 · 闻名与生产</h4><p>be known for / be famous for 意为“因……而闻名”，后接闻名的原因：China is famous for tea. 中国以茶闻名；Anxi and Hangzhou are widely known for their tea. 安溪和杭州因茶而广为人知。其他高频表达：be good at 擅长；as far as I know 据我所知；send sth. for processing 把……送去加工；produce 生产 → product 产品 → production 生产、产量；can hardly avoid doing sth. 几乎无法避免做某事。</p></div>
+      <div class="k-item"><h4>易混词 · 国家、语言与名词复数</h4><p>France 法国 → French 法国的、法语（French fries 炸薯条）；Germany 德国 → German 德国的、德语、（单数）德国人，德国人复数加 -s 为 Germans。名词复数：leaf 叶子 → leaves；chopsticks 筷子成对出现、习惯用复数，不说 a chopstick 表示一双筷子。everyday 是形容词“日常的”，后接名词（everyday things 日常用品），而 every day 是副词短语“每天”，作时间状语。</p></div>
+      <div class="k-item"><h4>阅读视野 · Made in China 与中国民间艺术</h4><p>3a 阅读讲述上海学生 Kang Jian 在美国的发现：商店里大量产品是中国制造的（made in China）——玩具虽是 American brands、篮球鞋、足球、手提包、手机，甚至美国国旗（American flags）都产自中国，美国人 hardly avoid buying products made in China。2b 阅读 Beauty in Common Things 介绍三种民间艺术：孔明灯 sky lanterns（竹子与纸制成）、剪纸 paper cutting（用红纸与剪刀）、中国泥塑 Chinese clay art（黏土手工塑形、晾干、烧制、上色）。最平常的材料（纸、黏土、竹子）被变成艺术之美：The most common things are turned into objects of beauty.</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 统编版语文九年级全一册 · 第一单元 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_english9_u5_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+
+
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:"Unit 5 What are the shirts made of?",chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:"Unit 5 What are the shirts made of?,课堂练习"};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "— What are the shirts made of? — They ___ of cotton.", "opts": ["A. are made", "B. is made", "C. made", "D. are making"], "ans": 0, "exp": "答案 A。被动语态由 be + 过去分词构成：主语 They 是复数，be 用 are；are made of cotton 意为“由棉花制成”。句意：——这些衬衫是由什么做的？——它们是由棉花做的。语法点：一般现在时被动 am/is/are + done。"}, {"q": "This blouse ___ of silk, and it feels very soft and light.", "opts": ["A. is made", "B. are made", "C. makes", "D. is making"], "ans": 0, "exp": "答案 A。主语 This blouse（这件女式衬衫）是第三人称单数，被动语态用 is made；be made of 表“由……制成”，看得出材料。句意：这件衬衫是丝绸做的，摸起来又软又轻。语法点：被动语态 be 动词第三人称单数用 is。"}, {"q": "Paper is ___ wood, so we cannot see the wood in the paper.", "opts": ["A. made of", "B. made from", "C. made in", "D. made by"], "ans": 1, "exp": "答案 B。看不出原材料、原料已发生变化时用 be made from：纸由木材制成，但纸里看不出木头。句意：纸是由木头制成的，所以我们在纸里看不到木头。对比：能看出原料用 be made of，如 The desk is made of wood."}, {"q": "The desk is ___ wood. You can see the wood grain clearly.", "opts": ["A. made of", "B. made from", "C. made in", "D. made by"], "ans": 0, "exp": "答案 A。能直接看出原材料用 be made of：桌子还保留着木头的纹理，看得出是木头做的。句意：这张桌子是木头做的，你可以清楚地看到木纹。语法点：made of 看得出材料，made from 看不出材料。"}, {"q": "— Where was the ring made? — It ___ in Thailand.", "opts": ["A. was made", "B. is made", "C. made", "D. was making"], "ans": 0, "exp": "答案 A。be made in + 产地表“在某地制造”；问句用过去时 was made，答句时态保持一致也用 was made。句意：——这个戒指是在哪里制造的？——它是在泰国制造的。语法点：made in + 地点。"}, {"q": "The little chair was made ___ my grandpa when I was five.", "opts": ["A. by", "B. of", "C. from", "D. in"], "ans": 0, "exp": "答案 A。be made by + 制造者，表“被……制造”；by my grandpa 意为“被我爷爷（制造）”。句意：这把小椅子是我五岁时爷爷做的。语法点：made by 引出动作的执行者。"}, {"q": "The workers make machines in this factory, so the machines ___ in this factory.", "opts": ["A. are made", "B. are making", "C. make", "D. made"], "ans": 0, "exp": "答案 A。这是主动变被动的考查：主动句 The workers make machines... 中宾语 machines 提前作主语（复数），谓语改为 are made，泛指的 the workers 无需保留。句意：工人们在这家工厂制造机器，所以这些机器是在这家工厂制造的。"}, {"q": "They grow tea on the sides of mountains in Hangzhou. Tea ___ on the sides of mountains there.", "opts": ["A. is grown", "B. are grown", "C. grows", "D. is growing"], "ans": 0, "exp": "答案 A。主动句变被动：原主语 they 泛指“人们”，被动句中 by they 省略；新主语 tea 是不可数名词，be 用 is，故为 Tea is grown。句意：他们在杭州的山坡上种茶。茶被种在那里的山坡上。语法点：They grow tea in Hangzhou. → Tea is grown in Hangzhou."}, {"q": "When the tea leaves are ready, they ___ by hand and then are sent for processing.", "opts": ["A. are picked", "B. pick", "C. are picking", "D. picked"], "ans": 0, "exp": "答案 A。leaves（叶子）是动作 pick 的承受者，用被动语态，主语 they 指 leaves 是复数，故用 are picked；by hand 意为“用手工”。句意：茶叶成熟后，被手工采摘，然后送去加工。语法点：被动语态 be(are) + 过去分词。"}, {"q": "___ what you may buy, you might think those products were made in those countries.", "opts": ["A. No matter", "B. Even", "C. Not only", "D. Thanks to"], "ans": 0, "exp": "答案 A。no matter what 引导让步状语从句，意为“无论什么”。句意：无论你可能买什么，你都可能以为那些产品是在那些国家制造的。语法点：no matter + 疑问词 = 无论……（3a 课文原句）。"}, {"q": "No matter ___ hard the work is, he always does it well.", "opts": ["A. what", "B. how", "C. when", "D. where"], "ans": 1, "exp": "答案 B。hard 是形容词，需用 no matter how（无论多么）修饰，相当于 however；no matter what 后接名词或动词，不能直接接 hard。句意：无论工作多么难，他总能做好。语法点：no matter how + 形容词/副词。"}, {"q": "China is famous for tea, and Anxi and Hangzhou are widely ___ for their tea.", "opts": ["A. known", "B. knew", "C. knowing", "D. knows"], "ans": 0, "exp": "答案 A。be widely known for 意为“因……而广为人知”，known 是 know 的过去分词，与 are 构成被动（系表）结构，相当于 be famous for。句意：中国以茶闻名，安溪和杭州因茶而广为人知。语法点：be known for 因……而闻名（2d 课文原句）。"}, {"q": "— How is tea ___? — Tea plants are grown on the sides of mountains.", "opts": ["A. produced", "B. painted", "C. packed", "D. practiced"], "ans": 0, "exp": "答案 A。How is tea produced? 意为“茶是怎样生产的？”，produced 是 produce（生产）的过去分词；其余选项 painting（绘画）、pack（打包）、practice（练习）均不合语境。句意：——茶是怎样生产的？——茶树被种在山坡上。语法点：produce 生产（2d 课文原句）。"}, {"q": "This car was made in ___, so it is a German car.", "opts": ["A. Germany", "B. German", "C. Germans", "D. Germany's"], "ans": 0, "exp": "答案 A。介词 in 后接国家名，德国是 Germany；German 意为“德国的、德语、德国人”，Germans 是“德国人”复数。句意：这辆车是德国制造的，所以它是一辆德国车。语法点：Germany 德国 vs German 德国的/德国人。"}, {"q": "In autumn, the ___ on the trees turn yellow and fall to the ground.", "opts": ["A. leaf", "B. leafs", "C. leaves", "D. leafes"], "ans": 2, "exp": "答案 C。leaf（叶子）的复数是不规则变化 leaves，类似 wife → wives；leafs、leafes 都是错误拼写。句意：秋天，树上的叶子变黄并落到地上。语法点：leaf → leaves（辅音字母 + f 结尾变 f 为 v 加 es）。"}, {"q": "Kang Jian realized that Americans can hardly avoid ___ products made in China.", "opts": ["A. buying", "B. to buy", "C. buy", "D. bought"], "ans": 0, "exp": "答案 A。avoid 后接动名词，avoid doing sth. 意为“避免做某事”；can hardly 意为“几乎不能”。句意：康健意识到美国人几乎无法避免购买中国制造的产品。语法点：avoid doing sth.（3a 课文原句）。"}]
+const flashcards=[{"q": "一般现在时被动语态的构成？", "a": "be(am/is/are) + 及物动词的过去分词；主语单数用 is，复数或 you/they 用 are。The shirts are made of cotton. 这些衬衫是棉做的。"}, {"q": "主语是第三人称单数时被动怎么变？", "a": "be 用 is：This blouse is made of silk. 这件女式衬衫是丝绸做的。一般疑问句把 is 提前：Is the fork made of silver?"}, {"q": "be made of 还是 be made from？", "a": "看得出原材料用 of：The desk is made of wood.（看得出木头）；看不出原材料、原料已变化用 from：Paper is made from wood.（纸里看不出木头）"}, {"q": "be made in / be made by 怎么用？", "a": "in + 产地：It was made in Thailand. 产于泰国；by + 制造者/方式：The chair was made by my grandpa. 椅子是爷爷做的；The tea is picked by hand. 手工采摘。"}, {"q": "主动句变被动句的三步法？", "a": "①宾语提前作主语；②动词变为 be + 过去分词（be 随新主语变化）；③原主语由 by 引出，泛指 they/people 时可省略。They grow tea in Hangzhou. → Tea is grown in Hangzhou."}, {"q": "no matter + 疑问词表示什么？", "a": "引导让步状语从句，意为“无论……”，= wh- + ever（no matter what = whatever）；从句用陈述语序。No matter what you do, do it well. 无论你做什么，都要做好。"}, {"q": "be known for / be famous for？", "a": "因……而闻名，后接闻名的原因。Anxi and Hangzhou are widely known for their tea. 安溪和杭州因茶而广为人知。China is famous for tea. 中国以茶闻名。"}, {"q": "Germany / German / Germans 的区别？", "a": "Germany 德国（国家名）；German 德国的、德语、德国人（单数）；Germans 德国人（复数，直接加 -s）。This car was made in Germany. It is a German car."}, {"q": "France 与 French 的区别？", "a": "France 法国（国家名）；French 法国的、法语、法国人（总称 the French）。These beautiful clothes were made in France. 这些漂亮衣服是法国制造的。"}, {"q": "leaf 和 chopsticks 的复数要注意什么？", "a": "leaf → leaves（叶子变黄：The leaves turn yellow）；chopsticks 成对出现，习惯用复数形式，不用 a chopstick 表示“一双筷子”。"}]
+const errors=[{"title": "被动语态漏掉 be 动词 ❌", "wrong": "想当然地写成 The shirts made of cotton.（直接用 made 作谓语），或误写成 The shirts are making of cotton.（把现在进行时当被动）。", "right": "一般现在时被动必须是 <span class=\"hl\">be(am/is/are) + 过去分词</span>，两者缺一不可：The shirts are made of cotton.（made 是 make 的过去分词）。are making 表示“正在做”的进行时，与被动无关。"}, {"title": "made of 与 made from 混淆 ❌", "wrong": "见到“由……制成”就填 made of，把 Paper is made from wood 错写成 Paper is made of wood。", "right": "判断标准是<span class=\"hl\">能否看出原材料</span>：看不出原材料、原料已发生变化的用 from（Paper is made from wood 纸由木材制成，纸里看不出木头）；看得出原材料的用 of（The desk is made of wood）。"}, {"title": "主动变被动时 be 与数不一致、乱留 by ❌", "wrong": "把 They grow tea in Hangzhou. 变成 Tea are grown in Hangzhou.（误用 are），或写成 Tea is grown in Hangzhou by they.。", "right": "新主语 tea 是单数不可数名词，be 用 <span class=\"hl\">is</span>：Tea is grown in Hangzhou.；原主语 they 泛指“人们”，被动句中 <span class=\"hl\">by they 应省略</span>，只有具体的人或物才用 by 引出。"}, {"title": "no matter 从句错用疑问语序 ❌", "wrong": "写成 No matter what do you do, do it well.（保留疑问语序），或把 no matter 与疑问词拆开：No matter you do what...。", "right": "no matter 必须紧跟疑问词，且引导的从句用<span class=\"hl\">陈述语序</span>：No matter what you do, do it well. 无论你做什么，都要做好。（= Whatever you do, do it well.）"}, {"title": "国家名、语言、人三者混用 ❌", "wrong": "把 Germany 当作“德国人”，写成 He comes from German.；或把德国人复数写成 Germen。", "right": "国家名：Germany 德国、France 法国；German 既是“德国的、德语”也是“德国人”，复数直接加 -s 为 <span class=\"hl\">Germans</span>；French 意为“法国的、法语”。正确句子：He comes from Germany. He is a German engineer."}, {"title": "everyday 与 every day 混用 ❌", "wrong": "把 everyday things（日常用品）写成 every day things，或把 I exercise every day（每天锻炼）写成 I exercise everyday。", "right": "<span class=\"hl\">everyday 是形容词</span>“日常的”，后接名词（everyday things 日常用品）；every day 是副词短语“每天”，作时间状语：Kang Jian hopes China will get better at making everyday things."}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_english9_u5';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

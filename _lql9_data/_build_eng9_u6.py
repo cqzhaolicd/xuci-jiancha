@@ -1,0 +1,151 @@
+# -*- coding: utf-8 -*-
+"""人教九全英语 Unit 6 When was it invented? 互动内容生成"""
+import json, os
+
+knowledge = [
+ {"t": "单元概览 · When was it invented?",
+  "d": "本单元话题是“发明与历史”，核心语法为一般过去时的被动语态（was/were + 过去分词）。重点句型：When was it invented?（什么时候发明的？）Who was it invented by?（被谁发明的？）What is it used for?（被用来做什么？）。课文涉及茶的偶然发明（An Accidental Invention）、篮球的诞生（Do You Know When Basketball Was Invented?）以及电话、拉链、薯片等发明的历史。学习要求：会用被动语态谈论发明的发明者、时间与用途。"},
+ {"t": "一般过去时被动语态：was / were + done",
+  "d": "结构：主语 + was/were + 及物动词的过去分词。主语是单数或不可数名词用 was，复数用 were。例句：The telephone was invented (by Alexander Graham Bell) in 1876.（电话是贝尔于1876年发明的。）The zipper was invented in 1893.（拉链是1893年发明的。）被动语态强调动作承受者，动作执行者用 by 短语引出，可省略。"},
+ {"t": "主动语态 → 被动语态 的改写方法",
+  "d": "三步法：① 原句宾语变主语；② 谓语动词改为 be + 过去分词，时态不变（一般过去时即 was/were + done）；③ 原句主语前加 by 变成状语（可省略）。例：Alexander Graham Bell invented the telephone in 1876. → The telephone was invented by Alexander Graham Bell in 1876. 若原主语是人称代词，变为宾格（I→by me）。"},
+ {"t": "by accident 偶然地，意外地",
+  "d": "by accident 意为“偶然地、意外地”，相当于 by chance / by mistake，常与 invent、discover 等动词连用。例句：Did you know that tea was invented by accident?（你知道吗，茶是偶然被发明的？）Potato chips were also invented by accident（by mistake）。（薯片也是偶然被发明的。）注意 by accident 是固定短语，accident 不加 -ly。"},
+ {"t": "be used for doing / be used to do 被用来做……",
+  "d": "句型：Sth. + be used for + doing sth. = Sth. + be used to + do sth.，意为“某物被用来做某事”。例句：The hot ice-cream scoop is used for serving really cold ice-cream.（热冰淇淋勺被用来舀真正冰凉的冰淇淋。）= The hot ice-cream scoop is used to serve really cold ice-cream. 注意与 used to do（过去常常，主动）区分。"},
+ {"t": "It is said / It is believed that ... 据说 / 人们相信……",
+  "d": "It is said that... 据说……；It is believed that... 人们相信……，后接陈述语序的从句。例句：It is said that a Chinese ruler called Shen Nong was the first to discover tea as a drink.（据说一位叫神农的中国统治者第一个发现茶可作饮品。）It is believed that the first basketball game in history was played on December 21, 1891.（人们相信历史上第一场篮球赛是在1891年12月21日举行的。）"},
+ {"t": "茶：一项偶然的发明（An Accidental Invention）",
+  "d": "茶（世界上最受欢迎的饮品之一）是偶然被发明的：约5000年前，中国统治者神农（Shen Nong）在火上烧水时，一些茶叶落入沸水并停留了一段时间，散发出清香，神农品尝后觉得美味可口，茶就这样诞生了。几千年后，被称作“the saint of tea（茶圣）”的陆羽（Lu Yu）在《茶经》（Cha Jing）中提到神农。茶在6—7世纪被传入朝鲜和日本；约1660年传到英国，不到100年便成为英国的国民饮品；19世纪中国与西方国家的茶叶贸易（tea trade）兴起。"},
+ {"t": "薯片：厨师的一次失误（The History of Potato Chips）",
+  "d": "薯片（potato chips）是偶然被发明的：1853年，一位名叫乔治·克拉姆（George Crum）的厨师发明了薯片。当时一位顾客抱怨炸土豆切得不够薄（not thin enough），Crum 便把土豆切得非常非常薄，又炸（煮）了很长时间直到酥脆（crispy），最后撒上很多盐使它们变咸（salty）。没想到顾客很满意，薯片从此流行起来。"},
+ {"t": "篮球的诞生（Basketball）",
+  "d": "篮球是美国马萨诸塞州的一位加拿大籍医生詹姆斯·奈史密斯（James Naismith，1861年生）发明的。他当大学老师时被要求想出一种能在冬天室内玩的游戏，于是发明了在硬地板上进行的篮球运动，把全班学生分成两队比赛。人们相信历史上第一场篮球赛于1891年12月21日举行；1936年篮球在柏林（Berlin）奥运会上成为正式比赛项目。美国最著名的职业联赛是 NBA，中国的是 CBA。"},
+ {"t": "电话与拉链（Telephone & Zipper）",
+  "d": "电话：1876年由亚历山大·格雷厄姆·贝尔（Alexander Graham Bell，1847年生）发明，他与托马斯·沃森（Thomas Watson）合作研究；贝尔在电话里说的第一句话是“Mr. Watson, come here; I want to see you.”。拉链：1893年由惠特科姆·贾德森（Whitcomb Judson）发明，但那时（at that time）没有被广泛使用，大约1917年才开始流行。日常补充：without doubt 毫无疑问；take place 发生；all of a sudden 突然。"},
+]
+
+questions = [
+ {"q": "— When ___ the telephone invented? — I think it was invented in 1876.",
+  "opts": ["was", "is", "did", "were"], "ans": 0,
+  "exp": "问“电话是什么时候发明的？”用一般过去时的被动语态，主语 the telephone 是单数，be 用 was：was invented。答语 It was invented in 1876.（课文：贝尔于1876年发明电话。）"},
+ {"q": "— Who was the telephone invented ___? — Alexander Graham Bell.",
+  "opts": ["by", "for", "in", "at"], "ans": 0,
+  "exp": "询问“被谁发明的”用 by（被……），介词 by 后接动作执行者：was invented by Alexander Graham Bell。by 提问执行者时用 Who ... invented by?"},
+ {"q": "Tea was first ___ by Shen Nong about 5,000 years ago.",
+  "opts": ["drunk", "drank", "drinking", "drinks"], "ans": 0,
+  "exp": "一般过去时被动语态 was/were + 过去分词；drink 的过去分词是 drunk。句意：大约5000年前茶被神农第一次饮用。（课本3c原句）"},
+ {"q": "Tea, one of the world's favorite drinks, was invented ___ accident.",
+  "opts": ["by", "in", "on", "with"], "ans": 0,
+  "exp": "固定短语 by accident 意为“偶然地、意外地”。课文原句：tea ... was invented by accident（茶是偶然被发明的），即神农烧水时茶叶偶然落入沸水。"},
+ {"q": "Potato chips were invented by a cook ___ George Crum in 1853.",
+  "opts": ["called", "calling", "calls", "to call"], "ans": 0,
+  "exp": "过去分词 called 作后置定语，意为“名叫……的”：a cook called George Crum = a cook who was called George Crum。薯片是厨师 George Crum 在1853年偶然发明的。"},
+ {"q": "The customer said the fried potatoes were not thin ___, so George Crum cut them really, really thin.",
+  "opts": ["enough", "too", "very", "so"], "ans": 0,
+  "exp": "enough 修饰形容词/副词时后置：not thin enough 不够薄。顾客嫌薯条切得不够薄，Crum 才把土豆切得极薄并炸到酥脆，薯片由此诞生。"},
+ {"q": "Basketball was invented by James Naismith, a ___ doctor, in 1891.",
+  "opts": ["Canadian", "American", "English", "Chinese"], "ans": 0,
+  "exp": "课文原句：Basketball was invented by a Canadian doctor named James Naismith（篮球是由一位名叫詹姆斯·奈史密斯的加拿大医生发明的）。Naismith 1861年出生。"},
+ {"q": "It is believed that the first basketball game in history was played on December 21, ___.",
+  "opts": ["1891", "1853", "1876", "1936"], "ans": 0,
+  "exp": "课文原句：It is believed that the first basketball game in history was played on December 21, 1891.（人们相信历史上第一场篮球赛于1891年12月21日举行。）1853年是薯片发明年份，1876年是电话发明年份。"},
+ {"q": "Basketball became an event at the Olympics in Berlin in ___.",
+  "opts": ["1936", "1891", "1927", "1971"], "ans": 0,
+  "exp": "课文原句：Then in 1936 in Berlin, it became an event at the Olympics.（1936年在柏林，篮球成为奥运会比赛项目。）"},
+ {"q": "— What ___ the hot ice-cream scoop ___ for? — It's used for serving really cold ice-cream.",
+  "opts": ["is; used", "was; used", "is; using", "did; use"], "ans": 0,
+  "exp": "问用途用 What is ... used for?，答语 be used for doing sth.（被用来做……）。the hot ice-cream scoop（热冰淇淋勺）用于舀真正冰凉的冰淇淋，课文2b听力内容。"},
+ {"q": "The fridge is used for ___ food fresh and cold.",
+  "opts": ["keeping", "keep", "kept", "to keeping"], "ans": 0,
+  "exp": "be used for doing sth. 中 for 是介词，后接动名词 keeping：冰箱被用来保鲜、冷藏食物。若用不定式则说 be used to keep，故 to keeping 不成立。"},
+ {"q": "In the factory, this machine is used ___ bottles with water.",
+  "opts": ["to fill", "filling", "filled", "fill"], "ans": 0,
+  "exp": "be used to do sth. = be used for doing sth.，意为“被用来做某事”，后接动词原形构成不定式 to fill：这台机器被用来给瓶子装水。这是 be used to do 的正确用法。"},
+ {"q": "They sold the fridge at a low price. → The fridge ___ at a low price.",
+  "opts": ["was sold", "is sold", "sold", "were sold"], "ans": 0,
+  "exp": "主动句变被动：宾语 the fridge 作主语（单数用 was），动词变为 was + 过去分词 sold，原主语 They 不明确可省略。the fridge 是单数，故不用 were。"},
+ {"q": "Alexander Graham Bell worked ___ the invention of the telephone with Thomas Watson.",
+  "opts": ["on", "in", "at", "for"], "ans": 0,
+  "exp": "固定搭配 work on 意为“从事、致力于”。课文4c：Mr. Bell worked on the invention of the telephone with Thomas Watson.（贝尔与沃森一起致力于电话的发明。）"},
+ {"q": "The first sentence that ___ on the telephone by Mr. Bell was “Mr. Watson, come here; I want to see you.”",
+  "opts": ["was said", "said", "was saying", "is said"], "ans": 0,
+  "exp": "先行词 sentence 与 say 是被动关系（话被说出），且 by Mr. Bell 提示被动，用一般过去时被动 was said。这是贝尔在电话里说的第一句话。"},
+ {"q": "The hot ice-cream scoop runs on ___ and can scoop really cold ice-cream easily.",
+  "opts": ["electricity", "electric", "electrical", "electronic"], "ans": 0,
+  "exp": "on 是介词，后接名词 electricity：runs on electricity（靠电力运转）。electric 是形容词“电的”，electrical“电气的”，electronic“电子的”，均不能放在介词 on 后。"},
+]
+
+flashcards = [
+ {"q": "When was the telephone invented? Who was it invented by?",
+  "a": "It was invented in 1876. / It was invented by Alexander Graham Bell.（电话是1876年由贝尔发明的。）"},
+ {"q": "by accident",
+  "a": "偶然地，意外地（= by chance / by mistake）。Tea was invented by accident. 茶是偶然被发明的。注意是固定短语，不说 by accidently。"},
+ {"q": "be used for doing sth. = be used to do sth.",
+  "a": "被用来做某事。The hot ice-cream scoop is used for serving really cold ice-cream.（热冰淇淋勺被用来舀冰凉的冰淇淋。）for 后接动名词，to 后接动词原形。"},
+ {"q": "一般过去时的被动语态结构",
+  "a": "主语 + was/were + 及物动词的过去分词。The zipper was invented by Whitcomb Judson in 1893.（拉链是贾德森1893年发明的。）单数/不可数用 was，复数用 were。"},
+ {"q": "Shen Nong 神农",
+  "a": "a Chinese ruler 中国统治者，约5000年前（about 5,000 years ago）第一个发现茶（discover tea as a drink）：烧水时茶叶偶然落入沸水，茶水清香可口。课文称 It is said that...（据说）。"},
+ {"q": "Lu Yu and his book Cha Jing",
+  "a": "陆羽被称作“the saint of tea（茶圣）”，他在《茶经》中提到神农；该书讲述茶树如何种植与制茶、何处出产最好的茶叶等。茶在6—7世纪传入朝鲜和日本。"},
+ {"q": "George Crum and potato chips",
+  "a": "George Crum 是厨师（a cook）。顾客嫌薯条 not thin enough（不够薄），他于1853年把土豆切得极薄、炸到酥脆（crispy）并加盐，薯片被偶然发明（invented by mistake / by accident）。"},
+ {"q": "James Naismith and basketball",
+  "a": "詹姆斯·奈史密斯，加拿大医生（Canadian doctor，1861年生），1891年发明篮球；第一场比赛于1891年12月21日举行；1936年柏林奥运会成为比赛项目。美国职业联赛 NBA，中国 CBA。"},
+ {"q": "What is it used for?",
+  "a": "它被用来做什么？（问用途）答：It is used for + doing. / It is used to + do. 例：It's used for serving really cold ice-cream."},
+ {"q": "It is said that ... / It is believed that ...",
+  "a": "据说……/ 人们相信……，后接陈述语序从句。It is said that Shen Nong was the first to discover tea as a drink. / It is believed that the first basketball game was played on December 21, 1891."},
+]
+
+errors = [
+ {"title": "被动语态漏掉 be 或动词形式错误",
+  "wrong": "把“电话是1876年发明的”写成 The telephone invented in 1876.（漏掉 was），或写成 was invent / was invented 混用动词原形。",
+  "right": "一般过去时被动语态必须是 was/were + 过去分词：The telephone was invented in 1876. 主语单数用 was，复数用 were；主要动词一律用过去分词（invented），不可用原形或进行式。"},
+ {"title": "was / were 与主语不一致",
+  "wrong": "The shoes with special heels was invented... / The zipper were invented in 1893.——be 动词不看“被谁发明”，而看主语单复数。",
+  "right": "被动语态中 be 与句子的主语保持一致：The zipper was invented in 1893.（zipper 单数用 was）；The shoes with lights were invented...（shoes 复数用 were）。先找主语再定 was/were。"},
+ {"title": "by accident 写错形式",
+  "wrong": "把“偶然地”写成 by an accident / by accidently / in accident，或与 in the accident（在事故中）混淆。",
+  "right": "by accident 是固定短语，意为“偶然地、意外地”（= by chance / by mistake），中间不加冠词、accident 不加 -ly。Tea was invented by accident. 正确。"},
+ {"title": "used to do / be used to doing / be used to do 三组混淆",
+  "wrong": "把“被用来做”写成 be used to doing：This knife is used to cutting bread.（误，本意是“这把刀被用来切面包”）；又把“过去常常”错说成 used to doing。",
+  "right": "be used to do sth. = be used for doing sth. = 被用来做……（主语是物，被动）：This knife is used to cut / for cutting bread. 而 used to do 意为“过去常常”（主语是人，主动）：He used to get up late. 若表“习惯于”，才是 be used to doing。"},
+ {"title": "被动语态的一般疑问句 / 特殊疑问句结构错乱",
+  "wrong": "把“电话是贝尔发明的吗？”写成 Did the telephone invented by Bell? 或 Was the telephone invent by Bell?（did 后接原形却出现过去分词，或 was 后仍用原形）。",
+  "right": "被动语态疑问句把 be 动词（was/were）提前即可，过去分词保持不变：Was the telephone invented by Bell? 特殊疑问句：When was the telephone invented? Who was it invented by? 注意 by 不能省略，且用宾格 whom/who 提问时后面不再加其他词。"},
+]
+
+data = {
+ "hero_title": "Unit 6 · When was it invented?",
+ "meta_desc": "人教九全 · Unit 6",
+ "knowledge": knowledge,
+ "questions": questions,
+ "flashcards": flashcards,
+ "errors": errors,
+}
+
+out_dir = "/home/administrator/xuci-jiancha/_lql9_data"
+os.makedirs(out_dir, exist_ok=True)
+out_path = os.path.join(out_dir, "english9_u6.json")
+with open(out_path, "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, indent=1)
+
+# 校验
+with open(out_path, encoding="utf-8") as f:
+    back = json.load(f)
+assert back.keys() == data.keys()
+for k in ("knowledge", "flashcards"):
+    assert len(back[k]) == len(data[k])
+assert len(back["questions"]) == len(data["questions"])
+assert len(back["errors"]) == len(data["errors"])
+for i, q in enumerate(back["questions"]):
+    assert len(q["opts"]) == 4 and 0 <= q["ans"] <= 3, (i, q)
+
+print("hero_title:", back["hero_title"])
+print("knowledge:", len(back["knowledge"]))
+print("questions:", len(back["questions"]))
+print("flashcards:", len(back["flashcards"]))
+print("errors:", len(back["errors"]))
+print("saved:", out_path)
