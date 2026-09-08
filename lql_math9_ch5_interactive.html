@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第5章 投影与视图 · 九年级数学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-calculator"></i> 第5章 投影与视图</h1>
+    <div class="meta">北师大九上 · 第5章 · 14 题 · 8 知识 · 7 卡 · 5 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>投影：光线下的影子</h4><p>物体在光线的照射下，在地面或墙壁上留下的影子，叫做物体的投影（投影现象）。光线、物体与承接影子的平面（投影面）的相对位置，决定了影子的形状和大小。</p></div>
+      <div class="k-item"><h4>中心投影：点光源</h4><p>手电筒、路灯、台灯（灯泡）的光线可以看成是从同一个点发出的，这样的光线形成的投影叫做中心投影。物体离点光源的远近、位置改变时，影子的大小方向都会随之变化。</p></div>
+      <div class="k-item"><h4>平行投影与正投影</h4><p>太阳光线可以看成平行光线，平行光线形成的投影叫做平行投影。在平行投影中，当光线（投影线）与投影面垂直时，这种投影叫做正投影；光线斜着照时得到的不是正投影。</p></div>
+      <div class="k-item"><h4>同一时刻物高与影长成正比</h4><p>在同一时刻（同一地点）的太阳光（平行投影）下，物体的高度与影长成正比例：物高∶影长＝同一常数。因此量出竹竿（或人）的高与影长，再量出旗杆、楼房的影长，就能算出它们的高度；灯光（中心投影）下没有这个正比关系。</p></div>
+      <div class="k-item"><h4>视图与三视图</h4><p>用正投影的方法绘制的物体在投影面上的图形，叫做物体的视图。从正面看得到主视图，从左面看得到左视图，从上面看得到俯视图。画三视图时，主视图在左上角，俯视图画在主视图的正下方，左视图画在主视图的正右方。</p></div>
+      <div class="k-item"><h4>三视图的对应关系</h4><p>主视图反映物体的长和高，俯视图反映物体的长和宽，左视图反映物体的高和宽。画图时：主视图与俯视图长对正（等长），主视图与左视图高平齐（等高），俯视图与左视图宽相等（等宽）。</p></div>
+      <div class="k-item"><h4>常见几何体的三视图</h4><p>正方体：三个视图都是正方形；球：三个视图都是圆；圆柱（底面水平放置）：主视图、左视图是矩形，俯视图是圆；圆锥（底面水平放置）：主视图、左视图是等腰三角形，俯视图是圆且圆心处画一个点表示顶点；长方体：三个视图都是矩形。</p></div>
+      <div class="k-item"><h4>由视图想象立体图形</h4><p>把三个视图对照起来看：俯视图一般给出底面（主体）的形状，主视图、左视图给出高度和侧面的轮廓。如三个视图都是正方形→正方体；主、左视图是矩形且俯视图是圆→圆柱；主、左视图是等腰三角形且俯视图是带圆心的圆→圆锥。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 北师大版九年级上册 · 第1章 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_math9_ch5_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第5章 投影与视图',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第5章 投影与视图,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "下列现象中，属于平行投影的是（　）", "opts": ["路灯下人的影子", "阳光下旗杆在地面上的影子", "台灯（灯泡）下书本在桌面上的影子", "手电筒照射下物体在墙上的影子"], "ans": 1, "exp": "太阳光线可看成平行光线，阳光下旗杆的影子是平行投影；路灯、台灯、手电筒的光线都从一点发出，形成的都是中心投影。"}, {"q": "晚上，小明站在路灯下，路灯光线从路灯（可看成一个点）发出，在地面上形成了他的影子。这种投影属于（　）", "opts": ["平行投影", "中心投影", "正投影", "斜投影"], "ans": 1, "exp": "路灯的光线可以看成是从同一个点发出的，这样的投影叫中心投影；平行光线（如太阳光）形成的才是平行投影。正投影指平行光线与投影面垂直的情形，路灯下不属于。"}, {"q": "下列说法正确的是（　）", "opts": ["太阳光下的影子一定是正投影", "路灯下人的影子属于平行投影", "平行光线与投影面垂直时形成的投影叫做正投影", "正投影是由从一点发出的光线形成的"], "ans": 2, "exp": "正投影指平行光线与投影面垂直时形成的投影。A：阳光斜照时投影线不垂直于投影面，不是正投影；B：路灯是点光源，属中心投影；D：正投影的光线互相平行，不是从一点发出。"}, {"q": "同一时刻，一根高 1.5 米的竹竿在阳光下的影长为 0.5 米，旁边一栋楼的影长为 6 米。这栋楼高（　）米", "opts": ["9 米", "18 米", "4.5 米", "3 米"], "ans": 1, "exp": "同一时刻太阳光下物高与影长成正比：1.5∶0.5=3，楼高=6×3=18（米）。选 9 是把比例用反了（6×1.5）。"}, {"q": "同一时刻，身高 1.6 米的小明影子长 0.8 米，旁边旗杆的影子长 5 米，旗杆高（　）米", "opts": ["5 米", "8 米", "10 米", "4 米"], "ans": 2, "exp": "同一时刻物高与影长成正比：1.6∶0.8=2，旗杆高=5×2=10（米）。8 是 1.6×5 的误算。"}, {"q": "下列几何体中，主视图、左视图、俯视图都是圆的是（　）", "opts": ["圆柱", "圆锥", "球", "正方体"], "ans": 2, "exp": "从任何方向看球都是一个圆；圆柱的俯视图是圆但主、左视图是矩形，圆锥的主、左视图是等腰三角形，正方体三视图都是正方形。"}, {"q": "正方体的主视图、左视图、俯视图分别是（　）", "opts": ["三角形", "正方形", "圆", "梯形"], "ans": 1, "exp": "正方体的每个面都是正方形，从正面、左面、上面看都是正方形，所以它的三个视图都是正方形。"}, {"q": "下列几何体中，主视图和左视图都是矩形、俯视图是圆的是（　）", "opts": ["圆锥", "球", "圆柱", "长方体"], "ans": 2, "exp": "竖直放置的圆柱：从正面、左面看都是矩形，从上面看是圆；圆锥主、左视图是三角形，球三视图都是圆，长方体三视图都是矩形（俯视图不是圆）。"}, {"q": "竖直放置的圆锥（底面水平），从正面看到的图形（主视图）是（　）", "opts": ["圆", "等腰三角形", "矩形", "正方形"], "ans": 1, "exp": "从正面看圆锥，看到的是以底面直径为底、母线为腰的等腰三角形；圆是从正上方看（俯视图）才得到的形状。"}, {"q": "竖直放置的圆锥，从正上方看到的图形（俯视图）是（　）", "opts": ["等腰三角形", "长方形", "圆", "圆心处有一点（表示顶点）的圆"], "ans": 3, "exp": "圆锥的俯视图是圆：底面圆投影为圆周，顶点投影在圆心处，所以圆心处还要画一个点表示顶点，不能只画一个光秃秃的圆。"}, {"q": "一个长、宽、高互不相等的长方体，它的三个视图是（　）", "opts": ["三个正方形", "三个大小不一定相同的长方形（矩形）", "两个三角形和一个长方形", "一个圆和两个长方形"], "ans": 1, "exp": "长方体从正面、左面、上面看都是长方形（矩形）；长、宽、高互不相等时，三个矩形的长宽组合不同，大小一般也不相同。"}, {"q": "画三视图时，主视图与俯视图之间的对应关系是（　）", "opts": ["宽相等", "长对正", "高平齐", "形状相同"], "ans": 1, "exp": "主视图与俯视图都反映物体的“长”，两者要长对正；高平齐指主视图与左视图，宽相等指俯视图与左视图。"}, {"q": "画三视图时，主视图与左视图之间的对应关系是（　）", "opts": ["宽相等", "长对正", "高平齐", "角度相等"], "ans": 2, "exp": "主视图与左视图都反映物体的“高”，两者要高平齐；长对正属于主视图与俯视图，宽相等属于俯视图与左视图。"}, {"q": "三视图中所说的“宽相等”，是指（　）的宽相等", "opts": ["主视图与俯视图", "主视图与左视图", "俯视图与左视图", "主、左、俯三个视图之间"], "ans": 2, "exp": "俯视图与左视图都反映物体的“宽”，所以宽相等指俯视图与左视图；主视图与俯视图要长对正，主视图与左视图要高平齐。"}]
+const flashcards=[{"q": "什么是投影？", "a": "物体在光线的照射下，在地面或墙壁上留下的影子叫做投影；光线、物体、投影面的位置关系决定影子的形状和大小"}, {"q": "中心投影与平行投影怎么分？", "a": "光线从同一点（点光源）发出→中心投影（手电筒、路灯、台灯灯泡）；光线互相平行→平行投影（太阳光）"}, {"q": "什么是正投影？", "a": "平行光线（投影线）与投影面垂直时形成的投影叫正投影；光线斜着照时不是正投影，三视图就是用正投影法绘制的"}, {"q": "三视图分别从哪里看？", "a": "主视图：从正面看；左视图：从左面看；俯视图：从上面看。摆放：主视图在左上角，俯视图在正下方，左视图在正右方"}, {"q": "三视图的三条对应关系？", "a": "长对正：主视图与俯视图；高平齐：主视图与左视图；宽相等：俯视图与左视图"}, {"q": "常见几何体的三视图？", "a": "正方体：三个正方形；球：三个圆；圆柱（竖放）：主、左为矩形，俯为圆；圆锥（竖放）：主、左为等腰三角形，俯为圆且圆心处有一点（顶点）；长方体：三个矩形"}, {"q": "同一时刻物高与影长的关系？", "a": "同一时刻太阳光（平行投影）下，物高与影长成正比（物高∶影长=常数），可据此测旗杆、楼高；灯光（中心投影）下不成立"}]
+const errors=[{"title": "太阳光与灯光分不清 ❌", "wrong": "以为所有光源照出的影子是同一类投影，把路灯、手电筒、台灯下的影子也当成平行投影。", "right": "判断看光线：<span class=\"hl\">太阳光可看成平行光线→平行投影</span>；路灯、手电筒、台灯（灯泡）的光线从同一个点发出，是<span class=\"hl\">点光源→中心投影</span>。"}, {"title": "正投影理解偏 ❌", "wrong": "误以为“影子投在地面上”就是正投影，或以为灯光下也能形成正投影。", "right": "正投影有特定含义：<span class=\"hl\">平行光线与投影面垂直</span>时形成的投影才叫正投影；光线斜着照或从点光源发出时，都不是正投影。"}, {"title": "圆锥的俯视图画错 ❌", "wrong": "把圆锥的俯视图画成三角形，或画成“光秃秃”的圆，漏掉了表示顶点的点。", "right": "圆锥的主、左视图才是等腰三角形；<span class=\"hl\">俯视图是圆，且圆心处有一点表示顶点</span>（从正上方能看到顶点的投影）。"}, {"title": "三视图对应关系张冠李戴 ❌", "wrong": "把“高平齐”记成主视图与俯视图的关系，把“宽相等”记成主视图与左视图的关系。", "right": "记口诀：<span class=\"hl\">长对正（主视图↔俯视图）、高平齐（主视图↔左视图）、宽相等（俯视图↔左视图）</span>——高只出现在主、左视图中，宽只出现在俯、左视图中。"}, {"title": "灯光下也套用物高与影长成正比 ❌", "wrong": "在路灯（中心投影）下直接套用“物高∶影长”求高度。", "right": "同一时刻<span class=\"hl\">物高与影长成正比只在太阳光（平行投影）下成立</span>；灯光下影子还随物体离灯的距离变化，不能直接按正比计算。"}]
+
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_math9_ch5';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

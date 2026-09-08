@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第3章 概率的进一步认识 · 九年级数学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-calculator"></i> 第3章 概率的进一步认识</h1>
+    <div class="meta">北师大九上 · 第3章 · 14 题 · 8 知识 · 8 卡 · 5 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>两步试验与等可能结果</h4><p>涉及两个步骤（如连摸两次球、同时抛两枚硬币）的随机试验叫两步试验。求概率前，先要列出所有等可能的结果：总结果数=第一步可能数×第二步可能数。若各结果等可能，则 P(事件)=该事件包含的结果数÷总结果数。注意：只有当每个结果出现的机会都相同（等可能）时，才能用"结果数之比"求概率。</p></div>
+      <div class="k-item"><h4>列表法（适合两步试验）</h4><p>把第一次的所有可能结果作为横行、第二次的所有可能结果作为竖列，交叉处的每个格就是一种结果。例如同时抛两枚骰子：第一枚 1~6、第二枚 1~6，列表得 6×6=36 个等可能结果。列表法的好处是既不重也不漏，能直观看到"点数和为 7"占 (1,6)(2,5)(3,4)(4,3)(5,2)(6,1) 共 6 格，概率=6/36=1/6。</p></div>
+      <div class="k-item"><h4>树状图法（适合两步及多步试验）</h4><p>按试验的先后顺序分步画图：第一步画出的每个分枝代表第一次的一种可能结果，从每个分枝再分出第二步的可能结果……依此类推。树状图的"层数"等于试验的步数，末尾每个分枝的路径就是一个结果，路径总数=各步可能数相乘。例如抛三次硬币：树状图共 2×2×2=8 个末端结果。画完可数末端个数与乘法结果核对，防止漏枝。</p></div>
+      <div class="k-item"><h4>有放回与不放回的区别（关键）</h4><p>有放回：摸出后记下结果再放回去，两次的情况完全相同、互不影响（独立），每一步概率不变。如袋中 2 红 1 白，有放回连摸两次都红：(2/3)×(2/3)=(2/3)²=4/9。不放回：第一次摸出后不放回，第二次的球数少 1，概率要"跟着第一次的结果变"，属于条件概率，通常用列表或树状图列举来算。如 2 红 1 白不放回连摸两次都红：第一次取红 2/3，剩下 1 红 1 白，第二次仍取红 1/2，故 P=(2/3)×(1/2)=1/3。审题先看清"放回"还是"不放回"！</p></div>
+      <div class="k-item"><h4>同色球要编号，保证结果等可能</h4><p>袋中 2 个红球虽颜色相同，却是两个不同的球。列举时要把它们记作"红1、红2"分别考虑，否则会把 (红1,红2) 与 (红2,红1) 混成一种，各结果不再等可能，算出的概率就错了。例如 2 红 1 白不放回摸两次，编号后共有 6 个等可能结果，而"两次都是红球"占 (红1红2)(红2红1) 2 个，P=2/6=1/3，与 2/3×1/2=1/3 一致。</p></div>
+      <div class="k-item"><h4>频率与概率的关系</h4><p>做 n 次试验，事件 A 发生 m 次，比值 m/n 叫事件 A 发生的频率。频率随每次试验而波动，不是固定的；但在大量重复试验中，频率会稳定在某个常数附近，这个稳定的值就可以作为事件 A 发生概率的估计值。频率是"试验出来"的，概率是"客观存在"的，二者近似相等而不一定完全相等。</p></div>
+      <div class="k-item"><h4>用频率估计概率（试验法）</h4><p>当无法用列举法（等可能结果无限或不易列出）求概率时，用大量重复试验：试验次数足够多时，频率稳定于概率，用稳定后的频率作为概率的估计值。例如抛掷图钉钉尖朝上的概率、6 个人中 2 人生肖相同的概率、50 人中 2 人生日相同的概率，都可以通过大量试验或模拟试验（如用计算器产生随机数代替试验）来估计。</p></div>
+      <div class="k-item"><h4>概率的意义：是"长期比例"不是"短期保证"</h4><p>概率 P 满足 0≤P≤1：P=0 表示不可能发生，P=1 表示必然发生。P=1/2 只说明大量重复试验中该事件约有一半次数发生，绝不表示"做 2 次就必有 1 次发生"。同理，抛硬币正面概率为 1/2，连抛 10 次可能全是正面，但试验次数越多，正面频率越接近 1/2。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 北师大版九年级上册 · 第1章 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_math9_ch3_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第3章 概率的进一步认识',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第3章 概率的进一步认识,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "袋中有 2 个红球、1 个白球，它们除颜色外都相同。从中随机摸出 1 个球记下颜色后不放回，再随机摸出 1 个球，两次都摸到红球的概率是（　）", "opts": ["1/3", "2/9", "1/2", "4/9"], "ans": 0, "exp": "不放回连摸两个：第一次摸红概率 2/3（2 红 1 白）；不放回后袋中剩 1 红 1 白，第二次仍摸红的概率变为 1/2。P=2/3×1/2=1/3。选 4/9 是把不放回误当有放回，选 2/9 是误把第二次当 1/3。"}, {"q": "袋中有 2 个红球、1 个白球，除颜色外都相同。随机摸出 1 个球记下颜色后放回，再随机摸出 1 个球，两次都摸到红球的概率是（　）", "opts": ["1/3", "2/3", "4/9", "1/9"], "ans": 2, "exp": "有放回时两次互不影响、每次摸红都是 2/3，P=(2/3)×(2/3)=(2/3)²=4/9≈0.44。注意与不放回的区别：不放回第二次袋中只剩 1 红，概率是 2/3×1/2=1/3，小于 4/9。"}, {"q": "同时抛掷两枚质地均匀的骰子，则两枚骰子朝上一面的点数之和为 7 的概率是（　）", "opts": ["1/12", "1/6", "1/9", "1/3"], "ans": 1, "exp": "列表或列举：两枚骰子共 6×6=36 个等可能结果；点数和为 7 的有 (1,6)(2,5)(3,4)(4,3)(5,2)(6,1) 共 6 个，P=6/36=1/6。"}, {"q": "同时抛掷三枚质地均匀的硬币，至少有两枚正面朝上的概率是（　）", "opts": ["3/8", "1/2", "5/8", "1/4"], "ans": 1, "exp": "三枚硬币共 2×2×2=8 个等可能结果；至少两正包括：三正 HHH 1 种、两正一反 HHT、HTH、THH 3 种，共 4 种，P=4/8=1/2。"}, {"q": "袋中有 2 个红球、1 个白球（除颜色外都相同），连续摸两次球。其余条件相同，\"两次都摸到红球\"的概率，有放回与不放回相比（　）", "opts": ["有放回时更大", "不放回时更大", "一样大", "无法确定"], "ans": 0, "exp": "有放回：P=(2/3)²=4/9；不放回：第二次红球少 1 个，P=2/3×1/2=1/3。因为 4/9＞1/3，所以有放回时更大。不放回使第二次可选的球变少，\"都红\"更难发生。"}, {"q": "袋中有 2 个红球、1 个白球（除颜色外都相同）。随机摸出 1 个球记下颜色后放回，再摸 1 个球，两次恰好是\"第一次红、第二次白\"的概率是（　）", "opts": ["1/3", "2/9", "1/9", "4/9"], "ans": 1, "exp": "有放回时两次独立：第一次摸红 P=2/3，第二次摸白 P=1/3，P=2/3×1/3=2/9。注意若是不放回，第二次摸白概率变为 1/2，结果会是 1/3，看清\"放回\"二字。"}, {"q": "连续抛掷同一枚质地均匀的硬币两次，两次朝上一正一反的概率是（　）", "opts": ["1/4", "1/3", "1/2", "3/4"], "ans": 2, "exp": "两次抛掷互不影响，共 2×2=4 个等可能结果：正正、正反、反正、反反。一正一反占正反、反正 2 个，P=2/4=1/2。易错选 1/4：只数了\"先正后反\"一种而漏掉\"先反后正\"。"}, {"q": "小明用树状图求概率：从每组各 1 张、牌面分别为 1 和 2 的两组牌中，各随机摸出 1 张，摸到的两张牌牌面数字之和为 3 的概率是（　）", "opts": ["1/2", "1/4", "1/3", "2/3"], "ans": 0, "exp": "两步试验共 2×2=4 个等可能结果：(1,1)(1,2)(2,1)(2,2)；和为 3 的有 (1,2)(2,1) 2 个，P=2/4=1/2，和为 3 的概率最大。"}, {"q": "盒中有 3 个球，分别标有数字 1、2、3，除数字外都相同。随机摸出 1 个球记下数字后不放回，再摸 1 个，两次数字之和为 3 的概率是（　）", "opts": ["1/6", "1/3", "1/9", "1/2"], "ans": 1, "exp": "不放回共 3×2=6 个等可能结果：(1,2)(1,3)(2,1)(2,3)(3,1)(3,2)；和为 3 的只有 (1,2)(2,1) 2 个，P=2/6=1/3。选 1/9 是按\"放回、和也看顺序\"误算（放回时应是 2/9）。"}, {"q": "盒中有 3 个球，分别标有数字 1、2、3，除数字外都相同。随机摸出 1 个球记下数字后放回，再摸 1 个，两次摸到的数字相同的概率是（　）", "opts": ["0", "1/9", "1/3", "2/9"], "ans": 2, "exp": "有放回共 3×3=9 个等可能结果，数字相同的有 (1,1)(2,2)(3,3) 3 个，P=3/9=1/3。若改为不放回，两次数字不可能相同，概率为 0——放回与否结果完全不同。"}, {"q": "小华掷一枚质地均匀的骰子 600 次，估计出现\"6 点\"朝上的次数约为（　）", "opts": ["60 次", "100 次", "120 次", "600 次"], "ans": 1, "exp": "掷一次出现 6 点的概率为 1/6。大量重复试验中频率稳定于概率，故 600 次中约出现 600×1/6=100 次。这是用\"频率稳定值≈概率\"做估计的典型应用。"}, {"q": "在大量重复抛硬币的试验中，正面朝上的频率稳定在 0.5 附近。下列说法正确的是（　）", "opts": ["抛 1000 次，必有 500 次正面朝上", "正面朝上的概率约为 0.5，且试验次数越多频率越稳定在 0.5 附近", "频率就是概率，两者完全相同", "抛的次数越多，正面朝上的频率越大"], "ans": 1, "exp": "频率随试验波动，但大量重复时稳定于一个常数，该稳定值即概率的估计值：P(正面)≈0.5。A 错：概率 0.5 不是\"保证\"；C 错：频率是试验值、概率是理论值，只是近似；D 错：频率在 0.5 附近摆动，不一定越抛越大。"}, {"q": "某射击运动员在相同条件下射击 200 次，击中靶心 160 次，则他射击一次击中靶心的概率估计为（　）", "opts": ["0.8", "0.6", "0.4", "0.2"], "ans": 0, "exp": "击中靶心的频率为 160/200=0.8。试验次数足够多时频率稳定于概率，故用 0.8 作为击中靶心概率的估计值（实际概率约为 0.8，可能略有偏差）。"}, {"q": "袋中有 2 个红球、1 个白球（除颜色外都相同），随机摸出 1 个球不放回，再摸 1 个球，恰好\"第一次红、第二次白\"的概率是（　）", "opts": ["2/9", "1/2", "1/3", "2/3"], "ans": 2, "exp": "不放回：第一次摸红 P=2/3；不放回后剩 1 红 1 白，第二次摸白的条件概率为 1/2，P=2/3×1/2=1/3。选 1/2 只算了第二步的条件概率，漏乘第一步；选 2/9 是按放回误算。"}]
+const flashcards=[{"q": "两步试验求概率，有哪两种常用方法？一般步骤是什么？", "a": "列表法和树状图法。步骤：① 弄清试验分几步、每步各有几种等可能结果；② 用列表或树状图不重不漏地列出所有结果；③ 数出总结果数 N 与事件包含的结果数 M；④ P(事件)=M/N。只有各结果等可能才能用结果数之比。"}, {"q": "列表法和树状图法各适合什么情况？", "a": "列表法适合两步试验（结果不多时清晰直观，如两枚骰子 6×6 表）；树状图法两步、三步甚至更多步都可以，层数=试验步数，特别适合三步及以上的试验（如抛三次硬币、摸三次球）。"}, {"q": "袋中 2 红 1 白，连摸两次都红：有放回和不放回的概率各是多少？为什么不同？", "a": "有放回：P=(2/3)×(2/3)=(2/3)²=4/9；不放回：P=(2/3)×(1/2)=1/3。因为不放回时第一次摸走 1 个红球，第二次只剩 1 红 1 白，摸红概率由 2/3 降到 1/2；有放回则每次都是 2/3，两次互不影响。"}, {"q": "有放回与不放回的本质区别是什么？", "a": "有放回：每次试验前的情况完全相同，各次结果互不影响（独立），每一步的概率不变。不放回：第一次的结果会改变袋中的球数，第二步的概率要\"由第一次的结果决定\"（条件概率），必须用列表或树状图按顺序列举。"}, {"q": "什么是\"用频率估计概率\"？", "a": "在相同条件下做大量重复试验，事件发生的频率 m/n 会稳定在某个常数附近，这个稳定值就可作为该事件概率的估计值。适合无法用列举法（等可能结果太多或不确定）求概率的情形，如掷图钉、生日相同等问题，也可用计算器产生的随机数做模拟试验。"}, {"q": "频率和概率是一回事吗？", "a": "不是。频率=发生的次数÷试验总次数，随每次试验而波动，是个\"试验值\"；概率是事件固有的\"理论值\"，固定不变。二者关系：大量重复试验时频率稳定于概率，用频率的稳定值估计概率，两者近似相等而不一定相等。"}, {"q": "同时抛两枚骰子，为什么点数之和为 7 的概率是 1/6？", "a": "两枚骰子各有 6 种结果，共 6×6=36 个等可能结果；和为 7 的有 (1,6)(2,5)(3,4)(4,3)(5,2)(6,1) 共 6 个，所以 P=6/36=1/6。注意\"点数和\"不是一个等可能结果，不能直接把 2~12 十一种和当成 11 等分。"}, {"q": "求概率时为什么要把同色球编号（如红1、红2）？", "a": "两个红球颜色相同但仍是两个不同的球。不编号会把\"第一次红1第二次红2\"和\"第一次红2第二次红1\"当成同一种，使各结果出现机会不相等，就不能用\"结果数之比\"。编号后每种结果才等可能，如 2 红 1 白不放回摸两次共 6 个等可能结果，两次都红占 2 个，P=2/6=1/3。"}]
+const errors=[{"title": "有放回、不放回不分，套错算式", "wrong": "袋中 2 红 1 白，连摸两次都红：不放回时也写 (2/3)²=4/9；或反过来，放回时写 2/3×1/2=1/3。看到\"都红\"就只记一种算式。", "right": "先看题目关键字：\"放回\"→两次独立、概率不变，P=(2/3)²=4/9；\"不放回\"→第二次受第一次影响，P=2/3×1/2=1/3（第二次只剩 1 红 1 白）。不放回先红后白则是 2/3×1/2=1/3，放回先红后白是 2/3×1/3=2/9。"}, {"title": "同色球不编号，结果不等可能", "wrong": "2 红 1 白不放回摸两次，把结果写成\"红红、红白、白红、白白\"4 种，说两次都红概率是 1/4。", "right": "白白根本不可能，且\"红红\"实际有 (红1红2)(红2红1) 两种，直接数 4 种各结果不等可能。应编号列举：共 6 个等可能结果 (红1红2)(红2红1)(红1白)(红2白)(白红1)(白红2)，两次都红占 2 个，P=2/6=1/3，与 2/3×1/2=1/3 吻合。"}, {"title": "把一次试验的频率当成概率", "wrong": "抛 100 次硬币正面朝上 60 次，就说\"正面朝上的概率是 0.6\"；或做 2 次试验都没出现某事件，就说它概率为 0。", "right": "频率随试验次数波动，不能拿一次小样本的频率当概率。概率的估计要靠大量重复试验：次数越多，频率越稳定在某个常数附近，这个稳定值才是概率的估计。100 次抛 60 正，只能说本次频率 0.6，概率仍约为 0.5，再多抛些次数频率会向 0.5 靠拢。"}, {"title": "树状图漏层、漏枝，或把\"点数和\"当等可能结果", "wrong": "三步试验只画两层；某一层的可能结果画不全；或求两枚骰子点数和时，把和 2、3、…、12 共 11 种当等可能结果，说 P(和为 7)=1/11。", "right": "树状图层数=步数，画完用乘法核对末端数：总数=每层可能数相乘（如三步试验 2×2×2=8）。骰子的等可能结果应是 36 个\"点数对\"(a,b)，和为 7 占其中 6 对，P=6/36=1/6。"}, {"title": "概率的\"长期比例\"理解偏差", "wrong": "掷一枚硬币正面概率是 1/2，就说\"掷 2 次必有 1 次正面\"；或\"已经连出 5 次正面，下一次必出反面\"。", "right": "概率 1/2 表示大量重复试验中正面约占一半，是长期规律，不是对少数几次的保证：掷 2 次可能 2 次都正面。每次抛掷互不影响，前 5 次正面不会\"增加\"第 6 次反面的机会；但试验次数足够多时，频率会稳定于 1/2。"}]
+
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_math9_ch3';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>
