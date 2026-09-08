@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第十一单元 · 盐 化肥 · 九年级化学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#27ae60;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-flask"></i> 第十一单元 · 盐 化肥</h1>
+    <div class="meta">人教九下 · 第11单元 · 16 题 · 10 知识 · 10 卡 · 6 错</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid"><div class="k-item"><h4>单元导览 · 常见的盐与化肥</h4><p>本单元围绕两条主线：课题1“生活中常见的盐”——认识食盐(NaCl)、纯碱(Na₂CO₃)、小苏打(NaHCO₃)、碳酸钙(CaCO₃)等常见盐的俗称、性质与用途，掌握碳酸根离子的检验方法，理解复分解反应的定义及发生条件；课题2“化学肥料”——认识氮肥、磷肥、钾肥和复合肥料，掌握铵根离子(NH₄⁺)的检验方法。高频考点：俗称与化学式对应、碳酸盐与酸反应的现象与方程式、复分解反应能否发生的判断、化肥的分类与合理施用。</p></div>
+      <div class="k-item"><h4>盐的组成与物质分类（单质/化合物不混淆）</h4><p>盐是由金属离子(或铵根离子 NH₄⁺)和酸根离子构成的化合物，如 NaCl(Na⁺+Cl⁻)、Na₂CO₃(Na⁺+CO₃²⁻)。纯净物按元素组成分为单质(由同种元素组成，如 O₂、Fe)和化合物(由不同种元素组成)；化合物又可分为氧化物(如 CO₂、CaO)、酸(如 HCl)、碱(如 NaOH)、盐(如 NaCl)。注意：NaOH 俗称烧碱、火碱、苛性钠，是碱；Ca(OH)₂ 俗称熟石灰、消石灰，是碱；CaO 俗称生石灰，是氧化物——“碱”“盐”要按构成判断，不能只看名称。</p></div>
+      <div class="k-item"><h4>氯化钠 NaCl：俗称与用途</h4><p>氯化钠俗称食盐，是白色固体，易溶于水，有咸味(实验室不尝药品)。用途：生活中的调味品；医疗上配制 0.9% 的生理盐水(用于静脉输液)、腌制食品防腐；农业上用食盐水选种；工业上以食盐为原料制取碳酸钠、氢氧化钠、氯气和盐酸等；冬天在路面上撒食盐可使冰雪较快融化(盐水凝固点降低)。注意区分：NaCl 是盐，NaOH 才是碱。</p></div>
+      <div class="k-item"><h4>碳酸钠与碳酸氢钠：俗称、性质、用途</h4><p>碳酸钠 Na₂CO₃ 俗称纯碱(也叫苏打)，白色粉末，易溶于水，水溶液显碱性——但它由 Na⁺ 和 CO₃²⁻ 构成，属于盐而不是碱；广泛用于玻璃、造纸、纺织和洗涤剂的生产。碳酸氢钠 NaHCO₃ 俗称小苏打，白色细小晶体，能溶于水；是焙制糕点所用发酵粉的主要成分之一(受热或与酸反应放出 CO₂ 使糕点疏松)，医疗上可用于治疗胃酸过多(与盐酸反应：NaHCO₃+HCl=NaCl+H₂O+CO₂↑)。二者都能与稀盐酸反应产生二氧化碳气体。</p></div>
+      <div class="k-item"><h4>碳酸钙 CaCO₃：大理石、石灰石与蛋壳</h4><p>碳酸钙是白色固体，难溶于水。大理石、石灰石的主要成分都是 CaCO₃(鸡蛋壳、贝壳、珍珠、水垢的主要成分也是它)，大理石和石灰石是重要的建筑材料，碳酸钙还可作补钙剂。性质：① 高温分解制生石灰：CaCO₃ —高温→ CaO+CO₂↑；② 与稀盐酸反应(实验室制取 CO₂ 的原理)：CaCO₃+2HCl=CaCl₂+H₂O+CO₂↑。碳酸钙虽难溶于水，但能与酸反应放出 CO₂——初中常考“难溶的碳酸盐也能与酸反应”。</p></div>
+      <div class="k-item"><h4>碳酸根离子(CO₃²⁻)的检验</h4><p>检验样品中是否含碳酸根(或碳酸氢根)：取样，滴加足量稀盐酸，产生大量气泡(生成 CO₂)，把产生的气体通入澄清石灰水中，澄清石灰水变浑浊，则证明样品中含 CO₃²⁻(或 HCO₃⁻)。两个典型方程式：Na₂CO₃+2HCl=2NaCl+H₂O+CO₂↑；CaCO₃+2HCl=CaCl₂+H₂O+CO₂↑。注意：仅凭“加酸冒气泡”不能下结论——活泼金属(如锌)与酸反应也产生气泡(氢气)，但氢气不能使澄清石灰水变浑浊，必须验证气体能使澄清石灰水变浑浊。</p></div>
+      <div class="k-item"><h4>复分解反应：定义与发生条件</h4><p>两种化合物互相交换成分，生成另外两种化合物的反应叫复分解反应(可表示为 AB+CD→AD+CB)，反应前后各元素化合价不变。能否发生要看两点：① 生成物中必须有沉淀、气体或水三者之一生成(如酸+碱生成水，碳酸盐+酸生成气体，Na₂CO₃+CaCl₂ 生成 CaCO₃ 沉淀)；② 当反应物是盐与盐、盐与碱时，参加反应的两种物质都必须可溶(溶于水)。典型判断：NaCl 溶液与 KNO₃ 溶液混合，交换成分后仍得到 NaCl 和 KNO₃，无沉淀、无气体、无水生成，故不能反应。</p></div>
+      <div class="k-item"><h4>化学肥料与氮、磷、钾的作用</h4><p>农作物生长需要量较大的营养元素是氮(N)、磷(P)、钾(K)。氮肥能促进作物茎叶生长茂盛、叶色浓绿——缺氮时植株矮小瘦弱、叶片发黄；磷肥能促进作物根系发达，增强抗寒、抗旱能力——缺磷时生长迟缓、产量降低；钾肥能使作物茎秆粗壮，增强抗病虫害和抗倒伏能力——缺钾时茎秆软弱、容易倒伏。常见氮肥：尿素 CO(NH₂)₂(含氮量最高，约 46.7%)、硝酸铵 NH₄NO₃、碳酸氢铵 NH₄HCO₃(俗称碳铵，易分解，应密封保存在阴凉处)、硫酸铵 (NH₄)₂SO₄；含 NH₄⁺ 的氮肥叫铵态氮肥。</p></div>
+      <div class="k-item"><h4>磷肥、钾肥与复合肥料</h4><p>磷肥：磷矿粉(主要成分是 Ca₃(PO₄)₂ 磷酸钙)、钙镁磷肥、过磷酸钙等，能增强作物的抗寒抗旱能力。钾肥：氯化钾 KCl、硫酸钾 K₂SO₄ 等，能使茎秆粗壮、抗倒伏。复合肥料：同时含有 N、P、K 三种营养元素中两种或两种以上的化肥，如硝酸钾 KNO₃(含氮、钾两种元素)、磷酸二氢铵 NH₄H₂PO₄(含氮、磷两种元素)。化肥要合理施用：与农家肥配合使用，根据土壤和作物需要适量施用，长期过量施用化肥会造成土壤板结、酸化，并污染水体。</p></div>
+      <div class="k-item"><h4>铵根离子(NH₄⁺)的检验与施肥禁忌</h4><p>铵态氮肥(含 NH₄⁺)与碱(如熟石灰 Ca(OH)₂、氢氧化钠)混合研磨或共热，会放出有刺激性气味的氨气(NH₃)，氨气能使湿润的红色石蕊试纸变蓝——据此可检验物质中是否含铵根。因此，铵态氮肥不能与熟石灰、草木灰(主要成分 K₂CO₃，水溶液显碱性)等碱性物质混合施用，否则放出氨气、氮元素逸散，降低肥效。农药要根据病虫害的发生规律对症下药，按规定用量和浓度使用，防止农药残留和环境污染。</p></div>
+      
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 人教版九年级上册 · 第五单元第1章 动物的主要类群 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_chem9_u11_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'第十一单元 盐 化肥',chapter:'第五单元第1章 动物的主要类群',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'第十一单元 盐 化肥,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q": "下列俗称与其化学式对应错误的是（　）", "opts": ["A. 食盐——NaCl", "B. 纯碱——Na₂CO₃", "C. 小苏打——NaHCO₃", "D. 烧碱——Na₂CO₃"], "ans": 3, "exp": "烧碱是 NaOH 的俗称(又叫火碱、苛性钠)；Na₂CO₃ 的俗称是纯碱、苏打，不是烧碱。"}, {"q": "Na₂CO₃ 俗称“纯碱”，其水溶液显碱性，但从物质分类看，Na₂CO₃ 属于（　）", "opts": ["A. 碱", "B. 盐", "C. 氧化物", "D. 单质"], "ans": 1, "exp": "Na₂CO₃ 由金属离子 Na⁺ 和酸根离子 CO₃²⁻ 构成，属于盐；它只是俗称带“碱”字、水溶液显碱性，并不是碱。"}, {"q": "把鸡蛋壳碎片(主要成分是 CaCO₃)放入稀盐酸中，观察到的现象是（　）", "opts": ["A. 无明显变化", "B. 产生大量气泡，把产生的气体通入澄清石灰水中，石灰水变浑浊", "C. 固体溶解后溶液变成蓝色", "D. 固体熔化并放出大量热"], "ans": 1, "exp": "CaCO₃ 与稀盐酸反应：CaCO₃+2HCl=CaCl₂+H₂O+CO₂↑，生成的气体 CO₂ 能使澄清石灰水变浑浊。"}, {"q": "焙制糕点所用的发酵粉的主要成分之一，医疗上还可用于治疗胃酸过多的物质是（　）", "opts": ["A. 氯化钠 NaCl", "B. 碳酸氢钠 NaHCO₃", "C. 碳酸钠 Na₂CO₃", "D. 碳酸钙 CaCO₃"], "ans": 1, "exp": "小苏打 NaHCO₃ 是发酵粉的主要成分之一(受热或与酸反应放出 CO₂)，能与胃酸(盐酸)反应：NaHCO₃+HCl=NaCl+H₂O+CO₂↑，用于治疗胃酸过多。"}, {"q": "要检验某固体样品中是否含碳酸根离子(CO₃²⁻)，正确的操作是（　）", "opts": ["A. 滴加稀盐酸，观察到有气泡产生即可判断", "B. 滴加足量稀盐酸，把产生的气体通入澄清石灰水，石灰水变浑浊", "C. 滴加氢氧化钠溶液，观察有无现象", "D. 加水振荡，观察是否全部溶解"], "ans": 1, "exp": "活泼金属与酸反应也冒气泡(氢气)，所以只“冒气泡”不能证明含 CO₃²⁻；必须把气体通入澄清石灰水，变浑浊才说明生成的是 CO₂。"}, {"q": "下列各组物质在溶液中混合后，不能发生复分解反应的是（　）", "opts": ["A. NaCl 溶液与 KNO₃ 溶液", "B. Na₂CO₃ 溶液与稀盐酸", "C. NaOH 溶液与稀盐酸", "D. CaCl₂ 溶液与 Na₂CO₃ 溶液"], "ans": 0, "exp": "NaCl 与 KNO₃ 交换成分后仍得到 NaCl 和 KNO₃，无沉淀、无气体、无水生成，不能反应；B 生成 CO₂↑，C 中和反应生成水，D 生成 CaCO₃ 白色沉淀，都能反应。"}, {"q": "盐与盐(或盐与碱)发生复分解反应时，除生成物中要有沉淀、气体或水外，还须满足的条件是（　）", "opts": ["A. 参加反应的两种物质都是可溶的", "B. 参加反应的两种物质都难溶于水", "C. 生成的两种物质都易溶于水", "D. 反应物中必须有一种是酸"], "ans": 0, "exp": "盐+盐、盐+碱这类反应，参加反应的两种物质都必须可溶，反应才可能发生；生成物中则要有沉淀、气体或水三者之一。"}, {"q": "下列化学反应中，属于复分解反应的是（　）", "opts": ["A. C+O₂ —点燃→ CO₂", "B. CaCO₃ —高温→ CaO+CO₂↑", "C. Fe+CuSO₄=FeSO₄+Cu", "D. Na₂CO₃+2HCl=2NaCl+H₂O+CO₂↑"], "ans": 3, "exp": "复分解反应是两种化合物互相交换成分生成另外两种化合物(化合价不变)。A 是化合反应，B 是分解反应，C 是置换反应，D 是复分解反应。"}, {"q": "下列物质中，能与水反应并放出大量热，常被用作食品干燥剂的是（　）", "opts": ["A. 生石灰 CaO", "B. 熟石灰 Ca(OH)₂", "C. 食盐 NaCl", "D. 小苏打 NaHCO₃"], "ans": 0, "exp": "生石灰 CaO 能与水反应：CaO+H₂O=Ca(OH)₂，放出大量热，常用作食品干燥剂；Ca(OH)₂、NaCl、NaHCO₃ 与水不反应放热。"}, {"q": "下列关于氯化钠(NaCl)的说法错误的是（　）", "opts": ["A. NaCl 是重要的调味品", "B. 医疗上常用 0.9% 的 NaCl 溶液作生理盐水", "C. NaCl 可用作食品干燥剂", "D. 工业上以 NaCl 为原料可制取 Na₂CO₃、NaOH 等"], "ans": 2, "exp": "NaCl 是调味品、可配生理盐水、可作工业原料(制 Na₂CO₃、NaOH、Cl₂ 等)，但食盐不能作食品干燥剂(常用干燥剂是生石灰 CaO)。"}, {"q": "下列氮肥中，氮元素质量分数最高的是（　）", "opts": ["A. 硝酸铵 NH₄NO₃", "B. 尿素 CO(NH₂)₂", "C. 碳酸氢铵 NH₄HCO₃", "D. 硫酸铵 (NH₄)₂SO₄"], "ans": 1, "exp": "尿素 CO(NH₂)₂ 的含氮量约 46.7%，是含氮量最高的氮肥；NH₄NO₃ 约 35%，(NH₄)₂SO₄ 约 21.2%，NH₄HCO₃ 约 17.7%。"}, {"q": "某农田作物出现叶片发黄、植株矮小瘦弱的现象。为促进茎叶生长茂盛、叶色浓绿，应施用的肥料是（　）", "opts": ["A. 尿素(氮肥)", "B. 磷矿粉(磷肥)", "C. 氯化钾(钾肥)", "D. 钙镁磷肥(磷肥)"], "ans": 0, "exp": "缺氮时植株矮小瘦弱、叶片发黄；氮肥能促进茎叶生长茂盛、叶色浓绿，应施含氮的化肥(如尿素、硝酸铵等氮肥)。"}, {"q": "要鉴别氯化铵(NH₄Cl)和氯化钠两种白色固体，最简便可行的方法是（　）", "opts": ["A. 分别取样与熟石灰混合研磨，闻气味", "B. 分别加水，观察是否溶解", "C. 观察固体颜色的深浅", "D. 分别尝味道"], "ans": 0, "exp": "NH₄Cl 含 NH₄⁺，与熟石灰 Ca(OH)₂ 混合研磨会放出有刺激性气味的氨气(NH₃)；NaCl 无明显现象。二者都易溶于水且都是白色，不可用尝味道的方法。"}, {"q": "下列化肥中，属于复合肥料的是（　）", "opts": ["A. 尿素 CO(NH₂)₂", "B. 硝酸钾 KNO₃", "C. 磷矿粉 Ca₃(PO₄)₂", "D. 氯化钾 KCl"], "ans": 1, "exp": "KNO₃ 同时含 N、K 两种营养元素，属于复合肥料(磷酸二氢铵 NH₄H₂PO₄ 含 N、P，也是复合肥料)；尿素只含 N，磷矿粉只含 P，KCl 只含 K。"}, {"q": "铵态氮肥(如碳酸氢铵 NH₄HCO₃)不能与熟石灰、草木灰等碱性物质混合施用的原因是（　）", "opts": ["A. 二者反应放出氨气，氮元素逸散，降低肥效", "B. 二者混合会发生爆炸", "C. 会使土壤酸性显著增强", "D. 会生成难溶物堵塞土壤孔隙"], "ans": 0, "exp": "铵态氮肥含 NH₄⁺，遇碱(熟石灰、草木灰)放出有刺激性气味的氨气 NH₃，氮元素逸散损失，肥效降低，所以不能与碱性物质混合施用。"}, {"q": "下列化学方程式书写正确的是（　）", "opts": ["A. Na₂CO₃+HCl=NaCl+H₂O+CO₂↑", "B. CaCO₃+2HCl=CaCl₂+H₂O+CO₂↑", "C. 2NaOH+CuSO₄=Na₂SO₄+Cu(OH)₂", "D. CaCO₃ —高温→ CaO+CO₂"], "ans": 1, "exp": "A 未配平，应为 Na₂CO₃+2HCl=2NaCl+H₂O+CO₂↑；C 生成的 Cu(OH)₂ 是蓝色沉淀，应标“↓”；D 生成的 CO₂ 是气体，应标“↑”。B 是实验室制取 CO₂ 的原理，书写正确。"}]
+const flashcards=[{"q": "常见物质的俗称、化学式与类别速查表", "a": "NaCl 食盐(盐)；Na₂CO₃ 纯碱、苏打(盐，水溶液显碱性)；NaHCO₃ 小苏打(盐)；CaCO₃ 大理石、石灰石的主要成分(盐)；CaO 生石灰(氧化物)；Ca(OH)₂ 熟石灰、消石灰(碱)；NaOH 烧碱、火碱、苛性钠(碱)"}, {"q": "“纯碱”是碱吗？物质分类怎么分", "a": "不是！Na₂CO₃ 由 Na⁺ 和 CO₃²⁻ 构成，属于盐，因水溶液显碱性才俗称“纯碱”。纯净物：单质(同种元素组成)与化合物；化合物分氧化物(CO₂、CaO)、酸(HCl)、碱(NaOH、Ca(OH)₂)、盐(NaCl、Na₂CO₃)"}, {"q": "碳酸根(CO₃²⁻)检验的操作与方程式", "a": "取样→滴加足量稀盐酸(产生气泡)→把气体通入澄清石灰水，变浑浊→证明含 CO₃²⁻/HCO₃⁻。Na₂CO₃+2HCl=2NaCl+H₂O+CO₂↑；CaCO₃+2HCl=CaCl₂+H₂O+CO₂↑(只冒泡不算，要验气体)"}, {"q": "复分解反应发生条件是什么", "a": "①生成物中必须有沉淀、气体或水三者之一；②盐+盐、盐+碱反应时，两种反应物都必须可溶。判断 NaCl 溶液与 KNO₃ 溶液：交换成分仍得 NaCl、KNO₃，无沉淀/气体/水生成→不能反应"}, {"q": "NaCl、Na₂CO₃、NaHCO₃、CaCO₃ 各有什么用途", "a": "NaCl：调味、腌渍食品、0.9%生理盐水、选种、工业制 Na₂CO₃/NaOH/Cl₂、冬季融雪；Na₂CO₃：制玻璃、造纸、纺织、洗涤剂；NaHCO₃：发酵粉、治胃酸过多；CaCO₃：建筑材料、补钙剂、高温分解制生石灰 CaO"}, {"q": "哪些盐能与稀盐酸反应产生 CO₂(难溶的也能吗)", "a": "碳酸盐都能：Na₂CO₃、NaHCO₃、CaCO₃ 与稀盐酸反应均放出 CO₂(气泡)，气体通澄清石灰水变浑浊；CaCO₃ 虽难溶于水也能与酸反应——CaCO₃+2HCl=CaCl₂+H₂O+CO₂↑；CaCO₃ 高温分解：CaCO₃ —高温→ CaO+CO₂↑"}, {"q": "氮、磷、钾三元素的作用口诀与缺素症状", "a": "口诀“氮叶磷根钾茎”：氮促茎叶茂盛浓绿(缺氮：叶黄、矮小瘦弱)；磷促根系发达、抗寒抗旱(缺磷：根不发达、生长迟缓)；钾促茎秆粗壮抗倒伏(缺钾：茎秆软弱易倒伏)"}, {"q": "常见化肥怎么分类(氮/磷/钾/复合)", "a": "氮肥：尿素 CO(NH₂)₂(含氮量最高约46.7%)、NH₄NO₃、NH₄HCO₃(碳铵，易分解需密封阴凉保存)、(NH₄)₂SO₄；磷肥：磷矿粉 Ca₃(PO₄)₂、钙镁磷肥、过磷酸钙；钾肥：KCl、K₂SO₄；复合肥(含 N、P、K 中两种以上)：KNO₃、NH₄H₂PO₄"}, {"q": "怎么检验铵根 NH₄⁺？铵态氮肥能跟碱性物质混用吗", "a": "取样品与熟石灰 Ca(OH)₂ 混合研磨(或共热)，闻到刺激性气味，放出的氨气能使湿润的红色石蕊试纸变蓝→含 NH₄⁺。铵态氮肥不能与熟石灰、草木灰等碱性物质混施，否则放出 NH₃、氮流失、降低肥效"}, {"q": "本单元必背方程式一组", "a": "①Na₂CO₃+2HCl=2NaCl+H₂O+CO₂↑ ②CaCO₃+2HCl=CaCl₂+H₂O+CO₂↑ ③NaHCO₃+HCl=NaCl+H₂O+CO₂↑ ④CaCO₃ —高温→ CaO+CO₂↑ ⑤CaO+H₂O=Ca(OH)₂(放热，制熟石灰)"}]
+const errors=[{"title": "俗称张冠李戴、“纯碱”≠碱 ❌", "wrong": "把“纯碱”当成碱，把“烧碱”误写成 Na₂CO₃，把 CaO 说成是熟石灰。", "right": "Na₂CO₃ 俗称纯碱、苏打，但由 Na⁺ 和 CO₃²⁻ 构成，属于<span class=\"hl\">盐而不是碱</span>；NaOH 的俗称是<span class=\"hl\">烧碱、火碱、苛性钠</span>；CaO 是<span class=\"hl\">生石灰</span>(氧化物)，Ca(OH)₂ 才是<span class=\"hl\">熟石灰、消石灰</span>(碱)，NaCl 俗称食盐。"}, {"title": "检验碳酸根“一冒泡就下结论” ❌", "wrong": "取样滴加稀盐酸，看到有气泡冒出，就断言样品中含 CO₃²⁻。", "right": "必须<span class=\"hl\">把产生的气体通入澄清石灰水</span>，若变浑浊才能证明含 CO₃²⁻(或 HCO₃⁻)——锌、铁等活泼金属与酸反应也会冒气泡(生成 H₂)，但氢气<span class=\"hl\">不能使澄清石灰水变浑浊</span>。"}, {"title": "复分解反应判断想当然 ❌", "wrong": "认为“两种盐交换成分后一定能反应”，误判 NaCl 溶液与 KNO₃ 溶液能够反应。", "right": "复分解反应能否发生，关键是看<span class=\"hl\">生成物中有没有沉淀、气体或水</span>(三者至少其一)；NaCl 与 KNO₃ 交换成分后仍是 NaCl 和 KNO₃，<span class=\"hl\">无沉淀、无气体、无水生成，不能反应</span>。盐+盐、盐+碱还要求<span class=\"hl\">两种反应物都可溶</span>。"}, {"title": "方程式漏配平、漏标箭头 ❌", "wrong": "把 Na₂CO₃ 与盐酸的反应写成 Na₂CO₃+HCl=NaCl+H₂O+CO₂↑(未配平)，或误认为 CaCO₃ 难溶于水就不能与稀盐酸反应。", "right": "正确写法：<span class=\"hl\">Na₂CO₃+2HCl=2NaCl+H₂O+CO₂↑</span>；<span class=\"hl\">CaCO₃+2HCl=CaCl₂+H₂O+CO₂↑</span>。碳酸钙难溶于水，但能与酸反应放出 CO₂——<span class=\"hl\">难溶的碳酸盐也能与酸反应</span>，气体产物要标“↑”。"}, {"title": "铵态氮肥与碱性物质混施 ❌", "wrong": "把碳铵(NH₄HCO₃)与草木灰、熟石灰一起施用，误以为能“增强肥效”。", "right": "铵态氮肥(含 NH₄⁺)与碱混合研磨或共热会放出<span class=\"hl\">有刺激性气味的氨气 NH₃</span>，氮元素逸散，<span class=\"hl\">降低肥效</span>，所以不能与碱性物质混施。检验铵根：加熟石灰研磨，闻到刺激性气味，气体能使<span class=\"hl\">湿润的红色石蕊试纸变蓝</span>。"}, {"title": "化肥分类只看一个元素 ❌", "wrong": "看到 KNO₃ 含氮就说它是氮肥，看到 NH₄H₂PO₄ 含磷就说它是磷肥。", "right": "化肥按所含<span class=\"hl\">N、P、K 营养元素</span>分类：只含 N 的是氮肥(尿素、硝酸铵等)，只含 P 的是磷肥(磷矿粉 Ca₃(PO₄)₂、钙镁磷肥)，只含 K 的是钾肥(KCl、K₂SO₄)；<span class=\"hl\">含 N、P、K 中两种或两种以上的是复合肥料</span>——KNO₃(含 N、K)、NH₄H₂PO₄(含 N、P)都是复合肥。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_chem9_u11_interactive';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>
