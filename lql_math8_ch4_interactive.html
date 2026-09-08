@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>一次函数 · 8年级上数学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 一次函数</h1>
+    <div class="meta">第4章 一次函数 · 15 题 · 12 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+      <div class="k-item"><h4>函数概念</h4><p><strong>定义</strong>：在一个变化过程中有两个变量 x、y，对于 x 的每一个确定值，y 都有<strong>唯一确定</strong>的值与之对应，则 y 是 x 的函数，x 叫自变量。<br><strong>三要素</strong>：①两个变量；②x 有范围（定义域）；③y 唯一对应（一对多不行）。<br><strong>判断函数</strong>：给一个 x，看 y 是否唯一——y²=x 不是函数（一个 x 对应 ±y），y=2x+1 是函数。<br><strong>表示方法</strong>：解析式法（y=kx+b）、列表法、图象法。</p></div>
+      <div class="k-item"><h4>一次函数</h4><p><strong>定义</strong>：形如 <strong>y=kx+b</strong>（k、b 为常数，<strong>k≠0</strong>）的函数叫一次函数。<br><strong>正比例函数</strong>：当 b=0 时，y=kx（k≠0），它是特殊的一次函数（必过原点）。<br><strong>判断</strong>：①x 的次数是 1；②x 的系数 k≠0；③式子中不能有 x²、1/x、|x| 等。<br><strong>易混</strong>：y=2 不是一次函数（无 x 项）；y=1/x 不是（x 次数 -1）；y=3x² 不是（次数 2）。<br><strong>关系</strong>：正比例函数 ⊂ 一次函数 ⊂ 函数。</p></div>
+      <div class="k-item"><h4>一次函数图象</h4><p><strong>图象</strong>：一次函数 y=kx+b 的图象是一条<strong>直线</strong>。<br><strong>两点画图法</strong>：直线由两点确定——常取①与 y 轴交点 (0,b)；②与 x 轴交点 (−b/k, 0)，连线即可。<br><strong>k = 斜率</strong>：决定倾斜方向与陡峭程度；<strong>b = 截距</strong>：与 y 轴交点纵坐标。<br><strong>例</strong>：y=2x−1，取 (0,−1) 和 (1/2,0) 连线。</p><div style="text-align:center;margin-top:.4rem"><svg viewBox="0 0 240 220" style="width:100%;max-width:220px;height:auto" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="110" x2="210" y2="110" stroke="#2d3748" stroke-width="1.5"/><line x1="120" y1="200" x2="120" y2="20" stroke="#2d3748" stroke-width="1.5"/><polygon points="210,110 202,106 202,114" fill="#2d3748"/><polygon points="120,20 116,28 124,28" fill="#2d3748"/><text x="214" y="114" font-size="11" fill="#2d3748">x</text><text x="124" y="24" font-size="11" fill="#2d3748">y</text><line x1="105" y1="170" x2="165" y2="50" stroke="#e74c3c" stroke-width="2"/><circle cx="120" cy="110" r="3" fill="#e74c3c"/><text x="94" y="124" font-size="10" fill="#718096">(0,0)</text><circle cx="168" cy="52" r="3" fill="#e74c3c"/><text x="174" y="48" font-size="10" fill="#c0392b" font-weight="bold">y=2x−1</text><circle cx="120" cy="140" r="3.5" fill="#4c51bf"/><text x="126" y="144" font-size="10" fill="#4c51bf">(0,−1)</text><circle cx="135" cy="110" r="3.5" fill="#2f855a"/><text x="148" y="122" font-size="10" fill="#2f855a">(1/2,0)</text></svg></div></div>
+      <div class="k-item"><h4>k的几何意义</h4><p><strong>k>0</strong>：y 随 x 增大而增大，直线<strong>上升</strong>（过一三象限方向）；<br><strong>k&lt;0</strong>：y 随 x 增大而减小，直线<strong>下降</strong>（过二四象限方向）；<br><strong>|k| 越大</strong>：直线越<strong>陡</strong>；|k| 越小，直线越平缓。<br><strong>记忆</strong>："正升负降，绝对值大陡峭"。</p><div style="text-align:center;margin-top:.4rem"><svg viewBox="0 0 240 200" style="width:100%;max-width:220px;height:auto" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="100" x2="210" y2="100" stroke="#2d3748" stroke-width="1.5"/><line x1="120" y1="180" x2="120" y2="20" stroke="#2d3748" stroke-width="1.5"/><text x="214" y="104" font-size="11" fill="#2d3748">x</text><text x="124" y="24" font-size="11" fill="#2d3748">y</text><line x1="90" y1="160" x2="160" y2="20" stroke="#48bb78" stroke-width="2"/><text x="162" y="34" font-size="10" fill="#2f855a" font-weight="bold">y=2x (k&gt;0)</text><line x1="90" y1="40" x2="160" y2="180" stroke="#e74c3c" stroke-width="2"/><text x="38" y="168" font-size="10" fill="#c0392b" font-weight="bold">y=−2x (k&lt;0)</text><line x1="90" y1="130" x2="160" y2="60" stroke="#667eea" stroke-width="2"/><text x="136" y="82" font-size="10" fill="#4c51bf" font-weight="bold">y=x (较缓)</text></svg></div></div>
+      <div class="k-item"><h4>b的几何意义</h4><p><strong>b>0</strong>：直线与 y 轴交于<strong>正半轴</strong> (0,b)，b 越大交点越高；<br><strong>b&lt;0</strong>：交于<strong>负半轴</strong> (0,b)；<strong>b=0</strong>：过原点 → 正比例函数。<br><strong>图象平移</strong>：b 相当于把 y=kx 的图象<strong>上下平移</strong> |b| 个单位（b&gt;0 上移，b&lt;0 下移）。<br><strong>例</strong>：y=2x+1 是 y=2x 上移 1 个单位；y=2x−3 是 y=2x 下移 3 个单位。</p></div>
+      <div class="k-item"><h4>求解析式</h4><p>待定系数法：设y=kx+b，代入两组x、y值，列方程组求k、b。例：图象过(1,3)、(2,5)，代入得k+b=3、2k+b=5，解得k=2、b=1，解析式为y=2x+1。</p></div>
+      <div class="k-item"><h4>与方程的联系</h4><p><strong>定理（数形结合）</strong>：一次函数 y=kx+b 的图象与 x 轴交点横坐标 = 方程 kx+b=0 的解。<br><strong>步骤</strong>：令 y=0 → 解 kx+b=0 → 得 x，交点即 (x,0)。<br><strong>例</strong>：y=2x−6，令 2x−6=0 得 x=3，与 x 轴交于 (3,0)，3 就是方程 2x−6=0 的解。<br><strong>推广（两线交点）</strong>：两个一次函数图象的交点坐标 = 联立两解析式所得方程组的解。<br><strong>例</strong>：y=x+1 与 y=−x+3 联立得 x=1、y=2，交点 (1,2)。</p><div style="text-align:center;margin-top:.4rem"><svg viewBox="0 0 240 220" style="width:100%;max-width:220px;height:auto" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="110" x2="210" y2="110" stroke="#2d3748" stroke-width="1.5"/><line x1="120" y1="200" x2="120" y2="20" stroke="#2d3748" stroke-width="1.5"/><text x="214" y="114" font-size="11" fill="#2d3748">x</text><text x="124" y="24" font-size="11" fill="#2d3748">y</text><line x1="90" y1="110" x2="180" y2="20" stroke="#e74c3c" stroke-width="2"/><text x="164" y="38" font-size="10" fill="#c0392b" font-weight="bold">y=x+1</text><line x1="120" y1="20" x2="210" y2="110" stroke="#48bb78" stroke-width="2"/><text x="56" y="38" font-size="10" fill="#2f855a" font-weight="bold">y=−x+3</text><circle cx="150" cy="50" r="4" fill="#e74c3c"/><text x="156" y="68" font-size="10" fill="#c0392b" font-weight="bold">交点(1,2)</text></svg></div></div>
+      <div class="k-item"><h4>实际应用</h4><p>行程问题（s=vt）、计费问题（起步价+里程费）、方案选择。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 北师大版八年级上册 · 第4章 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_math8_ch4_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); toggleKP(name, mark); };
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+
+// 事件委托：点击 .kp-mark 标记
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'一次函数',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'一次函数,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q":"下列函数中是一次函数的是","opts":["A. y=x²","B. y=3/x","C. y=2x+1","D. y=5"],"ans":2,"exp":"一次函数y=kx+b（k≠0）。y=x²是二次，y=3/x是反比例，y=5是常数函数。"},{"q":"一次函数y=2x-3的图象与y轴的交点坐标是","opts":["A. (0,2)","B. (0,-3)","C. (2,0)","D. (0,3)"],"ans":1,"exp":"与y轴交点横坐标x=0：y=2×0-3=-3，交点(0,-3)。"},{"q":"一次函数y=3x+1中，k=3的几何含义是","opts":["A. y随x增大而增大","B. 直线过原点","C. 与x轴平行","D. 直线与y轴交于3"],"ans":0,"exp":"k=3>0，y随x增大而增大，直线上升。k>0递增、k<0递减。"},{"q":"一次函数y=-2x+5的增减性是","opts":["A. 无法确定","B. y随x增大而减小","C. y随x增大而增大","D. 不变"],"ans":1,"exp":"k=-2<0，y随x增大而减小。"},{"q":"正比例函数y=kx的图象","opts":["A. 只经过第一象限","B. 一定经过原点","C. 不经过原点","D. 与y轴交于(0,b)"],"ans":1,"exp":"正比例函数y=kx是b=0的一次函数，图象经过原点(0,0)。"},{"q":"已知一次函数图象过(1,3)和(0,1)，则解析式是","opts":["A. y=2x-1","B. y=2x+1","C. y=3x","D. y=x+2"],"ans":1,"exp":"设y=kx+b，代入(0,1)得b=1；代入(1,3)得k+1=3，k=2。y=2x+1。"},{"q":"一次函数y=3x-6与x轴的交点坐标是","opts":["A. (6,0)","B. (-2,0)","C. (2,0)","D. (0,-6)"],"ans":2,"exp":"与x轴交点y=0：3x-6=0，x=2。交点(2,0)。"},{"q":"函数y=(m-2)x+3是一次函数，则m","opts":["A. m=2","B. m<2","C. m>2","D. m≠2"],"ans":3,"exp":"一次函数要求k≠0，即m-2≠0，m≠2。"},{"q":"直线y=2x向上平移3个单位得到的直线是","opts":["A. y=5x","B. y=2x-3","C. y=2(x+3)","D. y=2x+3"],"ans":3,"exp":"向上平移：b加3，y=2x+3。"},{"q":"下列直线中，y随x增大而减小的是","opts":["A. y=3x","B. y=-2x+4","C. y=0.5x-1","D. y=x+1"],"ans":1,"exp":"k<0则递减：y=-2x+4中k=-2<0。"},{"q":"直线y=-x+1经过","opts":["A. 第一、二、四象限","B. 第一、三、四象限","C. 第一、二、三象限","D. 第二、三、四象限"],"ans":0,"exp":"k=-1<0下降，b=1>0交y轴正半轴，过一、二、四象限。"},{"q":"若一次函数y=kx+b过(0,-2)且k<0，则图象","opts":["A. 过一、二、四象限","B. 过一、三、四象限","C. 过原点","D. 过二、三、四象限"],"ans":3,"exp":"b=-2交y轴负半轴，k<0下降，过二、三、四象限。"},{"q":"汽车以60km/h匀速行驶，行驶路程S(km)与时间t(h)的关系是","opts":["A. S=60","B. S=60/t","C. S=60t","D. S=t+60"],"ans":2,"exp":"路程=速度×时间，S=60t，是正比例函数。"},{"q":"一次函数y=x-3与y=2x+1的图象交点坐标是","opts":["A. (1,-2)","B. (-4,-7)","C. (4,5)","D. (0,-3)"],"ans":1,"exp":"联立：x-3=2x+1，-x=4，x=-4；y=-4-3=-7。交点(-4,-7)。"},{"q":"函数y=kx+b的图象经过第一、三、四象限，则","opts":["A. k<0,b<0","B. k<0,b>0","C. k>0,b<0","D. k>0,b>0"],"ans":2,"exp":"过一、三、四象限：上升(k>0)且交y轴负半轴(b<0)。"},{"q":"下列各式中，y不是x的函数的是","opts":["A. y=1/x","B. y=3x-1","C. y=x²","D. y=±x"],"ans":3,"exp":"函数的定义：x每取一个确定值，y有唯一确定的值对应。y=±x中一个x对应两个y值，不符合函数定义；A、B、D均满足。"},{"q":"某市出租车计费：起步价8元（3km内），超过3km后每km收费2元。行驶x km（x>3）应付y元，则y与x的关系式是","opts":["A. y=2x+2","B. y=2x-2","C. y=2x+5","D. y=2x+8"],"ans":0,"exp":"超过3km的部分为(x-3)km，y=8+2(x-3)=8+2x-6=2x+2。"}]
+const flashcards=[{"q": "函数定义", "a": "x的每个值→y唯一确定的值，y是x的函数"}, {"q": "一次函数", "a": "y=kx+b（k≠0）；b=0时为正比例函数y=kx"}, {"q": "图象", "a": "一条直线；两点确定一条直线（常取与坐标轴交点）"}, {"q": "k的意义", "a": "k>0递增（上升），k<0递减（下降）；|k|越大越陡"}, {"q": "b的意义", "a": "与y轴交点(0,b)：b>0正半轴，b<0负半轴，b=0过原点"}, {"q": "待定系数法", "a": "设y=kx+b→代入两组x,y→列方程组→求k,b"}, {"q": "与x轴交点", "a": "令y=0，解kx+b=0，交点横坐标是方程的解"}, {"q": "平移规律", "a": "y=kx+b上下平移：上加下减（b变）；左右平移：x变"}, {"q": "象限判断", "a": "k>0,b>0一三；k>0,b<0一三四；k<0,b>0一二四；k<0,b<0二三四"}, {"q": "实际应用", "a": "行程S=vt；计费=起步价+单价×量"}, {"q": "交点", "a": "两直线交点坐标=两解析式联立方程组的解：令两式y相等解x，再代回求y。"}, {"q": "正比例函数", "a": "y=kx（k≠0），图象过原点，是特殊的正比例函数"}]
+const errors=[{"title": "k≠0忽略", "wrong": "把y=5也算一次函数。", "right": "一次函数y=kx+b中k≠0是前提。y=5是常数函数（k=0），图象是平行于x轴的直线，不是一次函数。"}, {"title": "k符号与增减", "wrong": "k>0时y随x增大而减小。", "right": "k>0时y随x增大而增大（图象从左向右上升）；k<0时y随x增大而减小（下降）。口诀：正增负减。"}, {"title": "b是交点", "wrong": "以为b是直线与x轴交点。", "right": "b是直线与y轴交点的纵坐标，交点坐标为(0,b)；与x轴交点是(-b/k,0)。求法：令x=0得b，令y=0得x=-b/k。"}, {"title": "平移方向", "wrong": "向上平移写y=2x-3。", "right": "上加下减：向上平移b加；向下平移b减。y=2x上移3→y=2x+3。"}, {"title": "待定系数代反", "wrong": "把(1,3)代成x=3,y=1。", "right": "点的坐标是(x,y)有序数对：第一个数是x，第二个数是y。例：(1,3)表示x=1、y=3，代入y=kx+b得k+b=3。"}, {"title": "正比例混淆", "wrong": "以为所有一次函数都过原点。", "right": "只有b=0即正比例函数y=kx的图象过原点；一般一次函数y=kx+b与y轴交于(0,b)，不过原点。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_math8_ch4';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>

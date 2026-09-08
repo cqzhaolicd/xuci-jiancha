@@ -1,0 +1,301 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>勾股定理 · 8年级上数学</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#e74c3c;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.navbar{background:linear-gradient(135deg,var(--primary),var(--primary)dd);padding:.6rem 0;position:sticky;top:0;z-index:1000}
+.navbar .container{max-width:1000px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.navbar-nav{display:flex;gap:.1rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.25rem .55rem;border-radius:6px;font-size:.75rem;cursor:pointer;transition:all .15s}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:960px;margin:0 auto;padding:.5rem 1rem}
+.hero{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:.8rem;text-align:center}
+.hero h1{font-size:1.25rem;font-weight:800;color:var(--text)}
+.hero h1 i{color:var(--primary);margin-right:.35rem}
+.hero .meta{margin-top:.3rem;font-size:.78rem;color:var(--text-light)}
+.tab-nav{display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.78rem;font-weight:500;color:var(--text-light)}
+.tab-btn:hover,.tab-btn.active{border-color:var(--primary);color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:.6rem}
+.card-title{font-size:.88rem;font-weight:700;margin-bottom:.6rem;color:var(--text)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+.k-item{background:var(--bg);border-radius:var(--radius-sm);padding:.7rem;border-left:3px solid var(--primary)}
+.k-item h4{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.k-item p{font-size:.74rem;color:var(--text-light);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap}
+.quiz-progress .progress-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;min-width:80px}
+.quiz-progress .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s}
+.quiz-progress span{font-size:.74rem;color:var(--text-light)}
+.q-header{font-size:.95rem;font-weight:600;margin-bottom:.7rem;color:var(--text)}
+.option{display:block;width:100%;padding:.55rem .75rem;margin-bottom:.3rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;text-align:left;font-size:.8rem;color:var(--text);transition:all .12s}
+.option:hover:not(.disabled){border-color:var(--primary)}
+.option.correct{border-color:#48bb78;background:rgba(72,187,120,.08);color:#48bb78}
+.option.wrong{border-color:#f56565;background:rgba(245,101,101,.08);color:#f56565}
+.option.disabled{cursor:default;opacity:.7}
+.exp-box{margin-top:.5rem;padding:.6rem;background:#fffbeb;border-radius:var(--radius-sm);border-left:4px solid #ecc94b;font-size:.78rem;color:var(--text);line-height:1.5}
+.result-card{text-align:center;padding:1.5rem}
+.result-card .score{font-size:2.2rem;font-weight:900;color:var(--primary)}
+.result-card .sub{font-size:.82rem;color:var(--text-light);margin-top:.25rem}
+.flashcard{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;text-align:center;min-height:140px;cursor:pointer;border:2px solid var(--border);transition:all .2s;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.flashcard:hover{border-color:var(--primary)}
+.flashcard .front{font-size:.9rem;font-weight:600;color:var(--text)}
+.flashcard .back{font-size:.8rem;color:var(--text-light);margin-top:.4rem}
+.flashcard-nav{display:flex;justify-content:center;align-items:center;gap:.5rem;margin-top:.5rem}
+.flashcard-counter{font-size:.78rem;color:var(--text-light)}
+.check-item{padding:.55rem .75rem;background:var(--card-bg);border-radius:var(--radius-sm);margin-bottom:.3rem;border-left:4px solid #f56565;font-size:.78rem;color:var(--text)}
+.check-item strong{color:#f56565}
+.footer{text-align:center;padding:.8rem;font-size:.74rem;color:var(--text-light)}
+.btn{padding:.3rem .65rem;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.76rem;margin:.15rem;color:#fff}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--text-light);color:#718096}
+.btn-sm{padding:.18rem .4rem;font-size:.7rem}
+@media(max-width:768px){.navbar-nav a span{display:none}.knowledge-grid{grid-template-columns:1fr}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+
+.flashcard{position:relative}
+.flashcard .fc-mark{position:absolute;top:.25rem;right:.25rem;cursor:pointer;font-size:.55rem;color:#999;transition:all .2s;z-index:5;background:rgba(255,255,255,.85);border-radius:8px;padding:1px 4px;display:inline-flex;align-items:center;gap:2px}
+.flashcard .fc-mark.done{color:#27ae60}
+.flashcard.kp-learned{border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.06)}
+.check-item{position:relative}
+.check-item .ec-mark{cursor:pointer;font-size:.58rem;color:#999;margin-left:.3rem;transition:all .2s;display:inline-flex;align-items:center}
+.check-item .ec-mark.done{color:#27ae60}
+.check-item.kp-learned{background:rgba(46,204,113,.12);border-left-color:#27ae60}
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:#48bb78}
+.toast-warning{background:#ed8936}
+.toast-info{background:#667eea}</style></head><body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="liuqiuling_index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-book-open"></i> 勾股定理</h1>
+    <div class="meta">第1章 勾股定理 · 20 题 · 14 卡牌</div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+  <div id="tab-knowledge" class="tab-content active"><div class="knowledge-grid">
+      <div class="k-item"><h4>勾股定理</h4><p>直角三角形两直角边a、b的平方和等于斜边c的平方：a²+b²=c²。勾=短直角边，股=长直角边，弦=斜边。</p></div>
+      <div class="k-item"><h4>勾股定理证明</h4><p>赵爽弦图（外弦图/内弦图）、总统证法（Garfield梯形）、欧几里得证法、达芬奇法、刘徽青朱出入图。核心：等面积法。</p></div>
+      <div class="k-item"><h4>勾股数</h4><p>满足a²+b²=c²的三个正整数。常见：3,4,5；5,12,13；7,24,25；8,15,17；9,40,41。规律：一组勾股数同乘整数倍仍是勾股数（如3n,4n,5n）。用途：见到成比例的三边可直接判定直角三角形、快速求第三边。</p></div>
+      <div class="k-item"><h4>勾股定理逆定理</h4><p>若三角形三边满足a²+b²=c²（c为最长边），则它是直角三角形。用于判定直角三角形。</p></div>
+      <div class="k-item"><h4>勾股定理应用·求边长</h4><p>已知两边求第三边：c=√(a²+b²)；a=√(c²-b²)。注意分类讨论（第三边可能为直角边或斜边）。</p></div>
+      <div class="k-item"><h4>勾股定理应用·面积</h4><p><strong>① 求斜边上的高</strong>（等面积法）：直角三角形面积 = ½ab = ½ch，所以 <strong>h = ab/c</strong>。如直角边3、4，斜边5，高 = 12/5 = 2.4。步骤：先勾股求斜边 → 用面积相等列方程 → 解高。<br><strong>② 求距离/最短路径</strong>：蚂蚁爬行、将军饮马类问题，<strong>把立体或折线展开成平面</strong>，两点间线段最短，用勾股定理求直线距离。例：长方体长4宽3高5，表面最短爬行距离 = 展开后 √((4+3)²+5²) 或 √((4+5)²+3²)，取较小值。<br><strong>③ 折叠问题</strong>：折叠前后对应边相等、对应角相等，设未知数 x 表示折叠后线段，在直角三角形中列勾股方程。例：矩形ABCD折叠使B落在AD上E处，设AE=x，则BE=BC-EC 用勾股解x。<br><strong>④ 实际应用</strong>：旗杆问题——旗杆折断倒在地上，用勾股求原高（折断部分+直立部分）；梯子问题——梯子长l靠墙，下滑/外移后重新列勾股方程求新距离。<strong>口诀：求高用面积，最短路展开，折叠设x列方程，实际画图找直角。</strong></p></div>
+      <div class="k-item"><h4>赵爽弦图·进阶</h4><p><strong>构图</strong>：四个全等直角三角形（直角边a、b，斜边c）拼成正方形，用<strong>等面积法</strong>证勾股定理。<br>
+<strong>外弦图</strong>（三角在外）：大正方形边长 <strong>a+b</strong>，中间小正方形边长 <strong>c</strong>（由斜边构成），S大=(a+b)²=c²+4×½ab → a²+b²=c²。<br>
+<strong>内弦图</strong>（三角在内）：大正方形边长 <strong>c</strong>（由斜边构成），中间小正方形边长 <strong>|a−b|</strong>，c²=(a−b)²+4×½ab → a²+b²=c²。<br>
+<strong>历史</strong>：三国·赵爽为《周髀算经》作注时创制，是最早的勾股定理严格证明之一。<br>
+<strong>考法</strong>：①给面积反求边长（列方程）；②弦图+坐标系求点坐标。</p>
+<div style="text-align:center;margin-top:.5rem">
+<svg viewBox="0 0 660 330" style="width:100%;max-width:460px;height:auto" xmlns="http://www.w3.org/2000/svg">
+  <!-- 外弦图：大正方形 a+b=7，三角在外，小正方形 c=5 -->
+  <rect x="20" y="20" width="280" height="280" fill="none" stroke="#e74c3c" stroke-width="2.5"/>
+  <polygon points="20,20 180,20 20,140" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
+  <polygon points="300,20 180,20 300,180" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
+  <polygon points="300,300 140,300 300,180" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
+  <polygon points="20,300 140,300 20,180" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
+  <polygon points="180,20 300,180 140,300 20,180" fill="#48bb7822" stroke="#48bb78" stroke-width="2.2"/>
+  <text x="100" y="42" font-size="12" fill="#c0392b" font-weight="bold" text-anchor="middle">a</text>
+  <text x="32" y="88" font-size="12" fill="#c0392b" font-weight="bold">b</text>
+  <text x="160" y="175" font-size="11" fill="#2f855a" font-weight="bold" text-anchor="middle">c</text>
+  <text x="160" y="318" font-size="10" fill="#555" text-anchor="middle">外弦图：大正方形边长 a+b，中间小正方形边长 c</text>
+  <!-- 分隔线 -->
+  <line x1="340" y1="20" x2="340" y2="300" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <!-- 内弦图：大正方形 c=5，三角在内，小正方形 |a-b|=1（右移 340） -->
+  <rect x="375" y="35" width="250" height="250" fill="none" stroke="#e74c3c" stroke-width="2.5"/>
+  <polygon points="375,35 625,35 465,155" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
+  <polygon points="625,35 625,285 505,125" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
+  <polygon points="625,285 375,285 535,165" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
+  <polygon points="375,285 375,35 495,195" fill="#e74c3c22" stroke="#e74c3c" stroke-width="1.6"/>
+  <polygon points="465,155 505,125 535,165 495,195" fill="#48bb7822" stroke="#48bb78" stroke-width="2.2"/>
+  <text x="500" y="28" font-size="12" fill="#c0392b" font-weight="bold" text-anchor="middle">c</text>
+  <text x="545" y="100" font-size="11" fill="#c0392b" font-weight="bold">a</text>
+  <text x="420" y="100" font-size="11" fill="#c0392b" font-weight="bold">b</text>
+  <text x="500" y="172" font-size="11" fill="#2f855a" font-weight="bold" text-anchor="middle">a−b</text>
+  <text x="500" y="318" font-size="10" fill="#555" text-anchor="middle">内弦图：大正方形边长 c，中间小正方形边长 |a−b|</text>
+</svg>
+</div></div>
+      <div class="k-item"><h4>常见题型·多解</h4><p><strong>① 等腰三角形腰/底不确定</strong>：题目只给两条边或两角时，先分类讨论（第三边可能是腰也可能是底），再验证是否满足三角形三边关系（两边之和大于第三边），排除不成立的情况。<br>例：等腰三角形两边为4和8，则第三边可能是4或8，但4+4=8不构成三角形（舍去），所以第三边=8，周长=20。<br><strong>② 高在三角形内/外</strong>：求等腰三角形腰上的高或底边上的高时，若只给两边长，高的位置可能在内（锐角）也可能在外（钝角），需分别列勾股方程。<br>例：等腰三角形腰长5、底边6，底边上的高=√(5²-3²)=4（在内部）；若改成两边5、6但未说明哪边是底，高可能在外部，需讨论。<br><strong>③ 答案可能是多个</strong>：如一边4、一边3，第三边可能是√(4²+3²)=5（直角边），也可能是√(4²-3²)=√7（斜边），还可能√41或3等。分类讨论后答案不唯一，<strong>写"答"时要把所有可能都写上</strong>。</p></div>
+  </div></div><div id="tab-quiz" class="tab-content"><div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+<div id="quizArea"></div></div>
+  <div id="tab-flashcard" class="tab-content">
+    <p style="font-size:.76rem;color:var(--text-light);margin-bottom:.4rem">点击卡片翻转查看答案</p>
+    <div id="flashcardArea"></div>
+  </div>
+  <div id="tab-errors" class="tab-content">
+    <div class="card"><div class="card-title"><i class="fas fa-exclamation-triangle" style="color:#f56565"></i> 高频易错点自检</div>
+    <div id="errorChecklist"></div></div>
+  </div>
+</div>
+<div class="footer">为刘秋灵定制的学习工具 | 北师大版八年级上册 · 第1章 | 持续更新中</div>
+<script>
+
+function speakDone(){
+  try{
+    if(!window.__voiceMuted && window.speechSynthesis){
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance('你完成了一项，太棒了');
+      u.lang='zh-CN'; u.rate=0.95; u.pitch=1.05;
+      window.speechSynthesis.speak(u);
+    }
+  }catch(e){}
+}
+
+// ===== 知识点已学习标记 =====
+const KP_KEY = 'learned_kp_lql_math8_ch1_interactive';
+function getKP() { try { return JSON.parse(localStorage.getItem(KP_KEY) || '[]'); } catch(e) { return []; } }
+function toggleKP(name, el) {
+  let arr = getKP();
+  const i = arr.indexOf(name);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(name); speakDone(); }
+  localStorage.setItem(KP_KEY, JSON.stringify(arr));
+  const item = el.closest('.k-item, .knowledge-card li, .flashcard, .check-item');
+  if (item) item.classList.toggle('kp-learned', arr.includes(name));
+  const mark = el.querySelector('.kp-mark') || el;
+  if (mark) {
+    mark.innerHTML = arr.includes(name) ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+  }
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = arr.includes(name) ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function kpMark(name) {
+  const learned = getKP().includes(name);
+  return '<span class="kp-mark ' + (learned ? 'done' : '') + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function kpInit() {
+  document.querySelectorAll('.k-item, .knowledge-card li').forEach(item => {
+    const titleEl = item.querySelector('h4') || item.querySelector('strong');
+    if (!titleEl) return;
+    const name = titleEl.textContent.replace(/<[^>]+>/g, '').trim();
+    const learned = getKP().includes(name);
+    item.classList.toggle('kp-learned', learned);
+    const mark = document.createElement('span');
+    mark.className = 'kp-mark' + (learned ? ' done' : '');
+    mark.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习';
+    mark.setAttribute('data-kp', encodeURIComponent(name));
+    mark.title = '标记已学习';
+    titleEl.parentNode.insertBefore(mark, titleEl.nextSibling);
+  });
+}
+document.addEventListener('DOMContentLoaded', kpInit);
+
+// ===== 知识卡牌/易错标记（前置定义，供 renderFC/renderEC 调用） =====
+function fcMark(q) {
+  const learned = getKP().includes('fc:' + q);
+  return '<span class="kp-mark fc-mark ' + (learned ? 'done' : '') + '" data-kp="fc:' + encodeURIComponent(q) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+function ecMark(t) {
+  const learned = getKP().includes('err:' + t);
+  return '<span class="kp-mark ec-mark ' + (learned ? 'done' : '') + '" data-kp="err:' + encodeURIComponent(t) + '" title="标记已学习">' + (learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="far fa-circle"></i> 已学习') + '</span>';
+}
+document.addEventListener('click', function(e) {
+  const mark = e.target.closest('.kp-mark');
+  if (!mark) return;
+  const name = decodeURIComponent(mark.getAttribute('data-kp'));
+  e.preventDefault(); e.stopPropagation();
+  toggleKP(name, mark);
+});
+
+const IMPORT_KEY='lql_wrong_bank_import';
+
+function toast(msg,type){type=type||'info';var el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},350);},2600);}
+function autoImportWB(idx, myAns){
+  const q=questions[idx];
+  const item={subject:'勾股定理',chapter:'课堂练习',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns],error_reason:'概念不清',source:'练习',difficulty:3,tags:'勾股定理,课堂练习'};
+  const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');
+  if(ex.some(x=>x.content===item.content))return false;
+  ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));
+  return true;
+}
+const questions=[{"q":"勾股定理的数学表达式是","opts":["A. a²+b²=c","B. 2a+2b=c","C. a²+b²=c²","D. a+b=c"],"ans":2,"exp":"勾股定理：直角三角形两直角边的平方和等于斜边的平方，即 a²+b²=c²。"},{"q":"直角三角形中，勾指","opts":["A. 斜边","B. 任意一边","C. 较短的直角边","D. 较长的直角边"],"ans":2,"exp":"勾=较短的直角边，股=较长的直角边，弦=斜边。"},{"q":"下列哪组数是勾股数？","opts":["A. 2,3,4","B. 5,12,13","C. 4,5,6","D. 1,2,3"],"ans":1,"exp":"5²+12²=25+144=169=13²，所以5、12、13是勾股数。"},{"q":"直角三角形的两直角边分别为6和8，斜边长是","opts":["A. 14","B. 10","C. 9","D. 12"],"ans":1,"exp":"c=√(6²+8²)=√(36+64)=√100=10。"},{"q":"已知直角三角形斜边为13，一直角边为5，另一直角边为","opts":["A. 15","B. 12","C. 10","D. 8"],"ans":1,"exp":"a=√(13²-5²)=√(169-25)=√144=12。"},{"q":"三边长分别为6,8,10的三角形是","opts":["A. 钝角三角形","B. 直角三角形","C. 等腰三角形","D. 锐角三角形"],"ans":1,"exp":"6²+8²=36+64=100=10²，满足勾股定理逆定理，是直角三角形。"},{"q":"赵爽弦图主要用于","opts":["A. 计算圆面积","B. 画坐标","C. 解方程","D. 证明勾股定理"],"ans":3,"exp":"赵爽利用弦图（四个全等直角三角形拼正方形），通过面积关系证明勾股定理。"},{"q":"直角三角形两直角边为3和4，斜边上的高是","opts":["A. 2.4","B. 5","C. 12","D. 3.5"],"ans":0,"exp":"斜边=5，面积=½×3×4=6=½×5×h，h=12/5=2.4。"},{"q":"三角形三边为5,12,13，其面积是","opts":["A. 30","B. 60","C. 32.5","D. 78"],"ans":0,"exp":"5²+12²=13²，是直角三角形。S=½×5×12=30。"},{"q":"等腰直角三角形的直角边为1，斜边长为","opts":["A. √2","B. √3","C. 2","D. 1"],"ans":0,"exp":"c=√(1²+1²)=√2。等腰直角三角形斜边=直角边×√2。"},{"q":"梯子长10m，靠墙时底端离墙6m，则梯子顶端离地面","opts":["A. 8m","B. 4m","C. 10m","D. 6m"],"ans":0,"exp":"h=√(10²-6²)=√(100-36)=√64=8m。"},{"q":"直角三角形两边长为4和5，第三边长为","opts":["A. √41或3","B. 9","C. 3","D. √41"],"ans":0,"exp":"若5为斜边，第三边=√(25-16)=3；若第三边为斜边，=√(16+25)=√41。需分类讨论！"},{"q":"下列各组数中，不能构成直角三角形的是","opts":["A. 3,4,5","B. 1,1,√2","C. 6,8,10","D. 5,7,8"],"ans":3,"exp":"5²+7²=25+49=74≠64=8²，不能构成直角三角形。"},{"q":"在△ABC中，AB=15，AC=13，高AD=12，则BC=","opts":["A. 4","B. 9","C. 14","D. 14或4"],"ans":3,"exp":"BD=√(15²-12²)=9，CD=√(13²-12²)=5。高在形内BC=14；高在形外BC=9-5=4。分类讨论！"},{"q":"勾股数3,4,5同时扩大2倍得到的6,8,10","opts":["A. 是勾股数","B. 不是勾股数","C. 无法判断","D. 不一定"],"ans":0,"exp":"勾股数同乘正整数仍是勾股数：6²+8²=36+64=100=10²。"},{"q":"如图，将Rt△ABC（∠C=90°，AC=6，BC=8）沿过点A的直线折叠，使点C落在斜边AB上的点E处，则BE的长是","opts":["A. 6","B. 4","C. 8","D. 10"],"ans":1,"exp":"AB=√(6²+8²)=10；折叠后AE=AC=6（折叠前后对应边相等），BE=AB-AE=10-6=4。"},{"q":"长方体长4、宽3、高5，一只蚂蚁从顶点A沿表面爬到相对的顶点B，则最短爬行距离是","opts":["A. 12","B. √80","C. √90","D. √74"],"ans":3,"exp":"沿表面爬行需把立体展开成平面：√((4+3)²+5²)=√74，√((4+5)²+3²)=√90，√((3+5)²+4²)=√80，取最小值√74。"},{"q":"赵爽内弦图中，四个全等直角三角形拼成的大正方形边长为 c（斜边），中间小正方形边长为","opts":["A. a+b","B. c","C. 2ab","D. |a-b|"],"ans":3,"exp":"内弦图：斜边 c 构成外面的大正方形，中间留出的小正方形边长 = 两条直角边之差 = |a-b|（a、b 大小不定，须加绝对值）。"},{"q":"赵爽弦图中，四个全等直角三角形的直角边为 3 和 4，外弦图大正方形的面积是","opts":["A. 37","B. 12","C. 49","D. 25"],"ans":2,"exp":"外弦图大正方形边长 = a+b = 7，面积 = 7² = 49。验证：c²=25，4×½×3×4=24，25+24=49 ✓"},{"q":"赵爽弦图（内弦图）中，大正方形面积为 25，中间小正方形面积为 1，则直角三角形较短的直角边为","opts":["A. 3","B. 5","C. 4","D. 2"],"ans":0,"exp":"大正方形面积 = c² = 25 → c=5；小正方形面积 = (a-b)² = 1 → |a-b|=1；由 a²+b²=25 且 a-b=1 解得 a=4、b=3，较短直角边 = 3。"}]
+const flashcards=[{"q": "勾股定理", "a": "a²+b²=c²（直角三角形两直角边平方和=斜边平方）"}, {"q": "勾股数", "a": "3,4,5；5,12,13；7,24,25；8,15,17；9,40,41（都是正整数）"}, {"q": "逆定理", "a": "三边满足a²+b²=c²（c最长）→直角三角形"}, {"q": "赵爽弦图", "a": "四个全等Rt△拼正方形，等面积法证勾股定理。外弦图：(a+b)²=c²+4×½ab；内弦图：c²=(a-b)²+4×½ab → 均得 a²+b²=c²"}, {"q": "求斜边上的高", "a": "等面积法：h = ab/c（两直角边积÷斜边）"}, {"q": "分类讨论", "a": "两边长不确定时：第三边可能是直角边也可能是斜边→两解"}, {"q": "等腰直角", "a": "直角边1:1，斜边1:√2；30°-60°-90°：1:√3:2"}, {"q": "最短路径", "a": "展开成平面→勾股定理求最短路程（蚂蚁爬行问题）"}, {"q": "折叠问题", "a": "折叠后利用勾股定理列方程求边长"}, {"q": "勾股定理用处", "a": "求边长、判定直角、求高、求距离、解决实际问题"}, {"q": "多边形面积", "a": "不规则图形→分割成直角三角形→用勾股定理求边长→求面积"}, {"q": "旋转弦图", "a": "四个直角三角形拼正方形→面积法证明（出入相补）"},
+{"q": "外弦图 vs 内弦图", "a": "外弦图（三角在外）：大正方形边长 a+b、小正方形边长 c。内弦图（三角在内）：大正方形边长 c、小正方形边长 |a-b|。记法：谁在外面，谁定大正方形边长。"},
+{"q": "弦图求边长", "a": "经典题：大正方形面积=25 → c=5；小正方形面积=1 → |a-b|=1；a²+b²=25 且 a-b=1 → 解得 a=4、b=3。"}]
+const errors=[{"title": "任意三角形用勾股定理", "wrong": "把a²+b²=c²用于所有三角形。", "right": "勾股定理只适用于直角三角形，且c必须是斜边（最长边）。使用前先判断三角形是否为直角三角形、确定斜边。"}, {"title": "求第三边漏分类", "wrong": "两边长4、5，直接写第三边=√41。", "right": "第三边可能是直角边（3）也可能是斜边（√41），需分类讨论。"}, {"title": "勾股数要求", "wrong": "把0.6,0.8,1也算勾股数。", "right": "勾股数必须是正整数。小数或根式只满足a²+b²=c²，称广义勾股数。"}, {"title": "斜边高公式记错", "wrong": "斜边上的高=两直角边之和÷斜边。", "right": "等面积法：h=ab/c（两直角边乘积÷斜边），如3,4,5的h=12/5=2.4。"}, {"title": "高在形内外", "wrong": "三角形高AD=12时只算一种情况。", "right": "如AB=13、AC=15、BC边上的高AD=12：BD=√(13²-12²)=5，DC=√(15²-12²)=9。高在形内时BC=5+9=14；高在形外时BC=9-5=4。必须画图分类讨论。"}, {"title": "逆定理方向", "wrong": "由直角三角形推出a²+b²=c²和由a²+b²=c²推出直角三角形混用。", "right": "正向：直角→a²+b²=c²（勾股定理）；逆向：a²+b²=c²→直角（逆定理）。"},
+{"title": "弦图小正方形边长记错", "wrong": "以为外弦图中间小正方形边长是 a-b。", "right": "外弦图（三角在外）中间小正方形由斜边 c 构成，面积=c²；内弦图（三角在内）中间小正方形边长才是 |a-b|。记法：谁在外面谁定大正方形边长。"}]
+let curQ=0;let score=0;let answered=0;let fIdx=0;let shuffled=questions.map(function(_,i){return i;}).sort(function(){return Math.random()-0.5;});
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_lql_math8_ch1';
+var REDO_NEEDED=3;
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function normProg(p){var np={};Object.keys(p).forEach(function(k){var v=p[k];if(typeof v==='string'){np[k]={s:v,r:0};}else if(v&&typeof v==='object'){np[k]={s:v.s||'wrong',r:v.r||0};}});return np;}
+function saveQuizProg(idx,obj){var p=normProg(getQuizProg());p[idx]=obj;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function getProg(idx){var p=normProg(getQuizProg());return p[idx]||null;}
+function progBadge(idx){var pr=getProg(idx);if(!pr)return '';if(pr.s==='ok'){if(pr.r>0)return '<span class="done-badge ok">✅已合格('+pr.r+'次)</span>';return '<span class="done-badge ok">✅已做</span>';}var rr=pr.r||0;var color=rr>=REDO_NEEDED?'ok':'no';var label=rr>=REDO_NEEDED?'✅已合格':'❌重做'+rr+'/'+REDO_NEEDED;return '<span class="done-badge '+color+'">'+label+'</span>';}
+function updateModeInfo(){var p=normProg(getQuizProg());var keys=Object.keys(p);var wrong=0,qualified=0;keys.forEach(function(k){if(p[k].s==='wrong'){if((p[k].r||0)>=REDO_NEEDED)qualified++;else wrong++;}});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 待重做 '+wrong+' · 已合格 '+qualified;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=questions.map(function(_,i){return i;});if(QUIZ_MODE==='all')return ids;var p=normProg(getQuizProg());if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]&&p[i].s==='wrong'&&(p[i].r||0)<REDO_NEEDED})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="result-card" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-primary" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;score=0;answered=0;var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];return;}shuffled=ids.sort(function(){return Math.random()-0.5;});updateModeInfo();}
+function renderQ(){if(curQ>=questions.length){showResult();return;}
+var q=questions[shuffled[curQ]];var prog=document.getElementById('quizArea');
+prog.innerHTML='<div class="quiz-progress"><span>第'+(curQ+1)+'/'+questions.length+'题</span><div class="progress-bar"><div class="progress-fill" style="width:'+(curQ/questions.length*100)+'%"></div></div><span>'+score+'/'+answered+'</span></div><div class="q-header">'+progBadge(shuffled[curQ])+q.q+'</div>'+
+q.opts.map(function(o,i){return '<button class="option" onclick="selA('+i+')">'+o+'</button>';}).join('');}
+function selA(oi){var idx=shuffled[curQ];if(questions[idx]._answered)return;questions[idx]._answered=1;answered++;var pr=getProg(idx);var isFirst=!pr;var correct=(oi===questions[idx].ans);
+if(isFirst){saveQuizProg(idx,{s:correct?'ok':'wrong',r:0});if(!correct){if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}}
+else if(pr.s==='wrong'){if(correct){var nr=(pr.r||0)+1;saveQuizProg(idx,{s:nr>=REDO_NEEDED?'ok':'wrong',r:nr});if(nr>=REDO_NEEDED){toast('🎉 重做'+nr+'次，已合格！','success');}else{toast('✅ 答对！重做'+nr+'/'+REDO_NEEDED,'success');}}else{saveQuizProg(idx,{s:'wrong',r:0});toast('❌ 答错！连续重做清零，需重新连对3次','warning');}}
+else if(correct){saveQuizProg(idx,{s:'ok',r:pr.r||0});}else{saveQuizProg(idx,{s:'wrong',r:0});if(typeof autoImportWB==='function'&&autoImportWB(idx,oi))toast('📥 已重新加入错题库','success');}
+var btns=document.querySelectorAll('.option');btns.forEach(function(b,i){b.onclick=null;b.classList.add('disabled');
+if(i===questions[idx].ans)b.classList.add('correct');if(i===oi&&oi!==questions[idx].ans)b.classList.add('wrong');});
+if(correct&&isFirst){score++;speakDone();}var qh=document.querySelector('.q-header');
+qh.insertAdjacentHTML('afterend','<div class="exp-box">'+questions[idx].exp+'</div>');
+var nav=document.createElement('div');nav.style.cssText='margin-top:.9rem;text-align:center';nav.innerHTML='<button class="btn btn-primary" onclick="nextQ()">'+(curQ<questions.length-1?'下一题':'查看结果')+'</button>';document.getElementById('quizArea').appendChild(nav);}
+function nextQ(){if(curQ<questions.length-1){curQ++;renderQ();}else showResult();}
+function showResult(){var p=normProg(getQuizProg());var total=p?Object.keys(p).length:0;var qualified=0;if(p)Object.keys(p).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=REDO_NEEDED)qualified++;});document.getElementById('quizArea').innerHTML='<div class="result-card"><div class="score">'+score+'/'+questions.length+'</div><div class="sub">答对'+score+'题 / 共'+questions.length+'题 · 已合格 '+qualified+' 题</div><div style="margin-top:.8rem"><button class="btn btn-primary" onclick="initQ();renderQ();">重新测验</button> <button class="btn btn-outline" onclick="setQuizMode(&#39;wrong&#39;);">❌ 待重做</button></div></div>';}
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;
+var fc=flashcards[fIdx];var a=document.getElementById('flashcardArea');
+a.innerHTML='<div class=\"flashcard\" id=\"fc-card\"><div class=\"front\">'+fc.q+' '+fcMark(fc.q)+'</div><div class=\"back\" style=\"display:block\">'+fc.a+'</div></div><div class=\"flashcard-nav\"><button class=\"btn btn-outline btn-sm\" onclick=\"goPrev()\"'+(fIdx===0?' disabled':'')+'><i class=\"fas fa-arrow-left\"></i> 上一张</button><span class=\"flashcard-counter\">'+(fIdx+1)+'/'+flashcards.length+'</span><button class=\"btn btn-primary btn-sm\" onclick=\"goNext()\"'+(fIdx===flashcards.length-1?' disabled':'')+'>下一张 <i class=\"fas fa-arrow-right\"></i></button></div>';
+document.getElementById('fc-card').onclick=function(){this.classList.toggle('flipped');};}
+function goPrev(){fIdx--;renderFC(null);}
+function goNext(){fIdx++;renderFC(null);}
+function renderEC(){var a=document.getElementById('errorChecklist');
+a.innerHTML=errors.map(function(e){return '<div class=\"check-item\"><strong>'+e.title+'</strong>'+ecMark(e.title)+'<br>'+e.wrong+'<br><span style=\"color:#48bb78\">→ '+e.right+'</span></div>';}).join('');}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active');});
+document.getElementById('tab-'+n).classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(function(e){var im={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(im[n]))e.classList.add('active');});}
+renderFC();initQ();renderQ();renderEC();
+</script>
+<script>(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .navbar-nav a, .btn, .flashcard');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+
+
+</script>
+</body></html>
