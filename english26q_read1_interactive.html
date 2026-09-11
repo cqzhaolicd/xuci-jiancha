@@ -1,0 +1,393 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🤖 AI 陪伴机器人新规 · 英语阅读互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</style></head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 英语阅读 · 第1周</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-newspaper"></i> AI 陪伴机器人新规 · 英语阅读互动学习</h1>
+    <p>2026秋 八年级第一周 · 21世纪报带读课 · 28 题 · 12 卡牌 | 英语阅读</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 28道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 12张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 八年级第一周 · 21世纪报带读课：AI 陪伴机器人新规</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-book-open" style="color:#34495e"></i> 📖 文章脉络 Protecting users</h3><ul>
+        <li>① 提问引入：你会不会把 AI 当<strong class="hl">真朋友</strong>并过度依赖？</li>
+        <li>② 摆现象：AI 陪伴机器人已是日常，有人因此<strong class="hl">疏远真人朋友</strong></li>
+        <li>③④⑤ 新规三条：<strong class="hl">限时提醒 + 必须安全友善 + 青少年模式</strong></li>
+      </ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-clock" style="color:#e67e22"></i> ⏰ 新规一：限时与提醒</h3><ul>
+        <li>AI 不得鼓励用户长时间使用</li>
+        <li>连续使用 <strong class="hl">2 小时</strong>必须弹窗提醒 <strong class="hl">take a break</strong></li>
+        <li>要讲清区别：<strong class="hl">This is a machine, not a real person.</strong></li>
+      </ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-shield-alt" style="color:#27ae60"></i> 🛡️ 新规二：三条禁止</h3><ul>
+        <li>不许 <strong class="hl">tell lies</strong>（撒谎，含善意谎言）</li>
+        <li>不许 <strong class="hl">share private information</strong></li>
+        <li>不许做 <strong class="hl">harm national security</strong>（危害国家安全）的事</li>
+      </ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-child" style="color:#8e44ad"></i> 👦 新规三：青少年模式</h3><ul>
+        <li>未满 18 岁打开 AI App → <strong class="hl">teen mode 自动开启</strong></li>
+        <li>家长可查看 <strong class="hl">how long you chat</strong>（聊天时长）</li>
+        <li>AI 不得为讨好用户而给出<strong class="hl">不安全建议</strong></li>
+      </ul></div>
+      <div class="knowledge-card c5"><h3><i class="fas fa-font" style="color:#2980b9"></i> 📚 6 个必背词组</h3><ul>
+        <li><strong class="hl">depend on</strong> 依赖 ｜ <strong class="hl">introduce</strong> 颁布/引入</li>
+        <li><strong class="hl">pull away from</strong> 疏远 ｜ <strong class="hl">tell lies</strong> 撒谎</li>
+        <li><strong class="hl">either...or...</strong> 要么…要么 ｜ <strong class="hl">remind sb. to do sth.</strong> 提醒某人做</li>
+      </ul></div>
+      <div class="knowledge-card c6"><h3><i class="fas fa-balance-scale" style="color:#16a085"></i> ⚖️ either...or... 用法</h3><ul>
+        <li>结构：<strong class="hl">either + A + or + B</strong>（二选一）</li>
+        <li>连接<strong class="hl">同类成分</strong>：名词/动词/句子</li>
+        <li>例：These bots, <strong class="hl">either in the form of a toy or an app</strong>…（作插入语）</li>
+      </ul></div>
+      <div class="knowledge-card c7"><h3><i class="fas fa-bullhorn" style="color:#e74c3c"></i> 🔔 remind 的两种搭配</h3><ul>
+        <li><strong class="hl">remind sb. to do sth.</strong> 提醒某人做某事（要有 to）</li>
+        <li><strong class="hl">remind sb. of sth.</strong> 使某人想起某事</li>
+        <li>例：pop-up messages <strong class="hl">reminding people to take a break</strong></li>
+      </ul></div>
+      <div class="knowledge-card c8"><h3><i class="fas fa-pen-fancy" style="color:#f39c12"></i> ✍️ 写作任务 Survey Report</h3><ul>
+        <li>调查 <strong class="hl">≥10 位同学</strong>：AI 是工具还是朋友？</li>
+        <li>写 <strong class="hl">150–200 词</strong>：给数据 + 表态 + <strong class="hl">必须给理由</strong></li>
+        <li>句式：According to the survey, … / while 对比 / First… Second…</li>
+      </ul></div>
+    </div>
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone-alt"></i> 🎙️ 带读要点 · 八年级第一周（21世纪报：AI 陪伴机器人新规）</h4>
+      <p><strong>本篇讲什么</strong>：China makes new rules for AI companion bots（中国为 AI 陪伴机器人出台新规）。文章结构是典型说明文：<strong>抛问题（青少年依赖 AI）→ 政府出新规 → 三条具体规定 → 举例说明</strong>。读懂结构，主旨题就先拿一半分。</p>
+      <p><strong>三条新规要能背</strong>：① 不得鼓励长时间使用，<strong>连续 2 小时必须弹窗提醒休息</strong>（take a break），并明确"这是机器不是真人"；② 不得撒谎、泄露隐私、危害国家安全；以前 AI 会用你的情绪推广告，<strong>现在被规则叫停</strong>；③ 未满 18 岁 <strong>青少年模式自动开启</strong>，家长可查看聊天时长。</p>
+      <p><strong>词汇与语法</strong>：6 个必背词组 depend on / introduce / pull away from / either...or... / tell lies / remind sb. to do sth.；语法点：<strong>现在分词作后置定语</strong>（pop-up messages reminding people to take a break = that remind people…）、<strong>either...or 插入语</strong>。</p>
+      <p><strong>易错提醒</strong>：① 主旨题别选"细节选项"（C 只是第 2 段的现象）；② 细节题考<strong>同义替换</strong>——原文 take a break ↔ 选项 take a rest；③ 判断题注意 <strong>Now, the rules stop this</strong> 的转折（过去可以，现在禁止）；④ remind 后面<strong>别丢 to</strong>。</p>
+      <p><strong>🎓 本周任务</strong> — 读 3 遍文章（重点第 3、5 段），6 个词组各造 1 个自己的句子；把 `remind sb. to do sth.` 和 `either...or...` 用进自己的句子里；完成 150–200 词 survey report，检查三件事：有数据、有理由、remind 后没丢 to。</p>
+    </div>
+    </div>
+    <div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 28</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共12张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 英语阅读 · 第1周 AI 陪伴机器人新规 | 21世纪报带读课 · 2026秋</div>
+
+<script>
+const questions = [
+  {"q":"理清文章结构后判断：本文最好的主旨是","opts":["A. AI companion bots are very smart and friendly.","B. China introduced new rules for AI companion bots.","C. Many young people make friends with AI bots instead of real friends.","D. Teenagers are not allowed to use AI companion bots in China."],"ans":1,"exp":"全文都在讲政府出台新规及具体条款，选 <strong>B</strong>。C 只是第 2 段的一个现象细节，D 与原文矛盾（未满18岁是开启青少年模式，不是禁止使用）。"},
+  {"q":"What problem do some young people have while using AI companion bots?（用原文回答）","opts":["A. They spend a lot of time with AI bots and pull away from their real-life friends.","B. They spend too much money on AI toys and apps.","C. They become angry and impatient with their parents.","D. They fail their exams because of chatting with AI."],"ans":0,"exp":"定位第 2 段：Some young people spend a lot of time with them and <strong>pull away from real-life friends</strong>。其余三项原文均未提及。"},
+  {"q":"According to the new rules, what must the AI bot do when people have used it for two hours?","opts":["A. Stop working at once.","B. Play a short video.","C. Turn on its teen mode.","D. Tell people to take a rest."],"ans":3,"exp":"原文：show pop-up messages <strong>reminding people to take a break after two hours</strong>。选项用 <strong>take a rest</strong> 同义替换 take a break；D 是另一条规定（未满18岁）张冠李戴。"},
+  {"q":"What will happen if under-18 users open AI apps, according to the new rules?","opts":["A. Teen mode will turn on by itself.","B. They have to ask their parents for a password.","C. The app will close in two hours.","D. They can only use the app at weekends."],"ans":0,"exp":"定位第 5 段：If you're under 18 and open an AI app, <strong>teen mode will turn on by itself</strong>（by itself = 自动）。"},
+  {"q":"判断正误：AI bots are allowed to tell white lies.","opts":["A. True (T)","B. False (F)","C. Not mentioned in the article","D. The article only talks about adult users"],"ans":1,"exp":"<strong>F</strong>。原文 They can't tell lies——规则没有「善意谎言」的例外，white lies 也是 lies。"},
+  {"q":"判断正误：AI bots cannot share users' private information.","opts":["A. True (T)","B. False (F)","C. Only for users under 18","D. Only when parents ask"],"ans":0,"exp":"<strong>T</strong>。原文明确：They can't tell lies, <strong>share private information</strong> or do anything that could harm national security."},
+  {"q":"判断正误：It's okay for AI to send people ads based on their feelings.","opts":["A. True (T)","B. False (F)——the new rules stop this now","C. True, but only for toys","D. The article doesn't say"],"ans":1,"exp":"<strong>F</strong>。原文：In the past, AI might use information about your feelings to show you ads… <strong>Now, the rules stop this.</strong> 抓住 Now 这个词，是「过去可以、现在禁止」的转折。"},
+  {"q":"If people start to see AI as a real friend, what should the system make clear?","opts":["A. That this is a machine, not a real person.","B. That users should pay more money.","C. That the AI has its own feelings.","D. That the AI will report to their parents."],"ans":0,"exp":"定位第 3 段末：the system should also make the difference clear: <strong>This is a machine, not a real person</strong>（专家刘晓春语）。"},
+  {"q":"What can parents do under the new rules?","opts":["A. Read all the messages their children send.","B. Check how long their children chat with AI.","C. Turn off the AI app on their children's phones.","D. Choose which AI bots their children may use."],"ans":1,"exp":"原文：Your parents can <strong>check how long you chat</strong>（查看聊天时长），并未授权读消息、关应用或挑选模型。"},
+  {"q":"The writing task at the end asks you to ______.","opts":["A. ask more than 10 classmates and write a 150–200 word report","B. design an AI companion bot of your own","C. write a letter to the government about the new rules","D. interview AI experts in your city"],"ans":0,"exp":"题目原文：ask <strong>more than 10 classmates</strong> about their experiences… write a short report (<strong>about 150–200 words</strong>)。数字是硬考点，别写错。"},
+  {"q":"词汇：depend on 的意思是","opts":["A. 讨厌；厌倦","B. 依赖；依靠","C. 假装；假扮","D. 依靠……生活（只用于人）"],"ans":1,"exp":"depend on = <strong>依赖；依靠</strong>。原句：…see it as a real friend and <strong>depend on</strong> it too much? A 项表述完整，D 项加限定错误（物也可作主语，如 It depends on the weather）。"},
+  {"q":"词汇：The government has introduced new rules for AI companion bots. 句中 introduce 的含义是","opts":["A. 颁布；引入","B. 介绍（某个人）","C. 翻译","D. 取消"],"ans":0,"exp":"introduce sth 在此表<strong>颁布、推出</strong>（新规）；也可表「介绍、引进」。原句：The government has <strong>introduced</strong> new rules for AI companion bots."},
+  {"q":"词汇：pull away from real-life friends 的意思是","opts":["A. 把朋友拉过来","B. 疏远；远离真人朋友","C. 和朋友一起参加活动","D. 把朋友介绍给别人"],"ans":1,"exp":"pull away from = <strong>疏远；远离</strong>。例句：If you spend all day on your phone, you may pull away from your family. 注意介词 <strong>from</strong> 不能丢。"},
+  {"q":"词汇：either in the form of a toy or an app 中 either...or... 的含义是","opts":["A. 既……又……（两者都）","B. 要么……要么……（二选一）","C. 不仅……而且……","D. 既不……也不……"],"ans":1,"exp":"either + A + or + B = <strong>要么 A 要么 B</strong>（二选一）。B 项 both...and、C 项 not only...but also、D 项 neither...nor 均不符。"},
+  {"q":"词汇：tell lies 与下列哪个表达意思最接近？","opts":["A. say something that is not true","B. tell the truth","C. tell stories to children","D. tell a joke"],"ans":0,"exp":"tell lies = <strong>撒谎</strong>，即 say something that is not true；其反义表达是 <strong>tell the truth</strong>（说实话）。"},
+  {"q":"结构：下列句子中 remind 用法正确的是","opts":["A. My watch reminds me to take a break every hour.","B. My watch reminds me take a break every hour.","C. My watch reminds me taking a break every hour.","D. My watch reminds to take a break every hour."],"ans":0,"exp":"<strong>remind sb. to do sth.</strong>：先出人（me），再出 <strong>to do</strong>（to take）。A 丢 to、C 用动名词、D 丢宾语，都错。"},
+  {"q":"选词填空：Don't ______ AI too much. It is not always right.","opts":["A. pull away from","B. depend on","C. tell lies","D. introduce"],"ans":1,"exp":"“不要太<strong>依赖</strong> AI，它并不总是对的” → depend on。"},
+  {"q":"选词填空：The government ______ new rules for AI companion bots last year.","opts":["A. introduced","B. introduce","C. introducing","D. introduces"],"ans":0,"exp":"时间状语 <strong>last year</strong> 用过去式 <strong>introduced</strong>。"},
+  {"q":"选词填空：If you stay online all day long, you may ______ your family and friends.","opts":["A. pull away from","B. depend on","C. remind","D. introduce"],"ans":0,"exp":"整天上网 → 会<strong>疏远</strong>家人朋友 → pull away from。"},
+  {"q":"选词填空：It's wrong for teenagers ______. Honesty is the best policy.","opts":["A. tell lies","B. telling lies","C. told lies","D. to tell lies"],"ans":3,"exp":"It is + adj. + for sb. + <strong>to do sth.</strong> 句型 → to tell lies。后半句 Honesty is the best policy（诚实为上）提示填「撒谎」。"},
+  {"q":"选词填空：This pop-up message ______ users ______ take a break after two hours.","opts":["A. reminds; for","B. remind; to","C. reminding; to","D. reminds; to"],"ans":3,"exp":"主语 This pop-up message 是单数 → <strong>reminds</strong>；搭配 <strong>remind sb. to do sth.</strong> → reminds users <strong>to</strong> take a break。"},
+  {"q":"同义替换：原文 take a break 与下列哪个表达最接近？","opts":["A. take a walk","B. take a rest","C. take a photo","D. take a seat"],"ans":1,"exp":"<strong>take a break = take a rest</strong>（休息一下）。这正是第 3 题选项的考法——细节题常靠同义替换设置正确答案。"},
+  {"q":"Now, the rules stop this. 句中 this 指代的是","opts":["A. AI bots telling lies to users","B. young people pulling away from real friends","C. parents checking how long children chat","D. AI using information about your feelings to show you ads"],"ans":3,"exp":"this 指代前一句：In the past, AI might <strong>use information about your feelings to show you ads</strong> for toys or candy——新规把这种行为叫停了。"},
+  {"q":"把 pop-up messages reminding people to take a break 改写为定语从句，正确的是","opts":["A. pop-up messages that reminding people to take a break","B. pop-up messages remind people to take a break","C. pop-up messages which reminds people to take a break","D. pop-up messages that remind people to take a break"],"ans":3,"exp":"现在分词短语作后置定语 = 定语从句 <strong>that/which remind people…</strong>（先行词 messages 是复数，从句谓语用 <strong>remind</strong>，不加 s）。"},
+  {"q":"短语 harm national security 的意思是","opts":["A. 泄露个人隐私","B. 提供不安全建议","C. 传播不实信息","D. 危害国家安全"],"ans":3,"exp":"harm = 危害；national security = 国家安全。文中三条禁止之一：不许做 anything that could <strong>harm national security</strong>。"},
+  {"q":"翻译：You can either call me or send me a message.","opts":["A. 你可以给我打电话或者发信息。","B. 你既可以给我打电话，也可以发信息（两者都可）。","C. 你既不能打电话也不能发信息。","D. 你必须先打电话再发信息。"],"ans":0,"exp":"either...or 表<strong>二选一</strong>（或此或彼）；若表「两者都」应用 <strong>both...and</strong>——这是最常见的混淆点。"},
+  {"q":"根据新规，AI 陪伴机器人被禁止做下列哪些事？","opts":["A. 使用中文与用户对话","B. 撒谎、泄露隐私、危害国家安全","C. 向用户提问","D. 提醒用户休息"],"ans":1,"exp":"原文：They can't <strong>tell lies, share private information or do anything that could harm national security</strong>。D 项提醒休息恰恰是新规<strong>要求</strong>做的事。"},
+  {"q":"文章第 1 段（If you talked to an AI bot a lot…）在全文中的作用是","opts":["A. 总结全文并给出建议","B. 举一个具体的新闻事例","C. 提出话题、引出新规（抛问题引入）","D. 介绍 AI 陪伴机器人的价格"],"ans":2,"exp":"开头用提问（你会不会过度依赖 AI？）+ 政府已出台新规，属于典型的<strong>抛问题引入</strong>写法，看到开头提问就要预判下文讲「解决方案/规定」。"}
+];
+
+
+const flashcards = [
+  {"front":"这篇《Protecting users》的主旨是什么？","back":"中国为 AI 陪伴机器人（AI companion bots）<strong>出台新规</strong>，保护用户、尤其是未成年人。"},
+  {"front":"六个必背词组","back":"depend on <strong>依赖</strong>；introduce sth <strong>颁布/引入</strong>；pull away from <strong>疏远</strong>；either...or... <strong>要么…要么</strong>；tell lies <strong>撒谎</strong>；remind sb. to do sth. <strong>提醒某人做某事</strong>。"},
+  {"front":"depend on 怎么用？","back":"<strong>依赖；依靠</strong>。例：Many teenagers <strong>depend on</strong> AI to do their homework.（depend on sb./sth.；也可 depend on sb. to do sth.）"},
+  {"front":"introduce sth 的两个意思","back":"① <strong>颁布、推出</strong>（新规）：The government has introduced new rules…；② <strong>介绍、引进</strong>：introduce a friend / a new subject。"},
+  {"front":"pull away from 的用法与易错点","back":"<strong>疏远、远离</strong>。例：If you spend all day on your phone, you may pull away from your family. ⚠️ 介词 <strong>from</strong> 不能丢。"},
+  {"front":"either...or... 的含义与例句","back":"<strong>要么 A 要么 B</strong>（二选一）。例：These bots, either in the form of a toy or an app, have become…；You can either call me or send me a message. ⚠️ 表「两者都」要用 both...and。"},
+  {"front":"tell lies 与 honesty","back":"tell lies = <strong>撒谎</strong>（反义 tell the truth）。例：It's wrong for teenagers to tell lies. Honesty is the best policy.（诚实为上）"},
+  {"front":"remind 的两种搭配","back":"① <strong>remind sb. to do sth.</strong> 提醒某人做某事（reminds users <strong>to</strong> take a break）② <strong>remind sb. of sth.</strong> 使某人想起（It reminded me of a painting.）"},
+  {"front":"新规的三条核心内容","back":"① <strong>限时</strong>：连续 2 小时弹窗提醒休息，并说明「这是机器不是真人」；② <strong>安全友善</strong>：不许撒谎、泄露隐私、危害国家安全，不许用情绪信息推广告；③ <strong>青少年模式</strong>：未满 18 岁自动开启，家长可查看聊天时长。"},
+  {"front":"take a break 的同义表达（考点）","back":"<strong>take a rest</strong>。细节题常把原文词组换成同义词作正确选项——见原文 reminding people to take a break after two hours。"},
+  {"front":"现在分词作后置定语怎么改定语从句？","back":"pop-up messages <strong>reminding</strong> people to take a break = pop-up messages <strong>that/which remind</strong> people to take a break（先行词复数 → 从句谓语 remind 不加 s）。"},
+  {"front":"Survey report（150–200 词）写作框架","back":"① 开头：I asked <strong>12</strong> classmates about their experiences with AI companion bots. ② 数据：According to the survey, <strong>8 out of 12</strong> see AI bots as helpful tools, while <strong>3</strong> see them as real friends. ③ 立场+理由：I agree with the new rules. First… Second… 最后扣回 AI is a good tool, but it is still a machine. ⚠️ 必须给理由。"}
+];
+
+
+errors = [
+  {"title":"❌ 主旨题选了细节选项","wrong":"第 1 题选 C：Many young people make friends with AI bots instead of real friends.","right":"主旨题要选能<strong>统摄全文</strong>的项 → B（China introduced new rules for AI companion bots.）。C 只是第 2 段举的一个现象，范围太窄。"},
+  {"title":"❌ remind 后面丢了 to","wrong":"My watch reminds me take a break every hour.","right":"<strong>remind sb. to do sth.</strong>：先人后 to do → My watch reminds me <strong>to</strong> take a break."},
+  {"title":"❌ 以为「善意谎言」可以例外","wrong":"第 5 题选 T：AI bots are allowed to tell white lies.","right":"规则原文 They can't <strong>tell lies</strong>，没有 white lies 的例外 → 判 <strong>F</strong>。"},
+  {"title":"❌ 忽略 Now 的转折，把「过去可以」当「现在可以」","wrong":"第 7 题选 T：AI 可以用你的情绪推广告。","right":"原文 In the past, AI might… <strong>Now, the rules stop this.</strong> 看到 <strong>Now / But / However</strong> 要立刻警觉语义转折 → 判 <strong>F</strong>。"},
+  {"title":"❌ pull away from 漏掉介词 from","wrong":"写成 pull away real-life friends / pull away of friends。","right":"<strong>pull away from sb./sth.</strong>；同类搭配还有 depend <strong>on</strong>、remind sb. <strong>of</strong> sth.——介词是固定搭配的一部分，必须背准。"},
+  {"title":"❌ 写报告只表态不给理由","wrong":"I agree with the new rules. They are very good. （约 15 词，且无数据无理由）","right":"任务要求 <strong>150–200 词</strong>且必须解释 why：先给调查<strong>数据</strong>（N out of 10…），再分点给<strong>理由</strong>（First… Second…），最后收尾表态。"}
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx,myAns){const q=questions[idx];const item={subject:'英语阅读(21世纪报)',chapter:'八年级第一周 AI陪伴机器人新规',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'英语,21世纪报,八年级,AI陪伴机器人,depend on,pull away from,remind,either...or,阅读理解'};const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');if(ex.some(x=>x.content===item.content))return false;ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));return true;}
+const WRONG_HISTORY_KEY='quiz_english26q_read1_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();found.redo=0;}
+  else h.push({idx,count:1,lastWrong:Date.now(),redo:0});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+function markRedoOk(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(!found)return;
+  found.redo=(found.redo||0)+1;
+  if(found.redo>=3){h=h.filter(x=>x.idx!==idx);toast('🎉 重做'+found.redo+'次，已合格！','success');}
+  else{toast('✅ 答对！重做'+found.redo+'/3','success');}
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_english26q_read1';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory().filter(x=>(x.redo||0)<3);
+  if(!h.length){alert('没有待重做的错题了，全部合格！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const total=retryMode?shuffled.length:questions.length;if(curQ<total-1){curQ++;renderQ();}else showResult();}
+function showResult(){const p=getQuizProg();let ok=0,done=0;Object.keys(p||{}).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=3)ok++;});for(let i=0;i<quizAns.length;i++){if(quizAns[i]>=0)done++;}let h='<div class="question-card result-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2.6rem">🎉</div><h2>本组答题完成</h2><p style="color:var(--text-light)">本次已完成 '+done+' 题 · 连续做对3次已合格 '+ok+' 题</p><div style="margin-top:1rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 继续练习全部</button><button class="btn btn-primary" onclick="initRetryMode()">🔁 错题重练</button></div></div>';document.getElementById('quizArea').innerHTML=h;}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=(function(){if(_dp){const wh=loadWrongHistory();const rec=wh.find(x=>x.idx===idx);if(rec){const rr=(rec.redo||0);return `<span class="done-badge ${rr>=3?'ok':'no'}">${rr>=3?'✅已合格':'❌重做'+rr+'/3'}</span>`;}return `<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`;}return '';})();if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi===questions[idx].ans){const wh=loadWrongHistory();if(wh.some(x=>x.idx===idx))markRedoOk(idx);}
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'英语阅读(21世纪报)',chapter:'八年级第一周 AI陪伴机器人新规',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'英语,21世纪报,八年级,AI陪伴机器人,depend on,pull away from,remind,either...or,阅读理解'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('english26q_read1_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('english26q_read1_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('english26q_read1_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('english26q_read1_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('english26q_read1_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</div>
+</body></html>
