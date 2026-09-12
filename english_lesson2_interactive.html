@@ -1,0 +1,907 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌍 Words &amp; Comparatives · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</style></head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 英语 · 第2讲</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-book"></i> Words &amp; Comparatives · 互动学习</h1>
+    <p>2026秋双语八年级 C班 · 第2讲 · 46 题 · 12 卡牌 | 双语英语</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 46道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 12张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第二讲 · Words &amp; Comparatives（C班）</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3>📘 lift 的三种用法</h3><ul><li>搭便车 / 开车顺便送某人：<strong class="hl">give sb. a lift</strong></li><li>电梯：<strong class="hl">take the lift</strong> 乘电梯</li><li>举起；抬起：<strong class="hl">lift up</strong>（用体力或机械力举起）</li><li>拓展：lifter 升降机；举重运动员（weight lifter）</li></ul></div>
+      <div class="knowledge-card c2"><h3>📝 note 的多重词义</h3><ul><li>记笔记：<strong class="hl">take/make notes</strong></li><li>便利贴：<strong class="hl">sticky note / post-it note</strong></li><li>v. 注意；指出（后接名词/代词/<strong class="hl">that 从句</strong>）</li><li>货币义：<strong class="hl">纸币</strong> a £5 note ｜ 文件义：a sick note 证明书 ｜ 音乐义：high/low notes 音符</li></ul></div>
+      <div class="knowledge-card c3"><h3>🗑️ rubbish 与垃圾表达</h3><ul><li>同义词：<strong class="hl">waste / trash / garbage / litter</strong></li><li>垃圾袋/桶：a rubbish bag/bin；生活垃圾：household rubbish</li><li>倒垃圾：<strong class="hl">take out the rubbish</strong></li><li>垃圾分类：<strong class="hl">rubbish sorting</strong></li></ul></div>
+      <div class="knowledge-card c4"><h3>🙏 Can/Could you please…?（请求）</h3><ul><li>Can/Could you please water the plants? 请你……好吗？</li><li>肯定：<strong class="hl">No problem. / With pleasure. / Sure·Of course·Certainly.</strong></li><li>否定：Sorry, I can't. I have to… / Sorry, I'm going to… / <strong class="hl">I'm afraid not.</strong></li></ul></div>
+      <div class="knowledge-card c5"><h3>🔑 Can/Could I…?（请求许可）</h3><ul><li>意为“我能……吗？”，请求对方允许自己做某事</li><li>肯定：<strong class="hl">Yes, you can. / Of course you can. / Yes, please.</strong></li><li>否定：Sorry, you can't. / <strong class="hl">Sorry, I'm afraid you can't.</strong></li></ul></div>
+      <div class="knowledge-card c6"><h3>⚖️ 比较级规则变化（5 条）</h3><ul><li>一般 +er：short → <strong class="hl">shorter</strong></li><li>不发音 e 结尾 +r：cute → <strong class="hl">cuter</strong></li><li>辅音+y 结尾变 y 为 i +er：pretty → <strong class="hl">prettier</strong></li><li>重读闭音节双写末尾辅音 +er：big → <strong class="hl">bigger</strong>；hot → hotter</li><li>多音节/部分双音节前加 more：important → <strong class="hl">more important</strong></li></ul></div>
+      <div class="knowledge-card c7"><h3>📊 比较级不规则变化</h3><ul><li>good/well → <strong class="hl">better</strong></li><li>ill/bad/badly → <strong class="hl">worse</strong></li><li>many/much → <strong class="hl">more</strong>；little → <strong class="hl">less</strong></li><li>old → older/<strong class="hl">elder</strong>；far → farther/<strong class="hl">further</strong></li></ul></div>
+      <div class="knowledge-card c8"><h3>🔤 三种比较结构</h3><ul><li>高级比较（比……更）：比较级 + <strong class="hl">than</strong>（I am taller than him.）</li><li>次级比较（不如……）：<strong class="hl">less + 原级 + than</strong>（I am less tall than him.）</li><li>同级比较（和……一样）：<strong class="hl">as + 原级 + as</strong>（I am as tall as him.）</li></ul></div>
+      <div class="knowledge-card c9"><h3>💪 修饰比较级的程度副词</h3><ul><li>三多：<strong class="hl">much / a lot / far</strong></li><li>两少：<strong class="hl">a little / a bit</strong>；一甚至：<strong class="hl">even</strong></li><li>⚠️ <strong class="hl">very 和 more 不能修饰比较级</strong></li></ul></div>
+      <div class="knowledge-card c10"><h3>🎯 比较级特殊表达</h3><ul><li>the + 比较级, the + 比较级（越……就越……）：The more careful you are, <strong class="hl">the fewer</strong> mistakes you will make.</li><li>比较级 + and + 比较级（越来越……）：The weather is <strong class="hl">hotter and hotter</strong>.</li><li>多音节：<strong class="hl">more and more + 原级</strong>（more and more beautiful）</li></ul></div>
+      <div class="knowledge-card c11"><h3>📚 考点词汇（上）：invite / sort / plan / add</h3><ul><li>invite sb. <strong class="hl">to do</strong> sth 邀请某人做某事；<strong class="hl">invitation</strong> n. 邀请；请柬</li><li>imagine→<strong class="hl">imagination</strong>；prepare→preparation；organize→organization</li><li>sort：a sort of 一种 / <strong class="hl">all sorts of</strong> 许多种 / sort of 有点儿 / sort out 弄清</li><li>plan to do sth 打算做；add...<strong class="hl">to</strong>... 把……加到；<strong class="hl">add up to</strong> 总计为</li></ul></div>
+      <div class="knowledge-card c12"><h3>📚 考点词汇（下）：until / familiar / describe / matter / cover / decorate</h3><ul><li>until：<strong class="hl">not...until</strong> 直到……才</li><li>familiar：sb. be familiar <strong class="hl">with</strong> sth ｜ sth. be familiar <strong class="hl">to</strong> sb</li><li>describe...<strong class="hl">as</strong> 把……描述成为；<strong class="hl">description</strong> n. 描述；beyond description 难以描绘</li><li>matter：What's the matter? / <strong class="hl">It doesn't matter.</strong> / no matter 不论</li><li>cover...<strong class="hl">with</strong> 覆盖 → be covered with；<strong class="hl">discover</strong> v. 发现</li><li>decorate...<strong class="hl">with</strong> 用……装饰；<strong class="hl">decoration</strong> n. 装饰品</li></ul></div>
+    </div>
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone-alt"></i> 🎙️ 课堂要点 · 第二讲（C班 · Words &amp; Comparatives）</h4>
+      <p><strong>本讲核心</strong>：2026秋双语八年级 C班第2讲。①核心词汇：<strong>lift（give sb. a lift / take the lift / lift up）、note（记笔记/纸币/证明书/音符）、rubbish</strong>；②句型：<strong>Can/Could you please…?</strong>（请求）与 <strong>Can/Could I…?</strong>（许可）及答语；③语法：<strong>形容词和副词的比较级</strong>（规则/不规则变化、三种比较结构、修饰词、特殊表达）。</p>
+      <p><strong>练习册重点</strong>：阅读理解（感恩节儿子"Sure"式简短回复的议论文，答案 CBABC）+ 短文填空 10 空（farewell party：Planning / sort / cover / decorate / familiar / until / add / matter / describe / discovered）。做题技巧：短文填空先按词性归类词库（plan→Planning 动名词作主语；discover→discovered 跟全文时态）。</p>
+      <p><strong>易错提醒</strong>：① <strong>very/more 不能修饰比较级</strong>（用 much/a lot/far/even/a little）；② 不规则比较级：bad→worse、little→less、far→farther/further；③ familiar 的介词方向（人 with 物、物 to 人）；④ <strong>not...until</strong> 别漏 not；⑤ cover（覆盖）与 decorate（装饰）辨析；⑥ 短文填空注意首字母大写与时态。</p>
+      <p><strong>🎓 老师课堂总结</strong> — 本讲是"词汇+语法"双主线：三个核心词（lift/note/rubbish）要连短语一起记；比较级是本讲重头戏，"三多两少一甚至"的修饰词口诀 + "the more...the more"结构是中考高频考点。练习册的送别派对短文把 10 个考点词汇串成完整情景，订正时把"词库原词 → 文中正确形式"成对背诵。</p>
+    </div>
+    </div>
+    <div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 46</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共12张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 英语 · 第2讲 Words &amp; Comparatives | 双语英语 · 2026秋</div>
+
+<script>
+const questions = [
+ {
+  "q": "give sb. a lift 的意思是",
+  "opts": [
+   "A. 给某人一部电梯",
+   "B. 开车顺便送某人",
+   "C. 把某人举起来",
+   "D. 借给某人钱"
+  ],
+  "ans": 1,
+  "exp": "give sb. a lift = <strong>开车顺便送某人</strong>（顺路捎带）；lift 此处指“搭便车”。"
+ },
+ {
+  "q": "“乘电梯”的正确表达是",
+  "opts": [
+   "A. take the lift",
+   "B. give a lift",
+   "C. lift up",
+   "D. take a note"
+  ],
+  "ans": 0,
+  "exp": "take the lift = <strong>乘电梯</strong>；lift up = 举起。"
+ },
+ {
+  "q": "“记笔记”的正确表达是",
+  "opts": [
+   "A. take/make notes",
+   "B. take a note",
+   "C. do notes",
+   "D. notes taking"
+  ],
+  "ans": 0,
+  "exp": "固定表达 <strong>take/make notes</strong>（记笔记），notes 用复数。"
+ },
+ {
+  "q": "“倒垃圾”的正确表达是",
+  "opts": [
+   "A. take up the rubbish",
+   "B. take out the rubbish",
+   "C. take off the rubbish",
+   "D. take in the rubbish"
+  ],
+  "ans": 1,
+  "exp": "<strong>take out the rubbish</strong> = 倒垃圾；take up 占据/开始，take off 起飞/脱下。"
+ },
+ {
+  "q": "与 rubbish（垃圾）意思最接近的一组是",
+  "opts": [
+   "A. paper, plastic, glass",
+   "B. waste, trash, garbage",
+   "C. lift, note, sort",
+   "D. plan, add, cover"
+  ],
+  "ans": 1,
+  "exp": "rubbish 的同义词：<strong>waste、trash、garbage、litter</strong>。"
+ },
+ {
+  "q": "“垃圾分类”的正确表达是",
+  "opts": [
+   "A. rubbish sorting",
+   "B. rubbish lifting",
+   "C. rubbish noting",
+   "D. rubbish covering"
+  ],
+  "ans": 0,
+  "exp": "<strong>rubbish sorting</strong> = 垃圾分类（sort 分类）。"
+ },
+ {
+  "q": "a £5 note 中 note 的意思是",
+  "opts": [
+   "A. 笔记",
+   "B. 纸币",
+   "C. 便条",
+   "D. 音符"
+  ],
+  "ans": 1,
+  "exp": "note 表 <strong>纸币</strong>：a £5 note 一张 5 英镑纸币。"
+ },
+ {
+  "q": "a sick note 中 note 的意思是",
+  "opts": [
+   "A. 正式文件；证明书",
+   "B. 音符",
+   "C. 纸币",
+   "D. 注释"
+  ],
+  "ans": 0,
+  "exp": "a sick note = <strong>病假证明/正式文件</strong>；high/low notes 才是音符。"
+ },
+ {
+  "q": "—Could you please water the plants? —___（表示乐意帮忙）",
+  "opts": [
+   "A. With pleasure.",
+   "B. I'm afraid not.",
+   "C. Sorry, I can't.",
+   "D. Yes, you can."
+  ],
+  "ans": 0,
+  "exp": "对请求的肯定答语：<strong>With pleasure.</strong>（乐意帮忙）；I'm afraid not 是否定。"
+ },
+ {
+  "q": "—Could I use your pen? —___（表示拒绝）",
+  "opts": [
+   "A. Yes, you can.",
+   "B. Sorry, I'm afraid you can't.",
+   "C. With pleasure.",
+   "D. No problem."
+  ],
+  "ans": 1,
+  "exp": "请求许可的否定答语：<strong>Sorry, I'm afraid you can't.</strong>；D、A 为肯定。"
+ },
+ {
+  "q": "—Could you help me with my homework? —___（委婉拒绝）",
+  "opts": [
+   "A. Sure. Of course.",
+   "B. Sorry, I can't. I have to do my own homework.",
+   "C. Yes, please.",
+   "D. No problem."
+  ],
+  "ans": 1,
+  "exp": "拒绝请求用 <strong>Sorry, I can't. I have to…</strong>；Yes, please 是许可类答语，不用于回答求助。"
+ },
+ {
+  "q": "Can/Could I…? 这一句型的用途是",
+  "opts": [
+   "A. 请求对方允许自己做某事",
+   "B. 询问对方的能力",
+   "C. 提出建议",
+   "D. 表达感谢"
+  ],
+  "ans": 0,
+  "exp": "<strong>Can/Could I…?</strong> = 我能……吗？用于<strong>请求许可</strong>（允许自己做某事）。"
+ },
+ {
+  "q": "pretty 的比较级是",
+  "opts": [
+   "A. more pretty",
+   "B. prettier",
+   "C. prettiest",
+   "D. prettyer"
+  ],
+  "ans": 1,
+  "exp": "辅音字母+y 结尾 → 变 y 为 i 再加 er：pretty → <strong>prettier</strong>。"
+ },
+ {
+  "q": "big 的比较级是",
+  "opts": [
+   "A. biger",
+   "B. bigger",
+   "C. more big",
+   "D. biggest"
+  ],
+  "ans": 1,
+  "exp": "重读闭音节 → 双写末尾辅音字母 + er：big → <strong>bigger</strong>。"
+ },
+ {
+  "q": "important 的比较级是",
+  "opts": [
+   "A. importanter",
+   "B. more important",
+   "C. most important",
+   "D. importantest"
+  ],
+  "ans": 1,
+  "exp": "多音节词前加 more：important → <strong>more important</strong>。"
+ },
+ {
+  "q": "ill / bad / badly 的比较级是",
+  "opts": [
+   "A. badder",
+   "B. more bad",
+   "C. worse",
+   "D. worst"
+  ],
+  "ans": 2,
+  "exp": "不规则变化：ill/bad/badly → <strong>worse</strong>。"
+ },
+ {
+  "q": "little 的比较级是",
+  "opts": [
+   "A. littler",
+   "B. less",
+   "C. least",
+   "D. more little"
+  ],
+  "ans": 1,
+  "exp": "little → <strong>less</strong>（不规则变化）；least 是最高级。"
+ },
+ {
+  "q": "far 的比较级是",
+  "opts": [
+   "A. farer",
+   "B. more far",
+   "C. farther/further",
+   "D. farthest"
+  ],
+  "ans": 2,
+  "exp": "far → <strong>farther / further</strong>（两个形式均可）。"
+ },
+ {
+  "q": "“我比他高”的正确表达是",
+  "opts": [
+   "A. I am taller than him.",
+   "B. I am more tall than him.",
+   "C. I am tall than him.",
+   "D. I am as tall than him."
+  ],
+  "ans": 0,
+  "exp": "高级比较：比较级 + <strong>than</strong> → I am taller than him."
+ },
+ {
+  "q": "“我不如他努力”的正确表达是",
+  "opts": [
+   "A. I am not hard-working than him.",
+   "B. I am less hard-working than him.",
+   "C. I am less hard-working as him.",
+   "D. I am more hard-working than him."
+  ],
+  "ans": 1,
+  "exp": "次级比较：<strong>less + 原级 + than</strong> → less hard-working than him。"
+ },
+ {
+  "q": "“我和他一样高”的正确表达是",
+  "opts": [
+   "A. I am so tall as him.",
+   "B. I am as taller as him.",
+   "C. I am as tall as him.",
+   "D. I am as tall than him."
+  ],
+  "ans": 2,
+  "exp": "同级比较：<strong>as + 原级 + as</strong> → as tall as him。"
+ },
+ {
+  "q": "下列不能修饰比较级的是",
+  "opts": [
+   "A. much",
+   "B. a lot",
+   "C. very",
+   "D. even"
+  ],
+  "ans": 2,
+  "exp": "修饰比较级：三多 much/a lot/far；两少 a little/a bit；一甚至 even。<strong>very 和 more 不能修饰比较级</strong>。"
+ },
+ {
+  "q": "“你越仔细，你犯错越少”的正确表达是",
+  "opts": [
+   "A. More careful you are, fewer mistakes you will make.",
+   "B. The more careful you are, the fewer mistakes you will make.",
+   "C. The more careful you are, the less mistakes you will make.",
+   "D. The careful you are, the few mistakes you make."
+  ],
+  "ans": 1,
+  "exp": "<strong>the + 比较级, the + 比较级</strong>（越……就越……）→ The more careful you are, the fewer mistakes you will make."
+ },
+ {
+  "q": "“天气越来越热”的正确表达是",
+  "opts": [
+   "A. The weather is hotter and hotter.",
+   "B. The weather is more hot and more hot.",
+   "C. The weather is more and more hot.",
+   "D. The weather is hotter and hot."
+  ],
+  "ans": 0,
+  "exp": "<strong>比较级 + and + 比较级</strong>（越来越……）→ hotter and hotter。"
+ },
+ {
+  "q": "多音节词“越来越漂亮”的正确表达是",
+  "opts": [
+   "A. beautifuler and beautifuler",
+   "B. more and more beautiful",
+   "C. more beautiful and more beautiful",
+   "D. most and most beautiful"
+  ],
+  "ans": 1,
+  "exp": "多音节/部分双音节用 <strong>more and more + 原级</strong> → more and more beautiful。"
+ },
+ {
+  "q": "invite sb. ___ sth 邀请某人做某事",
+  "opts": [
+   "A. to do",
+   "B. do",
+   "C. doing",
+   "D. done"
+  ],
+  "ans": 0,
+  "exp": "<strong>invite sb. to do sth</strong>（邀请某人做某事）；invite sb. to... 邀请某人到……"
+ },
+ {
+  "q": "“邀请；请柬”的英文名词是",
+  "opts": [
+   "A. invite",
+   "B. inviting",
+   "C. invitation",
+   "D. invited"
+  ],
+  "ans": 2,
+  "exp": "<strong>invitation</strong> n. 邀请；请柬（invite 是动词）。"
+ },
+ {
+  "q": "imagine 的名词形式是",
+  "opts": [
+   "A. imagination",
+   "B. imaginition",
+   "C. imagine",
+   "D. imaginating"
+  ],
+  "ans": 0,
+  "exp": "变 e 为 a 加 tion：imagine → <strong>imagination</strong>（同 prepare→preparation；organize→organization）。"
+ },
+ {
+  "q": "“许多种……”的正确表达是",
+  "opts": [
+   "A. a sort of",
+   "B. all sorts of",
+   "C. sort of",
+   "D. sort with"
+  ],
+  "ans": 1,
+  "exp": "<strong>all sorts of</strong> = 许多种；a sort of 一种；sort of 有点儿。"
+ },
+ {
+  "q": "add up to 的意思是",
+  "opts": [
+   "A. 把……加起来",
+   "B. 总计为",
+   "C. 增加",
+   "D. 除了……以外（还）"
+  ],
+  "ans": 1,
+  "exp": "<strong>add up to</strong> = 总计为；add up 才是“把……加起来”。"
+ },
+ {
+  "q": "“直到……才”的正确表达是",
+  "opts": [
+   "A. until",
+   "B. not...until",
+   "C. till not",
+   "D. not...till"
+  ],
+  "ans": 1,
+  "exp": "<strong>not...until</strong> = 直到……才（谓语用否定形式）；until 单独用表“直到……为止”。"
+ },
+ {
+  "q": "“某人熟悉某物”的正确表达是",
+  "opts": [
+   "A. sb. be familiar to sth",
+   "B. sb. be familiar with sth",
+   "C. sth. be familiar with sb",
+   "D. familiar sb. with sth"
+  ],
+  "ans": 1,
+  "exp": "sb. be <strong>familiar with</strong> sth（人熟悉物）；sth. be familiar <strong>to</strong> sb（物为人所熟悉）。"
+ },
+ {
+  "q": "describe...as... 的意思是",
+  "opts": [
+   "A. 向某人描述",
+   "B. 把……描述成为",
+   "C. 发现",
+   "D. 难以描绘"
+  ],
+  "ans": 1,
+  "exp": "<strong>describe...as...</strong> = 把……描述成为……；beyond description 才是“难以描绘”。"
+ },
+ {
+  "q": "“It doesn't matter.” 的意思是",
+  "opts": [
+   "A. 没关系。",
+   "B. 怎么了？",
+   "C. 这很重要。",
+   "D. 不论……"
+  ],
+  "ans": 0,
+  "exp": "<strong>It doesn't matter.</strong> = 没关系/不要紧；What's the matter? 才是“怎么了”。"
+ },
+ {
+  "q": "The desk ___ flowers.（用花覆盖桌面）",
+  "opts": [
+   "A. is covered with",
+   "B. covers with",
+   "C. cover with",
+   "D. is covering"
+  ],
+  "ans": 0,
+  "exp": "<strong>be covered with</strong> = 被……覆盖（cover...with 的被动形式）。"
+ },
+ {
+  "q": "“用花装饰教室”的正确表达是",
+  "opts": [
+   "A. decorate the classroom with flowers",
+   "B. decorate flowers with classroom",
+   "C. cover the classroom with flowers",
+   "D. decorate the classroom to flowers"
+  ],
+  "ans": 0,
+  "exp": "<strong>decorate...with...</strong> = 用……装饰……；decorate 侧重装饰美化（cover 侧重覆盖）。"
+ },
+ {
+  "q": "no matter how busy you are 中 no matter 的意思是",
+  "opts": [
+   "A. 没关系",
+   "B. 不论",
+   "C. 要紧",
+   "D. 问题"
+  ],
+  "ans": 1,
+  "exp": "<strong>no matter + 疑问词</strong> = 不论……（no matter how/what/where…）。"
+ },
+ {
+  "q": "（练习册）作者在感恩节前给儿子发短信的目的是",
+  "opts": [
+   "A. 表达她的爱",
+   "B. 让他回家",
+   "C. 询问感恩节的计划",
+   "D. 提醒他做作业"
+  ],
+  "ans": 2,
+  "exp": "第一段作者明确问 <strong>“Let me know your plans”</strong>，是询问感恩节的计划（答案 C）。"
+ },
+ {
+  "q": "（练习册）作者认为 one-word replies（一词回复）怎么样？",
+  "opts": [
+   "A. 冷漠且不礼貌",
+   "B. 冷漠但清晰",
+   "C. 礼貌且清晰",
+   "D. 完全没有问题"
+  ],
+  "ans": 0,
+  "exp": "原文提到一词回复 may be too <strong>impolite</strong>、may seem <strong>cold</strong>，未提 clear（答案 A：①②）。"
+ },
+ {
+  "q": "（练习册）画线句 “I will ask for full sentences” 表明",
+  "opts": [
+   "A. 作者会更常用一词回复",
+   "B. 作者希望儿子改变沟通方式",
+   "C. 作者不愿再和儿子说话",
+   "D. 作者希望儿子提高成绩"
+  ],
+  "ans": 1,
+  "exp": "“我会要求完整句子”表明希望儿子<strong>改变沟通方式</strong>（答案 B）。"
+ },
+ {
+  "q": "（练习册）全文主要讲的是",
+  "opts": [
+   "A. 年轻人为何喜欢一词回复",
+   "B. 别人用一词回复时如何应对",
+   "C. 一位母亲对儿子简短回复的感受",
+   "D. 如何用短信表达礼貌"
+  ],
+  "ans": 2,
+  "exp": "全文围绕一位母亲对儿子简短回复的感受与看法（答案 C）。"
+ },
+ {
+  "q": "（练习册·短文填空）___ a surprise farewell party for Mrs. Chen required careful organization.",
+  "opts": [
+   "A. Plan",
+   "B. Planning",
+   "C. Planned",
+   "D. Plans"
+  ],
+  "ans": 1,
+  "exp": "plan 变动名词作主语且句首大写 → <strong>Planning</strong>（谓语 required 要求单数主语）。"
+ },
+ {
+  "q": "（练习册·短文填空）First, we needed to ___ out who would bring decorations and snacks.",
+  "opts": [
+   "A. sort",
+   "B. cover",
+   "C. add",
+   "D. describe"
+  ],
+  "ans": 0,
+  "exp": "固定搭配 <strong>sort out</strong> = 弄清、分配。"
+ },
+ {
+  "q": "（练习册·短文填空）“We can't relax ___ everything is ready!” Mrs. Lee reminded us.",
+  "opts": [
+   "A. until",
+   "B. not until",
+   "C. since",
+   "D. while"
+  ],
+  "ans": 0,
+  "exp": "can't relax <strong>until</strong> everything is ready（直到一切就绪才能放松）；此处不写 not。"
+ },
+ {
+  "q": "（练习册·短文填空）Luckily, it didn't ___ since Tom had prepared extra songs.",
+  "opts": [
+   "A. matter",
+   "B. care",
+   "C. mind",
+   "D. work"
+  ],
+  "ans": 0,
+  "exp": "固定搭配 <strong>it didn't matter</strong> = 没关系/不要紧。"
+ },
+ {
+  "q": "（练习册·短文填空）Later, she ___ a hidden album of our class memories.",
+  "opts": [
+   "A. discover",
+   "B. discovered",
+   "C. discovers",
+   "D. discovering"
+  ],
+  "ans": 1,
+  "exp": "全文为过去时 → <strong>discovered</strong>（发现了一个隐藏相册）。"
+ }
+];
+
+
+const flashcards = [
+ {
+  "front": "give sb. a lift / take the lift / lift up 分别什么意思？",
+  "back": "<strong>give sb. a lift</strong> 开车顺便送某人；<strong>take the lift</strong> 乘电梯；<strong>lift up</strong> 举起。"
+ },
+ {
+  "front": "note 的四个拓展词义？",
+  "back": "① 注释；批注 notes of an article ② <strong>纸币</strong> a £5 note ③ 正式文件 a sick note ④ 音符 high/low notes。"
+ },
+ {
+  "front": "rubbish 的同义词有哪些？",
+  "back": "<strong>waste、trash、garbage、litter</strong>；短语：take out the rubbish 倒垃圾 / rubbish sorting 垃圾分类。"
+ },
+ {
+  "front": "Can/Could you please…? 的肯定、否定答语？",
+  "back": "肯定：No problem. / <strong>With pleasure.</strong> / Sure·Of course·Certainly.；否定：Sorry, I can't. I have to… / I'm afraid not."
+ },
+ {
+  "front": "Can/Could I…? 是问什么？答语？",
+  "back": "请求<strong>许可</strong>（允许自己做某事）。肯定：Yes, you can. / Of course you can. / Yes, please.；否定：Sorry, you can't. / Sorry, I'm afraid you can't."
+ },
+ {
+  "front": "比较级规则变化 5 条",
+  "back": "① 一般 +er（shorter）② 不发音 e +r（cuter）③ 辅音+y 变 i +er（prettier）④ 重读闭音节双写辅音 +er（bigger/hotter）⑤ 多音节前加 more（more important）。"
+ },
+ {
+  "front": "比较级不规则变化 6 组",
+  "back": "good/well → better；ill/bad/badly → worse；many/much → more；little → less；old → older/elder；far → farther/further。"
+ },
+ {
+  "front": "三种比较结构（比…更 / 不如 / 一样）",
+  "back": "比较级 + <strong>than</strong>（taller than him）；<strong>less + 原级 + than</strong>（less tall than him）；<strong>as + 原级 + as</strong>（as tall as him）。"
+ },
+ {
+  "front": "哪些词可以修饰比较级？",
+  "back": "三多 <strong>much / a lot / far</strong>；两少 <strong>a little / a bit</strong>；一甚至 <strong>even</strong>。⚠️ very 和 more 不能修饰比较级。"
+ },
+ {
+  "front": "“越……就越……”和“越来越……”怎么表达？",
+  "back": "<strong>the + 比较级, the + 比较级</strong>（The more careful you are, the fewer mistakes you will make.）；<strong>比较级 + and + 比较级</strong>（hotter and hotter）；多音节用 more and more + 原级。"
+ },
+ {
+  "front": "invite / imagine / prepare / organize 的名词形式？",
+  "back": "invite → <strong>invitation</strong>；imagine → <strong>imagination</strong>；prepare → <strong>preparation</strong>；organize → <strong>organization</strong>。"
+ },
+ {
+  "front": "familiar / describe / matter / cover / decorate 的关键搭配？",
+  "back": "sb. be familiar <strong>with</strong> sth；describe...<strong>as</strong> 把……描述成为；It doesn't matter. 没关系；be covered <strong>with</strong> 被……覆盖；decorate...<strong>with</strong> 用……装饰。"
+ }
+];
+
+
+errors = [
+ {
+  "title": "❌ 用 very / more 修饰比较级",
+  "wrong": "He is very taller than me. / This book is more better.",
+  "right": "very 和 more <strong>不修饰比较级</strong>；用 much / a lot / far / even / a little / a bit → He is much taller than me."
+ },
+ {
+  "title": "❌ 比较级规则变化错用",
+  "wrong": "pretty → more pretty；big → biger；important → importanter。",
+  "right": "pretty → <strong>prettier</strong>（辅音+y 变 i 加 er）；big → <strong>bigger</strong>（双写末尾辅音）；important → <strong>more important</strong>（多音节前加 more）。"
+ },
+ {
+  "title": "❌ 不规则比较级写错",
+  "wrong": "bad → badder；little → littler；far → farer。",
+  "right": "bad/badly → <strong>worse</strong>；little → <strong>less</strong>；far → <strong>farther/further</strong>。"
+ },
+ {
+  "title": "❌ familiar 的介词颠倒",
+  "wrong": "sb. be familiar to sth / sth. be familiar with sb。",
+  "right": "人熟悉物：sb. be familiar <strong>with</strong> sth；物为人所知：sth. be familiar <strong>to</strong> sb。"
+ },
+ {
+  "title": "❌ not...until 漏掉 not 或位置错",
+  "wrong": "We can relax until everything is ready.（意思反了）",
+  "right": "“直到……才”用 <strong>not...until</strong>：We <strong>can't</strong> relax until everything is ready."
+ },
+ {
+  "title": "❌ cover 与 decorate 混用",
+  "wrong": "decorate the board with photos（想表达“贴满照片”）；cover the desk with flowers（想表达“装饰桌子”）。",
+  "right": "cover...with 侧重<strong>覆盖、铺满</strong>（photos 贴满布告板用 cover）；decorate...with 侧重<strong>装饰美化</strong>（用花装饰桌子用 decorate）。"
+ },
+ {
+  "title": "❌ 短文填空词形错误",
+  "wrong": "plan → plan（句首不大写/不用动名词）；discover → discover（全文过去时却用原形）。",
+  "right": "作主语用动名词且句首大写：<strong>Planning</strong>... required...；时态为过去时用 <strong>discovered</strong>。"
+ }
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx,myAns){const q=questions[idx];const item={subject:'英语(双语C班)',chapter:'第2讲 核心词汇与比较级',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'英语,双语C班,第2讲,lift,note,rubbish,比较级,程度副词,考点词汇'};const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');if(ex.some(x=>x.content===item.content))return false;ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));return true;}
+const WRONG_HISTORY_KEY='quiz_english_lesson2_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();found.redo=0;}
+  else h.push({idx,count:1,lastWrong:Date.now(),redo:0});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+function markRedoOk(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(!found)return;
+  found.redo=(found.redo||0)+1;
+  if(found.redo>=3){h=h.filter(x=>x.idx!==idx);toast('🎉 重做'+found.redo+'次，已合格！','success');}
+  else{toast('✅ 答对！重做'+found.redo+'/3','success');}
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_english_lesson2';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory().filter(x=>(x.redo||0)<3);
+  if(!h.length){alert('没有待重做的错题了，全部合格！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const total=retryMode?shuffled.length:questions.length;if(curQ<total-1){curQ++;renderQ();}else showResult();}
+function showResult(){const p=getQuizProg();let ok=0,done=0;Object.keys(p||{}).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=3)ok++;});for(let i=0;i<quizAns.length;i++){if(quizAns[i]>=0)done++;}let h='<div class="question-card result-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2.6rem">🎉</div><h2>本组答题完成</h2><p style="color:var(--text-light)">本次已完成 '+done+' 题 · 连续做对3次已合格 '+ok+' 题</p><div style="margin-top:1rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 继续练习全部</button><button class="btn btn-primary" onclick="initRetryMode()">🔁 错题重练</button></div></div>';document.getElementById('quizArea').innerHTML=h;}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=(function(){if(_dp){const wh=loadWrongHistory();const rec=wh.find(x=>x.idx===idx);if(rec){const rr=(rec.redo||0);return `<span class="done-badge ${rr>=3?'ok':'no'}">${rr>=3?'✅已合格':'❌重做'+rr+'/3'}</span>`;}return `<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`;}return '';})();if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi===questions[idx].ans){const wh=loadWrongHistory();if(wh.some(x=>x.idx===idx))markRedoOk(idx);}
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'英语',chapter:'第2讲 核心词汇与比较级',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'英语,双语C班,第2讲,lift,note,rubbish,比较级,程度副词,考点词汇'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('english_lesson2_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('english_lesson2_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('english_lesson2_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('english_lesson2_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('english_lesson2_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</div>
+</body></html>
