@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>学习中心 · 群晖入口</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f7fa;color:#1f2937;padding:32px 16px}
+  .wrap{max-width:720px;margin:0 auto}
+  h1{font-size:24px;margin-bottom:6px}
+  .sub{color:#6b7280;font-size:14px;margin-bottom:26px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  a.card{display:block;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:18px 16px;text-decoration:none;color:inherit;transition:.15s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  a.card:hover{border-color:#2563eb;box-shadow:0 4px 14px rgba(37,99,235,.12);transform:translateY(-2px)}
+  .icon{font-size:26px}
+  .t{font-weight:600;font-size:16px;margin:8px 0 4px}
+  .d{font-size:13px;color:#6b7280;line-height:1.5}
+  .foot{margin-top:26px;font-size:12px;color:#9ca3af;text-align:center}
+  .admin a{color:#9ca3af;text-decoration:none;border-bottom:1px dotted #d1d5db}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏠 学习中心 · 群晖入口</h1>
+  <div class="sub">192.168.3.190 · 点击进入</div>
+  <div class="grid">
+    <a class="card" href="/xuci-jiancha/index.html">
+      <div class="icon">📚</div>
+      <div class="t">赵若琳学习中心</div>
+      <div class="d">初中数学/物理/语文/英语/化学互动学习页 · 错题库 · 闯关测验</div>
+    </a>
+    <a class="card" href="/xuci-jiancha/liuqiuling_index.html">
+      <div class="icon">🎓</div>
+      <div class="t">刘秋灵学习中心</div>
+      <div class="d">9年级五科全章节互动页（语数英物化）· 预习闯关</div>
+    </a>
+    <a class="card" href="/xuci-jiancha/ai_workshop.html">
+      <div class="icon">🤖</div>
+      <div class="t">AI 学习工坊</div>
+      <div class="d">自配大模型 + edulab 课件 + Hermes agent</div>
+    </a>
+    <a class="card" href="/xuci-jiancha/wrong_bank.html">
+      <div class="icon">❌</div>
+      <div class="t">错题库</div>
+      <div class="d">错题管理 · 三层训练 · 闯关合格追踪</div>
+    </a>
+  </div>
+  <div class="foot admin">管理入口：<a href="http://192.168.3.190:5000/">DSM</a></div>
+</div>
+</body>
+</html>
