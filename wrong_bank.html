@@ -199,6 +199,37 @@ function checkImport(){try{
   if(imported>0)toast(`📥 成功导入 ${imported} 道错题！`,'success');
 }catch(e){console.error('Import error:',e);}}
 
+// ===================== BUILTIN WRONG QUESTIONS (内置收录) =====================
+const BUILTIN_FLAG='wrong_bank_builtin_applied';
+const BUILTIN_QUESTIONS=[
+{key:'physics_ecg_20260913',subject:'物理',chapter:'机械运动（速度计算）',
+content:'5. 心电图仪通过传感手段，把与人心跳对应的生物电流记录在匀速运动的坐标纸上(图甲)。医生测量相邻两波峰的时间间隔，便可计算出 1 min 内心脏跳动的次数（心率）。同一台心电图仪正常工作时测得甲、乙的心电图分别如图乙、丙：甲的相邻波峰间距为 18 mm，乙（患者乙）的相邻波峰间距为 15 mm。已知甲的心率为 80 次/min，求：(1) 甲每次心跳的时间间隔；(2) 这台心电图仪输出坐标纸的走纸速度大小；(3) 乙患者的心率。',
+correct_answer:'(1) 0.75 s（即 3/4 s）　(2) 24 mm/s　(3) 96 次/min\n\n【解析】(1) 甲心率 80 次/min ⇒ 每次心跳的时间间隔 t₁ = 60 s ÷ 80 = 0.75 s。(2) 走纸速度 v = 相邻波峰间距 ÷ 时间间隔 = 18 mm ÷ 0.75 s = 24 mm/s。(3) 乙相邻波峰间距 15 mm ⇒ 时间间隔 t₂ = 15 mm ÷ 24 mm/s = 0.625 s ⇒ 心率 = 60 s ÷ 0.625 s = 96 次/min。（比例法验证：同一台仪器走纸速度相同，波峰间距与时间间隔成正比，t₂ = 0.75 s × 15/18 = 0.625 s）',
+my_answer:'(1) 4/3 s　(2) 13.5 mm/s（27/2 mm/s）　(3) 54 次/min',
+error_reason:'公式应用错误',tags:'物理,机械运动,速度计算,心电图,比例法',source:'作业',difficulty:3,
+image_path:'uploads/wrong_bank/physics_ecg_20260913.jpg'}
+];
+function applyBuiltinQuestions(){try{
+  const applied=JSON.parse(localStorage.getItem(BUILTIN_FLAG)||'[]');
+  const d=loadData();let added=0;
+  for(const b of BUILTIN_QUESTIONS){
+    if(applied.indexOf(b.key)>=0)continue;
+    const subj=d.subjects.find(s=>s.name===b.subject);
+    if(!subj)continue;
+    let chap=null;
+    if(b.chapter){chap=d.chapters.find(c=>c.subject_id===subj.id&&c.name===b.chapter);
+      if(!chap){chap={id:genChapId(),subject_id:subj.id,name:b.chapter,sort_order:0};d.chapters.push(chap);}}
+    d.questions.push({id:genId(),subject_id:subj.id,chapter_id:chap?chap.id:null,
+      content:b.content,correct_answer:b.correct_answer||'',my_answer:b.my_answer||'',
+      error_reason:b.error_reason||'概念不清',tags:b.tags||'',source:b.source||'练习',
+      difficulty:b.difficulty||3,mastery:0,created_at:now(),updated_at:now(),
+      next_review:today(),review_count:0,image_path:b.image_path||'',answer_image_path:'',flow:{}});
+    applied.push(b.key);added++;
+  }
+  saveData(d);localStorage.setItem(BUILTIN_FLAG,JSON.stringify(applied));
+  if(added>0)toast('📥 已收录 '+added+' 道新错题','success');
+}catch(e){console.error('builtin error',e);}}
+
 // ===================== ROUTER =====================
 let currentPage='dashboard';
 function navigate(page,data){
@@ -927,6 +958,7 @@ function renderAnalysis(){
 
 // ===================== INIT =====================
 checkImport();
+applyBuiltinQuestions();
 navigate('dashboard');
 </script>
 <script>
