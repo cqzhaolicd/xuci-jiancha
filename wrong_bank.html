@@ -207,7 +207,13 @@ content:'5. 心电图仪通过传感手段，把与人心跳对应的生物电�
 correct_answer:'(1) 0.75 s（即 3/4 s）　(2) 24 mm/s　(3) 96 次/min\n\n【解析】(1) 甲心率 80 次/min ⇒ 每次心跳的时间间隔 t₁ = 60 s ÷ 80 = 0.75 s。(2) 走纸速度 v = 相邻波峰间距 ÷ 时间间隔 = 18 mm ÷ 0.75 s = 24 mm/s。(3) 乙相邻波峰间距 15 mm ⇒ 时间间隔 t₂ = 15 mm ÷ 24 mm/s = 0.625 s ⇒ 心率 = 60 s ÷ 0.625 s = 96 次/min。（比例法验证：同一台仪器走纸速度相同，波峰间距与时间间隔成正比，t₂ = 0.75 s × 15/18 = 0.625 s）',
 my_answer:'(1) 4/3 s　(2) 13.5 mm/s（27/2 mm/s）　(3) 54 次/min',
 error_reason:'公式应用错误',tags:'物理,机械运动,速度计算,心电图,比例法',source:'作业',difficulty:3,
-image_path:'uploads/wrong_bank/physics_ecg_20260913.jpg'}
+image_path:'uploads/wrong_bank/physics_ecg_20260913.jpg'},
+{key:'physics_crossing_20260913',subject:'物理',chapter:'运动学综合（相对运动·过街安全）',
+content:'（2025秋·锦江区期中）如图 a，光滑水平面上有甲、乙两小球分别位于 A、B 两点，同时开始沿互相垂直的方向匀速运动。已知 AC = 48cm，BC = 72cm，甲的速度为 0.2 m/s（两小球直径忽略不计）。(1) 求甲球由 A 运动到 C 的时间；(2) 为使两小球刚好在 C 点相碰，求乙球的速度；(3) 保持其他条件不变，将乙球换成长为 20cm、宽 4cm 的滑块 MN，N 端放于 B 点，滑块中线与 BC 重合且由 B 向 C 运动（图 b），为使二者不相碰，求滑块的速度范围。',
+correct_answer:'(1) 2.4 s　(2) 0.3 m/s　(3) v > 0.4 m/s 或 v < 0.288 m/s\n\n【解析】(1) t = AC ÷ v甲 = 0.48 m ÷ 0.2 m/s = 2.4 s。(2) 两球刚好在 C 相碰 → 乙到 C 所用时间与甲相同 = 2.4 s → v乙 = 0.72 m ÷ 2.4 s = 0.3 m/s。(3) 分类讨论（滑块宽 4cm，甲球与滑块中线 BC 的临界距离为半宽 2cm）：① 车尾过球（滑块很快，甲球到 C 前滑块尾部已通过 C）：滑块路程 = BC+MN = 0.72+0.20 = 0.92 m；甲球走 0.48−0.02 = 0.46 m 用时 t = 2.3 s → v = 0.92÷2.3 = 0.4 m/s，故 v > 0.4 m/s；② 车头过球（滑块较慢，甲球离开 C 后滑块才到 C）：甲球走 0.48+0.02 = 0.50 m 用时 2.5 s，滑块走 BC = 0.72 m → v = 0.72÷2.5 = 0.288 m/s，故 v < 0.288 m/s。综上：不相碰时 v > 0.4 m/s 或 v < 0.288 m/s（0.288~0.4 之间会相碰）。',
+my_answer:'（例题·标准解答，重点掌握）',
+error_reason:'重点题型',tags:'物理,运动学,相对运动,过街安全,分类讨论,临界问题',source:'课外题',difficulty:4,
+image_path:'uploads/wrong_bank/physics_crossing_20260913.jpg'}
 ];
 function applyBuiltinQuestions(){try{
   const applied=JSON.parse(localStorage.getItem(BUILTIN_FLAG)||'[]');
