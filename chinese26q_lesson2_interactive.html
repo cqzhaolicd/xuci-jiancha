@@ -1,0 +1,720 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏔️ 山水游记专题 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</style></head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 语文 · 第1讲</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-mountain"></i> 山水游记专题 · 互动学习</h1>
+    <p>2026秋语文课外班 第2课 · 29 题 · 12 卡牌 | 山水游记专题</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 29道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 12张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 6大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第二课 · 山水游记专题</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3>🏔️ 山水游记发展脉络·魏晋南北朝（萌芽）</h3><ul><li>代表：<strong class="hl">王羲之、谢灵运、陶渊明</strong></li><li>内容以<strong class="hl">纯描摹山水</strong>为主</li><li>核心情感：对自然山水的<strong class="hl">欣赏与陶醉</strong></li></ul></div>
+      <div class="knowledge-card c2"><h3>🌊 唐代（情景交融）</h3><ul><li>文人开始把<strong class="hl">主观情感融入景物</strong>描写，实现情景交融</li><li>代表：柳宗元被贬永州后创作的<strong class="hl">《永州八记》</strong></li><li>其中<strong class="hl">《小石潭记》要求全文背诵</strong></li></ul></div>
+      <div class="knowledge-card c3"><h3>📖 宋代（寓理于景）</h3><ul><li>受<strong class="hl">宋明理学</strong>思辨风气影响，收敛泛滥抒情，转向<strong class="hl">寓理于景</strong></li><li>代表：苏轼<strong class="hl">《赤壁赋》</strong>、王安石<strong class="hl">《游褒禅山记》</strong></li><li>侧重探讨天地万物运行规律与为人处世的道理</li></ul></div>
+      <div class="knowledge-card c4"><h3>🏛️ 明清（鼎盛成熟期）</h3><ul><li>山水游记发展至<strong class="hl">鼎盛成熟期</strong>，创作群体多元</li><li>文人：<strong class="hl">公安三袁、张岱</strong>；官员：<strong class="hl">施润章</strong>（关注民生政务）</li><li>内容涵盖山水描摹、个人志趣、民生思考，<strong class="hl">解读难度最高</strong></li></ul></div>
+      <div class="knowledge-card c5"><h3>📍 成都本地出题背景</h3><ul><li>陆游曾在成都<strong class="hl">崇州</strong>长期居住（成都东站坐高铁 15 分钟可达其故居）</li><li>素材：《入蜀记》（陆游）、<strong class="hl">《吴船录》（范成大）</strong></li><li>杨慎整理蜀地相关文言文 <strong class="hl">1600 多篇</strong>；《华阳国志》篇目</li><li>⚠️ <strong class="hl">半期考试后</strong>山水游记阅读题难度明显提升</li></ul></div>
+      <div class="knowledge-card c6"><h3>📜 《浣花溪记》文本背景</h3><ul><li>作者：明代文学家<strong class="hl">袁中道</strong>（属明清山水游记）</li><li>篇幅较长：八上后半段就会遇到同篇幅难度题目，八下日常训练基本都是这个长度</li></ul></div>
+      <div class="knowledge-card c7"><h3>🔤 文言知识点：并提·互文·宾语前置</h3><ul><li><strong class="hl">并提</strong>、<strong class="hl">互文</strong>：古诗文专属修辞手法</li><li><strong class="hl">“水木清华”</strong>是<strong class="hl">宾语前置</strong>句式</li><li>正确翻译：<strong class="hl">流水清澈、树木茂盛</strong></li></ul></div>
+      <div class="knowledge-card c8"><h3>👥 人文背景：杜甫与严武</h3><ul><li>严武曾为杜甫在<strong class="hl">浣花溪畔</strong>安排居所，保障其吃穿用度</li><li>严武去世后杜甫失去依托，离开浣花溪前往<strong class="hl">重庆夔门</strong></li><li>在夔门创作千古第一律诗<strong class="hl">《登高》</strong></li></ul></div>
+      <div class="knowledge-card c9"><h3>🖼️ 写作手法：移步换景</h3><ul><li>全文用<strong class="hl">移步换景</strong>串联：万里桥 → 杜甫草堂 → 百花潭等景点逐一串联</li><li>整体氛围<strong class="hl">清幽悠远</strong></li><li>寄寓作者对杜甫从容不迫、热爱生活品质的<strong class="hl">敬佩与赞美</strong></li></ul></div>
+      <div class="knowledge-card c10"><h3>🎯 情感推断三路径（解题核心）</h3><ul><li>① 锁定文章<strong class="hl">结尾关键总结句</strong>，提取直接流露的情感</li><li>② 通过<strong class="hl">景物特点反推</strong>情感（如“冷月”常对应战乱后的悲痛）</li><li>③ 结合<strong class="hl">作者生平与写作背景</strong>（如苏轼被贬黄州 → 苦闷与怀才不遇）</li></ul></div>
+      <div class="knowledge-card c11"><h3>🧭 分难度文本解题法</h3><ul><li><strong class="hl">魏晋南北朝（简单）</strong>：游踪 → 景物 → 时间季节变化 → 结合氛围推导情感</li><li><strong class="hl">唐及以后（复杂）</strong>：额外圈出文中<strong class="hl">人物</strong>，分析作者对人物的情感倾向</li><li>最后结合<strong class="hl">朝代特征</strong>判断作品使用的核心手法</li></ul></div>
+      <div class="knowledge-card c12"><h3>📌 课堂安排与作业</h3><ul><li>调课：<strong class="hl">9月19日停课</strong>；9月26日补19日课时；<strong class="hl">10月6日</strong>补国庆调休占用课时</li><li>作业：第一/三套习题有重复，<strong class="hl">本周优先完成 A 卷</strong>，下周推进 B 卷</li><li>待办：完成《刘大令四序》山水游记阅读习题，做好批注并订正；《浣花溪记》重点实词整理到积累本</li></ul></div>
+    </div>
+    </div>
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone-alt"></i> 🎙️ 课堂要点 · 第2课（山水游记专题）</h4>
+      <p><strong>本讲核心</strong>：2026秋语文课外班第2课，专题为<strong>中国古代山水游记</strong>。①发展脉络四阶段：<strong>魏晋南北朝（萌芽·纯描摹）→ 唐代（情景交融·柳宗元《永州八记》）→ 宋代（寓理于景·苏轼/王安石）→ 明清（鼎盛成熟·公安三袁、张岱）</strong>；②文本精讲：袁中道<strong>《浣花溪记》</strong>（并提、互文、宾语前置“水木清华”、移步换景）；③解题方法：<strong>情感推断三路径</strong> + 分难度文本阅读步骤。</p>
+      <p><strong>本地出题背景</strong>：陆游居崇州（《入蜀记》）、范成大（《吴船录》）、杨慎整理 1600 多篇蜀地文言文、《华阳国志》——素材充足；<strong>半期考试后阅读难度会明显提升</strong>，八下日常训练基本都是《浣花溪记》这样的篇幅。</p>
+      <p><strong>作业与安排</strong>：9月19日停课，9月26日补课时，10月6日补国庆调休占用课时；习题集作业本周优先完成 <strong>A 卷</strong>、下周推进 B 卷；完成《刘大令四序》阅读习题并订正；把《浣花溪记》重点实词整理到积累本。</p>
+      <p><strong>🎓 老师课堂金句</strong> — “中国古人出去玩儿不能纯玩儿……必须写点儿东西。”｜“听懂是前提，然后要自己亲自实践演练，同时反思自己的问题。”｜“文科学习就像扩大池塘，虽然每次做题可能只会用到一条水，但你至少要有水可舀。”</p>
+    </div>
+    <div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 29</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共12张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 语文 · 第2课 山水游记专题 | 2026秋 · 新闻阅读</div>
+
+<script>
+const questions = [
+ {
+  "q": "中国古代山水游记的萌芽阶段是哪个时期？",
+  "opts": [
+   "A. 唐代",
+   "B. 魏晋南北朝",
+   "C. 宋代",
+   "D. 明清"
+  ],
+  "ans": 1,
+  "exp": "魏晋南北朝是山水游记的<strong>萌芽阶段</strong>，代表王羲之、谢灵运、陶渊明。"
+ },
+ {
+  "q": "魏晋南北朝山水游记的核心情感是",
+  "opts": [
+   "A. 忧国忧民",
+   "B. 对自然山水的欣赏与陶醉",
+   "C. 被贬的苦闷",
+   "D. 对功名的追求"
+  ],
+  "ans": 1,
+  "exp": "此阶段作品以纯描摹山水为主，核心情感是<strong>对自然山水的欣赏与陶醉</strong>。"
+ },
+ {
+  "q": "《永州八记》的作者是",
+  "opts": [
+   "A. 柳宗元",
+   "B. 苏轼",
+   "C. 王安石",
+   "D. 袁中道"
+  ],
+  "ans": 0,
+  "exp": "唐代<strong>柳宗元</strong>被贬永州后创作《永州八记》，实现情景交融。"
+ },
+ {
+  "q": "下列要求全文背诵的篇目是",
+  "opts": [
+   "A. 《赤壁赋》",
+   "B. 《游褒禅山记》",
+   "C. 《小石潭记》",
+   "D. 《浣花溪记》"
+  ],
+  "ans": 2,
+  "exp": "《永州八记》中的<strong>《小石潭记》</strong>要求全文背诵。"
+ },
+ {
+  "q": "唐代山水游记的突出特征是",
+  "opts": [
+   "A. 纯描摹山水",
+   "B. 情景交融",
+   "C. 寓理于景",
+   "D. 民生思考"
+  ],
+  "ans": 1,
+  "exp": "唐代文人把主观情感融入景物，实现<strong>情景交融</strong>；纯描摹是魏晋、寓理于景是宋代。"
+ },
+ {
+  "q": "宋代山水游记转向“寓理于景”，主要受什么影响？",
+  "opts": [
+   "A. 佛教兴盛",
+   "B. 宋明理学的思辨风气",
+   "C. 科举改革",
+   "D. 市民文化"
+  ],
+  "ans": 1,
+  "exp": "受<strong>宋明理学</strong>思辨风气影响，文人收敛抒情、转向寓理于景。"
+ },
+ {
+  "q": "《游褒禅山记》的作者是",
+  "opts": [
+   "A. 苏轼",
+   "B. 王安石",
+   "C. 柳宗元",
+   "D. 张岱"
+  ],
+  "ans": 1,
+  "exp": "宋代代表作品：苏轼《赤壁赋》、<strong>王安石《游褒禅山记》</strong>。"
+ },
+ {
+  "q": "山水游记发展至鼎盛成熟期是在",
+  "opts": [
+   "A. 唐代",
+   "B. 宋代",
+   "C. 明清",
+   "D. 魏晋"
+  ],
+  "ans": 2,
+  "exp": "<strong>明清</strong>是山水游记的鼎盛成熟期，创作群体多元、解读难度最高。"
+ },
+ {
+  "q": "下列人物属于明清时期山水游记作者的是",
+  "opts": [
+   "A. 谢灵运",
+   "B. 公安三袁、张岱",
+   "C. 柳宗元",
+   "D. 王安石"
+  ],
+  "ans": 1,
+  "exp": "明清文人代表：<strong>公安三袁、张岱</strong>；另有施润章这类关注民生政务的官员。"
+ },
+ {
+  "q": "施润章在山水游记创作中的特点是",
+  "opts": [
+   "A. 纯描摹山水",
+   "B. 关注民生政务",
+   "C. 专写赤壁",
+   "D. 只写佛教题材"
+  ],
+  "ans": 1,
+  "exp": "施润章是<strong>关注民生政务</strong>的官员型作者。"
+ },
+ {
+  "q": "关于成都本地出题素材，下列说法正确的是",
+  "opts": [
+   "A. 陆游曾在成都崇州长期居住",
+   "B. 杨慎整理蜀地文言文 160 篇",
+   "C. 《入蜀记》作者是范成大",
+   "D. 《华阳国志》与山水游记无关"
+  ],
+  "ans": 0,
+  "exp": "<strong>陆游曾在成都崇州长期居住</strong>（东站高铁 15 分钟可达故居）；杨慎整理 <strong>1600 多篇</strong>；《入蜀记》作者是陆游。"
+ },
+ {
+  "q": "《吴船录》的作者是",
+  "opts": [
+   "A. 陆游",
+   "B. 杨慎",
+   "C. 范成大",
+   "D. 袁中道"
+  ],
+  "ans": 2,
+  "exp": "<strong>范成大</strong>创作《吴船录》；陆游创作《入蜀记》。"
+ },
+ {
+  "q": "杨慎整理的蜀地相关文言文约有",
+  "opts": [
+   "A. 160 篇",
+   "B. 600 篇",
+   "C. 1600 多篇",
+   "D. 6000 篇"
+  ],
+  "ans": 2,
+  "exp": "杨慎整理了<strong>1600 多篇</strong>蜀地相关文言文，是重要出题素材。"
+ },
+ {
+  "q": "《浣花溪记》的作者是",
+  "opts": [
+   "A. 袁中道",
+   "B. 袁宏道",
+   "C. 张岱",
+   "D. 苏轼"
+  ],
+  "ans": 0,
+  "exp": "《浣花溪记》作者是明代文学家<strong>袁中道</strong>，属明清山水游记。"
+ },
+ {
+  "q": "“水木清华”属于哪种文言句式？",
+  "opts": [
+   "A. 判断句",
+   "B. 宾语前置",
+   "C. 被动句",
+   "D. 省略句"
+  ],
+  "ans": 1,
+  "exp": "“水木清华”是<strong>宾语前置</strong>句式，正确翻译为“<strong>流水清澈、树木茂盛</strong>”。"
+ },
+ {
+  "q": "关于“并提”和“互文”，下列说法正确的是",
+  "opts": [
+   "A. 是古诗文专属修辞手法",
+   "B. 是两种文言句式",
+   "C. 只用于散文",
+   "D. 属于通假字现象"
+  ],
+  "ans": 0,
+  "exp": "<strong>并提、互文</strong>是古诗文<strong>专属修辞手法</strong>（不是句式、不是通假）。"
+ },
+ {
+  "q": "谁曾为杜甫在浣花溪畔安排居所？",
+  "opts": [
+   "A. 李白",
+   "B. 严武",
+   "C. 高适",
+   "D. 王安石"
+  ],
+  "ans": 1,
+  "exp": "<strong>严武</strong>曾为杜甫在浣花溪畔安排居所，保障其日常吃穿用度。"
+ },
+ {
+  "q": "严武去世后，杜甫离开浣花溪前往哪里？",
+  "opts": [
+   "A. 成都崇州",
+   "B. 重庆夔门",
+   "C. 湖北黄州",
+   "D. 湖南长沙"
+  ],
+  "ans": 1,
+  "exp": "杜甫失去依托后前往<strong>重庆夔门</strong>，在此创作了千古第一律诗《登高》。"
+ },
+ {
+  "q": "被称为“千古第一律诗”的作品是",
+  "opts": [
+   "A. 《赤壁赋》",
+   "B. 《登高》",
+   "C. 《小石潭记》",
+   "D. 《华阳国志》"
+  ],
+  "ans": 1,
+  "exp": "杜甫在夔门创作的<strong>《登高》</strong>被誉为千古第一律诗。"
+ },
+ {
+  "q": "《浣花溪记》全文采用的串联方式是",
+  "opts": [
+   "A. 移步换景",
+   "B. 托物言志",
+   "C. 欲扬先抑",
+   "D. 卒章显志"
+  ],
+  "ans": 0,
+  "exp": "全文用<strong>移步换景</strong>把万里桥、杜甫草堂、百花潭等景点逐一串联。"
+ },
+ {
+  "q": "《浣花溪记》整体氛围与寄寓的情感是",
+  "opts": [
+   "A. 悲凉萧瑟，怀才不遇",
+   "B. 清幽悠远，敬佩赞美杜甫",
+   "C. 热烈奔放，歌颂自然",
+   "D. 忧国忧民，愤世嫉俗"
+  ],
+  "ans": 1,
+  "exp": "整体氛围<strong>清幽悠远</strong>，寄寓作者对杜甫从容不迫、热爱生活品质的<strong>敬佩与赞美</strong>。"
+ },
+ {
+  "q": "情感推断的第一条路径是",
+  "opts": [
+   "A. 锁定结尾关键总结句",
+   "B. 只看标题",
+   "C. 猜测作者年龄",
+   "D. 统计字数"
+  ],
+  "ans": 0,
+  "exp": "情感推断三路径：① <strong>结尾关键总结句</strong> ② 景物特点反推 ③ 作者生平与写作背景。"
+ },
+ {
+  "q": "读到“冷月”这类景物，通常可推断的情感是",
+  "opts": [
+   "A. 欢快喜悦",
+   "B. 战乱后的悲痛",
+   "C. 悠闲自得",
+   "D. 豪情万丈"
+  ],
+  "ans": 1,
+  "exp": "通过<strong>景物特点反推情感</strong>：写“冷月”通常对应<strong>战乱后的悲痛</strong>情绪。"
+ },
+ {
+  "q": "苏轼被贬黄州时期作品的核心情感多包含",
+  "opts": [
+   "A. 建功立业的豪情",
+   "B. 被贬的苦闷与怀才不遇的悲愤",
+   "C. 归隐山林的闲适",
+   "D. 对科举的批判"
+  ],
+  "ans": 1,
+  "exp": "结合作者生平背景：苏轼被贬黄州时期作品核心情感多为<strong>被贬的苦闷与怀才不遇的悲愤</strong>。"
+ },
+ {
+  "q": "阅读魏晋南北朝（较简单）的山水游记，正确的顺序是",
+  "opts": [
+   "A. 先判断手法再找情感",
+   "B. 游踪→景物→时间季节变化→结合氛围推导情感",
+   "C. 只看结尾一句",
+   "D. 先分析人物关系"
+  ],
+  "ans": 1,
+  "exp": "简单文本：先梳理<strong>作者游踪与所写景物</strong>，再看景物的时间、季节变化，最后结合氛围推导情感。"
+ },
+ {
+  "q": "阅读唐及以后的复杂山水游记，除上述步骤外还要额外做什么？",
+  "opts": [
+   "A. 统计修辞数量",
+   "B. 圈出文中人物，分析作者对人物的情感倾向",
+   "C. 抄写全文",
+   "D. 只看注释"
+  ],
+  "ans": 1,
+  "exp": "复杂文本需额外<strong>圈出人物并分析情感倾向</strong>，最后结合<strong>朝代特征</strong>判断核心手法。"
+ },
+ {
+  "q": "关于语文课后续安排，正确的是",
+  "opts": [
+   "A. 9月19日正常上课",
+   "B. 9月19日停课，9月26日补课时",
+   "C. 10月6日不上课",
+   "D. 本周优先完成 B 卷"
+  ],
+  "ans": 1,
+  "exp": "<strong>9月19日停课，9月26日补19日课时，10月6日补国庆调休占用课时</strong>；作业本周优先完成 A 卷。"
+ },
+ {
+  "q": "老师布置的山水游记阅读习题是",
+  "opts": [
+   "A. 《浣花溪记》",
+   "B. 《刘大令四序》",
+   "C. 《小石潭记》",
+   "D. 《赤壁赋》"
+  ],
+  "ans": 1,
+  "exp": "待办：完成<strong>《刘大令四序》</strong>山水游记阅读习题，做好文本批注并订正错误。"
+ },
+ {
+  "q": "半期考试之后，山水游记类阅读题的难度变化是",
+  "opts": [
+   "A. 明显降低",
+   "B. 明显提升",
+   "C. 保持不变",
+   "D. 只考背诵"
+  ],
+  "ans": 1,
+  "exp": "半期考试后山水游记阅读题<strong>难度会明显提升</strong>，需提前适应更高强度的文本解读。"
+ }
+];
+
+
+const flashcards = [
+ {
+  "front": "山水游记四个发展阶段及特征？",
+  "back": "① <strong>魏晋南北朝（萌芽）</strong>：纯描摹山水，欣赏陶醉；② <strong>唐代</strong>：情景交融（柳宗元《永州八记》）；③ <strong>宋代</strong>：寓理于景（苏轼《赤壁赋》、王安石《游褒禅山记》）；④ <strong>明清</strong>：鼎盛成熟（公安三袁、张岱、施润章）。"
+ },
+ {
+  "front": "魏晋南北朝的三个代表人物？",
+  "back": "<strong>王羲之、谢灵运、陶渊明</strong>；内容以纯描摹山水为主，情感是对自然山水的欣赏与陶醉。"
+ },
+ {
+  "front": "《永州八记》与《小石潭记》的关系？",
+  "back": "《小石潭记》是柳宗元<strong>《永州八记》</strong>中的一篇，<strong>要求全文背诵</strong>。"
+ },
+ {
+  "front": "宋代山水游记为什么“寓理于景”？",
+  "back": "受<strong>宋明理学</strong>思辨风气影响，文人收敛泛滥抒情，转向寓理于景，探讨天地万物运行规律与为人处世的道理。"
+ },
+ {
+  "front": "成都本地有哪些山水游记出题素材？",
+  "back": "陆游（居崇州，《入蜀记》）、<strong>范成大《吴船录》</strong>、杨慎整理的 1600 多篇蜀地文言文、《华阳国志》篇目。"
+ },
+ {
+  "front": "《浣花溪记》作者、朝代与难度定位？",
+  "back": "明代文学家<strong>袁中道</strong>的作品，属明清山水游记；篇幅较长，<strong>八上后半段</strong>就会在考试中遇到同篇幅难度。"
+ },
+ {
+  "front": "“水木清华”的句式与正确翻译？",
+  "back": "属于<strong>宾语前置</strong>句式；正确翻译为“<strong>流水清澈、树木茂盛</strong>”。"
+ },
+ {
+  "front": "并提、互文是什么？",
+  "back": "古诗文<strong>专属修辞手法</strong>（不是句式）；《浣花溪记》中重点讲解的两类文言知识点。"
+ },
+ {
+  "front": "杜甫与浣花溪、严武的关系？",
+  "back": "<strong>严武</strong>为杜甫在<strong>浣花溪畔</strong>安排居所；严武去世后杜甫失去依托，离开浣花溪前往<strong>重庆夔门</strong>，创作千古第一律诗<strong>《登高》</strong>。"
+ },
+ {
+  "front": "《浣花溪记》的写作手法与情感？",
+  "back": "<strong>移步换景</strong>（万里桥→杜甫草堂→百花潭）；氛围清幽悠远，寄寓对杜甫从容不迫、热爱生活品质的<strong>敬佩与赞美</strong>。"
+ },
+ {
+  "front": "情感推断的三条路径？",
+  "back": "① 锁定<strong>结尾关键总结句</strong>；② 通过<strong>景物特点反推</strong>（冷月→战乱悲痛）；③ 结合<strong>作者生平与写作背景</strong>（苏轼贬黄州→苦闷与怀才不遇）。"
+ },
+ {
+  "front": "不同难度山水游记的解题步骤？",
+  "back": "<strong>简单（魏晋）</strong>：游踪→景物→时间季节→氛围→情感；<strong>复杂（唐及以后）</strong>：再加圈人物、分析情感倾向，结合朝代特征判断手法。"
+ }
+];
+
+
+errors = [
+ {
+  "title": "❌ 把阶段特征张冠李戴",
+  "wrong": "认为唐代“寓理于景”、宋代“纯描摹山水”。",
+  "right": "记忆链条：<strong>魏晋纯描摹 → 唐代情景交融 → 宋代寓理于景 → 明清鼎盛多元</strong>。"
+ },
+ {
+  "title": "❌ 作品与作者对应错误",
+  "wrong": "把《永州八记》记成苏轼、《游褒禅山记》记成柳宗元。",
+  "right": "柳宗元→<strong>《永州八记》/《小石潭记》</strong>；苏轼→《赤壁赋》；王安石→<strong>《游褒禅山记》</strong>；袁中道→《浣花溪记》。"
+ },
+ {
+  "title": "❌ “水木清华”翻译成“水清木华”",
+  "wrong": "只做字面直译，未按宾语前置还原语序。",
+  "right": "“水木清华”是<strong>宾语前置</strong>，正确翻译为“<strong>流水清澈、树木茂盛</strong>”。"
+ },
+ {
+  "title": "❌ 把并提、互文当作句式",
+  "wrong": "认为“并提”“互文”与宾语前置一样是文言句式。",
+  "right": "并提、互文是<strong>修辞手法</strong>；宾语前置才是<strong>句式</strong>，两类要分开记。"
+ },
+ {
+  "title": "❌ 情感推断只凭感觉",
+  "wrong": "读完就凭印象写“表达了作者的喜爱之情”。",
+  "right": "用<strong>三路径</strong>落地：结尾关键句 + 景物特点反推 + 作者生平背景，答题才有依据。"
+ },
+ {
+  "title": "❌ 忽略作者背景导致情感误判",
+  "wrong": "读苏轼被贬黄州时期作品，答“豪迈乐观、壮志满怀”。",
+  "right": "结合作者经历：被贬黄州时期核心情感多含<strong>被贬的苦闷与怀才不遇的悲愤</strong>。"
+ },
+ {
+  "title": "❌ 复杂文本漏掉“人物”这一环",
+  "wrong": "读唐及以后山水游记时只梳理景物，不圈人物。",
+  "right": "复杂文本要额外<strong>圈出人物</strong>、分析作者对人物的情感倾向，再结合<strong>朝代特征</strong>判断手法。"
+ }
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx,myAns){const q=questions[idx];const item={subject:'语文(课外班)',chapter:'第2课 山水游记专题',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'语文,2026秋,第2课,山水游记,浣花溪记,情感推断'};const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');if(ex.some(x=>x.content===item.content))return false;ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));return true;}
+const WRONG_HISTORY_KEY='quiz_chinese26q_lesson2_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();found.redo=0;}
+  else h.push({idx,count:1,lastWrong:Date.now(),redo:0});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+function markRedoOk(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(!found)return;
+  found.redo=(found.redo||0)+1;
+  if(found.redo>=3){h=h.filter(x=>x.idx!==idx);toast('🎉 重做'+found.redo+'次，已合格！','success');}
+  else{toast('✅ 答对！重做'+found.redo+'/3','success');}
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_chinese26q_lesson2';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory().filter(x=>(x.redo||0)<3);
+  if(!h.length){alert('没有待重做的错题了，全部合格！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const total=retryMode?shuffled.length:questions.length;if(curQ<total-1){curQ++;renderQ();}else showResult();}
+function showResult(){const p=getQuizProg();let ok=0,done=0;Object.keys(p||{}).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=3)ok++;});for(let i=0;i<quizAns.length;i++){if(quizAns[i]>=0)done++;}let h='<div class="question-card result-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2.6rem">🎉</div><h2>本组答题完成</h2><p style="color:var(--text-light)">本次已完成 '+done+' 题 · 连续做对3次已合格 '+ok+' 题</p><div style="margin-top:1rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 继续练习全部</button><button class="btn btn-primary" onclick="initRetryMode()">🔁 错题重练</button></div></div>';document.getElementById('quizArea').innerHTML=h;}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=(function(){if(_dp){const wh=loadWrongHistory();const rec=wh.find(x=>x.idx===idx);if(rec){const rr=(rec.redo||0);return `<span class="done-badge ${rr>=3?'ok':'no'}">${rr>=3?'✅已合格':'❌重做'+rr+'/3'}</span>`;}return `<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`;}return '';})();if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi===questions[idx].ans){const wh=loadWrongHistory();if(wh.some(x=>x.idx===idx))markRedoOk(idx);}
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'语文',chapter:'第2课 山水游记专题',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'语文,2026秋,第2课,山水游记,浣花溪记,情感推断'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('chinese26q_lesson2_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('chinese26q_lesson2_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('chinese26q_lesson2_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('chinese26q_lesson2_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('chinese26q_lesson2_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</div>
+</body></html>
