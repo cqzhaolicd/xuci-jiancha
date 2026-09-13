@@ -267,7 +267,13 @@ content:'不定代词辨析（两题）：① ______ Tom nor his parents have be
 correct_answer:'① Neither　② None\n\n【辨析】\n• **neither**：两者都不（neither of the two；固定结构 Neither...nor）\n• **none**：三者或三者以上都不（none of the three，可指人或物）\n① 填 **Neither**——“Neither Tom nor his parents have been to Paris”，neither...nor 为固定关联连词，动词随就近主语 his parents 用 have。\n② 填 **None**——three dresses（三件）属三者以上；且 No one 只指人、也不能回答 which 对物的选择问。\n⚠️ 卷面红笔批注为 ①None／②Neither，与标准答案相反，建议课上再向老师确认一遍（上述为标准英语用法）。',
 my_answer:'① 学生写 Neither（卷面红笔批注 None）② 学生写 No one（卷面红笔批注 Neither）',
 error_reason:'概念不清',tags:'英语,不定代词,neither,none,易混辨析',source:'小测',difficulty:4,
-image_path:'uploads/wrong_bank/english_quiz_20260913.jpg'}
+image_path:'uploads/wrong_bank/english_quiz_20260913.jpg'},
+{key:'mathgeometry_20260913_q1',subject:'数学',chapter:'几何证明综合（等腰·全等·辅助线）',
+content:'【改错本·几何证明综合题】在△ABC中，AB=AC，点E在AB上、点H在AC上，AE与BH交于点F，∠ABH=∠CAE。\n(1) 如图1，求证：∠AFB = 2∠ABC；\n(2) 如图2，连接FC，若E为AB中点，求证：AH = CH；\n(3) 如图3，在(2)的条件下，点D在BC的延长线上，∠ACD + 3∠EFC = 180°，若 AE+BF = 14，BH+AF = 16，求 HF 的长。',
+correct_answer:'(1) 证明：∵ AB = AC ∴ ∠ABC = ∠ACB；设 ∠ABH = ∠CAE = x。\n在△ABF 中：∠AFB = 180° − ∠BAF − ∠ABF = 180° − (∠BAC − x) − (∠ABC − x)\n= 180° − ∠BAC − ∠ABC + 2x。又 ∠BAC = 180° − 2∠ABC，代入得 ∠AFB = 2∠ABC。\n\n(2) 证明（作垂线构造全等）：过 C 作 CG⊥AE 于 G、CP⊥FH 于 P，过 A 作 AM⊥BH 于 M。\n由 ∠ABH = ∠CAE 与 AB = AC 可证 △ABM ≌ △ACG（AAS）→ AM = AG；\n再证 △AMP ≌ △AGP（HL）→ AP 平分 ∠FAC，即 ∠CAG = ∠CAH。\n结合 ∠BAF = ∠BAC − ∠CAH、∠CAH = ∠BAF（等腰与角平分关系）→ ∠BAF = ½∠BAC；\n又 E 为 AB 中点 → AE = ½AB = ½AC，在△AEF 中推得 AH = CH。\n\n(3) HF = 2。\n关键：由 ∠ACD + 3∠EFC = 180° → ∠EFC = (180° − ∠ACD)/3，结合(1)(2)的结论可推出 **AF = AE**（△AEF 为等腰）。\n再利用 BH = BF + FH：\n(BH + AF) − (AE + BF) = (BF + FH + AF) − (AE + BF) = FH + (AF − AE) = FH\n∴ HF = 16 − 14 = **2**。',
+my_answer:'（改错本订正）原错因：① 不会利用等腰三角形性质（AB=AC → 两底角相等）；② 忘了作垂线构造辅助线；③ 全等找对应角、对应边不严谨——“缺边或缺角就乱画”。',
+error_reason:'辅助线不会作',tags:'数学,几何证明,等腰三角形,全等,辅助线,压轴题,改错本',source:'改错本',difficulty:5,
+image_path:'uploads/wrong_bank/math_geometry_20260913.jpg'}
 ];
 function applyBuiltinQuestions(){try{
   const applied=JSON.parse(localStorage.getItem(BUILTIN_FLAG)||'[]');
