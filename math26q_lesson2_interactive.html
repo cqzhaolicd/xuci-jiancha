@@ -1,0 +1,764 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📐 勾股定理复习进阶 · 互动学习</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</style></head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 数学 · 第2讲</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-drafting-compass"></i> 勾股定理复习进阶 · 互动学习</h1>
+    <p>26秋博学班 数学第2讲 · 33 题 · 12 卡牌 | 博学班</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 33道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 12张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 第二讲 · 勾股定理复习进阶</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3>📐 模块一：展开图求最短路径</h3><ul><li>方法：把立体图形表面<strong class="hl">展开成平面</strong>，再用<strong class="hl">勾股定理</strong>求两点间线段长</li><li>长方体：最短路径按不同展开方式分别计算，取最小值</li><li>长方体体对角线：√(a²+b²+c²)</li><li>圆柱：展开后横向长为<strong class="hl">半周长 πr</strong>（π取3 时 = 3r），纵向为高 h</li></ul></div>
+      <div class="knowledge-card c2"><h3>🍶 吸管类：范围问题</h3><ul><li>长方体 6×8×24、吸管 30cm：体对角线 = √(36+64+576) = <strong class="hl">26</strong></li><li>插入最深 = 体对角线 26 → a<sub>min</sub> = 30−26 = <strong class="hl">4</strong></li><li>插入最浅 = 高 24 → a<sub>max</sub> = 30−24 = <strong class="hl">6</strong></li><li>所以 <strong class="hl">4 ≤ a ≤ 6</strong>（圆杯类同理：√(高²+底面直径²)）</li></ul></div>
+      <div class="knowledge-card c3"><h3>🌳 绕树/绕柱：藤条与丝带</h3><ul><li>树高 14m、底面周长 4m、绕 7 圈 → 展开后底 = 4×7 = <strong class="hl">28</strong>，高 14</li><li>藤长 = √(28²+14²) = √980 = <strong class="hl">14√5</strong></li><li>核心：<strong class="hl">绕 n 圈 → 展开后横向长 = 周长 × n</strong></li></ul></div>
+      <div class="knowledge-card c4"><h3>🧗 圆柱蚂蚁：两条路线比较</h3><ul><li>高 12、底面直径 6（r=3，π取3）：路线一 A→C→B = 12+6 = <strong class="hl">18</strong></li><li>路线二（侧面展开）：√(12² + (πr)²) = √(144+81) = <strong class="hl">15</strong></li><li>两路线相等：h + 2r = √(h²+9r²) → 4hr = 5r² → <strong class="hl">h/r = 5/4</strong></li></ul></div>
+      <div class="knowledge-card c5"><h3>🟦 模块二：勾股定理面积相关</h3><ul><li>直角边上正方形面积和 = 斜边上正方形面积（a²+b²=c² 的面积化）</li><li>四边形 DAB=BCD=90°，S₁+S₄=35、S₃=9 → <strong class="hl">S₂ = 26</strong></li><li>（对角线 BD 分成两个直角三角形：S₁+S₃ = S₂+S₄）</li><li>三边为直径作半圆：<strong class="hl">S₁ + S₂ = S₃</strong>（相似图形面积同规律）</li></ul></div>
+      <div class="knowledge-card c6"><h3>🌲 勾股树与生长类</h3><ul><li>边长 1 的正方形每次“生长”总面积 <strong class="hl">+1</strong></li><li>生长 2025 次 → 所有正方形面积和 = <strong class="hl">2026</strong></li><li>逐次作垂线：OP₁=√2，OP₂=√3，…，OP<sub>n</sub> = √(n+1) → OP₂₀₂₅ = <strong class="hl">√2026</strong></li></ul></div>
+      <div class="knowledge-card c7"><h3>🔢 完美勾股数与偶差勾股数</h3><ul><li>完美勾股数：a² + n² = (n+1)² → a² = 2n+1（a 必为<strong class="hl">奇数</strong>）</li><li>n<41：a² <83 → a = 3,5,7,9 → <strong class="hl">4 组</strong></li><li>n<1013：a² <2027 → a 为奇数 3~45 → <strong class="hl">22 组</strong></li><li>偶差勾股数组（c²−b²=2）：(6,8,10) m=24、(8,15,17)… m₁ = <strong class="hl">24</strong>，m₁₈ = <strong class="hl">840</strong></li></ul></div>
+      <div class="knowledge-card c8"><h3>✏️ 模块三：设元求解</h3><ul><li>核心：设所求（或最短）线段为 <strong class="hl">x</strong>，在不同直角三角形中<strong class="hl">列勾股方程</strong></li><li>两笔筒 8cm、12cm，铅笔露出 4cm、2cm → 铅笔长 <strong class="hl">23cm</strong></li><li>芦苇（池边长 10 尺、中央高出 1 尺）：设水深 x → x²+5² = (x+1)² → x=12 → 芦长 <strong class="hl">13 尺</strong></li><li>折叠类：折叠前后<strong class="hl">对应边相等</strong>（AB=AF、BE=EF）</li></ul></div>
+      <div class="knowledge-card c9"><h3>🔁 折叠与翻折：经典题型</h3><ul><li>长方形 AB=5、AD=3，沿 AE 折叠使 B 落在 CD 上 F：AF = AB = 5 → DF = 4、FC = 1</li><li>设 BE = x，则 EF = x、EC = 3−x → x² = 1²+(3−x)² → x = <strong class="hl">5/3</strong></li><li>关键：找到<strong class="hl">含未知数的直角三角形</strong>列方程</li></ul></div>
+      <div class="knowledge-card c10"><h3>📊 模块四：B卷综合</h3><ul><li>数形结合：网格中构造三角形，用<strong class="hl">两边之和 > 第三边</strong>比较无理数大小（√5+1 > √10）</li><li>√(x²+…)+√((…−x)²+…) 型最小值 → 转化<strong class="hl">两点间距离 + 将军饮马</strong>（对称 + 直线）</li><li>圆柱吸管 25cm（直径 10、高 12）：a ∈ [<strong class="hl">25−2√61, 13</strong>]</li></ul></div>
+      <div class="knowledge-card c11"><h3>📐 模块五：解三角形（可解性）</h3><ul><li>核心：<strong class="hl">作高</strong>把斜三角形转化为直角三角形求解</li><li>⚠️ 钝角三角形的高可能在<strong class="hl">三角形外部</strong>（必须分类讨论）</li><li>特殊角边比：30°→1:√3:2；45°→1:1:√2；60°→1:√3:2</li><li>已知 AB=12、AC=10、BC 边高 6：BD=6√3、CD=8 → BC = <strong class="hl">6√3+8 或 6√3−8</strong></li></ul></div>
+      <div class="knowledge-card c12"><h3>⚠️ 本讲六大易错点</h3><ul><li>不区分斜边与直角边，盲目套公式（<strong class="hl">最长边才可能是斜边</strong>）</li><li>题目无图形时<strong class="hl">遗漏多种情况</strong>，缺分类讨论</li><li>混淆<strong class="hl">勾股定理与逆定理</strong>：定理由直角得边，逆定理由边判定直角</li><li>立体图形<strong class="hl">展开方式选错</strong>，最值算错</li><li>勾股树不会<strong class="hl">转化面积关系</strong></li><li>解斜三角形作高时忽略<strong class="hl">高在外部</strong>的钝角情形</li></ul></div>
+    </div>
+    </div>
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone-alt"></i> 🎙️ 课堂要点 · 第二讲（勾股定理复习进阶）</h4>
+      <p><strong>本讲核心（五大模块）</strong>：① <strong>展开图求最短路径</strong>（立体表面展开 + 勾股，取最小）；② <strong>勾股定理面积相关</strong>（正方形/半圆/勾股树面积转化）；③ <strong>设元求解</strong>（设 x 列勾股方程，折叠类用对应边相等）；④ <strong>B卷综合</strong>（数形结合、将军饮马、偶差勾股数组）；⑤ <strong>解三角形</strong>（作高转化，注意钝角高在外部）。</p>
+      <p><strong>易错点（教师强调）</strong>：① 不区分斜边与直角边，盲目套公式（<strong>最长边才可能是斜边</strong>）；② 题目无图形时遗漏多种情况，缺分类讨论；③ 混淆勾股定理和逆定理；④ 立体图形展开方式选错；⑤ 勾股树不会转化面积关系；⑥ 解斜三角形作高时忽略高在三角形外部的情形。</p>
+      <p><strong>教师寄语</strong>：勾股定理是平面几何核心工具——现阶段支撑几何计算；九年级学解直角三角形、圆、相似三角形、二次函数几何综合题频繁用到；也为高中平面解析几何两点间距离公式、立体几何空间距离计算奠基。</p>
+      <p><strong>📝 作业</strong>：<strong>本讲巩固所有</strong>（巩固 1–4 全部完成）。</p>
+    </div>
+    <div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 33</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共12张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 数学 · 第2讲 勾股定理复习进阶 | 博学班 · 2026秋</div>
+
+<script>
+const questions = [
+ {
+  "q": "长方体水杯长宽高为 6、8、24，一根 30 的吸管（底端在杯底）放入，露在外面的长度为 a，则 a 的取值范围是",
+  "opts": [
+   "A. 4 ≤ a ≤ 6",
+   "B. 6 ≤ a ≤ 8",
+   "C. 4 ≤ a ≤ 8",
+   "D. 2 ≤ a ≤ 6"
+  ],
+  "ans": 0,
+  "exp": "体对角线 = √(6²+8²+24²) = √676 = <strong>26</strong>；插入最深 26 → a=4，插入最浅（竖直）= 高 24 → a=6，故 <strong>4 ≤ a ≤ 6</strong>。"
+ },
+ {
+  "q": "长方体长宽高分别为 a、b、c，其体对角线长为",
+  "opts": [
+   "A. a+b+c",
+   "B. √(a²+b²+c²)",
+   "C. √(a²+b²)",
+   "D. (a+b+c)/3"
+  ],
+  "ans": 1,
+  "exp": "体对角线 = <strong>√(a²+b²+c²)</strong>（两次勾股：先求底面对角线 √(a²+b²)，再与高 c 组合）。"
+ },
+ {
+  "q": "一棵树（看作圆柱）高 14m，底面周长 4m，一根藤从底部均匀绕树 7 圈，上端刚好与树顶齐平，则藤长为",
+  "opts": [
+   "A. 28m",
+   "B. 10√5 m",
+   "C. 14√5 m",
+   "D. 14√2 m"
+  ],
+  "ans": 2,
+  "exp": "展开后横向长 = 4×7 = <strong>28</strong>，纵向 14 → 藤长 = √(28²+14²) = √980 = <strong>14√5</strong> m。"
+ },
+ {
+  "q": "圆柱高 12cm、底面直径 6cm，蚂蚁沿 A→C→B（C 在上底圆周）走侧面，路线一（先上后绕）路程为 18cm；若把侧面展开，路线二的最短路程是（π取3）",
+  "opts": [
+   "A. 12cm",
+   "B. 15cm",
+   "C. 18cm",
+   "D. 21cm"
+  ],
+  "ans": 1,
+  "exp": "展开后横向 = πr = 3×3 = 9，纵向 = 高 12 → 路线二 = √(12²+9²) = √225 = <strong>15</strong> cm。"
+ },
+ {
+  "q": "上题中圆柱若半径为 r、高为 h，当两种爬行路线路程相等时，h/r =",
+  "opts": [
+   "A. 3/2",
+   "B. 4/3",
+   "C. 5/4",
+   "D. 2/3"
+  ],
+  "ans": 2,
+  "exp": "路线一 = h+2r，路线二 = √(h²+9r²)；相等 → h²+4hr+4r² = h²+9r² → 4hr = 5r² → <strong>h/r = 5/4</strong>。"
+ },
+ {
+  "q": "求立体图形表面两点间最短路径的基本方法是",
+  "opts": [
+   "A. 直接量距离",
+   "B. 把表面展开成平面，用勾股定理求线段长",
+   "C. 用比例计算",
+   "D. 用面积公式"
+  ],
+  "ans": 1,
+  "exp": "核心方法：<strong>展开成平面</strong> + <strong>勾股定理</strong>；注意不同展开方式结果不同，取最小值。"
+ },
+ {
+  "q": "圆柱高 8cm、底面周长 6cm，蚂蚁从下底一点沿侧面绕半圈爬到上底对应点，最短路程是",
+  "opts": [
+   "A. √73 cm",
+   "B. 10 cm",
+   "C. √82 cm",
+   "D. 14 cm"
+  ],
+  "ans": 0,
+  "exp": "绕半圈 → 展开横向 = 6÷2 = 3，纵向 = 8 → √(3²+8²) = <strong>√73</strong> cm。"
+ },
+ {
+  "q": "棱长为 1 的正方体，一只蚂蚁沿表面从一个顶点爬到与它相对的另一个顶点（不在同一面），最短路程是",
+  "opts": [
+   "A. √3",
+   "B. √5",
+   "C. 2",
+   "D. 1+√2"
+  ],
+  "ans": 1,
+  "exp": "把两个相邻面展开成 2×1 的矩形 → 最短路程 = √(2²+1²) = <strong>√5</strong>（体对角线 √3 只在“穿过内部”时成立）。"
+ },
+ {
+  "q": "四边形 ABCD 中，∠DAB = ∠BCD = 90°，分别以四边向外作正方形，面积依次为 S₁、S₂、S₃、S₄。若 S₁+S₄ = 35，S₃ = 9，则 S₂ =",
+  "opts": [
+   "A. 26",
+   "B. 44",
+   "C. 35",
+   "D. 9"
+  ],
+  "ans": 0,
+  "exp": "对角线 BD 把四边形分成两个直角三角形：S₁+S₃ = S₂+S₄（都等于 BD²）→ S₂ = S₁+S₄−S₃ = 35−9 = <strong>26</strong>。"
+ },
+ {
+  "q": "Rt△ABC 中 ∠ACB = 90°，分别以三边为直径作三个半圆，图形中两直角边上半圆阴影面积之和与斜边上半圆面积的关系是",
+  "opts": [
+   "A. 两者之和 > 斜边半圆",
+   "B. 两者之和 = 斜边半圆",
+   "C. 两者之和 < 斜边半圆",
+   "D. 无法确定"
+  ],
+  "ans": 1,
+  "exp": "半圆面积 = π/8 × 边长²，由 a²+b² = c² 得 <strong>S₁+S₂ = S₃</strong>（相似图形同规律）。"
+ },
+ {
+  "q": "边长 1 的正方形“生长”：每次在直角边外生出小正方形。生长 2025 次后，图形中所有正方形的面积和是",
+  "opts": [
+   "A. 2025",
+   "B. 2026",
+   "C. 2²⁰²⁵",
+   "D. 4049"
+  ],
+  "ans": 1,
+  "exp": "每次生长使总面积增加初始正方形的面积 1 → 2025 次后 = 1+2025 = <strong>2026</strong>。"
+ },
+ {
+  "q": "OP₁=1，过 P₁ 作 P₁P₂⊥OP₁ 且 P₁P₂=1 得 OP₂=√2；再过 P₂ 作垂线且长度为 1 得 OP₃=√3；…依次作下去，OP₂₀₂₅ =",
+  "opts": [
+   "A. √2024",
+   "B. √2025",
+   "C. √2026",
+   "D. 2026"
+  ],
+  "ans": 2,
+  "exp": "规律 OP<sub>n</sub> = √(n+1) → OP₂₀₂₅ = <strong>√2026</strong>。"
+ },
+ {
+  "q": "“完美勾股数”：正整数 a、n 满足 a² + n² = (n+1)²。当 n < 41 时共有多少组",
+  "opts": [
+   "A. 3 组",
+   "B. 4 组",
+   "C. 5 组",
+   "D. 6 组"
+  ],
+  "ans": 1,
+  "exp": "a² = 2n+1，a 为奇数。n<41 → a² <83 → a = 3,5,7,9 → <strong>4 组</strong>。"
+ },
+ {
+  "q": "同上，当 n < 1013 时共有多少组“完美勾股数”",
+  "opts": [
+   "A. 20 组",
+   "B. 21 组",
+   "C. 22 组",
+   "D. 23 组"
+  ],
+  "ans": 2,
+  "exp": "a² < 2027 → a 为不超过 45 的奇数：3,5,…,45 共 (45−3)/2+1 = <strong>22 组</strong>。"
+ },
+ {
+  "q": "直角三角形两条直角边为 3 和 4，则以斜边为边的正方形面积是",
+  "opts": [
+   "A. 7",
+   "B. 12",
+   "C. 25",
+   "D. 49"
+  ],
+  "ans": 2,
+  "exp": "斜边 = √(3²+4²) = 5 → 正方形面积 = 5² = <strong>25</strong> = 3²+4²（面积转化）。"
+ },
+ {
+  "q": "两个粗细相同的圆柱形笔筒高分别为 8cm 和 12cm，同一支铅笔先后斜放入两个笔筒，露在外面的部分分别为 4cm 和 2cm，则铅笔长为",
+  "opts": [
+   "A. 20cm",
+   "B. 22cm",
+   "C. 23cm",
+   "D. 25cm"
+  ],
+  "ans": 2,
+  "exp": "设笔筒底面直径为 d、笔长 L：L² = 8²+d²+? 由两式消去 d² 得 L = <strong>23cm</strong>（8²+d² = (L−4)²，12²+d² = (L−2)²，相减可解）。"
+ },
+ {
+  "q": "池塘底面是边长 10 尺的正方形，芦苇 AB 生在中央、高出水面 1 尺；把芦苇沿垂直池边方向拉向岸边，顶端恰好碰到岸边 B′，则芦苇长",
+  "opts": [
+   "A. 12 尺",
+   "B. 13 尺",
+   "C. 14 尺",
+   "D. 15 尺"
+  ],
+  "ans": 1,
+  "exp": "设水深 x 尺，芦长 x+1；水平距离 = 5 尺 → x²+5² = (x+1)² → x = 12 → 芦长 <strong>13 尺</strong>。"
+ },
+ {
+  "q": "四边形 ABCD 中 ∠B = 90°，AB = 3，BC = 4，CD = 12，AD = 13，则四边形 ABCD 的面积是",
+  "opts": [
+   "A. 30",
+   "B. 36",
+   "C. 60",
+   "D. 72"
+  ],
+  "ans": 1,
+  "exp": "AC = √(3²+4²) = 5；又 5²+12² = 13² → △ACD 为直角三角形 → 面积 = ½×3×4 + ½×5×12 = 6+30 = <strong>36</strong>。"
+ },
+ {
+  "q": "△ABC 中，AB = 12，AC = 10，BC 边上的高 AD = 6，则 BC 的长为",
+  "opts": [
+   "A. 6√3+8",
+   "B. 6√3−8",
+   "C. 6√3+8 或 6√3−8",
+   "D. 8−6√3"
+  ],
+  "ans": 2,
+  "exp": "BD = √(12²−6²) = <strong>6√3</strong>，CD = √(10²−6²) = <strong>8</strong>；锐角/钝角两种情形 → BC = <strong>6√3+8 或 6√3−8</strong>（分类讨论）。"
+ },
+ {
+  "q": "长方形 ABCD 中 AB = 5、AD = 3，沿 AE 折叠使点 B 落在 CD 边上的点 F 处，则 BE 的长为",
+  "opts": [
+   "A. 3/2",
+   "B. 5/3",
+   "C. 2",
+   "D. 4/3"
+  ],
+  "ans": 1,
+  "exp": "AF = AB = 5，AD = 3 → DF = 4、FC = 1；设 BE = x = EF，EC = 3−x → x² = 1²+(3−x)² → x = <strong>5/3</strong>。"
+ },
+ {
+  "q": "在折叠问题中，设未知数列勾股方程的关键依据是",
+  "opts": [
+   "A. 折叠前后对应边相等",
+   "B. 面积相等",
+   "C. 周长相等",
+   "D. 角度和为 180°"
+  ],
+  "ans": 0,
+  "exp": "折叠的性质：<strong>对应边相等、对应角相等</strong>，据此把未知量集中到一个直角三角形中。"
+ },
+ {
+  "q": "设元求解类几何题的一般思路是",
+  "opts": [
+   "A. 直接测量",
+   "B. 设所求线段为 x，在不同直角三角形中用勾股定理列方程",
+   "C. 用面积法直接得答案",
+   "D. 逐一试值"
+  ],
+  "ans": 1,
+  "exp": "核心思路：<strong>设元（常设最短/所求线段为 x）→ 在两个直角三角形中列勾股方程 → 解方程</strong>。"
+ },
+ {
+  "q": "圆柱形水杯底面直径 10cm、高 12cm，一根 25cm 的吸管（底端在杯底）放入，露在外面的长度为 a，则 a 的取值范围是",
+  "opts": [
+   "A. 13 ≤ a ≤ 25",
+   "B. 25−2√61 ≤ a ≤ 25",
+   "C. 25−2√61 ≤ a ≤ 13",
+   "D. 11 ≤ a ≤ 15"
+  ],
+  "ans": 2,
+  "exp": "竖直插入最浅 → a<sub>max</sub> = 25−12 = <strong>13</strong>；沿体对角线插入最深 = √(12²+10²) = 2√61 → a<sub>min</sub> = <strong>25−2√61</strong>。"
+ },
+ {
+  "q": "“偶差”勾股数组（a<b，a²+b²=c²，c²−b²=2），令 m = a+b+c，(6,8,10) 对应 m = 24。则 m₁ =",
+  "opts": [
+   "A. 12",
+   "B. 24",
+   "C. 30",
+   "D. 40"
+  ],
+  "ans": 1,
+  "exp": "(6,8,10) 是最小偶差勾股数组 → m₁ = 6+8+10 = <strong>24</strong>。"
+ },
+ {
+  "q": "在正方形网格（每个小正方形边长 1）中构造△ABC，用“两边之和大于第三边”可比较 √5+1 与 √10 的大小，结论是",
+  "opts": [
+   "A. √5+1 > √10",
+   "B. √5+1 < √10",
+   "C. √5+1 = √10",
+   "D. 无法比较"
+  ],
+  "ans": 0,
+  "exp": "构造 AB = √5、BC = 1、AC = √10 的三角形 → AB+BC > AC → <strong>√5+1 > √10</strong>。"
+ },
+ {
+  "q": "求形如 √(x²+9) + √((15−x)²+25) 的最小值时，可利用的数学思想方法是",
+  "opts": [
+   "A. 因式分解",
+   "B. 数形结合（两点间距离 + 将军饮马）",
+   "C. 反证法",
+   "D. 换元后直接配方"
+  ],
+  "ans": 1,
+  "exp": "把两式看成平面内两段距离 → 用<strong>数形结合</strong>转化：对称点连线（将军饮马），最小值 = 两点间距离。"
+ },
+ {
+  "q": "勾股树图形中，若一个图形的所有正方形面积总和为 S，那么继续“生长”一次后（每个直角边外再生成一个正方形），总面积变化是",
+  "opts": [
+   "A. 不变",
+   "B. 增加初始正方形的面积",
+   "C. 变为 2S",
+   "D. 增加 S"
+  ],
+  "ans": 1,
+  "exp": "每次生长新增的正方形面积和 = 被生长的正方形面积（a²+b²=c²）→ 总面积<strong>每次增加初始正方形的面积</strong>（边长 1 时为 1）。"
+ },
+ {
+  "q": "△ACB 和 △DCE 都是直角三角形，∠ACB = ∠DCE = 90°，CB = CD，∠B = 45°，延长 BA 交 DE 于 F，取 AB 中点 G，AG = AF = 2，则 △AEF 的面积为",
+  "opts": [
+   "A. 2",
+   "B. 3",
+   "C. 4",
+   "D. 6"
+  ],
+  "ans": 2,
+  "exp": "由 AG = AF = 2 得 AB = 4；△DGB ≌ △EFA（ASA）→ S△AEF = S△DGB = ½×AB×AD 型 = <strong>4</strong>。"
+ },
+ {
+  "q": "等边三角形 ABC 中 AB = 2，等腰 Rt△ABD 中 ∠ABD = 90°，延长 AC、BD 交于点 R，连接 CD，则 CD =",
+  "opts": [
+   "A. √2",
+   "B. √3",
+   "C. √6−√2",
+   "D. √6+√2"
+  ],
+  "ans": 2,
+  "exp": "以 A 为原点、AB 为 x 轴：B(2,0)、C(1,√3)、D(2,−2)（等腰直角）→ CD = √(1²+(2−√3)²) = √(8−4√3) = <strong>√6−√2</strong>。"
+ },
+ {
+  "q": "解斜三角形（非直角三角形）的常用方法是",
+  "opts": [
+   "A. 直接套勾股定理",
+   "B. 作高转化为直角三角形",
+   "C. 用面积公式直接算边",
+   "D. 延长一边"
+  ],
+  "ans": 1,
+  "exp": "常用方法：<strong>作高</strong>构造直角三角形，再用勾股定理与特殊角边比求解。"
+ },
+ {
+  "q": "△ABC 中 AB = 13、AC = 15、BC = 14，则 △ABC 的面积为",
+  "opts": [
+   "A. 84",
+   "B. 91",
+   "C. 96",
+   "D. 108"
+  ],
+  "ans": 0,
+  "exp": "作高 AD：设 BD = x → 13²−x² = 15²−(14−x)² → x = 5 → AD = 12 → 面积 = ½×14×12 = <strong>84</strong>。"
+ },
+ {
+  "q": "Rt△ABC 中 ∠C = 90°，∠ABC = 30°，AC = 3，则 AB 与 BC 分别为",
+  "opts": [
+   "A. 6 和 3√3",
+   "B. 3√3 和 6",
+   "C. 6 和 3",
+   "D. 3 和 6"
+  ],
+  "ans": 0,
+  "exp": "30° 角所对直角边 = 斜边一半 → AB = 2×3 = <strong>6</strong>，BC = √(6²−3²) = <strong>3√3</strong>（边比 1:√3:2）。"
+ },
+ {
+  "q": "已知三角形两边及其中一边上的高，求第三边时，若题目未给图形，必须注意",
+  "opts": [
+   "A. 直接算一次即可",
+   "B. 高可能在三角形外部（钝角三角形），需分类讨论",
+   "C. 只能取正值",
+   "D. 无需考虑"
+  ],
+  "ans": 1,
+  "exp": "⚠️ 无图时高可能在<strong>内部或外部</strong>（钝角情形）→ 两个解，必须<strong>分类讨论</strong>（如 AB=12、AC=10、高=6 → BC = 6√3±8）。"
+ }
+];
+
+
+const flashcards = [
+ {
+  "front": "求立体图形表面最短路径的核心方法？",
+  "back": "<strong>展开成平面</strong> + <strong>勾股定理</strong>；不同展开方式结果不同，取最小值。"
+ },
+ {
+  "front": "长方体 6×8×24 中 30cm 吸管露出长度 a 的范围怎么求？",
+  "back": "体对角线 = √(6²+8²+24²) = <strong>26</strong> → a<sub>min</sub> = 30−26 = 4；竖直插入 a<sub>max</sub> = 30−24 = 6 → <strong>4 ≤ a ≤ 6</strong>。"
+ },
+ {
+  "front": "绕树 7 圈、周长 4m、高 14m 的藤长？",
+  "back": "展开横向 = 4×7 = 28 → 藤长 = √(28²+14²) = <strong>14√5</strong> m（绕 n 圈 → 横向 = 周长×n）。"
+ },
+ {
+  "front": "圆柱蚂蚁两条路线相等时 h/r 的推导？",
+  "back": "h+2r = √(h²+9r²)（π取3）→ 4hr+4r² = 9r² → 4h = 5r → <strong>h/r = 5/4</strong>。"
+ },
+ {
+  "front": "勾股定理的面积化结论？",
+  "back": "直角边上正方形（或相似图形）面积和 = 斜边上的对应面积（a²+b²=c²）。"
+ },
+ {
+  "front": "四边形两对角为 90°，S₁+S₄=35、S₃=9 求 S₂？",
+  "back": "对角线分两个直角三角形 → S₁+S₃ = S₂+S₄ → S₂ = <strong>26</strong>。"
+ },
+ {
+  "front": "勾股树生长 2025 次后总面积？",
+  "back": "每次生长总面积 +1（初始边长 1）→ <strong>2026</strong>。"
+ },
+ {
+  "front": "完美勾股数 a²+n²=(n+1)² 的两组计数？",
+  "back": "a² = 2n+1（a 为奇数）：n<41 → <strong>4 组</strong>（a=3,5,7,9）；n<1013 → <strong>22 组</strong>（a 为 ≤45 的奇数）。"
+ },
+ {
+  "front": "芦苇题（池边长 10 尺、高出 1 尺）怎么解？",
+  "back": "设水深 x，芦长 x+1；水平距离 5 尺 → x²+25 = (x+1)² → x = 12 → 芦长 <strong>13 尺</strong>。"
+ },
+ {
+  "front": "长方形 AB=5、AD=3 折叠求 BE 的步骤？",
+  "back": "AF=AB=5 → DF=4、FC=1；设 BE=x=EF、EC=3−x → x² = 1+(3−x)² → <strong>x = 5/3</strong>。"
+ },
+ {
+  "front": "解斜三角形的方法与易错点？",
+  "back": "<strong>作高</strong>转化为直角三角形；⚠️ 钝角三角形的高可能在<strong>外部</strong>，无图时必须<strong>分类讨论</strong>。"
+ },
+ {
+  "front": "本讲六大易错点速记？",
+  "back": "① 斜边判断（最长边）② 无图分类讨论 ③ 定理 vs 逆定理 ④ 展开方式选错 ⑤ 勾股树面积转化 ⑥ 高在外部情形。"
+ }
+];
+
+
+errors = [
+ {
+  "title": "❌ 不判断斜边就套公式",
+  "wrong": "看到两边 3、4 就把第三边算成 5，即使第三边可能是直角边。",
+  "right": "先判断哪条是<strong>斜边（最长边）</strong>：若已知两边为直角边 → c = √(a²+b²)；若已知斜边和一直角边 → b = √(c²−a²)。"
+ },
+ {
+  "title": "❌ 无图形题遗漏分类讨论",
+  "wrong": "AB=12、AC=10、BC 边上的高为 6，只算出 BC = 6√3+8。",
+  "right": "高可能在三角形<strong>内部或外部</strong> → BC = <strong>6√3+8 或 6√3−8</strong>（两个解都要写）。"
+ },
+ {
+  "title": "❌ 混淆勾股定理与逆定理",
+  "wrong": "由“a²+b²=c²”说“所以这个三角形是直角三角形”时，误以为是勾股定理。",
+  "right": "<strong>定理</strong>：直角 → a²+b²=c²；<strong>逆定理</strong>：a²+b²=c² → 该三角形是直角三角形（由边判定形状）。"
+ },
+ {
+  "title": "❌ 立体图形展开方式选错",
+  "wrong": "圆柱蚂蚁问题中，把纵向高与底面周长直接相加当最短路程。",
+  "right": "最短路径必须<strong>展开后取直线</strong>（勾股计算），路线一（绕顶）与路线二（侧面展开）要分别算再比较。"
+ },
+ {
+  "title": "❌ 勾股树类不会转化面积",
+  "wrong": "生长问题中逐个累加正方形边长再平方，计算量大且易错。",
+  "right": "利用 <strong>a²+b²=c²</strong>：每次生长新增面积 = 被生长正方形面积 → 生长 n 次总面积 = 初始面积 × (n+1)。"
+ },
+ {
+  "title": "❌ 折叠题找不到等量关系",
+  "wrong": "折叠后仍用原来的边长相减，忽略对应边相等。",
+  "right": "折叠性质：<strong>对应边相等、对应角相等</strong>（AB=AF、BE=EF），据此把未知量集中到一个直角三角形列方程。"
+ },
+ {
+  "title": "❌ 解三角形忽略高在外部",
+  "wrong": "钝角三角形中作高仍画在内部，导致边长算错。",
+  "right": "无图题要考虑<strong>锐角/钝角两种情形</strong>：钝角时高落在三角形<strong>外部</strong>，第三边 = 两段之差。"
+ }
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx,myAns){const q=questions[idx];const item={subject:'数学(博学班)',chapter:'第2讲 勾股定理复习进阶',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'数学,博学班,第2讲,勾股定理,最短路径,面积,设元,解三角形'};const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');if(ex.some(x=>x.content===item.content))return false;ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));return true;}
+const WRONG_HISTORY_KEY='quiz_math26q_lesson2_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();found.redo=0;}
+  else h.push({idx,count:1,lastWrong:Date.now(),redo:0});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+function markRedoOk(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(!found)return;
+  found.redo=(found.redo||0)+1;
+  if(found.redo>=3){h=h.filter(x=>x.idx!==idx);toast('🎉 重做'+found.redo+'次，已合格！','success');}
+  else{toast('✅ 答对！重做'+found.redo+'/3','success');}
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_math26q_lesson2';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory().filter(x=>(x.redo||0)<3);
+  if(!h.length){alert('没有待重做的错题了，全部合格！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const total=retryMode?shuffled.length:questions.length;if(curQ<total-1){curQ++;renderQ();}else showResult();}
+function showResult(){const p=getQuizProg();let ok=0,done=0;Object.keys(p||{}).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=3)ok++;});for(let i=0;i<quizAns.length;i++){if(quizAns[i]>=0)done++;}let h='<div class="question-card result-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2.6rem">🎉</div><h2>本组答题完成</h2><p style="color:var(--text-light)">本次已完成 '+done+' 题 · 连续做对3次已合格 '+ok+' 题</p><div style="margin-top:1rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 继续练习全部</button><button class="btn btn-primary" onclick="initRetryMode()">🔁 错题重练</button></div></div>';document.getElementById('quizArea').innerHTML=h;}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=(function(){if(_dp){const wh=loadWrongHistory();const rec=wh.find(x=>x.idx===idx);if(rec){const rr=(rec.redo||0);return `<span class="done-badge ${rr>=3?'ok':'no'}">${rr>=3?'✅已合格':'❌重做'+rr+'/3'}</span>`;}return `<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`;}return '';})();if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi===questions[idx].ans){const wh=loadWrongHistory();if(wh.some(x=>x.idx===idx))markRedoOk(idx);}
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'数学(博学班)',chapter:'第2讲 勾股定理复习进阶',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'数学,博学班,第2讲,勾股定理,最短路径,面积,设元,解三角形'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('math26q_lesson2_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('math26q_lesson2_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('math26q_lesson2_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('math26q_lesson2_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('math26q_lesson2_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</div>
+</body></html>
