@@ -279,6 +279,7 @@ const tools = [
   { name: 'Python 基础', icon: 'fa-code', desc: '变量/数据类型/控制流', cls: 't-add', url: 'python_basics_interactive.html' },
   { name: 'AI 应用', icon: 'fa-robot', desc: '机器学习/大模型/提示词', cls: 't-training', url: 'ai_basics_interactive.html' },
   { name: '学习路线', icon: 'fa-route', desc: '从零到 AI 应用路线图', cls: 't-flow', url: 'zhaoli_index.html#ai-route' },
+  { name: 'AI互动课堂', icon: 'fa-chalkboard-user', desc: '多智能体互动课堂（OpenMAIC）· AI/编程主题', cls: 't-ai', url: 'https://reception-filme-answering-alternatively.trycloudflare.com', target: '_blank' },
 ];
 
 // 🔵 AI 学习 — 课程目录（按模块分层）
@@ -335,7 +336,7 @@ function render() {
 
   // === 快捷工具栏 ===
   html += `<div class="toolbar fade-in-up">
-    ${tools.map(t => `<a href="${BANK_BASE}${t.url}"><i class="fas ${t.icon}"></i> ${t.name}</a>`).join('')}
+    ${tools.map(t => `<a href="${/^https?:/.test(t.url) ? t.url : BANK_BASE + t.url}"${t.target ? ` target="${t.target}" rel="noopener"` : ''}><i class="fas ${t.icon}"></i> ${t.name}</a>`).join('')}
   </div>`;
 
   // === AI 学习目录 ===
