@@ -564,6 +564,18 @@ function render() {
       </a>`).join('')}
     </div>`);
 
+  // === 复习模块（作业题精析·分学科）===
+  html += renderSection('复习模块 · 作业题精析', 'fa-book-open', '#2f6fed', 'badge-tools', `
+    <div class="tool-grid">
+      <a href="review_interactive.html" class="tool-card t-list ${isLearned('review_interactive.html') ? 'learned' : ''}">
+        <span class="learn-badge" style="display:${isLearned('review_interactive.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
+        <div class="t-icon"><i class="fas fa-book-open"></i></div>
+        <div class="t-name">题目精析（分学科）</div>
+        <div class="t-desc">A已知条件 B求解 C思路 D易错点 E知识点</div>
+        ${learnedBtn('review_interactive.html')}
+      </a>
+    </div>`);
+
   // === 预习闯关 ===
   html += renderSection('预习闯关 · 八上', 'fa-gamepad', '#f39c12', 'badge-tools', `
     <div class="tool-grid">
