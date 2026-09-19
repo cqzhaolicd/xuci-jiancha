@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学第12题 · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">数学 · 第12题</div>
+    <h1>勾股定理的证明 · 面积法（图2 梯形拼法）</h1>
+    <div class="meta">来源：2026-09-19 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">12. 勾股定理神秘而美妙，它的证法多样，其巧妙各有不同，其中的“面积法”给了小聪灵感：当两个全等的直角三角形如图 1 或图 2 所示摆放时，都可以用“面积法”来证明勾股定理。下面是小聪利用图 1 证明勾股定理的过程：将两个全等的直角三角形按如图 1 所示摆放，其中 ∠DAB = 90°，求证：a² + b² = c²。
+
+证明：连接 DB，过点 D 作 BC 边上的高 DF，则 DF = EC = b − a。
+∴ S四边形ADCB = S△ACD + S△ABC = ½b² + ½ab；
+又 ∵ S四边形ADCB = S△ADB + S△DCB = ½c² + ½a(b − a)；
+∴ ½b² + ½ab = ½c² + ½a(b − a)，∴ a² + b² = c²。
+
+请参照上述证法，利用图 2 完成下面的证明。</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_20260919_py1.jpg" alt="数学第12题题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>① 两个全等的直角三角形（直角边 a、b，斜边 c）；
+② 按图 2 的方式摆放（两个全等直角三角形 + 一个以 c 为直角边的等腰直角三角形，拼成直角梯形）；
+③ 图 1 给出的证法思路：用两种不同的方式表示同一块图形的面积，然后列等式。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>参照图 1 的“面积法”，利用图 2 证明勾股定理 a² + b² = c²。</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【核心思路】图 2 的拼法可以看成一个直角梯形，而它又刚好由三个直角三角形拼成——于是同一块面积有两种算法，这就是面积法。（这种拼法就是著名的“总统证法”。）
+
+证明：
+① 按梯形算：上底 = a，下底 = b，高 = a + b，
+   S = ½(a + b)(a + b) = ½(a² + 2ab + b²)；
+② 按三块三角形算：S = ½ab + ½ab + ½c² = ab + ½c²；
+③ 同一块面积，两式相等：½a² + ab + ½b² = ab + ½c²；
+④ 两边同时乘 2：a² + 2ab + b² = 2ab + c²，消去 2ab 得 a² + b² = c²。证毕。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 只算一种面积就直接写结论（面积法的关键是两种算法 + 一个等式）；
+② 拼图里哪条边是 a、哪条是 b 看错，导致梯形上底/下底写反（写反不影响结果，但过程要自洽）；
+③ 把梯形的高写错；
+④ 展开 ½(a+b)² 时漏掉中间项 ab；
+⑤ ⚠ 本题照片里图 1、图 2 未拍全，以上按标准梯形拼法整理，做题时以原图标注为准。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>面积法证明勾股定理（两种方式表示同一面积）；
+梯形面积公式 S = ½(上底 + 下底) × 高；
+完全平方公式的展开与化简；
+数形结合：把图形拼合关系转化为代数恒等式。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="math_11.html">← 上一题：数学第11题</a><a href="math_13.html">下一题：数学第13题 →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>

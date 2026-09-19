@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>物理第7题 · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">物理 · 第7题</div>
+    <h1>相向运动 · s-t 图像 · 过街安全</h1>
+    <div class="meta">来源：2026-09-19 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">如图甲，小车 A 和小车 B 在马路上相向而行；图乙是两车的路程随时间变化的图像，从开始计时到第 15 s 两车正好相遇。求：
+(1) 小车 A 和小车 B 在开始计时的时候相距多远？
+(2) 如图丙，马路为双向两车道，每条车道宽 3.5 m。一辆长 5 m、宽 2.1 m 的小车 C 以 6 m/s 由西向东匀速行驶在右侧车道的正中间。此时一行人突然从图中 E 点横穿马路，人与小车在东西方向的距离 s₃ = 25 m。为了能够安全通过，行人速度的范围是多少？（不考虑小车车速和方向变化，以及制动情况）
+【答案】(1) 125 m　(2) v ≤ 0.84 m/s 或 v ≥ 1.512 m/s</div>
+    <img class="q-img" src="../uploads/wrong_bank/physics_20260919_p3.jpg" alt="物理第7题题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>① A、B 两车相向而行；
+② 图乙（s-t 图）：A 车 10 s 内通过 50 m（v_A = 5 m/s）；B 车 15 s 内通过 50 m；
+③ 第 15 s 两车正好相遇；
+④ 图丙：双向两车道，每车道宽 3.5 m；小车 C 长 5 m、宽 2.1 m，速度 6 m/s，行驶在右侧车道正中间；
+⑤ 行人从 E 点横穿，人与车东西方向距离 s₃ = 25 m。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>(1) 开始计时时两车相距多远？
+(2) 行人安全横穿马路的行驶速度范围。</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>(1) 由图乙读速度：v_A = 50 m ÷ 10 s = 5 m/s；B 车 15 s 走 50 m。
+    两车相向而行，15 s 后相遇 ⇒ 初始距离 = A 走的路程 + B 走的路程 = 5×15 + 50 = 75 + 50 = 125 m。
+
+(2) 小车宽 2.1 m，在 3.5 m 车道正中间 ⇒ 车身两侧各留 (3.5 − 2.1) ÷ 2 = 0.7 m。
+① 慢速（等车先过）：行人只需走到车身近侧，距离 s₁ = 3.5 ÷ 2 + 0.7 = 1.75 + 0.7 = 4.2 m；
+   车尾离开所需时间 t = (25 + 5) ÷ 6 = 5 s；⇒ v ≤ 4.2 ÷ 5 = 0.84 m/s。
+② 快速（抢在车头前过）：行人要穿过车身区域，距离 s₂ = 3.5 ÷ 2 + 2.1 ÷ 2 + 3.5 = 1.75 + 1.05 + 3.5 = 6.3 m；
+   可用时间 = 车头到达的时间 = 25 ÷ 6 s；⇒ v ≥ 6.3 ÷ (25 ÷ 6) = 1.512 m/s。
+结论：v ≤ 0.84 m/s 或 v ≥ 1.512 m/s。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① s-t 图像不会读：忽略&quot;斜率 = 速度&quot;，凭数字乱算；
+② 第二问忘记把&quot;车长 5 m&quot;计入车尾通过时间（用 25 ÷ 6 而非 30 ÷ 6）；
+③ 几何距离算错：分不清&quot;车道宽、半车宽、半车道&quot;的关系（4.2 m 与 6.3 m 的来历）；
+④ 只写一个不等式，漏掉分类讨论的另一种情况。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>s-t 图像：斜率表示速度；
+相向运动的路程关系（s_总 = s₁ + s₂）；
+临界问题与分类讨论；
+相对运动思想；
+几何建模（车道宽度 → 行人需通过的距离）。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="physics_6.html">← 上一题：物理第6题</a><a href="physics_4.html">下一题：物理第4题 →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>
