@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>物理第5题 · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">物理 · 第5题</div>
+    <h1>匀变速直线运动 · 刹车安全距离</h1>
+    <div class="meta">来源：2026-09-19 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">汽车在路上出现故障时，应在车后放置三角警示牌，以提醒后面驾车司机减速安全通过。在夜间，有一货车因故障停驶，后面有一小轿车以 30 m/s 的速度向前驶来，由于夜间视线不好，小轿车驾驶员只能看清前方 60 m 的物体，并且他的反应时间为 0.6 s，制动后最大加速度为 5 m/s²。求：
+(1) 小轿车从刹车到停止所用的最短时间；
+(2) 三角警示牌至少要放在车后多远处，才能有效避免两车相撞？
+【答案】(1) 6 s　(2) 48 m</div>
+    <img class="q-img" src="../uploads/wrong_bank/physics_20260919_p2.jpg" alt="物理第5题题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>① 小轿车速度 v = 30 m/s；
+② 驾驶员能看清前方 60 m 的物体（夜间视线）；
+③ 反应时间 t_反 = 0.6 s（这段时间车仍匀速）；
+④ 制动后最大加速度 a = 5 m/s²。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>(1) 从刹车到停止的最短时间？
+(2) 警示牌至少放在车后多远处才能避免相撞？</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>(1) 刹车过程是匀减速：由 v = a·t ⇒ t = v ÷ a = 30 ÷ 5 = 6 s。
+(2) &quot;从发现情况到停下&quot;分两段：
+① 反应距离（匀速）：s_反 = v·t_反 = 30 × 0.6 = 18 m；
+② 制动距离（匀减速）：s_制 = v² ÷ (2a) = 30² ÷ (2×5) = 900 ÷ 10 = 90 m；
+总停车距离 = 18 + 90 = 108 m。
+驾驶员只能看清 60 m，所以警示牌至少要放在 108 − 60 = 48 m 之前（即 ≥ 48 m 处）。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 漏掉反应距离 18 m，只算制动距离；
+② 用错公式：把 v² = 2as 写成 s = v/2a 或 s = at²/2 混用；
+③ 忘记减去&quot;能看清的 60 m&quot;，直接把 108 m 当答案；
+④ 把&quot;至少&quot;理解成&quot;等于&quot;——实际应 ≥ 48 m。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>匀变速直线运动基本公式：v = at、v² = 2as；
+反应距离 + 制动距离 = 停车距离（安全距离模型）；
+&quot;最短时间&quot;对应最大加速度；
+物理模型与实际交通安全的联系。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="physics_4.html">← 上一题：物理第4题</a><a href="math_10.html">下一题：数学第10题 →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>
