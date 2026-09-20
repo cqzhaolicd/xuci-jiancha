@@ -124,9 +124,18 @@ const CARDS = [
   "url": "review/math_13.html",
   "excerpt": "13.（C 组）如图，在 Rt△ABC 中，∠A = 90°，D 是 BC 的中点，E、F 分别是 AB、AC 上的点，DE ⊥ DF。求证：EF² = BE² + CF²。",
   "key": "数学第13题直角三角形 · 中点与垂直（倍长中线）13.（c 组）如图，在 rt△abc 中，∠a = 90°，d 是 bc 的中点，e、f 分别是 ab、ac 上的点，de ⊥ df。求证：ef² = be² + cf²。"
+ },
+ {
+  "subj": "英语",
+  "num": "短文填空",
+  "topic": "选词填空 · 固定搭配与词形变化",
+  "date": "2026-09-19",
+  "url": "review/english_9.html",
+  "excerpt": "二、短文填空。 从方框中选择合适的词并用其正确形式填空（每词限用一次，有两词多余）。 备选词：plan, sort, cover, decorate, until, famil",
+  "key": "英语短文填空选词填空 · 固定搭配与词形变化二、短文填空。\n从方框中选择合适的词并用其正确形式填空（每词限用一次，有两词多余）。\n\n备选词：plan, sort, cover, decorate, until, familiar, matter, add, describe, discover, invite, preparation\n\n____1____ a surprise farewell party for mrs. chen required careful organization. first, we needed to ____2____ out who would bring decorations and snacks. lucy volunteered to ____3____ the bulletin board (布告板) with photos while i would ____4____ the teacher's desk with flowers. until the party day, we worked nonstop. tom, who was ____5____ with sound systems, set up music. \"we can't relax ____6____ everything is ready!\" mrs. lee reminded us. suddenly, emma gasped: \"what's the matter? i forgot to ____7____ mrs. chen's favorite song to the playlist!\" luckily, it didn't ____8____ since tom had prepared extra songs. when mrs. chen entered, she tried to ____9____ her amazement but was speechless. later, she ____10____ a hidden album of our class memories. \"this is beyond description!\" she exclaimed tearfully.\n\n【参考答案】1 planning　2 sort　3 cover　4 decorate　5 familiar　6 until　7 add　8 matter　9 describe　10 discovered（多余词：invite、preparation）"
  }
 ];
-const SUBJECTS = ["物理", "数学"];
+const SUBJECTS = ["物理", "数学", "英语"];
 let curSubj = '全部', curKw = '';
 function renderTabs(){
   const items = [['全部', CARDS.length]].concat(SUBJECTS.map(s => [s, CARDS.filter(c => c.subj === s).length]));

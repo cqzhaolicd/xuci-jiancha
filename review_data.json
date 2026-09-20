@@ -102,5 +102,18 @@
   "method": "【关键辅助线】倍长中线（把 FD 延长一倍）+ 全等转移线段。\n\n证明：\n① 延长 FD 到 G，使 DG = DF，连接 BG、EG；\n② ∵ D 是 BC 中点 ⇒ BD = CD；又 ∠BDG = ∠CDF（对顶角），DG = DF，\n   ∴ △BDG ≅ △CDF（SAS）⇒ BG = CF，∠DBG = ∠C；\n③ ∵ ∠A = 90° ⇒ ∠ABC + ∠C = 90° ⇒ ∠ABC + ∠DBG = 90° ⇒ ∠ABG = 90°；\n④ ∵ DE ⊥ DF 且 DG = DF ⇒ DE 是 FG 的垂直平分线 ⇒ EF = EG；\n⑤ 在 Rt△EBG 中，由勾股定理：EG² = BE² + BG² = BE² + CF² ⇒ EF² = BE² + CF²。证毕。",
   "pitfall": "① 想不到“倍长中线”这条辅助线（见中点 + 垂直，要想到垂直平分线模型）；\n② 无法把 BE、CF 搬到同一个直角三角形里（这是本题最大的障碍）；\n③ 写全等时对应顶点顺序错乱，导致边、角对应错；\n④ 得到 EF = EG 后，忘记说明 DE 是 FG 的垂直平分线这一步的依据；\n⑤ 最后一步忘记回到 EF² 的结论（EG 要换成 EF）。",
   "points": "倍长中线（中线倍长）辅助线作法；\n全等三角形的判定（SAS）与性质；\n线段垂直平分线的性质；\n勾股定理；\n等量代换 / 线段转移的证明思想。"
+ },
+ {
+  "subj": "英语",
+  "num": "短文填空",
+  "topic": "选词填空 · 固定搭配与词形变化",
+  "date": "2026-09-19",
+  "img": "uploads/wrong_bank/english_20260919_wrong.jpg",
+  "stem": "二、短文填空。\n从方框中选择合适的词并用其正确形式填空（每词限用一次，有两词多余）。\n\n备选词：plan, sort, cover, decorate, until, familiar, matter, add, describe, discover, invite, preparation\n\n____1____ a surprise farewell party for Mrs. Chen required careful organization. First, we needed to ____2____ out who would bring decorations and snacks. Lucy volunteered to ____3____ the bulletin board (布告板) with photos while I would ____4____ the teacher's desk with flowers. Until the party day, we worked nonstop. Tom, who was ____5____ with sound systems, set up music. \"We can't relax ____6____ everything is ready!\" Mrs. Lee reminded us. Suddenly, Emma gasped: \"What's the matter? I forgot to ____7____ Mrs. Chen's favorite song to the playlist!\" Luckily, it didn't ____8____ since Tom had prepared extra songs. When Mrs. Chen entered, she tried to ____9____ her amazement but was speechless. Later, she ____10____ a hidden album of our class memories. \"This is beyond description!\" she exclaimed tearfully.\n\n【参考答案】1 Planning　2 sort　3 cover　4 decorate　5 familiar　6 until　7 add　8 matter　9 describe　10 discovered（多余词：invite、preparation）",
+  "known": "① 备选词 12 个：plan, sort, cover, decorate, until, familiar, matter, add, describe, discover, invite, preparation；\n② 短文共 10 个空（讲同学们为陈老师筹办惊喜告别派对）；\n③ 每词限用一次，有 2 个多余词；\n④ 部分空需要改变词形（时态 / 动名词）。",
+  "ask": "从方框中选词并用正确形式填入 10 个空，使短文通顺完整。",
+  "method": "① 先通读全文抓大意：策划派对 → 分工准备 → 当天小插曲 → 老师的反应 → 感悟。\n② 每个空先判“词性”，再判“固定搭配”，最后查“词形”：\n   1) 空 1 是句子主语，需要名词/动名词 ⇒ plan → 「Planning」；\n   2) 空 2：sort out（挑出、分配）固定搭配 ⇒ 「sort」；\n   3) 空 3：cover ... with ...（用…覆盖）⇒ 「cover」；\n   4) 空 4：decorate ... with ...（用…装饰）⇒ 「decorate」；\n   5) 空 5：be familiar with（熟悉）⇒ 「familiar」；\n   6) 空 6：not ... until（直到…才）⇒ 「until」；\n   7) 空 7：add ... to ...（把…加入）⇒ 「add」；\n   8) 空 8：it doesn't matter（没关系/不要紧）⇒ 「matter」；\n   9) 空 9：describe her amazement（描述她的惊讶）⇒ 「describe」；\n   10) 空 10：Later, she ___ ⇒ 叙述过去，用过去式 ⇒ 「discovered」。\n③ 最后检查：10 个空各用一个词，未使用的两个（invite、preparation）正好是干扰项。",
+  "pitfall": "① 只按“词义”选词，忽略「固定搭配」——本题几乎每空都靠搭配定位（sort out / be familiar with / add ... to / cover ... with / decorate ... with）；\n② 「词形不变化」：空 1 需要动名词 Planning（不是 Preparation/Plan），空 10 需要过去式 discovered（不是 discover）；\n③ 「一个词重复使用」：把 cover 同时填在空 3 和空 9（每词只能用一次）；\n④ 误用多余的干扰词：preparation、invite 在本文中没有合适位置；\n⑤ 不熟悉 not ... until 结构（“直到…才”）；\n⑥ ⚠ 本次作业错得较多：第1、2、4、5、7、8、9、10 空均被红笔改正，对的只有第 3、6 空。",
+  "points": "① 高频动词短语：sort out / cover ... with ... / decorate ... with ... / add ... to ... / be familiar with / not ... until；\n② 词形变化：动名词作主语（Planning ... required）；一般过去时（discovered）；\n③ 词义辨析：matter（要紧、有影响）vs. describe（描述）vs. discover（发现）vs. decorate（装饰）；\n④ 解题策略：先定词性 → 再定搭配 → 最后查词形；用“每词限用一次 + 多余词”反推。"
  }
 ]
