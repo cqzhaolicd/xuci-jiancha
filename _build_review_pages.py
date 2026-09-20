@@ -20,6 +20,8 @@ with open(DATA_FILE, encoding='utf-8') as f:
 def esc(s): return html.escape(str(s), quote=True)
 
 def slug_of(q, idx):
+    if q.get('slug'):
+        return q['slug']
     sub = SUBJ_SLUG.get(q['subj'], 'x')
     num = re.sub(r'[^0-9]', '', q.get('num', '')) or str(idx + 1)
     return f"{sub}_{num}"
@@ -105,7 +107,15 @@ document.querySelectorAll('.q-img').forEach(function(im){
 DIM_LABEL = {'known':('A','已知条件'), 'ask':('B','求解什么'), 'method':('C','做题思路'),
              'pitfall':('D','易错点'), 'points':('E','知识点')}
 
-slugs = [slug_of(q, i) for i, q in enumerate(DATA)]
+slugs, _used = [], {}
+for i, q in enumerate(DATA):
+    s_ = slug_of(q, i)
+    if s_ in _used:
+        _used[s_] += 1
+        s_ = f"{s_}{chr(96 + _used[s_])}"      # b, c, ...
+    else:
+        _used[s_] = 1
+    slugs.append(s_)
 titles = [f"{q['subj']}{q['num']}" for q in DATA]
 
 for i, q in enumerate(DATA):

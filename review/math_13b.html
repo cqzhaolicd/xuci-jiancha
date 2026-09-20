@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学第13题（等边三角形） · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">数学 · 第13题（等边三角形）</div>
+    <h1>等边三角形 · 旋转构图（手拉手模型）</h1>
+    <div class="meta">来源：2026-09-20 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">13.（C组）
+（1）如图1，P 是等边三角形 ABC 内一点，PA = 6，PB = 8，PC = 10。若 P&#x27; 是 △ABC 外的一点，且 △P&#x27;AB ≌ △PAC。求 PP&#x27; 的长度及 ∠APB 的度数。
+（2）如图2，Q 是等边三角形 ABC 内一点，QA = 5，QB = 12，∠AQB = 150°，求 CQ 的长。
+（本题为旋转构图（手拉手）经典模型，两问解法同源。）
+【参考答案】(1) PP&#x27; = 6，∠APB = 150°；(2) CQ = 13</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_13_eq_20260920.jpg" alt="数学第13题（等边三角形）题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>【第(1)问】① 等边三角形 ABC；② P 是三角形内一点；③ PA = 6、PB = 8、PC = 10；④ P&#x27; 在 △ABC 外部，且 △P&#x27;AB ≌ △PAC。
+【第(2)问】① 等边三角形 ABC；② Q 是三角形内一点；③ QA = 5、QB = 12；④ ∠AQB = 150°。
+（两问都给了「等边三角形 + 内部一点 + 到顶点距离」，是同一个模型的两种问法。）</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>【第(1)问】求 PP&#x27; 的长度 与 ∠APB 的度数；
+【第(2)问】求 CQ 的长。</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【第(1)问】
+① 观察全等：△P&#x27;AB ≌ △PAC，相当于把 △PAC 绕点 A 旋转 60°（因为等边三角形 ∠BAC = 60°）得到 △P&#x27;AB；
+② 由全等得对应边相等：AP&#x27; = AP = 6，P&#x27;B = PC = 10，且 ∠P&#x27;AB = ∠PAC；
+③ ∵ ∠BAC = 60°，∴ ∠P&#x27;AP = ∠P&#x27;AB + ∠BAP = ∠PAC + ∠BAP = ∠BAC = 60°；
+④ 又 AP&#x27; = AP = 6 ⇒ △P&#x27;AP 是等边三角形 ⇒ PP&#x27; = 6（同时 ∠APP&#x27; = 60°）；
+⑤ 在 △P&#x27;PB 中：P&#x27;P = 6、PB = 8、P&#x27;B = 10，而 6² + 8² = 100 = 10² ⇒ ∠P&#x27;PB = 90°；
+⑥ ∠APB = ∠APP&#x27; + ∠P&#x27;PB = 60° + 90° = 150°。
+
+【第(2)问】同源解法（旋转 60°）：
+① 把 △QAC 绕点 A 顺时针旋转 60°，落到 △Q&#x27;AB 的位置（Q&#x27; 在 △ABC 外）；
+② ⇒ AQ&#x27; = AQ = 5，且 ∠Q&#x27;AQ = 60° ⇒ △Q&#x27;AQ 是等边三角形 ⇒ QQ&#x27; = 5、∠AQQ&#x27; = 60°；
+③ ∵ ∠AQB = 150° ⇒ ∠Q&#x27;QB = ∠AQB − ∠AQQ&#x27; = 150° − 60° = 90°；
+④ 在 Rt△Q&#x27;QB 中：Q&#x27;B² = QQ&#x27;² + QB² = 5² + 12² = 25 + 144 = 169 ⇒ Q&#x27;B = 13；
+⑤ 由旋转全等 △Q&#x27;AB ≌ △QAC ⇒ Q&#x27;B = QC ⇒ CQ = 13。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 看不出「全等 = 绕顶点旋转 60°」，找不到 PP&#x27; / QQ&#x27; 这条关键辅助线；
+② 忘记先证 △P&#x27;AP（△Q&#x27;AQ）是等边三角形 —— 必须同时用「两边相等」和「夹角 60°」两个条件；
+③ 全等对应关系搞错：△P&#x27;AB ≌ △PAC 中对应关系是 AP&#x27;↔AP、AB↔AC、P&#x27;B↔PC，写错就全盘皆错；
+④ 第(2)问里 ∠Q&#x27;QB = 90° 的推导漏掉（要用 150° − 60°，其中 60° 来自等边三角形）；
+⑤ 数字 6、8、10 与 5、12、13 都是勾股数，看到就要立刻想到「直角三角形」；
+⑥ 第(1)问漏答一问（题目要 PP&#x27; 和 ∠APB 两个答案）。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 等边三角形的性质：三边相等、三个角都是 60°，以及「旋转 60° 不变」的思想；
+② 旋转型全等（手拉手模型）：公共顶点、等长旋转边、夹角相等 ⇒ 全等；
+③ 勾股定理的逆定理：6² + 8² = 10²、5² + 12² = 13² ⇒ 直角三角形；
+④ 图形变换（旋转）把分散的条件集中到一个三角形中的解题思想；
+⑤ 常见勾股数：3-4-5、5-12-13、6-8-10、8-15-17。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="math_5.html">← 上一题：数学第5题</a><a class="dis">已是最后一题 →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>
