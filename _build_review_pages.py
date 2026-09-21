@@ -17,7 +17,10 @@ SUBJ_SLUG = {'数学':'math','语文':'chinese','英语':'english','物理':'phy
 with open(DATA_FILE, encoding='utf-8') as f:
     DATA = json.load(f)
 
-def esc(s): return html.escape(str(s), quote=True)
+def esc(s):
+    # 把 Markdown 粗体 **xxx** 转成中文书名号，避免网页上原样显示星号
+    s = re.sub(r'\*\*(.+?)\*\*', lambda m: '「' + m.group(1) + '」', str(s))
+    return html.escape(s, quote=True)
 
 def slug_of(q, idx):
     if q.get('slug'):

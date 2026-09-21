@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学第18题 · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">数学 · 第18题</div>
+    <h1>等腰（等边）三角形综合 · 平行构造 / 全等证明 / 对称最值</h1>
+    <div class="meta">来源：2026-09-21 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">18. 在 △ABC 中，AC = BC，点 D、E 是边 BC 上的两点。
+（1）如图1，若 ∠B = 60°，点 N 在 AB 边上，点 F 在 AC 的延长线上，过点 N 作 ND ∥ AF 交 BC 于点 D，AC = 4，CF = 1，求 CE 的长。
+（2）如图2，若 ∠B = 60°，点 F 在 AC 的延长线上，连接 DF、AD、AE，且 ∠CAE = ∠CDF，求证：CE = CF。
+（3）如图3，连接 AD、AE，若 AD ⊥ BC，且 BD : CD = 1 : 4，AE 平分 ∠BAC，△ABC 的面积为 30，点 M、N 分别是线段 AB、AE 上的动点，连接 MN、DN，求 MN + DN 的最小值。
+
+⚠️ 说明：第（1）问题干中「且 BN = ___」处、第（3）问末尾「写出 ___ 值」处，照片上字迹不清，以上按可辨识内容+常见题型整理，请核对。</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_p18_20260921.jpg" alt="数学第18题题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>【共同条件】① △ABC 中 AC = BC（等腰）；② 点 D、E 是边 BC 上的两点。
+【第(1)问】∠B = 60°；N 在 AB 边上；F 在 AC 的延长线上；ND ∥ AF 交 BC 于 D；AC = 4；CF = 1。
+【第(2)问】∠B = 60°；F 在 AC 的延长线上；连接 DF、AD、AE；∠CAE = ∠CDF。
+【第(3)问】AD ⊥ BC；BD : CD = 1 : 4；AE 平分 ∠BAC；S△ABC = 30；M、N 分别是线段 AB、AE 上的动点。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>第(1)问：求 CE 的长；
+第(2)问：求证 CE = CF；
+第(3)问：求 MN + DN 的最小值。</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【第(1)问】
+① ∵ AC = BC 且 ∠B = 60° ⇒ △ABC 是「等边三角形」 ⇒ AB = BC = AC = 4；
+② 由 ND ∥ AF，利用平行线分线段成比例（或相似三角形）建立 BD : DC 与 BN : NA 的关系，再结合 F 在 AC 延长线上、CF = 1（⇒ AF = AC + CF = 5）逐步求出 CE。
+（本题还需题干中那个 BN 的条件，请对照原书核对。）
+
+【第(2)问】证明思路（角相等 ⇒ 三角形相似/全等 ⇒ 边相等）：
+① 由 ∠B = 60° 且 AC = BC ⇒ △ABC 为等边三角形，∠ACB = ∠ABC = 60°；
+② 目标 CE = CF，可考虑证 △ACE ≌ △DCF（或找中间量）：
+   - 已知 ∠CAE = ∠CDF（对应角相等）；
+   - 用等边三角形提供 60° 角 + 公共边/等边，凑齐 ASA 或 AAS；
+③ 得 CE = CF。
+
+【第(3)问】对称最值（将军饮马型）：
+① 先由 AD ⊥ BC、BD : CD = 1 : 4 与 S△ABC = 30 求出各边长（设 BD = x, CD = 4x，由 BC·AD/2 = 30 与勾股关系解出）；
+② AE 平分 ∠BAC ⇒ 可利用角平分线性质定 N 的位置范围；
+③ 求 MN + DN 的最小值：作 D（或 M）关于直线 AE 的「对称点」，把 MN + DN 转化为「两点之间线段最短」，再求该线段长。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 没有先由「AC = BC 且 ∠B = 60°」判断出「等边三角形」——这是三个小问共同的突破口；
+② 第(1)问不知道用「平行 ⇒ 分线段成比例/相似」把已知长度联系起来；
+③ 第(2)问把「∠CAE = ∠CDF」当成边相等用，忽略必须先用等边三角形补 60° 角；
+④ 第(3)问看到「动点 + 求最小值」想不到「对称（将军饮马）模型」，硬解动点；
+⑤ 第(3)问求边长时漏用面积条件 S△ABC = 30；
+⑥ 三个小问共用同一图形条件，容易把上一问的条件带进下一问。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 等腰三角形判定等边（有一个 60° 角的等腰三角形是等边三角形）；
+② 平行线分线段成比例 + 相似三角形求线段长；
+③ 全等三角形的判定（ASA / AAS）与性质；
+④ 角平分线的性质；
+⑤ 轴对称求最短路径（将军饮马模型）：两点之间线段最短；
+⑥ 三角形面积公式结合比例求线段长。
+
+📌 备注：本题第(1)问的「BN 条件」与第(3)问末尾要求，照片上不清晰，已在题干中标注，核对后可补充完整。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="math_20.html">← 上一题：数学第20题</a><a class="dis">已是最后一题 →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>
