@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学第13题（动点分类） · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">数学 · 第13题（动点分类）</div>
+    <h1>动点问题 · 直角三角形/等腰三角形的分类讨论</h1>
+    <div class="meta">来源：2026-09-24 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">如图，在 Rt△ABC 中，∠C = 90°，AB = 5 cm，AC = 3 cm，动点 P 从点 B 出发，沿射线 BC 以 1 cm/s 的速度移动，设运动的时间为 t s。
+（1）求 BC 边的长；
+（2）当 △ABP 为直角三角形时，求 t 的值；
+（3）当 △ABP 为等腰三角形时，求 t 的值。</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_p13_20260924.jpg" alt="数学第13题（动点分类）题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>① Rt△ABC，∠C = 90°；② AB = 5 cm，AC = 3 cm；③ 动点 P 从 B 出发沿【射线 BC】（会越过点 C 继续向右）以 1 cm/s 移动；④ 运动时间 t s ⇒ BP = t cm。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>（1）BC 的长；（2）△ABP 为直角三角形时的 t；（3）△ABP 为等腰三角形时的 t。</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【（1）】由勾股定理：BC = √(AB² − AC²) = √(25 − 9) = 4 cm。
+
+【（2）按直角顶点分类】：
+① 若 ∠APB = 90°：即 AP ⊥ BC。A 到直线 BC 的垂足恰是 C，故 P 与 C 重合 ⇒ BP = BC = 4 ⇒ t = 4；
+② 若 ∠BAP = 90°：设 BP = t（t &gt; 4），则 CP = t − 4，AP² = AC² + CP² = 9 + (t − 4)²；
+   由 AP² + AB² = BP²：9 + (t − 4)² + 25 = t² ⇒ t² − 8t + 50 = t² ⇒ 8t = 50 ⇒ t = 25/4；
+③ ∠ABP = 90° 不可能（P 在 BC 上，∠ABP = ∠ABC &lt; 90°）。
+⇒ t = 4 或 25/4。
+
+【（3）按相等的边分类】：
+① AB = BP：t = 5；
+② AB = AP：9 + (t − 4)² = 25 ⇒ (t − 4)² = 16 ⇒ t = 8 或 t = 0（t = 0 时 P 与 B 重合，三角形退化，舍去）⇒ t = 8；
+③ AP = BP：P 在 AB 的垂直平分线上 ⇒ 9 + (t − 4)² = t² ⇒ −8t + 25 = 0 ⇒ t = 25/8。
+⇒ t = 5、8 或 25/8。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 忽略「射线 BC」：P 可以越过点 C（t &gt; 4），只考虑线段 BC 会漏解；
+② 分类不全：直角三角形要分三种直角顶点、等腰三角形要分三组相等的边，最容易漏「以 P 为直角顶点」「AB = AP」；
+③ 算 AP 时忘记 P 越过后 CP = t − 4（不是 4 − t）；
+④ 解出 t = 0 不舍去（三角形退化）；
+⑤ 把 AP = BP 误当成 P 是 BC 中点（那会得 t = 2，是错的；正确 t = 25/8）。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 勾股定理及其在动点问题中的应用；
+② 直角三角形的分类讨论（按直角顶点分三种）；
+③ 等腰三角形的分类讨论（按腰分三种）；
+④ 垂直平分线的性质（到两端点距离相等）；
+⑤ 动点问题「时间 t ⇒ 线段长」的转化，以及舍去不合题意的解。
+
+📌 出处：若琳此题只写了开头（“在△ABC中，∠C=90°则 AC²+BC²=AB²”），未完成。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="math_10b.html">← 上一题：数学第10题（旋转全等）</a><a href="math_23.html">下一题：数学第23题（旋转构造） →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>

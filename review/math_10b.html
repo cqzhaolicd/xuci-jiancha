@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学第10题（旋转全等） · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">数学 · 第10题（旋转全等）</div>
+    <h1>正方形内的旋转全等 · 勾股定理逆定理</h1>
+    <div class="meta">来源：2026-09-24 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">如图，E 是正方形 ABCD 内一点，连接 AE、BE、CE，将 △ABE 绕点 B 顺时针旋转 90° 到 △CBE′ 的位置。若 AE = 1，BE = 2，CE = 3，则 ∠BE′C = ______ °。</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_p10_20260924.jpg" alt="数学第10题（旋转全等）题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>① ABCD 是正方形；② E 是正方形内一点；③ 将 △ABE 绕点 B 顺时针旋转 90° 得 △CBE′；④ AE = 1，BE = 2，CE = 3。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>求 ∠BE′C 的度数。（若琳填 56°，被红笔判错；正确答案 135°）</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>① 旋转 90° 是全等变换 ⇒ △ABE ≌ △CBE′ ⇒ BE′ = BE = 2，CE′ = AE = 1，且 ∠EBE′ = 90°；
+② 连接 EE′，在等腰直角 △BEE′ 中：EE′ = √(BE² + BE′²) = √(2² + 2²) = 2√2，∠BE′E = 45°；
+③ 在 △CEE′ 中看三边：CE = 3，CE′ = 1，EE′ = 2√2；
+④ 用勾股定理的逆定理检验：CE′² + EE′² = 1² + (2√2)² = 1 + 8 = 9 = 3² = CE² ⇒ △CEE′ 是直角三角形，且 ∠EE′C = 90°；
+⑤ 所以 ∠BE′C = ∠BE′E + ∠EE′C = 45° + 90° = 135°。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 看到「旋转 90°」只想得到角相等，忘了它同时给出「BE′ = BE、CE′ = AE、∠EBE′ = 90°」三组条件；
+② 不连接 EE′，白白丢掉等腰直角 △BEE′ 这个关键桥梁；
+③ 在 △CEE′ 中看到 1、2√2、3 三边，想不到用「勾股定理逆定理」判断直角；
+④ 把 ∠BE′C 直接当成某个已知角，没有拆成 ∠BE′E + ∠EE′C 两段来算；
+⑤ 结果写成 56°（若琳的错误答案）—— 没抓住「45° + 90°」这个必然结构。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 旋转的性质（对应线段相等、对应角相等、旋转角相等）；
+② 等腰直角三角形的性质与斜边计算（EE′ = 2√2）；
+③ 勾股定理及其逆定理（由三边判定直角三角形）；
+④ 角的和差拆分（∠BE′C = ∠BE′E + ∠EE′C）；
+⑤ 正方形四边相等、四角为 90°。
+
+📌 出处：本页含第 10、11、12 题；若琳第10题填 56°，正确答案 135°。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="math_18.html">← 上一题：数学第18题</a><a href="math_13c.html">下一题：数学第13题（动点分类） →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>
