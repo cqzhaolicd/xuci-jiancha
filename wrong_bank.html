@@ -166,10 +166,18 @@ function loadData() {
   return d;
 }
 // ===================== 跨设备同步（威联通后端 api_wrongbank.php） =====================
-// 同步后端地址：威联通上部署了 PHP 接口；同源优先，其它站点（群晖版等）指向威联通
+// 同步后端地址解析：
+//   ① https 站点（cloudflared 隧道）→ 同源相对路径，由本机 8099 服务反代到威联通（免混合内容）
+//   ② 威联通本机页面 → 同源相对路径，直连自己的 PHP
+//   ③ 其它来源（如群晖版页面，内网 http）→ 直接指向威联通
 const SYNC_REMOTE = 'http://192.168.3.88/xuci-jiancha/api_wrongbank.php';
-const SYNC_API = (location.protocol === 'https:') ? null          // https 页面调不了 http 后端（混合内容会被拦）
-                : (location.hostname === '192.168.3.88' ? 'api_wrongbank.php' : SYNC_REMOTE);
+const SYNC_API = (function(){
+  const host = location.hostname;
+  if (host === '192.168.3.88') return 'api_wrongbank.php';                  // ① 威联通页面：直连本地 PHP
+  if (/\.trycloudflare\.com$/.test(host)) return 'api_wrongbank.php';       // ② 隧道(https)：同源，由 8099 反代
+  if (location.protocol === 'https:') return null;                          // ③ 其它 https（如 GitHub Pages）：本机模式
+  return SYNC_REMOTE;                                                       // ④ 内网其它来源（如群晖）：指向威联通
+})();
 const SYNC_TOKEN = 'xuji-sync-2026';
 let _syncTimer = null, _syncPulling = false, _lastPushed = '';
 
