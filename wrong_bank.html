@@ -244,9 +244,9 @@ async function cloudInit(forceRemote){
     const hasRemote = j.data && Array.isArray(j.data.questions) && (j.data.questions.length > 0 || (j.data.subjects||[]).length > 0);
     if(hasRemote){
       // 服务器有真实数据：以服务器为准（服务器是唯一真实源）
-      localStorage.setItem(LS_KEY, JSON.stringify(j.data));
+      saveData(j.data);                                   // 走统一保存：顺便校准 id 计数器
       _lastPushed = JSON.stringify(j.data);
-      if(repairIds(j.data)||migrateGrades(j.data)){ localStorage.setItem(LS_KEY,JSON.stringify(j.data)); _lastPushed=''; cloudPushNow(j.data).then(()=>setSyncBadge('ok')).catch(()=>{}); }
+      if(repairIds(j.data)||migrateGrades(j.data)){ saveData(j.data); _lastPushed=''; cloudPushNow(j.data).then(()=>setSyncBadge('ok')).catch(()=>{}); }
       setSyncBadge('ok');
       navigate('dashboard');
       toast('☁️ 已从服务器同步最新错题本','success');
