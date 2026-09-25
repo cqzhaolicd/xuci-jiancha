@@ -705,7 +705,7 @@ function render(page,data){
   else if(page==='list') app.innerHTML=renderList();
   else if(page==='detail') app.innerHTML=renderDetail(data);
   else if(page==='review') app.innerHTML=renderReview();
-  else if(page==='training') app.innerHTML=renderTraining();
+  else if(page==='training') app.innerHTML=renderTraining(data);
   else if(page==='print-page') app.innerHTML=renderPrint();
   else if(page==='analysis') app.innerHTML=renderAnalysis();
 }
@@ -1150,7 +1150,7 @@ function reviewResult(r){
 }
 
 // ===================== TRAINING =====================
-let trainingLayer=1,trainingQ=null;
+let trainingLayer=1,trainingQ=null,trainingFromQid=null;
 let trainingGrade='';                    // 三层训练的年级维度：''=全部 'none'=未标注 '7'..'12'
 function trainGradeMatch(q){
   if(trainingGrade==='none')return q.grade===undefined||q.grade===null||q.grade==='';
@@ -1173,9 +1173,11 @@ function renderTraining(data){
     if(!q)return'<div class="empty-state"><i class="fas fa-question-circle"></i><h5>题目不存在</h5></div>';
     trainingQ=q;
     trainingLayer=1;
+    trainingFromQid=q.id;                 // 记住来源，返回时回到该错题详情
     return renderQTraining(q);
   }
   trainingQ=null;
+  trainingFromQid=null;
   // Show subject selection
   const subjects=['数学','物理','化学'];
   const counts={};
@@ -1253,9 +1255,16 @@ function renderQTraining(q){
       <button class="btn btn-primary btn-sm" onclick="trainingLayer=Math.min(3,trainingLayer+1);document.querySelector('#app').innerHTML=renderQTraining(trainingQ)" ${trainingLayer>=3?'disabled':''}>下一层 <i class="fas fa-arrow-right"></i></button>
       <button class="btn btn-success btn-sm" onclick="saveLayerAns()"><i class="fas fa-save"></i> 保存作答</button>
       <button class="btn btn-outline btn-sm" onclick="nextTrainingQ()"><i class="fas fa-random"></i> 换一题</button>
-      <button class="btn btn-outline btn-sm" onclick="trainingQ=null;navigate('training',{})"><i class="fas fa-times"></i> 返回</button>
+      <button class="btn btn-outline btn-sm" onclick="backFromTraining()"><i class="fas fa-arrow-left"></i> ${trainingFromQid?'返回错题详情':'返回'}</button>
     </div>
   </div>`;
+}
+
+function backFromTraining(){
+  const back=trainingFromQid;
+  trainingQ=null;trainingFromQid=null;
+  if(back){navigate('detail',{qid:back});return;}
+  navigate('training',{});
 }
 
 function showLayerAns(){
