@@ -1004,7 +1004,7 @@ function renderDetail(data){
     <div class="detail-field"><div class="label">时间</div><div class="value" style="color:var(--text-light);font-size:.85rem">录入: ${q.created_at} | 复习: ${q.review_count}次 | 下次复习: ${q.next_review||'无需'}</div></div>
     <div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
       <button class="btn btn-primary btn-sm" onclick="navigate('detail',{qid:${q.id},edit:true})"><i class="fas fa-edit"></i> 编辑</button>
-      ${['数学','物理','化学'].includes(subj?subj.name:'')?`<button class="btn btn-success btn-sm" onclick="navigate('training',{qid:${q.id}})"><i class="fas fa-layer-group"></i> 三层练</button>`:''}
+      <button class="btn btn-success btn-sm" onclick="navigate('training',{qid:${q.id}})"><i class="fas fa-layer-group"></i> 三层练</button>
       <button class="btn btn-danger btn-sm" onclick="deleteQ(${q.id})"><i class="fas fa-trash"></i> 删除</button>
       <button class="btn btn-outline btn-sm" onclick="navigate('list',{})"><i class="fas fa-arrow-left"></i> 返回列表</button>
     </div></div>`;
@@ -1165,6 +1165,9 @@ function trainingGradeChips(d){
   return `<div class="grade-chips" style="margin-bottom:.5rem">${chip('','全部年级')}${present.map(g=>chip(String(g),g+'年级')).join('')}${has('none')?chip('none','未标注'):''}</div>`;
 }
 
+const SUBJ_ICON={'数学':'fa-calculator','物理':'fa-atom','化学':'fa-flask','语文':'fa-book','英语':'fa-language','历史':'fa-scroll','地理':'fa-globe','生物':'fa-dna','道法':'fa-balance-scale'};
+function subjIcon(n){return SUBJ_ICON[n]||'fa-book';}
+
 function renderTraining(data){
   const d=loadData();
   // If a specific question is requested
@@ -1179,25 +1182,21 @@ function renderTraining(data){
   trainingQ=null;
   trainingFromQid=null;
   // Show subject selection
-  const subjects=['数学','物理','化学'];
-  const counts={};
   const gQs=d.questions.filter(trainGradeMatch);          // 先过年级维度
-  subjects.forEach(s=>{
-    const subj=d.subjects.find(x=>x.name===s);
-    if(subj)counts[s]=gQs.filter(q=>q.subject_id===subj.id).length;
-    else counts[s]=0;
-  });
+  const counts={};
+  d.subjects.forEach(x=>{counts[x.name]=gQs.filter(q=>q.subject_id===x.id).length;});   // 全部科目（含语文/英语）
+  const subjects=Object.keys(counts).filter(n=>counts[n]>0);
   const total=Object.values(counts).reduce((a,b)=>a+b,0);
-  if(!total)return`<div class="card">${trainingGradeChips(d)}<div class="empty-state"><i class="fas fa-layer-group"></i><h5>${trainingGrade?'该年级还没有数理化错题':'还没有数理化错题'}</h5><p>先录入错题，再用三层训练强化</p></div></div>`;
+  if(!total)return`<div class="card">${trainingGradeChips(d)}<div class="empty-state"><i class="fas fa-layer-group"></i><h5>${trainingGrade?'该年级还没有错题':'还没有错题'}</h5><p>先录入错题，再用三层训练强化</p></div></div>`;
   return`<div class="training-layout">
     <div class="training-panel"><h4 style="margin-bottom:.8rem"><i class="fas fa-layer-group" style="color:var(--primary)"></i> 三层训练</h4>
       <p style="font-size:.9rem;color:var(--text-light);margin-bottom:1rem">
       <strong>1️⃣ 基础同构</strong> → 原题重做<br>
-      <strong>2️⃣ 条件变化</strong> → 改编条件，灵活应变<br>
+      <strong>2️⃣ 条件变化</strong> → 改编条件/换语境，灵活应变<br>
       <strong>3️⃣ 反向综合</strong> → 综合应用，提升思维</p>
       ${trainingGradeChips(d)}
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center">
-        ${subjects.filter(s=>counts[s]>0).map(s=>`<button class="btn btn-primary" onclick="startSubjectTraining('${s}')"><i class="fas ${s==='数学'?'fa-calculator':s==='物理'?'fa-flask':'fa-flask'}"></i> ${s}（${counts[s]}题）</button>`).join('')}
+        ${subjects.map(s=>`<button class="btn btn-primary" onclick="startSubjectTraining('${s}')"><i class="fas ${subjIcon(s)}"></i> ${s}（${counts[s]}题）</button>`).join('')}
         ${Object.values(counts).reduce((a,b)=>a+b,0)?'<button class="btn btn-success" onclick="startSubjectTraining(\'all\')"><i class="fas fa-random"></i> 全部混合（'+Object.values(counts).reduce((a,b)=>a+b,0)+'题）</button>':''}
       </div>
     </div></div>`;
@@ -1207,7 +1206,7 @@ function startSubjectTraining(subjName){
   const d=loadData();
   let qs;
   if(subjName==='all'){
-    const subjIds=d.subjects.filter(s=>['数学','物理','化学'].includes(s.name)).map(s=>s.id);
+    const subjIds=d.subjects.map(s=>s.id);
     qs=d.questions.filter(q=>subjIds.includes(q.subject_id)&&trainGradeMatch(q));
   }else{
     const subj=d.subjects.find(s=>s.name===subjName);
@@ -1296,13 +1295,15 @@ function getOrGenLayers(q){
 function genLayers(q){
   const content=q.content||'';
   const answer=q.correct_answer||'';
+  const d0=loadData();
+  const subjName=((d0.subjects||[]).find(s=>s.id===q.subject_id)||{}).name||'';
   const isMath=/\d+/.test(content);
   const hasChoice=/[A-D]\)/.test(content)||/A\./.test(content);
   
   // Layer 1: 原题重现
   const l1={
     title:'基础同构 · 原题重做',
-    content:`<strong>原题：</strong>${content}<br><br><strong style="color:var(--success)">✅ 原题正确答案：</strong><span class="prewrap">${answer||'（见下方）'}</span>`,
+    content:`<strong>原题：</strong><span class="prewrap">${content}</span><br><strong style="color:var(--success)">✅ 原题正确答案：</strong><span class="prewrap">${answer||'（见下方）'}</span>`,
     placeholder:'请重新解答这道题，检验是否真正掌握…',
     answer:`原题正确答案：${answer||'（未记录）'}<br>重新做一遍，看是否和正确答案一致。`,
     savedAnswer:''
@@ -1310,7 +1311,21 @@ function genLayers(q){
 
   // Layer 2: 生成变式
   let l2Content,l2Ans,l2Place;
-  if(isMath&&!/[A-D]\)/.test(content)){
+  if(subjName==='英语'||subjName==='语文'){
+    // 语言类 → 同考点换素材（不能换数字）
+    const w=subjName==='英语'?'句子':'语段';
+    l2Content=`<strong>变式题（同考点换个语境）：</strong>把这道题考查的同一个知识点，换一个${w}再练一遍。<br><br>`+
+      `<div style="background:var(--card-bg);padding:.6rem .8rem;border-radius:8px;border-left:3px solid #e67e22">`+
+      `💡 提示：${subjName==='英语'?'换个主语/时间/情境，让同一个词或语法点出现在新句子里':'换个说法或换一段文字，同一个考点换一种表达方式'}，<br>`+
+      `写出来后再对照原题，看这个知识点是不是真的会用了。</div>`;
+    l2Ans=`换语境训练的关键：<br>1. 先写清原题考的是哪个知识点<br>2. 自己造一个新的${w}，确保用上同一个知识点<br>3. 对照原题答案，检查用法是否一致`;
+    l2Place=`写出你编的新${w}，并标明用到的知识点…`;
+  }else if(subjName==='物理'){
+    // 物理 → 换场景
+    l2Content=`<strong>变式题（换场景）：</strong>保持考查的知识点和公式不变，换一个物体或生活场景再算一遍。`;
+    l2Ans=`换场景训练的关键：<br>1. 明确原题用的公式/规律<br>2. 换物体、换数值或换情境，重算一遍<br>3. 对比原题，看结论是否合理`;
+    l2Place='换一个场景改编，写出新题和数据，再解一遍…';
+  }else if(isMath&&!/[A-D]\)/.test(content)){
     // 数学计算题 → 换数字
     const nums=content.match(/\d+(\.\d+)?/g);
     if(nums&&nums.length){
@@ -1355,12 +1370,12 @@ function genLayers(q){
   // Layer 3: 反向综合
   let l3Content,l3Ans,l3Place;
   if(answer){
-    l3Content=`<strong>反向综合题：</strong>根据答案<strong>"${answer.length>50?answer.substring(0,50)+'…':answer}"</strong>反推，<br>`+
+    l3Content=`<strong>反向综合题：</strong>根据答案<strong>"${answer.length>50?answer.substring(0,50).replace(/\n/g,' ')+'…':answer.replace(/\n/g,' ')}"</strong>反推，<br>`+
       `你能编出一道能得到这个答案的题目吗？<br><br>`+
       `<div style="background:var(--card-bg);padding:.6rem .8rem;border-radius:8px;border-left:3px solid #e74c3c">`+
       `💡 提示：从答案出发，想想什么样的题目条件或场景能得出这个答案。`+
       `这是从"解题"到"出题"的思维转换，最能检验是否真正理解。</div>`;
-    l3Ans=`反向综合示范：<br>原题问的是"${content.length>80?content.substring(0,80)+'…':content}"<br>从答案"${answer.length>60?answer.substring(0,60)+'…':answer}"反推，<br>可以编一道：保持核心知识点不变，换一个生活场景来出题。`;
+    l3Ans=`反向综合示范：<br>原题问的是"${content.length>80?content.substring(0,80).replace(/\n/g,' ')+'…':content.replace(/\n/g,' ')}"<br>从答案"${answer.length>60?answer.substring(0,60).replace(/\n/g,' ')+'…':answer.replace(/\n/g,' ')}"反推，<br>可以编一道：保持核心知识点不变，换一个生活场景来出题。`;
     l3Place='从答案反推，编一道新题…';
   }else{
     l3Content=`<strong>反向综合题：</strong>请自己出一道与本题知识点相同的题目，<br>`+
