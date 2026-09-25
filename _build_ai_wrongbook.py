@@ -15,6 +15,10 @@ import sys
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(ROOT, 'wrong_bank.html')
 DST = os.path.join(ROOT, 'ai_wrongbook.html')
+# 独立版（脱离「赵若琳学习中心」）：部署到 /ai-wrongbook/ 顶层路径
+# 用 <base href="/xuci-jiancha/"> 让 assets/、uploads/ 图片仍指向原目录（不必复制资源）
+STANDALONE_DIR = os.path.join(ROOT, 'ai-wrongbook')
+STANDALONE = os.path.join(STANDALONE_DIR, 'index.html')
 
 CSS = """/* ===== AI错题本 · 顶部双功能区（错题本 / 三层训练） ===== */
 .top-tabs{display:flex;gap:.35rem;flex-wrap:wrap}
@@ -117,6 +121,31 @@ def main():
     h = sub_once(h, '// ===================== INIT =====================', JS_BLOCK, 'JS 切换逻辑')
     open(DST, 'w', encoding='utf-8').write(h)
     print(f'输出: {DST}  {len(h)} 字符')
+
+    # ---------- 同步生成「独立版」（/ai-wrongbook/）：去掉一切指向学习中心的东西 ----------
+    s = h
+    s = sub_once(s, '<title>AI错题本 · 赵若琳学习中心</title>',
+                 '<title>AI错题本</title>\n<base href="/xuci-jiancha/">', '独立版: 标题 + base')
+    s = sub_once(s, '<a class="navbar-brand" href="index.html"><i class="fas fa-robot"></i> AI错题本</a>',
+                 '<span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本</span>', '独立版: 品牌链接去外链')
+    s = re.sub(r'\n\s*&nbsp;\|&nbsp; <a href="index\.html"[^>]*>返回学习中心</a>', '', s, count=1)
+    # API 用绝对同源路径，避免受 base/目录层级影响
+    s = sub_once(s, "if (host === '192.168.3.88') return 'api_wrongbank.php';",
+                 "if (host === '192.168.3.88') return '/xuci-jiancha/api_wrongbank.php';", '独立版: API(威联通)')
+    s = sub_once(s, "if (/\\.trycloudflare\\.com$/.test(host)) return 'api_wrongbank.php';",
+                 "if (/\\.trycloudflare\\.com$/.test(host)) return '/xuci-jiancha/api_wrongbank.php';", '独立版: API(隧道)')
+    os.makedirs(STANDALONE_DIR, exist_ok=True)
+    open(STANDALONE, 'w', encoding='utf-8').write(s)
+    ok = True
+    chips = [
+        ('独立版: 无「返回学习中心」链接', '返回学习中心' not in s),
+        ('独立版: 无 index.html 外链', 'href="index.html"' not in s),
+        ('独立版: base 已设', s.count('<base href="/xuci-jiancha/">') == 1),
+        ('独立版: 带 复习要点/筛选', 'function renderPoints' in s and 'function rvfPanel' in s),
+    ]
+    for name, cond in chips:
+        print(('  ✓ ' if cond else '  ✗ ') + name)
+        ok = ok and cond
 
     # 自检：关键锚点仍在、无残留旧品牌
     checks = [

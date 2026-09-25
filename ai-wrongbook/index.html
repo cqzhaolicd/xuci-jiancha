@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI错题本</title>
+<base href="/xuci-jiancha/">
+<link href="assets/fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+<script src="assets/vendor/chart.umd.min.js"></script>
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+/* Navbar */
+.navbar{background:linear-gradient(135deg,var(--primary),var(--secondary));padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.4rem}
+.navbar-nav{display:flex;gap:.2rem;flex-wrap:wrap}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .6rem;border-radius:8px;font-size:.82rem;transition:all .2s;display:flex;align-items:center;gap:.3rem;cursor:pointer}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.page{display:none}.page.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+/* Dashboard */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-bottom:1.5rem}
+.stat-card{border-radius:var(--radius);padding:1.2rem;color:#fff;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:-40%;right:-20%;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.1)}
+.stat-card .num{font-size:2rem;font-weight:900}
+.stat-card .label{font-size:.8rem;opacity:.85}
+.stat-card .icon{position:absolute;right:1rem;bottom:.8rem;font-size:1.8rem;opacity:.2}
+.bg-g1{background:linear-gradient(135deg,#667eea,#764ba2)}
+.bg-g2{background:linear-gradient(135deg,#e74c3c,#c0392b)}
+.bg-g3{background:linear-gradient(135deg,#2ecc71,#27ae60)}
+.bg-g4{background:linear-gradient(135deg,#f39c12,#e67e22)}
+/* Subject grid */
+.subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem}
+.subject-card{background:var(--card-bg);border-radius:var(--radius-sm);padding:.8rem;text-align:center;text-decoration:none;color:var(--text);border:2px solid var(--border);transition:all .2s;cursor:pointer}
+.subject-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.subject-card .s-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto .4rem;font-size:1rem;color:#fff}
+.subject-card .s-name{font-size:.82rem;font-weight:600}
+.subject-card .s-count{font-size:.7rem;color:var(--text-light)}
+/* Form */
+.form-section{margin-bottom:1.2rem}
+.form-section h6{font-size:.82rem;font-weight:700;color:var(--text-light);margin-bottom:.6rem;letter-spacing:.5px}
+.form-section h6 i{margin-right:.3rem}
+.form-label{font-size:.85rem;font-weight:500;margin-bottom:.3rem;display:block}
+.form-label .req{color:var(--danger)}
+.form-control,.form-select{width:100%;padding:.5rem .7rem;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:.9rem;font-family:inherit;transition:border-color .2s;background:#fff}
+.form-control:focus,.form-select:focus{outline:none;border-color:var(--primary)}
+textarea.form-control{resize:vertical;min-height:70px}
+.row{display:flex;flex-wrap:wrap;gap:.8rem}.row>*{flex:1 1 200px}
+.btn{padding:.5rem 1.2rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+.btn-sm{padding:.35rem .8rem;font-size:.8rem}
+.btn-group{display:flex;gap:.5rem;flex-wrap:wrap}
+/* List */
+.filter-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.filter-bar .form-select,.filter-bar .form-control{width:auto;min-width:120px;flex:1}
+.question-item{padding:.8rem;border-bottom:1px solid var(--border);transition:background .2s;cursor:pointer}
+.question-item:hover{background:var(--bg)}
+.question-item:last-child{border-bottom:none}
+.question-item .q-header{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.3rem}
+.question-item .q-content{font-size:.9rem;color:#4a5568}
+.question-item .q-meta{font-size:.78rem;color:var(--text-light);margin-top:.3rem;display:flex;gap:.5rem;flex-wrap:wrap}
+.q-badge{font-size:.7rem;padding:.05rem .4rem;border-radius:4px;font-weight:500}
+.badge-subject{background:var(--primary);color:#fff}
+.badge-chapter{background:var(--bg);color:var(--text-light)}
+.badge-reason{background:#f5656515;color:var(--danger)}
+.badge-source{background:#48bb7815;color:#276749}
+.badge-mastery{background:#667eea15;color:var(--primary)}
+/* Detail */
+.detail-field{margin-bottom:.8rem}.detail-field .label{font-size:.8rem;color:var(--text-light);font-weight:600}
+.detail-field .value{font-size:.95rem}
+/* Review */
+.review-card{text-align:center;padding:2rem}
+.review-card .q-text{font-size:1.1rem;font-weight:600;margin-bottom:1.5rem}
+.review-btns{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}
+.review-meta{font-size:.8rem;color:var(--text-light);margin-top:1rem}
+.flow-check{margin-top:1rem;padding:.9rem 1rem;border-radius:var(--radius-sm);background:#fdf2f2;border:1.5px solid #f5c6c6;text-align:left}
+.flow-check-title{font-size:.85rem;font-weight:700;color:var(--danger);margin-bottom:.6rem}
+.flow-check textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:.5rem .6rem;font-size:.85rem;font-family:inherit;margin-bottom:.45rem;resize:vertical;background:#fff;color:var(--text);line-height:1.6}
+.flow-check textarea::placeholder{color:#bdc3c7}
+.flow-check-warn{font-size:.76rem;color:var(--danger);margin-top:.2rem;display:none;font-weight:600}
+.review-progress{margin-bottom:1rem}
+/* Training */
+.training-layout{display:grid;grid-template-columns:1fr;gap:1rem}
+.training-panel{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem}
+.layer-tabs{display:flex;gap:.4rem;margin-bottom:1rem}
+.layer-tab{padding:.4rem 1rem;border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.layer-tab.l1{background:#667eea20;color:var(--primary)}.layer-tab.l1.active{background:var(--primary);color:#fff}
+.layer-tab.l2{background:#e67e2220;color:#e67e22}.layer-tab.l2.active{background:#e67e22;color:#fff}
+.layer-tab.l3{background:#e74c3c20;color:var(--danger)}.layer-tab.l3.active{background:var(--danger);color:#fff}
+/* Print */
+.print-layout{display:grid;gap:1.5rem}
+.print-q{padding:1rem;border:1px dashed var(--border);border-radius:8px;min-height:120px;page-break-inside:avoid}
+.print-q .pq-num{font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.print-q .pq-answer{border-top:1px dashed var(--border);margin-top:.5rem;padding-top:.5rem;font-size:.9rem}
+/* Analysis */
+.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.chart-box{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.chart-box h4{font-size:.9rem;margin-bottom:.8rem;text-align:center}
+.analysis-table{width:100%;border-collapse:collapse;font-size:.85rem}
+.analysis-table th,.analysis-table td{padding:.4rem .6rem;text-align:left;border-bottom:1px solid var(--border)}
+.analysis-table th{color:var(--text-light);font-weight:600;font-size:.78rem}
+/* Pagination */
+.pagination{display:flex;justify-content:center;gap:.3rem;margin-top:1rem}
+.pagination a{padding:.3rem .7rem;border:1px solid var(--border);border-radius:6px;text-decoration:none;color:var(--text);font-size:.82rem}
+.pagination a.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+/* Toast */
+.toast{position:fixed;top:20px;right:20px;padding:.8rem 1.2rem;border-radius:var(--radius-sm);color:#fff;font-size:.85rem;z-index:9999;animation:fadeInUp .3s ease;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.toast-success{background:var(--success)}
+.toast-error{background:var(--danger)}
+.toast-info{background:var(--info)}
+/* Misc */
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--text-light)}
+.empty-state i{font-size:3rem;opacity:.3;margin-bottom:1rem}
+.empty-state h5{font-size:1rem;margin-bottom:.3rem}
+.footer{text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@media(max-width:768px){.navbar-nav a span{display:none}.stat-grid{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(3,1fr)}.filter-bar .form-select,.filter-bar .form-control{min-width:100px}}
+/* ==== 年级维度（1-12年级）==== */
+.q-badge.badge-grade{background:#eef2ff;color:#3b5bdb;border:1px solid #dbe2ff}
+.grade-chips{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;margin-top:.6rem}
+.grade-chip{background:#fff;border:1.5px solid var(--border);border-radius:999px;padding:.28rem .75rem;font-size:.8rem;cursor:pointer;transition:.15s;color:var(--text)}
+.grade-chip:hover{border-color:var(--primary);color:var(--primary)}
+.grade-chip.active{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
+/* ==== 五维分析（A已知/B求解/C思路/D易错/E知识点）==== */
+.ana5-wrap{display:grid;gap:.45rem;margin-top:.15rem}
+.ana5-item{display:flex;gap:.55rem;align-items:flex-start;font-size:.9rem;line-height:1.7}
+.ana5-tag{flex:0 0 auto;min-width:4.9rem;padding:.16rem .5rem;border-radius:6px;color:#fff;font-size:.75rem;font-weight:700;text-align:center;white-space:nowrap}
+.ana5-empty{font-size:.78rem;color:var(--text-light);margin-top:.4rem}
+.ana5-form-row{margin-bottom:.5rem}
+.ana5-v{flex:1;min-width:0}
+.ana5-line{line-height:1.9;padding-left:1.05rem;text-indent:-1.05rem;margin-bottom:.2rem}
+.ana5-line:last-child{margin-bottom:0}
+.ana5-key{font-weight:700;color:#334155}
+/* ==== 答案等长文本按行显示（保留换行，不被折叠成空格）==== */
+.prewrap{white-space:pre-wrap;line-height:1.95}
+/* ===== 复习要点（AI错题本）===== */
+.pts-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem}
+.pts-tab{padding:.4rem 1rem;border:1.5px solid var(--border);background:var(--card-bg);color:var(--text);
+  border-radius:999px;font-size:.88rem;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.pts-tab:hover{border-color:var(--primary);color:var(--primary)}
+.pts-tab.active{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 2px 8px rgba(102,126,234,.35)}
+.pts-range{font-size:.84rem;color:var(--text-light);margin-bottom:.9rem;line-height:1.7}
+.pts-card{background:var(--card-bg);border-radius:var(--radius);padding:.95rem 1.05rem;margin-bottom:.85rem;
+  border-left:4px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.pts-card h5{margin:0 0 .6rem;font-size:.96rem;font-weight:700;display:flex;align-items:center;gap:.4rem}
+.pts-card.c1{border-left-color:#667eea}.pts-card.c2{border-left-color:#e67e22}
+.pts-card.c3{border-left-color:#38a169}.pts-card.c4{border-left-color:#e74c3c}
+.pts-item{font-size:.9rem;line-height:1.85;padding-left:1.15rem;text-indent:-1.15rem;margin-bottom:.45rem}
+.pts-item:last-child{margin-bottom:0}
+.pts-badge{display:inline-block;background:#667eea14;color:#4a5fd0;border-radius:6px;padding:0 .4rem;font-size:.76rem;
+  margin-left:.3rem;white-space:nowrap}
+.pts-q{display:inline-block;color:var(--primary);font-size:.78rem;cursor:pointer;margin-right:.25rem;
+  border-bottom:1px dotted var(--primary)}
+.pts-q:hover{opacity:.7}
+.pts-note{font-size:.8rem;color:var(--text-light)}
+.pts-empty{font-size:.88rem;color:var(--text-light);line-height:1.7}
+.pts-title{font-size:1.15rem;font-weight:800;margin-bottom:.3rem;display:flex;align-items:center;gap:.45rem}
+/* ===== 复习筛选（复习页/复习要点 共用）===== */
+.rvf-box{border:1.5px solid var(--border);border-radius:var(--radius);padding:.6rem .8rem;margin-bottom:.9rem;background:var(--card-bg)}
+.rvf-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:.87rem;cursor:pointer}
+.rvf-head b{color:var(--primary)}
+.rvf-row{display:flex;gap:.32rem;flex-wrap:wrap;align-items:center;margin-top:.5rem}
+.rvf-lab{font-size:.78rem;color:var(--text-light);font-weight:700;min-width:2.6rem}
+.rvf-chip{padding:.22rem .62rem;border:1.5px solid var(--border);background:var(--bg);color:var(--text);
+  border-radius:999px;font-size:.78rem;cursor:pointer;font-family:inherit;transition:.15s;white-space:nowrap}
+.rvf-chip i{font-style:normal;color:var(--text-light);font-size:.72rem;margin-left:.25rem}
+.rvf-chip:hover{border-color:var(--primary);color:var(--primary)}
+.rvf-chip.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.rvf-chip.active i{color:#fff}
+.rvf-note{font-size:.76rem;color:var(--text-light);margin-top:.5rem;line-height:1.65}
+.rvf-clr{color:#e74c3c;text-decoration:none;font-weight:700;margin-right:.2rem}
+/* ===== AI错题本 · 顶部双功能区（错题本 / 三层训练） ===== */
+.top-tabs{display:flex;gap:.35rem;flex-wrap:wrap}
+.top-tab{background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.35);
+  padding:.35rem .95rem;border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer;
+  display:inline-flex;align-items:center;gap:.35rem;transition:all .2s;font-family:inherit}
+.top-tab:hover{background:rgba(255,255,255,.3)}
+.top-tab.active{background:#fff;color:var(--primary);border-color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+#mainNav{border-top:1px solid rgba(255,255,255,.18);padding-top:.35rem}
+.domain-tip{font-size:.76rem;color:var(--text-light);margin:-.4rem 0 .8rem}
+@media(max-width:768px){.top-tab{font-size:.78rem;padding:.3rem .7rem}}
+</style>
+</head><body>
+
+<div id="syncBadge" onclick="cloudInit(true)" title="点击立即与服务器同步（错题库数据跨设备共享）"
+     style="position:fixed;right:14px;bottom:14px;z-index:9999;padding:7px 14px;border-radius:999px;
+            font-size:12.5px;font-family:inherit;background:#f1f3f4;color:#5f6368;cursor:pointer;
+            box-shadow:0 2px 8px rgba(0,0,0,.18);user-select:none;transition:.2s">☁️ 同步…</div>
+
+<nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本</span>
+    <div class="top-tabs" id="topTabs">
+      <button class="top-tab active" data-top="notebook" onclick="switchTop('notebook')"><i class="fas fa-book"></i> 错题本</button>
+      <button class="top-tab" data-top="training" onclick="switchTop('training')"><i class="fas fa-layer-group"></i> 三层训练</button>
+      <button class="top-tab" data-top="points" onclick="switchTop('points')"><i class="fas fa-clipboard-check"></i> 复习要点</button>
+    </div>
+  </div>
+  <div class="navbar-nav" id="mainNav">
+    <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
+    <a data-page="add"><i class="fas fa-plus-circle"></i><span>录入</span></a>
+    <a data-page="list"><i class="fas fa-list"></i><span>错题本</span></a>
+    <a data-page="review"><i class="fas fa-redo"></i><span>复习</span></a>
+    <a data-page="print-page"><i class="fas fa-print"></i><span>打印</span></a>
+    <a data-page="analysis"><i class="fas fa-chart-pie"></i><span>分析</span></a>
+  </div>
+</div></nav>
+
+<div class="container" id="app"></div>
+<div class="footer">
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 · 收录「错题本」「三层训练」「复习要点」三项功能
+  &nbsp;|&nbsp; 数据与「错题库」共用同一份（本机存储 + 云端同步）
+</div>
+
+<script>
+// ===================== DATA LAYER =====================
+const LS_KEY = 'wrong_bank_data';
+const IMPORT_KEY = 'wrong_bank_import';
+// ⚠️ 历史/地理/生物/道法 已下线（老板 2026-09-25 要求）；前 5 科 id 不变，旧数据不受影响
+const SUBJECTS_DEFAULT = ['数学','语文','英语','物理','化学'];
+const REMOVED_SUBJECTS = ['历史','地理','生物','道法'];
+const SUBJECT_ICONS = ['fa-calculator','fa-book','fa-language','fa-flask','fa-flask','fa-history','fa-globe','fa-leaf','fa-gavel'];
+const SUBJECT_COLORS = ['#e74c3c','#3498db','#2ecc71','#667eea','#9b59b6','#f39c12','#1abc9c','#2ecc71','#34495e'];
+const ERROR_REASONS = ['概念不清','计算失误','审题不清','思路错误','公式记错','其他'];
+const SOURCES = ['考试','作业','练习','课外题','其他'];
+const REVIEW_INTERVALS = [1,3,7,15,30];
+
+function loadData() {
+  let d = JSON.parse(localStorage.getItem(LS_KEY)||'null');
+  if(!d||!d.subjects){
+    d={subjects:SUBJECTS_DEFAULT.map((n,i)=>({id:i+1,name:n,sort_order:i})),chapters:[],questions:[],nextQId:1,nextChapId:1};
+    saveData(d);
+  }
+  const _rp=repairIds(d);
+  if(_rp){saveData(d);toast('🔧 已修复 '+_rp+' 道错题的重复编号','info');}
+  const _mg=migrateGrades(d);
+  if(_mg){saveData(d);toast('📚 已把 '+_mg+' 道旧错题归入 '+DEFAULT_GRADE+'年级（可在详情页修改）','info');}
+  if(pruneSubjects(d))saveData(d);   // 下线科目清理
+  return d;
+}
+// ===================== 跨设备同步（威联通后端 api_wrongbank.php） =====================
+// 同步后端地址解析：
+//   ① https 站点（cloudflared 隧道）→ 同源相对路径，由本机 8099 服务反代到威联通（免混合内容）
+//   ② 威联通本机页面 → 同源相对路径，直连自己的 PHP
+//   ③ 其它来源（如群晖版页面，内网 http）→ 直接指向威联通
+const SYNC_REMOTE = 'http://192.168.3.88/xuci-jiancha/api_wrongbank.php';
+const SYNC_API = (function(){
+  const host = location.hostname;
+  if (host === '192.168.3.88') return '/xuci-jiancha/api_wrongbank.php';                  // ① 威联通页面：直连本地 PHP
+  if (/\.trycloudflare\.com$/.test(host)) return '/xuci-jiancha/api_wrongbank.php';       // ② 隧道(https)：同源，由 8099 反代
+  if (location.protocol === 'https:') return null;                          // ③ 其它 https（如 GitHub Pages）：本机模式
+  return SYNC_REMOTE;                                                       // ④ 内网其它来源（如群晖）：指向威联通
+})();
+const SYNC_TOKEN = 'xuji-sync-2026';
+let _syncTimer = null, _syncPulling = false, _lastPushed = '';
+
+function _syncOn(){ return !!SYNC_API; }
+
+async function cloudPull(){
+  const r = await fetch(`${SYNC_API}?action=load`, {headers:{'X-Sync-Token':SYNC_TOKEN}, cache:'no-store'});
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  const j = await r.json();
+  if(!j.ok) throw new Error(j.error||'load 失败');
+  return j;   // {data, updated_at}  data 可能为 null
+}
+
+async function cloudPushNow(d){
+  const body = JSON.stringify(d);
+  if(body === _lastPushed) return;               // 无变化不重复上传
+  const r = await fetch(`${SYNC_API}?action=save`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','X-Sync-Token':SYNC_TOKEN},
+    body
+  });
+  const j = await r.json();
+  if(!j.ok) throw new Error(j.error||'save 失败');
+  _lastPushed = body;
+  return j;
+}
+
+function cloudPush(d){                            // 防抖：停止操作 1.2s 后上传
+  if(!SYNC_API) return;                           // 无可用后端（https 版）→ 纯本机模式
+  if(_syncTimer) clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(()=>{
+    cloudPushNow(d).then(()=>{ setSyncBadge('ok'); })
+                   .catch(e=>{ setSyncBadge('error', e.message); });
+  }, 1200);
+}
+
+function setSyncBadge(state, msg){
+  const el = document.getElementById('syncBadge');
+  if(!el) return;
+  if(state==='ok'){ el.textContent='☁️ 已同步'; el.style.background='#e6f4ea'; el.style.color='#137333'; el.title='已保存到服务器，其他设备可见'; }
+  else if(state==='error'){ el.textContent='⚠️ 同步失败(仅本机)'; el.style.background='#fce8e6'; el.style.color='#c5221f'; el.title=msg||''; }
+  else if(state==='local'){ el.textContent='📴 本机模式'; el.style.background='#f1f3f4'; el.style.color='#5f6368'; el.title='此页面地址无同步服务（如 GitHub Pages 版），数据仅存本机；用 NAS 地址打开即可跨设备同步'; }
+  else if(state==='pulling'){ el.textContent='⏳ 正在同步…'; el.style.background='#e8f0fe'; el.style.color='#1967d2'; }
+  else { el.textContent='☁️ 同步已启用'; el.style.background='#f1f3f4'; el.style.color='#5f6368'; }
+}
+
+async function cloudInit(forceRemote){
+  if(!SYNC_API){ setSyncBadge('local'); return; }   // 如 GitHub Pages(https) 版：无后端可用
+  setSyncBadge('pulling');
+  try{
+    const j = await cloudPull();
+    const localRaw = localStorage.getItem(LS_KEY);
+    const localObj = localRaw ? JSON.parse(localRaw) : null;
+    const hasRemote = j.data && Array.isArray(j.data.questions) && (j.data.questions.length > 0 || (j.data.subjects||[]).length > 0);
+    if(hasRemote){
+      // 服务器有真实数据：以服务器为准（服务器是唯一真实源）
+      saveData(j.data);                                   // 走统一保存：顺便校准 id 计数器
+      _lastPushed = JSON.stringify(j.data);
+      const _chg=repairIds(j.data)+migrateGrades(j.data)+pruneSubjects(j.data);
+      if(_chg){ saveData(j.data); _lastPushed=''; cloudPushNow(j.data).then(()=>setSyncBadge('ok')).catch(()=>{}); }
+      setSyncBadge('ok');
+      navigate('dashboard');
+      toast('☁️ 已从服务器同步最新错题本','success');
+    }else{
+      // 服务器为空或只有空壳：把本地数据推上去初始化
+      const d0 = loadData();
+      await cloudPushNow(d0);
+      setSyncBadge('ok');
+    }
+  }catch(e){
+    // 后端不可达：file:// 或无 PHP 的静态站（如 GitHub Pages）→ 中性提示，静默退回本机模式
+    const neutral = (location.protocol === 'file:') || !/^https?:/.test(location.protocol);
+    setSyncBadge(neutral ? 'local' : 'error', e.message);
+  }
+}
+
+function _maxId(arr,key){return (arr||[]).reduce((m,x)=>Math.max(m,(x&&+x[key])||0),0);}
+function saveData(d){
+  // ⚠️ 历史 bug：调用方常拿旧快照回写，把 nextQId 覆盖回旧值（生产库曾出现已有 39 题而
+  //    nextQId=1）→ 新录入的题被分配与旧题重复的 id，点开新题看到的是旧题（find 取首个匹配）。
+  //    这里每次保存都按现有最大 id 校准计数器，从根上堵住。
+  if(d&&Array.isArray(d.questions))d.nextQId=Math.max((+d.nextQId)||1,_maxId(d.questions,'id')+1);
+  if(d&&Array.isArray(d.chapters))d.nextChapId=Math.max((+d.nextChapId)||1,_maxId(d.chapters,'id')+1);
+  localStorage.setItem(LS_KEY,JSON.stringify(d));cloudPush(d);
+}
+
+function genId(){const d=loadData();const id=Math.max((+d.nextQId)||1,_maxId(d.questions,'id')+1);d.nextQId=id+1;saveData(d);return id;}
+function genChapId(){const d=loadData();const id=Math.max((+d.nextChapId)||1,_maxId(d.chapters,'id')+1);d.nextChapId=id+1;saveData(d);return id;}
+function repairIds(d){                          // 一次性修补历史重复编号
+  if(!d)return 0;
+  const used=new Set();let fixed=0;
+  (d.questions||[]).forEach(q=>{
+    if(used.has(q.id)){const nid=(used.size?Math.max(...used):0)+1;q.id=nid;used.add(nid);fixed++;}
+    else used.add(q.id);
+  });
+  if(fixed)d.nextQId=(used.size?Math.max(...used):0)+1;
+  return fixed;
+}
+// 下线科目：从已有数据里移除历史/地理/生物/道法（该科下仍挂着题或章节则保留，避免孤儿数据）
+function pruneSubjects(d){
+  if(!d||!Array.isArray(d.subjects))return 0;
+  const qs=(d.questions||[]).map(q=>q.subject_id),cs=(d.chapters||[]).map(c=>c.subject_id);
+  const before=d.subjects.length;
+  d.subjects=d.subjects.filter(s=>!REMOVED_SUBJECTS.includes(s.name)||qs.includes(s.id)||cs.includes(s.id));
+  return before-d.subjects.length;
+}
+function now(){return new Date().toLocaleString('zh-CN',{hour12:false}).replace(/\//g,'-');}
+function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function calcNextReview(mastery){if(mastery>=REVIEW_INTERVALS.length)return null;const d=new Date();d.setDate(d.getDate()+REVIEW_INTERVALS[mastery]);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+
+// ===================== 年级维度（1-12年级） =====================
+const GRADES=[1,2,3,4,5,6,7,8,9,10,11,12];
+// ===================== 五维分析（A 已知条件 / B 求解什么 / C 做题思路 / D 易错点 / E 知识点）=====================
+const ANA5_DIMS=[
+  {k:'known',  tag:'A 已知条件', color:'#2f6fed', ph:'题目给了什么（含隐含条件）'},
+  {k:'ask',    tag:'B 求解什么', color:'#16a34a', ph:'要求的是什么 / 目标量'},
+  {k:'method', tag:'C 做题思路', color:'#d97706', ph:'从条件到结论的路子、用的定理/公式'},
+  {k:'pitfall',tag:'D 易错点',   color:'#dc2626', ph:'这次错在哪、坑在哪、下次怎么避'},
+  {k:'points', tag:'E 知识点',   color:'#7c3aed', ph:'对应的课本知识点 / 考点'}
+];
+function esc5(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function ana5(q){return (q&&q.ana5)||{};}
+function ana5Empty(q){const a=ana5(q);return !ANA5_DIMS.some(dm=>(a[dm.k]||'').trim());}
+function ana5Lines(v){                      // 按行渲染：行首编号/短标签做悬挂缩进，标签加粗
+  return v.split('\n').map(x=>x.trim()).filter(x=>x).map(line=>{
+    const m=line.match(/^([^：:]{1,10}[：:])/);
+    if(m)return `<div class="ana5-line"><span class="ana5-key">${esc5(m[1])}</span>${esc5(line.slice(m[1].length))}</div>`;
+    return `<div class="ana5-line">${esc5(line)}</div>`;
+  }).join('');
+}
+function renderAna5View(q){
+  const a=ana5(q);
+  return `<div class="detail-field"><div class="label">🧩 五维分析</div>
+    <div class="ana5-wrap">${ANA5_DIMS.map(dm=>{
+      const v=(a[dm.k]||'').trim();
+      return `<div class="ana5-item"><span class="ana5-tag" style="background:${dm.color}">${dm.tag}</span><div class="ana5-v">${v?ana5Lines(v):'<span style="color:#bdc3c7">未填写</span>'}</div></div>`;
+    }).join('')}</div>
+    ${ana5Empty(q)?'<div class="ana5-empty">💡 点下方「编辑」按 A–E 五维补全：先定已知与目标，再写思路，最后记易错点与知识点——复习时按这五步复盘最快</div>':''}
+  </div>`;
+}
+function renderAna5Form(q){
+  const a=ana5(q);
+  return `<div class="form-section"><h6>🧩 五维分析（可留空，之后随时补）</h6>
+    ${ANA5_DIMS.map(dm=>`<div class="ana5-form-row"><label class="form-label"><span class="ana5-tag" style="background:${dm.color}">${dm.tag}</span></label>
+      <textarea class="form-control" rows="2" id="ed_ana5_${dm.k}" placeholder="${dm.ph}">${esc5(a[dm.k]||'')}</textarea></div>`).join('')}
+  </div>`;
+}
+const DEFAULT_GRADE=8;                  // 若琳当前年级（2026秋 八年级），旧数据迁入此年级
+function lastGrade(){const v=parseInt(localStorage.getItem('wb_last_grade')||'');return(v>=1&&v<=12)?v:DEFAULT_GRADE;}
+function setLastGrade(g){const v=parseInt(g);if(v>=1&&v<=12)localStorage.setItem('wb_last_grade',String(v));}
+function gradeText(g){return(g===undefined||g===null||g==='')?'未标注年级':(g+'年级');}
+function gradeMatch(q,g){                       // 通用年级筛选：''=全部 'none'=未标注 '7'..'12'
+  if(g==='none')return q.grade===undefined||q.grade===null||q.grade==='';
+  if(g!=='')return q.grade===parseInt(g);
+  return true;
+}
+function migrateGrades(d){                      // 旧数据一次性补年级（详情页可改）
+  if(!d||d.grade_migrated)return 0;
+  let n=0;(d.questions||[]).forEach(q=>{if(q.grade===undefined||q.grade===null||q.grade===''){q.grade=DEFAULT_GRADE;n++;}});
+  d.grade_migrated=true;return n;
+}
+
+// ===================== IMPORT FROM LEARNING PAGES =====================
+function checkImport(){try{
+  const data=localStorage.getItem(IMPORT_KEY);
+  if(!data)return;
+  const items=JSON.parse(data);
+  if(!items.length)return;
+  const d=loadData();
+  let imported=0;
+  for(const item of items){
+    const subj=d.subjects.find(s=>s.name===item.subject);
+    if(!subj)continue;
+    let chap=null;
+    if(item.chapter){
+      chap=d.chapters.find(c=>c.subject_id===subj.id&&c.name===item.chapter);
+      if(!chap){chap={id:genChapId(),subject_id:subj.id,name:item.chapter,sort_order:0};d.chapters.push(chap);}
+    }
+    d.questions.push({
+      id:genId(),subject_id:subj.id,chapter_id:chap?chap.id:null,
+      content:item.content,correct_answer:item.correct_answer||'',my_answer:item.my_answer||'',
+      error_reason:item.error_reason||'概念不清',tags:item.tags||'',source:item.source||'练习',
+      difficulty:item.difficulty||3,grade:item.grade||lastGrade(),mastery:0,created_at:now(),updated_at:now(),
+      next_review:today(),review_count:0,image_path:'',answer_image_path:'',flow:{},ana5:{}
+    });
+    imported++;
+  }
+  saveData(d);
+  localStorage.removeItem(IMPORT_KEY);
+  if(imported>0)toast(`📥 成功导入 ${imported} 道错题！`,'success');
+}catch(e){console.error('Import error:',e);}}
+
+// ===================== BUILTIN WRONG QUESTIONS (内置收录) =====================
+const BUILTIN_FLAG='wrong_bank_builtin_applied';
+const BUILTIN_QUESTIONS=[
+{key:'physics_ecg_20260913',subject:'物理',chapter:'机械运动（速度计算）',
+content:'5. 心电图仪通过传感手段，把与人心跳对应的生物电流记录在匀速运动的坐标纸上(图甲)。医生测量相邻两波峰的时间间隔，便可计算出 1 min 内心脏跳动的次数（心率）。同一台心电图仪正常工作时测得甲、乙的心电图分别如图乙、丙：甲的相邻波峰间距为 18 mm，乙（患者乙）的相邻波峰间距为 15 mm。已知甲的心率为 80 次/min，求：(1) 甲每次心跳的时间间隔；(2) 这台心电图仪输出坐标纸的走纸速度大小；(3) 乙患者的心率。',
+correct_answer:'(1) 0.75 s（即 3/4 s）　(2) 24 mm/s　(3) 96 次/min\n\n【解析】(1) 甲心率 80 次/min ⇒ 每次心跳的时间间隔 t₁ = 60 s ÷ 80 = 0.75 s。(2) 走纸速度 v = 相邻波峰间距 ÷ 时间间隔 = 18 mm ÷ 0.75 s = 24 mm/s。(3) 乙相邻波峰间距 15 mm ⇒ 时间间隔 t₂ = 15 mm ÷ 24 mm/s = 0.625 s ⇒ 心率 = 60 s ÷ 0.625 s = 96 次/min。（比例法验证：同一台仪器走纸速度相同，波峰间距与时间间隔成正比，t₂ = 0.75 s × 15/18 = 0.625 s）',
+my_answer:'(1) 4/3 s　(2) 13.5 mm/s（27/2 mm/s）　(3) 54 次/min',
+error_reason:'公式应用错误',tags:'物理,机械运动,速度计算,心电图,比例法',source:'作业',difficulty:3,
+image_path:'uploads/wrong_bank/physics_ecg_20260913.jpg'},
+{key:'physics_crossing_20260913',subject:'物理',chapter:'运动学综合（相对运动·过街安全）',
+content:'（2025秋·锦江区期中）如图 a，光滑水平面上有甲、乙两小球分别位于 A、B 两点，同时开始沿互相垂直的方向匀速运动。已知 AC = 48cm，BC = 72cm，甲的速度为 0.2 m/s（两小球直径忽略不计）。(1) 求甲球由 A 运动到 C 的时间；(2) 为使两小球刚好在 C 点相碰，求乙球的速度；(3) 保持其他条件不变，将乙球换成长为 20cm、宽 4cm 的滑块 MN，N 端放于 B 点，滑块中线与 BC 重合且由 B 向 C 运动（图 b），为使二者不相碰，求滑块的速度范围。',
+correct_answer:'(1) 2.4 s　(2) 0.3 m/s　(3) v > 0.4 m/s 或 v < 0.288 m/s\n\n【解析】(1) t = AC ÷ v甲 = 0.48 m ÷ 0.2 m/s = 2.4 s。(2) 两球刚好在 C 相碰 → 乙到 C 所用时间与甲相同 = 2.4 s → v乙 = 0.72 m ÷ 2.4 s = 0.3 m/s。(3) 分类讨论（滑块宽 4cm，甲球与滑块中线 BC 的临界距离为半宽 2cm）：① 车尾过球（滑块很快，甲球到 C 前滑块尾部已通过 C）：滑块路程 = BC+MN = 0.72+0.20 = 0.92 m；甲球走 0.48−0.02 = 0.46 m 用时 t = 2.3 s → v = 0.92÷2.3 = 0.4 m/s，故 v > 0.4 m/s；② 车头过球（滑块较慢，甲球离开 C 后滑块才到 C）：甲球走 0.48+0.02 = 0.50 m 用时 2.5 s，滑块走 BC = 0.72 m → v = 0.72÷2.5 = 0.288 m/s，故 v < 0.288 m/s。综上：不相碰时 v > 0.4 m/s 或 v < 0.288 m/s（0.288~0.4 之间会相碰）。',
+my_answer:'（例题·标准解答，重点掌握）',
+error_reason:'重点题型',tags:'物理,运动学,相对运动,过街安全,分类讨论,临界问题',source:'课外题',difficulty:4,
+image_path:'uploads/wrong_bank/physics_crossing_20260913.jpg'},
+{key:'mathquiz_20260913_q1',subject:'数学',chapter:'第2讲小测（二次根式与代数式求值）',
+content:'1.（2026秋初二博学班第1次小测·第2讲用）已知 √((x-10)²) + (√(8-x))² = 20，y = √(m+15) + √(2m-2) + √(1-m)，则 y+x 的平方根是 ____。',
+correct_answer:'±√3\n\n【解析】由 √(8-x) 有意义得 x ≤ 8，故 |x-10| = 10-x：\n(10-x) + (8-x) = 20 → 18-2x = 20 → x = -1。\n由 y 的三个根式都有意义：m+15≥0、2m-2≥0、1-m≥0 → m≥1 且 m≤1 → m = 1，代入 y = √16+√0+√0 = 4。\n所以 y+x = 4+(-1) = 3，其平方根为 **±√3**。',
+my_answer:'±√2（x 求解出错 / 根式有意义条件没抓准）',
+error_reason:'概念不清',tags:'数学,二次根式,绝对值化简,根式有意义,平方根,取值范围',source:'小测',difficulty:4,
+image_path:'uploads/wrong_bank/math_quiz_20260913.jpg'},
+{key:'mathquiz_20260913_q2',subject:'数学',chapter:'第2讲小测（二次根式与代数式求值）',
+content:'2. 如图（数轴：a 在 -2 与 -1 之间且靠近 -2，b 在 1 与 2 之间且靠近 1），化简 √((a+b)²) - √((a-1)²) + ∛((b-2)³) 的结果是 ____。',
+correct_answer:'-3\n\n【解析】由数轴可知 a ∈ (-2,-1)、b ∈ (1,2)，且 |a| > |b| → a+b < 0；又 a-1 < 0、b-2 < 0。\n原式 = |a+b| - |a-1| + (b-2) = -(a+b) - (1-a) + (b-2) = -3。\n（注意：立方根 ∛((b-2)³) = b-2，符号与被开方数一致，不加绝对值！）',
+my_answer:'-2b+2a（没有先判断 a+b 的符号，∛ 的处理也不对）',
+error_reason:'思路错误',tags:'数学,数轴,绝对值化简,立方根,分类讨论',source:'小测',difficulty:4,
+image_path:'uploads/wrong_bank/math_quiz_20260913.jpg'},
+{key:'mathquiz_20260913_q3',subject:'数学',chapter:'第2讲小测（二次根式与代数式求值）',
+content:'3. 计算：(1) √(4-2√3) = ____；(2) √(9+6√2) = ____；(3) √(4-√7) = ____。',
+correct_answer:'(1) √3-1　(2) 3+√6　(3) (√14-√2)/2\n\n【解析】都是"完全平方开方"（√(a±2√b) 型）：\n(1) 4-2√3 = (√3-1)² → √(4-2√3) = √3-1（≈0.732）。\n(2) 9+6√2 = 9+2·3√2 = (3+√6)² → √(9+6√2) = 3+√6（≈5.449）。\n(3) 4-√7 = 4-2·(√7/2)：设 (√x-√y)² = x+y-2√(xy) = 4-√7 → x+y=4、4xy=7 → x、y = (4±3)/2? 直接配方：(√14-√2)/2 的平方 = (14+2-2√28)/4 = (16-4√7)/4 = 4-√7 ✓，故 √(4-√7) = (√14-√2)/2（≈1.164）。',
+my_answer:'√3-1；(√6-3 或 √6+3 混写)；2（第3空）',
+error_reason:'公式应用错误',tags:'数学,二次根式,完全平方公式,配方开方',source:'小测',difficulty:4,
+image_path:'uploads/wrong_bank/math_quiz_20260913.jpg'},
+{key:'mathquiz_20260913_q4',subject:'数学',chapter:'第2讲小测（二次根式与代数式求值）',
+content:'4. 已知 a+b = -4，ab = 3，则 √(a/b) + √(b/a) 的值为 ____。',
+correct_answer:'4√3/3\n\n【解析】由 ab = 3 > 0、a+b = -4 < 0 → a、b 同为负数（a=-1, b=-3），故 √(a/b) = |a|/√(ab)、√(b/a) = |b|/√(ab)。\n√(a/b) + √(b/a) = (|a|+|b|)/√(ab) = -(a+b)/√(ab) = 4/√3 = **4√3/3**。\n（注意：不能直接用 (a+b)/√(ab)，符号会错。）',
+my_answer:'10√3/3（把 a²+b² = 10 当作 a+b 用了）',
+error_reason:'公式应用错误',tags:'数学,二次根式,韦达定理,符号判断',source:'小测',difficulty:4,
+image_path:'uploads/wrong_bank/math_quiz_20260913.jpg'},
+{key:'mathquiz_20260913_q5',subject:'数学',chapter:'第2讲小测（二次根式与代数式求值）',
+content:'5. 已知 √(13+x) - √(11-x) = 4，则 √(13+x) + √(11-x) = ____。',
+correct_answer:'4√2\n\n【解析】设 A = √(13+x)、B = √(11-x)，则：\nA² + B² = (13+x) + (11-x) = 24，A - B = 4。\n由 (A-B)² = A² + B² - 2AB → 16 = 24 - 2AB → AB = 4。\n再由 (A+B)² = A² + B² + 2AB = 24 + 8 = 32 → A+B = **4√2**。',
+my_answer:'48（第二步 2AB 算成 -8，又把 (A+B)² 算成 16+32）',
+error_reason:'计算错误',tags:'数学,二次根式,整体代换,完全平方变形',source:'小测',difficulty:4,
+image_path:'uploads/wrong_bank/math_quiz_20260913.jpg'},
+{key:'mathquiz_20260913_q6',subject:'数学',chapter:'第2讲小测（二次根式与代数式求值）',
+content:'6. 若 a = (√2+1)/(√2-1)，求 2a³ - 13a² + 8a + 5 的值。',
+correct_answer:'6\n\n【解析】a = (√2+1)/(√2-1) = (√2+1)²/((√2)²-1) = 3+2√2（分母有理化）。\na² = (3+2√2)² = 17+12√2；a³ = a·a² = (3+2√2)(17+12√2) = 99+70√2。\n代入：2(99+70√2) - 13(17+12√2) + 8(3+2√2) + 5\n= (198-221+24+5) + (140-156+16)√2 = 6 + 0 = **6**。\n（技巧：也可用 a² - 6a + 1 = 0 降次简化。）',
+my_answer:'56√2-76（分母有理化后 a 的化简出错，后续计算量过大）',
+error_reason:'计算错误',tags:'数学,二次根式,分母有理化,代数式求值,降次',source:'小测',difficulty:5,
+image_path:'uploads/wrong_bank/math_quiz_20260913.jpg'},
+{key:'englishquiz_20260913_q1',subject:'英语',chapter:'英语C班双语第1讲（词汇与不定代词）',
+content:'英语小测·汉译英：奇怪的；陌生的 adj. —— 学生写成 strang。',
+correct_answer:'strange\n\n【解析】形容词“奇怪的、陌生的”= **strange**（/streɪndʒ/），学生漏写词尾字母 e。\n记忆链：strange（形容词）→ stranger（陌生人，+r）→ strangely（副词，奇怪地）。\n同类易错：breath（名词，一口气）vs breathe（动词，呼吸）——词性不同，拼写不同。',
+my_answer:'strang（漏写词尾 e）',
+error_reason:'拼写错误',tags:'英语,词汇,拼写,strange',source:'小测',difficulty:2,
+image_path:'uploads/wrong_bank/english_quiz_20260913.jpg'},
+{key:'englishquiz_20260913_q2',subject:'英语',chapter:'英语C班双语第1讲（词汇与不定代词）',
+content:'不定代词填空：Of the two new films, ______ interests me much. I’d rather stay at home and read.',
+correct_answer:'neither\n\n【解析】前文 **two** new films（两部电影）→ 表示“两者都不”用 **neither**（后接单数动词 interests ✓）。\n后半句“I’d rather stay at home and read”表明对两部电影都不感兴趣 → 故选 neither。\n⚠️ everything 表示“一切事物”，与“两部电影”的范围不符；若为三者以上“都不”则用 none。',
+my_answer:'everything',
+error_reason:'概念不清',tags:'英语,不定代词,neither,两者,语境判断',source:'小测',difficulty:3,
+image_path:'uploads/wrong_bank/english_quiz_20260913.jpg'},
+{key:'englishquiz_20260913_q3',subject:'英语',chapter:'英语C班双语第1讲（词汇与不定代词）',
+content:'不定代词辨析（两题）：① ______ Tom nor his parents have been to Paris, but they all dream of visiting it one day. ② —Which of the three dresses do you like? —______. They are either too long or too expensive.',
+correct_answer:'① Neither　② None\n\n【辨析】\n• **neither**：两者都不（neither of the two；固定结构 Neither...nor）\n• **none**：三者或三者以上都不（none of the three，可指人或物）\n① 填 **Neither**——“Neither Tom nor his parents have been to Paris”，neither...nor 为固定关联连词，动词随就近主语 his parents 用 have。\n② 填 **None**——three dresses（三件）属三者以上；且 No one 只指人、也不能回答 which 对物的选择问。\n⚠️ 卷面红笔批注为 ①None／②Neither，与标准答案相反，建议课上再向老师确认一遍（上述为标准英语用法）。',
+my_answer:'① 学生写 Neither（卷面红笔批注 None）② 学生写 No one（卷面红笔批注 Neither）',
+error_reason:'概念不清',tags:'英语,不定代词,neither,none,易混辨析',source:'小测',difficulty:4,
+image_path:'uploads/wrong_bank/english_quiz_20260913.jpg'},
+{key:'mathgeometry_20260913_q1',subject:'数学',chapter:'几何证明综合（等腰·全等·辅助线）',
+content:'【改错本·几何证明综合题】在△ABC中，AB=AC，点E在AB上、点H在AC上，AE与BH交于点F，∠ABH=∠CAE。\n(1) 如图1，求证：∠AFB = 2∠ABC；\n(2) 如图2，连接FC，若E为AB中点，求证：AH = CH；\n(3) 如图3，在(2)的条件下，点D在BC的延长线上，∠ACD + 3∠EFC = 180°，若 AE+BF = 14，BH+AF = 16，求 HF 的长。',
+correct_answer:'(1) 证明：∵ AB = AC ∴ ∠ABC = ∠ACB；设 ∠ABH = ∠CAE = x。\n在△ABF 中：∠AFB = 180° − ∠BAF − ∠ABF = 180° − (∠BAC − x) − (∠ABC − x)\n= 180° − ∠BAC − ∠ABC + 2x。又 ∠BAC = 180° − 2∠ABC，代入得 ∠AFB = 2∠ABC。\n\n(2) 证明（作垂线构造全等）：过 C 作 CG⊥AE 于 G、CP⊥FH 于 P，过 A 作 AM⊥BH 于 M。\n由 ∠ABH = ∠CAE 与 AB = AC 可证 △ABM ≌ △ACG（AAS）→ AM = AG；\n再证 △AMP ≌ △AGP（HL）→ AP 平分 ∠FAC，即 ∠CAG = ∠CAH。\n结合 ∠BAF = ∠BAC − ∠CAH、∠CAH = ∠BAF（等腰与角平分关系）→ ∠BAF = ½∠BAC；\n又 E 为 AB 中点 → AE = ½AB = ½AC，在△AEF 中推得 AH = CH。\n\n(3) HF = 2。\n关键：由 ∠ACD + 3∠EFC = 180° → ∠EFC = (180° − ∠ACD)/3，结合(1)(2)的结论可推出 **AF = AE**（△AEF 为等腰）。\n再利用 BH = BF + FH：\n(BH + AF) − (AE + BF) = (BF + FH + AF) − (AE + BF) = FH + (AF − AE) = FH\n∴ HF = 16 − 14 = **2**。',
+my_answer:'（改错本订正）原错因：① 不会利用等腰三角形性质（AB=AC → 两底角相等）；② 忘了作垂线构造辅助线；③ 全等找对应角、对应边不严谨——“缺边或缺角就乱画”。',
+error_reason:'辅助线不会作',tags:'数学,几何证明,等腰三角形,全等,辅助线,压轴题,改错本',source:'改错本',difficulty:5,
+image_path:'uploads/wrong_bank/math_geometry_20260913.jpg'},
+{key:'physics_bullet_20260919',subject:'物理',chapter:'圆周运动与匀速直线运动（旋转法测子弹速度）',
+content:'4. 有一种运用“旋转法”测子弹速度的方法，如图所示。在电动机转轴上固定两个间距为 20 cm 的薄塑片，电动机以 500 转/s 的速度匀速转动。枪正对塑片水平射击，子弹先后射穿两塑片的弹孔位置如图中 A、B 所示（两弹孔对应的圆心角为 60°）。(1) 薄塑片转过 360° 和 60° 的时间分别是多少 s？（用 n 表示）(2) 若两薄塑片还未转过一周就被子弹射穿，子弹的速度是多少 m/s？(3) 若两薄塑片间的距离为 d，电动机转速为 n，薄塑片转过 N 周后才被子弹射穿，弹孔仍如图中 A、B 所示。子弹的速度 v 是多少？（用 d、n、N 表示）',
+correct_answer:'(1) 转过 360° 用时 T = 1/n = 1/500 s = 0.002 s；转过 60° 用时 t = 60°/360° × 1/n = 1/(6n) = 1/3000 s ≈ 3.3×10⁻⁴ s。\n\n【解析】(2) 子弹在两塑片间飞行时，塑片恰好转过 60°（弹孔由 A 转到 B）→ t = 1/(6n) = 1/(6×500) = 1/3000 s；v = d/t = 0.20 m ÷ (1/3000) s = 600 m/s。\n(3) 塑片转过 N 周后再转过 60°：t = N/n + 1/(6n) = (6N+1)/(6n)；所以 v = d/t = **6nd/(6N+1)**。\n⚠️ 关键：第(3)问的时间是“N 整周 + 60°”，不能再写成 n，否则符号含义混淆。',
+my_answer:'(1) 0.002 s、1/3000 s ✔　(2) 600 m/s ✔　(3) 写成 v = 6nd/(6n+1)——把「N 周」误写成「n」',
+error_reason:'符号混淆（N 与 n 混用）',tags:'物理,圆周运动,转速,周期,匀速直线运动,子弹速度,旋转法',source:'作业',difficulty:4,
+image_path:'uploads/wrong_bank/physics_20260919_p2.jpg'},
+{key:'physics_brake_20260919',subject:'物理',chapter:'匀变速直线运动（刹车问题与安全距离）',
+content:'5. 汽车在路上出现故障时，应在车后放置三角警示牌，以提醒后面驾车司机减速安全通过。在夜间，有一货车因故障停驶，后面有一小轿车以 30 m/s 的速度向前驶来，由于夜间视线不好，小轿车驾驶员只能看清前方 60 m 的物体，并且他的反应时间为 0.6 s，制动后最大加速度为 5 m/s²。求：(1) 小轿车从刹车到停止所用的最短时间；(2) 三角警示牌至少要放在车后多远处，才能有效避免两车相撞。',
+correct_answer:'(1) 6 s　(2) 48 m\n\n【解析】(1) 由 v = at 得最短刹车时间 t = v/a = 30 m/s ÷ 5 m/s² = 6 s。\n(2) 从发现情况到停下的总距离 = 反应距离 + 制动距离：\nS总 = v·t反 + v²/(2a) = 30×0.6 + 30²/(2×5) = 18 m + 90 m = 108 m。\n驾驶员只能看清 60 m 内的物体，故警示牌至少要放在货车后 108 m − 60 m = **48 m** 处。\n⚠️ 易错点：忘记加反应距离（18 m），或把 a 代入成 a = 5 却用 v² = 2as 时算错。',
+my_answer:'（已做对，作为重点题型复习）',
+error_reason:'重点题型',tags:'物理,匀变速直线运动,刹车问题,反应距离,制动距离,安全距离',source:'作业',difficulty:4,
+image_path:'uploads/wrong_bank/physics_20260919_p2.jpg'},
+{key:'physics_twocar_20260919',subject:'物理',chapter:'运动学综合（相向运动·s-t 图像·过街安全）',
+content:'7. 如图甲所示，小车A和小车B在马路上相向而行（A向右、B向左）。如图乙是小车A和小车B的路程随时间变化的坐标图，从开始计时到第 15 s 两车正好相遇。求：(1) 小车A和小车B在开始计时的时候相距多远；(2) 如图丙所示，马路为双向两车道，每条车道宽 3.5 m。一辆长 5 m、宽 2.1 m 的小车C以 6 m/s 的速度由西向东匀速行驶在右侧车道的正中间。此时，一行人突然从图中E点横穿马路，人与小车在东西方向的距离为 s₃ = 25 m。为了能够安全通过，行人速度的范围是多少。（不考虑小车车速和方向变化，以及制动情况）',
+correct_answer:'(1) 125 m　(2) v ≤ 0.84 m/s 或 v ≥ 1.512 m/s\n\n【解析】\n(1) 由图乙：A 车 10 s 内通过 50 m → vA = 5 m/s，15 s 内走 75 m；B 车 15 s 内走 50 m。两车相向而行，初始相距 = 75 m + 50 m = **125 m**。\n(2) 小车C在右侧车道正中间（车道宽 3.5 m，车宽 2.1 m）：\n① 行人慢速（等车先过）：行人只需走到车身近侧 s人1 = 3.5 + 3.5/2 − 2.1/2 = 4.2 m；车尾离开所用时间 t = (s₃ + 车长)/v车 = (25+5)/6 = 5 s → v人 ≤ 4.2/5 = **0.84 m/s**。\n② 行人快速（抢在车头前过）：行人需穿过车身区 s人2 = 3.5 + 3.5/2 + 2.1/2 = 6.3 m；车头到达用时 t = 25/6 s → v人 ≥ 6.3 ÷ (25/6) = **1.512 m/s**。\n综上：行人速度 v ≤ 0.84 m/s 或 v ≥ 1.512 m/s。',
+my_answer:'（已做对，作为重点题型复习）',
+error_reason:'重点题型',tags:'物理,运动学,相向运动,s-t图像,过街安全,临界问题,分类讨论',source:'作业',difficulty:5,
+image_path:'uploads/wrong_bank/physics_20260919_p3.jpg'},
+{key:'physics_crossing_20260919',subject:'物理',chapter:'运动学综合（横穿马路·临界速度）',
+content:'6. 马路宽为 D = 20 m，一辆长为 6 m、宽为 3.2 m 的汽车以速度 v₁ = 15 m/s 在路中间匀速向前行驶，此时距车头 s = 30 m 处有一辆长为 1.6 m 的自行车要横穿马路。则自行车为了安全通过马路，它行驶的速度 v₂ 的范围是（　）A. 0 < v₂ < 6.6 m/s　B. v₂ < 4.2 m/s 或 v₂ > 5.8 m/s　C. v₂ < 3.5 m/s 或 v₂ > 6.6 m/s　D. v₂ < 3.5 m/s 或 v₂ > 4.2 m/s',
+correct_answer:'选 C（v₂ < 3.5 m/s 或 v₂ > 6.6 m/s）\n\n【解析】汽车宽 3.2 m 居中行驶，路两侧各余 (20−3.2)/2 = 8.4 m。\n① 慢速（等车先过）：自行车到车身近侧 8.4 m 处；车头到达用 2 s，车身 6 m 通过再需 0.4 s，共 2.4 s → v₂ ≤ 8.4/2.4 = 3.5 m/s。\n② 快速（抢在车前过）：自行车需穿过车身区 10 + 1.6 + 1.6 = 13.2 m；车头到达用时 30/15 = 2 s → v₂ ≥ 13.2/2 = 6.6 m/s。\n故 v₂ < 3.5 m/s 或 v₂ > 6.6 m/s（3.5~6.6 m/s 之间会与汽车相遇，不安全）。',
+my_answer:'（已做对，作为重点题型复习）',
+error_reason:'重点题型',tags:'物理,运动学,过街安全,临界问题,分类讨论,速度范围',source:'作业',difficulty:4,
+image_path:'uploads/wrong_bank/physics_20260919_p3.jpg'}
+,
+{
+key:"review_第10题",subject:"数学",chapter:"勾股定理 · 弦图面积关系",
+content:"【题干】10. 如图，由 4 个相同的直角三角形与中间的小正方形拼成一个大正方形。若大正方形的面积是 17，小正方形的面积是 5，直角三角形中较长直角边为 a，较短直角边为 b，则 (a+b)² 的值是 ______。\n【已知条件】① 大正方形由 4 个全等直角三角形 + 中间小正方形拼成；\n② 大正方形面积 = 17；\n③ 小正方形面积 = 5；\n④ 较长直角边为 a，较短直角边为 b。\n【求解】求 (a+b)² 的值。",
+correct_answer:"【详解】① 大正方形的边长就是直角三角形的斜边 c ⇒ c² = a² + b² = 17；\n② 中间小正方形的边长 = a − b ⇒ (a − b)² = a² + b² − 2ab = 5；\n③ 代入 a² + b² = 17：17 − 2ab = 5 ⇒ 2ab = 12；\n④ 所求 (a+b)² = a² + b² + 2ab = 17 + 12 = 29。\n\n【知识点】勾股定理 a² + b² = c²；\n完全平方公式 (a ± b)² = a² ± 2ab + b²；\n弦图（赵爽弦图）的面积关系：大正方形 = 4 个直角三角形 + 小正方形；\n整体代换思想（不必单独求出 a、b）。",
+my_answer:"（见题干说明）",
+error_reason:"其他",tags:"数学,勾股定理 · 弦图面积关系",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_20260919_py1.jpg"},
+{
+key:"review_第11题",subject:"数学",chapter:"等腰三角形 · 面积法（等面积分割）",
+content:"【题干】11. 如图，在等腰△ABC 中，AC = BC = 5，AB = 8，D 为底边上一动点（不与点 A、B 重合），DE⊥AC，DF⊥BC，垂足分别为 E、F，则 DE + DF = ______。\n【已知条件】① 等腰 △ABC：两腰 AC = BC = 5，底边 AB = 8；\n② D 是底边 AB 上一动点（不与 A、B 重合）；\n③ DE⊥AC 于 E，DF⊥BC 于 F。\n【求解】求 DE + DF 的值（并体会它与 D 的位置无关）。",
+correct_answer:"【详解】① 先求三角形面积：底边 AB = 8，作底边上的高，由勾股定理得高 = √(5² − 4²) = 3，\n   所以 S△ABC = ½ × 8 × 3 = 12；\n② 连接 CD，把 △ABC 分成两块：\n   S△ACD = ½ × AC × DE = ½ × 5 × DE；S△BCD = ½ × BC × DF = ½ × 5 × DF；\n③ 由面积相等：½ × 5 × DE + ½ × 5 × DF = 12 ⇒ (5/2)(DE + DF) = 12；\n④ 解得 DE + DF = 24/5 = 4.8。\n\n【知识点】等腰三角形的性质；\n勾股定理（求高）；\n等面积法 / 面积分割：S△ABC = S△ACD + S△BCD；\n“动中求定”思想：动点 D 变化，但 DE + DF 恒定。",
+my_answer:"（见题干说明）",
+error_reason:"其他",tags:"数学,等腰三角形 · 面积法（等面积分割）",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_20260919_py1.jpg"},
+{
+key:"review_第12题",subject:"数学",chapter:"勾股定理的证明 · 面积法（图2 梯形拼法）",
+content:"【题干】12. 勾股定理神秘而美妙，它的证法多样，其巧妙各有不同，其中的“面积法”给了小聪灵感：当两个全等的直角三角形如图 1 或图 2 所示摆放时，都可以用“面积法”来证明勾股定理。下面是小聪利用图 1 证明勾股定理的过程：将两个全等的直角三角形按如图 1 所示摆放，其中 ∠DAB = 90°，求证：a² + b² = c²。\n\n证明：连接 DB，过点 D 作 BC 边上的高 DF，则 DF = EC = b − a。\n∴ S四边形ADCB = S△ACD + S△ABC = ½b² + ½ab；\n又 ∵ S四边形ADCB = S△ADB + S△DCB = ½c² + ½a(b − a)；\n∴ ½b² + ½ab = ½c² + ½a(b − a)，∴ a² + b² = c²。\n\n请参照上述证法，利用图 2 完成下面的证明。\n【已知条件】① 两个全等的直角三角形（直角边 a、b，斜边 c）；\n② 按图 2 的方式摆放（两个全等直角三角形 + 一个以 c 为直角边的等腰直角三角形，拼成直角梯形）；\n③ 图 1 给出的证法思路：用两种不同的方式表示同一块图形的面积，然后列等式。\n【求解】参照图 1 的“面积法”，利用图 2 证明勾股定理 a² + b² = c²。",
+correct_answer:"【详解】【核心思路】图 2 的拼法可以看成一个直角梯形，而它又刚好由三个直角三角形拼成——于是同一块面积有两种算法，这就是面积法。（这种拼法就是著名的“总统证法”。）\n\n证明：\n① 按梯形算：上底 = a，下底 = b，高 = a + b，\n   S = ½(a + b)(a + b) = ½(a² + 2ab + b²)；\n② 按三块三角形算：S = ½ab + ½ab + ½c² = ab + ½c²；\n③ 同一块面积，两式相等：½a² + ab + ½b² = ab + ½c²；\n④ 两边同时乘 2：a² + 2ab + b² = 2ab + c²，消去 2ab 得 a² + b² = c²。证毕。\n\n【知识点】面积法证明勾股定理（两种方式表示同一面积）；\n梯形面积公式 S = ½(上底 + 下底) × 高；\n完全平方公式的展开与化简；\n数形结合：把图形拼合关系转化为代数恒等式。",
+my_answer:"（见题干说明）",
+error_reason:"其他",tags:"数学,勾股定理的证明 · 面积法（图2 梯形拼法）",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_20260919_py1.jpg"},
+{
+key:"review_第13题",subject:"数学",chapter:"直角三角形 · 中点与垂直（倍长中线）",
+content:"【题干】13.（C 组）如图，在 Rt△ABC 中，∠A = 90°，D 是 BC 的中点，E、F 分别是 AB、AC 上的点，DE ⊥ DF。求证：EF² = BE² + CF²。\n【已知条件】① Rt△ABC，∠A = 90°；\n② D 是斜边 BC 的中点；\n③ E 在 AB 上，F 在 AC 上；\n④ DE ⊥ DF。\n【求解】求证 EF² = BE² + CF²。",
+correct_answer:"【详解】【关键辅助线】倍长中线（把 FD 延长一倍）+ 全等转移线段。\n\n证明：\n① 延长 FD 到 G，使 DG = DF，连接 BG、EG；\n② ∵ D 是 BC 中点 ⇒ BD = CD；又 ∠BDG = ∠CDF（对顶角），DG = DF，\n   ∴ △BDG ≅ △CDF（SAS）⇒ BG = CF，∠DBG = ∠C；\n③ ∵ ∠A = 90° ⇒ ∠ABC + ∠C = 90° ⇒ ∠ABC + ∠DBG = 90° ⇒ ∠ABG = 90°；\n④ ∵ DE ⊥ DF 且 DG = DF ⇒ DE 是 FG 的垂直平分线 ⇒ EF = EG；\n⑤ 在 Rt△EBG 中，由勾股定理：EG² = BE² + BG² = BE² + CF² ⇒ EF² = BE² + CF²。证毕。\n\n【知识点】倍长中线（中线倍长）辅助线作法；\n全等三角形的判定（SAS）与性质；\n线段垂直平分线的性质；\n勾股定理；\n等量代换 / 线段转移的证明思想。",
+my_answer:"（见题干说明）",
+error_reason:"其他",tags:"数学,直角三角形 · 中点与垂直（倍长中线）",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_20260919_py1.jpg"},
+{
+key:"review_短文填空",subject:"英语",chapter:"选词填空 · 固定搭配与词形变化",
+content:"【题干】二、短文填空。\n从方框中选择合适的词并用其正确形式填空（每词限用一次，有两词多余）。\n\n备选词：plan, sort, cover, decorate, until, familiar, matter, add, describe, discover, invite, preparation\n\n____1____ a surprise farewell party for Mrs. Chen required careful organization. First, we needed to ____2____ out who would bring decorations and snacks. Lucy volunteered to ____3____ the bulletin board (布告板) with photos while I would ____4____ the teacher's desk with flowers. Until the party day, we worked nonstop. Tom, who was ____5____ with sound systems, set up music. \"We can't relax ____6____ everything is ready!\" Mrs. Lee reminded us. Suddenly, Emma gasped: \"What's the matter? I forgot to ____7____ Mrs. Chen's favorite song to the playlist!\" Luckily, it didn't ____8____ since Tom had prepared extra songs. When Mrs. Chen entered, she tried to ____9____ her amazement but was speechless. Later, she ____10____ a hidden album of our class memories. \"This is beyond description!\" she exclaimed tearfully.\n\n【参考答案】1 Planning　2 sort　3 cover　4 decorate　5 familiar　6 until　7 add　8 matter　9 describe　10 discovered（多余词：invite、preparation）\n【已知条件】① 备选词 12 个：plan, sort, cover, decorate, until, familiar, matter, add, describe, discover, invite, preparation；\n② 短文共 10 个空（讲同学们为陈老师筹办惊喜告别派对）；\n③ 每词限用一次，有 2 个多余词；\n④ 部分空需要改变词形（时态 / 动名词）。\n【求解】从方框中选词并用正确形式填入 10 个空，使短文通顺完整。",
+correct_answer:"【详解】① 先通读全文抓大意：策划派对 → 分工准备 → 当天小插曲 → 老师的反应 → 感悟。\n② 每个空先判“词性”，再判“固定搭配”，最后查“词形”：\n   1) 空 1 是句子主语，需要名词/动名词 ⇒ plan → 「Planning」；\n   2) 空 2：sort out（挑出、分配）固定搭配 ⇒ 「sort」；\n   3) 空 3：cover ... with ...（用…覆盖）⇒ 「cover」；\n   4) 空 4：decorate ... with ...（用…装饰）⇒ 「decorate」；\n   5) 空 5：be familiar with（熟悉）⇒ 「familiar」；\n   6) 空 6：not ... until（直到…才）⇒ 「until」；\n   7) 空 7：add ... to ...（把…加入）⇒ 「add」；\n   8) 空 8：it doesn't matter（没关系/不要紧）⇒ 「matter」；\n   9) 空 9：describe her amazement（描述她的惊讶）⇒ 「describe」；\n   10) 空 10：Later, she ___ ⇒ 叙述过去，用过去式 ⇒ 「discovered」。\n③ 最后检查：10 个空各用一个词，未使用的两个（invite、preparation）正好是干扰项。\n\n【知识点】① 高频动词短语：sort out / cover ... with ... / decorate ... with ... / add ... to ... / be familiar with / not ... until；\n② 词形变化：动名词作主语（Planning ... required）；一般过去时（discovered）；\n③ 词义辨析：matter（要紧、有影响）vs. describe（描述）vs. discover（发现）vs. decorate（装饰）；\n④ 解题策略：先定词性 → 再定搭配 → 最后查词形；用“每词限用一次 + 多余词”反推。",
+my_answer:"（见题干说明）",
+error_reason:"其他",tags:"英语,选词填空 · 固定搭配与词形变化",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/english_20260919_wrong.jpg"},
+{
+key:"review_第5题",subject:"数学",chapter:"勾股定理逆定理 · 斜边上的中线",
+content:"【题干】5. 若一个三角形的三边长分别为 5、12、13，则这个三角形最长边上的中线为 ______。\n【参考答案】6.5（即 13/2）\n【已知条件】① 三角形的三边长分别为 5、12、13；\n② 所求的是「最长边上的中线」；\n③ 题目目前未作答（横线空白）。\n【求解】求这个三角形最长边上的中线长度。",
+correct_answer:"【详解】① 先判断三角形形状（关键第一步）：\n   5² + 12² = 25 + 144 = 169，而 13² = 169，\n   ∵ 5² + 12² = 13²，∴ 该三角形是直角三角形，最长边 13 就是斜边；\n② 用直角三角形的性质：斜边上的中线等于斜边的一半，\n   所以中线 = 13 ÷ 2 = 6.5。\n（若不用这条性质，也可用中线长公式或建坐标硬算，但本题显然考的是「斜边中线」这一性质。）\n\n【知识点】① 勾股定理的逆定理：若 a² + b² = c²，则该三角形是直角三角形（c 为斜边）；\n② 直角三角形斜边上的中线等于斜边的一半（斜边中线定理）；\n③ 三角形中线的概念（顶点到对边中点的线段）；\n④ 常见勾股数要熟记：3-4-5、5-12-13、6-8-10、8-15-17。",
+my_answer:"（见题干说明）",
+error_reason:"其他",tags:"数学,勾股定理逆定理 · 斜边上的中线",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_p5_20260919.jpg"},
+{
+key:"review_math_13b",subject:"数学",chapter:"等边三角形 · 旋转构图（手拉手模型）",
+content:"【题干】13.（C组）\n（1）如图1，P 是等边三角形 ABC 内一点，PA = 6，PB = 8，PC = 10。若 P' 是 △ABC 外的一点，且 △P'AB ≌ △PAC。求 PP' 的长度及 ∠APB 的度数。\n（2）如图2，Q 是等边三角形 ABC 内一点，QA = 5，QB = 12，∠AQB = 150°，求 CQ 的长。\n（本题为旋转构图（手拉手）经典模型，两问解法同源。）\n【参考答案】(1) PP' = 6，∠APB = 150°；(2) CQ = 13\n【已知条件】【第(1)问】① 等边三角形 ABC；② P 是三角形内一点；③ PA = 6、PB = 8、PC = 10；④ P' 在 △ABC 外部，且 △P'AB ≌ △PAC。\n【第(2)问】① 等边三角形 ABC；② Q 是三角形内一点；③ QA = 5、QB = 12；④ ∠AQB = 150°。\n（两问都给了「等边三角形 + 内部一点 + 到顶点距离」，是同一个模型的两种问法。）\n【求解】【第(1)问】求 PP' 的长度 与 ∠APB 的度数；\n【第(2)问】求 CQ 的长。",
+correct_answer:"【详解】【第(1)问】\n① 观察全等：△P'AB ≌ △PAC，相当于把 △PAC 绕点 A 旋转 60°（因为等边三角形 ∠BAC = 60°）得到 △P'AB；\n② 由全等得对应边相等：AP' = AP = 6，P'B = PC = 10，且 ∠P'AB = ∠PAC；\n③ ∵ ∠BAC = 60°，∴ ∠P'AP = ∠P'AB + ∠BAP = ∠PAC + ∠BAP = ∠BAC = 60°；\n④ 又 AP' = AP = 6 ⇒ △P'AP 是等边三角形 ⇒ PP' = 6（同时 ∠APP' = 60°）；\n⑤ 在 △P'PB 中：P'P = 6、PB = 8、P'B = 10，而 6² + 8² = 100 = 10² ⇒ ∠P'PB = 90°；\n⑥ ∠APB = ∠APP' + ∠P'PB = 60° + 90° = 150°。\n\n【第(2)问】同源解法（旋转 60°）：\n① 把 △QAC 绕点 A 顺时针旋转 60°，落到 △Q'AB 的位置（Q' 在 △ABC 外）；\n② ⇒ AQ' = AQ = 5，且 ∠Q'AQ = 60° ⇒ △Q'AQ 是等边三角形 ⇒ QQ' = 5、∠AQQ' = 60°；\n③ ∵ ∠AQB = 150° ⇒ ∠Q'QB = ∠AQB − ∠AQQ' = 150° − 60° = 90°；\n④ 在 Rt△Q'QB 中：Q'B² = QQ'² + QB² = 5² + 12² = 25 + 144 = 169 ⇒ Q'B = 13；\n⑤ 由旋转全等 △Q'AB ≌ △QAC ⇒ Q'B = QC ⇒ CQ = 13。\n\n【知识点】① 等边三角形的性质：三边相等、三个角都是 60°，以及「旋转 60° 不变」的思想；\n② 旋转型全等（手拉手模型）：公共顶点、等长旋转边、夹角相等 ⇒ 全等；\n③ 勾股定理的逆定理：6² + 8² = 10²、5² + 12² = 13² ⇒ 直角三角形；\n④ 图形变换（旋转）把分散的条件集中到一个三角形中的解题思想；\n⑤ 常见勾股数：3-4-5、5-12-13、6-8-10、8-15-17。",
+my_answer:"（见题干说明）",
+error_reason:"思路错误",tags:"数学,等边三角形 · 旋转构图（手拉手模型）",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_13_eq_20260920.jpg"},
+{
+key:"review_math_19",subject:"数学",chapter:"无理数的整数部分与小数部分 · 分母有理化",
+content:"【题干】19. 已知 x = 3 − √3，a、b 分别是 x 的整数部分和小数部分，则 x + 1/a + 1/b = ______。\n【参考答案】6（若琳答对）\n【已知条件】① x = 3 − √3；\n② a 是 x 的整数部分，b 是 x 的小数部分；\n③ 求 x + 1/a + 1/b 的值。\n【求解】求 x + 1/a + 1/b 的值。",
+correct_answer:"【详解】① 先估范围定整数部分：1 < √3 < 2 ⇒ 1 < 3 − √3 < 2 ⇒ x 的整数部分 a = 1；\n② 小数部分 = 原数 − 整数部分 ⇒ b = (3 − √3) − 1 = 2 − √3；\n③ 分母有理化求 1/b：\n   1/(2 − √3) = (2 + √3)/[(2 − √3)(2 + √3)] = (2 + √3)/(4 − 3) = 2 + √3；\n④ 整体代入：\n   x + 1/a + 1/b = (3 − √3) + 1/1 + (2 + √3) = 3 − √3 + 1 + 2 + √3 = 6。\n（−√3 与 +√3 恰好抵消，得到整数——这正是本题的设计点。）\n\n【知识点】① 无理数的整数部分与小数部分（估值法：a ≤ x < a+1）；\n② 分母有理化：利用平方差公式 (a+b)(a−b) = a² − b²；\n③ 二次根式的加减与化简；\n④ 整体代入、先化简再求值的思想。",
+my_answer:"（见题干说明）",
+error_reason:"概念不清",tags:"数学,无理数的整数部分与小数部分 · 分母有理化",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_p19_20_20260921.jpg"},
+{
+key:"review_math_20",subject:"数学",chapter:"完全平方公式变形 · 根式取值范围判定（易错：漏负号）",
+content:"【题干】20. 已知 x + 1/x = 7（0 < x < 1），则 √x − 1/√x 的值为 ______。\n【参考答案】−√5（若琳答 √5 ✗，被红笔判错）\n【已知条件】① x + 1/x = 7；\n② 0 < x < 1（这个范围条件很关键）；\n③ 求 √x − 1/√x 的值。\n【求解】求 √x − 1/√x 的值（注意确定正负号）。",
+correct_answer:"【详解】① 设 t = √x − 1/√x，两边平方：\n   t² = (√x)² − 2·√x·(1/√x) + (1/√x)² = x + 1/x − 2；\n② 代入已知：t² = 7 − 2 = 5；\n③ 【关键一步】判断符号：∵ 0 < x < 1 ⇒ √x < 1 < 1/√x ⇒ √x − 1/√x < 0；\n④ ∴ t = −√5（不能取 +√5）。\n\n【知识点】① 完全平方公式 (a − b)² = a² − 2ab + b²；\n② 二次根式的乘法化简：√x · (1/√x) = 1；\n③ 由范围判断代数式的符号（0 < x < 1 ⇒ √x < 1 < 1/√x）；\n④ 常用变形：x + 1/x 与 (√x ± 1/√x)² 的互化（7 − 2 = 5、7 + 2 = 9）。",
+my_answer:"（见题干说明）",
+error_reason:"审题不清",tags:"数学,完全平方公式变形 · 根式取值范围判定（易错：漏负号）",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_p19_20_20260921.jpg"},
+{
+key:"review_math_18",subject:"数学",chapter:"等腰（等边）三角形综合 · 平行构造 / 全等证明 / 对称最值",
+content:"【题干】18. 在 △ABC 中，AC = BC，点 D、E 是边 BC 上的两点。\n（1）如图1，若 ∠B = 60°，点 N 在 AB 边上，点 F 在 AC 的延长线上，过点 N 作 ND ∥ AF 交 BC 于点 D，AC = 4，CF = 1，求 CE 的长。\n（2）如图2，若 ∠B = 60°，点 F 在 AC 的延长线上，连接 DF、AD、AE，且 ∠CAE = ∠CDF，求证：CE = CF。\n（3）如图3，连接 AD、AE，若 AD ⊥ BC，且 BD : CD = 1 : 4，AE 平分 ∠BAC，△ABC 的面积为 30，点 M、N 分别是线段 AB、AE 上的动点，连接 MN、DN，求 MN + DN 的最小值。\n\n⚠️ 说明：第（1）问题干中「且 BN = ___」处、第（3）问末尾「写出 ___ 值」处，照片上字迹不清，以上按可辨识内容+常见题型整理，请核对。\n【已知条件】【共同条件】① △ABC 中 AC = BC（等腰）；② 点 D、E 是边 BC 上的两点。\n【第(1)问】∠B = 60°；N 在 AB 边上；F 在 AC 的延长线上；ND ∥ AF 交 BC 于 D；AC = 4；CF = 1。\n【第(2)问】∠B = 60°；F 在 AC 的延长线上；连接 DF、AD、AE；∠CAE = ∠CDF。\n【第(3)问】AD ⊥ BC；BD : CD = 1 : 4；AE 平分 ∠BAC；S△ABC = 30；M、N 分别是线段 AB、AE 上的动点。\n【求解】第(1)问：求 CE 的长；\n第(2)问：求证 CE = CF；\n第(3)问：求 MN + DN 的最小值。",
+correct_answer:"【详解】【第(1)问】\n① ∵ AC = BC 且 ∠B = 60° ⇒ △ABC 是「等边三角形」 ⇒ AB = BC = AC = 4；\n② 由 ND ∥ AF，利用平行线分线段成比例（或相似三角形）建立 BD : DC 与 BN : NA 的关系，再结合 F 在 AC 延长线上、CF = 1（⇒ AF = AC + CF = 5）逐步求出 CE。\n（本题还需题干中那个 BN 的条件，请对照原书核对。）\n\n【第(2)问】证明思路（角相等 ⇒ 三角形相似/全等 ⇒ 边相等）：\n① 由 ∠B = 60° 且 AC = BC ⇒ △ABC 为等边三角形，∠ACB = ∠ABC = 60°；\n② 目标 CE = CF，可考虑证 △ACE ≌ △DCF（或找中间量）：\n   - 已知 ∠CAE = ∠CDF（对应角相等）；\n   - 用等边三角形提供 60° 角 + 公共边/等边，凑齐 ASA 或 AAS；\n③ 得 CE = CF。\n\n【第(3)问】对称最值（将军饮马型）：\n① 先由 AD ⊥ BC、BD : CD = 1 : 4 与 S△ABC = 30 求出各边长（设 BD = x, CD = 4x，由 BC·AD/2 = 30 与勾股关系解出）；\n② AE 平分 ∠BAC ⇒ 可利用角平分线性质定 N 的位置范围；\n③ 求 MN + DN 的最小值：作 D（或 M）关于直线 AE 的「对称点」，把 MN + DN 转化为「两点之间线段最短」，再求该线段长。\n\n【知识点】① 等腰三角形判定等边（有一个 60° 角的等腰三角形是等边三角形）；\n② 平行线分线段成比例 + 相似三角形求线段长；\n③ 全等三角形的判定（ASA / AAS）与性质；\n④ 角平分线的性质；\n⑤ 轴对称求最短路径（将军饮马模型）：两点之间线段最短；\n⑥ 三角形面积公式结合比例求线段长。\n\n📌 备注：本题第(1)问的「BN 条件」与第(3)问末尾要求，照片上不清晰，已在题干中标注，核对后可补充完整。",
+my_answer:"（见题干说明）",
+error_reason:"思路错误",tags:"数学,等腰（等边）三角形综合 · 平行构造 / 全等证明 / 对称最值",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_p18_20260921.jpg"},
+{
+key:"review_math_10b",subject:"数学",chapter:"正方形内的旋转全等 · 勾股定理逆定理",
+content:"【题干】如图，E 是正方形 ABCD 内一点，连接 AE、BE、CE，将 △ABE 绕点 B 顺时针旋转 90° 到 △CBE′ 的位置。若 AE = 1，BE = 2，CE = 3，则 ∠BE′C = ______ °。\n【已知条件】① ABCD 是正方形；② E 是正方形内一点；③ 将 △ABE 绕点 B 顺时针旋转 90° 得 △CBE′；④ AE = 1，BE = 2，CE = 3。\n【求解】求 ∠BE′C 的度数。（若琳填 56°，被红笔判错；正确答案 135°）",
+correct_answer:"【详解】① 旋转 90° 是全等变换 ⇒ △ABE ≌ △CBE′ ⇒ BE′ = BE = 2，CE′ = AE = 1，且 ∠EBE′ = 90°；\n② 连接 EE′，在等腰直角 △BEE′ 中：EE′ = √(BE² + BE′²) = √(2² + 2²) = 2√2，∠BE′E = 45°；\n③ 在 △CEE′ 中看三边：CE = 3，CE′ = 1，EE′ = 2√2；\n④ 用勾股定理的逆定理检验：CE′² + EE′² = 1² + (2√2)² = 1 + 8 = 9 = 3² = CE² ⇒ △CEE′ 是直角三角形，且 ∠EE′C = 90°；\n⑤ 所以 ∠BE′C = ∠BE′E + ∠EE′C = 45° + 90° = 135°。\n\n【知识点】① 旋转的性质（对应线段相等、对应角相等、旋转角相等）；\n② 等腰直角三角形的性质与斜边计算（EE′ = 2√2）；\n③ 勾股定理及其逆定理（由三边判定直角三角形）；\n④ 角的和差拆分（∠BE′C = ∠BE′E + ∠EE′C）；\n⑤ 正方形四边相等、四角为 90°。\n\n📌 出处：本页含第 10、11、12 题；若琳第10题填 56°，正确答案 135°。",
+my_answer:"若琳填 56°，被红笔判错；正确答案 135°",
+error_reason:"思路错误",tags:"数学,正方形内的旋转全等 · 勾股定理逆定理",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_p10_20260924.jpg"},
+{
+key:"review_math_13c",subject:"数学",chapter:"动点问题 · 直角三角形/等腰三角形的分类讨论",
+content:"【题干】如图，在 Rt△ABC 中，∠C = 90°，AB = 5 cm，AC = 3 cm，动点 P 从点 B 出发，沿射线 BC 以 1 cm/s 的速度移动，设运动的时间为 t s。\n（1）求 BC 边的长；\n（2）当 △ABP 为直角三角形时，求 t 的值；\n（3）当 △ABP 为等腰三角形时，求 t 的值。\n【已知条件】① Rt△ABC，∠C = 90°；② AB = 5 cm，AC = 3 cm；③ 动点 P 从 B 出发沿【射线 BC】（会越过点 C 继续向右）以 1 cm/s 移动；④ 运动时间 t s ⇒ BP = t cm。\n【求解】（1）BC 的长；（2）△ABP 为直角三角形时的 t；（3）△ABP 为等腰三角形时的 t。",
+correct_answer:"【详解】【（1）】由勾股定理：BC = √(AB² − AC²) = √(25 − 9) = 4 cm。\n\n【（2）按直角顶点分类】：\n① 若 ∠APB = 90°：即 AP ⊥ BC。A 到直线 BC 的垂足恰是 C，故 P 与 C 重合 ⇒ BP = BC = 4 ⇒ t = 4；\n② 若 ∠BAP = 90°：设 BP = t（t > 4），则 CP = t − 4，AP² = AC² + CP² = 9 + (t − 4)²；\n   由 AP² + AB² = BP²：9 + (t − 4)² + 25 = t² ⇒ t² − 8t + 50 = t² ⇒ 8t = 50 ⇒ t = 25/4；\n③ ∠ABP = 90° 不可能（P 在 BC 上，∠ABP = ∠ABC < 90°）。\n⇒ t = 4 或 25/4。\n\n【（3）按相等的边分类】：\n① AB = BP：t = 5；\n② AB = AP：9 + (t − 4)² = 25 ⇒ (t − 4)² = 16 ⇒ t = 8 或 t = 0（t = 0 时 P 与 B 重合，三角形退化，舍去）⇒ t = 8；\n③ AP = BP：P 在 AB 的垂直平分线上 ⇒ 9 + (t − 4)² = t² ⇒ −8t + 25 = 0 ⇒ t = 25/8。\n⇒ t = 5、8 或 25/8。\n\n【知识点】① 勾股定理及其在动点问题中的应用；\n② 直角三角形的分类讨论（按直角顶点分三种）；\n③ 等腰三角形的分类讨论（按腰分三种）；\n④ 垂直平分线的性质（到两端点距离相等）；\n⑤ 动点问题「时间 t ⇒ 线段长」的转化，以及舍去不合题意的解。\n\n📌 出处：若琳此题只写了开头（“在△ABC中，∠C=90°则 AC²+BC²=AB²”），未完成。",
+my_answer:"（见题干说明）",
+error_reason:"审题不清",tags:"数学,动点问题 · 直角三角形/等腰三角形的分类讨论",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_p13_20260924.jpg"},
+{
+key:"review_math_23",subject:"数学",chapter:"等腰直角三角形内的点 · 旋转构造 + 勾股逆定理 + 余弦定理",
+content:"【题干】点 D 是以 AB 为斜边的等腰直角三角形 ABC 内一点，若 BD = 2，CD = 4，AD = 6，则 △ABC 的面积是 ______。\n【已知条件】① △ABC 是以 AB 为斜边的等腰直角三角形 ⇒ ∠ACB = 90°，AC = BC；\n② D 是三角形内一点；\n③ BD = 2，CD = 4，AD = 6。\n【求解】求 △ABC 的面积。（若琳填 23；正确答案 10 + 4√2）",
+correct_answer:"【详解】【核心：把两条已知边「转」到同一个三角形里，用勾股逆定理造直角】\n① 设 AC = BC = a，则 S△ABC = ½a²，只需求出 a²；\n② 将 △CDB 绕点 C 顺时针旋转 90°，使 CB 落到 CA 上，D 落到 D′：\n   - CD′ = CD = 4，AD′ = BD = 2（旋转保持长度）；\n   - ∠DCD′ = 90° ⇒ △CDD′ 是等腰直角三角形 ⇒ DD′ = 4√2，∠CD′D = 45°；\n③ 在 △ADD′ 中，三边 AD = 6，AD′ = 2，DD′ = 4√2；\n   勾股定理逆定理：AD′² + DD′² = 4 + 32 = 36 = 6² = AD² ⇒ ∠AD′D = 90°；\n④ 于是 ∠CD′A = ∠CD′D + ∠DD′A = 45° + 90° = 135°；\n⑤ 在 △CD′A 中用余弦定理（CD′ = 4，AD′ = 2，夹角 135°）：\n   CA² = 4² + 2² − 2·4·2·cos135° = 16 + 4 + 8√2 = 20 + 8√2；\n⑥ S△ABC = ½a² = ½(20 + 8√2) = 10 + 4√2。\n\n【知识点】① 等腰直角三角形的性质（斜边 = 直角边 × √2）；\n② 旋转变换：把分散的线段集中到同一个三角形；\n③ 勾股定理的逆定理判定直角；\n④ 余弦定理（或用「构造直角三角形 + 勾股」）求第三边；\n⑤ 含 135° 角的三角形求边长（转化到特殊角）；\n⑥ 面积公式 S = ½ab（等腰直角三角形 S = ½a²）。\n\n📌 出处：同页第22题（△ABC 与 △ACD 均为直角三角形，AD = 2BC = 6 等）也在填空题区；若琳第23题填 23，正确答案 10 + 4√2。",
+my_answer:"若琳填 23；正确答案 10 + 4√2",
+error_reason:"思路错误",tags:"数学,等腰直角三角形内的点 · 旋转构造 + 勾股逆定理 + 余弦定理",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_p23_20260924.jpg"},
+{
+key:"review_math_2cyl",subject:"数学",chapter:"圆柱侧面展开 · 丝带缠绕最短路径",
+content:"【题干】（2024秋·深圳校级期末）如图，圆柱底面圆的周长为 8 cm，CD、AB 分别是上、下底面的直径，高 BC = 6 cm，用一条无弹性的丝带从 A 至 C 按如图所示的圈数缠绕，则丝带的最短长度为 ______ cm。\n\n【出处】第二讲 勾股定理综合复习 · 巩固1 第2题\n【已知条件】① 圆柱底面周长 = 8 cm；② AB 为下底面直径，CD 为上底面直径；③ 圆柱高 BC = 6 cm；④ 丝带从 A 绕到 C，圈数按图（图中为绕行路径）。\n【求解】求丝带的最短长度。（若琳答 20 cm，被红笔判错）",
+correct_answer:"【详解】【展开法（化曲面为平面）】\n① 把圆柱侧面沿一条母线剪开摊平，得到一个矩形：宽 = 底面周长，高 = 圆柱的高；\n② 若丝带绕 n 圈，则展开后矩形的总宽度为 8n（每绕一圈横向推进一个周长），高度为 6；\n③ 丝带的路径在展开图上就是一条斜线段 ⇒ 最短长度 = √((8n)² + 6²)；\n④ 由图数出实际圈数 n 后代入即得（具体 n 以原图为准 —— 请对照书本核对圈数后填入最终答案）。\n\n【若琳的思路（错在哪）】\n她先算 √(8² + 6²) = 10，然后乘 2 得 20。用「先算一圈的斜边、再乘圈数」的做法是错的：多圈时展开后的横向总宽要一次算进同一个直角三角形里（√((8n)² + 6²)），而不是把单圈斜边简单相加。另外她手写时把底面「周长 8」与「半径 4」混在一起用，也是常见的混淆点。\n\n【知识点】① 圆柱侧面展开图（矩形：宽 = 底面周长，高 = 圆柱高）；\n② 空间曲面上的最短路径 ⇔ 展开图上的线段；\n③ 勾股定理 √(a² + b²)；\n④ 多圈缠绕的处理：横向总距离 = 周长 × 圈数。\n\n📌 出处：第二讲 勾股定理综合复习（巩固1）第 2 题；若琳答 20 cm 被红笔判错。教材答案需对照原书确认（取决于圈数）。",
+my_answer:"若琳答 20 cm，被红笔判错",
+error_reason:"公式记错",tags:"数学,圆柱侧面展开 · 丝带缠绕最短路径",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_p2cyl_20260925.jpg"},
+{
+key:"review_math_4ant",subject:"数学",chapter:"圆柱内外壁最短路径 · 展开 + 半周长",
+content:"【题干】（2023秋·青羊区校级期中）如图，透明圆柱形容器（容器厚度忽略不计）的高为 10 cm，底面周长为 10 cm，在容器内壁离容器底部 3 cm 的 B 处有一饭粒，此时一只蚂蚁正好在容器外壁与 B 相对且距离容器上沿 2 cm 的点 A 处，则蚂蚁吃到饭粒需爬行的最短路径长度是 ______ cm。\n\n【出处】第二讲 勾股定理综合复习 第4题\n【已知条件】① 圆柱形容器高 10 cm；② 底面周长 10 cm；③ B 在内壁、离底 3 cm（⇒ 离上沿 7 cm）；④ A 在外壁、与 B【相对】、离上沿 2 cm（⇒ 离底 8 cm）。\n【求解】求蚂蚁从 A 爬到 B 的最短路径长度。（参考值 5√2 ≈ 7.07 cm）",
+correct_answer:"【详解】【展开法】\n① 沿过 A 的母线把圆柱侧面剪开摊平；\n② 水平距离：A 与 B「相对」⇒ 相差半圈 ⇒ 10 ÷ 2 = 5 cm；\n③ 垂直距离：A 离底 8 cm（10 − 2），B 离底 3 cm ⇒ 相差 8 − 3 = 5 cm；\n④ 最短路径 = 展开图上的线段 = √(5² + 5²) = √50 = 5√2 cm。\n\n【知识点】① 圆柱侧面展开图；\n② 「相对」⇒ 半周长；\n③ 高度方向的距离差计算；\n④ 勾股定理 √(5² + 5²) = 5√2；\n⑤ 空间最短路径的通用思路：展开 → 线段。\n\n📌 出处：第二讲 勾股定理综合复习 第 4 题。页面上此题旁边有红勾（视为已过关），但若琳手写过程（√(25+61)）与上述标准解法不一致，建议重做一遍确认掌握。",
+my_answer:"（见题干说明）",
+error_reason:"审题不清",tags:"数学,圆柱内外壁最短路径 · 展开 + 半周长",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_p45_20260925.jpg"},
+{
+key:"review_math_5shuxing",subject:"数学",chapter:"数形结合 · 网格作图比较大小 + 距离和最值（将军饮马）",
+content:"【题干】（2025秋·双流区校级期中）“数形结合”是一种重要的数学思想方法……在正方形网格中构造某些图形可以发现和解决一些数学问题。所有网格均是正方形网格，每个小正方形边长均为 1，点 A、B、C 都在格点上。\n（1）如图1，AB 的长度为 ______，△ABC 中 AB 边上的高的长度为 ______。\n（2）如图2，在正方形网格中构造 △ABC，可以比较 √5 + 1 与 √10 的大小，理由如下：因为点 A、B、C 都为小正方形的顶点（构造图形），所以 AB + BC > AC（三角形任意两边之和大于第三边）。因为 AB = √(1²+2²) = √5，AC = √(1²+3²) = √10（勾股定理），BC = 1，所以 √5 + 1 > √10。请你参考例子中的方法，在图3中构造图形，比较 2√2 + 2 与 2√5 的大小，并说明理由。\n（3）请运用上面“数形结合”的数学思想方法，求 √(x²+9) + √((x−15)²+25) 的最小值。\n\n【出处】第二讲 勾股定理综合复习 第5题（此页有红笔叉）\n【已知条件】① 正方形网格，每小格边长 1，A、B、C 均在格点；\n② 已知示例：AB = √5、AC = √10、BC = 1 ⇒ √5 + 1 > √10；\n③ 第（3）问要求按同样的数形结合思想求最小值。\n【求解】（1）AB 的长与 AB 边上的高；（2）用网格作图比较 2√2 + 2 与 2√5 的大小并说明理由；（3）求 √(x²+9) + √((x−15)²+25) 的最小值。",
+correct_answer:"【详解】【（2）思路】把每条二次根式看成格点间线段长：\n2√2 + 2 = √8 + 2，2√5 = √20；在网格中构造一个三角形，使两边分别等于 √8 = 2√2（横 2 竖 2 的斜边）与 2，第三边等于 2√5 = √20（横 2 竖 4 的斜边），由「三角形两边之和大于第三边」得 2√2 + 2 > 2√5。\n\n【（3）核心：把根式「翻译」成两点间距离，再用将军饮马求最值】\n① 取点 P(x, 0) 在 x 轴上；\n② √(x² + 9) = √(x² + 3²) = P 到点 A(0, 3) 的距离；\n③ √((x−15)² + 25) = √((x−15)² + 5²) = P 到点 B(15, 5) 的距离；\n④ 于是原式 = PA + PB，求其最小值；\n⑤ 作 A(0, 3) 关于 x 轴的对称点 A′(0, −3)：PA = PA′ ⇒ PA + PB = PA′ + PB ≥ A′B（两点之间线段最短）；\n⑥ 当 P 是 A′B 与 x 轴的交点（x = 45/8）时取最小值：\n   A′B = √((15−0)² + (5−(−3))²) = √(15² + 8²) = √(225 + 64) = √289 = 17。\n⇒ 最小值为 17。\n\n【知识点】① 数形结合思想（代数式 ⇄ 图形）；\n② 勾股定理及其逆用（把 √(a²+b²) 看成直角三角形的斜边）；\n③ 三角形三边关系（两边之和大于第三边）比较大小；\n④ 两点间距离公式的几何意义；\n⑤ 轴对称求最短路径（将军饮马模型）；\n⑥ 二次根式的化简（√289 = 17）。\n\n📌 出处：第二讲 勾股定理综合复习 第 5 题。此页有红笔叉（第(3)问未掌握），正确最小值 17；第(1)问答案需按图1网格核对（可由面积法 高 = 2S/AB 反推）。",
+my_answer:"（见题干说明）",
+error_reason:"思路错误",tags:"数学,数形结合 · 网格作图比较大小 + 距离和最值（将军饮马）",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_p45_20260925.jpg"},
+{
+key:"review_math_gu2_p2",subject:"数学",chapter:"勾股定理的面积推广 · 等腰直角三角形阴影",
+content:"【题干】（2025秋·贵阳期末）如图，Rt△ABC 中，∠BAC = 90°，分别以 △ABC 的三边为直角边作三个等腰直角三角形 △ABD、△ACE、△BCF，若图中阴影部分的面积 S₁ = 65，S₂ = 46，S₃ = 57，则 S₄ = ______。\n\n【出处】第二讲 勾股定理综合复习 · 巩固2 第2题（红笔判错）\n【已知条件】① Rt△ABC，∠BAC = 90°；② 分别以三边为直角边向外作等腰直角三角形；③ 阴影部分面积 S₁ = 65，S₂ = 46，S₃ = 57。\n【求解】求 S₄。（若琳答 14，被红笔判错；按勾股定理面积推广应为 54）",
+correct_answer:"【详解】【核心：勾股定理的「面积版本」】\n① 勾股定理 a² + b² = c² 说的是「以直角边为边的正方形面积之和 = 以斜边为边的正方形面积」；\n② 把正方形换成**任意相似图形**（这里是等腰直角三角形）结论仍然成立 —— 因为相似图形的面积比 = 边长比的平方，所以直角边上两个图形的面积和 = 斜边上图形的面积；\n③ 因此大块阴影 = 两个小块之和：S₁ + S₂ = S₃ + S₄（哪两块在直角边、哪两块在斜边，按图对号入座）；\n④ 代入：65 + 46 = 57 + S₄ ⇒ S₄ = 111 − 57 = 54。\n\n【知识点】① 勾股定理的几何意义（面积关系，不只是 a²+b²=c²）；\n② 「直角边上相似图形面积和 = 斜边上相似图形面积」这一推广；\n③ 等腰直角三角形与正方形的面积比关系（½ 倍）；\n④ 由已知面积反推未知面积的整体代入法。\n\n📌 出处：第二讲 勾股定理综合复习 巩固2 第2题。同页第1题（勾股树 A、B、C 面积 3、9、6 求 D = 18）答对，未录入。",
+my_answer:"若琳答 14，被红笔判错；按勾股定理面积推广应为 54",
+error_reason:"概念不清",tags:"数学,勾股定理的面积推广 · 等腰直角三角形阴影",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_gu2_20260925.jpg"},
+{
+key:"review_math_gu2_p4",subject:"数学",chapter:"勾股树的分形规律 · 数列规律归纳",
+content:"【题干】（2025秋·成都校级期末）图1 叫做一个基本的“勾股树”，也叫做第一代勾股树。让图1 中两个小正方形各自长出一个新的勾股树（如图2），叫做第二代勾股树。从第二代勾股树出发，又可以长出第三代勾股树（如图3）。这样一生二、二生四、四生八，继续生长下去，则**第四代**勾股树图形中正方形的个数为 ______。\n\n【出处】第二讲 勾股定理综合复习 · 巩固2 第4题（红笔判错）\n【已知条件】① 第一代 = 基本勾股树（图1）；② 每个「末端」小正方形再长出一个新的勾股树 ⇒ 末端个数 1 → 2 → 4 → 8 …（一生二、二生四、四生八）；③ 求第四代图形中正方形的总个数。\n【求解】第四代勾股树中正方形的个数。（若琳答 35321，被红笔判错；按「末端每代翻倍」的规律推算为 31，具体以原图规则为准）",
+correct_answer:"【详解】【思路：先数「末端」，再累加总数】\n① 每一代每个末端小正方形都会再分裂出 2 个新正方形（一生二、二生四…）；\n② 各代**新增**的末端正方形个数：1 → 2 → 4 → 8 → 16（第一代到第五代的末端分别为 1、2、4、8、16）；\n③ 图形中的**正方形总个数** = 各代累加：1 + 2 + 4 + 8 + 16 = **31**；\n④ 一般地第 n 代总个数 = 2^(n+1) − 1，故第四代 = 2⁵ − 1 = 31。\n\n（注意：这里的关键是判断「第四代」是从第一代算起还是从第 0 代算起 —— 请对照书上图1/图2/图3 的编号确认；若把基本树本身算作第 0 代，则结果可能为 30 或 15，请以原图为准核对。）\n\n【知识点】① 勾股树的构造规则（每个正方形分裂出两个更小的正方形）；\n② 等比数列（1, 2, 4, 8, 16…）与求和（2ⁿ⁺¹ − 1）；\n③ 从图形中观察、归纳规律的能力（数与形的结合）；\n④ 审题时先确定「第几代」的计数起点。\n\n📌 出处：第二讲 勾股定理综合复习 巩固2 第4题。同页第3题（ICME-7 螺旋 OA 长）答对，未录入。",
+my_answer:"若琳答 35321，被红笔判错；按「末端每代翻倍」的规律推算为 31，具体以原图规则为准",
+error_reason:"思路错误",tags:"数学,勾股树的分形规律 · 数列规律归纳",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_gu2_20260925.jpg"},
+{
+key:"review_math_gu3_p5",subject:"数学",chapter:"勾股数通项推导 · 数列规律与求和",
+content:"【题干】（2025秋·成华区校级期中）定义：若三个正整数 a、b、c 满足 a < b，a² + b² = c²，且 c − b = 2，则称 (a, b, c) 为“偶差”勾股数组。例如：(6, 8, 10)、(8, 15, 17) 都是“偶差”勾股数组。令 m = a + b + c，将 m 从小到大排列，分别记为 m₁、m₂、m₃、…、mₙ（n 为正整数），则 m₁ 的值为 ______；m₁₈ 的值为 ______。\n\n【出处】第二讲 勾股定理综合复习 题目5（两空均被红笔判错）\n【已知条件】① a、b、c 为正整数；② a < b；③ a² + b² = c²；④ c − b = 2；⑤ m = a + b + c，从小到大排成 m₁、m₂、…\n【求解】求 m₁ 和 m₁₈。（若琳答 m₁ = 24、m₁₈ = 3012，两空均判错；按定义推导 m₁ = 24、m₁₈ = 840）",
+correct_answer:"【详解】【第一步：把「偶差」条件化成通项】\n① 由 c − b = 2 得 c = b + 2；\n② 代入 a² + b² = c²：a² + b² = (b+2)² = b² + 4b + 4 ⇒ **a² = 4b + 4** ⇒ a² 是 4 的倍数 ⇒ a 是**偶数**；\n③ 设 a = 2k（k 为正整数）⇒ b = (4k² − 4)/4 = **k² − 1**，c = **k² + 1**；\n④ 由 a < b 得 2k < k² − 1 ⇒ k² − 2k − 1 > 0 ⇒ **k ≥ 3**；\n   验证：k = 3 ⇒ (6, 8, 10) ✔；k = 4 ⇒ (8, 15, 17) ✔ 与题目例子一致。\n\n【第二步：求 m 的表达式】\nm = a + b + c = 2k + (k² − 1) + (k² + 1) = **2k² + 2k = 2k(k + 1)**\n（k ≥ 3 时 m 随 k 单调递增）\n\n【第三步：代入】\n① k = 3 ⇒ m₁ = 2 × 3 × 4 = **24**；\n② 第 18 个对应 k = 3 + (18 − 1) = 20 ⇒ m₁₈ = 2 × 20 × 21 = **840**。\n\n【知识点】① 勾股数的通项推导（a = 2k, b = k²−1, c = k²+1）；\n② 由等式变形 + 整除性判断字母取值范围（偶数性）；\n③ 不等式约束（a < b ⇒ k ≥ 3）；\n④ 数列的单调性与序号对应（第 n 项 ⇔ k = n + 2）；\n⑤ 代数式化简（m = 2k(k+1)）。\n\n📌 出处：第二讲 勾股定理综合复习 题目5。同页另有两题（芦苇长度 13 ✔、△ABC 面积 130/126/66）见下条。",
+my_answer:"若琳答 m₁ = 24、m₁₈ = 3012，两空均判错；按定义推导 m₁ = 24、m₁₈ = 840",
+error_reason:"思路错误",tags:"数学,勾股数通项推导 · 数列规律与求和",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_gu3_20260925.jpg"},
+{
+key:"review_math_gu3_p2",subject:"数学",chapter:"已知两边及第三边上的高求面积 · 分类讨论",
+content:"【题干】（2024秋·武侯区校级月考）已知 △ABC，且 AB = 20，AC = 13，BC 边上的高为 12，则 △ABC 的面积为 ______。\n\n【出处】第二讲 勾股定理综合复习 题目2（红笔判错）\n【已知条件】① AB = 20；② AC = 13；③ BC 边上的高 AD = 12。\n【求解】求 △ABC 的面积。（若琳答 130 被判对、126 和 66 被判错；正确答案应为 **126 或 66** 两种情况）",
+correct_answer:"【详解】【关键：高可能在形内，也可能在形外 —— 必须分类】\n先由勾股定理求出两条「半底」：\n① 在 Rt△ABD 中：BD = √(AB² − AD²) = √(20² − 12²) = √(400 − 144) = √256 = **16**；\n② 在 Rt△ACD 中：CD = √(AC² − AD²) = √(13² − 12²) = √(169 − 144) = √25 = **5**。\n\n【情况一：垂足 D 在边 BC 上（高在形内）】\nBC = BD + CD = 16 + 5 = 21 ⇒ S = ½ × 21 × 12 = **126**。\n\n【情况二：垂足 D 在 BC 的延长线上（高在形外，∠B 为钝角）】\nBC = BD − CD = 16 − 5 = 11 ⇒ S = ½ × 11 × 12 = **66**。\n\n⇒ △ABC 的面积为 **126 或 66**。\n\n（若琳填的 130 与两种情况都对不上；按题意「已知两边及第三边上的高」必须考虑垂足在延长线上的情形。）\n\n【知识点】① 勾股定理求直角三角形边长；\n② 三角形面积公式 S = ½ × 底 × 高；\n③ **分类讨论思想**（高在形内 / 形外）；\n④ 钝角三角形与其高的位置关系；\n⑤ 数据设计：20-12-16 与 13-12-5 都是勾股数，是本题的破题点。\n\n📌 出处：第二讲 勾股定理综合复习 题目2。同页「偶差勾股数组」题见上条；芦苇题（答 13）已答对，未单独录入。",
+my_answer:"若琳答 130 被判对、126 和 66 被判错；正确答案应为 **126 或 66** 两种情况",
+error_reason:"审题不清",tags:"数学,已知两边及第三边上的高求面积 · 分类讨论",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_gu3_20260925.jpg"},
+{
+key:"review_math_gu34_p4",subject:"数学",chapter:"矩形翻折 · 轴对称 + 勾股定理建模",
+content:"【题干】（2025秋·成都校级期中）如图，在矩形 ABCD 中，AB = 13，AD = 24，P 是边 AD 上一点（不与点 A、D 重合），连接 PB，将 △ABP 沿直线 BP 翻折，点 A 与点 E 重合。若点 B 关于直线 PE 的对称点 F 恰好落在 CD 边上，连接 PF、EF，则 AP 的长为 ______。\n\n【出处】第二讲 勾股定理综合复习 第4题（红笔判错）\n【已知条件】① 矩形 ABCD，AB = 13，AD = 24；② P 在边 AD 上；③ 将 △ABP 沿 BP 翻折，A 的对应点为 E；④ 点 B 关于直线 PE 的对称点为 F，且 F 恰好落在 CD 边上。\n【求解】求 AP 的长。（若琳写 6.6，红笔判错；正确答案 26/3 ≈ 8.67）",
+correct_answer:"【详解】【第一步：翻折能给出什么】\n① △ABP 沿 BP 翻折 ⇒ △ABP ≌ △EBP ⇒ EB = AB = 13，EP = AP，∠PEB = ∠PAB = 90°；\n② B 关于 PE 的对称点为 F ⇒ PE 垂直平分 BF ⇒ **PF = PB**，**EF = EB = 13**，∠PEF = 90°。\n\n【第二步：发现三点共线】\n由 ① ② 得 ∠PEB = ∠PEF = 90°，且都在 E 处、PE 同侧 ⇒ **E、B、F 三点共线**；\n又 EF = EB = 13 ⇒ **E 是 BF 的中点**，即 PE 是 BF 的垂直平分线。\n\n【第三步：用坐标/勾股列方程】\n设 AP = x，以 A 为原点、AB 方向为 x 轴建立坐标：B(13, 0)，P(0, x)，F 在 CD 上 ⇒ F = (f, 24)；\n① 由 PF = PB：f² + (24 − x)² = 13² + x² ⇒ f² − 48x + 407 = 0 …(a)\n② 由「PB 是 AE 的垂直平分线」（A 与 E 关于 PB 对称）：AE ⊥ PB ⇒ 13(13 + f) = 24x …(b)\n   （E 的坐标 = ((13+f)/2, 12)，因为 E 是 BF 中点）\n③ 联立 (a)(b)：由 (b) 得 x = (169 + 13f)/24，代入 (a) 化简得 f² − 26f + 69 = 0 ⇒ f = 3 或 f = 23；\n   因 F 在 CD 上（0 ≤ f ≤ 13），取 **f = 3**；\n④ 代回：AP = x = (169 + 13×3)/24 = 208/24 = **26/3 ≈ 8.67**。\n\n【知识点】① 轴对称（翻折）的性质：对应线段相等、对应角相等、对称轴垂直平分对应点连线；\n② 由两个 90° 角推出三点共线（几何直观）；\n③ 勾股定理建模 + 方程思想（设 AP = x 列方程）；\n④ 坐标法处理复杂折叠问题；\n⑤ 解出多解后按图形位置检验取舍。\n\n📌 出处：第二讲 勾股定理综合复习 第4题。同页第3题（四边形面积 36）答对，未录入。",
+my_answer:"若琳写 6.6，红笔判错；正确答案 26/3 ≈ 8.67",
+error_reason:"计算失误",tags:"数学,矩形翻折 · 轴对称 + 勾股定理建模",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_gu34_20260925.jpg"},
+{
+key:"review_math_gu34_p5",subject:"数学",chapter:"直角三角形中线翻折 · 对称点与距离计算",
+content:"【题干】（2025秋·金牛区校级期中）在 Rt△ABC 中，∠ACB = 90°，AC = 6，BC = 8，CG 是 AB 边上的中线，将 △ACG 沿 CG 翻折后得到 △HCG，连接 BH，则 BH 的长为 ______。\n\n【出处】第二讲 勾股定理综合复习 第5题（红笔判错）\n【已知条件】① Rt△ABC，∠ACB = 90°；② AC = 6，BC = 8；③ CG 是 AB 边上的中线（G 是 AB 中点）；④ 将 △ACG 沿 CG 翻折得 △HCG。\n【求解】求 BH 的长。（若琳写 √39，红笔判错；正确答案 14/5 = 2.8）",
+correct_answer:"【详解】【第一步：先算基本量】\nAB = √(AC² + BC²) = √(6² + 8²) = 10 ⇒ 中线 CG = AG = BG = 5（直角三角形斜边中线等于斜边一半）。\n\n【第二步：翻折给出 H 的位置】\nH 是 A 关于直线 CG 的对称点 ⇒ CH = CA = 6，HG = AG = 5。\n\n【第三步：算 BH —— 用坐标最稳】\n以 C 为原点：A(6, 0)，B(0, 8)，则 G = AB 中点 = (3, 4)；\n直线 CG：y = (4/3)x，即 4x − 3y = 0；\nA(6, 0) 关于该直线的对称点（用点到直线距离公式求对称点）：\n   H = (−42/25, 144/25)  〔验证：HG = 5 ✔，CH = 6 ✔〕\n于是 BH² = (0 + 42/25)² + (8 − 144/25)² = (42/25)² + (56/25)² = (1764 + 3136)/625 = 4900/625 = 196/25；\n⇒ **BH = 14/5 = 2.8**。\n\n（也可用面积法/三角形中线长公式间接求解，但坐标法最不容易出错。）\n\n【知识点】① 勾股定理求斜边（6-8-10）；\n② 直角三角形斜边中线性质（CG = ½AB）；\n③ 轴对称的性质（对应线段相等）；\n④ 坐标系中求一点关于一条直线的对称点；\n⑤ 两点间距离公式 + 二次根式化简（4900/625 = 196/25）。\n\n📌 出处：第二讲 勾股定理综合复习 第5题。同页第3、4题见上条与同页说明。",
+my_answer:"若琳写 √39，红笔判错；正确答案 14/5 = 2.8",
+error_reason:"思路错误",tags:"数学,直角三角形中线翻折 · 对称点与距离计算",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_gu34_20260925.jpg"},
+{
+key:"review_math_gu4_p2",subject:"数学",chapter:"含 15°/30° 角的三角形 · 正弦定理/面积公式",
+content:"【题干】（2023秋·成华区期末）如图，在 △ABC 中，∠C = 90°，∠ABC = 30°，AC = 3。点 D 为 △ABC 外一点，满足 ∠BAD = 15°，∠ABD = 30°，则 △ABD 的面积是 ______。\n\n【出处】第二讲 勾股定理综合复习 · 巩固4 第2题（红笔判错）\n【已知条件】① △ABC 中 ∠C = 90°，∠ABC = 30°，AC = 3；② 由 30° 角性质可得 AB = 6，BC = 3√3；③ D 在 △ABC 外，∠BAD = 15°，∠ABD = 30°。\n【求解】求 △ABD 的面积。（若琳答 9 + 3√3，红笔判错；正确答案 (9/2)(√3 − 1) = 4.5√3 − 4.5 ≈ 3.29）",
+correct_answer:"【详解】【第一步：先定 AB】\n在 Rt△ABC 中，∠C = 90°，∠ABC = 30° ⇒ AC 是 30° 角所对的边 ⇒ AB = 2AC = **6**（30° 所对直角边 = 斜边的一半）。\n\n【第二步：在 △ABD 中确定各角】\n∠ADB = 180° − ∠BAD − ∠ABD = 180° − 15° − 30° = **135°**。\n\n【第三步：用正弦定理求 AD】\nAD / sin∠ABD = AB / sin∠ADB ⇒ AD / sin30° = 6 / sin135°\n⇒ AD = 6 × (1/2) ÷ (√2/2) = 3 × 2/√2 = **3√2**。\n\n【第四步：用两边夹角求面积】\nS△ABD = ½ × AB × AD × sin∠BAD = ½ × 6 × 3√2 × sin15°\n其中 sin15° = (√6 − √2)/4\n⇒ S = 9√2 × (√6 − √2)/4 = 9(√12 − 2)/4 = 9(2√3 − 2)/4 = **(9/2)(√3 − 1) = 4.5√3 − 4.5 ≈ 3.29**。\n\n（也可先求 BD = 3(√3 − 1) 再用 S = ½ × AB × BD × sin30° 验证，结果相同。）\n\n【知识点】① 直角三角形中 30° 角的性质（对边 = 斜边的一半）；\n② 三角形内角和与角度转化；\n③ 正弦定理（已知两角一边求边）；\n④ 含特殊角（15°、30°、135°）的三角函数值；\n⑤ 三角形面积公式的两个形式：S = ½ah 与 S = ½ab·sinC；\n⑥ 二次根式化简。\n\n📌 出处：第二讲 勾股定理综合复习 巩固4 第2题。同页第1题（等边+等腰直角求 CD = √(8−4√3)）答对，未录入。",
+my_answer:"若琳答 9 + 3√3，红笔判错；正确答案 (9/2",
+error_reason:"计算失误",tags:"数学,含 15°/30° 角的三角形 · 正弦定理/面积公式",source:'作业',difficulty:3,
+image_path:"uploads/wrong_bank/math_gu4_20260925.jpg"}
+];
+function applyBuiltinQuestions(){try{
+  const applied=JSON.parse(localStorage.getItem(BUILTIN_FLAG)||'[]');
+  const d=loadData();let added=0;
+  for(const b of BUILTIN_QUESTIONS){
+    if(applied.indexOf(b.key)>=0)continue;
+    const subj=d.subjects.find(s=>s.name===b.subject);
+    if(!subj)continue;
+    let chap=null;
+    if(b.chapter){chap=d.chapters.find(c=>c.subject_id===subj.id&&c.name===b.chapter);
+      if(!chap){chap={id:genChapId(),subject_id:subj.id,name:b.chapter,sort_order:0};d.chapters.push(chap);}}
+    d.questions.push({id:genId(),subject_id:subj.id,chapter_id:chap?chap.id:null,
+      content:b.content,correct_answer:b.correct_answer||'',my_answer:b.my_answer||'',
+      error_reason:b.error_reason||'概念不清',tags:b.tags||'',source:b.source||'练习',
+      difficulty:b.difficulty||3,grade:b.grade||DEFAULT_GRADE,mastery:0,created_at:now(),updated_at:now(),
+      next_review:today(),review_count:0,image_path:b.image_path||'',answer_image_path:'',flow:b.flow||{},ana5:b.ana5||{}});
+    applied.push(b.key);added++;
+  }
+  saveData(d);localStorage.setItem(BUILTIN_FLAG,JSON.stringify(applied));
+  if(added>0)toast('📥 已收录 '+added+' 道新错题','success');
+}catch(e){console.error('builtin error',e);}}
+
+// ===================== ROUTER =====================
+let currentPage='dashboard';
+function navigate(page,data){
+  currentPage=page;
+  document.querySelectorAll('.navbar-nav a').forEach(a=>a.classList.toggle('active',a.dataset.page===page));
+  render(page,data);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.navbar-nav a').forEach(a=>a.addEventListener('click',()=>navigate(a.dataset.page)));
+
+// ===================== TOAST =====================
+function toast(msg,type='info'){
+  const el=document.createElement('div');
+  el.className=`toast toast-${type}`;
+  el.textContent=msg;
+  document.body.appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300);},2500);
+}
+
+// ===================== RENDER =====================
+function render(page,data){
+  const app=document.getElementById('app');
+  if(page==='dashboard') app.innerHTML=renderDashboard();
+  else if(page==='add') app.innerHTML=renderAdd();
+  else if(page==='list') app.innerHTML=renderList();
+  else if(page==='detail') app.innerHTML=renderDetail(data);
+  else if(page==='review') app.innerHTML=renderReview();
+  else if(page==='training') app.innerHTML=renderTraining(data);
+  else if(page==='print-page') app.innerHTML=renderPrint();
+  else if(page==='analysis') app.innerHTML=renderAnalysis();
+  else if(page==='points') app.innerHTML=renderPoints();
+}
+
+// ===================== 局部重绘辅助 =====================
+// ⚠️ 历史 bug：#app 只在 navigate() 里被写入，但筛选/分页/编辑/再来一轮等按钮直接调
+//    renderList() 等（只返回 HTML 字符串、不写回 DOM）→ 点了完全没反应。
+//    统一改用 refresh* 辅助函数，真正把新视图写回 #app。
+function _drawView(html){const app=document.getElementById('app');if(app)app.innerHTML=html;}
+function refreshList(){_drawView(renderList());}
+function refreshAdd(){_drawView(renderAdd());}
+function refreshDetail(qid){_drawView(renderDetail({qid:qid}));}
+function refreshReview(){_drawView(renderReview());}
+function refreshTraining(){_drawView(renderTraining());}
+
+// ===================== DASHBOARD =====================
+function renderDashboard(){
+  const d=loadData();
+  const total=d.questions.length;
+  const needReview=d.questions.filter(q=>q.next_review&&q.next_review<=today()).length;
+  const mastered=d.questions.filter(q=>q.mastery>=5).length;
+  const weak=d.questions.filter(q=>q.mastery===0&&q.next_review).length;
+  // Subject counts
+  const subjCounts={};
+  d.subjects.forEach(s=>subjCounts[s.id]=0);
+  d.questions.forEach(q=>{if(subjCounts[q.subject_id]!==undefined)subjCounts[q.subject_id]++;});
+  // Grade counts（年级维度）
+  const gradeCnt={};
+  d.questions.forEach(q=>{const k=(q.grade===undefined||q.grade===null||q.grade==='')?'none':String(q.grade);gradeCnt[k]=(gradeCnt[k]||0)+1;});
+  // Recent questions
+  const recent=[...d.questions].sort((a,b)=>b.id-a.id).slice(0,5);
+  return`
+  <div class="stat-grid">
+    <div class="stat-card bg-g1"><div class="num">${total}</div><div class="label">总错题</div><div class="icon"><i class="fas fa-database"></i></div></div>
+    <div class="stat-card bg-g2"><div class="num">${needReview}</div><div class="label">待复习</div><div class="icon"><i class="fas fa-redo"></i></div></div>
+    <div class="stat-card bg-g3"><div class="num">${mastered}</div><div class="label">已掌握</div><div class="icon"><i class="fas fa-check-circle"></i></div></div>
+    <div class="stat-card bg-g4"><div class="num">${weak}</div><div class="label">薄弱点</div><div class="icon"><i class="fas fa-exclamation-triangle"></i></div></div>
+  </div>
+  <div class="card"><div class="card-title"><i class="fas fa-book"></i> 科目概览</div>
+    <div class="subject-grid">${d.subjects.map((s,i)=>{
+      const cnt=subjCounts[s.id]||0;
+      return `<div class="subject-card" onclick="navigate('list',{subject_id:${s.id}})">
+        <div class="s-icon" style="background:${SUBJECT_COLORS[i%SUBJECT_COLORS.length]}"><i class="fas ${SUBJECT_ICONS[i%SUBJECT_ICONS.length]}"></i></div>
+        <div class="s-name">${s.name}</div><div class="s-count">${cnt}题</div></div>`;
+    }).join('')}</div></div>
+  <div class="card"><div class="card-title"><i class="fas fa-graduation-cap" style="color:var(--primary)"></i> 年级概览</div>
+    <div class="grade-chips">
+      ${[...GRADES.map(String),'none'].filter(k=>gradeCnt[k]).map(k=>`<button class="grade-chip" onclick="listFilter.grade='${k}';listFilter.page=1;navigate('list')">${k==='none'?'未标注':k+'年级'} · ${gradeCnt[k]}题</button>`).join('')}
+      <button class="grade-chip" onclick="listFilter.grade='';listFilter.page=1;navigate('list')">全部年级 · ${d.questions.length}题</button>
+    </div></div>
+  ${recent.length?`<div class="card"><div class="card-title"><i class="fas fa-history"></i> 最近录入</div>
+    ${recent.map(q=>{
+      const subj=d.subjects.find(s=>s.id===q.subject_id);
+      return `<div class="question-item" onclick="navigate('detail',{qid:${q.id}})">
+        <div class="q-header"><span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+        <span class="q-badge badge-grade">${gradeText(q.grade)}</span>
+        ${q.chapter_id?`<span class="q-badge badge-chapter">${(d.chapters.find(c=>c.id===q.chapter_id)||{}).name||''}</span>`:''}
+        <span class="q-badge badge-reason">${q.error_reason}</span>
+        <span class="q-badge badge-mastery">掌握 ${q.mastery}/5</span></div>
+        <div class="q-content">${q.content.substring(0,100)}${q.content.length>100?'…':''}</div>
+        <div class="q-meta">${q.created_at}</div></div>`;
+    }).join('')}</div>`:''}
+  ${!total?'<div class="empty-state"><i class="fas fa-inbox"></i><h5>还没有错题记录</h5><p class="text-muted">去录入第一道错题吧！</p><button class="btn btn-primary mt-2" onclick="navigate(\'add\')"><i class="fas fa-plus-circle"></i> 录入错题</button></div>':''}
+  `;
+}
+
+// ===================== ADD =====================
+let addForm={subject_id:1,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:lastGrade()};
+
+function renderAdd(){
+  const d=loadData();
+  const chapters=d.chapters.filter(c=>c.subject_id===addForm.subject_id);
+  return`<div class="card">
+    <div class="card-title"><i class="fas fa-plus-circle" style="color:var(--primary)"></i> 录入新错题</div>
+    <form onsubmit="event.preventDefault();submitAdd()">
+      <div class="form-section"><h6><i class="fas fa-info-circle"></i> 基本信息</h6>
+        <div class="row">
+          <div><label class="form-label">科目 <span class="req">*</span></label>
+            <select class="form-select" id="af_subject" onchange="addForm.subject_id=+this.value;refreshAdd()">
+              ${d.subjects.map(s=>`<option value="${s.id}" ${s.id===addForm.subject_id?'selected':''}>${s.name}</option>`).join('')}
+            </select></div>
+          <div><label class="form-label">年级 <span class="req">*</span></label>
+            <select class="form-select" id="af_grade" onchange="addForm.grade=+this.value;setLastGrade(this.value)">
+              ${GRADES.map(g=>`<option value="${g}" ${g===addForm.grade?'selected':''}>${g}年级</option>`).join('')}
+            </select></div>
+          <div><label class="form-label">章节</label>
+            <div style="display:flex;gap:.3rem"><select class="form-select" id="af_chapter" onchange="addForm.chapter_id=this.value||''">
+              <option value="">选择章节…</option>
+              ${chapters.map(c=>`<option value="${c.id}" ${String(c.id)===addForm.chapter_id?'selected':''}>${c.name}</option>`).join('')}
+            </select><button class="btn btn-outline btn-sm" onclick="addChapter()"><i class="fas fa-plus"></i></button></div></div>
+          <div><label class="form-label">来源</label>
+            <select class="form-select" id="af_source" onchange="addForm.source=this.value">
+              ${SOURCES.map(s=>`<option value="${s}" ${s===addForm.source?'selected':''}>${s}</option>`).join('')}
+            </select></div>
+          <div><label class="form-label">难度</label>
+            <select class="form-select" id="af_difficulty" onchange="addForm.difficulty=+this.value">
+              ${[1,2,3,4,5].map(i=>`<option value="${i}" ${i===addForm.difficulty?'selected':''}>${'⭐'.repeat(i)}</option>`).join('')}
+            </select></div></div></div>
+      <div class="form-section"><h6><i class="fas fa-question-circle" style="color:var(--info)"></i> 题目</h6>
+        <label class="form-label">题目内容 <span class="req">*</span></label>
+        <textarea class="form-control" rows="3" id="af_content" placeholder="输入题目内容…" onchange="addForm.content=this.value">${addForm.content}</textarea>
+        <label class="form-label" style="margin-top:.5rem"><i class="fas fa-image"></i> 题目图片（选填，自动缩放）</label>
+        <input type="file" class="form-control" id="af_image" accept="image/*" onchange="handleFile(this, 'image_path')">
+        <div id="af_image_preview" style="margin-top:.3rem;max-width:200px;border-radius:8px;overflow:hidden;display:${addForm.image_path?'block':'none'}">
+          ${addForm.image_path ? `<img src="${addForm.image_path}" style="width:100%;border-radius:6px">` : ''}
+          <span style="font-size:.75rem;color:var(--text-light);cursor:pointer" onclick="clearFile('image_path','af_image','af_image_preview')">✕ 删除</span>
+        </div></div>
+      <div class="form-section"><h6><i class="fas fa-check-circle" style="color:var(--success)"></i> 答案</h6>
+        <div class="row">
+          <div><label class="form-label" style="color:var(--success)">正确答案</label>
+            <textarea class="form-control" rows="2" id="af_correct" placeholder="正确答案…" onchange="addForm.correct_answer=this.value">${addForm.correct_answer}</textarea></div>
+          <div><label class="form-label" style="color:var(--danger)">我的错误答案</label>
+            <textarea class="form-control" rows="2" id="af_wrong" placeholder="当时写的错误答案…" onchange="addForm.my_answer=this.value">${addForm.my_answer}</textarea></div></div>
+        <label class="form-label" style="margin-top:.5rem"><i class="fas fa-image"></i> 答案图片（选填，自动缩放）</label>
+        <input type="file" class="form-control" id="af_answer_image" accept="image/*" onchange="handleFile(this, 'answer_image_path')">
+        <div id="af_answer_image_preview" style="margin-top:.3rem;max-width:200px;border-radius:8px;overflow:hidden;display:${addForm.answer_image_path?'block':'none'}">
+          ${addForm.answer_image_path ? `<img src="${addForm.answer_image_path}" style="width:100%;border-radius:6px">` : ''}
+          <span style="font-size:.75rem;color:var(--text-light);cursor:pointer" onclick="clearFile('answer_image_path','af_answer_image','af_answer_image_preview')">✕ 删除</span>
+        </div></div>
+      <div class="form-section"><h6><i class="fas fa-search" style="color:var(--warning)"></i> 错因分析</h6>
+        <div class="row">
+          <div><label class="form-label">错误原因</label>
+            <select class="form-select" id="af_reason" onchange="addForm.error_reason=this.value">
+              ${ERROR_REASONS.map(r=>`<option value="${r}" ${r===addForm.error_reason?'selected':''}>${r}</option>`).join('')}
+            </select></div>
+          <div><label class="form-label">知识点标签</label>
+            <input class="form-control" id="af_tags" placeholder="逗号分隔" value="${addForm.tags}" onchange="addForm.tags=this.value"></div></div></div>
+      <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
+        <button class="btn btn-primary px-4"><i class="fas fa-save"></i> 保存错题</button>
+        <button class="btn btn-outline px-4 ms-2" type="button" onclick="addForm={subject_id:1,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:lastGrade()};refreshAdd()">重置</button></div>
+    </form></div>`;
+}
+
+// ===================== FILE UPLOAD HELPERS =====================
+function handleFile(input, field) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) { toast('图片不能超过2MB','error'); input.value = ''; return; }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    addForm[field] = e.target.result;
+    const preview = document.getElementById(field === 'image_path' ? 'af_image_preview' : 'af_answer_image_preview');
+    if (preview) {
+      preview.style.display = 'block';
+      preview.innerHTML = `<img src="${e.target.result}" style="width:100%;border-radius:6px">
+        <span style="font-size:.75rem;color:var(--text-light);cursor:pointer" onclick="clearFile('${field}','${input.id}','${preview.id}')">✕ 删除</span>`;
+    }
+  };
+  reader.readAsDataURL(file);
+}
+function clearFile(field, inputId, previewId) {
+  addForm[field] = '';
+  const inp = document.getElementById(inputId);
+  if (inp) inp.value = '';
+  const pre = document.getElementById(previewId);
+  if (pre) pre.style.display = 'none';
+}
+
+function submitAdd(){
+  const d=loadData();
+  const content=document.getElementById('af_content').value.trim();
+  if(!content){toast('请输入题目内容','error');return;}
+  const qid=genId();
+  const chapId=addForm.chapter_id?parseInt(addForm.chapter_id):null;
+  d.questions.push({
+    id:qid,subject_id:addForm.subject_id,chapter_id:chapId,
+    content,correct_answer:addForm.correct_answer,my_answer:addForm.my_answer,
+    error_reason:addForm.error_reason,tags:addForm.tags,source:addForm.source,
+    difficulty:addForm.difficulty,grade:(addForm.grade?+addForm.grade:lastGrade()),mastery:0,created_at:now(),updated_at:now(),
+    next_review:today(),review_count:0,image_path:addForm.image_path||'',answer_image_path:addForm.answer_image_path||'',flow:{},ana5:{}
+  });
+  saveData(d);
+  setLastGrade(addForm.grade);
+  addForm={subject_id:addForm.subject_id,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:addForm.grade||lastGrade(),image_path:'',answer_image_path:''};
+  toast('✅ 错题已保存','success');
+  navigate('detail',{qid});
+}
+
+function addChapter(){
+  const name=prompt('新章节名称：');
+  if(!name)return;
+  const d=loadData();
+  d.chapters.push({id:genChapId(),subject_id:addForm.subject_id,name,sort_order:0});
+  saveData(d);
+  refreshAdd();
+}
+
+// ===================== LIST =====================
+let listFilter={subject_id:'',error_reason:'',mastery:'',grade:'',search:'',page:1};
+const PER_PAGE=15;
+
+function renderList(){
+  const d=loadData();
+  let filtered=[...d.questions];
+  if(listFilter.subject_id) filtered=filtered.filter(q=>q.subject_id===parseInt(listFilter.subject_id));
+  if(listFilter.error_reason) filtered=filtered.filter(q=>q.error_reason===listFilter.error_reason);
+  if(listFilter.mastery!=='') filtered=filtered.filter(q=>q.mastery===parseInt(listFilter.mastery));
+  if(listFilter.grade!=='') filtered=filtered.filter(q=>gradeMatch(q,listFilter.grade));
+  if(listFilter.search) {const s=listFilter.search.toLowerCase();filtered=filtered.filter(q=>q.content.toLowerCase().includes(s)||q.tags.toLowerCase().includes(s));}
+  filtered.sort((a,b)=>b.id-a.id);
+  const totalPages=Math.max(1,Math.ceil(filtered.length/PER_PAGE));
+  const page=Math.min(listFilter.page,totalPages);
+  const paged=filtered.slice((page-1)*PER_PAGE,page*PER_PAGE);
+  return`<div class="card">
+    <div class="card-title"><i class="fas fa-filter"></i> 筛选</div>
+    <div class="filter-bar">
+      <select class="form-select" id="lf_subject" onchange="listFilter.subject_id=this.value;listFilter.page=1;refreshList()">
+        <option value="">📚 全部科目</option>${d.subjects.map(s=>`<option value="${s.id}" ${listFilter.subject_id==String(s.id)?'selected':''}>${s.name}</option>`).join('')}
+      </select>
+      <select class="form-select" onchange="listFilter.grade=this.value;listFilter.page=1;refreshList()">
+        <option value="">🎓 全部年级</option>
+        <option value="none" ${listFilter.grade==='none'?'selected':''}>未标注年级</option>
+        ${GRADES.map(g=>`<option value="${g}" ${listFilter.grade===String(g)?'selected':''}>${g}年级</option>`).join('')}
+      </select>
+      <select class="form-select" onchange="listFilter.error_reason=this.value;listFilter.page=1;refreshList()">
+        <option value="">📌 全部原因</option>${ERROR_REASONS.map(r=>`<option value="${r}" ${listFilter.error_reason===r?'selected':''}>${r}</option>`).join('')}
+      </select>
+      <select class="form-select" onchange="listFilter.mastery=this.value;listFilter.page=1;refreshList()">
+        <option value="">🎯 掌握度</option><option value="0" ${listFilter.mastery==='0'?'selected':''}>未掌握</option>
+        <option value="1" ${listFilter.mastery==='1'?'selected':''}>待复习</option><option value="5" ${listFilter.mastery==='5'?'selected':''}>已掌握</option>
+      </select>
+      <input class="form-control" placeholder="🔍 搜索题目…" value="${listFilter.search}" onchange="listFilter.search=this.value;listFilter.page=1;refreshList()" style="min-width:150px">
+      <button class="btn btn-outline btn-sm" onclick="listFilter={subject_id:'',error_reason:'',mastery:'',grade:'',search:'',page:1};refreshList()"><i class="fas fa-undo"></i> 重置</button>
+    </div>
+    <div>${paged.length?paged.map(q=>{
+      const subj=d.subjects.find(s=>s.id===q.subject_id);
+      const chap=d.chapters.find(c=>c.id===q.chapter_id);
+      return`<div class="question-item" onclick="navigate('detail',{qid:${q.id}})">
+        <div class="q-header"><span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+        <span class="q-badge badge-grade">${gradeText(q.grade)}</span>
+        ${chap?`<span class="q-badge badge-chapter">${chap.name}</span>`:''}
+        <span class="q-badge badge-reason">${q.error_reason}</span>
+        <span class="q-badge badge-source">${q.source}</span>
+        <span class="q-badge badge-mastery">${q.mastery}/5</span></div>
+        <div class="q-content">${q.content.substring(0,200)}${q.content.length>200?'…':''}</div>
+        <div class="q-meta">${q.created_at} ${q.tags?'🏷️ '+q.tags:''}</div></div>`;
+    }).join(''):'<div class="empty-state"><i class="fas fa-inbox"></i><h5>没有匹配的错题</h5></div>'}
+    ${totalPages>1?`<div class="pagination">${[...Array(totalPages).keys()].map(i=>`<a class="${i+1===page?'active':''}" onclick="listFilter.page=${i+1};refreshList()">${i+1}</a>`).join('')}</div>`:''}
+  </div>`;
+}
+
+// ===================== DETAIL =====================
+// ⚠️ 原 detailEditMode 全局开关已废弃：它只置真不复位（点过「编辑」后从导航栏离开，
+//    再点开任何错题都直接进编辑表单）。现在编辑态由 navigate('detail',{qid,edit:true}) 参数决定。
+function renderDetail(data){
+  const d=loadData();
+  const q=d.questions.find(x=>x.id===data.qid);
+  if(!q)return'<div class="empty-state"><i class="fas fa-question-circle"></i><h5>题目不存在</h5></div>';
+  const subj=d.subjects.find(s=>s.id===q.subject_id);
+  const chap=d.chapters.find(c=>c.id===q.chapter_id);
+  const chapters=d.chapters.filter(c=>c.subject_id===q.subject_id);
+  if(data&&data.edit){          // 编辑态由页面参数决定（原 detailEditMode 全局开关不复位 → 打开错题直接进编辑）
+    const ef={...q};
+    return`<div class="card"><div class="card-title"><i class="fas fa-edit"></i> 编辑错题</div>
+      <form onsubmit="event.preventDefault();saveEdit(${q.id})">
+        <div class="form-section"><h6>基本信息</h6>
+          <div class="row">
+            <div><label class="form-label">科目</label><select class="form-select" id="ed_subject" onchange="loadEditChapters(+this.value)">
+              ${d.subjects.map(s=>`<option value="${s.id}" ${s.id===q.subject_id?'selected':''}>${s.name}</option>`).join('')}
+            </select></div>
+            <div><label class="form-label">年级</label><select class="form-select" id="ed_grade">${GRADES.map(g=>`<option value="${g}" ${g===q.grade?'selected':''}>${g}年级</option>`).join('')}</select></div>
+            <div><label class="form-label">章节</label><select class="form-select" id="ed_chapter">
+              <option value="">无</option>${chapters.map(c=>`<option value="${c.id}" ${c.id===q.chapter_id?'selected':''}>${c.name}</option>`).join('')}
+            </select></div>
+            <div><label class="form-label">来源</label><select class="form-select" id="ed_source">${SOURCES.map(s=>`<option value="${s}" ${s===q.source?'selected':''}>${s}</option>`).join('')}</select></div>
+            <div><label class="form-label">难度</label><select class="form-select" id="ed_diff">${[1,2,3,4,5].map(i=>`<option value="${i}" ${i===q.difficulty?'selected':''}>${'⭐'.repeat(i)}</option>`).join('')}</select></div></div></div>
+        <div class="form-section"><label class="form-label">题目内容</label><textarea class="form-control" rows="3" id="ed_content">${q.content}</textarea></div>
+        <div class="form-section"><div class="row">
+          <div><label class="form-label" style="color:var(--success)">正确答案</label><textarea class="form-control" rows="2" id="ed_correct">${q.correct_answer}</textarea></div>
+          <div><label class="form-label" style="color:var(--danger)">我的错误答案</label><textarea class="form-control" rows="2" id="ed_wrong">${q.my_answer}</textarea></div></div></div>
+        <div class="form-section"><div class="row">
+          <div><label class="form-label">错误原因</label><select class="form-select" id="ed_reason">${ERROR_REASONS.map(r=>`<option value="${r}" ${r===q.error_reason?'selected':''}>${r}</option>`).join('')}</select></div>
+          <div><label class="form-label">标签</label><input class="form-control" id="ed_tags" value="${q.tags}"></div></div></div>
+        ${renderAna5Form(q)}
+        <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
+          <button class="btn btn-primary px-4"><i class="fas fa-save"></i> 保存修改</button>
+          <button class="btn btn-outline px-4 ms-2" type="button" onclick="navigate('detail',{qid:${q.id}})">取消</button></div>
+      </form></div>`;
+  }
+  return`<div class="card"><div class="card-title"><i class="fas fa-file-alt"></i> 错题详情</div>
+    <div class="detail-field"><div class="label">科目 / 章节</div><div class="value">
+      <span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+      <span class="q-badge badge-grade">${gradeText(q.grade)}</span>
+      ${chap?`<span class="q-badge badge-chapter">${chap.name}</span>`:''}
+      <span class="q-badge badge-source">${q.source}</span>
+      <span class="q-badge badge-mastery">掌握 ${q.mastery}/5</span>
+      ${'⭐'.repeat(q.difficulty)}</div></div>
+    <div class="detail-field"><div class="label">题目</div><div class="value" style="background:var(--bg);padding:.8rem;border-radius:var(--radius-sm);line-height:1.8">${q.content}</div></div>
+    ${q.image_path?`<div class="detail-field"><div class="label">📷 题目图片</div><div style="max-width:400px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="${q.image_path}" style="width:100%"></div></div>`:''}
+    ${q.correct_answer?`<div class="detail-field"><div class="label" style="color:var(--success)">✅ 正确答案</div><div class="value prewrap" style="background:#48bb7810;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--success)">${q.correct_answer}</div></div>`:''}
+    ${q.my_answer?`<div class="detail-field"><div class="label" style="color:var(--danger)">❌ 我的错误答案</div><div class="value prewrap" style="background:#f5656510;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger)">${q.my_answer}</div></div>`:''}
+    ${q.answer_image_path?`<div class="detail-field"><div class="label">📷 答案图片</div><div style="max-width:400px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="${q.answer_image_path}" style="width:100%"></div></div>`:''}
+    <div class="detail-field"><div class="label">错因分析</div><div class="value"><span class="q-badge badge-reason">${q.error_reason}</span> ${q.tags?'🏷️ '+q.tags:''}</div></div>
+    ${renderAna5View(q)}
+    ${q.flow&&(q.flow.known||q.flow.target||q.flow.plan||q.flow.check)?`<div class="detail-field"><div class="label">📋 流程检查</div><div class="value" style="background:#fdf2f2;padding:.6rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger);font-size:.85rem;line-height:1.9">① 已知：${q.flow.known||'—'}<br>② 目标：${q.flow.target||'—'}<br>③ 路径：${q.flow.plan||'—'}<br>④ 检验：${q.flow.check||'—'}</div></div>`:''}
+    <div class="detail-field"><div class="label">时间</div><div class="value" style="color:var(--text-light);font-size:.85rem">录入: ${q.created_at} | 复习: ${q.review_count}次 | 下次复习: ${q.next_review||'无需'}</div></div>
+    <div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+      <button class="btn btn-primary btn-sm" onclick="navigate('detail',{qid:${q.id},edit:true})"><i class="fas fa-edit"></i> 编辑</button>
+      <button class="btn btn-success btn-sm" onclick="navigate('training',{qid:${q.id}})"><i class="fas fa-layer-group"></i> 三层练</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteQ(${q.id})"><i class="fas fa-trash"></i> 删除</button>
+      <button class="btn btn-outline btn-sm" onclick="navigate('list',{})"><i class="fas fa-arrow-left"></i> 返回列表</button>
+    </div></div>`;
+}
+function loadEditChapters(sid){
+  const d=loadData();
+  const sel=document.getElementById('ed_chapter');
+  sel.innerHTML='<option value="">无</option>'+d.chapters.filter(c=>c.subject_id===sid).map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+}
+function saveEdit(qid){
+  const d=loadData();
+  const q=d.questions.find(x=>x.id===qid);
+  if(!q)return;
+  q.subject_id=parseInt(document.getElementById('ed_subject').value);
+  q.chapter_id=parseInt(document.getElementById('ed_chapter').value)||null;
+  q.content=document.getElementById('ed_content').value;
+  q.correct_answer=document.getElementById('ed_correct').value;
+  q.my_answer=document.getElementById('ed_wrong').value;
+  q.error_reason=document.getElementById('ed_reason').value;
+  q.tags=document.getElementById('ed_tags').value;
+  q.ana5={};ANA5_DIMS.forEach(dm=>{const el=document.getElementById('ed_ana5_'+dm.k);if(el)q.ana5[dm.k]=el.value.trim();});
+  q.source=document.getElementById('ed_source').value;
+  q.difficulty=parseInt(document.getElementById('ed_diff').value);
+  q.grade=parseInt(document.getElementById('ed_grade').value)||null;setLastGrade(q.grade);
+  q.updated_at=now();
+  saveData(d);
+  toast('✅ 已保存','success');
+  navigate('detail',{qid});
+}
+function deleteQ(qid){
+  if(!confirm('确定删除这道错题？'))return;
+  const d=loadData();
+  d.questions=d.questions.filter(q=>q.id!==qid);
+  saveData(d);
+  toast('已删除','info');
+  navigate('list',{});
+}
+
+// ===================== REVIEW =====================
+let reviewList=[],reviewIdx=0,reviewAnswered=false,reviewFilter='all';
+
+function renderReview(){
+  const d=loadData();
+  let qs;
+  if(reviewFilter==='need'){
+    qs=d.questions.filter(q=>q.next_review&&q.next_review<=today());
+    if(!qs.length)qs=d.questions.filter(q=>q.mastery<5);
+    if(!qs.length)qs=[...d.questions];
+  }else if(reviewFilter==='twice'){
+    qs=d.questions.filter(q=>q.review_count<2);
+    if(!qs.length)qs=[...d.questions];
+  }else{
+    // 默认：先复习未满2次重做的错题（确保每道错题重做2次以上）
+    qs=d.questions.filter(q=>q.review_count<2);
+    if(!qs.length)qs=d.questions.filter(q=>q.next_review&&q.next_review<=today());
+    if(!qs.length)qs=d.questions.filter(q=>q.mastery<5);
+    if(!qs.length)qs=[...d.questions];
+  }
+  qs=rvfApply(qs);
+  if(!qs.length)return rvfPanel()+'<div class="empty-state"><i class="fas fa-filter" style="color:var(--text-light)"></i><h5>当前筛选下没有错题</h5><p>把条件放宽，或点下面清空筛选。</p><button class="btn btn-primary" onclick="rvfClear()"><i class="fas fa-eraser"></i> 清空筛选</button></div>';
+  reviewList=qs.sort(()=>Math.random()-.5);
+  reviewIdx=0;reviewAnswered=false;
+  return reviewView();
+}
+function reviewCard(){
+  if(reviewIdx>=reviewList.length){
+    const d=loadData();
+    const twiceDone=d.questions.filter(q=>q.review_count>=2).length;
+    const needTwice=d.questions.filter(q=>q.review_count<2).length;
+    return`<div class="card review-card"><div class="big-icon" style="font-size:3rem">🎉</div><h2>复习完成！</h2>
+    <p style="color:var(--text-light);margin:.5rem 0">共复习了 ${reviewList.length} 道题</p>
+    <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:.5rem 0">
+      <span class="q-badge" style="background:#48bb7820;color:#2f855a">✅ 已重做2次以上：${twiceDone} 题</span>
+      <span class="q-badge" style="background:#ed893620;color:#c05621">⚠️ 未满2次：${needTwice} 题</span>
+    </div>
+    ${needTwice?`<p style="font-size:.8rem;color:var(--text-light)">💡 错题需重做 <strong>2次以上</strong>才算基础巩固，继续复习未满2次的题目吧！</p>`:''}
+    <button class="btn btn-primary" onclick="refreshReview()"><i class="fas fa-redo"></i> 再来一轮</button></div>`;}
+  const q=reviewList[reviewIdx];
+  const d=loadData();
+  const subj=d.subjects.find(s=>s.id===q.subject_id);
+  const progress=Math.round(reviewIdx/reviewList.length*100);
+  return`<div class="card"><div class="review-progress"><div class="progress-bar" style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+    <div style="height:100%;width:${progress}%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:3px;transition:width .3s"></div></div></div>
+    <div class="review-card fade-in-up">
+    <div style="display:flex;gap:.3rem;justify-content:center;flex-wrap:wrap;margin-bottom:.8rem">
+      <span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+      <span class="q-badge badge-grade">${gradeText(q.grade)}</span>
+      <span class="q-badge badge-reason">${q.error_reason}</span>
+      <span class="q-badge badge-mastery">${'⭐'.repeat(q.difficulty)}</span>
+      <span class="q-badge" style="background:${q.review_count>=2?'#48bb7820':'#ed893620'};color:${q.review_count>=2?'#2f855a':'#c05621'};font-size:.68rem">${q.review_count>=2?`✅ 已重做${q.review_count}次`:`⚠️ 已重做${q.review_count}次（需2次以上）`}</span>
+    </div>
+    <div class="q-text">${q.content}</div>
+    ${reviewAnswered?`
+      <div style="margin:1rem 0;padding:1rem;border-radius:var(--radius-sm);background:#48bb7810;border-left:4px solid var(--success);text-align:left">
+        <strong style="color:var(--success)">✅ 正确答案：</strong>
+        <div class="prewrap" style="margin-top:.3rem">${q.correct_answer||'（无）'}</div>
+      </div>
+      ${q.my_answer?`<div style="margin:.5rem 0;padding:.5rem .8rem;border-radius:var(--radius-sm);background:#f5656510;border-left:3px solid var(--danger);text-align:left;font-size:.85rem">
+        <strong style="color:var(--danger)">❌ 你的答案：</strong>
+        <div class="prewrap" style="margin-top:.2rem">${q.my_answer}</div></div>`:''}
+      <div class="flow-check">
+        <div class="flow-check-title">📋 流程检查（五步法 · 必填，不填完不算订正完成）</div>
+        <textarea id="fc_known" rows="1" placeholder="① 审题圈画：已知什么条件？">${q.flow&&q.flow.known?q.flow.known:''}</textarea>
+        <textarea id="fc_target" rows="1" placeholder="② 写出目标：这题求什么？">${q.flow&&q.flow.target?q.flow.target:''}</textarea>
+        <textarea id="fc_plan" rows="1" placeholder="③ 规划路径：用什么公式/方法？">${q.flow&&q.flow.plan?q.flow.plan:''}</textarea>
+        <textarea id="fc_check" rows="1" placeholder="④ 回代检验：怎么验证答案对不对？">${q.flow&&q.flow.check?q.flow.check:''}</textarea>
+        <div class="flow-check-warn" id="fc_warn">⚠️ 流程未完成：请先填完 已知/求/步骤/检验 四项，才算订正完成！</div>
+      </div>
+      <div class="review-btns" style="margin-top:1rem">
+        <button class="btn btn-danger" onclick="reviewResult(0)"><i class="fas fa-times"></i> 还不会</button>
+        <button class="btn btn-warning" style="background:var(--warning);color:#fff" onclick="reviewResult(1)"><i class="fas fa-minus"></i> 有点印象</button>
+        <button class="btn btn-success" onclick="reviewResult(2)"><i class="fas fa-check"></i> 已掌握</button>
+      </div>
+    `:`<button class="btn btn-primary" onclick="reviewShowAnswer()"><i class="fas fa-eye"></i> 看答案</button>`}
+    <div class="review-meta">${reviewIdx+1} / ${reviewList.length}</div></div></div>`;
+}
+function reviewShowAnswer(){reviewAnswered=true;document.querySelector('#app').innerHTML=reviewView();}
+function reviewResult(r){
+  const q=reviewList[reviewIdx];
+  const d=loadData();
+  const qq=d.questions.find(x=>x.id===q.id);
+  if(qq){
+    // 流程检查（五步法）：四项必填，不填完不算订正完成
+    const fcVals={};
+    ['fc_known','fc_target','fc_plan','fc_check'].forEach(id=>{const el=document.getElementById(id);fcVals[id]=el?(el.value||'').trim():'';});
+    if(!fcVals.fc_known||!fcVals.fc_target||!fcVals.fc_plan||!fcVals.fc_check){
+      const warn=document.getElementById('fc_warn');if(warn)warn.style.display='block';
+      toast('⚠️ 流程未完成：请填完 已知/求/步骤/检验 四项，才算订正完成！','error');
+      return;
+    }
+    qq.flow={known:fcVals.fc_known,target:fcVals.fc_target,plan:fcVals.fc_plan,check:fcVals.fc_check};
+    if(r===2)qq.mastery=Math.min(qq.mastery+1,REVIEW_INTERVALS.length);
+    else if(r===0)qq.mastery=0;
+    qq.next_review=calcNextReview(qq.mastery);
+    qq.review_count++;
+    qq.updated_at=now();
+    saveData(d);
+    if(qq.review_count===2)toast('✅ 该错题已重做2次，基础巩固达成！','success');
+    if(qq.review_count>=2&&qq.mastery>=3)toast('🏆 已重做2次以上且掌握良好！','success');
+    if(qq.mastery>=5)toast('🎉 该错题已完全掌握！','success');
+  }
+  reviewIdx++;reviewAnswered=false;
+  document.querySelector('#app').innerHTML=reviewView();
+}
+
+// ===================== TRAINING =====================
+let trainingLayer=1,trainingQ=null,trainingFromQid=null;
+let trainingGrade='';                    // 三层训练的年级维度：''=全部 'none'=未标注 '7'..'12'
+function trainGradeMatch(q){
+  if(trainingGrade==='none')return q.grade===undefined||q.grade===null||q.grade==='';
+  if(trainingGrade!=='')return q.grade===parseInt(trainingGrade);
+  return true;
+}
+function trainingGradeChips(d){
+  const has=(k)=>d.questions.some(q=>gradeMatch(q,k));
+  const chip=(k,txt)=>`<button class="grade-chip ${trainingGrade===k?'active':''}" onclick="trainingGrade='${k}';refreshTraining()">${txt}</button>`;
+  const present=GRADES.filter(g=>has(String(g)));
+  if(!has('none')&&present.length<2)return'';   // 只有一个年级且无未标注 → 不显示筛选条
+  return `<div class="grade-chips" style="margin-bottom:.5rem">${chip('','全部年级')}${present.map(g=>chip(String(g),g+'年级')).join('')}${has('none')?chip('none','未标注'):''}</div>`;
+}
+
+const SUBJ_ICON={'数学':'fa-calculator','物理':'fa-atom','化学':'fa-flask','语文':'fa-book','英语':'fa-language','历史':'fa-scroll','地理':'fa-globe','生物':'fa-dna','道法':'fa-balance-scale'};
+function subjIcon(n){return SUBJ_ICON[n]||'fa-book';}
+
+function renderTraining(data){
+  const d=loadData();
+  // If a specific question is requested
+  if(data&&data.qid){
+    const q=d.questions.find(x=>x.id===data.qid);
+    if(!q)return'<div class="empty-state"><i class="fas fa-question-circle"></i><h5>题目不存在</h5></div>';
+    trainingQ=q;
+    trainingLayer=1;
+    trainingFromQid=q.id;                 // 记住来源，返回时回到该错题详情
+    return renderQTraining(q);
+  }
+  trainingQ=null;
+  trainingFromQid=null;
+  // Show subject selection
+  const gQs=d.questions.filter(trainGradeMatch);          // 先过年级维度
+  const counts={};
+  d.subjects.forEach(x=>{counts[x.name]=gQs.filter(q=>q.subject_id===x.id).length;});   // 全部科目（含语文/英语）
+  const subjects=Object.keys(counts).filter(n=>counts[n]>0);
+  const total=Object.values(counts).reduce((a,b)=>a+b,0);
+  if(!total)return`<div class="card">${trainingGradeChips(d)}<div class="empty-state"><i class="fas fa-layer-group"></i><h5>${trainingGrade?'该年级还没有错题':'还没有错题'}</h5><p>先录入错题，再用三层训练强化</p></div></div>`;
+  return`<div class="training-layout">
+    <div class="training-panel"><h4 style="margin-bottom:.8rem"><i class="fas fa-layer-group" style="color:var(--primary)"></i> 三层训练</h4>
+      <p style="font-size:.9rem;color:var(--text-light);margin-bottom:1rem">
+      <strong>1️⃣ 基础同构</strong> → 原题重做<br>
+      <strong>2️⃣ 条件变化</strong> → 改编条件/换语境，灵活应变<br>
+      <strong>3️⃣ 反向综合</strong> → 综合应用，提升思维</p>
+      ${trainingGradeChips(d)}
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center">
+        ${subjects.map(s=>`<button class="btn btn-primary" onclick="startSubjectTraining('${s}')"><i class="fas ${subjIcon(s)}"></i> ${s}（${counts[s]}题）</button>`).join('')}
+        ${Object.values(counts).reduce((a,b)=>a+b,0)?'<button class="btn btn-success" onclick="startSubjectTraining(\'all\')"><i class="fas fa-random"></i> 全部混合（'+Object.values(counts).reduce((a,b)=>a+b,0)+'题）</button>':''}
+      </div>
+    </div></div>`;
+}
+
+function startSubjectTraining(subjName){
+  const d=loadData();
+  let qs;
+  if(subjName==='all'){
+    const subjIds=d.subjects.map(s=>s.id);
+    qs=d.questions.filter(q=>subjIds.includes(q.subject_id)&&trainGradeMatch(q));
+  }else{
+    const subj=d.subjects.find(s=>s.name===subjName);
+    if(!subj)return;
+    qs=d.questions.filter(q=>q.subject_id===subj.id&&trainGradeMatch(q));
+  }
+  if(!qs.length){toast('没有符合条件的错题','error');return;}
+  trainingQ=qs[Math.floor(Math.random()*qs.length)];
+  trainingLayer=1;
+  document.querySelector('#app').innerHTML=renderQTraining(trainingQ);
+}
+
+function renderQTraining(q){
+  const d=loadData();
+  const subj=d.subjects.find(s=>s.id===q.subject_id);
+  const layers=getOrGenLayers(q);
+  const layerNames=['','🔵 基础同构 · 原题重现','🟠 条件变化 · 灵活应变','🔴 反向综合 · 思维提升'];
+  const layerCols=['','#667eea','#e67e22','#e74c3c'];
+  const layerBg=['','#667eea10','#e67e2210','#e74c3c10'];
+  const l=layers[trainingLayer-1];
+  return`<div class="training-panel fade-in-up">
+    <div style="display:flex;gap:.3rem;margin-bottom:.8rem;flex-wrap:wrap">
+      ${[0,1,2].map((li,i)=>{
+        const ln=i+1;
+        return`<button class="btn btn-sm ${ln===trainingLayer?'btn-primary':'btn-outline'}" onclick="trainingLayer=${ln};document.querySelector('#app').innerHTML=renderQTraining(trainingQ)">
+          ${['🔵','🟠','🔴'][i]} 第${ln}层</button>`;
+      }).join('')}
+      <span style="font-size:.78rem;color:var(--text-light);align-self:center;margin-left:auto">${subj?subj.name:''}</span>
+    </div>
+    <div style="padding:.8rem;background:var(--bg);border-radius:var(--radius-sm);margin-bottom:.8rem;font-size:.92rem;line-height:1.8">
+      <strong>📝 ${l.title}</strong>
+    </div>
+    <div style="padding:.8rem;background:${layerBg[trainingLayer]};border-radius:var(--radius-sm);margin-bottom:.8rem;border-left:4px solid ${layerCols[trainingLayer]};font-size:.9rem">
+      ${l.content}
+    </div>
+    <textarea class="form-control" rows="${trainingLayer===3?'5':'4'}" placeholder="${l.placeholder}" style="margin-bottom:.8rem">${l.savedAnswer||''}</textarea>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem">
+      <button class="btn btn-outline btn-sm" onclick="showLayerAns()"><i class="fas fa-eye"></i> 查看参考答案</button>
+    </div>
+    <div id="layerAns" style="display:none;padding:.8rem;background:#48bb7810;border-radius:var(--radius-sm);margin-bottom:.8rem;border-left:4px solid var(--success);font-size:.88rem">
+      <strong style="color:var(--success)">✅ 参考答案：</strong><br>${l.answer}
+    </div>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center">
+      <button class="btn btn-outline btn-sm" onclick="trainingLayer=Math.max(1,trainingLayer-1);document.querySelector('#app').innerHTML=renderQTraining(trainingQ)" ${trainingLayer<=1?'disabled':''}><i class="fas fa-arrow-left"></i> 上一层</button>
+      <button class="btn btn-primary btn-sm" onclick="trainingLayer=Math.min(3,trainingLayer+1);document.querySelector('#app').innerHTML=renderQTraining(trainingQ)" ${trainingLayer>=3?'disabled':''}>下一层 <i class="fas fa-arrow-right"></i></button>
+      <button class="btn btn-success btn-sm" onclick="saveLayerAns()"><i class="fas fa-save"></i> 保存作答</button>
+      <button class="btn btn-outline btn-sm" onclick="nextTrainingQ()"><i class="fas fa-random"></i> 换一题</button>
+      <button class="btn btn-outline btn-sm" onclick="backFromTraining()"><i class="fas fa-arrow-left"></i> ${trainingFromQid?'返回错题详情':'返回'}</button>
+    </div>
+  </div>`;
+}
+
+function backFromTraining(){
+  const back=trainingFromQid;
+  trainingQ=null;trainingFromQid=null;
+  if(back){navigate('detail',{qid:back});return;}
+  navigate('training',{});
+}
+
+function showLayerAns(){
+  const el=document.getElementById('layerAns');
+  if(el)el.style.display=el.style.display==='none'?'block':'none';
+}
+
+function saveLayerAns(){
+  const d=loadData();
+  const q=d.questions.find(x=>x.id===trainingQ.id);
+  if(!q)return;
+  if(!q._layers)q._layers={answers:[]};
+  const ta=document.querySelector('.training-panel textarea');
+  if(!q._layers.answers)q._layers.answers=[];
+  q._layers.answers[trainingLayer-1]=ta?ta.value:'';
+  saveData(d);
+  toast('✅ 作答已保存','success');
+}
+
+function getOrGenLayers(q){
+  const d=loadData();
+  const fq=d.questions.find(x=>x.id===q.id);
+  if(fq&&fq._layers&&fq._layers.data)return fq._layers.data;
+  const layers=genLayers(q);
+  if(fq){if(!fq._layers)fq._layers={};fq._layers.data=layers;saveData(d);}
+  return layers;
+}
+
+function genLayers(q){
+  const content=q.content||'';
+  const answer=q.correct_answer||'';
+  const d0=loadData();
+  const subjName=((d0.subjects||[]).find(s=>s.id===q.subject_id)||{}).name||'';
+  const isMath=/\d+/.test(content);
+  const hasChoice=/[A-D]\)/.test(content)||/A\./.test(content);
+  
+  // Layer 1: 原题重现
+  const l1={
+    title:'基础同构 · 原题重做',
+    content:`<strong>原题：</strong><span class="prewrap">${content}</span><br><strong style="color:var(--success)">✅ 原题正确答案：</strong><span class="prewrap">${answer||'（见下方）'}</span>`,
+    placeholder:'请重新解答这道题，检验是否真正掌握…',
+    answer:`原题正确答案：${answer||'（未记录）'}<br>重新做一遍，看是否和正确答案一致。`,
+    savedAnswer:''
+  };
+
+  // Layer 2: 生成变式
+  let l2Content,l2Ans,l2Place;
+  if(subjName==='英语'||subjName==='语文'){
+    // 语言类 → 同考点换素材（不能换数字）
+    const w=subjName==='英语'?'句子':'语段';
+    l2Content=`<strong>变式题（同考点换个语境）：</strong>把这道题考查的同一个知识点，换一个${w}再练一遍。<br><br>`+
+      `<div style="background:var(--card-bg);padding:.6rem .8rem;border-radius:8px;border-left:3px solid #e67e22">`+
+      `💡 提示：${subjName==='英语'?'换个主语/时间/情境，让同一个词或语法点出现在新句子里':'换个说法或换一段文字，同一个考点换一种表达方式'}，<br>`+
+      `写出来后再对照原题，看这个知识点是不是真的会用了。</div>`;
+    l2Ans=`换语境训练的关键：<br>1. 先写清原题考的是哪个知识点<br>2. 自己造一个新的${w}，确保用上同一个知识点<br>3. 对照原题答案，检查用法是否一致`;
+    l2Place=`写出你编的新${w}，并标明用到的知识点…`;
+  }else if(subjName==='物理'){
+    // 物理 → 换场景
+    l2Content=`<strong>变式题（换场景）：</strong>保持考查的知识点和公式不变，换一个物体或生活场景再算一遍。`;
+    l2Ans=`换场景训练的关键：<br>1. 明确原题用的公式/规律<br>2. 换物体、换数值或换情境，重算一遍<br>3. 对比原题，看结论是否合理`;
+    l2Place='换一个场景改编，写出新题和数据，再解一遍…';
+  }else if(isMath&&!/[A-D]\)/.test(content)){
+    // 数学计算题 → 换数字
+    const nums=content.match(/\d+(\.\d+)?/g);
+    if(nums&&nums.length){
+      const newNums=nums.map(n=>String(Math.floor(parseFloat(n)*(0.5+Math.random()*0.8)+1)));
+      let v=content;nums.forEach((n,i)=>{v=v.replace(n,newNums[i%newNums.length]);});
+      l2Content=`<strong>变式题（换数）：</strong>${v}`;
+      l2Ans=`题目变了数字，但解题方法相同。按照原题思路，代入新数据重新计算。`;
+      l2Place='按照原题解题方法，代入新的数据计算…';
+    }else{
+      l2Content=`<strong>变式题：</strong>改变题目中的一个条件，自己编一道类似的题并解答。`;
+      l2Ans=`变式练习的关键是找出题目的核心条件，改变其中一个，看解题思路是否变化。`;
+      l2Place='尝试改变条件，题目会怎么变？写出变式题和解答…';
+    }
+  }else if(hasChoice){
+    // 选择题 → 改选项/改情景
+    const opts=content.match(/[A-D][.）][^A-D]*/g);
+    if(opts&&opts.length>=2){
+      l2Content=`<strong>变式题（改选项/改情景）：</strong><br>把题目中的核心条件改一下，看看正确答案变不变？<br><br>`+
+        `<div style="background:var(--card-bg);padding:.6rem .8rem;border-radius:8px;border-left:3px solid #e67e22">`+
+        `💡 提示：想一下如果改变题目中的某个关键词，<br>比如"音调"改成"响度"、"声源处"改成"传播过程中"，<br>答案会怎么变？</div>`;
+      l2Ans=`变式练习答案取决于具体改动。关键思路：<br>1. 找出题目考查的核心知识点<br>2. 改变条件后重新分析哪个选项正确<br>3. 验证原答案是否仍然成立`;
+      l2Place='写出你改编的题目，以及改编后的正确答案…';
+    }else{
+      l2Content=`<strong>变式题：</strong>自己出一道与本题考查相同知识点的选择题，并给出答案。`;
+      l2Ans=`编题思路：确定考查的知识点 → 设计题干 → 设计4个选项（1正确3干扰）<br>确保干扰项来自常见的概念混淆。`;
+      l2Place='请编一道相似的选择题并给出答案…';
+    }
+  }else{
+    // 其他题型
+    l2Content=`<strong>变式题：</strong>改变题目的某个条件或数据，重新解答。看看条件变了以后，答案有什么不同？`;
+    l2Ans=`变式练习的关键：<br>1. 找出题目的可变条件<br>2. 改变一个条件后重新分析<br>3. 对比原题答案，理解条件变化对结果的影响`;
+    l2Place='写出你改编后的题目和解答过程…';
+  }
+  const l2={
+    title:'条件变化 · 灵活应变',
+    content:l2Content,
+    placeholder:l2Place||'思考条件变化后的新解法…',
+    answer:l2Ans||'条件变化训练的是你灵活运用知识的能力。尝试改变题目条件，看解题思路的变化。',
+    savedAnswer:''
+  };
+
+  // Layer 3: 反向综合
+  let l3Content,l3Ans,l3Place;
+  if(answer){
+    l3Content=`<strong>反向综合题：</strong>根据答案<strong>"${answer.length>50?answer.substring(0,50).replace(/\n/g,' ')+'…':answer.replace(/\n/g,' ')}"</strong>反推，<br>`+
+      `你能编出一道能得到这个答案的题目吗？<br><br>`+
+      `<div style="background:var(--card-bg);padding:.6rem .8rem;border-radius:8px;border-left:3px solid #e74c3c">`+
+      `💡 提示：从答案出发，想想什么样的题目条件或场景能得出这个答案。`+
+      `这是从"解题"到"出题"的思维转换，最能检验是否真正理解。</div>`;
+    l3Ans=`反向综合示范：<br>原题问的是"${content.length>80?content.substring(0,80).replace(/\n/g,' ')+'…':content.replace(/\n/g,' ')}"<br>从答案"${answer.length>60?answer.substring(0,60).replace(/\n/g,' ')+'…':answer.replace(/\n/g,' ')}"反推，<br>可以编一道：保持核心知识点不变，换一个生活场景来出题。`;
+    l3Place='从答案反推，编一道新题…';
+  }else{
+    l3Content=`<strong>反向综合题：</strong>请自己出一道与本题知识点相同的题目，<br>`+
+      `并解释你的出题思路。<br><br>`+
+      `<div style="background:var(--card-bg);padding:.6rem .8rem;border-radius:8px;border-left:3px solid #e74c3c">`+
+      `💡 从"做题者"变成"出题者"，把这道题的知识点用你自己的方式再表达一次。</div>`;
+    l3Ans=`出题思路：<br>1. 确定核心知识点<br>2. 设计一个应用场景<br>3. 设置条件和问题<br>4. 制定评分标准`;
+    l3Place='编一道新题并写出出题思路…';
+  }
+  const l3={
+    title:'反向综合 · 思维提升',
+    content:l3Content,
+    placeholder:l3Place,
+    answer:l3Ans,
+    savedAnswer:''
+  };
+  return[l1,l2,l3];
+}
+
+function nextTrainingQ(){
+  const d=loadData();
+  const subj=d.subjects.find(s=>s.id===trainingQ.subject_id);
+  if(!subj)return;
+  const qs=d.questions.filter(q=>q.subject_id===subj.id&&q.id!==trainingQ.id);
+  if(!qs.length){toast('没有更多题目了','info');return;}
+  trainingQ=qs[Math.floor(Math.random()*qs.length)];
+  trainingLayer=1;
+  document.querySelector('#app').innerHTML=renderQTraining(trainingQ);
+}
+
+// qData reference for re-rendering
+let qData=null;
+
+// ===================== PRINT =====================
+function renderPrint(){
+  const d=loadData();
+  const qs=d.questions;
+  if(!qs.length)return'<div class="empty-state"><i class="fas fa-print"></i><h5>没有可打印的错题</h5></div>';
+  return`<div class="card"><div class="card-title"><i class="fas fa-print"></i> 打印预览</div>
+    <div class="print-layout">${qs.map((q,i)=>{
+      const subj=d.subjects.find(s=>s.id===q.subject_id);
+      return`<div class="print-q">
+        <div class="pq-num">${i+1}. [${subj?subj.name:'?'}]</div>
+        <div>${q.content}</div>
+        <div class="pq-answer prewrap" style="color:var(--success)"><strong>答案：</strong>${q.correct_answer||'（无）'}</div>
+      </div>`;
+    }).join('')}</div>
+    <div style="text-align:center;margin-top:1rem">
+      <button class="btn btn-primary" onclick="window.print()"><i class="fas fa-print"></i> 打印</button>
+    </div></div>`;
+}
+
+// ===================== ANALYSIS =====================
+let analysisChart=null;
+
+function renderAnalysis(){
+  const d=loadData();
+  const qs=d.questions;
+  if(!qs.length)return'<div class="empty-state"><i class="fas fa-chart-pie"></i><h5>还没有数据</h5><p>录入错题后查看分析报告</p></div>';
+  
+  // By error reason
+  const reasonCount={};ERROR_REASONS.forEach(r=>reasonCount[r]=0);
+  qs.forEach(q=>{if(reasonCount[q.error_reason]!==undefined)reasonCount[q.error_reason]++;});
+  
+  // By subject
+  const subjCount={},subjMastered={};d.subjects.forEach(s=>{subjCount[s.id]=0;subjMastered[s.id]=0;});
+  qs.forEach(q=>{if(subjCount[q.subject_id]!==undefined){subjCount[q.subject_id]++;if(q.mastery>=5)subjMastered[q.subject_id]++;}});
+  
+  // By chapter
+  const chapWeak={};
+  d.chapters.forEach(c=>chapWeak[c.id]=0);
+  qs.forEach(q=>{if(q.chapter_id&&chapWeak[q.chapter_id]!==undefined&&q.mastery===0)chapWeak[q.chapter_id]++;});
+  const weakChaps=Object.entries(chapWeak).filter(([_,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,8);
+
+  // By grade（年级维度）
+  const gradeAgg={};
+  qs.forEach(q=>{const k=(q.grade===undefined||q.grade===null||q.grade==='')?'none':String(q.grade);
+    if(!gradeAgg[k])gradeAgg[k]={total:0,mastered:0};gradeAgg[k].total++;if(q.mastery>=5)gradeAgg[k].mastered++;});
+  const gradeRows=[...GRADES.map(String),'none'].filter(k=>gradeAgg[k]);
+
+  setTimeout(()=>{
+    const canvas=document.getElementById('chartReason');
+    if(!canvas)return;
+    if(analysisChart)analysisChart.destroy();
+    const ctx=canvas.getContext('2d');
+    const labels=Object.keys(reasonCount).filter(k=>reasonCount[k]>0);
+    const data=labels.map(k=>reasonCount[k]);
+    const colors=['#f56565','#ecc94b','#4299e1','#9b59b6','#e67e22','#a0aec0'];
+    analysisChart=new Chart(ctx,{type:'doughnut',data:{labels:labels.map(l=>l+`(${reasonCount[l]})`),datasets:[{data,backgroundColor:colors.slice(0,labels.length),borderWidth:0}]},
+      options:{responsive:true,cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:{size:11}}}}}});
+  },50);
+
+  return`<div class="chart-grid">
+    <div class="chart-box"><h4>错因分布</h4><canvas id="chartReason" style="max-height:250px"></canvas></div>
+    <div class="chart-box"><h4>科目统计</h4>
+      <table class="analysis-table"><thead><tr><th>科目</th><th>错题</th><th>已掌握</th><th>掌握率</th></tr></thead>
+      <tbody>${d.subjects.map(s=>{
+        const total=subjCount[s.id]||0;
+        const mastered=subjMastered[s.id]||0;
+        return`<tr><td>${s.name}</td><td>${total}</td><td>${mastered}</td><td>${total?Math.round(mastered/total*100)+'%':'-'}</td></tr>`;
+      }).join('')}</tbody></table></div>
+  </div>
+  <div class="card" style="margin-top:1rem">
+    <div class="card-title"><i class="fas fa-graduation-cap" style="color:var(--primary)"></i> 年级维度统计</div>
+    <table class="analysis-table"><thead><tr><th>年级</th><th>错题</th><th>已掌握</th><th>掌握率</th></tr></thead>
+      <tbody>${gradeRows.map(k=>{const a=gradeAgg[k];
+        return`<tr><td>${k==='none'?'未标注年级':k+'年级'}</td><td>${a.total}</td><td>${a.mastered}</td><td>${a.total?Math.round(a.mastered/a.total*100)+'%':'-'}</td></tr>`;
+      }).join('')}</tbody></table>
+    <p style="font-size:.8rem;color:var(--text-light);margin-top:.5rem">💡 跨年级错题可分开集中突破；点「错题本」用年级筛选查看</p>
+  </div>
+  <div class="card" style="margin-top:1rem">
+    <div class="card-title"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 薄弱章节 TOP</div>
+    ${weakChaps.length?`<table class="analysis-table"><thead><tr><th>章节</th><th>未掌握题数</th></tr></thead>
+      <tbody>${weakChaps.map(([cid,cnt])=>{
+        const chap=d.chapters.find(c=>c.id===parseInt(cid));
+        const subj=chap?d.subjects.find(s=>s.id===chap.subject_id):null;
+        return`<tr><td>${subj?subj.name+' · ':''}${chap?chap.name:'?'}</td><td><span style="color:var(--danger);font-weight:600">${cnt}</span></td></tr>`;
+      }).join('')}</tbody></table>`:'<p style="color:var(--text-light)">暂无薄弱章节数据</p>'}
+  </div>`;
+}
+
+// ===================== 复习筛选（「复习」页 与「复习要点」共用）=====================
+// 五个维度：科目 / 年级 / 学期(上·下) / 月份 / 哪一周。
+// 数据全部来自错题本身（subject_id / grade / created_at），不改数据、不做推断。
+// 学期口径：9月~次年1月=上学期，2月~7月=下学期，8月(暑假)不计入学期筛选（只出现在「全部」）。
+let RVF={subject:'all',grade:'all',term:'all',month:'all',week:'all'};
+let rvfOpen=false;
+function rvfSave(){try{localStorage.setItem('wrong_bank_review_filter',JSON.stringify(RVF));}catch(e){}}
+function rvfLoad(){try{const j=JSON.parse(localStorage.getItem('wrong_bank_review_filter')||'null');if(j&&typeof j==='object')RVF=Object.assign({subject:'all',grade:'all',term:'all',month:'all',week:'all'},j);}catch(e){}
+  if(RVF.term==='up'||RVF.term==='lower')RVF.term='all';   // 旧版学期值（上学期/下学期）已弃用
+  rvfOpen=rvfHas();   // 上次的筛选还在生效时自动展开，避免"怎么只有一部分题"
+}
+function rvfWeekStart(dt){const x=new Date(dt.getFullYear(),dt.getMonth(),dt.getDate());const wd=(x.getDay()+6)%7;x.setDate(x.getDate()-wd);return x;}
+function rvfHalf(dt){const m=dt.getMonth()+1;return (m>=9||m<=1)?'up':(m<=7?'lo':'');}   // 8月='' 不计入
+function rvfTermKey(q){const dt=rvfDate(q);if(!dt)return'';const h=rvfHalf(dt);if(!h)return'';return ((q.grade==null||q.grade==='')?'none':String(q.grade))+'-'+h;}
+function rvfSchoolYear(dt){const m=dt.getMonth()+1,y=dt.getFullYear();if(m>=9)return String(y).slice(2)+'秋';if(m<=1)return String(y-1).slice(2)+'秋';return String(y).slice(2)+'春';}
+function rvfMonthKey(dt){return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0');}
+function rvfDate(q){return ptsParseDate(q.created_at);}
+function rvfList(list,skip){
+  list=list||(loadData().questions||[]);
+  return list.filter(function(q){
+    const dt=rvfDate(q);
+    if(skip!=='subject'&&RVF.subject!=='all'&&String(q.subject_id)!==String(RVF.subject))return false;
+    if(skip!=='grade'&&RVF.grade!=='all'&&String(q.grade==null?'none':q.grade)!==String(RVF.grade))return false;
+    if(skip!=='term'&&RVF.term!=='all'&&rvfTermKey(q)!==RVF.term)return false;
+    if(skip!=='month'&&RVF.month!=='all'&&(!dt||rvfMonthKey(dt)!==RVF.month))return false;
+    if(skip!=='week'&&RVF.week!=='all'&&(!dt||rvfWeekStart(dt).getTime()!==Number(RVF.week)))return false;
+    return true;
+  });
+}
+function rvfApply(list){return rvfList(list,null);}
+function rvfHas(){return Object.keys(RVF).some(k=>RVF[k]!=='all');}
+function rvfCount(list,fn){return list.filter(fn).length;}
+function rvfSubjectOpts(){
+  const d=loadData(),base=rvfList(null,'subject'),m={};
+  base.forEach(q=>{m[q.subject_id]=(m[q.subject_id]||0)+1;});
+  return (d.subjects||[]).filter(s=>m[s.id]).map(s=>({v:s.id,label:s.name,n:m[s.id]}));
+}
+function rvfGradeOpts(){
+  const base=rvfList(null,'grade'),m={};
+  base.forEach(q=>{const k=(q.grade==null?'none':q.grade);m[k]=(m[k]||0)+1;});
+  return Object.keys(m).sort((a,b)=>(a==='none'?99:+a)-(b==='none'?99:+b))
+    .map(k=>({v:k,label:(k==='none'?'未标注':k+'年级'),n:m[k]}));
+}
+function rvfTermOpts(){
+  const base=rvfList(null,'term'),m={},yr={};
+  base.forEach(function(q){
+    const k=rvfTermKey(q);if(!k)return;
+    m[k]=(m[k]||0)+1;
+    const sy=rvfSchoolYear(rvfDate(q));
+    if(!yr[k])yr[k]={};
+    yr[k][sy]=1;
+  });
+  const keys=Object.keys(m).sort(function(a,b){
+    const pa=a.split('-'),pb=b.split('-');
+    const ga=(pa[0]==='none'?99:+pa[0]),gb=(pb[0]==='none'?99:+pb[0]);
+    if(ga!==gb)return ga-gb;
+    return pa[1]==='up'?-1:1;
+  });
+  const dup={};keys.forEach(k=>{if(Object.keys(yr[k]).length>1)dup[k]=1;});
+  return keys.map(function(k){
+    const p=k.split('-');
+    const lab=(p[0]==='none'?'未标注年级':p[0]+'年级')+(p[1]==='up'?'上':'下');
+    return {v:k,label:lab+(dup[k]?'（'+Object.keys(yr[k]).sort().join('/')+'）':''),n:m[k]};
+  });
+}
+function rvfMonthOpts(){
+  const base=rvfList(null,'month'),m={};
+  base.forEach(q=>{const dt=rvfDate(q);if(dt){const k=rvfMonthKey(dt);m[k]=(m[k]||0)+1;}});
+  return Object.keys(m).sort().reverse().map(k=>{
+    const p=k.split('-');return {v:k,label:String(p[0]).slice(2)+'年'+Number(p[1])+'月',n:m[k]};
+  });
+}
+function rvfWeekOpts(){
+  const base=rvfList(null,'week'),m={};
+  base.forEach(q=>{const dt=rvfDate(q);if(dt){const t=rvfWeekStart(dt).getTime();m[t]=(m[t]||0)+1;}});
+  const now=rvfWeekStart(new Date()).getTime();
+  return Object.keys(m).map(Number).sort((a,b)=>b-a).map(function(t){
+    const s=new Date(t),e=new Date(t+6*86400000),diff=Math.round((now-t)/(7*86400000));
+    const tag=diff===0?'本周':diff===1?'上周':diff+'周前';
+    return {v:t,label:tag+'('+(s.getMonth()+1)+'/'+s.getDate()+'~'+(e.getMonth()+1)+'/'+e.getDate()+')',n:m[t]};
+  });
+}
+function rvfChipRow(label,key,opts){
+  if(!opts.length)return'';
+  const all={v:'all',label:'全部',n:rvfList(null,key).length};
+  return '<div class="rvf-row"><span class="rvf-lab">'+label+'</span>'
+    +[all].concat(opts).map(o=>'<button class="rvf-chip'+(String(RVF[key])===String(o.v)?' active':'')
+      +'" onclick="rvfSet(\''+key+'\',\''+o.v+'\')">'+o.label+'<i>'+o.n+'</i></button>').join('')+'</div>';
+}
+function rvfNames(){
+  const n=[];
+  if(RVF.subject!=='all'){const s=(loadData().subjects||[]).filter(x=>String(x.id)===String(RVF.subject))[0];n.push(s?s.name:'科目'+RVF.subject);}
+  if(RVF.grade!=='all')n.push(RVF.grade==='none'?'未标注年级':RVF.grade+'年级');
+  if(RVF.term!=='all'){const o=rvfTermOpts().filter(x=>String(x.v)===String(RVF.term))[0];n.push(o?o.label.replace(/（.*$/,''):'学期');}
+  if(RVF.month!=='all'){const p=RVF.month.split('-');n.push(String(p[0]).slice(2)+'年'+Number(p[1])+'月');}
+  if(RVF.week!=='all'){const o=rvfWeekOpts().filter(x=>String(x.v)===String(RVF.week))[0];
+    n.push(o?o.label.replace(/\(.*/,''):'指定周');}
+  return n;
+}
+function rvfPanel(){
+  const total=(loadData().questions||[]).length,hit=rvfList(null,null).length,nm=rvfNames();
+  let h='<div class="rvf-box"><div class="rvf-head" onclick="rvfToggle()">'
+    +'<span><i class="fas fa-filter"></i> 筛选：<b>'+(nm.length?nm.join(' · '):'全部')+'</b></span>'
+    +'<span class="rvf-note" style="margin:0">命中 <b>'+hit+'</b> / '+total+' 题　'
+    +(nm.length?'<a href="javascript:void(0)" onclick="event.stopPropagation();rvfClear()" class="rvf-clr">清空</a> ':'')
+    +'<span>'+(rvfOpen?'收起 ▲':'展开 ▼')+'</span></span></div>';
+  if(rvfOpen){
+    h+=rvfChipRow('科目','subject',rvfSubjectOpts());
+    h+=rvfChipRow('年级','grade',rvfGradeOpts());
+    h+=rvfChipRow('学期','term',rvfTermOpts());
+    h+=rvfChipRow('月份','month',rvfMonthOpts());
+    h+=rvfChipRow('哪一周','week',rvfWeekOpts());
+    h+='<div class="rvf-note">时间按错题的<b>录入日期</b>筛；学期＝年级+上/下（如 8年级上），上下半按录入日期定：9~1月=上、2~7月=下、8月不计入；'
+      +(nm.length?'<a href="javascript:rvfClear()" style="color:var(--primary)">清空筛选</a>':'勾选即生效，再点一次取消。')+'</div>';
+  }
+  h+='</div>';
+  return h;
+}
+function rvfSet(k,v){RVF[k]=(String(RVF[k])===String(v))?'all':v;rvfSave();rvfRedraw();}
+function rvfToggle(){rvfOpen=!rvfOpen;rvfRedraw();}
+function rvfClear(){RVF={subject:'all',grade:'all',term:'all',month:'all',week:'all'};rvfSave();rvfRedraw();}
+function rvfRedraw(){
+  if(currentPage==='points')document.getElementById('app').innerHTML=renderPoints();
+  else if(currentPage==='review')document.getElementById('app').innerHTML=renderReview();
+  else render(currentPage);
+}
+function reviewView(){return rvfPanel()+reviewCard();}
+
+// ===================== 复习要点（AI错题本）=============================
+// 四个板块＝四种复习节奏，各自的"汇总维度"不同（避免四块内容雷同）：
+//   A 周复习   → 按错因（本周错在哪类）
+//   B 月复习   → 按科目（各科薄弱在哪）
+//   C 半期复习 → 按考点（章节化归并，抓高频考点）
+//   D 期末复习 → 全量补漏（逐考点：关联错因 + 典型易错 + 全部题号）
+// 内容 100% 由真实字段聚合：error_reason / tags / ana5.pitfall / ana5.points /
+// mastery / review_count / created_at。不做猜测、不改写，每条结论都标来源题号可点开核对。
+const POINTS_BLOCKS=[
+  {key:'week', label:'A 周复习', days:7, axis:'error',   dim:'按错因',
+   tip:'每周末 30 分钟：先纠错因，再重做本周错题'},
+  {key:'month',label:'B 月复习', days:30, axis:'subject', dim:'按科目',
+   tip:'每月末：按科目过一遍，定位各科薄弱环节'},
+  {key:'half', label:'C 半期复习', days:90, axis:'point', dim:'按考点',
+   tip:'期中考前一周：按考点归并，主攻高频考点'},
+  {key:'final',label:'D 期末复习', days:0, axis:'full',   dim:'全量补漏',
+   tip:'期末考前两周：逐考点补漏，把没复习过的清掉'}
+];
+let pointsBlock='week';
+const PTS_SUBJ=['数学','物理','化学','语文','英语','历史','地理','生物','道法','政治'];
+
+function ptsSpec(bk){const a=POINTS_BLOCKS.filter(b=>b.key===bk);return a.length?a[0]:POINTS_BLOCKS[0];}
+function ptsParseDate(s){
+  const m=/(\d{4})-(\d{1,2})-(\d{1,2})/.exec(String(s||''));
+  return m?new Date(+m[1],+m[2]-1,+m[3]):null;
+}
+function ptsSubjName(d,id){const s=(d.subjects||[]).filter(x=>x.id===id);return s.length?s[0].name:'未分科目';}
+function ptsTags(q){return String(q.tags||'').split(',').map(x=>x.trim()).filter(x=>x&&PTS_SUBJ.indexOf(x)<0);}
+function ptsErr(q){const k=String(q.error_reason||'').trim();return k||'未标注错因';}
+function ptsErrShow(k){return (k==='其他'||k==='未标注错因')?k+'（原记录未细分）':k;}
+function ptsTop(obj,n){return Object.keys(obj).sort((a,b)=>obj[b]-obj[a]).slice(0,n).map(k=>[k,obj[k]]);}
+function ptsCount(list){const o={};list.forEach(x=>{o[x]=(o[x]||0)+1;});return o;}
+function ptsQids(ids){return ids.slice(0,8).map(i=>`<span class="pts-q" onclick="navigate('detail',{qid:${i}})">#${i}</span>`).join('');}
+function ptsPitfall(q){
+  const p=String(((q.ana5||{}).pitfall)||'');if(!p)return'';
+  const lines=p.split('\n').map(s=>s.trim()).filter(Boolean);let t='';
+  for(let i=0;i<lines.length;i++){
+    const m=/^(易错点|常见错法|错在哪|错误原因)[:：]\s*(.+)$/.exec(lines[i]);
+    if(m){t=m[2];break;}
+  }
+  if(!t)t=(lines[0]||'').replace(/^[①②③④⑤⑥⑦⑧⑨⑩]\s*/,'');
+  return t.replace(/^(易错点|常见错法|错在哪|错误原因)[:：]\s*/,'').replace(/^[0-9]+[.、]\s*/,'').replace(/[。；;]$/,'').trim();
+}
+function ptsPoints(q){return String(((q.ana5||{}).points)||'').split('\n').map(s=>s.trim()).filter(Boolean);}
+function ptsWindow(bk){
+  const d=loadData(),spec=ptsSpec(bk),all=d.questions||[];
+  // 用户在筛选里指定了 学期/月份/哪一周 → 时间范围以用户选的为准，板块不再叠加自己的天数窗口
+  const userTime=(RVF.week!=='all'||RVF.month!=='all'||RVF.term!=='all');
+  let qs=all;
+  if(spec.days>0&&!userTime){
+    const now=new Date(),t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+    qs=all.filter(q=>{const t=ptsParseDate(q.created_at);return t&&Math.round((t0-t)/86400000)<=spec.days;});
+  }
+  const f=rvfApply(qs);
+  return {spec:spec,qs:f,allCount:all.length,d:d,thinner:f.length<all.length,filtered:f.length!==qs.length,userTime:userTime};
+}
+function ptsRangeText(w){
+  const st=ptsCount(w.qs.map(q=>ptsSubjName(w.d,q.subject_id)));
+  let s=w.spec.days>0?'近 '+w.spec.days+' 天':'全部';
+  if(w.qs.length){
+    const ds=w.qs.map(q=>String(q.created_at||'').slice(0,10)).filter(Boolean).sort();
+    if(ds.length)s+='（'+ds[0]+' ~ '+ds[ds.length-1]+'）';
+  }
+  s+=' · <b>'+w.qs.length+'</b> 题';
+  if(w.qs.length)s+=' · '+Object.keys(st).sort((a,b)=>st[b]-st[a]).map(k=>k+' '+st[k]).join(' / ');
+  if(w.thinner)s+=' · <span class="pts-note">（共 '+w.allCount+' 题，其余不在本板块时间范围内）</span>';
+  return s;
+}
+
+/* ① 学习上的弱点 —— 四种维度 */
+function ptsWeaknessHtml(w){
+  const qs=w.qs,d=w.d,ax=w.spec.axis;
+  if(!qs.length)return'<div class="pts-empty">还没有错题。</div>';
+  let h='';
+  if(ax==='error'){
+    const errs=ptsCount(qs.map(ptsErr));
+    ptsTop(errs,4).forEach(function(pr){
+      const k=pr[0],v=pr[1],inQ=qs.filter(q=>ptsErr(q)===k);
+      const tags=ptsTop(ptsCount([].concat.apply([],inQ.map(ptsTags))),3).map(x=>x[0]);
+      const sj=[];inQ.forEach(q=>{const n=ptsSubjName(d,q.subject_id);if(sj.indexOf(n)<0)sj.push(n);});
+      h+=`<div class="pts-item"><b>${ptsErrShow(k)}</b><span class="pts-badge">${v} 题 · 占 ${Math.round(v/qs.length*100)}%</span><br>`
+        +`<span class="pts-note">集中在：${sj.join('、')}${tags.length?'（'+tags.join('、')+'）':''}　来源：${ptsQids(inQ.map(q=>q.id))}</span></div>`;
+    });
+  }else if(ax==='subject'){
+    const sj=[];qs.forEach(q=>{const n=ptsSubjName(d,q.subject_id);if(sj.indexOf(n)<0)sj.push(n);});
+    sj.sort((a,b)=>qs.filter(q=>ptsSubjName(d,q.subject_id)===b).length-qs.filter(q=>ptsSubjName(d,q.subject_id)===a).length);
+    sj.forEach(function(n){
+      const inQ=qs.filter(q=>ptsSubjName(d,q.subject_id)===n);
+      const errs=ptsTop(ptsCount(inQ.map(ptsErr)),3).map(x=>x[0]+'×'+x[1]).join('、');
+      const tags=ptsTop(ptsCount([].concat.apply([],inQ.map(ptsTags))),4).map(x=>x[0]);
+      h+=`<div class="pts-item"><b>${n}</b><span class="pts-badge">${inQ.length} 题 · 占 ${Math.round(inQ.length/qs.length*100)}%</span><br>`
+        +`<span class="pts-note">主要错因：${errs}<br>涉及考点：${tags.join('、')||'（未打标签）'}<br>来源：${ptsQids(inQ.map(q=>q.id))}</span></div>`;
+    });
+  }else if(ax==='point'){
+    const ks=ptsKeyData(qs,d).slice(0,5);
+    ks.forEach(function(o){
+      const inQ=qs.filter(q=>ptsTags(q).indexOf(o.name)>=0);
+      const errs=ptsTop(ptsCount(inQ.map(ptsErr)),2).map(x=>ptsErrShow(x[0])+'×'+x[1]).join('、');
+      h+=`<div class="pts-item"><b>${o.name}</b><span class="pts-badge">${o.n} 次错</span><br>`
+        +`<span class="pts-note">错因：${errs}${o.pitfall?'<br>典型易错：'+o.pitfall:''}　来源：${ptsQids(o.ids)}</span></div>`;
+    });
+  }else{
+    const errs=ptsCount(qs.map(ptsErr));
+    ptsTop(errs,5).forEach(function(pr){
+      const inQ=qs.filter(q=>ptsErr(q)===pr[0]);
+      const tags=ptsTop(ptsCount([].concat.apply([],inQ.map(ptsTags))),4).map(x=>x[0]);
+      h+=`<div class="pts-item"><b>${ptsErrShow(pr[0])}</b><span class="pts-badge">${pr[1]} 题 · 占 ${Math.round(pr[1]/qs.length*100)}%</span><br>`
+        +`<span class="pts-note">涉及考点：${tags.join('、')||'（未打标签）'}　来源：${ptsQids(inQ.map(q=>q.id))}</span></div>`;
+    });
+  }
+  const zero=qs.filter(q=>!(q.mastery>0)).length,noRev=qs.filter(q=>!(q.review_count>0)).length;
+  h+=`<div class="pts-item"><b>掌握度</b>：`+(zero===qs.length&&noRev===qs.length
+    ? `<b>${qs.length}</b> 题全部为 0 级（均未复习）`
+    : `<b>${zero}</b> / ${qs.length} 题仍为 0 级<span class="pts-badge">${noRev} 题从未复习</span>`)+`</div>`;
+  return h;
+}
+
+/* ② 易错点（五维「易错点」原文，不动一个字） */
+function ptsPitfallData(qs){
+  const map={};
+  qs.forEach(function(q){
+    const t=ptsPitfall(q);if(!t)return;
+    const k=t.replace(/[\s，,。、；;：:（）()【】「」]/g,'').slice(0,14);
+    if(!map[k])map[k]={text:t,ids:[],tags:ptsTags(q).slice(0,2)};
+    map[k].ids.push(q.id);
+  });
+  const arr=Object.keys(map).map(k=>map[k]).sort((a,b)=>b.ids.length-a.ids.length);
+  return {arr:arr,covered:qs.filter(q=>ptsPitfall(q)).length,total:qs.length};
+}
+function ptsPitfallHtml(w){
+  const qs=w.qs,ax=w.spec.axis;
+  if(!qs.length)return'<div class="pts-empty">还没有错题。</div>';
+  const r=ptsPitfallData(qs);
+  const noAna=qs.length-r.covered;
+  if(!r.arr.length)return`<div class="pts-empty">这 ${r.total} 道题的「易错点」还没填写，可在错题详情里点「编辑」补上。</div>`;
+  let h='';
+  if(ax==='point'){
+    const ks=ptsKeyData(qs,w.d);
+    let shown=0;
+    ks.forEach(function(o){
+      if(shown>=6)return;
+      const inQ=qs.filter(q=>ptsTags(q).indexOf(o.name)>=0);
+      const pr=ptsPitfallData(inQ).arr.slice(0,2);
+      if(!pr.length)return;shown++;
+      h+=`<div class="pts-item"><b>${o.name}</b><br>`
+        +pr.map(x=>`<span class="pts-note">· ${x.text}${x.ids.length>1?'（'+x.ids.length+' 题）':''}</span>`).join('<br>')
+        +`<br><span class="pts-note">来源：${ptsQids(inQ.map(q=>q.id))}</span></div>`;
+    });
+  }else{
+    const n=(ax==='full')?15:8;
+    r.arr.slice(0,n).forEach(function(o){
+      h+=`<div class="pts-item">${o.text}${o.ids.length>1?`<span class="pts-badge">${o.ids.length} 题</span>`:''}<br>`
+        +`<span class="pts-note">来源：${ptsQids(o.ids)}${o.tags.length?'　考点：'+o.tags.join('、'):''}</span></div>`;
+    });
+    if(r.arr.length>n)h+=`<div class="pts-note" style="margin-top:.4rem">另有 ${r.arr.length-n} 条已按同类合并，未逐条展开。</div>`;
+  }
+  if(noAna)h+=`<div class="pts-note" style="margin-top:.4rem">另有 ${noAna} 题未填写五维分析，未纳入统计。</div>`;
+  return h;
+}
+
+/* ③ 重点（考点标签按命中次数） */
+function ptsKeyData(qs,d){
+  const map={};
+  qs.forEach(function(q){
+    ptsTags(q).forEach(function(t){
+      if(!map[t])map[t]={n:0,ids:[],subjects:[],pitfall:''};
+      if(map[t].ids.indexOf(q.id)<0){
+        map[t].n++;map[t].ids.push(q.id);
+        const sn=d?ptsSubjName(d,q.subject_id):'';
+        if(sn&&map[t].subjects.indexOf(sn)<0)map[t].subjects.push(sn);
+      }
+      if(!map[t].pitfall)map[t].pitfall=ptsPitfall(q);
+    });
+  });
+  return Object.keys(map).sort((a,b)=>map[b].n-map[a].n).map(k=>{const o=map[k];o.name=k;return o;});
+}
+function ptsKeyHtml(w){
+  const ks=ptsKeyData(w.qs,w.d);
+  if(!w.qs.length)return'<div class="pts-empty">还没有错题。</div>';
+  if(!ks.length)return'<div class="pts-empty">还没有带考点标签的错题，先给错题打上考点标签。</div>';
+  const sum=ks.reduce((a,b)=>a+b.n,0);
+  const n=(w.spec.axis==='full')?20:((w.spec.axis==='error')?6:10);
+  const list=(w.spec.axis==='full'||w.spec.axis==='point')?ks:ks.slice(0,n);
+  let h=`<div class="pts-item">考点清单${list.length<ks.length?'（前 '+list.length+' 个／共 '+ks.length+' 个）':'（共 '+ks.length+' 个）'}，按错题命中次数排序</div>`;
+  list.forEach(function(o,i){
+    h+=`<div class="pts-item">${i+1}. <b>${o.name}</b><span class="pts-badge">${o.n} 题</span><br>`
+      +`<span class="pts-note">${o.pitfall?'典型易错：'+o.pitfall+'<br>':''}来源：${ptsQids(o.ids)}</span></div>`;
+  });
+  h+=`<div class="pts-note" style="margin-top:.4rem">共 ${ks.length} 个考点标签、${sum} 次命中（同一题多个考点会重复计入）。</div>`;
+  return h;
+}
+
+/* ④ 应该补充学习的内容 */
+function ptsTodoHtml(w){
+  const qs=w.qs,d=w.d,ax=w.spec.axis;
+  if(!qs.length)return'<div class="pts-empty">还没有错题。</div>';
+  const ks=ptsKeyData(qs,d);
+  if(!ks.length)return'<div class="pts-empty">还没有带考点标签的错题，先给错题打上考点标签。</div>';
+  let h='';
+  if(ax==='subject'){
+    const sj=[];qs.forEach(q=>{const n=ptsSubjName(d,q.subject_id);if(sj.indexOf(n)<0)sj.push(n);});
+    sj.forEach(function(n){
+      const inQ=qs.filter(q=>ptsSubjName(d,q.subject_id)===n);
+      const tk=ptsTop(ptsCount([].concat.apply([],inQ.map(ptsTags))),3);
+      if(!tk.length)return;
+      h+=`<div class="pts-item"><b>${n}</b><span class="pts-badge">优先补 ${tk.length} 个考点</span><br>`
+        +`<span class="pts-note">`+tk.map(x=>`「${x[0]}」${x[1]} 题`).join('、')+`<br>做法：把该考点下这 ${inQ.length} 题重做一遍（错因已标在详情里）。</span></div>`;
+    });
+  }else{
+    const n=(ax==='full')?12:(ax==='point'?8:5);
+    ks.slice(0,n).forEach(function(o,i){
+      const inQ=qs.filter(q=>ptsTags(q).indexOf(o.name)>=0);
+      const errs=ptsTop(ptsCount(inQ.map(ptsErr)),2).map(x=>ptsErrShow(x[0])+'×'+x[1]).join('、');
+      const rev=inQ.filter(q=>!(q.review_count>0)).length;
+      h+=`<div class="pts-item"><b>${i+1}. ${o.name}</b><span class="pts-badge">${o.n} 题${rev?' · '+rev+' 题未复习':''}</span><br>`
+        +`<span class="pts-note">错因：${errs}${o.pitfall?'<br>先解决：'+o.pitfall:''}<br>来源：${ptsQids(o.ids)}</span></div>`;
+    });
+  }
+  if(ax==='error'){
+    h+=`<div class="pts-note" style="margin-top:.4rem">排序依据：考点在错题里命中的次数（次数越多越该先补）。</div>`;
+  }else if(ax==='full'){
+    h+=`<div class="pts-note" style="margin-top:.4rem">全量清单：${ks.length} 个考点全部列出，按命中次数排序；标「未复习」的题请优先重做。</div>`;
+  }else if(ax==='point'){
+    h+=`<div class="pts-note" style="margin-top:.4rem">按考点归并：同一考点的错题一起处理，比重做单题更省时间。</div>`;
+  }
+  return h;
+}
+
+function renderPoints(){
+  const w=ptsWindow(pointsBlock),sp=w.spec;
+  const tabs=POINTS_BLOCKS.map(b=>
+    `<button class="pts-tab${b.key===pointsBlock?' active':''}" onclick="pointsBlock='${b.key}';document.querySelector('#app').innerHTML=renderPoints()">${b.label}</button>`).join('');
+  return rvfPanel()+`<div class="card">
+    <div class="pts-title"><i class="fas fa-clipboard-check" style="color:var(--primary)"></i> 复习要点</div>
+    <div class="pts-range" style="margin-bottom:.7rem">按复习节奏分四个板块，内容自动汇总自错题本里的题（错因 / 易错点 / 考点标签 / 掌握度），<b>每条都标来源题号，可点开核对</b>。「考点标签」＝录入时打的标签，不用打＝没标签先补。</div>
+    <div class="pts-tabs">${tabs}</div>
+    <div class="pts-range"><b>${sp.label}</b>　${sp.dim}汇总　范围：${ptsRangeText(w)}${w.userTime?'　<span class="pts-note">（时间范围＝上方筛选的学期/月/周）</span>':(w.filtered?'　<span class="pts-note">（已套用上方筛选）</span>':'')}<br>💡 ${sp.tip}</div>
+    <div class="pts-card c1"><h5>1️⃣ 学习上的弱点（${sp.dim}）</h5>${ptsWeaknessHtml(w)}</div>
+    <div class="pts-card c2"><h5>2️⃣ 易错点${sp.axis==='point'?'（按考点归并）':''}</h5>${ptsPitfallHtml(w)}</div>
+    <div class="pts-card c3"><h5>3️⃣ 重点（高频考点${sp.axis==='full'?'全量':' Top'}）</h5>${ptsKeyHtml(w)}</div>
+    <div class="pts-card c4"><h5>4️⃣ 应该补充学习的内容</h5>${ptsTodoHtml(w)}</div>
+  </div>`;
+}
+// ===================== AI错题本 · 双功能区（错题本 / 三层训练） =====================
+// 本页 = 把错题库里的「错题本」与「三层训练」两项功能单独成页。
+// 数据层/渲染函数与原页完全同源；localStorage 键与云端后端也一致 ⇒ 两页数据互通：
+// 在原错题库录入或复习的题，这里立刻可见；反之亦然。
+let _aiLastNbPage = 'dashboard';
+function _aiTopTabOf(page){ return page === 'training' ? 'training' : (page === 'points' ? 'points' : 'notebook'); }
+function _aiApplyTopTab(page){
+  const t = _aiTopTabOf(page);
+  document.querySelectorAll('#topTabs .top-tab').forEach(b => b.classList.toggle('active', b.dataset.top === t));
+  const mn = document.getElementById('mainNav');
+  if (mn) mn.style.display = (t === 'notebook') ? 'flex' : 'none';   // 三层训练/复习要点页隐藏错题本子导航
+  document.body.setAttribute('data-domain', t);
+}
+function switchTop(tab){
+  if (tab === 'training') { navigate('training', {}); return; }
+  if (tab === 'points')   { navigate('points'); return; }
+  navigate(_aiLastNbPage || 'dashboard');
+}
+const _aiNavigateBase = navigate;
+navigate = function(page, data){
+  _aiNavigateBase(page, data);
+  if (page !== 'training' && page !== 'points') _aiLastNbPage = (page === 'detail') ? 'list' : page;  // detail 需带参，不记忆
+  _aiApplyTopTab(page);
+};
+
+// ===================== INIT =====================
+rvfLoad();
+checkImport();
+applyBuiltinQuestions();
+navigate('dashboard');
+cloudInit();          // 异步从服务器拉取最新错题本（失败则静默退回本机模式）
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</body></html>
