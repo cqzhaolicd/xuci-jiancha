@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学第2题（勾股树·阴影面积） · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">数学 · 第2题（勾股树·阴影面积）</div>
+    <h1>勾股定理的面积推广 · 等腰直角三角形阴影</h1>
+    <div class="meta">来源：2026-09-25 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">（2025秋·贵阳期末）如图，Rt△ABC 中，∠BAC = 90°，分别以 △ABC 的三边为直角边作三个等腰直角三角形 △ABD、△ACE、△BCF，若图中阴影部分的面积 S₁ = 65，S₂ = 46，S₃ = 57，则 S₄ = ______。
+
+【出处】第二讲 勾股定理综合复习 · 巩固2 第2题（红笔判错）</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_gu2_20260925.jpg" alt="数学第2题（勾股树·阴影面积）题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>① Rt△ABC，∠BAC = 90°；② 分别以三边为直角边向外作等腰直角三角形；③ 阴影部分面积 S₁ = 65，S₂ = 46，S₃ = 57。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>求 S₄。（若琳答 14，被红笔判错；按勾股定理面积推广应为 54）</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【核心：勾股定理的「面积版本」】
+① 勾股定理 a² + b² = c² 说的是「以直角边为边的正方形面积之和 = 以斜边为边的正方形面积」；
+② 把正方形换成「任意相似图形」（这里是等腰直角三角形）结论仍然成立 —— 因为相似图形的面积比 = 边长比的平方，所以直角边上两个图形的面积和 = 斜边上图形的面积；
+③ 因此大块阴影 = 两个小块之和：S₁ + S₂ = S₃ + S₄（哪两块在直角边、哪两块在斜边，按图对号入座）；
+④ 代入：65 + 46 = 57 + S₄ ⇒ S₄ = 111 − 57 = 54。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 只记得 a² + b² = c² 的「数字形式」，想不到它还是「面积关系」（直角边上两图形面积和 = 斜边上图形面积）；
+② 不敢把正方形换成等腰直角三角形（其实任何相似图形都可以）；
+③ 图中哪块在直角边、哪块在斜边没分清，导致加减方向反了（容易算成 65 − 46 + 57 = 76 或 65 − 46 − 57 之类）；
+④ 若琳的 14 就是「胡乱相减」的结果（65 − 46 − 57 附近），没有利用面积关系。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 勾股定理的几何意义（面积关系，不只是 a²+b²=c²）；
+② 「直角边上相似图形面积和 = 斜边上相似图形面积」这一推广；
+③ 等腰直角三角形与正方形的面积比关系（½ 倍）；
+④ 由已知面积反推未知面积的整体代入法。
+
+📌 出处：第二讲 勾股定理综合复习 巩固2 第2题。同页第1题（勾股树 A、B、C 面积 3、9、6 求 D = 18）答对，未录入。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="math_5shuxing.html">← 上一题：数学第5题（数形结合求最值）</a><a href="math_gu2_p4.html">下一题：数学第4题（勾股树·正方形个数） →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>

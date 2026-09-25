@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学第4题（勾股树·正方形个数） · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">数学 · 第4题（勾股树·正方形个数）</div>
+    <h1>勾股树的分形规律 · 数列规律归纳</h1>
+    <div class="meta">来源：2026-09-25 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">（2025秋·成都校级期末）图1 叫做一个基本的“勾股树”，也叫做第一代勾股树。让图1 中两个小正方形各自长出一个新的勾股树（如图2），叫做第二代勾股树。从第二代勾股树出发，又可以长出第三代勾股树（如图3）。这样一生二、二生四、四生八，继续生长下去，则「第四代」勾股树图形中正方形的个数为 ______。
+
+【出处】第二讲 勾股定理综合复习 · 巩固2 第4题（红笔判错）</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_gu2_20260925.jpg" alt="数学第4题（勾股树·正方形个数）题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>① 第一代 = 基本勾股树（图1）；② 每个「末端」小正方形再长出一个新的勾股树 ⇒ 末端个数 1 → 2 → 4 → 8 …（一生二、二生四、四生八）；③ 求第四代图形中正方形的总个数。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>第四代勾股树中正方形的个数。（若琳答 35321，被红笔判错；按「末端每代翻倍」的规律推算为 31，具体以原图规则为准）</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【思路：先数「末端」，再累加总数】
+① 每一代每个末端小正方形都会再分裂出 2 个新正方形（一生二、二生四…）；
+② 各代「新增」的末端正方形个数：1 → 2 → 4 → 8 → 16（第一代到第五代的末端分别为 1、2、4、8、16）；
+③ 图形中的「正方形总个数」 = 各代累加：1 + 2 + 4 + 8 + 16 = 「31」；
+④ 一般地第 n 代总个数 = 2^(n+1) − 1，故第四代 = 2⁵ − 1 = 31。
+
+（注意：这里的关键是判断「第四代」是从第一代算起还是从第 0 代算起 —— 请对照书上图1/图2/图3 的编号确认；若把基本树本身算作第 0 代，则结果可能为 30 或 15，请以原图为准核对。）</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 把「一生二、二生四」理解成「只数最后一层」（漏掉前面各代累加）；
+② 代数数错（第四代究竟对应 2⁴ 还是 2⁵，必须对照图1/图2/图3 的编号）；
+③ 忘记每次分裂的是「每个末端正方形」（所以是翻倍，不是加 2）；
+④ 若琳答 35321 —— 完全脱离规律（该数约为 2¹⁵ 量级，属于把层数搞成 15 代）。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 勾股树的构造规则（每个正方形分裂出两个更小的正方形）；
+② 等比数列（1, 2, 4, 8, 16…）与求和（2ⁿ⁺¹ − 1）；
+③ 从图形中观察、归纳规律的能力（数与形的结合）；
+④ 审题时先确定「第几代」的计数起点。
+
+📌 出处：第二讲 勾股定理综合复习 巩固2 第4题。同页第3题（ICME-7 螺旋 OA 长）答对，未录入。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="math_gu2_p2.html">← 上一题：数学第2题（勾股树·阴影面积）</a><a href="math_gu3_p5.html">下一题：数学题目5（偶差勾股数组） →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>

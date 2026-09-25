@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学第4题（矩形折叠·两次对称） · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">数学 · 第4题（矩形折叠·两次对称）</div>
+    <h1>矩形翻折 · 轴对称 + 勾股定理建模</h1>
+    <div class="meta">来源：2026-09-25 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">（2025秋·成都校级期中）如图，在矩形 ABCD 中，AB = 13，AD = 24，P 是边 AD 上一点（不与点 A、D 重合），连接 PB，将 △ABP 沿直线 BP 翻折，点 A 与点 E 重合。若点 B 关于直线 PE 的对称点 F 恰好落在 CD 边上，连接 PF、EF，则 AP 的长为 ______。
+
+【出处】第二讲 勾股定理综合复习 第4题（红笔判错）</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_gu34_20260925.jpg" alt="数学第4题（矩形折叠·两次对称）题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>① 矩形 ABCD，AB = 13，AD = 24；② P 在边 AD 上；③ 将 △ABP 沿 BP 翻折，A 的对应点为 E；④ 点 B 关于直线 PE 的对称点为 F，且 F 恰好落在 CD 边上。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>求 AP 的长。（若琳写 6.6，红笔判错；正确答案 26/3 ≈ 8.67）</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【第一步：翻折能给出什么】
+① △ABP 沿 BP 翻折 ⇒ △ABP ≌ △EBP ⇒ EB = AB = 13，EP = AP，∠PEB = ∠PAB = 90°；
+② B 关于 PE 的对称点为 F ⇒ PE 垂直平分 BF ⇒ 「PF = PB」，「EF = EB = 13」，∠PEF = 90°。
+
+【第二步：发现三点共线】
+由 ① ② 得 ∠PEB = ∠PEF = 90°，且都在 E 处、PE 同侧 ⇒ 「E、B、F 三点共线」；
+又 EF = EB = 13 ⇒ 「E 是 BF 的中点」，即 PE 是 BF 的垂直平分线。
+
+【第三步：用坐标/勾股列方程】
+设 AP = x，以 A 为原点、AB 方向为 x 轴建立坐标：B(13, 0)，P(0, x)，F 在 CD 上 ⇒ F = (f, 24)；
+① 由 PF = PB：f² + (24 − x)² = 13² + x² ⇒ f² − 48x + 407 = 0 …(a)
+② 由「PB 是 AE 的垂直平分线」（A 与 E 关于 PB 对称）：AE ⊥ PB ⇒ 13(13 + f) = 24x …(b)
+   （E 的坐标 = ((13+f)/2, 12)，因为 E 是 BF 中点）
+③ 联立 (a)(b)：由 (b) 得 x = (169 + 13f)/24，代入 (a) 化简得 f² − 26f + 69 = 0 ⇒ f = 3 或 f = 23；
+   因 F 在 CD 上（0 ≤ f ≤ 13），取 「f = 3」；
+④ 代回：AP = x = (169 + 13×3)/24 = 208/24 = 「26/3 ≈ 8.67」。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 只知道「翻折 ⇒ 对应边相等、对应角相等」，漏掉第二次对称给出的 PF = PB、EF = EB；
+② 看不出 ∠PEB 与 ∠PEF 都是 90° ⇒ 得不到 E、B、F 三点共线（这一步是本题的关键突破口）；
+③ 设元后忘记 P 在 AD 上意味着 PD = 24 − x（容易写成 x）；
+④ 解出 f = 3 与 f = 23 后不检验 F 是否在 CD 上（把 23 也留下）；
+⑤ 若琳算到 x = 416/48 后抄成 6.6（应为 26/3 ≈ 8.67）—— 属于最后一步抄写错误，非常可惜。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 轴对称（翻折）的性质：对应线段相等、对应角相等、对称轴垂直平分对应点连线；
+② 由两个 90° 角推出三点共线（几何直观）；
+③ 勾股定理建模 + 方程思想（设 AP = x 列方程）；
+④ 坐标法处理复杂折叠问题；
+⑤ 解出多解后按图形位置检验取舍。
+
+📌 出处：第二讲 勾股定理综合复习 第4题。同页第3题（四边形面积 36）答对，未录入。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="math_gu3_p2.html">← 上一题：数学题目2（高在形内/形外分类）</a><a href="math_gu34_p5.html">下一题：数学第5题（中线折叠·BH） →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>
