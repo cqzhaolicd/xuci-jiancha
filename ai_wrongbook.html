@@ -128,6 +128,12 @@ textarea.form-control{resize:vertical;min-height:70px}
 .grade-chip{background:#fff;border:1.5px solid var(--border);border-radius:999px;padding:.28rem .75rem;font-size:.8rem;cursor:pointer;transition:.15s;color:var(--text)}
 .grade-chip:hover{border-color:var(--primary);color:var(--primary)}
 .grade-chip.active{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
+/* ==== 五维分析（A已知/B求解/C思路/D易错/E知识点）==== */
+.ana5-wrap{display:grid;gap:.45rem;margin-top:.15rem}
+.ana5-item{display:flex;gap:.55rem;align-items:flex-start;font-size:.9rem;line-height:1.7}
+.ana5-tag{flex:0 0 auto;min-width:4.9rem;padding:.16rem .5rem;border-radius:6px;color:#fff;font-size:.75rem;font-weight:700;text-align:center;white-space:nowrap}
+.ana5-empty{font-size:.78rem;color:var(--text-light);margin-top:.4rem}
+.ana5-form-row{margin-bottom:.5rem}
 /* ===== AI错题本 · 顶部双功能区（错题本 / 三层训练） ===== */
 .top-tabs{display:flex;gap:.35rem;flex-wrap:wrap}
 .top-tab{background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.35);
@@ -175,7 +181,9 @@ textarea.form-control{resize:vertical;min-height:70px}
 // ===================== DATA LAYER =====================
 const LS_KEY = 'wrong_bank_data';
 const IMPORT_KEY = 'wrong_bank_import';
-const SUBJECTS_DEFAULT = ['数学','语文','英语','物理','化学','历史','地理','生物','道法'];
+// ⚠️ 历史/地理/生物/道法 已下线（老板 2026-09-25 要求）；前 5 科 id 不变，旧数据不受影响
+const SUBJECTS_DEFAULT = ['数学','语文','英语','物理','化学'];
+const REMOVED_SUBJECTS = ['历史','地理','生物','道法'];
 const SUBJECT_ICONS = ['fa-calculator','fa-book','fa-language','fa-flask','fa-flask','fa-history','fa-globe','fa-leaf','fa-gavel'];
 const SUBJECT_COLORS = ['#e74c3c','#3498db','#2ecc71','#667eea','#9b59b6','#f39c12','#1abc9c','#2ecc71','#34495e'];
 const ERROR_REASONS = ['概念不清','计算失误','审题不清','思路错误','公式记错','其他'];
@@ -192,6 +200,7 @@ function loadData() {
   if(_rp){saveData(d);toast('🔧 已修复 '+_rp+' 道错题的重复编号','info');}
   const _mg=migrateGrades(d);
   if(_mg){saveData(d);toast('📚 已把 '+_mg+' 道旧错题归入 '+DEFAULT_GRADE+'年级（可在详情页修改）','info');}
+  if(pruneSubjects(d))saveData(d);   // 下线科目清理
   return d;
 }
 // ===================== 跨设备同步（威联通后端 api_wrongbank.php） =====================
@@ -265,7 +274,8 @@ async function cloudInit(forceRemote){
       // 服务器有真实数据：以服务器为准（服务器是唯一真实源）
       saveData(j.data);                                   // 走统一保存：顺便校准 id 计数器
       _lastPushed = JSON.stringify(j.data);
-      if(repairIds(j.data)||migrateGrades(j.data)){ saveData(j.data); _lastPushed=''; cloudPushNow(j.data).then(()=>setSyncBadge('ok')).catch(()=>{}); }
+      const _chg=repairIds(j.data)+migrateGrades(j.data)+pruneSubjects(j.data);
+      if(_chg){ saveData(j.data); _lastPushed=''; cloudPushNow(j.data).then(()=>setSyncBadge('ok')).catch(()=>{}); }
       setSyncBadge('ok');
       navigate('dashboard');
       toast('☁️ 已从服务器同步最新错题本','success');
@@ -304,12 +314,48 @@ function repairIds(d){                          // 一次性修补历史重复�
   if(fixed)d.nextQId=(used.size?Math.max(...used):0)+1;
   return fixed;
 }
+// 下线科目：从已有数据里移除历史/地理/生物/道法（该科下仍挂着题或章节则保留，避免孤儿数据）
+function pruneSubjects(d){
+  if(!d||!Array.isArray(d.subjects))return 0;
+  const qs=(d.questions||[]).map(q=>q.subject_id),cs=(d.chapters||[]).map(c=>c.subject_id);
+  const before=d.subjects.length;
+  d.subjects=d.subjects.filter(s=>!REMOVED_SUBJECTS.includes(s.name)||qs.includes(s.id)||cs.includes(s.id));
+  return before-d.subjects.length;
+}
 function now(){return new Date().toLocaleString('zh-CN',{hour12:false}).replace(/\//g,'-');}
 function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function calcNextReview(mastery){if(mastery>=REVIEW_INTERVALS.length)return null;const d=new Date();d.setDate(d.getDate()+REVIEW_INTERVALS[mastery]);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 
 // ===================== 年级维度（1-12年级） =====================
 const GRADES=[1,2,3,4,5,6,7,8,9,10,11,12];
+// ===================== 五维分析（A 已知条件 / B 求解什么 / C 做题思路 / D 易错点 / E 知识点）=====================
+const ANA5_DIMS=[
+  {k:'known',  tag:'A 已知条件', color:'#2f6fed', ph:'题目给了什么（含隐含条件）'},
+  {k:'ask',    tag:'B 求解什么', color:'#16a34a', ph:'要求的是什么 / 目标量'},
+  {k:'method', tag:'C 做题思路', color:'#d97706', ph:'从条件到结论的路子、用的定理/公式'},
+  {k:'pitfall',tag:'D 易错点',   color:'#dc2626', ph:'这次错在哪、坑在哪、下次怎么避'},
+  {k:'points', tag:'E 知识点',   color:'#7c3aed', ph:'对应的课本知识点 / 考点'}
+];
+function esc5(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function ana5(q){return (q&&q.ana5)||{};}
+function ana5Empty(q){const a=ana5(q);return !ANA5_DIMS.some(dm=>(a[dm.k]||'').trim());}
+function renderAna5View(q){
+  const a=ana5(q);
+  return `<div class="detail-field"><div class="label">🧩 五维分析</div>
+    <div class="ana5-wrap">${ANA5_DIMS.map(dm=>{
+      const v=(a[dm.k]||'').trim();
+      return `<div class="ana5-item"><span class="ana5-tag" style="background:${dm.color}">${dm.tag}</span><span style="flex:1;white-space:pre-wrap">${v?esc5(v):'<span style="color:#bdc3c7">未填写</span>'}</span></div>`;
+    }).join('')}</div>
+    ${ana5Empty(q)?'<div class="ana5-empty">💡 点下方「编辑」按 A–E 五维补全：先定已知与目标，再写思路，最后记易错点与知识点——复习时按这五步复盘最快</div>':''}
+  </div>`;
+}
+function renderAna5Form(q){
+  const a=ana5(q);
+  return `<div class="form-section"><h6>🧩 五维分析（可留空，之后随时补）</h6>
+    ${ANA5_DIMS.map(dm=>`<div class="ana5-form-row"><label class="form-label"><span class="ana5-tag" style="background:${dm.color}">${dm.tag}</span></label>
+      <textarea class="form-control" rows="2" id="ed_ana5_${dm.k}" placeholder="${dm.ph}">${esc5(a[dm.k]||'')}</textarea></div>`).join('')}
+  </div>`;
+}
 const DEFAULT_GRADE=8;                  // 若琳当前年级（2026秋 八年级），旧数据迁入此年级
 function lastGrade(){const v=parseInt(localStorage.getItem('wb_last_grade')||'');return(v>=1&&v<=12)?v:DEFAULT_GRADE;}
 function setLastGrade(g){const v=parseInt(g);if(v>=1&&v<=12)localStorage.setItem('wb_last_grade',String(v));}
@@ -346,8 +392,7 @@ function checkImport(){try{
       content:item.content,correct_answer:item.correct_answer||'',my_answer:item.my_answer||'',
       error_reason:item.error_reason||'概念不清',tags:item.tags||'',source:item.source||'练习',
       difficulty:item.difficulty||3,grade:item.grade||lastGrade(),mastery:0,created_at:now(),updated_at:now(),
-      next_review:today(),review_count:0,image_path:'',answer_image_path:''
-      ,flow:{}
+      next_review:today(),review_count:0,image_path:'',answer_image_path:'',flow:{},ana5:{}
     });
     imported++;
   }
@@ -632,7 +677,7 @@ function applyBuiltinQuestions(){try{
       content:b.content,correct_answer:b.correct_answer||'',my_answer:b.my_answer||'',
       error_reason:b.error_reason||'概念不清',tags:b.tags||'',source:b.source||'练习',
       difficulty:b.difficulty||3,grade:b.grade||DEFAULT_GRADE,mastery:0,created_at:now(),updated_at:now(),
-      next_review:today(),review_count:0,image_path:b.image_path||'',answer_image_path:'',flow:{}});
+      next_review:today(),review_count:0,image_path:b.image_path||'',answer_image_path:'',flow:{},ana5:{}});
     applied.push(b.key);added++;
   }
   saveData(d);localStorage.setItem(BUILTIN_FLAG,JSON.stringify(applied));
@@ -836,8 +881,7 @@ function submitAdd(){
     content,correct_answer:addForm.correct_answer,my_answer:addForm.my_answer,
     error_reason:addForm.error_reason,tags:addForm.tags,source:addForm.source,
     difficulty:addForm.difficulty,grade:(addForm.grade?+addForm.grade:lastGrade()),mastery:0,created_at:now(),updated_at:now(),
-    next_review:today(),review_count:0,image_path:addForm.image_path||'',answer_image_path:addForm.answer_image_path||''
-    ,flow:{}
+    next_review:today(),review_count:0,image_path:addForm.image_path||'',answer_image_path:addForm.answer_image_path||'',flow:{},ana5:{}
   });
   saveData(d);
   setLastGrade(addForm.grade);
@@ -940,6 +984,7 @@ function renderDetail(data){
         <div class="form-section"><div class="row">
           <div><label class="form-label">错误原因</label><select class="form-select" id="ed_reason">${ERROR_REASONS.map(r=>`<option value="${r}" ${r===q.error_reason?'selected':''}>${r}</option>`).join('')}</select></div>
           <div><label class="form-label">标签</label><input class="form-control" id="ed_tags" value="${q.tags}"></div></div></div>
+        ${renderAna5Form(q)}
         <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
           <button class="btn btn-primary px-4"><i class="fas fa-save"></i> 保存修改</button>
           <button class="btn btn-outline px-4 ms-2" type="button" onclick="detailEditMode=false;refreshDetail(${q.id})">取消</button></div>
@@ -959,6 +1004,7 @@ function renderDetail(data){
     ${q.my_answer?`<div class="detail-field"><div class="label" style="color:var(--danger)">❌ 我的错误答案</div><div class="value" style="background:#f5656510;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger)">${q.my_answer}</div></div>`:''}
     ${q.answer_image_path?`<div class="detail-field"><div class="label">📷 答案图片</div><div style="max-width:400px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="${q.answer_image_path}" style="width:100%"></div></div>`:''}
     <div class="detail-field"><div class="label">错因分析</div><div class="value"><span class="q-badge badge-reason">${q.error_reason}</span> ${q.tags?'🏷️ '+q.tags:''}</div></div>
+    ${renderAna5View(q)}
     ${q.flow&&(q.flow.known||q.flow.target||q.flow.plan||q.flow.check)?`<div class="detail-field"><div class="label">📋 流程检查</div><div class="value" style="background:#fdf2f2;padding:.6rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger);font-size:.85rem;line-height:1.9">① 已知：${q.flow.known||'—'}<br>② 目标：${q.flow.target||'—'}<br>③ 路径：${q.flow.plan||'—'}<br>④ 检验：${q.flow.check||'—'}</div></div>`:''}
     <div class="detail-field"><div class="label">时间</div><div class="value" style="color:var(--text-light);font-size:.85rem">录入: ${q.created_at} | 复习: ${q.review_count}次 | 下次复习: ${q.next_review||'无需'}</div></div>
     <div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
@@ -984,6 +1030,7 @@ function saveEdit(qid){
   q.my_answer=document.getElementById('ed_wrong').value;
   q.error_reason=document.getElementById('ed_reason').value;
   q.tags=document.getElementById('ed_tags').value;
+  q.ana5={};ANA5_DIMS.forEach(dm=>{const el=document.getElementById('ed_ana5_'+dm.k);if(el)q.ana5[dm.k]=el.value.trim();});
   q.source=document.getElementById('ed_source').value;
   q.difficulty=parseInt(document.getElementById('ed_diff').value);
   q.grade=parseInt(document.getElementById('ed_grade').value)||null;setLastGrade(q.grade);
