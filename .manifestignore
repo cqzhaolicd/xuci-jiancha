@@ -1,0 +1,4 @@
+# 学习中心桌面版自动更新清单排除项
+.gitignore
+.gitattributes
+.DS_Store
