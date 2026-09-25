@@ -954,7 +954,8 @@ function renderList(){
 }
 
 // ===================== DETAIL =====================
-let detailEditMode=false;
+// ⚠️ 原 detailEditMode 全局开关已废弃：它只置真不复位（点过「编辑」后从导航栏离开，
+//    再点开任何错题都直接进编辑表单）。现在编辑态由 navigate('detail',{qid,edit:true}) 参数决定。
 function renderDetail(data){
   const d=loadData();
   const q=d.questions.find(x=>x.id===data.qid);
@@ -962,7 +963,7 @@ function renderDetail(data){
   const subj=d.subjects.find(s=>s.id===q.subject_id);
   const chap=d.chapters.find(c=>c.id===q.chapter_id);
   const chapters=d.chapters.filter(c=>c.subject_id===q.subject_id);
-  if(detailEditMode){
+  if(data&&data.edit){          // 编辑态由页面参数决定（原 detailEditMode 全局开关不复位 → 打开错题直接进编辑）
     const ef={...q};
     return`<div class="card"><div class="card-title"><i class="fas fa-edit"></i> 编辑错题</div>
       <form onsubmit="event.preventDefault();saveEdit(${q.id})">
@@ -987,7 +988,7 @@ function renderDetail(data){
         ${renderAna5Form(q)}
         <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
           <button class="btn btn-primary px-4"><i class="fas fa-save"></i> 保存修改</button>
-          <button class="btn btn-outline px-4 ms-2" type="button" onclick="detailEditMode=false;refreshDetail(${q.id})">取消</button></div>
+          <button class="btn btn-outline px-4 ms-2" type="button" onclick="navigate('detail',{qid:${q.id}})">取消</button></div>
       </form></div>`;
   }
   return`<div class="card"><div class="card-title"><i class="fas fa-file-alt"></i> 错题详情</div>
@@ -1008,7 +1009,7 @@ function renderDetail(data){
     ${q.flow&&(q.flow.known||q.flow.target||q.flow.plan||q.flow.check)?`<div class="detail-field"><div class="label">📋 流程检查</div><div class="value" style="background:#fdf2f2;padding:.6rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger);font-size:.85rem;line-height:1.9">① 已知：${q.flow.known||'—'}<br>② 目标：${q.flow.target||'—'}<br>③ 路径：${q.flow.plan||'—'}<br>④ 检验：${q.flow.check||'—'}</div></div>`:''}
     <div class="detail-field"><div class="label">时间</div><div class="value" style="color:var(--text-light);font-size:.85rem">录入: ${q.created_at} | 复习: ${q.review_count}次 | 下次复习: ${q.next_review||'无需'}</div></div>
     <div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
-      <button class="btn btn-primary btn-sm" onclick="detailEditMode=true;refreshDetail(${q.id})"><i class="fas fa-edit"></i> 编辑</button>
+      <button class="btn btn-primary btn-sm" onclick="navigate('detail',{qid:${q.id},edit:true})"><i class="fas fa-edit"></i> 编辑</button>
       ${['数学','物理','化学'].includes(subj?subj.name:'')?`<button class="btn btn-success btn-sm" onclick="navigate('training',{qid:${q.id}})"><i class="fas fa-layer-group"></i> 三层练</button>`:''}
       <button class="btn btn-danger btn-sm" onclick="deleteQ(${q.id})"><i class="fas fa-trash"></i> 删除</button>
       <button class="btn btn-outline btn-sm" onclick="navigate('list',{})"><i class="fas fa-arrow-left"></i> 返回列表</button>
@@ -1036,7 +1037,6 @@ function saveEdit(qid){
   q.grade=parseInt(document.getElementById('ed_grade').value)||null;setLastGrade(q.grade);
   q.updated_at=now();
   saveData(d);
-  detailEditMode=false;
   toast('✅ 已保存','success');
   navigate('detail',{qid});
 }
