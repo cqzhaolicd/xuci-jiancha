@@ -125,6 +125,11 @@ textarea.form-control{resize:vertical;min-height:70px}
 </style>
 </head><body>
 
+<div id="syncBadge" onclick="cloudInit(true)" title="点击立即与服务器同步（错题库数据跨设备共享）"
+     style="position:fixed;right:14px;bottom:14px;z-index:9999;padding:7px 14px;border-radius:999px;
+            font-size:12.5px;font-family:inherit;background:#f1f3f4;color:#5f6368;cursor:pointer;
+            box-shadow:0 2px 8px rgba(0,0,0,.18);user-select:none;transition:.2s">☁️ 同步…</div>
+
 <nav class="navbar"><div class="container">
   <a class="navbar-brand" href="#"><i class="fas fa-database"></i> 错题库</a>
   <div class="navbar-nav" id="mainNav">
@@ -160,7 +165,80 @@ function loadData() {
   }
   return d;
 }
-function saveData(d){localStorage.setItem(LS_KEY,JSON.stringify(d));}
+// ===================== 跨设备同步（威联通后端 api_wrongbank.php） =====================
+const SYNC_API = 'api_wrongbank.php';
+const SYNC_TOKEN = 'xuji-sync-2026';
+let _syncTimer = null, _syncPulling = false, _lastPushed = '';
+
+function _syncOn(){ return !!SYNC_API; }
+
+async function cloudPull(){
+  const r = await fetch(`${SYNC_API}?action=load`, {headers:{'X-Sync-Token':SYNC_TOKEN}, cache:'no-store'});
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  const j = await r.json();
+  if(!j.ok) throw new Error(j.error||'load 失败');
+  return j;   // {data, updated_at}  data 可能为 null
+}
+
+async function cloudPushNow(d){
+  const body = JSON.stringify(d);
+  if(body === _lastPushed) return;               // 无变化不重复上传
+  const r = await fetch(`${SYNC_API}?action=save`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','X-Sync-Token':SYNC_TOKEN},
+    body
+  });
+  const j = await r.json();
+  if(!j.ok) throw new Error(j.error||'save 失败');
+  _lastPushed = body;
+  return j;
+}
+
+function cloudPush(d){                            // 防抖：停止操作 1.2s 后上传
+  if(_syncTimer) clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(()=>{
+    cloudPushNow(d).then(()=>{ setSyncBadge('ok'); })
+                   .catch(e=>{ setSyncBadge('error', e.message); });
+  }, 1200);
+}
+
+function setSyncBadge(state, msg){
+  const el = document.getElementById('syncBadge');
+  if(!el) return;
+  if(state==='ok'){ el.textContent='☁️ 已同步'; el.style.background='#e6f4ea'; el.style.color='#137333'; el.title='已保存到服务器，其他设备可见'; }
+  else if(state==='error'){ el.textContent='⚠️ 同步失败(仅本机)'; el.style.background='#fce8e6'; el.style.color='#c5221f'; el.title=msg||''; }
+  else if(state==='local'){ el.textContent='📴 本机模式'; el.style.background='#f1f3f4'; el.style.color='#5f6368'; el.title='此页面地址无同步服务（如 GitHub Pages 版），数据仅存本机；用 NAS 地址打开即可跨设备同步'; }
+  else if(state==='pulling'){ el.textContent='⏳ 正在同步…'; el.style.background='#e8f0fe'; el.style.color='#1967d2'; }
+  else { el.textContent='☁️ 同步已启用'; el.style.background='#f1f3f4'; el.style.color='#5f6368'; }
+}
+
+async function cloudInit(forceRemote){
+  setSyncBadge('pulling');
+  try{
+    const j = await cloudPull();
+    const localRaw = localStorage.getItem(LS_KEY);
+    const localObj = localRaw ? JSON.parse(localRaw) : null;
+    if(j.data){
+      // 服务器有数据：以服务器为准（服务器是唯一真实源）
+      localStorage.setItem(LS_KEY, JSON.stringify(j.data));
+      _lastPushed = JSON.stringify(j.data);
+      if(forceRemote || !localObj) setSyncBadge('ok');
+      else setSyncBadge('ok');
+      navigate('dashboard');
+      toast('☁️ 已从服务器同步最新错题本','success');
+    }else{
+      // 服务器为空：把本地数据推上去初始化
+      if(localObj){ await cloudPushNow(localObj); }
+      setSyncBadge('ok');
+    }
+  }catch(e){
+    // 后端不可达：file:// 或无 PHP 的静态站（如 GitHub Pages）→ 中性提示，静默退回本机模式
+    const neutral = (location.protocol === 'file:') || !/^https?:/.test(location.protocol);
+    setSyncBadge(neutral ? 'local' : 'error', e.message);
+  }
+}
+
+function saveData(d){localStorage.setItem(LS_KEY,JSON.stringify(d));cloudPush(d);}
 
 function genId(){const d=loadData();d.nextQId++;saveData(d);return d.nextQId-1;}
 function genChapId(){const d=loadData();d.nextChapId++;saveData(d);return d.nextChapId-1;}
@@ -1212,6 +1290,7 @@ function renderAnalysis(){
 checkImport();
 applyBuiltinQuestions();
 navigate('dashboard');
+cloudInit();          // 异步从服务器拉取最新错题本（失败则静默退回本机模式）
 </script>
 <script>
 // 点击音效
