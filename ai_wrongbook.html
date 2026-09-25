@@ -138,6 +138,8 @@ textarea.form-control{resize:vertical;min-height:70px}
 .ana5-line{line-height:1.9;padding-left:1.05rem;text-indent:-1.05rem;margin-bottom:.2rem}
 .ana5-line:last-child{margin-bottom:0}
 .ana5-key{font-weight:700;color:#334155}
+/* ==== 答案等长文本按行显示（保留换行，不被折叠成空格）==== */
+.prewrap{white-space:pre-wrap;line-height:1.95}
 /* ===== AI错题本 · 顶部双功能区（错题本 / 三层训练） ===== */
 .top-tabs{display:flex;gap:.35rem;flex-wrap:wrap}
 .top-tab{background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.35);
@@ -1012,8 +1014,8 @@ function renderDetail(data){
       ${'⭐'.repeat(q.difficulty)}</div></div>
     <div class="detail-field"><div class="label">题目</div><div class="value" style="background:var(--bg);padding:.8rem;border-radius:var(--radius-sm);line-height:1.8">${q.content}</div></div>
     ${q.image_path?`<div class="detail-field"><div class="label">📷 题目图片</div><div style="max-width:400px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="${q.image_path}" style="width:100%"></div></div>`:''}
-    ${q.correct_answer?`<div class="detail-field"><div class="label" style="color:var(--success)">✅ 正确答案</div><div class="value" style="background:#48bb7810;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--success)">${q.correct_answer}</div></div>`:''}
-    ${q.my_answer?`<div class="detail-field"><div class="label" style="color:var(--danger)">❌ 我的错误答案</div><div class="value" style="background:#f5656510;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger)">${q.my_answer}</div></div>`:''}
+    ${q.correct_answer?`<div class="detail-field"><div class="label" style="color:var(--success)">✅ 正确答案</div><div class="value prewrap" style="background:#48bb7810;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--success)">${q.correct_answer}</div></div>`:''}
+    ${q.my_answer?`<div class="detail-field"><div class="label" style="color:var(--danger)">❌ 我的错误答案</div><div class="value prewrap" style="background:#f5656510;padding:.5rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger)">${q.my_answer}</div></div>`:''}
     ${q.answer_image_path?`<div class="detail-field"><div class="label">📷 答案图片</div><div style="max-width:400px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="${q.answer_image_path}" style="width:100%"></div></div>`:''}
     <div class="detail-field"><div class="label">错因分析</div><div class="value"><span class="q-badge badge-reason">${q.error_reason}</span> ${q.tags?'🏷️ '+q.tags:''}</div></div>
     ${renderAna5View(q)}
@@ -1115,10 +1117,12 @@ function reviewCard(){
     <div class="q-text">${q.content}</div>
     ${reviewAnswered?`
       <div style="margin:1rem 0;padding:1rem;border-radius:var(--radius-sm);background:#48bb7810;border-left:4px solid var(--success);text-align:left">
-        <strong style="color:var(--success)">✅ 正确答案：</strong> ${q.correct_answer||'（无）'}
+        <strong style="color:var(--success)">✅ 正确答案：</strong>
+        <div class="prewrap" style="margin-top:.3rem">${q.correct_answer||'（无）'}</div>
       </div>
       ${q.my_answer?`<div style="margin:.5rem 0;padding:.5rem .8rem;border-radius:var(--radius-sm);background:#f5656510;border-left:3px solid var(--danger);text-align:left;font-size:.85rem">
-        <strong style="color:var(--danger)">❌ 你的答案：</strong> ${q.my_answer}</div>`:''}
+        <strong style="color:var(--danger)">❌ 你的答案：</strong>
+        <div class="prewrap" style="margin-top:.2rem">${q.my_answer}</div></div>`:''}
       <div class="flow-check">
         <div class="flow-check-title">📋 流程检查（五步法 · 必填，不填完不算订正完成）</div>
         <textarea id="fc_known" rows="1" placeholder="① 审题圈画：已知什么条件？">${q.flow&&q.flow.known?q.flow.known:''}</textarea>
@@ -1308,7 +1312,7 @@ function genLayers(q){
   // Layer 1: 原题重现
   const l1={
     title:'基础同构 · 原题重做',
-    content:`<strong>原题：</strong>${content}<br><br><strong style="color:var(--success)">✅ 原题正确答案：</strong>${answer||'（见下方）'}`,
+    content:`<strong>原题：</strong>${content}<br><br><strong style="color:var(--success)">✅ 原题正确答案：</strong><span class="prewrap">${answer||'（见下方）'}</span>`,
     placeholder:'请重新解答这道题，检验是否真正掌握…',
     answer:`原题正确答案：${answer||'（未记录）'}<br>重新做一遍，看是否和正确答案一致。`,
     savedAnswer:''
@@ -1411,7 +1415,7 @@ function renderPrint(){
       return`<div class="print-q">
         <div class="pq-num">${i+1}. [${subj?subj.name:'?'}]</div>
         <div>${q.content}</div>
-        <div class="pq-answer" style="color:var(--success)"><strong>答案：</strong>${q.correct_answer||'（无）'}</div>
+        <div class="pq-answer prewrap" style="color:var(--success)"><strong>答案：</strong>${q.correct_answer||'（无）'}</div>
       </div>`;
     }).join('')}</div>
     <div style="text-align:center;margin-top:1rem">
