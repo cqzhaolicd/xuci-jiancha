@@ -677,7 +677,7 @@ function applyBuiltinQuestions(){try{
       content:b.content,correct_answer:b.correct_answer||'',my_answer:b.my_answer||'',
       error_reason:b.error_reason||'概念不清',tags:b.tags||'',source:b.source||'练习',
       difficulty:b.difficulty||3,grade:b.grade||DEFAULT_GRADE,mastery:0,created_at:now(),updated_at:now(),
-      next_review:today(),review_count:0,image_path:b.image_path||'',answer_image_path:'',flow:{},ana5:{}});
+      next_review:today(),review_count:0,image_path:b.image_path||'',answer_image_path:'',flow:b.flow||{},ana5:b.ana5||{}});
     applied.push(b.key);added++;
   }
   saveData(d);localStorage.setItem(BUILTIN_FLAG,JSON.stringify(applied));
