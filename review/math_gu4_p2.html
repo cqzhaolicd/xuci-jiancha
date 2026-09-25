@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学第2题（15°/30°三角形面积） · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">数学 · 第2题（15°/30°三角形面积）</div>
+    <h1>含 15°/30° 角的三角形 · 正弦定理/面积公式</h1>
+    <div class="meta">来源：2026-09-25 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">（2023秋·成华区期末）如图，在 △ABC 中，∠C = 90°，∠ABC = 30°，AC = 3。点 D 为 △ABC 外一点，满足 ∠BAD = 15°，∠ABD = 30°，则 △ABD 的面积是 ______。
+
+【出处】第二讲 勾股定理综合复习 · 巩固4 第2题（红笔判错）</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_gu4_20260925.jpg" alt="数学第2题（15°/30°三角形面积）题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>① △ABC 中 ∠C = 90°，∠ABC = 30°，AC = 3；② 由 30° 角性质可得 AB = 6，BC = 3√3；③ D 在 △ABC 外，∠BAD = 15°，∠ABD = 30°。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>求 △ABD 的面积。（若琳答 9 + 3√3，红笔判错；正确答案 (9/2)(√3 − 1) = 4.5√3 − 4.5 ≈ 3.29）</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【第一步：先定 AB】
+在 Rt△ABC 中，∠C = 90°，∠ABC = 30° ⇒ AC 是 30° 角所对的边 ⇒ AB = 2AC = 「6」（30° 所对直角边 = 斜边的一半）。
+
+【第二步：在 △ABD 中确定各角】
+∠ADB = 180° − ∠BAD − ∠ABD = 180° − 15° − 30° = 「135°」。
+
+【第三步：用正弦定理求 AD】
+AD / sin∠ABD = AB / sin∠ADB ⇒ AD / sin30° = 6 / sin135°
+⇒ AD = 6 × (1/2) ÷ (√2/2) = 3 × 2/√2 = 「3√2」。
+
+【第四步：用两边夹角求面积】
+S△ABD = ½ × AB × AD × sin∠BAD = ½ × 6 × 3√2 × sin15°
+其中 sin15° = (√6 − √2)/4
+⇒ S = 9√2 × (√6 − √2)/4 = 9(√12 − 2)/4 = 9(2√3 − 2)/4 = 「(9/2)(√3 − 1) = 4.5√3 − 4.5 ≈ 3.29」。
+
+（也可先求 BD = 3(√3 − 1) 再用 S = ½ × AB × BD × sin30° 验证，结果相同。）</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 忘记「30° 角所对直角边等于斜边一半」，求不出 AB = 6；
+② 三角形内角和算错 ⇒ ∠ADB ≠ 135°，后面全错；
+③ 不会用「正弦定理」（这是本题最直接的工具），转而硬作高，越算越乱；
+④ 记不住 sin15° 的值（= (√6 − √2)/4 ≈ 0.2588）；
+⑤ 面积公式用错：应该是 ½×AB×AD×sin∠BAD（夹角必须取 AB 与 AD 之间的角）；
+⑥ 若琳答 9 + 3√3 ≈ 14.2，比正确答案 ≈ 3.29 大 4 倍多 —— 属于量级错误（可能把面积当成周长或用了错误的高）。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 直角三角形中 30° 角的性质（对边 = 斜边的一半）；
+② 三角形内角和与角度转化；
+③ 正弦定理（已知两角一边求边）；
+④ 含特殊角（15°、30°、135°）的三角函数值；
+⑤ 三角形面积公式的两个形式：S = ½ah 与 S = ½ab·sinC；
+⑥ 二次根式化简。
+
+📌 出处：第二讲 勾股定理综合复习 巩固4 第2题。同页第1题（等边+等腰直角求 CD = √(8−4√3)）答对，未录入。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="math_gu34_p5.html">← 上一题：数学第5题（中线折叠·BH）</a><a class="dis">已是最后一题 →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>

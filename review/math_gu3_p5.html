@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学题目5（偶差勾股数组） · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">数学 · 题目5（偶差勾股数组）</div>
+    <h1>勾股数通项推导 · 数列规律与求和</h1>
+    <div class="meta">来源：2026-09-25 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">（2025秋·成华区校级期中）定义：若三个正整数 a、b、c 满足 a &lt; b，a² + b² = c²，且 c − b = 2，则称 (a, b, c) 为“偶差”勾股数组。例如：(6, 8, 10)、(8, 15, 17) 都是“偶差”勾股数组。令 m = a + b + c，将 m 从小到大排列，分别记为 m₁、m₂、m₃、…、mₙ（n 为正整数），则 m₁ 的值为 ______；m₁₈ 的值为 ______。
+
+【出处】第二讲 勾股定理综合复习 题目5（两空均被红笔判错）</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_gu3_20260925.jpg" alt="数学题目5（偶差勾股数组）题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>① a、b、c 为正整数；② a &lt; b；③ a² + b² = c²；④ c − b = 2；⑤ m = a + b + c，从小到大排成 m₁、m₂、…</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>求 m₁ 和 m₁₈。（若琳答 m₁ = 24、m₁₈ = 3012，两空均判错；按定义推导 m₁ = 24、m₁₈ = 840）</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【第一步：把「偶差」条件化成通项】
+① 由 c − b = 2 得 c = b + 2；
+② 代入 a² + b² = c²：a² + b² = (b+2)² = b² + 4b + 4 ⇒ 「a² = 4b + 4」 ⇒ a² 是 4 的倍数 ⇒ a 是「偶数」；
+③ 设 a = 2k（k 为正整数）⇒ b = (4k² − 4)/4 = 「k² − 1」，c = 「k² + 1」；
+④ 由 a &lt; b 得 2k &lt; k² − 1 ⇒ k² − 2k − 1 &gt; 0 ⇒ 「k ≥ 3」；
+   验证：k = 3 ⇒ (6, 8, 10) ✔；k = 4 ⇒ (8, 15, 17) ✔ 与题目例子一致。
+
+【第二步：求 m 的表达式】
+m = a + b + c = 2k + (k² − 1) + (k² + 1) = 「2k² + 2k = 2k(k + 1)」
+（k ≥ 3 时 m 随 k 单调递增）
+
+【第三步：代入】
+① k = 3 ⇒ m₁ = 2 × 3 × 4 = 「24」；
+② 第 18 个对应 k = 3 + (18 − 1) = 20 ⇒ m₁₈ = 2 × 20 × 21 = 「840」。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 不会由 c − b = 2 推出「a 必为偶数」这一步（这是整题的钥匙）；
+② 忘记 a = 2k 之后还要用 a &lt; b 限制 k ≥ 3（若允许 k = 2 会出现 (4, 3, 5)，a &gt; b 不合定义）；
+③ 把「从小到大排列的序号」与 k 的取值搞混（第 18 个 ⇒ k = 20，不是 k = 18）；
+④ 若琳 m₁ 填 24（与推导一致）但被判错 —— 建议与老师核对 m₁ 的标准答案；m₁₈ 填 3012 明显是按错误规律（误差极大）算出的。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 勾股数的通项推导（a = 2k, b = k²−1, c = k²+1）；
+② 由等式变形 + 整除性判断字母取值范围（偶数性）；
+③ 不等式约束（a &lt; b ⇒ k ≥ 3）；
+④ 数列的单调性与序号对应（第 n 项 ⇔ k = n + 2）；
+⑤ 代数式化简（m = 2k(k+1)）。
+
+📌 出处：第二讲 勾股定理综合复习 题目5。同页另有两题（芦苇长度 13 ✔、△ABC 面积 130/126/66）见下条。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="math_gu2_p4.html">← 上一题：数学第4题（勾股树·正方形个数）</a><a href="math_gu3_p2.html">下一题：数学题目2（高在形内/形外分类） →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>

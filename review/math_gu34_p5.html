@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学第5题（中线折叠·BH） · 复习模块</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:#f4f6fb;color:#1f2937;line-height:1.75}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 1rem 3rem}
+  .back{display:inline-block;color:#2f6fed;text-decoration:none;font-size:.88rem;margin-bottom:.7rem}
+  .back:hover{text-decoration:underline}
+  .hero{background:linear-gradient(135deg,#2f6fed,#5f3dc4);color:#fff;border-radius:16px;padding:1.2rem 1.2rem;margin-bottom:1rem}
+  .hero .crumb{font-size:.8rem;opacity:.9;margin-bottom:.3rem}
+  .hero h1{margin:0;font-size:1.2rem;line-height:1.45}
+  .hero .meta{margin-top:.5rem;font-size:.78rem;opacity:.85}
+  .card{background:#fff;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem;box-shadow:0 2px 10px rgba(31,41,55,.06)}
+  h2{font-size:1rem;margin:0 0 .6rem;color:#3b4cca}
+  .stem{background:#fafbff;border-left:3px solid #2f6fed;border-radius:8px;padding:.65rem .85rem;
+        font-size:.94rem;white-space:pre-wrap;margin-bottom:.7rem}
+  .q-img{width:100%;max-width:440px;border-radius:10px;border:1px solid #eef1f8;cursor:zoom-in;display:block}
+  .dim{border-radius:10px;padding:.6rem .85rem;margin-bottom:.55rem;font-size:.93rem}
+  .dim .k{font-weight:700;font-size:.87rem;display:block;margin-bottom:.2rem}
+  .dim p{margin:0;white-space:pre-wrap}
+  .dim.A{background:#eef7ff;border:1px solid #d3e8ff}.dim.A .k{color:#1a6bb8}
+  .dim.B{background:#eefaf3;border:1px solid #c7eeda}.dim.B .k{color:#0b6b3a}
+  .dim.C{background:#fff8e8;border:1px solid #ffe6b3}.dim.C .k{color:#a5720a}
+  .dim.D{background:#fff2f2;border:1px solid #ffd6d6}.dim.D .k{color:#b02a2a}
+  .dim.E{background:#f6f0ff;border:1px solid #e3d5ff}.dim.E .k{color:#6b3fc4}
+  .nav{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .nav a{background:#fff;border:1px solid #e3e8f2;border-radius:10px;padding:.5rem .9rem;text-decoration:none;
+         color:#374151;font-size:.87rem;max-width:47%}
+  .nav a:hover{border-color:#2f6fed;color:#2f6fed}
+  .nav a.dis{opacity:.35;pointer-events:none}
+  #lightbox{display:none;position:fixed;inset:0;background:rgba(15,20,35,.9);z-index:99;
+            align-items:center;justify-content:center;padding:1rem}
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+  footer{text-align:center;color:#9aa3b2;font-size:.78rem;margin-top:1.5rem}
+  @media print{.back,.nav,footer{display:none}.card{box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../review_interactive.html">← 返回题目列表</a>
+  <div class="hero">
+    <div class="crumb">数学 · 第5题（中线折叠·BH）</div>
+    <h1>直角三角形中线翻折 · 对称点与距离计算</h1>
+    <div class="meta">来源：2026-09-25 ｜ 赵若琳学习中心 · 复习模块</div>
+  </div>
+
+  <div class="card">
+    <h2>题目</h2>
+    <div class="stem">（2025秋·金牛区校级期中）在 Rt△ABC 中，∠ACB = 90°，AC = 6，BC = 8，CG 是 AB 边上的中线，将 △ACG 沿 CG 翻折后得到 △HCG，连接 BH，则 BH 的长为 ______。
+
+【出处】第二讲 勾股定理综合复习 第5题（红笔判错）</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_gu34_20260925.jpg" alt="数学第5题（中线折叠·BH）题目图片">
+  </div>
+
+  <div class="card">
+    <h2>五维分析</h2>
+    <div class="dim A"><span class="k">A　已知条件</span><p>① Rt△ABC，∠ACB = 90°；② AC = 6，BC = 8；③ CG 是 AB 边上的中线（G 是 AB 中点）；④ 将 △ACG 沿 CG 翻折得 △HCG。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>求 BH 的长。（若琳写 √39，红笔判错；正确答案 14/5 = 2.8）</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【第一步：先算基本量】
+AB = √(AC² + BC²) = √(6² + 8²) = 10 ⇒ 中线 CG = AG = BG = 5（直角三角形斜边中线等于斜边一半）。
+
+【第二步：翻折给出 H 的位置】
+H 是 A 关于直线 CG 的对称点 ⇒ CH = CA = 6，HG = AG = 5。
+
+【第三步：算 BH —— 用坐标最稳】
+以 C 为原点：A(6, 0)，B(0, 8)，则 G = AB 中点 = (3, 4)；
+直线 CG：y = (4/3)x，即 4x − 3y = 0；
+A(6, 0) 关于该直线的对称点（用点到直线距离公式求对称点）：
+   H = (−42/25, 144/25)  〔验证：HG = 5 ✔，CH = 6 ✔〕
+于是 BH² = (0 + 42/25)² + (8 − 144/25)² = (42/25)² + (56/25)² = (1764 + 3136)/625 = 4900/625 = 196/25；
+⇒ 「BH = 14/5 = 2.8」。
+
+（也可用面积法/三角形中线长公式间接求解，但坐标法最不容易出错。）</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 把 G 当成「CG 的中点」而不是「AB 的中点」（CG 是中线，G 在 AB 上）；
+② 误以为 H 落在 BG 上而用 BH = BG − GH 或勾股硬减（方向不对）；
+③ 忘记「斜边中线 = 斜边一半」这条性质，算不出 CG = 5；
+④ 翻折后没有利用 CH = CA、HG = GA 这两条不变量；
+⑤ 若琳写 √39 —— 属于「凭感觉拼凑」（64 − 25 = 39），既没用到 6、8，也得不出正确长度。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 勾股定理求斜边（6-8-10）；
+② 直角三角形斜边中线性质（CG = ½AB）；
+③ 轴对称的性质（对应线段相等）；
+④ 坐标系中求一点关于一条直线的对称点；
+⑤ 两点间距离公式 + 二次根式化简（4900/625 = 196/25）。
+
+📌 出处：第二讲 勾股定理综合复习 第5题。同页第3、4题见上条与同页说明。</p></div>
+    
+  </div>
+
+  <div class="nav"><a href="math_gu34_p4.html">← 上一题：数学第4题（矩形折叠·两次对称）</a><a href="math_gu4_p2.html">下一题：数学第2题（15°/30°三角形面积） →</a></div>
+  <footer>赵若琳学习中心 · 复习模块</footer>
+</div>
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
+<script>
+document.querySelectorAll('.q-img').forEach(function(im){
+  im.onclick = function(){ document.getElementById('lb').src = im.src;
+                           document.getElementById('lightbox').classList.add('on'); };
+});
+</script>
+</body>
+</html>
