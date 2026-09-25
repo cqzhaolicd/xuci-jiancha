@@ -162,6 +162,20 @@ textarea.form-control{resize:vertical;min-height:70px}
 .pts-note{font-size:.8rem;color:var(--text-light)}
 .pts-empty{font-size:.88rem;color:var(--text-light);line-height:1.7}
 .pts-title{font-size:1.15rem;font-weight:800;margin-bottom:.3rem;display:flex;align-items:center;gap:.45rem}
+/* ===== 复习筛选（复习页/复习要点 共用）===== */
+.rvf-box{border:1.5px solid var(--border);border-radius:var(--radius);padding:.6rem .8rem;margin-bottom:.9rem;background:var(--card-bg)}
+.rvf-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:.87rem;cursor:pointer}
+.rvf-head b{color:var(--primary)}
+.rvf-row{display:flex;gap:.32rem;flex-wrap:wrap;align-items:center;margin-top:.5rem}
+.rvf-lab{font-size:.78rem;color:var(--text-light);font-weight:700;min-width:2.6rem}
+.rvf-chip{padding:.22rem .62rem;border:1.5px solid var(--border);background:var(--bg);color:var(--text);
+  border-radius:999px;font-size:.78rem;cursor:pointer;font-family:inherit;transition:.15s;white-space:nowrap}
+.rvf-chip i{font-style:normal;color:var(--text-light);font-size:.72rem;margin-left:.25rem}
+.rvf-chip:hover{border-color:var(--primary);color:var(--primary)}
+.rvf-chip.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.rvf-chip.active i{color:#fff}
+.rvf-note{font-size:.76rem;color:var(--text-light);margin-top:.5rem;line-height:1.65}
+.rvf-clr{color:#e74c3c;text-decoration:none;font-weight:700;margin-right:.2rem}
 /* ===== AI错题本 · 顶部双功能区（错题本 / 三层训练） ===== */
 .top-tabs{display:flex;gap:.35rem;flex-wrap:wrap}
 .top-tab{background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.35);
@@ -1106,10 +1120,11 @@ function renderReview(){
     if(!qs.length)qs=d.questions.filter(q=>q.mastery<5);
     if(!qs.length)qs=[...d.questions];
   }
-  if(!qs.length)return'<div class="empty-state"><i class="fas fa-check-circle" style="color:var(--success)"></i><h5>没有错题需要复习</h5><p>先录入一些错题吧！</p></div>';
+  qs=rvfApply(qs);
+  if(!qs.length)return rvfPanel()+'<div class="empty-state"><i class="fas fa-filter" style="color:var(--text-light)"></i><h5>当前筛选下没有错题</h5><p>把条件放宽，或点下面清空筛选。</p><button class="btn btn-primary" onclick="rvfClear()"><i class="fas fa-eraser"></i> 清空筛选</button></div>';
   reviewList=qs.sort(()=>Math.random()-.5);
   reviewIdx=0;reviewAnswered=false;
-  return reviewCard();
+  return reviewView();
 }
 function reviewCard(){
   if(reviewIdx>=reviewList.length){
@@ -1163,7 +1178,7 @@ function reviewCard(){
     `:`<button class="btn btn-primary" onclick="reviewShowAnswer()"><i class="fas fa-eye"></i> 看答案</button>`}
     <div class="review-meta">${reviewIdx+1} / ${reviewList.length}</div></div></div>`;
 }
-function reviewShowAnswer(){reviewAnswered=true;document.querySelector('#app').innerHTML=reviewCard();}
+function reviewShowAnswer(){reviewAnswered=true;document.querySelector('#app').innerHTML=reviewView();}
 function reviewResult(r){
   const q=reviewList[reviewIdx];
   const d=loadData();
@@ -1189,7 +1204,7 @@ function reviewResult(r){
     if(qq.mastery>=5)toast('🎉 该错题已完全掌握！','success');
   }
   reviewIdx++;reviewAnswered=false;
-  document.querySelector('#app').innerHTML=reviewCard();
+  document.querySelector('#app').innerHTML=reviewView();
 }
 
 // ===================== TRAINING =====================
@@ -1540,6 +1555,118 @@ function renderAnalysis(){
   </div>`;
 }
 
+// ===================== 复习筛选（「复习」页 与「复习要点」共用）=====================
+// 五个维度：科目 / 年级 / 学期(上·下) / 月份 / 哪一周。
+// 数据全部来自错题本身（subject_id / grade / created_at），不改数据、不做推断。
+// 学期口径：9月~次年1月=上学期，2月~7月=下学期，8月(暑假)不计入学期筛选（只出现在「全部」）。
+let RVF={subject:'all',grade:'all',term:'all',month:'all',week:'all'};
+let rvfOpen=false;
+function rvfSave(){try{localStorage.setItem('wrong_bank_review_filter',JSON.stringify(RVF));}catch(e){}}
+function rvfLoad(){try{const j=JSON.parse(localStorage.getItem('wrong_bank_review_filter')||'null');if(j&&typeof j==='object')RVF=Object.assign({subject:'all',grade:'all',term:'all',month:'all',week:'all'},j);}catch(e){}
+  rvfOpen=rvfHas();   // 上次的筛选还在生效时自动展开，避免"怎么只有一部分题"
+}
+function rvfWeekStart(dt){const x=new Date(dt.getFullYear(),dt.getMonth(),dt.getDate());const wd=(x.getDay()+6)%7;x.setDate(x.getDate()-wd);return x;}
+function rvfTerm(dt){const m=dt.getMonth()+1;return (m>=9||m<=1)?'upper':'lower';}
+function rvfMonthKey(dt){return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0');}
+function rvfDate(q){return ptsParseDate(q.created_at);}
+function rvfList(list,skip){
+  list=list||(loadData().questions||[]);
+  return list.filter(function(q){
+    const dt=rvfDate(q);
+    if(skip!=='subject'&&RVF.subject!=='all'&&String(q.subject_id)!==String(RVF.subject))return false;
+    if(skip!=='grade'&&RVF.grade!=='all'&&String(q.grade==null?'none':q.grade)!==String(RVF.grade))return false;
+    if(skip!=='term'&&RVF.term!=='all'&&(!dt||rvfTerm(dt)!==RVF.term))return false;
+    if(skip!=='month'&&RVF.month!=='all'&&(!dt||rvfMonthKey(dt)!==RVF.month))return false;
+    if(skip!=='week'&&RVF.week!=='all'&&(!dt||rvfWeekStart(dt).getTime()!==Number(RVF.week)))return false;
+    return true;
+  });
+}
+function rvfApply(list){return rvfList(list,null);}
+function rvfHas(){return Object.keys(RVF).some(k=>RVF[k]!=='all');}
+function rvfCount(list,fn){return list.filter(fn).length;}
+function rvfSubjectOpts(){
+  const d=loadData(),base=rvfList(null,'subject'),m={};
+  base.forEach(q=>{m[q.subject_id]=(m[q.subject_id]||0)+1;});
+  return (d.subjects||[]).filter(s=>m[s.id]).map(s=>({v:s.id,label:s.name,n:m[s.id]}));
+}
+function rvfGradeOpts(){
+  const base=rvfList(null,'grade'),m={};
+  base.forEach(q=>{const k=(q.grade==null?'none':q.grade);m[k]=(m[k]||0)+1;});
+  return Object.keys(m).sort((a,b)=>(a==='none'?99:+a)-(b==='none'?99:+b))
+    .map(k=>({v:k,label:(k==='none'?'未标注':k+'年级'),n:m[k]}));
+}
+function rvfTermOpts(){
+  const base=rvfList(null,'term');
+  const o=[];
+  const up=rvfCount(base,q=>{const dt=rvfDate(q);return dt&&rvfTerm(dt)==='upper';});
+  const lo=rvfCount(base,q=>{const dt=rvfDate(q);return dt&&rvfTerm(dt)==='lower';});
+  if(up)o.push({v:'upper',label:'上学期(9~1月)',n:up});
+  if(lo)o.push({v:'lower',label:'下学期(2~7月)',n:lo});
+  return o;
+}
+function rvfMonthOpts(){
+  const base=rvfList(null,'month'),m={};
+  base.forEach(q=>{const dt=rvfDate(q);if(dt){const k=rvfMonthKey(dt);m[k]=(m[k]||0)+1;}});
+  return Object.keys(m).sort().reverse().map(k=>{
+    const p=k.split('-');return {v:k,label:String(p[0]).slice(2)+'年'+Number(p[1])+'月',n:m[k]};
+  });
+}
+function rvfWeekOpts(){
+  const base=rvfList(null,'week'),m={};
+  base.forEach(q=>{const dt=rvfDate(q);if(dt){const t=rvfWeekStart(dt).getTime();m[t]=(m[t]||0)+1;}});
+  const now=rvfWeekStart(new Date()).getTime();
+  return Object.keys(m).map(Number).sort((a,b)=>b-a).map(function(t){
+    const s=new Date(t),e=new Date(t+6*86400000),diff=Math.round((now-t)/(7*86400000));
+    const tag=diff===0?'本周':diff===1?'上周':diff+'周前';
+    return {v:t,label:tag+'('+(s.getMonth()+1)+'/'+s.getDate()+'~'+(e.getMonth()+1)+'/'+e.getDate()+')',n:m[t]};
+  });
+}
+function rvfChipRow(label,key,opts){
+  if(!opts.length)return'';
+  const all={v:'all',label:'全部',n:rvfList(null,key).length};
+  return '<div class="rvf-row"><span class="rvf-lab">'+label+'</span>'
+    +[all].concat(opts).map(o=>'<button class="rvf-chip'+(String(RVF[key])===String(o.v)?' active':'')
+      +'" onclick="rvfSet(\''+key+'\',\''+o.v+'\')">'+o.label+'<i>'+o.n+'</i></button>').join('')+'</div>';
+}
+function rvfNames(){
+  const n=[];
+  if(RVF.subject!=='all'){const s=(loadData().subjects||[]).filter(x=>String(x.id)===String(RVF.subject))[0];n.push(s?s.name:'科目'+RVF.subject);}
+  if(RVF.grade!=='all')n.push(RVF.grade==='none'?'未标注年级':RVF.grade+'年级');
+  if(RVF.term!=='all')n.push(RVF.term==='upper'?'上学期':'下学期');
+  if(RVF.month!=='all'){const p=RVF.month.split('-');n.push(String(p[0]).slice(2)+'年'+Number(p[1])+'月');}
+  if(RVF.week!=='all'){const o=rvfWeekOpts().filter(x=>String(x.v)===String(RVF.week))[0];
+    n.push(o?o.label.replace(/\(.*/,''):'指定周');}
+  return n;
+}
+function rvfPanel(){
+  const total=(loadData().questions||[]).length,hit=rvfList(null,null).length,nm=rvfNames();
+  let h='<div class="rvf-box"><div class="rvf-head" onclick="rvfToggle()">'
+    +'<span><i class="fas fa-filter"></i> 筛选：<b>'+(nm.length?nm.join(' · '):'全部')+'</b></span>'
+    +'<span class="rvf-note" style="margin:0">命中 <b>'+hit+'</b> / '+total+' 题　'
+    +(nm.length?'<a href="javascript:void(0)" onclick="event.stopPropagation();rvfClear()" class="rvf-clr">清空</a> ':'')
+    +'<span>'+(rvfOpen?'收起 ▲':'展开 ▼')+'</span></span></div>';
+  if(rvfOpen){
+    h+=rvfChipRow('科目','subject',rvfSubjectOpts());
+    h+=rvfChipRow('年级','grade',rvfGradeOpts());
+    h+=rvfChipRow('学期','term',rvfTermOpts());
+    h+=rvfChipRow('月份','month',rvfMonthOpts());
+    h+=rvfChipRow('哪一周','week',rvfWeekOpts());
+    h+='<div class="rvf-note">按错题的录入日期筛（学期：9~1月=上学期，2~7月=下学期，8月不计入学期）；'
+      +(nm.length?'<a href="javascript:rvfClear()" style="color:var(--primary)">清空筛选</a>':'勾选即生效，再点一次取消。')+'</div>';
+  }
+  h+='</div>';
+  return h;
+}
+function rvfSet(k,v){RVF[k]=(String(RVF[k])===String(v))?'all':v;rvfSave();rvfRedraw();}
+function rvfToggle(){rvfOpen=!rvfOpen;rvfRedraw();}
+function rvfClear(){RVF={subject:'all',grade:'all',term:'all',month:'all',week:'all'};rvfSave();rvfRedraw();}
+function rvfRedraw(){
+  if(currentPage==='points')document.getElementById('app').innerHTML=renderPoints();
+  else if(currentPage==='review')document.getElementById('app').innerHTML=renderReview();
+  else render(currentPage);
+}
+function reviewView(){return rvfPanel()+reviewCard();}
+
 // ===================== 复习要点（AI错题本）=============================
 // 四个板块＝四种复习节奏，各自的"汇总维度"不同（避免四块内容雷同）：
 //   A 周复习   → 按错因（本周错在哪类）
@@ -1586,12 +1713,15 @@ function ptsPitfall(q){
 function ptsPoints(q){return String(((q.ana5||{}).points)||'').split('\n').map(s=>s.trim()).filter(Boolean);}
 function ptsWindow(bk){
   const d=loadData(),spec=ptsSpec(bk),all=d.questions||[];
+  // 用户在筛选里指定了 学期/月份/哪一周 → 时间范围以用户选的为准，板块不再叠加自己的天数窗口
+  const userTime=(RVF.week!=='all'||RVF.month!=='all'||RVF.term!=='all');
   let qs=all;
-  if(spec.days>0){
+  if(spec.days>0&&!userTime){
     const now=new Date(),t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
     qs=all.filter(q=>{const t=ptsParseDate(q.created_at);return t&&Math.round((t0-t)/86400000)<=spec.days;});
   }
-  return {spec:spec,qs:qs,allCount:all.length,d:d,thinner:qs.length<all.length};
+  const f=rvfApply(qs);
+  return {spec:spec,qs:f,allCount:all.length,d:d,thinner:f.length<all.length,filtered:f.length!==qs.length,userTime:userTime};
 }
 function ptsRangeText(w){
   const st=ptsCount(w.qs.map(q=>ptsSubjName(w.d,q.subject_id)));
@@ -1769,11 +1899,11 @@ function renderPoints(){
   const w=ptsWindow(pointsBlock),sp=w.spec;
   const tabs=POINTS_BLOCKS.map(b=>
     `<button class="pts-tab${b.key===pointsBlock?' active':''}" onclick="pointsBlock='${b.key}';document.querySelector('#app').innerHTML=renderPoints()">${b.label}</button>`).join('');
-  return`<div class="card">
+  return rvfPanel()+`<div class="card">
     <div class="pts-title"><i class="fas fa-clipboard-check" style="color:var(--primary)"></i> 复习要点</div>
     <div class="pts-range" style="margin-bottom:.7rem">按复习节奏分四个板块，内容自动汇总自错题本里的题（错因 / 易错点 / 考点标签 / 掌握度），<b>每条都标来源题号，可点开核对</b>。「考点标签」＝录入时打的标签，不用打＝没标签先补。</div>
     <div class="pts-tabs">${tabs}</div>
-    <div class="pts-range"><b>${sp.label}</b>　${sp.dim}汇总　范围：${ptsRangeText(w)}<br>💡 ${sp.tip}</div>
+    <div class="pts-range"><b>${sp.label}</b>　${sp.dim}汇总　范围：${ptsRangeText(w)}${w.userTime?'　<span class="pts-note">（时间范围＝上方筛选的学期/月/周）</span>':(w.filtered?'　<span class="pts-note">（已套用上方筛选）</span>':'')}<br>💡 ${sp.tip}</div>
     <div class="pts-card c1"><h5>1️⃣ 学习上的弱点（${sp.dim}）</h5>${ptsWeaknessHtml(w)}</div>
     <div class="pts-card c2"><h5>2️⃣ 易错点${sp.axis==='point'?'（按考点归并）':''}</h5>${ptsPitfallHtml(w)}</div>
     <div class="pts-card c3"><h5>3️⃣ 重点（高频考点${sp.axis==='full'?'全量':' Top'}）</h5>${ptsKeyHtml(w)}</div>
@@ -1806,6 +1936,7 @@ navigate = function(page, data){
 };
 
 // ===================== INIT =====================
+rvfLoad();
 checkImport();
 applyBuiltinQuestions();
 navigate('dashboard');
