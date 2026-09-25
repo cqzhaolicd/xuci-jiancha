@@ -47,6 +47,7 @@ NAV_NEW = """<nav class="navbar"><div class="container" style="flex-direction:co
     <div class="top-tabs" id="topTabs">
       <button class="top-tab active" data-top="notebook" onclick="switchTop('notebook')"><i class="fas fa-book"></i> 错题本</button>
       <button class="top-tab" data-top="training" onclick="switchTop('training')"><i class="fas fa-layer-group"></i> 三层训练</button>
+      <button class="top-tab" data-top="points" onclick="switchTop('points')"><i class="fas fa-clipboard-check"></i> 复习要点</button>
     </div>
   </div>
   <div class="navbar-nav" id="mainNav">
@@ -62,7 +63,7 @@ NAV_NEW = """<nav class="navbar"><div class="container" style="flex-direction:co
 FOOTER_OLD = """<div class="footer"><i class="fas fa-heart" style="color:var(--danger)"></i> 错题库 · 浏览器本地存储 &nbsp;|&nbsp; 数据自动保存在本机</div>"""
 
 FOOTER_NEW = """<div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 · 收录「错题本」与「三层训练」两项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 · 收录「错题本」「三层训练」「复习要点」三项功能
   &nbsp;|&nbsp; 数据与「错题库」共用同一份（本机存储 + 云端同步）
   &nbsp;|&nbsp; <a href="index.html" style="color:var(--primary)">返回学习中心</a>
 </div>"""
@@ -72,21 +73,23 @@ JS_BLOCK = """// ===================== AI错题本 · 双功能区（错题本 /
 // 数据层/渲染函数与原页完全同源；localStorage 键与云端后端也一致 ⇒ 两页数据互通：
 // 在原错题库录入或复习的题，这里立刻可见；反之亦然。
 let _aiLastNbPage = 'dashboard';
-function _aiTopTabOf(page){ return page === 'training' ? 'training' : 'notebook'; }
+function _aiTopTabOf(page){ return page === 'training' ? 'training' : (page === 'points' ? 'points' : 'notebook'); }
 function _aiApplyTopTab(page){
   const t = _aiTopTabOf(page);
   document.querySelectorAll('#topTabs .top-tab').forEach(b => b.classList.toggle('active', b.dataset.top === t));
   const mn = document.getElementById('mainNav');
-  if (mn) mn.style.display = (t === 'training') ? 'none' : 'flex';   // 三层训练页隐藏错题本子导航
+  if (mn) mn.style.display = (t === 'notebook') ? 'flex' : 'none';   // 三层训练/复习要点页隐藏错题本子导航
   document.body.setAttribute('data-domain', t);
 }
 function switchTop(tab){
-  navigate(tab === 'training' ? 'training' : (_aiLastNbPage || 'dashboard'));
+  if (tab === 'training') { navigate('training', {}); return; }
+  if (tab === 'points')   { navigate('points'); return; }
+  navigate(_aiLastNbPage || 'dashboard');
 }
 const _aiNavigateBase = navigate;
 navigate = function(page, data){
   _aiNavigateBase(page, data);
-  if (page !== 'training') _aiLastNbPage = (page === 'detail') ? 'list' : page;  // detail 需带参，不记忆
+  if (page !== 'training' && page !== 'points') _aiLastNbPage = (page === 'detail') ? 'list' : page;  // detail 需带参，不记忆
   _aiApplyTopTab(page);
 };
 
@@ -123,6 +126,7 @@ def main():
         ('数据键未改', "const LS_KEY = 'wrong_bank_data';" in h),
         ('云同步未改', 'api_wrongbank.php' in h),
         ('双功能区到位', h.count("data-top=\"notebook\"") == 1 and h.count("data-top=\"training\"") == 1),
+        ('复习要点到位', h.count("data-top=\"points\"") == 1 and 'function renderPoints' in h),
         ('顶层三数组未动', h.count('const BUILTIN_QUESTIONS=[') == 1),
     ]
     ok = True

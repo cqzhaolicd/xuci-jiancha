@@ -140,6 +140,28 @@ textarea.form-control{resize:vertical;min-height:70px}
 .ana5-key{font-weight:700;color:#334155}
 /* ==== 答案等长文本按行显示（保留换行，不被折叠成空格）==== */
 .prewrap{white-space:pre-wrap;line-height:1.95}
+/* ===== 复习要点（AI错题本）===== */
+.pts-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem}
+.pts-tab{padding:.4rem 1rem;border:1.5px solid var(--border);background:var(--card-bg);color:var(--text);
+  border-radius:999px;font-size:.88rem;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.pts-tab:hover{border-color:var(--primary);color:var(--primary)}
+.pts-tab.active{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 2px 8px rgba(102,126,234,.35)}
+.pts-range{font-size:.84rem;color:var(--text-light);margin-bottom:.9rem;line-height:1.7}
+.pts-card{background:var(--card-bg);border-radius:var(--radius);padding:.95rem 1.05rem;margin-bottom:.85rem;
+  border-left:4px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.pts-card h5{margin:0 0 .6rem;font-size:.96rem;font-weight:700;display:flex;align-items:center;gap:.4rem}
+.pts-card.c1{border-left-color:#667eea}.pts-card.c2{border-left-color:#e67e22}
+.pts-card.c3{border-left-color:#38a169}.pts-card.c4{border-left-color:#e74c3c}
+.pts-item{font-size:.9rem;line-height:1.85;padding-left:1.15rem;text-indent:-1.15rem;margin-bottom:.45rem}
+.pts-item:last-child{margin-bottom:0}
+.pts-badge{display:inline-block;background:#667eea14;color:#4a5fd0;border-radius:6px;padding:0 .4rem;font-size:.76rem;
+  margin-left:.3rem;white-space:nowrap}
+.pts-q{display:inline-block;color:var(--primary);font-size:.78rem;cursor:pointer;margin-right:.25rem;
+  border-bottom:1px dotted var(--primary)}
+.pts-q:hover{opacity:.7}
+.pts-note{font-size:.8rem;color:var(--text-light)}
+.pts-empty{font-size:.88rem;color:var(--text-light);line-height:1.7}
+.pts-title{font-size:1.15rem;font-weight:800;margin-bottom:.3rem;display:flex;align-items:center;gap:.45rem}
 /* ===== AI错题本 · 顶部双功能区（错题本 / 三层训练） ===== */
 .top-tabs{display:flex;gap:.35rem;flex-wrap:wrap}
 .top-tab{background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.35);
@@ -164,6 +186,7 @@ textarea.form-control{resize:vertical;min-height:70px}
     <div class="top-tabs" id="topTabs">
       <button class="top-tab active" data-top="notebook" onclick="switchTop('notebook')"><i class="fas fa-book"></i> 错题本</button>
       <button class="top-tab" data-top="training" onclick="switchTop('training')"><i class="fas fa-layer-group"></i> 三层训练</button>
+      <button class="top-tab" data-top="points" onclick="switchTop('points')"><i class="fas fa-clipboard-check"></i> 复习要点</button>
     </div>
   </div>
   <div class="navbar-nav" id="mainNav">
@@ -178,7 +201,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 · 收录「错题本」与「三层训练」两项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 · 收录「错题本」「三层训练」「复习要点」三项功能
   &nbsp;|&nbsp; 数据与「错题库」共用同一份（本机存储 + 云端同步）
   &nbsp;|&nbsp; <a href="index.html" style="color:var(--primary)">返回学习中心</a>
 </div>
@@ -727,6 +750,7 @@ function render(page,data){
   else if(page==='training') app.innerHTML=renderTraining(data);
   else if(page==='print-page') app.innerHTML=renderPrint();
   else if(page==='analysis') app.innerHTML=renderAnalysis();
+  else if(page==='points') app.innerHTML=renderPoints();
 }
 
 // ===================== 局部重绘辅助 =====================
@@ -1516,26 +1540,186 @@ function renderAnalysis(){
   </div>`;
 }
 
+// ===================== 复习要点（AI错题本） =====================
+// 内容 100% 由错题里的真实字段聚合：错因(error_reason)、考点标签(tags)、
+// 五维「易错点」(ana5.pitfall)、掌握度(mastery)、复习次数(review_count)、录入时间(created_at)。
+// 不做任何猜测：每条结论都标出来源题号，可点进去核对。
+const POINTS_BLOCKS=[
+  {key:'week', label:'A 周复习',  days:7,  tip:'每周末 30 分钟：把这周新错的题重做一遍'},
+  {key:'month',label:'B 月复习',  days:30, tip:'每月末：把当月错题按错因归类过一遍'},
+  {key:'half', label:'C 半期复习',days:90, tip:'期中考前一周：按章节归并，抓高频考点'},
+  {key:'final',label:'D 期末复习',days:0,  tip:'期末考前两周：全量错题 + 弱项补漏'}
+];
+let pointsBlock='week';
+const PTS_SUBJ=['数学','物理','化学','语文','英语','历史','地理','生物','道法','政治'];
+
+function ptsParseDate(s){
+  const m=/(\d{4})-(\d{1,2})-(\d{1,2})/.exec(String(s||''));
+  return m?new Date(+m[1],+m[2]-1,+m[3]):null;
+}
+function ptsSubjName(d,id){const s=(d.subjects||[]).find(x=>x.id===id);return s?s.name:'未分科目';}
+function ptsTags(q){return (q.tags||'').split(',').map(x=>x.trim()).filter(x=>x&&PTS_SUBJ.indexOf(x)<0);}
+function ptsErr(q){return ((q.error_reason||'').trim())||'未标注错因';}
+function ptsTop(obj,n){return Object.keys(obj).sort((a,b)=>obj[b]-obj[a]).slice(0,n).map(k=>[k,obj[k]]);}
+function ptsQids(ids){return ids.slice(0,8).map(i=>`<span class="pts-q" onclick="navigate('detail',{qid:${i}})">#${i}</span>`).join('');}
+function ptsPitfall(q){
+  const p=((q.ana5||{}).pitfall)||'';
+  if(!p)return '';
+  const lines=p.split('\n').map(s=>s.trim()).filter(Boolean);
+  let t='';
+  for(let i=0;i<lines.length;i++){
+    const m=/^(易错点|常见错法|错在哪|错误原因)[:：]\s*(.+)$/.exec(lines[i]);
+    if(m){t=m[2];break;}
+  }
+  if(!t)t=(lines[0]||'').replace(/^[①②③④⑤⑥⑦⑧⑨⑩]\s*/,'').replace(/^(易错点|常见错法|错在哪|错误原因)[:：]\s*/,'');
+  return t.replace(/^[0-9]+[.、]\s*/,'').replace(/[。；;]$/,'').trim();
+}
+function ptsWindow(bk){
+  const d=loadData();
+  const spec=POINTS_BLOCKS.filter(b=>b.key===bk)[0]||POINTS_BLOCKS[0];
+  const all=d.questions||[];
+  let qs=all;
+  if(spec.days>0){
+    const now=new Date(),t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+    qs=all.filter(q=>{const t=ptsParseDate(q.created_at);return t&&Math.round((t0-t)/86400000)<=spec.days;});
+  }
+  return {spec:spec,qs:qs,allCount:all.length,d:d};
+}
+// ① 学习上的弱点
+function ptsWeaknessHtml(w){
+  const qs=w.qs,d=w.d;
+  if(!qs.length)return'<div class="pts-empty">该范围内还没有错题。</div>';
+  const errs={};qs.forEach(q=>{const k=ptsErr(q);errs[k]=(errs[k]||0)+1;});
+  let h='';
+  ptsTop(errs,4).forEach(function(pr){
+    const k=pr[0],v=pr[1];
+    const inQ=qs.filter(q=>ptsErr(q)===k);
+    const tg={};inQ.forEach(q=>ptsTags(q).forEach(t=>{tg[t]=(tg[t]||0)+1;}));
+    const tags=ptsTop(tg,3).map(x=>x[0]);
+    const sj=[];inQ.forEach(q=>{const n=ptsSubjName(d,q.subject_id);if(sj.indexOf(n)<0)sj.push(n);});
+    const kShow=(k==='其他'||k==='未标注错因')?k+'（原记录未细分）':k;
+    h+=`<div class="pts-item"><b>${kShow}</b><span class="pts-badge">${v} 题 · 占 ${Math.round(v/qs.length*100)}%</span><br>`
+      +`<span class="pts-note">集中在：${sj.join('、')}${tags.length?'（'+tags.join('、')+'）':''}　来源：${ptsQids(inQ.map(q=>q.id))}</span></div>`;
+  });
+  const zero=qs.filter(q=>!(q.mastery>0)).length;
+  const noRev=qs.filter(q=>!(q.review_count>0)).length;
+  h+=`<div class="pts-item"><b>掌握度</b>：`+(zero===qs.length&&noRev===qs.length
+      ? `<b>${qs.length}</b> 题全部为 0 级（均未复习）`
+      : `<b>${zero}</b> / ${qs.length} 题仍为 0 级<span class="pts-badge">${noRev} 题从未复习</span>`)+`</div>`;
+  return h;
+}
+// ② 易错点（来自五维「易错点」原文，按出现次数排序）
+function ptsPitfallData(qs){
+  const map={};
+  qs.forEach(function(q){
+    const t=ptsPitfall(q);if(!t)return;
+    const k=t.replace(/[\s，,。、；;：:（）()【】「」]/g,'').slice(0,14);
+    if(!map[k])map[k]={text:t,ids:[],tags:ptsTags(q).slice(0,2)};
+    map[k].ids.push(q.id);
+  });
+  const arr=Object.keys(map).map(k=>map[k]).sort((a,b)=>b.ids.length-a.ids.length);
+  return {arr:arr,covered:qs.filter(q=>ptsPitfall(q)).length,total:qs.length};
+}
+function ptsPitfallHtml(w){
+  const r=ptsPitfallData(w.qs);
+  if(!w.qs.length)return'<div class="pts-empty">该范围内还没有错题。</div>';
+  if(!r.arr.length)return'<div class="pts-empty">这 ${r.total} 道题的「易错点」还没填写，可在错题详情里点「编辑」补上。</div>';
+  let h='';
+  r.arr.slice(0,8).forEach(function(o){
+    h+=`<div class="pts-item">${o.text}${o.ids.length>1?`<span class="pts-badge">${o.ids.length} 题</span>`:''}<br>`
+      +`<span class="pts-note">来源：${ptsQids(o.ids)}${o.tags.length?'　考点：'+o.tags.join('、'):''}</span></div>`;
+  });
+  if(r.covered<r.total)h+=`<div class="pts-note" style="margin-top:.4rem">另有 ${r.total-r.covered} 题未填写五维分析，未纳入统计。</div>`;
+  return h;
+}
+// ③ 重点（高频考点标签）
+function ptsKeyData(qs){
+  const map={};
+  qs.forEach(function(q){
+    ptsTags(q).forEach(function(t){
+      if(!map[t])map[t]={n:0,ids:[],subjects:[],pitfall:''};
+      if(map[t].ids.indexOf(q.id)<0){map[t].n++;map[t].ids.push(q.id);}
+      if(!map[t].pitfall)map[t].pitfall=ptsPitfall(q);
+    });
+  });
+  return Object.keys(map).sort((a,b)=>map[b].n-map[a].n).map(k=>{const o=map[k];o.name=k;return o;});
+}
+function ptsKeyHtml(w){
+  const ks=ptsKeyData(w.qs);
+  if(!ks.length)return'<div class="pts-empty">该范围内还没有带考点标签的错题。</div>';
+  const sum=ks.reduce((a,b)=>a+b.n,0);
+  let h=`<div class="pts-item">高频考点 Top ${Math.min(8,ks.length)}（按错题命中次数）</div>`;
+  ks.slice(0,8).forEach(function(o,i){
+    h+=`<div class="pts-item">${i+1}. <b>${o.name}</b><span class="pts-badge">${o.n} 题</span><br>`
+      +`<span class="pts-note">${o.pitfall?'典型易错：'+o.pitfall+'　':''}来源：${ptsQids(o.ids)}</span></div>`;
+  });
+  h+=`<div class="pts-note" style="margin-top:.4rem">共 ${ks.length} 个考点标签、${sum} 次命中（同一题多考点会重复计入）。</div>`;
+  return h;
+}
+// ④ 应该补充学习的内容
+function ptsTodoHtml(w){
+  const qs=w.qs;
+  if(!qs.length)return'<div class="pts-empty">该范围内还没有错题。</div>';
+  const ks=ptsKeyData(qs).slice(0,5);
+  if(!ks.length)return'<div class="pts-empty">该范围内还没有带考点标签的错题，先给错题打上考点标签。</div>';
+  let h='';
+  ks.forEach(function(o,i){
+    const inQ=qs.filter(q=>ptsTags(q).indexOf(o.name)>=0);
+    const errs={};inQ.forEach(q=>{const k=ptsErr(q);errs[k]=(errs[k]||0)+1;});
+    const topErr=ptsTop(errs,2).map(x=>x[0]+'×'+x[1]).join('、');
+    h+=`<div class="pts-item"><b>${i+1}. ${o.name}</b><span class="pts-badge">${o.n} 题</span><br>`
+      +`<span class="pts-note">错因：${topErr}${o.pitfall?'　先解决：'+o.pitfall:''}<br>来源：${ptsQids(o.ids)}</span></div>`;
+  });
+  h+=`<div class="pts-note" style="margin-top:.4rem">排序依据：该考点在错题里命中的次数（次数越多越该先补）。</div>`;
+  return h;
+}
+function ptsRangeText(w){
+  const d=w.d,qs=w.qs;
+  if(!qs.length)return'该范围内 0 题';
+  const ds=qs.map(q=>ptsParseDate(q.created_at)).filter(Boolean).sort((a,b)=>a-b);
+  const fmt=x=>x.getFullYear()+'-'+(x.getMonth()+1)+'-'+x.getDate();
+  const sj={};qs.forEach(q=>{const n=ptsSubjName(d,q.subject_id);sj[n]=(sj[n]||0)+1;});
+  return `${fmt(ds[0])} ~ ${fmt(ds[ds.length-1])} · ${qs.length} 题 · `
+    +Object.keys(sj).map(k=>k+' '+sj[k]).join(' / ');
+}
+function renderPoints(){
+  const w=ptsWindow(pointsBlock);
+  const tabs=POINTS_BLOCKS.map(b=>
+    `<button class="pts-tab ${b.key===pointsBlock?'active':''}" onclick="pointsBlock='${b.key}';document.querySelector('#app').innerHTML=renderPoints()">${b.label}</button>`).join('');
+  return`<div class="card">
+    <div class="pts-title"><i class="fas fa-clipboard-check" style="color:var(--primary)"></i> 复习要点</div>
+    <div class="pts-range" style="margin-bottom:.7rem">按复习节奏分四个板块，内容自动汇总自「AI错题本」里的错题（错因 / 易错点 / 考点标签 / 掌握度），每条都标来源题号，可点开核对。</div>
+    <div class="pts-tabs">${tabs}</div>
+    <div class="pts-range"><b>${w.spec.label}</b>　范围：${ptsRangeText(w)}<br>💡 ${w.spec.tip}</div>
+    <div class="pts-card c1"><h5>1️⃣ 学习上的弱点</h5>${ptsWeaknessHtml(w)}</div>
+    <div class="pts-card c2"><h5>2️⃣ 易错点</h5>${ptsPitfallHtml(w)}</div>
+    <div class="pts-card c3"><h5>3️⃣ 重点</h5>${ptsKeyHtml(w)}</div>
+    <div class="pts-card c4"><h5>4️⃣ 应该补充学习的内容</h5>${ptsTodoHtml(w)}</div>
+  </div>`;
+}
+
 // ===================== AI错题本 · 双功能区（错题本 / 三层训练） =====================
 // 本页 = 把错题库里的「错题本」与「三层训练」两项功能单独成页。
 // 数据层/渲染函数与原页完全同源；localStorage 键与云端后端也一致 ⇒ 两页数据互通：
 // 在原错题库录入或复习的题，这里立刻可见；反之亦然。
 let _aiLastNbPage = 'dashboard';
-function _aiTopTabOf(page){ return page === 'training' ? 'training' : 'notebook'; }
+function _aiTopTabOf(page){ return page === 'training' ? 'training' : (page === 'points' ? 'points' : 'notebook'); }
 function _aiApplyTopTab(page){
   const t = _aiTopTabOf(page);
   document.querySelectorAll('#topTabs .top-tab').forEach(b => b.classList.toggle('active', b.dataset.top === t));
   const mn = document.getElementById('mainNav');
-  if (mn) mn.style.display = (t === 'training') ? 'none' : 'flex';   // 三层训练页隐藏错题本子导航
+  if (mn) mn.style.display = (t === 'notebook') ? 'flex' : 'none';   // 三层训练/复习要点页隐藏错题本子导航
   document.body.setAttribute('data-domain', t);
 }
 function switchTop(tab){
-  navigate(tab === 'training' ? 'training' : (_aiLastNbPage || 'dashboard'));
+  if (tab === 'training') { navigate('training', {}); return; }
+  if (tab === 'points')   { navigate('points'); return; }
+  navigate(_aiLastNbPage || 'dashboard');
 }
 const _aiNavigateBase = navigate;
 navigate = function(page, data){
   _aiNavigateBase(page, data);
-  if (page !== 'training') _aiLastNbPage = (page === 'detail') ? 'list' : page;  // detail 需带参，不记忆
+  if (page !== 'training' && page !== 'points') _aiLastNbPage = (page === 'detail') ? 'list' : page;  // detail 需带参，不记忆
   _aiApplyTopTab(page);
 };
 
