@@ -148,6 +148,7 @@ def main():
         ("localStorage.setItem('wb_last_grade'", "localStorage.setItem('wb_last_grade_test'", '隔离: 上次年级(写)'),
         ("localStorage.setItem('wrong_bank_review_filter'", "localStorage.setItem('wrong_bank_review_filter_test'", '隔离: 筛选记忆(存)'),
         ("localStorage.getItem('wrong_bank_review_filter')", "localStorage.getItem('wrong_bank_review_filter_test')", '隔离: 筛选记忆(读)'),
+        ("const REVIEW_SHOW_ANA5=false;", "const REVIEW_SHOW_ANA5=true;   // 测试版先开：复习页显示五维分析", '测试版: 复习页显示五维分析'),
     ]:
         s = sub_once(s, a, b, lab)
     os.makedirs(STANDALONE_DIR, exist_ok=True)

@@ -138,6 +138,9 @@ textarea.form-control{resize:vertical;min-height:70px}
 .ana5-line{line-height:1.9;padding-left:1.05rem;text-indent:-1.05rem;margin-bottom:.2rem}
 .ana5-line:last-child{margin-bottom:0}
 .ana5-key{font-weight:700;color:#334155}
+/* 复习页里的五维分析盒子（REVIEW_SHOW_ANA5=true 时出现） */
+.ana5-review-box{margin:1rem 0;padding:.9rem 1rem;border-radius:var(--radius-sm);background:#f8fafc;border-left:4px solid #7c3aed;text-align:left}
+.ana5-review-title{font-weight:700;color:#5b21b6;margin-bottom:.6rem;font-size:.95rem}
 /* ==== 答案等长文本按行显示（保留换行，不被折叠成空格）==== */
 .prewrap{white-space:pre-wrap;line-height:1.95}
 /* ===== 复习要点（AI错题本）===== */
@@ -405,6 +408,22 @@ function renderAna5Form(q){
     ${ANA5_DIMS.map(dm=>`<div class="ana5-form-row"><label class="form-label"><span class="ana5-tag" style="background:${dm.color}">${dm.tag}</span></label>
       <textarea class="form-control" rows="2" id="ed_ana5_${dm.k}" placeholder="${dm.ph}">${esc5(a[dm.k]||'')}</textarea></div>`).join('')}
   </div>`;
+}
+/* 复习页（一题一页）是否展示五维分析：
+   先在「AI错题本-测试版」开（构建脚本会把独立版的 false 翻成 true），
+   老板确认效果后，把这里改成 true 并重新构建 → 若琳错题库复习页同步生效 */
+const REVIEW_SHOW_ANA5=false;
+const REV_ANA5_COLORS={known:'#2f6fed',ask:'#16a34a',method:'#d97706',pitfall:'#dc2626',points:'#7c3aed'};
+function reviewAna5Block(q){
+  const a=ana5(q);
+  const body=ANA5_DIMS.map(dm=>{
+    const v=(a[dm.k]||'').trim();
+    return `<div class="ana5-item"><span class="ana5-tag" style="background:${REV_ANA5_COLORS[dm.k]||'#64748b'}">${dm.tag}</span><div class="ana5-v">${v?ana5Lines(v):'<span style="color:#bdc3c7">未填写</span>'}</div></div>`;
+  }).join('');
+  const tip=ana5Empty(q)
+    ? '<div class="ana5-empty">💡 本题还没填五维分析。到「错题本」找到这题 → 点开 → 「编辑」，按 A–E 五维补上，以后复习照着五步走最快。</div>'
+    : '';
+  return `<div class="ana5-review-box"><div class="ana5-review-title">🧩 五维分析</div><div class="ana5-wrap">${body}</div>${tip}</div>`;
 }
 const DEFAULT_GRADE=8;                  // 若琳当前年级（2026秋 八年级），旧数据迁入此年级
 function lastGrade(){const v=parseInt(localStorage.getItem('wb_last_grade')||'');return(v>=1&&v<=12)?v:DEFAULT_GRADE;}
@@ -1170,6 +1189,7 @@ function reviewCard(){
         <textarea id="fc_check" rows="1" placeholder="④ 回代检验：怎么验证答案对不对？">${q.flow&&q.flow.check?q.flow.check:''}</textarea>
         <div class="flow-check-warn" id="fc_warn">⚠️ 流程未完成：请先填完 已知/求/步骤/检验 四项，才算订正完成！</div>
       </div>
+      ${REVIEW_SHOW_ANA5?reviewAna5Block(q):''}
       <div class="review-btns" style="margin-top:1rem">
         <button class="btn btn-danger" onclick="reviewResult(0)"><i class="fas fa-times"></i> 还不会</button>
         <button class="btn btn-warning" style="background:var(--warning);color:#fff" onclick="reviewResult(1)"><i class="fas fa-minus"></i> 有点印象</button>
