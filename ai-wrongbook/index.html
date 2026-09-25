@@ -222,8 +222,8 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <script>
 // ===================== DATA LAYER =====================
-const LS_KEY = 'wrong_bank_data';
-const IMPORT_KEY = 'wrong_bank_import';
+const LS_KEY = 'wrong_bank_data_test';
+const IMPORT_KEY = 'wrong_bank_import_test';
 // ⚠️ 历史/地理/生物/道法 已下线（老板 2026-09-25 要求）；前 5 科 id 不变，旧数据不受影响
 const SUBJECTS_DEFAULT = ['数学','语文','英语','物理','化学'];
 const REMOVED_SUBJECTS = ['历史','地理','生物','道法'];
@@ -251,11 +251,11 @@ function loadData() {
 //   ① https 站点（cloudflared 隧道）→ 同源相对路径，由本机 8099 服务反代到威联通（免混合内容）
 //   ② 威联通本机页面 → 同源相对路径，直连自己的 PHP
 //   ③ 其它来源（如群晖版页面，内网 http）→ 直接指向威联通
-const SYNC_REMOTE = 'http://192.168.3.88/xuci-jiancha/api_wrongbank.php';
+const SYNC_REMOTE = 'http://192.168.3.88/xuci-jiancha/api_wrongbank_test.php';
 const SYNC_API = (function(){
   const host = location.hostname;
-  if (host === '192.168.3.88') return '/xuci-jiancha/api_wrongbank.php';                  // ① 威联通页面：直连本地 PHP
-  if (/\.trycloudflare\.com$/.test(host)) return '/xuci-jiancha/api_wrongbank.php';       // ② 隧道(https)：同源，由 8099 反代
+  if (host === '192.168.3.88') return '/xuci-jiancha/api_wrongbank_test.php';                  // ① 威联通页面：直连本地 PHP
+  if (/\.trycloudflare\.com$/.test(host)) return '/xuci-jiancha/api_wrongbank_test.php';       // ② 隧道(https)：同源，由 8099 反代
   if (location.protocol === 'https:') return null;                          // ③ 其它 https（如 GitHub Pages）：本机模式
   return SYNC_REMOTE;                                                       // ④ 内网其它来源（如群晖）：指向威联通
 })();
@@ -407,8 +407,8 @@ function renderAna5Form(q){
   </div>`;
 }
 const DEFAULT_GRADE=8;                  // 若琳当前年级（2026秋 八年级），旧数据迁入此年级
-function lastGrade(){const v=parseInt(localStorage.getItem('wb_last_grade')||'');return(v>=1&&v<=12)?v:DEFAULT_GRADE;}
-function setLastGrade(g){const v=parseInt(g);if(v>=1&&v<=12)localStorage.setItem('wb_last_grade',String(v));}
+function lastGrade(){const v=parseInt(localStorage.getItem('wb_last_grade_test')||'');return(v>=1&&v<=12)?v:DEFAULT_GRADE;}
+function setLastGrade(g){const v=parseInt(g);if(v>=1&&v<=12)localStorage.setItem('wb_last_grade_test',String(v));}
 function gradeText(g){return(g===undefined||g===null||g==='')?'未标注年级':(g+'年级');}
 function gradeMatch(q,g){                       // 通用年级筛选：''=全部 'none'=未标注 '7'..'12'
   if(g==='none')return q.grade===undefined||q.grade===null||q.grade==='';
@@ -452,7 +452,7 @@ function checkImport(){try{
 }catch(e){console.error('Import error:',e);}}
 
 // ===================== BUILTIN WRONG QUESTIONS (内置收录) =====================
-const BUILTIN_FLAG='wrong_bank_builtin_applied';
+const BUILTIN_FLAG='wrong_bank_builtin_applied_test';
 const BUILTIN_QUESTIONS=[
 {key:'physics_ecg_20260913',subject:'物理',chapter:'机械运动（速度计算）',
 content:'5. 心电图仪通过传感手段，把与人心跳对应的生物电流记录在匀速运动的坐标纸上(图甲)。医生测量相邻两波峰的时间间隔，便可计算出 1 min 内心脏跳动的次数（心率）。同一台心电图仪正常工作时测得甲、乙的心电图分别如图乙、丙：甲的相邻波峰间距为 18 mm，乙（患者乙）的相邻波峰间距为 15 mm。已知甲的心率为 80 次/min，求：(1) 甲每次心跳的时间间隔；(2) 这台心电图仪输出坐标纸的走纸速度大小；(3) 乙患者的心率。',
@@ -1561,8 +1561,8 @@ function renderAnalysis(){
 // 学期口径：9月~次年1月=上学期，2月~7月=下学期，8月(暑假)不计入学期筛选（只出现在「全部」）。
 let RVF={subject:'all',grade:'all',term:'all',month:'all',week:'all'};
 let rvfOpen=false;
-function rvfSave(){try{localStorage.setItem('wrong_bank_review_filter',JSON.stringify(RVF));}catch(e){}}
-function rvfLoad(){try{const j=JSON.parse(localStorage.getItem('wrong_bank_review_filter')||'null');if(j&&typeof j==='object')RVF=Object.assign({subject:'all',grade:'all',term:'all',month:'all',week:'all'},j);}catch(e){}
+function rvfSave(){try{localStorage.setItem('wrong_bank_review_filter_test',JSON.stringify(RVF));}catch(e){}}
+function rvfLoad(){try{const j=JSON.parse(localStorage.getItem('wrong_bank_review_filter_test')||'null');if(j&&typeof j==='object')RVF=Object.assign({subject:'all',grade:'all',term:'all',month:'all',week:'all'},j);}catch(e){}
   if(RVF.term==='up'||RVF.term==='lower')RVF.term='all';   // 旧版学期值（上学期/下学期）已弃用
   rvfOpen=rvfHas();   // 上次的筛选还在生效时自动展开，避免"怎么只有一部分题"
 }
