@@ -11,6 +11,14 @@ const BACKUP_DIR = __DIR__ . '/wrong_bank_backups';
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
+// 允许跨源调用（群晖版页面 / 局域网其它地址），自定义头 X-Sync-Token 会触发预检
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type, X-Sync-Token');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
 
 function out(array $a, int $code = 200): void {
     http_response_code($code);

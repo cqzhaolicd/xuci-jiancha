@@ -166,7 +166,10 @@ function loadData() {
   return d;
 }
 // ===================== 跨设备同步（威联通后端 api_wrongbank.php） =====================
-const SYNC_API = 'api_wrongbank.php';
+// 同步后端地址：威联通上部署了 PHP 接口；同源优先，其它站点（群晖版等）指向威联通
+const SYNC_REMOTE = 'http://192.168.3.88/xuci-jiancha/api_wrongbank.php';
+const SYNC_API = (location.protocol === 'https:') ? null          // https 页面调不了 http 后端（混合内容会被拦）
+                : (location.hostname === '192.168.3.88' ? 'api_wrongbank.php' : SYNC_REMOTE);
 const SYNC_TOKEN = 'xuji-sync-2026';
 let _syncTimer = null, _syncPulling = false, _lastPushed = '';
 
@@ -195,6 +198,7 @@ async function cloudPushNow(d){
 }
 
 function cloudPush(d){                            // 防抖：停止操作 1.2s 后上传
+  if(!SYNC_API) return;                           // 无可用后端（https 版）→ 纯本机模式
   if(_syncTimer) clearTimeout(_syncTimer);
   _syncTimer = setTimeout(()=>{
     cloudPushNow(d).then(()=>{ setSyncBadge('ok'); })
@@ -213,22 +217,24 @@ function setSyncBadge(state, msg){
 }
 
 async function cloudInit(forceRemote){
+  if(!SYNC_API){ setSyncBadge('local'); return; }   // 如 GitHub Pages(https) 版：无后端可用
   setSyncBadge('pulling');
   try{
     const j = await cloudPull();
     const localRaw = localStorage.getItem(LS_KEY);
     const localObj = localRaw ? JSON.parse(localRaw) : null;
-    if(j.data){
-      // 服务器有数据：以服务器为准（服务器是唯一真实源）
+    const hasRemote = j.data && Array.isArray(j.data.questions) && (j.data.questions.length > 0 || (j.data.subjects||[]).length > 0);
+    if(hasRemote){
+      // 服务器有真实数据：以服务器为准（服务器是唯一真实源）
       localStorage.setItem(LS_KEY, JSON.stringify(j.data));
       _lastPushed = JSON.stringify(j.data);
-      if(forceRemote || !localObj) setSyncBadge('ok');
-      else setSyncBadge('ok');
+      setSyncBadge('ok');
       navigate('dashboard');
       toast('☁️ 已从服务器同步最新错题本','success');
     }else{
-      // 服务器为空：把本地数据推上去初始化
-      if(localObj){ await cloudPushNow(localObj); }
+      // 服务器为空或只有空壳：把本地数据推上去初始化
+      const d0 = loadData();
+      await cloudPushNow(d0);
       setSyncBadge('ok');
     }
   }catch(e){
