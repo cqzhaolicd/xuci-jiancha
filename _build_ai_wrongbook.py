@@ -123,11 +123,14 @@ def main():
     print(f'输出: {DST}  {len(h)} 字符')
 
     # ---------- 同步生成「独立版」（/ai-wrongbook/）：去掉一切指向学习中心的东西 ----------
+    # 命名：独立版 = 「AI错题本-测试版」（老板指定）
     s = h
     s = sub_once(s, '<title>AI错题本 · 赵若琳学习中心</title>',
-                 '<title>AI错题本</title>\n<base href="/xuci-jiancha/">', '独立版: 标题 + base')
+                 '<title>AI错题本-测试版</title>\n<base href="/xuci-jiancha/">', '独立版: 标题 + base')
     s = sub_once(s, '<a class="navbar-brand" href="index.html"><i class="fas fa-robot"></i> AI错题本</a>',
-                 '<span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本</span>', '独立版: 品牌链接去外链')
+                 '<span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本-测试版</span>', '独立版: 品牌链接去外链')
+    s = sub_once(s, 'AI错题本 · 收录「错题本」「三层训练」「复习要点」三项功能',
+                 'AI错题本-测试版 · 收录「错题本」「三层训练」「复习要点」三项功能', '独立版: 页脚命名')
     s = re.sub(r'\n\s*&nbsp;\|&nbsp; <a href="index\.html"[^>]*>返回学习中心</a>', '', s, count=1)
     # API 用绝对同源路径，避免受 base/目录层级影响
     s = sub_once(s, "if (host === '192.168.3.88') return 'api_wrongbank.php';",
@@ -138,6 +141,7 @@ def main():
     open(STANDALONE, 'w', encoding='utf-8').write(s)
     ok = True
     chips = [
+        ('独立版: 名称=AI错题本-测试版', s.count('AI错题本-测试版') >= 3),
         ('独立版: 无「返回学习中心」链接', '返回学习中心' not in s),
         ('独立版: 无 index.html 外链', 'href="index.html"' not in s),
         ('独立版: base 已设', s.count('<base href="/xuci-jiancha/">') == 1),
