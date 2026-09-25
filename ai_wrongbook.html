@@ -1563,10 +1563,13 @@ let RVF={subject:'all',grade:'all',term:'all',month:'all',week:'all'};
 let rvfOpen=false;
 function rvfSave(){try{localStorage.setItem('wrong_bank_review_filter',JSON.stringify(RVF));}catch(e){}}
 function rvfLoad(){try{const j=JSON.parse(localStorage.getItem('wrong_bank_review_filter')||'null');if(j&&typeof j==='object')RVF=Object.assign({subject:'all',grade:'all',term:'all',month:'all',week:'all'},j);}catch(e){}
+  if(RVF.term==='up'||RVF.term==='lower')RVF.term='all';   // 旧版学期值（上学期/下学期）已弃用
   rvfOpen=rvfHas();   // 上次的筛选还在生效时自动展开，避免"怎么只有一部分题"
 }
 function rvfWeekStart(dt){const x=new Date(dt.getFullYear(),dt.getMonth(),dt.getDate());const wd=(x.getDay()+6)%7;x.setDate(x.getDate()-wd);return x;}
-function rvfTerm(dt){const m=dt.getMonth()+1;return (m>=9||m<=1)?'upper':'lower';}
+function rvfHalf(dt){const m=dt.getMonth()+1;return (m>=9||m<=1)?'up':(m<=7?'lo':'');}   // 8月='' 不计入
+function rvfTermKey(q){const dt=rvfDate(q);if(!dt)return'';const h=rvfHalf(dt);if(!h)return'';return ((q.grade==null||q.grade==='')?'none':String(q.grade))+'-'+h;}
+function rvfSchoolYear(dt){const m=dt.getMonth()+1,y=dt.getFullYear();if(m>=9)return String(y).slice(2)+'秋';if(m<=1)return String(y-1).slice(2)+'秋';return String(y).slice(2)+'春';}
 function rvfMonthKey(dt){return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0');}
 function rvfDate(q){return ptsParseDate(q.created_at);}
 function rvfList(list,skip){
@@ -1575,7 +1578,7 @@ function rvfList(list,skip){
     const dt=rvfDate(q);
     if(skip!=='subject'&&RVF.subject!=='all'&&String(q.subject_id)!==String(RVF.subject))return false;
     if(skip!=='grade'&&RVF.grade!=='all'&&String(q.grade==null?'none':q.grade)!==String(RVF.grade))return false;
-    if(skip!=='term'&&RVF.term!=='all'&&(!dt||rvfTerm(dt)!==RVF.term))return false;
+    if(skip!=='term'&&RVF.term!=='all'&&rvfTermKey(q)!==RVF.term)return false;
     if(skip!=='month'&&RVF.month!=='all'&&(!dt||rvfMonthKey(dt)!==RVF.month))return false;
     if(skip!=='week'&&RVF.week!=='all'&&(!dt||rvfWeekStart(dt).getTime()!==Number(RVF.week)))return false;
     return true;
@@ -1596,13 +1599,26 @@ function rvfGradeOpts(){
     .map(k=>({v:k,label:(k==='none'?'未标注':k+'年级'),n:m[k]}));
 }
 function rvfTermOpts(){
-  const base=rvfList(null,'term');
-  const o=[];
-  const up=rvfCount(base,q=>{const dt=rvfDate(q);return dt&&rvfTerm(dt)==='upper';});
-  const lo=rvfCount(base,q=>{const dt=rvfDate(q);return dt&&rvfTerm(dt)==='lower';});
-  if(up)o.push({v:'upper',label:'上学期(9~1月)',n:up});
-  if(lo)o.push({v:'lower',label:'下学期(2~7月)',n:lo});
-  return o;
+  const base=rvfList(null,'term'),m={},yr={};
+  base.forEach(function(q){
+    const k=rvfTermKey(q);if(!k)return;
+    m[k]=(m[k]||0)+1;
+    const sy=rvfSchoolYear(rvfDate(q));
+    if(!yr[k])yr[k]={};
+    yr[k][sy]=1;
+  });
+  const keys=Object.keys(m).sort(function(a,b){
+    const pa=a.split('-'),pb=b.split('-');
+    const ga=(pa[0]==='none'?99:+pa[0]),gb=(pb[0]==='none'?99:+pb[0]);
+    if(ga!==gb)return ga-gb;
+    return pa[1]==='up'?-1:1;
+  });
+  const dup={};keys.forEach(k=>{if(Object.keys(yr[k]).length>1)dup[k]=1;});
+  return keys.map(function(k){
+    const p=k.split('-');
+    const lab=(p[0]==='none'?'未标注年级':p[0]+'年级')+(p[1]==='up'?'上':'下');
+    return {v:k,label:lab+(dup[k]?'（'+Object.keys(yr[k]).sort().join('/')+'）':''),n:m[k]};
+  });
 }
 function rvfMonthOpts(){
   const base=rvfList(null,'month'),m={};
@@ -1632,7 +1648,7 @@ function rvfNames(){
   const n=[];
   if(RVF.subject!=='all'){const s=(loadData().subjects||[]).filter(x=>String(x.id)===String(RVF.subject))[0];n.push(s?s.name:'科目'+RVF.subject);}
   if(RVF.grade!=='all')n.push(RVF.grade==='none'?'未标注年级':RVF.grade+'年级');
-  if(RVF.term!=='all')n.push(RVF.term==='upper'?'上学期':'下学期');
+  if(RVF.term!=='all'){const o=rvfTermOpts().filter(x=>String(x.v)===String(RVF.term))[0];n.push(o?o.label.replace(/（.*$/,''):'学期');}
   if(RVF.month!=='all'){const p=RVF.month.split('-');n.push(String(p[0]).slice(2)+'年'+Number(p[1])+'月');}
   if(RVF.week!=='all'){const o=rvfWeekOpts().filter(x=>String(x.v)===String(RVF.week))[0];
     n.push(o?o.label.replace(/\(.*/,''):'指定周');}
@@ -1651,7 +1667,7 @@ function rvfPanel(){
     h+=rvfChipRow('学期','term',rvfTermOpts());
     h+=rvfChipRow('月份','month',rvfMonthOpts());
     h+=rvfChipRow('哪一周','week',rvfWeekOpts());
-    h+='<div class="rvf-note">按错题的录入日期筛（学期：9~1月=上学期，2~7月=下学期，8月不计入学期）；'
+    h+='<div class="rvf-note">时间按错题的<b>录入日期</b>筛；学期＝年级+上/下（如 8年级上），上下半按录入日期定：9~1月=上、2~7月=下、8月不计入；'
       +(nm.length?'<a href="javascript:rvfClear()" style="color:var(--primary)">清空筛选</a>':'勾选即生效，再点一次取消。')+'</div>';
   }
   h+='</div>';
