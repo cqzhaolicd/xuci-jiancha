@@ -1,0 +1,20 @@
+/* 离线字体（替代 Google Fonts CDN）
+   - Press Start 2P：本地 ttf
+   - Noto Sans SC：无本地字库，映射到系统字体（Windows 微软雅黑 / Mac 苹方），
+     保持原 CSS 里的 font-family:'Noto Sans SC' 声明依然有效，不改变页面排版逻辑。 */
+@font-face {
+  font-family: 'Press Start 2P';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../vendor/PressStart2P-Regular.ttf') format('truetype');
+}
+/* 用系统字体冒充 Noto Sans SC，避免 20MB+ 中文字库拖垮安装包 */
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: local('Microsoft YaHei'), local('微软雅黑'), local('PingFang SC'),
+       local('Source Han Sans SC'), local('Noto Sans CJK SC');
+}
