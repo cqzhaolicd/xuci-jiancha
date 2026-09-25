@@ -134,6 +134,10 @@ textarea.form-control{resize:vertical;min-height:70px}
 .ana5-tag{flex:0 0 auto;min-width:4.9rem;padding:.16rem .5rem;border-radius:6px;color:#fff;font-size:.75rem;font-weight:700;text-align:center;white-space:nowrap}
 .ana5-empty{font-size:.78rem;color:var(--text-light);margin-top:.4rem}
 .ana5-form-row{margin-bottom:.5rem}
+.ana5-v{flex:1;min-width:0}
+.ana5-line{line-height:1.9;padding-left:1.05rem;text-indent:-1.05rem;margin-bottom:.2rem}
+.ana5-line:last-child{margin-bottom:0}
+.ana5-key{font-weight:700;color:#334155}
 </style>
 </head><body>
 
@@ -320,12 +324,19 @@ const ANA5_DIMS=[
 function esc5(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function ana5(q){return (q&&q.ana5)||{};}
 function ana5Empty(q){const a=ana5(q);return !ANA5_DIMS.some(dm=>(a[dm.k]||'').trim());}
+function ana5Lines(v){                      // 按行渲染：行首编号/短标签做悬挂缩进，标签加粗
+  return v.split('\n').map(x=>x.trim()).filter(x=>x).map(line=>{
+    const m=line.match(/^([^：:]{1,10}[：:])/);
+    if(m)return `<div class="ana5-line"><span class="ana5-key">${esc5(m[1])}</span>${esc5(line.slice(m[1].length))}</div>`;
+    return `<div class="ana5-line">${esc5(line)}</div>`;
+  }).join('');
+}
 function renderAna5View(q){
   const a=ana5(q);
   return `<div class="detail-field"><div class="label">🧩 五维分析</div>
     <div class="ana5-wrap">${ANA5_DIMS.map(dm=>{
       const v=(a[dm.k]||'').trim();
-      return `<div class="ana5-item"><span class="ana5-tag" style="background:${dm.color}">${dm.tag}</span><span style="flex:1;white-space:pre-wrap">${v?esc5(v):'<span style="color:#bdc3c7">未填写</span>'}</span></div>`;
+      return `<div class="ana5-item"><span class="ana5-tag" style="background:${dm.color}">${dm.tag}</span><div class="ana5-v">${v?ana5Lines(v):'<span style="color:#bdc3c7">未填写</span>'}</div></div>`;
     }).join('')}</div>
     ${ana5Empty(q)?'<div class="ana5-empty">💡 点下方「编辑」按 A–E 五维补全：先定已知与目标，再写思路，最后记易错点与知识点——复习时按这五步复盘最快</div>':''}
   </div>`;
