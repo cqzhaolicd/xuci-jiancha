@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>数学第23题（旋转构造） · 复习模块</title>
+<title>数学第2题（圆柱丝带） · 复习模块</title>
 <style>
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
@@ -45,52 +45,45 @@
 <div class="wrap">
   <a class="back" href="../review_interactive.html">← 返回题目列表</a>
   <div class="hero">
-    <div class="crumb">数学 · 第23题（旋转构造）</div>
-    <h1>等腰直角三角形内的点 · 旋转构造 + 勾股逆定理 + 余弦定理</h1>
-    <div class="meta">来源：2026-09-24 ｜ 赵若琳学习中心 · 复习模块</div>
+    <div class="crumb">数学 · 第2题（圆柱丝带）</div>
+    <h1>圆柱侧面展开 · 丝带缠绕最短路径</h1>
+    <div class="meta">来源：2026-09-25 ｜ 赵若琳学习中心 · 复习模块</div>
   </div>
 
   <div class="card">
     <h2>题目</h2>
-    <div class="stem">点 D 是以 AB 为斜边的等腰直角三角形 ABC 内一点，若 BD = 2，CD = 4，AD = 6，则 △ABC 的面积是 ______。</div>
-    <img class="q-img" src="../uploads/wrong_bank/math_p23_20260924.jpg" alt="数学第23题（旋转构造）题目图片">
+    <div class="stem">（2024秋·深圳校级期末）如图，圆柱底面圆的周长为 8 cm，CD、AB 分别是上、下底面的直径，高 BC = 6 cm，用一条无弹性的丝带从 A 至 C 按如图所示的圈数缠绕，则丝带的最短长度为 ______ cm。
+
+【出处】第二讲 勾股定理综合复习 · 巩固1 第2题</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_p2cyl_20260925.jpg" alt="数学第2题（圆柱丝带）题目图片">
   </div>
 
   <div class="card">
     <h2>五维分析</h2>
-    <div class="dim A"><span class="k">A　已知条件</span><p>① △ABC 是以 AB 为斜边的等腰直角三角形 ⇒ ∠ACB = 90°，AC = BC；
-② D 是三角形内一点；
-③ BD = 2，CD = 4，AD = 6。</p></div>
-    <div class="dim B"><span class="k">B　求解什么</span><p>求 △ABC 的面积。（若琳填 23；正确答案 10 + 4√2）</p></div>
-    <div class="dim C"><span class="k">C　做题思路</span><p>【核心：把两条已知边「转」到同一个三角形里，用勾股逆定理造直角】
-① 设 AC = BC = a，则 S△ABC = ½a²，只需求出 a²；
-② 将 △CDB 绕点 C 顺时针旋转 90°，使 CB 落到 CA 上，D 落到 D′：
-   - CD′ = CD = 4，AD′ = BD = 2（旋转保持长度）；
-   - ∠DCD′ = 90° ⇒ △CDD′ 是等腰直角三角形 ⇒ DD′ = 4√2，∠CD′D = 45°；
-③ 在 △ADD′ 中，三边 AD = 6，AD′ = 2，DD′ = 4√2；
-   勾股定理逆定理：AD′² + DD′² = 4 + 32 = 36 = 6² = AD² ⇒ ∠AD′D = 90°；
-④ 于是 ∠CD′A = ∠CD′D + ∠DD′A = 45° + 90° = 135°；
-⑤ 在 △CD′A 中用余弦定理（CD′ = 4，AD′ = 2，夹角 135°）：
-   CA² = 4² + 2² − 2·4·2·cos135° = 16 + 4 + 8√2 = 20 + 8√2；
-⑥ S△ABC = ½a² = ½(20 + 8√2) = 10 + 4√2。</p></div>
-    <div class="dim D"><span class="k">D　易错点</span><p>① 看到「三角形内一点 + 三条到顶点的距离」不知道要旋转构造（本类题的突破口）；
-② 旋转方向/中心选错，D′ 落点不对，后续全乱；
-③ 不连接 DD′，丢掉等腰直角 △CDD′ 提供的 45° 角与 4√2；
-④ 在 △ADD′ 中看到 6、2、4√2 三边，想不到用勾股逆定理证 ∠AD′D = 90°；
-⑤ 求 CA² 时不会用余弦定理（或忘记 cos135° = −√2/2，符号弄错）；
-⑥ 忘记最后除以 2（S = ½a²），或写成 23 这种没有依据的值（若琳的错误答案）。</p></div>
-    <div class="dim E"><span class="k">E　知识点</span><p>① 等腰直角三角形的性质（斜边 = 直角边 × √2）；
-② 旋转变换：把分散的线段集中到同一个三角形；
-③ 勾股定理的逆定理判定直角；
-④ 余弦定理（或用「构造直角三角形 + 勾股」）求第三边；
-⑤ 含 135° 角的三角形求边长（转化到特殊角）；
-⑥ 面积公式 S = ½ab（等腰直角三角形 S = ½a²）。
+    <div class="dim A"><span class="k">A　已知条件</span><p>① 圆柱底面周长 = 8 cm；② AB 为下底面直径，CD 为上底面直径；③ 圆柱高 BC = 6 cm；④ 丝带从 A 绕到 C，圈数按图（图中为绕行路径）。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>求丝带的最短长度。（若琳答 20 cm，被红笔判错）</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【展开法（化曲面为平面）】
+① 把圆柱侧面沿一条母线剪开摊平，得到一个矩形：宽 = 底面周长，高 = 圆柱的高；
+② 若丝带绕 n 圈，则展开后矩形的总宽度为 8n（每绕一圈横向推进一个周长），高度为 6；
+③ 丝带的路径在展开图上就是一条斜线段 ⇒ 最短长度 = √((8n)² + 6²)；
+④ 由图数出实际圈数 n 后代入即得（具体 n 以原图为准 —— 请对照书本核对圈数后填入最终答案）。
 
-📌 出处：同页第22题（△ABC 与 △ACD 均为直角三角形，AD = 2BC = 6 等）也在填空题区；若琳第23题填 23，正确答案 10 + 4√2。</p></div>
+【若琳的思路（错在哪）】
+她先算 √(8² + 6²) = 10，然后乘 2 得 20。用「先算一圈的斜边、再乘圈数」的做法是错的：多圈时展开后的横向总宽要一次算进同一个直角三角形里（√((8n)² + 6²)），而不是把单圈斜边简单相加。另外她手写时把底面「周长 8」与「半径 4」混在一起用，也是常见的混淆点。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 把「底面周长 8 cm」当成半径（应该是周长，半径 = 8/(2π)）；
+② 多圈缠绕时「先算一圈斜边再乘圈数」（错！必须把总横向距离 8n 一次代入同一勾股式）；
+③ 剪开位置选错，导致展开图上起点与终点的横向差弄错；
+④ 忘记「无弹性丝带最短」= 展开图上的「线段」（两点之间线段最短）。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 圆柱侧面展开图（矩形：宽 = 底面周长，高 = 圆柱高）；
+② 空间曲面上的最短路径 ⇔ 展开图上的线段；
+③ 勾股定理 √(a² + b²)；
+④ 多圈缠绕的处理：横向总距离 = 周长 × 圈数。
+
+📌 出处：第二讲 勾股定理综合复习（巩固1）第 2 题；若琳答 20 cm 被红笔判错。教材答案需对照原书确认（取决于圈数）。</p></div>
     
   </div>
 
-  <div class="nav"><a href="math_13c.html">← 上一题：数学第13题（动点分类）</a><a href="math_2cyl.html">下一题：数学第2题（圆柱丝带） →</a></div>
+  <div class="nav"><a href="math_23.html">← 上一题：数学第23题（旋转构造）</a><a href="math_4ant.html">下一题：数学第4题（蚂蚁内外壁） →</a></div>
   <footer>赵若琳学习中心 · 复习模块</footer>
 </div>
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>

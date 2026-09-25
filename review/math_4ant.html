@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>数学第23题（旋转构造） · 复习模块</title>
+<title>数学第4题（蚂蚁内外壁） · 复习模块</title>
 <style>
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
@@ -45,52 +45,43 @@
 <div class="wrap">
   <a class="back" href="../review_interactive.html">← 返回题目列表</a>
   <div class="hero">
-    <div class="crumb">数学 · 第23题（旋转构造）</div>
-    <h1>等腰直角三角形内的点 · 旋转构造 + 勾股逆定理 + 余弦定理</h1>
-    <div class="meta">来源：2026-09-24 ｜ 赵若琳学习中心 · 复习模块</div>
+    <div class="crumb">数学 · 第4题（蚂蚁内外壁）</div>
+    <h1>圆柱内外壁最短路径 · 展开 + 半周长</h1>
+    <div class="meta">来源：2026-09-25 ｜ 赵若琳学习中心 · 复习模块</div>
   </div>
 
   <div class="card">
     <h2>题目</h2>
-    <div class="stem">点 D 是以 AB 为斜边的等腰直角三角形 ABC 内一点，若 BD = 2，CD = 4，AD = 6，则 △ABC 的面积是 ______。</div>
-    <img class="q-img" src="../uploads/wrong_bank/math_p23_20260924.jpg" alt="数学第23题（旋转构造）题目图片">
+    <div class="stem">（2023秋·青羊区校级期中）如图，透明圆柱形容器（容器厚度忽略不计）的高为 10 cm，底面周长为 10 cm，在容器内壁离容器底部 3 cm 的 B 处有一饭粒，此时一只蚂蚁正好在容器外壁与 B 相对且距离容器上沿 2 cm 的点 A 处，则蚂蚁吃到饭粒需爬行的最短路径长度是 ______ cm。
+
+【出处】第二讲 勾股定理综合复习 第4题</div>
+    <img class="q-img" src="../uploads/wrong_bank/math_p45_20260925.jpg" alt="数学第4题（蚂蚁内外壁）题目图片">
   </div>
 
   <div class="card">
     <h2>五维分析</h2>
-    <div class="dim A"><span class="k">A　已知条件</span><p>① △ABC 是以 AB 为斜边的等腰直角三角形 ⇒ ∠ACB = 90°，AC = BC；
-② D 是三角形内一点；
-③ BD = 2，CD = 4，AD = 6。</p></div>
-    <div class="dim B"><span class="k">B　求解什么</span><p>求 △ABC 的面积。（若琳填 23；正确答案 10 + 4√2）</p></div>
-    <div class="dim C"><span class="k">C　做题思路</span><p>【核心：把两条已知边「转」到同一个三角形里，用勾股逆定理造直角】
-① 设 AC = BC = a，则 S△ABC = ½a²，只需求出 a²；
-② 将 △CDB 绕点 C 顺时针旋转 90°，使 CB 落到 CA 上，D 落到 D′：
-   - CD′ = CD = 4，AD′ = BD = 2（旋转保持长度）；
-   - ∠DCD′ = 90° ⇒ △CDD′ 是等腰直角三角形 ⇒ DD′ = 4√2，∠CD′D = 45°；
-③ 在 △ADD′ 中，三边 AD = 6，AD′ = 2，DD′ = 4√2；
-   勾股定理逆定理：AD′² + DD′² = 4 + 32 = 36 = 6² = AD² ⇒ ∠AD′D = 90°；
-④ 于是 ∠CD′A = ∠CD′D + ∠DD′A = 45° + 90° = 135°；
-⑤ 在 △CD′A 中用余弦定理（CD′ = 4，AD′ = 2，夹角 135°）：
-   CA² = 4² + 2² − 2·4·2·cos135° = 16 + 4 + 8√2 = 20 + 8√2；
-⑥ S△ABC = ½a² = ½(20 + 8√2) = 10 + 4√2。</p></div>
-    <div class="dim D"><span class="k">D　易错点</span><p>① 看到「三角形内一点 + 三条到顶点的距离」不知道要旋转构造（本类题的突破口）；
-② 旋转方向/中心选错，D′ 落点不对，后续全乱；
-③ 不连接 DD′，丢掉等腰直角 △CDD′ 提供的 45° 角与 4√2；
-④ 在 △ADD′ 中看到 6、2、4√2 三边，想不到用勾股逆定理证 ∠AD′D = 90°；
-⑤ 求 CA² 时不会用余弦定理（或忘记 cos135° = −√2/2，符号弄错）；
-⑥ 忘记最后除以 2（S = ½a²），或写成 23 这种没有依据的值（若琳的错误答案）。</p></div>
-    <div class="dim E"><span class="k">E　知识点</span><p>① 等腰直角三角形的性质（斜边 = 直角边 × √2）；
-② 旋转变换：把分散的线段集中到同一个三角形；
-③ 勾股定理的逆定理判定直角；
-④ 余弦定理（或用「构造直角三角形 + 勾股」）求第三边；
-⑤ 含 135° 角的三角形求边长（转化到特殊角）；
-⑥ 面积公式 S = ½ab（等腰直角三角形 S = ½a²）。
+    <div class="dim A"><span class="k">A　已知条件</span><p>① 圆柱形容器高 10 cm；② 底面周长 10 cm；③ B 在内壁、离底 3 cm（⇒ 离上沿 7 cm）；④ A 在外壁、与 B【相对】、离上沿 2 cm（⇒ 离底 8 cm）。</p></div>
+    <div class="dim B"><span class="k">B　求解什么</span><p>求蚂蚁从 A 爬到 B 的最短路径长度。（参考值 5√2 ≈ 7.07 cm）</p></div>
+    <div class="dim C"><span class="k">C　做题思路</span><p>【展开法】
+① 沿过 A 的母线把圆柱侧面剪开摊平；
+② 水平距离：A 与 B「相对」⇒ 相差半圈 ⇒ 10 ÷ 2 = 5 cm；
+③ 垂直距离：A 离底 8 cm（10 − 2），B 离底 3 cm ⇒ 相差 8 − 3 = 5 cm；
+④ 最短路径 = 展开图上的线段 = √(5² + 5²) = √50 = 5√2 cm。</p></div>
+    <div class="dim D"><span class="k">D　易错点</span><p>① 把「相对」理解成「同一位置」⇒ 水平距离用了 0 或 10（应该是半周长 5）；
+② 垂直方向只算一段：忘记 A、B 分别离底 8 cm 和 3 cm，差是 5（不是 10 − 3 = 7）；
+③ 把「离上沿 2 cm」错当成「离底 2 cm」；
+④ 内壁/外壁方向搞混，符号取反。</p></div>
+    <div class="dim E"><span class="k">E　知识点</span><p>① 圆柱侧面展开图；
+② 「相对」⇒ 半周长；
+③ 高度方向的距离差计算；
+④ 勾股定理 √(5² + 5²) = 5√2；
+⑤ 空间最短路径的通用思路：展开 → 线段。
 
-📌 出处：同页第22题（△ABC 与 △ACD 均为直角三角形，AD = 2BC = 6 等）也在填空题区；若琳第23题填 23，正确答案 10 + 4√2。</p></div>
+📌 出处：第二讲 勾股定理综合复习 第 4 题。页面上此题旁边有红勾（视为已过关），但若琳手写过程（√(25+61)）与上述标准解法不一致，建议重做一遍确认掌握。</p></div>
     
   </div>
 
-  <div class="nav"><a href="math_13c.html">← 上一题：数学第13题（动点分类）</a><a href="math_2cyl.html">下一题：数学第2题（圆柱丝带） →</a></div>
+  <div class="nav"><a href="math_2cyl.html">← 上一题：数学第2题（圆柱丝带）</a><a href="math_5shuxing.html">下一题：数学第5题（数形结合求最值） →</a></div>
   <footer>赵若琳学习中心 · 复习模块</footer>
 </div>
 <div id="lightbox" onclick="this.classList.remove('on')"><img id="lb" src="" alt="题目图片"></div>
