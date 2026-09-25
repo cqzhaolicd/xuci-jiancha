@@ -122,6 +122,12 @@ textarea.form-control{resize:vertical;min-height:70px}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 @media(max-width:768px){.navbar-nav a span{display:none}.stat-grid{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(3,1fr)}.filter-bar .form-select,.filter-bar .form-control{min-width:100px}}
+/* ==== 年级维度（1-12年级）==== */
+.q-badge.badge-grade{background:#eef2ff;color:#3b5bdb;border:1px solid #dbe2ff}
+.grade-chips{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;margin-top:.6rem}
+.grade-chip{background:#fff;border:1.5px solid var(--border);border-radius:999px;padding:.28rem .75rem;font-size:.8rem;cursor:pointer;transition:.15s;color:var(--text)}
+.grade-chip:hover{border-color:var(--primary);color:var(--primary)}
+.grade-chip.active{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
 </style>
 </head><body>
 
@@ -163,6 +169,10 @@ function loadData() {
     d={subjects:SUBJECTS_DEFAULT.map((n,i)=>({id:i+1,name:n,sort_order:i})),chapters:[],questions:[],nextQId:1,nextChapId:1};
     saveData(d);
   }
+  const _rp=repairIds(d);
+  if(_rp){saveData(d);toast('🔧 已修复 '+_rp+' 道错题的重复编号','info');}
+  const _mg=migrateGrades(d);
+  if(_mg){saveData(d);toast('📚 已把 '+_mg+' 道旧错题归入 '+DEFAULT_GRADE+'年级（可在详情页修改）','info');}
   return d;
 }
 // ===================== 跨设备同步（威联通后端 api_wrongbank.php） =====================
@@ -236,6 +246,7 @@ async function cloudInit(forceRemote){
       // 服务器有真实数据：以服务器为准（服务器是唯一真实源）
       localStorage.setItem(LS_KEY, JSON.stringify(j.data));
       _lastPushed = JSON.stringify(j.data);
+      if(repairIds(j.data)||migrateGrades(j.data)){ localStorage.setItem(LS_KEY,JSON.stringify(j.data)); _lastPushed=''; cloudPushNow(j.data).then(()=>setSyncBadge('ok')).catch(()=>{}); }
       setSyncBadge('ok');
       navigate('dashboard');
       toast('☁️ 已从服务器同步最新错题本','success');
@@ -252,13 +263,48 @@ async function cloudInit(forceRemote){
   }
 }
 
-function saveData(d){localStorage.setItem(LS_KEY,JSON.stringify(d));cloudPush(d);}
+function _maxId(arr,key){return (arr||[]).reduce((m,x)=>Math.max(m,(x&&+x[key])||0),0);}
+function saveData(d){
+  // ⚠️ 历史 bug：调用方常拿旧快照回写，把 nextQId 覆盖回旧值（生产库曾出现已有 39 题而
+  //    nextQId=1）→ 新录入的题被分配与旧题重复的 id，点开新题看到的是旧题（find 取首个匹配）。
+  //    这里每次保存都按现有最大 id 校准计数器，从根上堵住。
+  if(d&&Array.isArray(d.questions))d.nextQId=Math.max((+d.nextQId)||1,_maxId(d.questions,'id')+1);
+  if(d&&Array.isArray(d.chapters))d.nextChapId=Math.max((+d.nextChapId)||1,_maxId(d.chapters,'id')+1);
+  localStorage.setItem(LS_KEY,JSON.stringify(d));cloudPush(d);
+}
 
-function genId(){const d=loadData();d.nextQId++;saveData(d);return d.nextQId-1;}
-function genChapId(){const d=loadData();d.nextChapId++;saveData(d);return d.nextChapId-1;}
+function genId(){const d=loadData();const id=Math.max((+d.nextQId)||1,_maxId(d.questions,'id')+1);d.nextQId=id+1;saveData(d);return id;}
+function genChapId(){const d=loadData();const id=Math.max((+d.nextChapId)||1,_maxId(d.chapters,'id')+1);d.nextChapId=id+1;saveData(d);return id;}
+function repairIds(d){                          // 一次性修补历史重复编号
+  if(!d)return 0;
+  const used=new Set();let fixed=0;
+  (d.questions||[]).forEach(q=>{
+    if(used.has(q.id)){const nid=(used.size?Math.max(...used):0)+1;q.id=nid;used.add(nid);fixed++;}
+    else used.add(q.id);
+  });
+  if(fixed)d.nextQId=(used.size?Math.max(...used):0)+1;
+  return fixed;
+}
 function now(){return new Date().toLocaleString('zh-CN',{hour12:false}).replace(/\//g,'-');}
 function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function calcNextReview(mastery){if(mastery>=REVIEW_INTERVALS.length)return null;const d=new Date();d.setDate(d.getDate()+REVIEW_INTERVALS[mastery]);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+
+// ===================== 年级维度（1-12年级） =====================
+const GRADES=[1,2,3,4,5,6,7,8,9,10,11,12];
+const DEFAULT_GRADE=8;                  // 若琳当前年级（2026秋 八年级），旧数据迁入此年级
+function lastGrade(){const v=parseInt(localStorage.getItem('wb_last_grade')||'');return(v>=1&&v<=12)?v:DEFAULT_GRADE;}
+function setLastGrade(g){const v=parseInt(g);if(v>=1&&v<=12)localStorage.setItem('wb_last_grade',String(v));}
+function gradeText(g){return(g===undefined||g===null||g==='')?'未标注年级':(g+'年级');}
+function gradeMatch(q,g){                       // 通用年级筛选：''=全部 'none'=未标注 '7'..'12'
+  if(g==='none')return q.grade===undefined||q.grade===null||q.grade==='';
+  if(g!=='')return q.grade===parseInt(g);
+  return true;
+}
+function migrateGrades(d){                      // 旧数据一次性补年级（详情页可改）
+  if(!d||d.grade_migrated)return 0;
+  let n=0;(d.questions||[]).forEach(q=>{if(q.grade===undefined||q.grade===null||q.grade===''){q.grade=DEFAULT_GRADE;n++;}});
+  d.grade_migrated=true;return n;
+}
 
 // ===================== IMPORT FROM LEARNING PAGES =====================
 function checkImport(){try{
@@ -280,7 +326,7 @@ function checkImport(){try{
       id:genId(),subject_id:subj.id,chapter_id:chap?chap.id:null,
       content:item.content,correct_answer:item.correct_answer||'',my_answer:item.my_answer||'',
       error_reason:item.error_reason||'概念不清',tags:item.tags||'',source:item.source||'练习',
-      difficulty:item.difficulty||3,mastery:0,created_at:now(),updated_at:now(),
+      difficulty:item.difficulty||3,grade:item.grade||lastGrade(),mastery:0,created_at:now(),updated_at:now(),
       next_review:today(),review_count:0,image_path:'',answer_image_path:''
       ,flow:{}
     });
@@ -566,7 +612,7 @@ function applyBuiltinQuestions(){try{
     d.questions.push({id:genId(),subject_id:subj.id,chapter_id:chap?chap.id:null,
       content:b.content,correct_answer:b.correct_answer||'',my_answer:b.my_answer||'',
       error_reason:b.error_reason||'概念不清',tags:b.tags||'',source:b.source||'练习',
-      difficulty:b.difficulty||3,mastery:0,created_at:now(),updated_at:now(),
+      difficulty:b.difficulty||3,grade:b.grade||DEFAULT_GRADE,mastery:0,created_at:now(),updated_at:now(),
       next_review:today(),review_count:0,image_path:b.image_path||'',answer_image_path:'',flow:{}});
     applied.push(b.key);added++;
   }
@@ -606,6 +652,17 @@ function render(page,data){
   else if(page==='analysis') app.innerHTML=renderAnalysis();
 }
 
+// ===================== 局部重绘辅助 =====================
+// ⚠️ 历史 bug：#app 只在 navigate() 里被写入，但筛选/分页/编辑/再来一轮等按钮直接调
+//    renderList() 等（只返回 HTML 字符串、不写回 DOM）→ 点了完全没反应。
+//    统一改用 refresh* 辅助函数，真正把新视图写回 #app。
+function _drawView(html){const app=document.getElementById('app');if(app)app.innerHTML=html;}
+function refreshList(){_drawView(renderList());}
+function refreshAdd(){_drawView(renderAdd());}
+function refreshDetail(qid){_drawView(renderDetail({qid:qid}));}
+function refreshReview(){_drawView(renderReview());}
+function refreshTraining(){_drawView(renderTraining());}
+
 // ===================== DASHBOARD =====================
 function renderDashboard(){
   const d=loadData();
@@ -617,6 +674,9 @@ function renderDashboard(){
   const subjCounts={};
   d.subjects.forEach(s=>subjCounts[s.id]=0);
   d.questions.forEach(q=>{if(subjCounts[q.subject_id]!==undefined)subjCounts[q.subject_id]++;});
+  // Grade counts（年级维度）
+  const gradeCnt={};
+  d.questions.forEach(q=>{const k=(q.grade===undefined||q.grade===null||q.grade==='')?'none':String(q.grade);gradeCnt[k]=(gradeCnt[k]||0)+1;});
   // Recent questions
   const recent=[...d.questions].sort((a,b)=>b.id-a.id).slice(0,5);
   return`
@@ -633,11 +693,17 @@ function renderDashboard(){
         <div class="s-icon" style="background:${SUBJECT_COLORS[i%SUBJECT_COLORS.length]}"><i class="fas ${SUBJECT_ICONS[i%SUBJECT_ICONS.length]}"></i></div>
         <div class="s-name">${s.name}</div><div class="s-count">${cnt}题</div></div>`;
     }).join('')}</div></div>
+  <div class="card"><div class="card-title"><i class="fas fa-graduation-cap" style="color:var(--primary)"></i> 年级概览</div>
+    <div class="grade-chips">
+      ${[...GRADES.map(String),'none'].filter(k=>gradeCnt[k]).map(k=>`<button class="grade-chip" onclick="listFilter.grade='${k}';listFilter.page=1;navigate('list')">${k==='none'?'未标注':k+'年级'} · ${gradeCnt[k]}题</button>`).join('')}
+      <button class="grade-chip" onclick="listFilter.grade='';listFilter.page=1;navigate('list')">全部年级 · ${d.questions.length}题</button>
+    </div></div>
   ${recent.length?`<div class="card"><div class="card-title"><i class="fas fa-history"></i> 最近录入</div>
     ${recent.map(q=>{
       const subj=d.subjects.find(s=>s.id===q.subject_id);
       return `<div class="question-item" onclick="navigate('detail',{qid:${q.id}})">
         <div class="q-header"><span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+        <span class="q-badge badge-grade">${gradeText(q.grade)}</span>
         ${q.chapter_id?`<span class="q-badge badge-chapter">${(d.chapters.find(c=>c.id===q.chapter_id)||{}).name||''}</span>`:''}
         <span class="q-badge badge-reason">${q.error_reason}</span>
         <span class="q-badge badge-mastery">掌握 ${q.mastery}/5</span></div>
@@ -649,7 +715,7 @@ function renderDashboard(){
 }
 
 // ===================== ADD =====================
-let addForm={subject_id:1,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3};
+let addForm={subject_id:1,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:lastGrade()};
 
 function renderAdd(){
   const d=loadData();
@@ -660,8 +726,12 @@ function renderAdd(){
       <div class="form-section"><h6><i class="fas fa-info-circle"></i> 基本信息</h6>
         <div class="row">
           <div><label class="form-label">科目 <span class="req">*</span></label>
-            <select class="form-select" id="af_subject" onchange="addForm.subject_id=+this.value;renderAdd()">
+            <select class="form-select" id="af_subject" onchange="addForm.subject_id=+this.value;refreshAdd()">
               ${d.subjects.map(s=>`<option value="${s.id}" ${s.id===addForm.subject_id?'selected':''}>${s.name}</option>`).join('')}
+            </select></div>
+          <div><label class="form-label">年级 <span class="req">*</span></label>
+            <select class="form-select" id="af_grade" onchange="addForm.grade=+this.value;setLastGrade(this.value)">
+              ${GRADES.map(g=>`<option value="${g}" ${g===addForm.grade?'selected':''}>${g}年级</option>`).join('')}
             </select></div>
           <div><label class="form-label">章节</label>
             <div style="display:flex;gap:.3rem"><select class="form-select" id="af_chapter" onchange="addForm.chapter_id=this.value||''">
@@ -707,7 +777,7 @@ function renderAdd(){
             <input class="form-control" id="af_tags" placeholder="逗号分隔" value="${addForm.tags}" onchange="addForm.tags=this.value"></div></div></div>
       <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
         <button class="btn btn-primary px-4"><i class="fas fa-save"></i> 保存错题</button>
-        <button class="btn btn-outline px-4 ms-2" type="button" onclick="addForm={subject_id:1,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3};renderAdd()">重置</button></div>
+        <button class="btn btn-outline px-4 ms-2" type="button" onclick="addForm={subject_id:1,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:lastGrade()};refreshAdd()">重置</button></div>
     </form></div>`;
 }
 
@@ -746,12 +816,13 @@ function submitAdd(){
     id:qid,subject_id:addForm.subject_id,chapter_id:chapId,
     content,correct_answer:addForm.correct_answer,my_answer:addForm.my_answer,
     error_reason:addForm.error_reason,tags:addForm.tags,source:addForm.source,
-    difficulty:addForm.difficulty,mastery:0,created_at:now(),updated_at:now(),
+    difficulty:addForm.difficulty,grade:(addForm.grade?+addForm.grade:lastGrade()),mastery:0,created_at:now(),updated_at:now(),
     next_review:today(),review_count:0,image_path:addForm.image_path||'',answer_image_path:addForm.answer_image_path||''
     ,flow:{}
   });
   saveData(d);
-  addForm={subject_id:addForm.subject_id,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,image_path:'',answer_image_path:''};
+  setLastGrade(addForm.grade);
+  addForm={subject_id:addForm.subject_id,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:addForm.grade||lastGrade(),image_path:'',answer_image_path:''};
   toast('✅ 错题已保存','success');
   navigate('detail',{qid});
 }
@@ -762,11 +833,11 @@ function addChapter(){
   const d=loadData();
   d.chapters.push({id:genChapId(),subject_id:addForm.subject_id,name,sort_order:0});
   saveData(d);
-  renderAdd();
+  refreshAdd();
 }
 
 // ===================== LIST =====================
-let listFilter={subject_id:'',error_reason:'',mastery:'',search:'',page:1};
+let listFilter={subject_id:'',error_reason:'',mastery:'',grade:'',search:'',page:1};
 const PER_PAGE=15;
 
 function renderList(){
@@ -775,6 +846,7 @@ function renderList(){
   if(listFilter.subject_id) filtered=filtered.filter(q=>q.subject_id===parseInt(listFilter.subject_id));
   if(listFilter.error_reason) filtered=filtered.filter(q=>q.error_reason===listFilter.error_reason);
   if(listFilter.mastery!=='') filtered=filtered.filter(q=>q.mastery===parseInt(listFilter.mastery));
+  if(listFilter.grade!=='') filtered=filtered.filter(q=>gradeMatch(q,listFilter.grade));
   if(listFilter.search) {const s=listFilter.search.toLowerCase();filtered=filtered.filter(q=>q.content.toLowerCase().includes(s)||q.tags.toLowerCase().includes(s));}
   filtered.sort((a,b)=>b.id-a.id);
   const totalPages=Math.max(1,Math.ceil(filtered.length/PER_PAGE));
@@ -783,24 +855,30 @@ function renderList(){
   return`<div class="card">
     <div class="card-title"><i class="fas fa-filter"></i> 筛选</div>
     <div class="filter-bar">
-      <select class="form-select" id="lf_subject" onchange="listFilter.subject_id=this.value;listFilter.page=1;renderList()">
+      <select class="form-select" id="lf_subject" onchange="listFilter.subject_id=this.value;listFilter.page=1;refreshList()">
         <option value="">📚 全部科目</option>${d.subjects.map(s=>`<option value="${s.id}" ${listFilter.subject_id==String(s.id)?'selected':''}>${s.name}</option>`).join('')}
       </select>
-      <select class="form-select" onchange="listFilter.error_reason=this.value;listFilter.page=1;renderList()">
+      <select class="form-select" onchange="listFilter.grade=this.value;listFilter.page=1;refreshList()">
+        <option value="">🎓 全部年级</option>
+        <option value="none" ${listFilter.grade==='none'?'selected':''}>未标注年级</option>
+        ${GRADES.map(g=>`<option value="${g}" ${listFilter.grade===String(g)?'selected':''}>${g}年级</option>`).join('')}
+      </select>
+      <select class="form-select" onchange="listFilter.error_reason=this.value;listFilter.page=1;refreshList()">
         <option value="">📌 全部原因</option>${ERROR_REASONS.map(r=>`<option value="${r}" ${listFilter.error_reason===r?'selected':''}>${r}</option>`).join('')}
       </select>
-      <select class="form-select" onchange="listFilter.mastery=this.value;listFilter.page=1;renderList()">
+      <select class="form-select" onchange="listFilter.mastery=this.value;listFilter.page=1;refreshList()">
         <option value="">🎯 掌握度</option><option value="0" ${listFilter.mastery==='0'?'selected':''}>未掌握</option>
         <option value="1" ${listFilter.mastery==='1'?'selected':''}>待复习</option><option value="5" ${listFilter.mastery==='5'?'selected':''}>已掌握</option>
       </select>
-      <input class="form-control" placeholder="🔍 搜索题目…" value="${listFilter.search}" onchange="listFilter.search=this.value;listFilter.page=1;renderList()" style="min-width:150px">
-      <button class="btn btn-outline btn-sm" onclick="listFilter={subject_id:'',error_reason:'',mastery:'',search:'',page:1};renderList()"><i class="fas fa-undo"></i> 重置</button>
+      <input class="form-control" placeholder="🔍 搜索题目…" value="${listFilter.search}" onchange="listFilter.search=this.value;listFilter.page=1;refreshList()" style="min-width:150px">
+      <button class="btn btn-outline btn-sm" onclick="listFilter={subject_id:'',error_reason:'',mastery:'',grade:'',search:'',page:1};refreshList()"><i class="fas fa-undo"></i> 重置</button>
     </div>
     <div>${paged.length?paged.map(q=>{
       const subj=d.subjects.find(s=>s.id===q.subject_id);
       const chap=d.chapters.find(c=>c.id===q.chapter_id);
       return`<div class="question-item" onclick="navigate('detail',{qid:${q.id}})">
         <div class="q-header"><span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+        <span class="q-badge badge-grade">${gradeText(q.grade)}</span>
         ${chap?`<span class="q-badge badge-chapter">${chap.name}</span>`:''}
         <span class="q-badge badge-reason">${q.error_reason}</span>
         <span class="q-badge badge-source">${q.source}</span>
@@ -808,7 +886,7 @@ function renderList(){
         <div class="q-content">${q.content.substring(0,200)}${q.content.length>200?'…':''}</div>
         <div class="q-meta">${q.created_at} ${q.tags?'🏷️ '+q.tags:''}</div></div>`;
     }).join(''):'<div class="empty-state"><i class="fas fa-inbox"></i><h5>没有匹配的错题</h5></div>'}
-    ${totalPages>1?`<div class="pagination">${[...Array(totalPages).keys()].map(i=>`<a class="${i+1===page?'active':''}" onclick="listFilter.page=${i+1};renderList()">${i+1}</a>`).join('')}</div>`:''}
+    ${totalPages>1?`<div class="pagination">${[...Array(totalPages).keys()].map(i=>`<a class="${i+1===page?'active':''}" onclick="listFilter.page=${i+1};refreshList()">${i+1}</a>`).join('')}</div>`:''}
   </div>`;
 }
 
@@ -830,6 +908,7 @@ function renderDetail(data){
             <div><label class="form-label">科目</label><select class="form-select" id="ed_subject" onchange="loadEditChapters(+this.value)">
               ${d.subjects.map(s=>`<option value="${s.id}" ${s.id===q.subject_id?'selected':''}>${s.name}</option>`).join('')}
             </select></div>
+            <div><label class="form-label">年级</label><select class="form-select" id="ed_grade">${GRADES.map(g=>`<option value="${g}" ${g===q.grade?'selected':''}>${g}年级</option>`).join('')}</select></div>
             <div><label class="form-label">章节</label><select class="form-select" id="ed_chapter">
               <option value="">无</option>${chapters.map(c=>`<option value="${c.id}" ${c.id===q.chapter_id?'selected':''}>${c.name}</option>`).join('')}
             </select></div>
@@ -844,12 +923,13 @@ function renderDetail(data){
           <div><label class="form-label">标签</label><input class="form-control" id="ed_tags" value="${q.tags}"></div></div></div>
         <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
           <button class="btn btn-primary px-4"><i class="fas fa-save"></i> 保存修改</button>
-          <button class="btn btn-outline px-4 ms-2" type="button" onclick="detailEditMode=false;renderDetail({qid:${q.id}})">取消</button></div>
+          <button class="btn btn-outline px-4 ms-2" type="button" onclick="detailEditMode=false;refreshDetail(${q.id})">取消</button></div>
       </form></div>`;
   }
   return`<div class="card"><div class="card-title"><i class="fas fa-file-alt"></i> 错题详情</div>
     <div class="detail-field"><div class="label">科目 / 章节</div><div class="value">
       <span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+      <span class="q-badge badge-grade">${gradeText(q.grade)}</span>
       ${chap?`<span class="q-badge badge-chapter">${chap.name}</span>`:''}
       <span class="q-badge badge-source">${q.source}</span>
       <span class="q-badge badge-mastery">掌握 ${q.mastery}/5</span>
@@ -863,7 +943,7 @@ function renderDetail(data){
     ${q.flow&&(q.flow.known||q.flow.target||q.flow.plan||q.flow.check)?`<div class="detail-field"><div class="label">📋 流程检查</div><div class="value" style="background:#fdf2f2;padding:.6rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger);font-size:.85rem;line-height:1.9">① 已知：${q.flow.known||'—'}<br>② 目标：${q.flow.target||'—'}<br>③ 路径：${q.flow.plan||'—'}<br>④ 检验：${q.flow.check||'—'}</div></div>`:''}
     <div class="detail-field"><div class="label">时间</div><div class="value" style="color:var(--text-light);font-size:.85rem">录入: ${q.created_at} | 复习: ${q.review_count}次 | 下次复习: ${q.next_review||'无需'}</div></div>
     <div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
-      <button class="btn btn-primary btn-sm" onclick="detailEditMode=true;renderDetail({qid:${q.id}})"><i class="fas fa-edit"></i> 编辑</button>
+      <button class="btn btn-primary btn-sm" onclick="detailEditMode=true;refreshDetail(${q.id})"><i class="fas fa-edit"></i> 编辑</button>
       ${['数学','物理','化学'].includes(subj?subj.name:'')?`<button class="btn btn-success btn-sm" onclick="navigate('training',{qid:${q.id}})"><i class="fas fa-layer-group"></i> 三层练</button>`:''}
       <button class="btn btn-danger btn-sm" onclick="deleteQ(${q.id})"><i class="fas fa-trash"></i> 删除</button>
       <button class="btn btn-outline btn-sm" onclick="navigate('list',{})"><i class="fas fa-arrow-left"></i> 返回列表</button>
@@ -887,6 +967,7 @@ function saveEdit(qid){
   q.tags=document.getElementById('ed_tags').value;
   q.source=document.getElementById('ed_source').value;
   q.difficulty=parseInt(document.getElementById('ed_diff').value);
+  q.grade=parseInt(document.getElementById('ed_grade').value)||null;setLastGrade(q.grade);
   q.updated_at=now();
   saveData(d);
   detailEditMode=false;
@@ -939,7 +1020,7 @@ function reviewCard(){
       <span class="q-badge" style="background:#ed893620;color:#c05621">⚠️ 未满2次：${needTwice} 题</span>
     </div>
     ${needTwice?`<p style="font-size:.8rem;color:var(--text-light)">💡 错题需重做 <strong>2次以上</strong>才算基础巩固，继续复习未满2次的题目吧！</p>`:''}
-    <button class="btn btn-primary" onclick="renderReview()"><i class="fas fa-redo"></i> 再来一轮</button></div>`;}
+    <button class="btn btn-primary" onclick="refreshReview()"><i class="fas fa-redo"></i> 再来一轮</button></div>`;}
   const q=reviewList[reviewIdx];
   const d=loadData();
   const subj=d.subjects.find(s=>s.id===q.subject_id);
@@ -949,6 +1030,7 @@ function reviewCard(){
     <div class="review-card fade-in-up">
     <div style="display:flex;gap:.3rem;justify-content:center;flex-wrap:wrap;margin-bottom:.8rem">
       <span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+      <span class="q-badge badge-grade">${gradeText(q.grade)}</span>
       <span class="q-badge badge-reason">${q.error_reason}</span>
       <span class="q-badge badge-mastery">${'⭐'.repeat(q.difficulty)}</span>
       <span class="q-badge" style="background:${q.review_count>=2?'#48bb7820':'#ed893620'};color:${q.review_count>=2?'#2f855a':'#c05621'};font-size:.68rem">${q.review_count>=2?`✅ 已重做${q.review_count}次`:`⚠️ 已重做${q.review_count}次（需2次以上）`}</span>
@@ -1007,6 +1089,19 @@ function reviewResult(r){
 
 // ===================== TRAINING =====================
 let trainingLayer=1,trainingQ=null;
+let trainingGrade='';                    // 三层训练的年级维度：''=全部 'none'=未标注 '7'..'12'
+function trainGradeMatch(q){
+  if(trainingGrade==='none')return q.grade===undefined||q.grade===null||q.grade==='';
+  if(trainingGrade!=='')return q.grade===parseInt(trainingGrade);
+  return true;
+}
+function trainingGradeChips(d){
+  const has=(k)=>d.questions.some(q=>gradeMatch(q,k));
+  const chip=(k,txt)=>`<button class="grade-chip ${trainingGrade===k?'active':''}" onclick="trainingGrade='${k}';refreshTraining()">${txt}</button>`;
+  const present=GRADES.filter(g=>has(String(g)));
+  if(!has('none')&&present.length<2)return'';   // 只有一个年级且无未标注 → 不显示筛选条
+  return `<div class="grade-chips" style="margin-bottom:.5rem">${chip('','全部年级')}${present.map(g=>chip(String(g),g+'年级')).join('')}${has('none')?chip('none','未标注'):''}</div>`;
+}
 
 function renderTraining(data){
   const d=loadData();
@@ -1022,19 +1117,21 @@ function renderTraining(data){
   // Show subject selection
   const subjects=['数学','物理','化学'];
   const counts={};
+  const gQs=d.questions.filter(trainGradeMatch);          // 先过年级维度
   subjects.forEach(s=>{
     const subj=d.subjects.find(x=>x.name===s);
-    if(subj)counts[s]=d.questions.filter(q=>q.subject_id===subj.id).length;
+    if(subj)counts[s]=gQs.filter(q=>q.subject_id===subj.id).length;
     else counts[s]=0;
   });
   const total=Object.values(counts).reduce((a,b)=>a+b,0);
-  if(!total)return`<div class="card"><div class="empty-state"><i class="fas fa-layer-group"></i><h5>还没有数理化错题</h5><p>先录入错题，再用三层训练强化</p></div></div>`;
+  if(!total)return`<div class="card">${trainingGradeChips(d)}<div class="empty-state"><i class="fas fa-layer-group"></i><h5>${trainingGrade?'该年级还没有数理化错题':'还没有数理化错题'}</h5><p>先录入错题，再用三层训练强化</p></div></div>`;
   return`<div class="training-layout">
     <div class="training-panel"><h4 style="margin-bottom:.8rem"><i class="fas fa-layer-group" style="color:var(--primary)"></i> 三层训练</h4>
       <p style="font-size:.9rem;color:var(--text-light);margin-bottom:1rem">
       <strong>1️⃣ 基础同构</strong> → 原题重做<br>
       <strong>2️⃣ 条件变化</strong> → 改编条件，灵活应变<br>
       <strong>3️⃣ 反向综合</strong> → 综合应用，提升思维</p>
+      ${trainingGradeChips(d)}
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center">
         ${subjects.filter(s=>counts[s]>0).map(s=>`<button class="btn btn-primary" onclick="startSubjectTraining('${s}')"><i class="fas ${s==='数学'?'fa-calculator':s==='物理'?'fa-flask':'fa-flask'}"></i> ${s}（${counts[s]}题）</button>`).join('')}
         ${Object.values(counts).reduce((a,b)=>a+b,0)?'<button class="btn btn-success" onclick="startSubjectTraining(\'all\')"><i class="fas fa-random"></i> 全部混合（'+Object.values(counts).reduce((a,b)=>a+b,0)+'题）</button>':''}
@@ -1047,11 +1144,11 @@ function startSubjectTraining(subjName){
   let qs;
   if(subjName==='all'){
     const subjIds=d.subjects.filter(s=>['数学','物理','化学'].includes(s.name)).map(s=>s.id);
-    qs=d.questions.filter(q=>subjIds.includes(q.subject_id));
+    qs=d.questions.filter(q=>subjIds.includes(q.subject_id)&&trainGradeMatch(q));
   }else{
     const subj=d.subjects.find(s=>s.name===subjName);
     if(!subj)return;
-    qs=d.questions.filter(q=>q.subject_id===subj.id);
+    qs=d.questions.filter(q=>q.subject_id===subj.id&&trainGradeMatch(q));
   }
   if(!qs.length){toast('没有符合条件的错题','error');return;}
   trainingQ=qs[Math.floor(Math.random()*qs.length)];
@@ -1267,6 +1364,12 @@ function renderAnalysis(){
   qs.forEach(q=>{if(q.chapter_id&&chapWeak[q.chapter_id]!==undefined&&q.mastery===0)chapWeak[q.chapter_id]++;});
   const weakChaps=Object.entries(chapWeak).filter(([_,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,8);
 
+  // By grade（年级维度）
+  const gradeAgg={};
+  qs.forEach(q=>{const k=(q.grade===undefined||q.grade===null||q.grade==='')?'none':String(q.grade);
+    if(!gradeAgg[k])gradeAgg[k]={total:0,mastered:0};gradeAgg[k].total++;if(q.mastery>=5)gradeAgg[k].mastered++;});
+  const gradeRows=[...GRADES.map(String),'none'].filter(k=>gradeAgg[k]);
+
   setTimeout(()=>{
     const canvas=document.getElementById('chartReason');
     if(!canvas)return;
@@ -1288,6 +1391,14 @@ function renderAnalysis(){
         const mastered=subjMastered[s.id]||0;
         return`<tr><td>${s.name}</td><td>${total}</td><td>${mastered}</td><td>${total?Math.round(mastered/total*100)+'%':'-'}</td></tr>`;
       }).join('')}</tbody></table></div>
+  </div>
+  <div class="card" style="margin-top:1rem">
+    <div class="card-title"><i class="fas fa-graduation-cap" style="color:var(--primary)"></i> 年级维度统计</div>
+    <table class="analysis-table"><thead><tr><th>年级</th><th>错题</th><th>已掌握</th><th>掌握率</th></tr></thead>
+      <tbody>${gradeRows.map(k=>{const a=gradeAgg[k];
+        return`<tr><td>${k==='none'?'未标注年级':k+'年级'}</td><td>${a.total}</td><td>${a.mastered}</td><td>${a.total?Math.round(a.mastered/a.total*100)+'%':'-'}</td></tr>`;
+      }).join('')}</tbody></table>
+    <p style="font-size:.8rem;color:var(--text-light);margin-top:.5rem">💡 跨年级错题可分开集中突破；点「错题本」用年级筛选查看</p>
   </div>
   <div class="card" style="margin-top:1rem">
     <div class="card-title"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 薄弱章节 TOP</div>
