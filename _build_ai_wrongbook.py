@@ -151,6 +151,27 @@ def main():
         ("const REVIEW_SHOW_ANA5=true;", "const REVIEW_SHOW_ANA5=true;", '复习页显示五维分析（正式版+测试版均已开）'),
     ]:
         s = sub_once(s, a, b, lab)
+
+    # ---------- 错题不进入测试版（老板 2026-09-27：「错题不添加到测试版」「只添加到ai错题本与错题库」）----------
+    # 页面若带着 BUILTIN_QUESTIONS，一打开就 applyBuiltinQuestions() 把正式版错题注入测试库 —— 必须清空。
+    i0 = s.index('const BUILTIN_QUESTIONS=[')
+    j0 = s.index('\n];', i0)
+    n_builtin = s[i0:j0].count('key:')
+    s = s[:i0] + 'const BUILTIN_QUESTIONS=[];' + s[j0 + len('\n];'):]   # 连同收尾的 \n]; 一起切掉
+    print(f'  ✓ 测试版: 清空内置错题 {n_builtin} 条（错题只进错题库/AI错题本）')
+
+    # 客户端一次性清理：历史版本已经把内置错题注入过浏览器本地库，换个新键才会真正干净
+    purge_js = (
+        "// ⚠️ 测试版：错题不进入测试库（老板 2026-09-27）。一次性清掉历史注入的内置错题。\n"
+        "try{ if(!localStorage.getItem('wb_test_purge_builtin_v1')){\n"
+        "  localStorage.removeItem('wrong_bank_data_test');\n"
+        "  localStorage.removeItem('wrong_bank_import_test');\n"
+        "  localStorage.removeItem('wrong_bank_builtin_applied_test');\n"
+        "  localStorage.setItem('wb_test_purge_builtin_v1','1');\n"
+        "}}catch(e){}\n")
+    s = sub_once(s, "const LS_KEY = 'wrong_bank_data_test';",
+                 purge_js + "const LS_KEY = 'wrong_bank_data_test';", '测试版: 一次性清空历史错题数据')
+
     os.makedirs(STANDALONE_DIR, exist_ok=True)
     open(STANDALONE, 'w', encoding='utf-8').write(s)
     ok = True
@@ -160,6 +181,8 @@ def main():
         ('独立版: 无 index.html 外链', 'href="index.html"' not in s),
         ('独立版: base 已设', s.count('<base href="/xuci-jiancha/">') == 1),
         ('独立版: 带 复习要点/筛选', 'function renderPoints' in s and 'function rvfPanel' in s),
+        ('独立版: 无内置错题（错题只进错题库/AI错题本）',
+         s[s.index('const BUILTIN_QUESTIONS='):].startswith('const BUILTIN_QUESTIONS=[]')),
     ]
     for name, cond in chips:
         print(('  ✓ ' if cond else '  ✗ ') + name)
