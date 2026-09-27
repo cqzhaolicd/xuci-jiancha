@@ -250,11 +250,26 @@ let _syncTimer = null, _syncPulling = false, _lastPushed = '';
 //    历史事故：NAS 慢/拉取失败时页面退回本机旧数据，此时任何一次编辑都会把旧数据整包
 //    推回服务器 → 服务器上的新内容（如刚补的五维分析）被静默覆盖。故加此闸门。
 let _pullOK = false;
+// ⚠️ 无超时的 fetch 会让「正在同步…」在 NAS 慢时无限转（2026-09-27 实测同一接口 3 次里 2 次 45s+ 无响应、
+//    1 次 15.7s 才成功）→ 统一走带超时的 fetchTO，失败即抛，交给重试循环；之后最多再自动重试 3 次。
+const SYNC_TIMEOUT_MS = 20000;
+const SYNC_TRIES = 3;
+let _syncRetryTimer = null, _autoRetry = 0;
+async function fetchTO(url, opts, ms){
+  const ctl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+  const timer = ctl ? setTimeout(()=>ctl.abort(), ms) : null;
+  try{
+    return await fetch(url, ctl ? Object.assign({}, opts||{}, {signal:ctl.signal}) : (opts||{}));
+  }catch(e){
+    if(e && e.name==='AbortError') throw new Error('请求超时 '+Math.round(ms/1000)+'s');
+    throw e;
+  }finally{ if(timer) clearTimeout(timer); }
+}
 
 function _syncOn(){ return !!SYNC_API; }
 
 async function cloudPull(){
-  const r = await fetch(`${SYNC_API}?action=load`, {headers:{'X-Sync-Token':SYNC_TOKEN}, cache:'no-store'});
+  const r = await fetchTO(`${SYNC_API}?action=load`, {headers:{'X-Sync-Token':SYNC_TOKEN}, cache:'no-store'}, SYNC_TIMEOUT_MS);
   if(!r.ok) throw new Error('HTTP '+r.status);
   const j = await r.json();
   if(!j.ok) throw new Error(j.error||'load 失败');
@@ -264,11 +279,11 @@ async function cloudPull(){
 async function cloudPushNow(d){
   const body = JSON.stringify(d);
   if(body === _lastPushed) return;               // 无变化不重复上传
-  const r = await fetch(`${SYNC_API}?action=save`, {
+  const r = await fetchTO(`${SYNC_API}?action=save`, {
     method:'POST',
     headers:{'Content-Type':'application/json','X-Sync-Token':SYNC_TOKEN},
     body
-  });
+  }, SYNC_TIMEOUT_MS*2);
   const j = await r.json();
   if(!j.ok) throw new Error(j.error||'save 失败');
   _lastPushed = body;
@@ -298,13 +313,13 @@ function setSyncBadge(state, msg){
   else { el.textContent='☁️ 同步已启用'; el.style.background='#f1f3f4'; el.style.color='#5f6368'; }
 }
 
-async function cloudInit(forceRemote){
+async function cloudInit(forceRemote, silent){
   if(!SYNC_API){ setSyncBadge('local'); return; }   // 如 GitHub Pages(https) 版：无后端可用
   setSyncBadge('pulling');
   let j=null, lastErr=null;
-  for(let attempt=1; attempt<=3; attempt++){        // NAS 偶尔要几十秒才回：重试 3 次（1.5s/3s 退避）再放弃
+  for(let attempt=1; attempt<=SYNC_TRIES; attempt++){   // 单次限时 20s + 重试（2s/4s 退避）；以前无超时会一直挂
     try{ j=await cloudPull(); lastErr=null; break; }
-    catch(e){ lastErr=e; if(attempt<3) await new Promise(r=>setTimeout(r, attempt*1500)); }
+    catch(e){ lastErr=e; if(attempt<SYNC_TRIES) await new Promise(r=>setTimeout(r, attempt*2000)); }
   }
   try{
     if(lastErr) throw lastErr;
@@ -312,6 +327,8 @@ async function cloudInit(forceRemote){
     const localRaw = localStorage.getItem(LS_KEY);
     const localObj = localRaw ? JSON.parse(localRaw) : null;
     const hasRemote = j.data && Array.isArray(j.data.questions) && (j.data.questions.length > 0 || (j.data.subjects||[]).length > 0);
+    _autoRetry = 0;
+    if(_syncRetryTimer){ clearTimeout(_syncRetryTimer); _syncRetryTimer=null; }
     if(hasRemote){
       // 服务器有真实数据：以服务器为准（服务器是唯一真实源）
       saveData(j.data);                                   // 走统一保存：顺便校准 id 计数器
@@ -319,20 +336,30 @@ async function cloudInit(forceRemote){
       const _chg=repairIds(j.data)+migrateGrades(j.data)+pruneSubjects(j.data);
       if(_chg){ saveData(j.data); _lastPushed=''; cloudPushNow(j.data).then(()=>setSyncBadge('ok')).catch(()=>{}); }
       setSyncBadge('ok');
-      navigate('dashboard');
-      toast('☁️ 已从服务器同步最新错题本','success');
+      if(!silent){ navigate('dashboard'); toast('☁️ 已从服务器同步最新错题本','success'); }
     }else{
       // 服务器为空或只有空壳：把本地数据推上去初始化
       const d0 = loadData();
       await cloudPushNow(d0);
       setSyncBadge('ok');
+      if(!silent) toast('☁️ 已把本机错题上传到服务器完成初始化','success');
     }
   }catch(e){
     // 后端不可达：file:// 或无 PHP 的静态站（如 GitHub Pages）→ 中性提示，静默退回本机模式
     _pullOK = false;                                // ⚠️ 关闭上传闸门：本机可能是旧数据，禁止覆盖服务器
     const neutral = (location.protocol === 'file:') || !/^https?:/.test(location.protocol);
-    setSyncBadge(neutral ? 'local' : 'error',
-                 neutral ? undefined : (e.message + '（改动只存本机，不会覆盖服务器；点徽章重试）'));
+    if(neutral){
+      setSyncBadge('local');
+    }else{
+      setSyncBadge('error', '云端暂时连不上（'+e.message+'）：先显示本机数据，改动只存本机、不会覆盖服务器（点徽章立即重试）');
+      if(!silent) toast('⚠️ 云端暂时连不上，先显示本机数据；改动只存本机，不会覆盖服务器','error');
+      // 网络恢复后自动再同步（最多 3 次、间隔 60s，静默进行不打断当前操作）
+      if(_autoRetry < 3){
+        _autoRetry++;
+        if(_syncRetryTimer) clearTimeout(_syncRetryTimer);
+        _syncRetryTimer = setTimeout(()=>{ _syncRetryTimer=null; cloudInit(false,true); }, 60000);
+      }
+    }
   }
 }
 
