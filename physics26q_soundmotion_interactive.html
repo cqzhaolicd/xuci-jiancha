@@ -1,0 +1,367 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔊 声与运动 · 回声测距 + 超声测速 · 互动学习</title>
+<link href="assets/fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+<style>
+:root{--primary:#667eea;--secondary:#764ba2;--success:#48bb78;--warning:#ecc94b;--danger:#f56565;--info:#4299e1;--bg:#f0f2f5;--card-bg:#fff;--text:#1a202c;--text-light:#718096;--border:#e2e8f0;--radius:16px;--radius-sm:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+.navbar{background:linear-gradient(135deg,#667eea,#764ba2);padding:.7rem 0;position:sticky;top:0;z-index:1000;box-shadow:0 2px 20px rgba(102,126,234,.3)}
+.navbar .container{max-width:1100px;margin:0 auto;padding:0 1rem;display:flex;align-items:center;justify-content:space-between}
+.navbar-brand{color:#fff;text-decoration:none;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.navbar-brand a{color:#fff;text-decoration:none}
+.navbar-nav{display:flex;gap:.2rem}
+.navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+.hero{background:linear-gradient(135deg,#667eea20,#764ba220);border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;text-align:center}
+.hero h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-light);margin-top:.3rem;font-size:.9rem}
+.hero .meta{display:flex;justify-content:center;gap:1.2rem;margin-top:.8rem;flex-wrap:wrap}
+.hero .meta span{background:var(--card-bg);padding:.25rem .9rem;border-radius:20px;font-size:.82rem;color:var(--text-light);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tab-nav{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);cursor:pointer;font-size:.85rem;font-weight:500;transition:all .2s;color:var(--text-light);display:flex;align-items:center;gap:.35rem}
+.tab-btn:hover,.tab-btn.active{border-color:#667eea;color:#667eea}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeInUp .35s ease}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.knowledge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.knowledge-card{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--primary);transition:transform .2s}
+.knowledge-card:hover{transform:translateY(-2px)}
+.knowledge-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.knowledge-card ul{list-style:none;font-size:.88rem;color:#4a5568}
+.knowledge-card ul li{padding:.15rem 0;padding-left:1.2rem;position:relative}
+.knowledge-card ul li::before{content:'·';position:absolute;left:0;font-weight:700;color:var(--primary)}
+.knowledge-card .hl{background:#fefcbf;padding:.05rem .3rem;border-radius:3px;font-weight:600}
+.knowledge-card.c1{border-color:#667eea}.knowledge-card.c2{border-color:#e74c3c}.knowledge-card.c3{border-color:#2ecc71}.knowledge-card.c4{border-color:#f39c12}
+.graph-demo{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05);text-align:center}
+.graph-demo .svg-graph{max-width:100%;height:auto;margin:.5rem 0}
+.graph-demo .graph-label{font-size:.85rem;color:var(--text-light);margin-top:.3rem}
+.graph-demo .graph-title{font-size:.95rem;font-weight:700;color:var(--primary);margin-bottom:.5rem}
+.quiz-progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:4px;transition:width .5s ease}
+.quiz-stats{font-size:.88rem;color:var(--text-light);white-space:nowrap}
+.question-card{background:var(--card-bg);border-radius:var(--radius);padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.q-num{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:32px;height:32px;border-radius:50%;text-align:center;line-height:32px;font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.8}
+.q-graph-img{text-align:center;margin-bottom:.8rem;background:#f8f9fa;border-radius:var(--radius-sm);padding:.8rem}
+.q-graph-img svg{max-width:100%;height:auto}
+.options{display:flex;flex-direction:column;gap:.6rem}
+.option{padding:.7rem 1.1rem;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+.option:hover:not(.disabled){border-color:#667eea;background:#667eea10}
+.option .letter{width:26px;height:26px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;flex-shrink:0}
+.option.correct{border-color:var(--success);background:#48bb7815}
+.option.correct .letter{background:var(--success);color:#fff}
+.option.wrong{border-color:var(--danger);background:#f5656515}
+.option.wrong .letter{background:var(--danger);color:#fff}
+.option.disabled{cursor:default;opacity:.7}
+.option.show-correct{border-color:var(--success);background:#48bb7810}
+.option.show-correct .letter{background:var(--success);color:#fff}
+.explanation{margin-top:1rem;padding:.8rem 1rem;border-radius:var(--radius-sm);background:#ebf8ff;border-left:4px solid var(--info);font-size:.88rem;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:1.2rem;gap:1rem}
+.btn{padding:.5rem 1.3rem;border:none;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(102,126,234,.4)}
+.btn-success{background:var(--success);color:#fff}
+.btn-outline{background:0 0;border:2px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:#667eea;color:#667eea}
+.result-card{text-align:center;padding:2.5rem}
+.result-card .big-icon{font-size:3.5rem;margin-bottom:.8rem}
+.result-card h2{font-size:1.4rem;margin-bottom:.3rem}
+.result-card .score{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.8rem 0}
+.result-stat{display:inline-block;background:var(--card-bg);padding:.4rem 1rem;border-radius:20px;margin:.2rem;font-size:.85rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.flashcard-container{perspective:1000px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:220px;cursor:pointer;transition:transform .6s;transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;border-radius:var(--radius);padding:1.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.flashcard-front{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.flashcard-front h3{font-size:1.2rem;margin-bottom:.4rem}
+.flashcard-front p{opacity:.8;font-size:.88rem}
+.flashcard-back{background:var(--card-bg);transform:rotateY(180deg);border:2px solid var(--border)}
+.flashcard-back h4{color:#667eea;margin-bottom:.6rem}
+.flashcard-back p{font-size:1rem;line-height:1.8;color:var(--text);text-align:center}
+.flashcard-nav{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem}
+.flashcard-counter{font-size:.85rem;color:var(--text-light)}
+.error-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.error-card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:transform .2s}
+.error-card:hover{transform:translateY(-2px)}
+.error-card .num{background:var(--danger);color:#fff;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-size:.78rem;font-weight:700;margin-bottom:.5rem;display:inline-block}
+.error-card h4{font-size:.92rem;margin-bottom:.4rem}
+.error-card .ex-wrong{background:#f5656515;border-left:3px solid var(--danger);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.4rem;color:var(--danger)}
+.error-card .ex-right{background:#48bb7815;border-left:3px solid var(--success);padding:.4rem .7rem;border-radius:6px;font-size:.82rem;margin-top:.3rem;color:#276749}
+.section-header{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;font-size:1.05rem;font-weight:700}
+.import-btn{margin-top:1rem;text-align:center}
+.calc-box{background:linear-gradient(135deg,#667eea08,#764ba208);border:2px solid #667eea30;border-radius:var(--radius-sm);padding:1rem;margin:.8rem 0;font-family:'Times New Roman',serif;font-size:1rem;text-align:center}
+.calc-box .step{color:var(--text-light);font-size:.85rem;margin:.2rem 0;font-family:'Noto Sans SC',sans-serif}
+.calc-box .formula{font-size:1.15rem;font-weight:700;color:#667eea;margin:.3rem 0}
+.teacher-talk{border-left:4px solid var(--primary);background:linear-gradient(135deg,#667eea10,#764ba210);border-radius:var(--radius-sm);padding:1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.9}
+.teacher-talk h4{color:var(--primary);margin-bottom:.5rem}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero h1{font-size:1.3rem}.knowledge-grid{grid-template-columns:1fr}.error-grid{grid-template-columns:1fr}.flashcard-face{min-height:180px;padding:1.2rem}}
+
+.quiz-mode-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem;padding:.5rem .6rem;background:var(--bg,#f7f7fb);border:1px solid var(--border,#e2e8f0);border-radius:var(--radius-sm,10px)}
+.qm-btn{border:1.5px solid var(--border,#e2e8f0);background:transparent;color:var(--text,#2d3748);padding:.3rem .75rem;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;line-height:1.4}
+.qm-btn.qm-active{background:var(--primary,#667eea);color:#fff;border-color:var(--primary,#667eea);font-weight:600}
+#quizModeInfo{margin-left:auto;font-size:.74rem;color:var(--text-light,#718096);white-space:nowrap}
+.done-badge{display:inline-block;font-size:.64rem;font-weight:700;padding:.12rem .45rem;border-radius:10px;margin-left:.35rem;vertical-align:middle;line-height:1.4}
+.done-badge.ok{background:#48bb7818;color:#2f855a;border:1px solid #48bb7855}
+.done-badge.no{background:#e74c3c18;color:#c0392b;border:1px solid #e74c3c55}
+@media(max-width:768px){#quizModeInfo{display:none}}
+
+</style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.toast-success{background:var(--success,#48bb78)}
+.toast-warning{background:var(--warning,#ed8936)}
+.toast-info{background:#667eea}</style></head><body>
+
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left" style="font-size:.85rem;opacity:.8"></i> 物理 · 声与运动</a>
+  <div class="navbar-nav">
+    <a class="active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i><span>知识点</span></a>
+    <a onclick="switchTab('quiz')"><i class="fas fa-pen"></i><span>测验</span></a>
+    <a onclick="initRetryMode()" style="color:#f39c12"><i class="fas fa-bug"></i><span>重练</span></a>
+    <a onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i><span>卡片</span></a>
+    <a onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i><span>易错点</span></a>
+  </div>
+</div></nav>
+
+<div class="container">
+  <div class="hero fade-in-up">
+    <h1><i class="fas fa-volume-up"></i> 声与运动 · 回声测距 + 超声测速</h1>
+    <p>2026秋物理 · 声与运动 · 30 题 · 12 卡牌 | 回声测距 + 超声测速（B卷压轴）</p>
+    <div class="meta">
+      <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 30道测验题</span>
+      <span><i class="fas fa-layer-group"></i> 12张知识卡</span>
+      <span><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 8大易错点</span>
+      <span><i class="fas fa-microphone"></i> 点击卡片翻转</span>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('knowledge')"><i class="fas fa-sitemap"></i> 知识图谱</button>
+    <button class="tab-btn" onclick="switchTab('quiz')"><i class="fas fa-pen"></i> 闯关测验</button>
+    <button class="tab-btn" onclick="switchTab('flashcard')"><i class="fas fa-layer-group"></i> 知识卡牌</button>
+    <button class="tab-btn" onclick="switchTab('errors')"><i class="fas fa-exclamation-triangle"></i> 易错自检</button>
+  </div>
+
+  <!-- ========== 知识图谱 ========== -->
+  <div id="tab-knowledge" class="tab-content active">
+    <div class="section-header"><i class="fas fa-sitemap" style="color:#667eea"></i> 声与运动 · 回声测距 + 超声测速（月考 / 半期 B 卷压轴）</div>
+
+        <div class="knowledge-grid">
+      <div class="knowledge-card c1"><h3><i class="fas fa-volume-up" style="color:#667eea"></i> 本讲概览 · 声与运动</h3><ul><li>把<strong class="hl">声波（v声 = 340 m/s）</strong>与运动学结合的两大模型：<strong class="hl">回声测距</strong> 与 <strong class="hl">超声测速</strong></li><li>回声测距：声音往返一趟 → 路程要<strong class="hl">÷2</strong></li><li>超声测速：两次发射取差 → 难点在<strong class="hl">时间轴上的时刻</strong></li><li>老师强调：超声测速是<strong class="hl">月考/半期 B 卷选择题压轴</strong>，必须掌握</li></ul></div>
+      <div class="knowledge-card c2"><h3><i class="fas fa-mountain" style="color:#e74c3c"></i> 回声测距模型</h3><ul><li>汽车<strong class="hl">驶向大山</strong>鸣笛，t 秒后听到回声</li><li>同一段时间里：声音走了 v声·t，车走了 v车·t</li><li>驶近时两者<strong class="hl">之和 = 2 × 鸣笛处距离</strong></li><li>听到回声时车又靠近了 v车·t → 距离变短</li></ul></div>
+      <div class="knowledge-card c3"><h3><i class="fas fa-calculator" style="color:#e67e22"></i> 回声测距公式（驶近）</h3><ul><li>① 鸣笛处距山：<strong class="hl">S = (v声 + v车) × t ÷ 2</strong></li><li>② 听到回声处距山：<strong class="hl">ΔS = (v声 − v车) × t ÷ 2</strong></li><li>两式关系：ΔS = S − v车·t（车走过的距离）</li><li>例：20 m/s 驶向山，1 s 后听到回声 → S = (340+20)/2 = <strong class="hl">180 m</strong>、ΔS = (340−20)/2 = <strong class="hl">160 m</strong></li></ul></div>
+      <div class="knowledge-card c4"><h3><i class="fas fa-square" style="color:#16a085"></i> 回声测距 · 车静止 / 远离</h3><ul><li><strong class="hl">车静止</strong>：S = v声·t ÷ 2（公式里 v车 = 0）</li><li>例：静止，2 s 后听到回声 → 340×2 ÷ 2 = <strong class="hl">340 m</strong></li><li><strong class="hl">车远离大山</strong>：声音要「追」车 → S = (v声 − v车) × t ÷ 2</li><li>⚠️ 符号规律：<strong class="hl">驶近用加、远离用减</strong></li></ul></div>
+      <div class="knowledge-card c5"><h3><i class="fas fa-satellite-dish" style="color:#8e44ad"></i> 超声测速模型</h3><ul><li>测速仪发出超声波 → 遇到车后反射 → 被测速仪接收</li><li>第 1 次：发出到收到回波用时 <strong class="hl">t₁</strong>，对应车距 S₁</li><li>第 2 次：间隔 <strong class="hl">Δt</strong> 后发出，用时 <strong class="hl">t₂</strong>，对应车距 S₂</li><li>已知 v声，求车速 v车</li></ul></div>
+      <div class="knowledge-card c6"><h3><i class="fas fa-ruler-combined" style="color:#2980b9"></i> 超声测速两大公式</h3><ul><li>① 汽车位移：<strong class="hl">S车 = S₁ − S₂</strong>（车靠近时，大减小）</li><li>② 汽车运动时间：<strong class="hl">t车 = Δt + t₂/2 − t₁/2</strong></li><li>③ 车速：<strong class="hl">v车 = S车 ÷ t车</strong></li><li>其中 S₁ = v声·t₁/2、S₂ = v声·t₂/2（回波是往返，必须 ÷2）</li></ul></div>
+      <div class="knowledge-card c7"><h3><i class="fas fa-hourglass-half" style="color:#c0392b"></i> 时间轴怎么画（核心）</h3><ul><li>以<strong class="hl">第一次发射</strong>为 0 时刻</li><li>第 1 次<strong>遇到车</strong>的时刻 = <strong class="hl">t₁/2</strong>（单程！）</li><li>第 2 次<strong>发出</strong>的时刻 = <strong class="hl">Δt</strong></li><li>第 2 次<strong>遇到车</strong>的时刻 = <strong class="hl">Δt + t₂/2</strong></li><li>两个「遇到车」的时刻相减 = t车</li></ul></div>
+      <div class="knowledge-card c8"><h3><i class="fas fa-exchange-alt" style="color:#f39c12"></i> 时间 vs 时刻（最容易错）</h3><ul><li><strong class="hl">时间间隔</strong>：t₁、t₂、Δt、t车 —— 是时间轴上的一段长度</li><li><strong class="hl">时刻</strong>：t₁/2、Δt、Δt + t₂/2 —— 是时间轴上的一个点</li><li>⚠️ <strong class="hl">t车 ≠ Δt</strong>！这是本专题最大失分点</li><li>Δt 只是两次「发出」的间隔，而车被「看见」的时刻还要各自加减 t/2</li></ul></div>
+      <div class="knowledge-card c9"><h3><i class="fas fa-chart-line" style="color:#9b59b6"></i> S-t 图看什么</h3><ul><li>纵轴是<strong class="hl">超声波走过的路程</strong> s，横轴是时间 t</li><li>超声波遇车<strong class="hl">折返</strong> → 图上出现折返点，对应 s₁、s₂</li><li>时间轴关键点：<strong class="hl">0、t₁、Δt、Δt + t₂</strong></li><li>车<strong>远离</strong>时两次回波间隔变大；<strong>还没收到第 1 次回波就发第 2 次</strong>时，两个三角形会重叠</li></ul></div>
+      <div class="knowledge-card c10"><h3><i class="fas fa-divide" style="color:#34495e"></i> 为什么必须 ÷2</h3><ul><li>声音（超声波）是<strong class="hl">反射回来</strong>的，走的是<strong class="hl">双程</strong></li><li>声音路程 = 2 × 障碍物距离 → 距离 = 声音路程 ÷ 2</li><li>⚠️ <strong class="hl">t₁ 是「发出到收回」的总时间</strong>，遇到车的时刻只是它的一半（t₁/2）</li><li>这一条同时是回声测距和超声测速的基础</li></ul></div>
+      <div class="knowledge-card c11"><h3><i class="fas fa-random" style="color:#27ae60"></i> 变式怎么应对</h3><ul><li>说「第二次回波用时更长」→ 车在<strong class="hl">远离</strong>，S车 = S₂ − S₁</li><li>只给两次回波时间 → 先算 S₁、S₂，再判断靠近还是远离</li><li>问「车距测速仪多远」→ 直接用 v声·t ÷ 2，不用管车速</li><li>万变不离其宗：<strong class="hl">先算两个车距，再除以车真正运动的时间</strong></li></ul></div>
+      <div class="knowledge-card c12"><h3><i class="fas fa-toolbox" style="color:#e67e22"></i> 公式速查</h3><ul><li>回声测距（驶近）：S = (v声+v车)t ÷ 2；ΔS = (v声−v车)t ÷ 2</li><li>回声测距（静止）：S = v声·t ÷ 2</li><li>超声测速：S车 = |S₁ − S₂|；t车 = Δt + t₂/2 − t₁/2；v车 = S车 ÷ t车</li><li>车距：S = v声 · t ÷ 2（t 为该次回波的总时间）</li></ul></div>
+    </div>
+    <div class="teacher-talk">
+      <h4><i class="fas fa-microphone-alt"></i> 🎙️ 课堂要点 · 声与运动（回声测距 + 超声测速）</h4>
+      <p><strong>本讲核心</strong>：把<strong>声波（340 m/s）</strong>与运动学结合的两个模型。① <strong>回声测距</strong>——同一段时间里声音走 v声·t、车走 v车·t，驶近时两者之和 = 2 × 鸣笛处距离，听到回声时两者之差 = 2 × 当时距离；② <strong>超声测速</strong>——两次发射取差，先算两个车距，再除以车真正运动的时间。</p>
+      <p><strong>方法要点</strong>：<strong>必须画图</strong>。回声测距画行程图（标出声音路程、车路程、等量关系）；超声测速画<strong>时间轴</strong>（标出 0、t₁/2、Δt、Δt+t₂/2）。老师原话：<strong>「画图！找等量关系」</strong>、<strong>「时间、时刻要分清」</strong>。</p>
+      <p><strong>易错提醒</strong>：① 回声/回波是<strong>往返</strong>，求距离忘了 ÷2；② <strong>t车 ≠ Δt</strong>——车被「看见」的间隔是 Δt + t₂/2 − t₁/2；③ 驶近用加、远离用减，符号搞反；④ 车静止时还硬套 (v声 + v车)；⑤ 不画图直接背公式，一变式就垮。⚠️ 超声测速是<strong>月考/半期 B 卷选择题压轴</strong>，要练到能自己画出时间轴。</p>
+      <p><strong>🎓 老师课堂总结</strong> — 两句话记牢：<strong>声音跑的是双程，距离一定除以 2</strong>；<strong>Δt 管「发出」，t/2 管「遇到」，t车 = Δt + t₂/2 − t₁/2</strong>。会画时间轴，这类题怎么变都能做。</p>
+    </div>
+    <div id="tab-quiz" class="tab-content">
+    <div class="quiz-mode-bar" id="quizModeBar">
+    <button class="qm-btn qm-active" data-m="all" onclick="setQuizMode('all')">📋 全部</button>
+    <button class="qm-btn" data-m="todo" onclick="setQuizMode('todo')">🆕 未做</button>
+    <button class="qm-btn" data-m="wrong" onclick="setQuizMode('wrong')">❌ 错题</button>
+    <span id="quizModeInfo"></span>
+  </div>
+    <div class="quiz-progress">
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="quiz-stats" id="quizStats">0 / 30</div>
+    </div>
+    <div id="quizArea"></div>
+  </div>
+
+  <!-- ========== 知识卡牌 ========== -->
+  <div id="tab-flashcard" class="tab-content">
+    <p style="color:var(--text-light);margin-bottom:.8rem"><i class="fas fa-lightbulb" style="color:var(--warning)"></i> 点击卡片翻转查看答案 · 共12张知识卡</p>
+    <div id="flashcardArea"></div>
+  </div>
+
+  <!-- ========== 易错自检 ========== -->
+  <div id="tab-errors" class="tab-content">
+    <div class="section-header"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i> 高频易错点自检</div>
+    <p style="color:var(--text-light);margin-bottom:.8rem">点击每个条目标记"已掌握" ✅</p>
+    <div id="errorChecklist"></div>
+    <div style="margin-top:1rem"><button class="btn btn-outline" onclick="resetEC()"><i class="fas fa-undo"></i> 重置</button><span id="ecProgress" style="margin-left:.8rem;font-size:.85rem;color:var(--text-light)"></span></div>
+</div>
+
+<div class="footer" style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem"><i class="fas fa-heart" style="color:var(--danger)"></i> 物理 · 声与运动 | 博学班 · 2026秋</div>
+
+<script>
+const questions = [
+  {"q": "一辆汽车停在山崖前鸣笛，2 s 后听到回声（v声 = 340 m/s），汽车距山崖", "opts": ["A. 170 m", "B. 340 m", "C. 680 m", "D. 85 m"], "ans": 1, "exp": "声音往返 → s = 340×2 ÷ 2 = <strong>340 m</strong>。"},
+  {"q": "汽车静止，距山崖 170 m，鸣笛后经过多长时间听到回声（v声 = 340 m/s）", "opts": ["A. 0.5 s", "B. 1 s", "C. 1.5 s", "D. 2 s"], "ans": 1, "exp": "t = 2s ÷ v声 = 2×170 ÷ 340 = <strong>1 s</strong>（往返双程）。"},
+  {"q": "汽车以 20 m/s 匀速驶向大山，在某处鸣笛后经 1 s 听到回声（v声 = 340 m/s），鸣笛处距大山", "opts": ["A. 160 m", "B. 170 m", "C. 180 m", "D. 200 m"], "ans": 2, "exp": "驶近：S = (v声 + v车)t ÷ 2 = (340+20)×1 ÷ 2 = <strong>180 m</strong>。"},
+  {"q": "上题中，听到回声时汽车距大山", "opts": ["A. 160 m", "B. 170 m", "C. 180 m", "D. 340 m"], "ans": 0, "exp": "ΔS = (v声 − v车)t ÷ 2 = (340−20) ÷ 2 = <strong>160 m</strong>；也可用 180 − 20 = 160 m。"},
+  {"q": "汽车以 15 m/s 匀速驶向山崖，鸣笛后 2 s 听到回声，则鸣笛处距山崖", "opts": ["A. 325 m", "B. 340 m", "C. 355 m", "D. 370 m"], "ans": 2, "exp": "S = (340+15)×2 ÷ 2 = <strong>355 m</strong>。"},
+  {"q": "上题中，听到回声处距山崖", "opts": ["A. 325 m", "B. 340 m", "C. 355 m", "D. 300 m"], "ans": 0, "exp": "ΔS = (340−15)×2 ÷ 2 = <strong>325 m</strong>（也可 355 − 30 = 325）。"},
+  {"q": "汽车以 10 m/s 匀速驶向大山，鸣笛后 4 s 听到回声，则鸣笛处距大山", "opts": ["A. 660 m", "B. 680 m", "C. 700 m", "D. 720 m"], "ans": 2, "exp": "S = (340+10)×4 ÷ 2 = <strong>700 m</strong>。"},
+  {"q": "汽车驶向大山鸣笛，求「鸣笛处到山」的距离用哪个公式", "opts": ["A. v声·t ÷ 2", "B. (v声 + v车) × t ÷ 2", "C. (v声 − v车) × t ÷ 2", "D. (v声 + v车) × t"], "ans": 1, "exp": "驶近时声音路程与车路程<strong>之和</strong> = 2 × 鸣笛处距离 → S = (v声+v车)t/2。"},
+  {"q": "求「听到回声时车到山」的距离，用哪个公式", "opts": ["A. v声·t ÷ 2", "B. (v声 + v车) × t ÷ 2", "C. (v声 − v车) × t ÷ 2", "D. (v车 − v声) × t ÷ 2"], "ans": 2, "exp": "驶近时两者之<strong>差</strong> = 2 × 当时距离 → ΔS = (v声−v车)t/2。"},
+  {"q": "汽车以 20 m/s 沿直线<strong>远离</strong>大山行驶，鸣笛后 1 s 听到回声，则鸣笛处距大山", "opts": ["A. 160 m", "B. 170 m", "C. 180 m", "D. 200 m"], "ans": 0, "exp": "远离时声音要「追」车：S = (v声 − v车)t ÷ 2 = (340−20) ÷ 2 = <strong>160 m</strong>。符号与驶近相反。"},
+  {"q": "测速仪第一次发出超声波，0.5 s 后收到回波，此时汽车距测速仪", "opts": ["A. 42.5 m", "B. 85 m", "C. 170 m", "D. 340 m"], "ans": 1, "exp": "往返 → S₁ = v声·t₁ ÷ 2 = 340×0.5 ÷ 2 = <strong>85 m</strong>。"},
+  {"q": "第二次发出超声波，0.4 s 后收到回波，此时汽车距测速仪", "opts": ["A. 34 m", "B. 68 m", "C. 136 m", "D. 340 m"], "ans": 1, "exp": "S₂ = 340×0.4 ÷ 2 = <strong>68 m</strong>。"},
+  {"q": "上两问中，汽车在两次超声波之间的位移为", "opts": ["A. 17 m", "B. 34 m", "C. 85 m", "D. 153 m"], "ans": 0, "exp": "S车 = S₁ − S₂ = 85 − 68 = <strong>17 m</strong>（S₂ &lt; S₁ → 车在靠近）。"},
+  {"q": "两次发射间隔 Δt = 1 s，第一次超声波<strong>遇到车</strong>的时刻（以第一次发射为 0 时刻）是", "opts": ["A. 0.25 s", "B. 0.5 s", "C. 0.75 s", "D. 1 s"], "ans": 0, "exp": "发出到遇到车是<strong>单程</strong> → t₁/2 = 0.5 ÷ 2 = <strong>0.25 s</strong>。"},
+  {"q": "第二次超声波<strong>遇到车</strong>的时刻（以第一次发射为 0 时刻）是", "opts": ["A. 1.0 s", "B. 1.2 s", "C. 1.4 s", "D. 1.5 s"], "ans": 1, "exp": "Δt + t₂/2 = 1 + 0.4 ÷ 2 = <strong>1.2 s</strong>。"},
+  {"q": "汽车在两次被超声波「看到」之间的时间间隔 t车 =", "opts": ["A. 0.95 s", "B. 1.0 s", "C. 1.05 s", "D. 1.2 s"], "ans": 0, "exp": "t车 = Δt + t₂/2 − t₁/2 = 1 + 0.2 − 0.25 = <strong>0.95 s</strong>。⚠️ 不是 Δt！"},
+  {"q": "上题中汽车的速度约为", "opts": ["A. 16.2 m/s", "B. 17.9 m/s", "C. 20.0 m/s", "D. 34.0 m/s"], "ans": 1, "exp": "v车 = S车 ÷ t车 = 17 ÷ 0.95 ≈ <strong>17.9 m/s</strong>。"},
+  {"q": "汽车靠近测速仪时，两次超声波之间的位移公式是", "opts": ["A. S₁ + S₂", "B. S₁ − S₂", "C. S₂ − S₁", "D. (S₁ + S₂) ÷ 2"], "ans": 1, "exp": "车靠近 → 第二次测得距离更近 → S车 = <strong>S₁ − S₂</strong>（大减小）。"},
+  {"q": "汽车被超声波两次「看到」的时间间隔公式是", "opts": ["A. Δt", "B. Δt + t₁/2 − t₂/2", "C. Δt + t₂/2 − t₁/2", "D. t₁/2 + t₂/2"], "ans": 2, "exp": "两次「遇到车」的时刻相减：(Δt + t₂/2) − t₁/2 = <strong>Δt + t₂/2 − t₁/2</strong>。"},
+  {"q": "若 t₁ = 0.6 s、t₂ = 0.4 s、Δt = 1.2 s，则汽车速度约为", "opts": ["A. 26.2 m/s", "B. 30.9 m/s", "C. 34.0 m/s", "D. 37.8 m/s"], "ans": 1, "exp": "S₁ = 102 m、S₂ = 68 m → S车 = 34 m；t车 = 1.2 + 0.2 − 0.3 = 1.1 s；v = 34 ÷ 1.1 ≈ <strong>30.9 m/s</strong>。"},
+  {"q": "若 t₁ = 0.8 s、t₂ = 0.6 s、Δt = 1 s，则汽车速度约为", "opts": ["A. 30.9 m/s", "B. 34.0 m/s", "C. 37.8 m/s", "D. 42.5 m/s"], "ans": 2, "exp": "S₁ = 136 m、S₂ = 102 m → S车 = 34 m；t车 = 1 + 0.3 − 0.4 = 0.9 s；v = 34 ÷ 0.9 ≈ <strong>37.8 m/s</strong>。"},
+  {"q": "若第二次回波用时比第一次长（t₂ &gt; t₁），说明汽车在", "opts": ["A. 靠近测速仪", "B. 远离测速仪", "C. 静止不动", "D. 无法判断"], "ans": 1, "exp": "回波时间变长 → 车距测速仪变远 → <strong>远离</strong>。此时 S车 = S₂ − S₁。"},
+  {"q": "超声波从发出到被接收所走的路程，是车距的", "opts": ["A. 1 倍", "B. 2 倍", "C. 4 倍", "D. 一半"], "ans": 1, "exp": "超声波往返 → 路程 = <strong>2 × 车距</strong>，所以求距离一律 ÷2。"},
+  {"q": "超声测速题最容易失分的地方是", "opts": ["A. 速度公式记不住", "B. 把「时间间隔」和「时刻」混用", "C. 不会单位换算", "D. 不会画图"], "ans": 1, "exp": "t₁、t₂、Δt 是<strong>时间间隔</strong>，t₁/2、Δt + t₂/2 是<strong>时刻</strong>；<strong>t车 ≠ Δt</strong>。"},
+  {"q": "回声测距和超声测速共同的必需步骤是", "opts": ["A. 先记住结论", "B. 先画图（行程图 / 时间轴）", "C. 先算平均速度", "D. 直接套公式"], "ans": 1, "exp": "笔记红字反复强调：<strong>画图！找等量关系</strong>；超声测速还要画出时间轴。"},
+  {"q": "汽车驶向大山鸣笛，声音走的路程与汽车走的路程", "opts": ["A. 相减后除以 2 = 鸣笛处距山", "B. 相加后除以 2 = 鸣笛处距山", "C. 相加 = 鸣笛处距山", "D. 相减 = 鸣笛处距山"], "ans": 1, "exp": "驶近时 S声 + S车 = 2S → S = (S声 + S车) ÷ 2。"},
+  {"q": "求「听到回声时车到山」的距离，等于声音路程与车路程", "opts": ["A. 之和的一半", "B. 之差的一半", "C. 之和", "D. 之差"], "ans": 1, "exp": "驶近时 ΔS = (S声 − S车) ÷ 2；也可用「鸣笛处距离 − 车走过的距离」。"},
+  {"q": "汽车以 20 m/s 驶向山崖，鸣笛后听到回声时距山 160 m，则从鸣笛到听到回声汽车走了", "opts": ["A. 10 m", "B. 20 m", "C. 40 m", "D. 160 m"], "ans": 1, "exp": "鸣笛处距山 180 m、听到时 160 m → 车走了 180 − 160 = <strong>20 m</strong>（= 20 m/s × 1 s）。"},
+  {"q": "超声测速中的 Δt 表示", "opts": ["A. 第一次超声波发出到收回的时间", "B. 两次超声波「发出」时刻之差", "C. 汽车运动的时间", "D. 超声波遇到车的时间"], "ans": 1, "exp": "Δt 是<strong>两次「发出」超声波的间隔</strong>；它不等于 t车，也不是 t₁。"},
+  {"q": "做超声测速题时，判断汽车靠近还是远离要看", "opts": ["A. Δt 的大小", "B. t₁ 与 t₂ 谁大", "C. 车速大小", "D. 声速大小"], "ans": 1, "exp": "t₂ &lt; t₁ → 车<strong>靠近</strong>；t₂ &gt; t₁ → 车<strong>远离</strong>。S车 取两者之差，t车 = Δt + t₂/2 − t₁/2。"}
+];
+
+
+const flashcards = [
+  {"front": "回声测距 · 车静止怎么算？", "back": "S = v声·t ÷ 2。例：静止鸣笛 2 s 听到回声 → 340×2 ÷ 2 = <strong>340 m</strong>。"},
+  {"front": "车驶向大山，鸣笛处距山怎么算？", "back": "S = <strong>(v声 + v车) × t ÷ 2</strong>（声音路程与车路程之和 = 2 × 距离）。例：20 m/s、1 s → (340+20)/2 = 180 m。"},
+  {"front": "听到回声时车距山怎么算？", "back": "ΔS = <strong>(v声 − v车) × t ÷ 2</strong>。例：20 m/s、1 s → (340−20)/2 = 160 m；也可用「鸣笛处 180 − 车走的 20 = 160」。"},
+  {"front": "车远离大山鸣笛呢？", "back": "声音要「追」车 → S = <strong>(v声 − v车) × t ÷ 2</strong>。符号与驶近相反：驶近用加、远离用减。"},
+  {"front": "超声测速里 S车 怎么算？", "back": "<strong>S车 = |S₁ − S₂|</strong>，其中 S₁ = v声·t₁/2、S₂ = v声·t₂/2。车靠近取 S₁ − S₂，远离取 S₂ − S₁。"},
+  {"front": "超声测速里 t车 怎么算？", "back": "<strong>t车 = Δt + t₂/2 − t₁/2</strong>。⚠️ 不是 Δt！Δt 只管两次「发出」，还要加上各自「遇到车」的偏移。"},
+  {"front": "超声测速最终车速公式？", "back": "<strong>v车 = S车 ÷ t车 = |S₁ − S₂| ÷ (Δt + t₂/2 − t₁/2)</strong>。"},
+  {"front": "为什么所有这类题都要 ÷2？", "back": "声音/超声波是<strong>反射回来</strong>的，走的是<strong>双程</strong>：声音路程 = 2 × 障碍物距离。而「遇到车」的时刻只是回波总时间的一半（t/2）。"},
+  {"front": "时间间隔和时刻怎么区分？", "back": "<strong>时间间隔</strong>（t₁、t₂、Δt、t车）是一段长度；<strong>时刻</strong>（t₁/2、Δt、Δt + t₂/2）是时间轴上的点。t车 要用两个「遇到车」的时刻相减。"},
+  {"front": "t₂ 比 t₁ 大说明什么？", "back": "车在<strong>远离</strong>测速仪（回波变久 = 距离变远）。此时 S车 = S₂ − S₁；反之 t₂ &lt; t₁ 则是靠近。"},
+  {"front": "超声测速的时间轴要标哪几个点？", "back": "以第一次发射为 0：<strong>0 → t₁/2（第 1 次遇到车）→ Δt（第 2 次发出）→ Δt + t₂/2（第 2 次遇到车）→ Δt + t₂（收到第 2 次回波）</strong>。"},
+  {"front": "这套题最核心的一句口诀？", "back": "<strong>声音跑双程，距离除以 2；Δt 管发出，t/2 管遇到，t车 = Δt + t₂/2 − t₁/2。</strong>会画时间轴，怎么变都能做。"}
+];
+
+
+errors = [
+  {"title": "❌ 回声/回波求距离忘了 ÷2", "wrong": "鸣笛 2 s 听到回声，直接写 340×2 = 680 m 当距离。", "right": "声音走的是<strong>往返双程</strong>，距离 = 声音路程 ÷ 2 = <strong>340 m</strong>。"},
+  {"title": "❌ 把 t车 当成 Δt", "wrong": "超声测速里直接用 Δt 当作汽车运动的时间。", "right": "<strong>t车 = Δt + t₂/2 − t₁/2</strong>。Δt 只是两次「发出」的间隔，车被「看见」的时刻还要各自加减 t/2。"},
+  {"title": "❌ 驶近 / 远离符号搞反", "wrong": "车远离时还用 (v声 + v车)。", "right": "驶近 → <strong>加</strong>（声音与车相向）；远离 → <strong>减</strong>（声音追车）。判据：t₂ &lt; t₁ 靠近、t₂ &gt; t₁ 远离。"},
+  {"title": "❌ 车静止却套用运动公式", "wrong": "车停着鸣笛，也算 (v声 + v车) × t ÷ 2。", "right": "静止时 v车 = 0，公式退化为 <strong>S = v声·t ÷ 2</strong>（结果一样，但别把 v车 代错）。"},
+  {"title": "❌ 拿「听到回声」的公式算「鸣笛处」", "wrong": "求鸣笛处距山，却用了 (v声 − v车) × t ÷ 2。", "right": "先分清问的是哪个位置：<strong>鸣笛处用 +，听到回声处用 −</strong>。也可用「鸣笛处 − v车·t」反推。"},
+  {"title": "❌ 把 t₁ 当成「遇到车」的时间", "wrong": "直接写「超声波 t₁ = 0.5 s 时遇到车」。", "right": "t₁ 是<strong>发出到收回的总时间</strong>，遇到车只用了 <strong>t₁/2</strong>（单程）。这一步错，后面全错。"},
+  {"title": "❌ 不画图直接背公式", "wrong": "题目一换问法（问车距、问位移、问时刻）就不会了。", "right": "笔记红字：<strong>画图！找等量关系</strong>。回声测距画行程图，超声测速画时间轴——图一画出来，式子自己就出来了。"},
+  {"title": "❌ 变式题不会迁移", "wrong": "只会做「求车速」，遇到「求车距」「判断靠近还是远离」就卡住。", "right": "套路固定：<strong>先由 v声·t/2 算出两个车距 → 取差得位移 → 除以真正的运动时间</strong>。剩下只是换个量问。"}
+];
+
+
+
+function toast(msg,type){type=type||'info';const el=document.createElement('div');el.className='toast toast-'+type;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),350);},2600);}
+const IMPORT_KEY='wrong_bank_import';
+function autoImportWB(idx,myAns){const q=questions[idx];const item={subject:'物理(博学班)',chapter:'声与运动 回声测距与超声测速',content:q.q,correct_answer:q.opts[q.ans],my_answer:q.opts[myAns]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'物理,2026秋,声与运动,回声测距,超声测速,时间轴,临界'};const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');if(ex.some(x=>x.content===item.content))return false;ex.push(item);localStorage.setItem(IMPORT_KEY,JSON.stringify(ex));return true;}
+const WRONG_HISTORY_KEY='quiz_physics26q_soundmotion_wrong';
+let retryMode=false,wrongIds=[];
+
+function loadWrongHistory(){
+  try{return JSON.parse(localStorage.getItem(WRONG_HISTORY_KEY)||'[]');}catch(e){return [];}
+}
+function saveWrongHistoryItem(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(found){found.count++;found.lastWrong=Date.now();found.redo=0;}
+  else h.push({idx,count:1,lastWrong:Date.now(),redo:0});
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+function markRedoOk(idx){
+  let h=loadWrongHistory();
+  const found=h.find(x=>x.idx===idx);
+  if(!found)return;
+  found.redo=(found.redo||0)+1;
+  if(found.redo>=3){h=h.filter(x=>x.idx!==idx);toast('🎉 重做'+found.redo+'次，已合格！','success');}
+  else{toast('✅ 答对！重做'+found.redo+'/3','success');}
+  localStorage.setItem(WRONG_HISTORY_KEY,JSON.stringify(h));
+}
+
+let curQ=0,quizAns=new Array(questions.length).fill(-1),shuffled=[];
+
+/* ===== 已做标记 + 未做/错题筛选 ===== */
+var QUIZ_MODE='all';
+var QUIZ_PROG_KEY='quiz_progress_physics26q_soundmotion';
+function getQuizProg(){try{return JSON.parse(localStorage.getItem(QUIZ_PROG_KEY)||'{}')}catch(e){return {}}}
+function saveQuizProg(idx,res){var p=getQuizProg();p[idx]=res;localStorage.setItem(QUIZ_PROG_KEY,JSON.stringify(p));updateModeInfo();}
+function updateModeInfo(){var p=getQuizProg();var keys=Object.keys(p);var wrong=0;keys.forEach(function(k){if(p[k]==='wrong')wrong++;});var el=document.getElementById('quizModeInfo');if(el)el.textContent='已做 '+keys.length+'/'+questions.length+' · 错题 '+wrong;}
+function setQuizMode(m){QUIZ_MODE=m;document.querySelectorAll('.qm-btn').forEach(function(b){b.classList.toggle('qm-active',b.getAttribute('data-m')===m)});initQ();if(shuffled.length)renderQ();}
+function quizFilterIds(){var ids=[...Array(questions.length).keys()];if(QUIZ_MODE==='all')return ids;var p=getQuizProg();if(QUIZ_MODE==='todo')return ids.filter(function(i){return !(i in p)});return ids.filter(function(i){return p[i]==='wrong'})}
+function showQuizEmpty(){var el=document.getElementById('quizArea');if(!el)return;var msg=QUIZ_MODE==='wrong'?'🎉 没有错题，全部掌握！':'🎉 所有题都已做过！切换「全部」可重新练习。';el.innerHTML='<div class="question-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2rem;margin-bottom:.5rem">'+(QUIZ_MODE==='wrong'?'🎉':'✅')+'</div><p style="color:var(--text-light)">'+msg+'</p><div style="margin-top:1rem"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 切换全部</button></div></div>';}
+function initQ(){curQ=0;quizAns=new Array(questions.length).fill(-1);var ids=quizFilterIds();if(!ids.length){showQuizEmpty();shuffled=[];retryMode=false;return;}shuffled=shuffle(ids);retryMode=false;updateModeInfo();}
+function initRetryMode(){
+  const h=loadWrongHistory().filter(x=>(x.redo||0)<3);
+  if(!h.length){alert('没有待重做的错题了，全部合格！');return;}
+  wrongIds=h.map(x=>x.idx);
+  curQ=0;retryMode=true;
+  quizAns=new Array(questions.length).fill(-1);
+  shuffled=shuffle([...wrongIds]);
+  switchTab('quiz');
+  renderQ();
+}function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+function switchTab(n){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+n).classList.add('active');document.querySelectorAll('.tab-btn').forEach(e=>{var icons={knowledge:'fa-sitemap',quiz:'fa-pen',flashcard:'fa-layer-group',errors:'fa-exclamation-triangle'};if(e.innerHTML.includes(icons[n]))e.classList.add('active');});}
+function prevQ(){if(curQ>0){curQ--;renderQ();}}
+function nextQ(){const total=retryMode?shuffled.length:questions.length;if(curQ<total-1){curQ++;renderQ();}else showResult();}
+function showResult(){const p=getQuizProg();let ok=0,done=0;Object.keys(p||{}).forEach(function(k){if(p[k].s==='ok'&&(p[k].r||0)>=3)ok++;});for(let i=0;i<quizAns.length;i++){if(quizAns[i]>=0)done++;}let h='<div class="question-card result-card fade-in-up" style="text-align:center;padding:2rem"><div style="font-size:2.6rem">🎉</div><h2>本组答题完成</h2><p style="color:var(--text-light)">本次已完成 '+done+' 题 · 连续做对3次已合格 '+ok+' 题</p><div style="margin-top:1rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap"><button class="btn btn-outline" onclick="setQuizMode(&#39;all&#39;)">📋 继续练习全部</button><button class="btn btn-primary" onclick="initRetryMode()">🔁 错题重练</button></div></div>';document.getElementById('quizArea').innerHTML=h;}
+function renderQ(){const idx=shuffled[curQ];const q=questions[idx];const total=retryMode?wrongIds.length:questions.length;const ansd=quizAns.filter(a=>a>=0).length;const doneAll=retryMode?shuffled.every(i=>quizAns[i]>=0):(ansd===questions.length);
+let h=``;const _dp=getQuizProg()[idx];const _db=(function(){if(_dp){const wh=loadWrongHistory();const rec=wh.find(x=>x.idx===idx);if(rec){const rr=(rec.redo||0);return `<span class="done-badge ${rr>=3?'ok':'no'}">${rr>=3?'✅已合格':'❌重做'+rr+'/3'}</span>`;}return `<span class="done-badge ${_dp==='ok'?'ok':'no'}">${_dp==='ok'?'✅已做':'❌已做'}</span>`;}return '';})();if(retryMode)h+=`<div style="margin-bottom:.6rem;padding:.3rem .6rem;background:#e74c3c10;border-radius:6px;font-size:.78rem;color:var(--danger);display:inline-block"><i class="fas fa-redo"></i> 错题重练模式 · 共${total}题</div>`;
+h+=`<div class="question-card fade-in-up"><div class="q-num">${retryMode?shuffled.indexOf(idx)+1:curQ+1}</div>${_db}<div class="q-text">${q.q}</div><div class="options">`;
+q.opts.forEach((o,oi)=>{let c=[];if(quizAns[idx]>=0){c.push('disabled');if(oi===q.ans)c.push('correct');if(oi===quizAns[idx]&&oi!==q.ans)c.push('wrong');if(oi===q.ans&&quizAns[idx]!==q.ans)c.push('show-correct');}
+h+=`<div class="option ${c.join(' ')}" onclick="selA(${oi})"><span class="letter">${'ABCD'[oi]}</span><span>${o.substring(2)}</span></div>`;});
+h+=`</div><div class="explanation ${quizAns[idx]>=0?'show':''}"><strong><i class="fas fa-lightbulb"></i> 解析：</strong><br>${q.exp}</div>
+<div class="quiz-nav"><button class="btn btn-outline" onclick="prevQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一题</button>
+<span style="font-size:.85rem;color:var(--text-light);align-self:center">${ansd}/${total}</span>
+<button class="btn btn-primary" onclick="nextQ()" ${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]<0?'disabled':''}>${(retryMode?shuffled.indexOf(idx):curQ)===total-1&&quizAns[idx]>=0?'查看结果':'下一题'} <i class="fas fa-arrow-right"></i></button></div></div>`;
+document.getElementById('quizArea').innerHTML=h;
+document.getElementById('progressFill').style.width=`${(ansd/total)*100}%`;
+document.getElementById('quizStats').textContent=`已完成 ${ansd} / ${total}`;}
+function selA(oi){const idx=shuffled[curQ];if(quizAns[idx]>=0)return;quizAns[idx]=oi;saveQuizProg(idx,oi===questions[idx].ans?'ok':'wrong');
+  if(oi===questions[idx].ans){const wh=loadWrongHistory();if(wh.some(x=>x.idx===idx))markRedoOk(idx);}
+  if(oi!==questions[idx].ans){saveWrongHistoryItem(idx);if(autoImportWB(idx,oi))toast('📥 已自动加入错题库','success');else toast('📥 错题已在错题库中','info');}
+renderQ();}
+function importWB(){const w=[];shuffled.forEach((oi)=>{const ua=quizAns[oi];if(ua>=0&&ua!==questions[oi].ans)w.push({idx:oi,q:questions[oi],uc:ua});});if(!w.length){alert('🎉 没有错题');return;}if(!confirm(`导入 ${w.length} 道错题？`))return;
+const items=w.map(w=>({subject:'物理',chapter:'声与运动 回声测距与超声测速',content:w.q.q,correct_answer:w.q.opts[w.q.ans],my_answer:w.q.opts[w.uc]||'未作答',error_reason:'概念不清',source:'练习',difficulty:3,tags:'物理,2026秋,声与运动,回声测距,超声测速'}));
+const ex=JSON.parse(localStorage.getItem(IMPORT_KEY)||'[]');localStorage.setItem(IMPORT_KEY,JSON.stringify([...ex,...items]));
+alert(`✅ 已准备 ${items.length} 道错题！`);}
+
+let fIdx=0,fFlip=false;
+function renderFC(dir){if(dir==='next'&&fIdx<flashcards.length-1)fIdx++;else if(dir==='prev'&&fIdx>0)fIdx--;fFlip=false;const fc=flashcards[fIdx];
+document.getElementById('flashcardArea').innerHTML=`<div class="flashcard-container fade-in-up"><div class="flashcard" id="fc" onclick="toggleFC()"><div class="flashcard-face flashcard-front"><i class="fas fa-question-circle" style="font-size:1.8rem;opacity:.5;margin-bottom:.8rem"></i><h3>${fc.front}</h3><p>👆 点击翻转</p></div><div class="flashcard-face flashcard-back"><i class="fas fa-lightbulb" style="font-size:1.3rem;color:var(--warning);margin-bottom:.4rem"></i><h4>${fc.front}</h4><p>${fc.back}</p></div></div></div>
+<div class="flashcard-nav"><button class="btn btn-outline" onclick="renderFC('prev')" ${fIdx===0?'disabled':''}><i class="fas fa-arrow-left"></i> 上一张</button><span class="flashcard-counter">${fIdx+1}/${flashcards.length}</span><button class="btn btn-primary" onclick="renderFC('next')" ${fIdx===flashcards.length-1?'disabled':''}>下一张 <i class="fas fa-arrow-right"></i></button></div>`;}
+function toggleFC(){const el=document.getElementById('fc');if(el){fFlip=!fFlip;el.classList.toggle('flipped');}}
+
+function renderEC(){let s=localStorage.getItem('physics26q_soundmotion_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);
+let h='<div class="error-grid">';errors.forEach((e,i)=>{h+=`<div class="error-card fade-in-up"><div class="num">${i+1}</div><h4>${e.title}</h4><div class="ex-wrong">❌ ${e.wrong}</div><div class="ex-right">✅ ${e.right}</div>
+<div class="check-item ${c[i]?'checked':''}" onclick="toggleEC(${i})" style="margin-top:.6rem;border-top:1px solid var(--border);padding-top:.6rem;display:flex;align-items:center;gap:.6rem;cursor:pointer">
+<div style="width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;${c[i]?'background:var(--success);border-color:var(--success);color:#fff':''}">${c[i]?'<i class="fas fa-check" style="font-size:10px"></i>':''}</div>
+<span style="font-size:.82rem;${c[i]?'text-decoration:line-through;opacity:.5':''}">我已掌握这个易错点</span></div></div>`;});
+h+='</div>';document.getElementById('errorChecklist').innerHTML=h;updateEC();}
+function toggleEC(i){let s=localStorage.getItem('physics26q_soundmotion_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);c[i]=!c[i];localStorage.setItem('physics26q_soundmotion_state_check',JSON.stringify(c));renderEC();}
+function resetEC(){if(confirm('重置所有自检？')){localStorage.removeItem('physics26q_soundmotion_state_check');renderEC();}}
+function updateEC(){let s=localStorage.getItem('physics26q_soundmotion_state_check');let c=s?JSON.parse(s):new Array(errors.length).fill(false);document.getElementById('ecProgress').textContent=`✅ ${c.filter(x=>x).length}/${errors.length} 已掌握`;}
+
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;const a=document.querySelector('.tab-content.active');if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();if(a&&a.id==='tab-quiz')nextQ();else if(a&&a.id==='tab-flashcard')renderFC('next');}
+if(e.key==='ArrowLeft'){e.preventDefault();if(a&&a.id==='tab-quiz')prevQ();else if(a&&a.id==='tab-flashcard')renderFC('prev');}
+if(e.key==='f'&&a&&a.id==='tab-flashcard')toggleFC();});
+
+renderEC();initQ();renderFC();renderQ();
+</script>
+<script>
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+</div>
+</body></html>
