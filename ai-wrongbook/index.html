@@ -222,7 +222,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 <div class="container" id="app"></div>
 <div class="footer">
   <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本-测试版 · 收录「错题本」「三层训练」「复习要点」三项功能
-  &nbsp;|&nbsp; 数据与「错题库」共用同一份（本机存储 + 云端同步）
+  &nbsp;|&nbsp; 数据独立存储（测试用，与错题库互不影响）
 </div>
 
 <script>
@@ -1714,8 +1714,9 @@ function renderPoints(){
 }
 // ===================== AI错题本 · 双功能区（错题本 / 三层训练） =====================
 // 本页 = 把错题库里的「错题本」与「三层训练」两项功能单独成页。
-// 数据层/渲染函数与原页完全同源；localStorage 键与云端后端也一致 ⇒ 两页数据互通：
-// 在原错题库录入或复习的题，这里立刻可见；反之亦然。
+// ⚠️ 测试版：数据层与错题库「隔离」—— 独立 localStorage 键 + 独立后端
+// （api_wrongbank_test.php / wrong_bank_data_test.json）。错题只进「错题库」与「AI错题本」，
+// 不进本测试版；这里录入的内容也不会回流到错题库。
 let _aiLastNbPage = 'dashboard';
 function _aiTopTabOf(page){ return page === 'training' ? 'training' : (page === 'points' ? 'points' : 'notebook'); }
 function _aiApplyTopTab(page){

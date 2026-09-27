@@ -131,6 +131,13 @@ def main():
                  '<span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本-测试版</span>', '独立版: 品牌链接去外链')
     s = sub_once(s, 'AI错题本 · 收录「错题本」「三层训练」「复习要点」三项功能',
                  'AI错题本-测试版 · 收录「错题本」「三层训练」「复习要点」三项功能', '独立版: 页脚命名')
+    # 独立版数据已隔离 ⇒ 文案不能说"与错题库共用同一份"（老板会误解为错题会同步过来）
+    s = sub_once(s, '数据与「错题库」共用同一份（本机存储 + 云端同步）',
+                 '数据独立存储（测试用，与错题库互不影响）', '独立版: 数据说明文案')
+    s = sub_once(s, '// 数据层/渲染函数与原页完全同源；localStorage 键与云端后端也一致 ⇒ 两页数据互通：\n// 在原错题库录入或复习的题，这里立刻可见；反之亦然。',
+                 '// ⚠️ 测试版：数据层与错题库「隔离」—— 独立 localStorage 键 + 独立后端\n'
+                 '// （api_wrongbank_test.php / wrong_bank_data_test.json）。错题只进「错题库」与「AI错题本」，\n'
+                 '// 不进本测试版；这里录入的内容也不会回流到错题库。', '独立版: 数据互通注释纠正')
     s = re.sub(r'\n\s*&nbsp;\|&nbsp; <a href="index\.html"[^>]*>返回学习中心</a>', '', s, count=1)
     # API 用绝对同源路径，避免受 base/目录层级影响
     s = sub_once(s, "if (host === '192.168.3.88') return 'api_wrongbank.php';",
