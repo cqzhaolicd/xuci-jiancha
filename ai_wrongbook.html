@@ -817,6 +817,168 @@ function toast(msg,type='info'){
   setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300);},2500);
 }
 
+// ===================== 大模型接入（AI 一键生成错题内容）=====================
+// 设计：页面直连大模型 API。DeepSeek 支持 CORS，浏览器/安卓 WebView 都能直接调；
+//       安卓 WebView 另开了 allowUniversalAccessFromFileURLs，file:// 下同样可请求。
+// Key 来源：① 本机「AI 设置」自己填（存 localStorage，优先）② App 打包时注入的 AI_EMBED_KEY。
+const AI_LS='wb_ai_cfg';
+const AI_EMBED_KEY='';        // ← 手机 App 打包脚本注入真 Key；仓库里始终为空，避免 Key 进公开仓库
+const AI_DEFAULT={base:'https://api.deepseek.com/v1',model:'deepseek-flash',key:''};
+function _aiStored(){try{return JSON.parse(localStorage.getItem(AI_LS)||'{}')||{};}catch(e){return {};}}
+function aiCfg(){const c={...AI_DEFAULT,..._aiStored()};if(!c.key)c.key=AI_EMBED_KEY;return c;}
+function aiSaveCfg(o){localStorage.setItem(AI_LS,JSON.stringify(o));}
+function aiKeySource(){return _aiStored().key?'本机自填 Key':'App 内置 Key';}
+// 考点词表：从现有错题汇总高频标签，让 AI 选词与既有标签保持同一套
+function aiVocab(){
+  const d=loadData(),c={};
+  (d.questions||[]).forEach(q=>String(q.tags||'').replace(/，/g,',').split(',').forEach(t=>{t=t.trim();if(t)c[t]=(c[t]||0)+1;}));
+  const arr=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,45).map(x=>x[0]);
+  const base=['二次根式','勾股定理','全等三角形','等腰三角形','轴对称','一次函数','动点问题','分类讨论','绝对值化简','分母有理化','整体代换','英语词汇','拼写','时态','不定代词','机械运动','速度计算','运动学','相对运动','临界问题','质量与密度','光学','透镜','辅助线','几何证明'];
+  return [...new Set([...arr,...base])].slice(0,60).join('、');
+}
+const AI_SYS=`你是初中错题整理助手，服务对象是八年级学生。你只依据用户提供的题干、学生答案、来源工作。
+铁律：
+1) 绝不编造题干里没有的条件或数字；题干信息不足时，相应字段写「待核对：缺什么」，不要硬编。
+2) 凡是计算结果，先自己验算一遍再写进答案。
+3) 只输出 JSON（不要 markdown 代码块、不要解释），字段固定：
+{"correct_answer":"正确答案，含关键数值；多问用(1)(2)(3)分行",
+ "error_reason":"一句话错因，8-20字（如：公式应用错误/概念不清/计算错误/思路错误/拼写错误/辅助线不会作）",
+ "tags":["科目","章节或知识块","考点1","考点2"],
+ "difficulty":3,
+ "ana5":{"known":"A 已知条件：①②③ 列清题目给了什么（含隐含条件）",
+         "ask":"B 求解什么：目标量，多问分行",
+         "method":"C 做题思路：【第一步：…】【第二步：…】分步写从条件到答案的路子、用的定理公式",
+         "pitfall":"D 易错点：①②③ 列这题容易错的点，重点扣学生这次的错处",
+         "points":"E 知识点：①②③ 对应课本知识点/考点"}}
+风格：五维用 ①②③ 编号 + 【第X步：】分段；用 √ ² △ ∠ 等符号；中文；不写客套话。tags 优先从给定考点词表里选，最多5个。`;
+function aiUserMsg(rc){
+  return `科目：${rc.subject||'（未填）'}（${rc.grade||''}年级${rc.chapter?'，章节：'+rc.chapter:''}）
+来源/出处：${rc.source||'（未填）'}
+题干：${rc.content}
+学生答案（可能为空，是错的）：${rc.wrong||'（未填）'}
+${rc.image?'（本题另附题目照片；若题干信息不足，可在字段里写"待核对：需要看图确认"）':''}
+考点词表（优先从这些里选，没有合适的再自拟）：${aiVocab()}
+请按系统要求只输出 JSON。`;
+}
+async function aiChat(messages,cfg,maxTokens){
+  const ctrl=new AbortController(),tm=setTimeout(()=>ctrl.abort(),200000);
+  try{
+    const r=await fetch(String(cfg.base).replace(/\/+$/,'')+'/chat/completions',{
+      method:'POST',signal:ctrl.signal,
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.key},
+      body:JSON.stringify({model:cfg.model,messages,temperature:0.3,max_tokens:maxTokens||8000,response_format:{type:'json_object'}})
+    });
+    if(!r.ok){let msg='';try{msg=(await r.json()).error.message||'';}catch(e){}throw new Error('HTTP '+r.status+(msg?'：'+msg:''));}
+    return await r.json();
+  } finally{clearTimeout(tm);}
+}
+function aiParse(j){
+  const raw=(j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||'';
+  try{return JSON.parse(raw);}catch(e){}
+  const m=raw.match(/\{[\s\S]*\}/);        // 兜底：抠出第一个 JSON 块
+  if(m){try{return JSON.parse(m[0]);}catch(e){}}
+  throw new Error('模型没返回 JSON（'+(j.choices&&j.choices[0]&&j.choices[0].finish_reason||'?')+'）');
+}
+function aiStatusEl(){return document.getElementById('ai_status');}
+function setAiStatus(msg,err){const el=aiStatusEl();if(el){el.textContent=msg;el.style.color=err?'var(--danger)':'var(--text-light)';}}
+function aiReadForm(p){
+  const g=id=>{const el=document.getElementById(id);return el?el.value:'';};
+  const selText=id=>{const el=document.getElementById(id);return el&&el.selectedOptions&&el.selectedOptions[0]?el.selectedOptions[0].textContent:'';};
+  return {subject:selText(p+'_subject'),grade:g(p+'_grade'),chapter:selText(p+'_chapter'),
+          source:g(p+'_source'),content:g(p+'_content'),wrong:g(p+'_wrong'),
+          image:!!(p==='af'?addForm.image_path:null)||!!(document.getElementById(p+'_image')||{}).files};
+}
+// 把 AI 结果回填到表单（p='af' 录入表单 / p='ed' 编辑表单）
+function aiApply(o,p){
+  const set=(id,val)=>{const el=document.getElementById(id);if(el&&val!=null&&val!=='')el.value=val;};
+  const sel=(id,val)=>{const el=document.getElementById(id);if(!el||val==null)return;
+    const opt=[...el.options].find(x=>x.value===String(val)||x.textContent.trim()===String(val).trim());
+    if(opt)el.selectedIndex=opt.index;
+    else if(el.tagName==='SELECT'){const op=document.createElement('option');op.value=op.textContent=String(val);el.appendChild(op);el.value=op.value;}};
+  if(o.correct_answer)set(p+'_correct',String(o.correct_answer));
+  if(o.error_reason)sel(p+'_reason',String(o.error_reason));
+  if(o.tags)set(p+'_tags',Array.isArray(o.tags)?o.tags.join(','):String(o.tags));
+  if(o.difficulty)sel(p==='af'?'af_difficulty':'ed_diff',o.difficulty);
+  const a=o.ana5||{};
+  ANA5_DIMS.forEach(dm=>{const v=a[dm.k];if(v)set(p+'_ana5_'+dm.k,String(v).trim());});
+  // 同步进表单状态对象（保存时读的是它）
+  if(p==='af'){
+    if(o.correct_answer)addForm.correct_answer=String(o.correct_answer);
+    if(o.error_reason)addForm.error_reason=String(o.error_reason);
+    if(o.tags)addForm.tags=Array.isArray(o.tags)?o.tags.join(','):String(o.tags);
+    if(o.difficulty)addForm.difficulty=+o.difficulty;
+    addForm.ana5=Object.assign({},addForm.ana5||{},Object.fromEntries(ANA5_DIMS.map(dm=>[dm.k,String((a[dm.k]||'').trim())])));
+    addForm.ana5_ai=true;
+  }else{
+    window._aiFilledEdit=true;      // 编辑表单：保存时给题目打 AI 待核对标记
+  }
+}
+async function aiGenerate(p){
+  const cfg=aiCfg();
+  if(!cfg.key){setAiStatus('❌ 还没配置 API Key：点「⚙️ AI 设置」填一个（或用带 Key 的手机 App 版）',true);toast('请先配置 AI Key','error');return;}
+  const rc=aiReadForm(p);
+  if(!rc.content||!rc.content.trim()){setAiStatus('❌ 先填「题目内容」，AI 才能按模板生成',true);toast('先填题目内容','error');return;}
+  setAiStatus('⏳ AI 正在按错题模板生成（约 10-20 秒，请稍等）…');
+  const btn=document.getElementById('ai_btn');if(btn){btn.disabled=true;btn.style.opacity=.6;}
+  try{
+    const j=await aiChat([{role:'system',content:AI_SYS},{role:'user',content:aiUserMsg(rc)}],cfg,8000);
+    const o=aiParse(j);
+    aiApply(o,p);
+    const u=(j.usage&&j.usage.total_tokens)||0;
+    setAiStatus('✅ 已生成（答案 / 错因 / 考点 / 五维分析）请核对后保存 · '+cfg.model+' · '+u+' tokens');
+    toast('🤖 AI 已生成，请核对后保存','success');
+  }catch(e){
+    setAiStatus('❌ 生成失败：'+e.message+'（检查网络 / Key / 模型名）',true);
+    toast('AI 生成失败：'+e.message,'error');
+  }finally{if(btn){btn.disabled=false;btn.style.opacity=1;}}
+}
+// ---- AI 设置页 ----
+function renderAiConf(){
+  const c=aiCfg(),st=_aiStored();
+  return `<div class="card" style="max-width:680px;margin:0 auto">
+    <div class="card-title">⚙️ AI 设置（大模型接入）</div>
+    <div class="form-section">
+      <p style="font-size:.85rem;color:var(--text-light);line-height:1.8">
+        录入错题时点「🤖 AI 一键生成」，会按错题模板自动产出：<b>正确答案 · 错因 · 考点标签 · 难度 · 五维分析（A已知/B求解/C思路/D易错/E知识点）</b>。
+        <br>当前 Key 来源：<b>${aiKeySource()}</b>${AI_EMBED_KEY?'（App 已内置，可直接用；想换成自己的 Key 就填下面）':''}
+      </p>
+      <label class="form-label">API 地址</label>
+      <input class="form-control" id="ai_base" value="${c.base}" placeholder="https://api.deepseek.com/v1">
+      <label class="form-label" style="margin-top:.5rem">模型名</label>
+      <input class="form-control" id="ai_model" value="${c.model}" placeholder="deepseek-flash">
+      <label class="form-label" style="margin-top:.5rem">API Key（留空＝用 App 内置；只存本机，不上传）</label>
+      <input class="form-control" id="ai_key" type="password" value="${st.key||''}" placeholder="sk-…">
+      <div style="margin-top:.9rem;display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="aiConfSave()"><i class="fas fa-save"></i> 保存</button>
+        <button class="btn btn-outline" onclick="aiConfTest()"><i class="fas fa-plug"></i> 测试连接</button>
+        <button class="btn btn-outline" onclick="navigate('dashboard')">返回</button>
+      </div>
+      <div id="ai_test_result" style="margin-top:.7rem;font-size:.85rem;color:var(--text-light)"></div>
+      <p style="margin-top:1rem;font-size:.78rem;color:var(--text-light)">
+        💡 手机 App 版已内置 Key，装上就能用；网页版（NAS/隧道）需自己填一次 Key（存在浏览器本机）。<br>
+        💡 生成需要联网；生成内容会带「AI 生成 · 待核对」标记，核对无误后可去掉。
+      </p>
+    </div></div>`;
+}
+function aiConfSave(){
+  const g=id=>(document.getElementById(id)||{}).value||'';
+  aiSaveCfg({base:g('ai_base').trim(),model:g('ai_model').trim(),key:g('ai_key').trim()});
+  toast('✅ AI 设置已保存','success');
+  const c=aiCfg();
+  document.getElementById('ai_test_result').textContent='已保存：'+c.model+' @ '+c.base+'（'+(c.key?'Key 已就绪':'⚠️ 没有 Key')+'）';
+}
+async function aiConfTest(){
+  const el=document.getElementById('ai_test_result');
+  const g=id=>(document.getElementById(id)||{}).value||'';
+  const cfg={base:g('ai_base').trim(),model:g('ai_model').trim(),key:g('ai_key').trim()||AI_EMBED_KEY};
+  if(!cfg.key){el.textContent='⚠️ 还没有 Key';return;}
+  el.textContent='⏳ 正在测试…';
+  try{
+    const j=await aiChat([{role:'system',content:'只输出JSON'},{role:'user',content:'回一句 {"ok":true} 给我'}],cfg,500);
+    el.textContent='✅ 连接成功：'+cfg.model+'（'+(j.usage?j.usage.total_tokens+' tokens':'响应正常')+'）';
+  }catch(e){el.textContent='❌ 失败：'+e.message;}
+}
+
 // ===================== RENDER =====================
 function render(page,data){
   const app=document.getElementById('app');
@@ -829,6 +991,7 @@ function render(page,data){
   else if(page==='print-page') app.innerHTML=renderPrint();
   else if(page==='analysis') app.innerHTML=renderAnalysis();
   else if(page==='points') app.innerHTML=renderPoints();
+  else if(page==='aiconf') app.innerHTML=renderAiConf();
 }
 
 // ===================== 局部重绘辅助 =====================
@@ -901,6 +1064,19 @@ function renderAdd(){
   const chapters=d.chapters.filter(c=>c.subject_id===addForm.subject_id);
   return`<div class="card">
     <div class="card-title"><i class="fas fa-plus-circle" style="color:var(--primary)"></i> 录入新错题</div>
+    <div style="background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #ddd6fe;border-radius:10px;padding:.85rem 1rem;margin-bottom:1rem">
+      <div style="font-weight:700;color:#5b21b6;margin-bottom:.35rem">🤖 AI 一键生成（大模型）</div>
+      <div style="font-size:.83rem;color:#4c1d95;line-height:1.7">
+        填好<b>题目内容</b>（可再填「我的错误答案」更好）→ 点下面按钮，AI 按错题模板生成：
+        <b>正确答案 · 错因 · 考点标签 · 难度 · 五维分析</b>，生成后<b>可逐项修改</b>再保存。
+      </div>
+      <div style="margin-top:.6rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+        <button type="button" class="btn btn-primary btn-sm" id="ai_btn" onclick="aiGenerate('af')"><i class="fas fa-wand-magic-sparkles"></i> AI 一键生成</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="navigate('aiconf')"><i class="fas fa-cog"></i> AI 设置</button>
+        <span style="font-size:.75rem;color:#6b7280">需联网 · 约 10-20 秒</span>
+      </div>
+      <div id="ai_status" style="margin-top:.5rem;font-size:.82rem;color:var(--text-light)"></div>
+    </div>
     <form onsubmit="event.preventDefault();submitAdd()">
       <div class="form-section"><h6><i class="fas fa-info-circle"></i> 基本信息</h6>
         <div class="row">
@@ -954,6 +1130,10 @@ function renderAdd(){
             </select></div>
           <div><label class="form-label">知识点标签</label>
             <input class="form-control" id="af_tags" placeholder="逗号分隔" value="${addForm.tags}" onchange="addForm.tags=this.value"></div></div></div>
+      <div class="form-section"><h6>🧩 五维分析（可先空着，用上面的「AI 一键生成」自动产出）</h6>
+        ${ANA5_DIMS.map(dm=>`<div class="ana5-form-row"><label class="form-label"><span class="ana5-tag" style="background:${dm.color}">${dm.tag}</span></label>
+          <textarea class="form-control" rows="2" id="af_ana5_${dm.k}" placeholder="${dm.ph}">${esc5((addForm.ana5||{})[dm.k]||'')}</textarea></div>`).join('')}
+      </div>
       <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
         <button class="btn btn-primary px-4"><i class="fas fa-save"></i> 保存错题</button>
         <button class="btn btn-outline px-4 ms-2" type="button" onclick="addForm={subject_id:1,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:lastGrade()};refreshAdd()">重置</button></div>
@@ -991,16 +1171,17 @@ function submitAdd(){
   if(!content){toast('请输入题目内容','error');return;}
   const qid=genId();
   const chapId=addForm.chapter_id?parseInt(addForm.chapter_id):null;
-  d.questions.push({
-    id:qid,subject_id:addForm.subject_id,chapter_id:chapId,
+  const ana5={};ANA5_DIMS.forEach(dm=>{const el=document.getElementById('af_ana5_'+dm.k);if(el)ana5[dm.k]=el.value.trim();});
+  const q={id:qid,subject_id:addForm.subject_id,chapter_id:chapId,
     content,correct_answer:addForm.correct_answer,my_answer:addForm.my_answer,
     error_reason:addForm.error_reason,tags:addForm.tags,source:addForm.source,
     difficulty:addForm.difficulty,grade:(addForm.grade?+addForm.grade:lastGrade()),mastery:0,created_at:now(),updated_at:now(),
-    next_review:today(),review_count:0,image_path:addForm.image_path||'',answer_image_path:addForm.answer_image_path||'',flow:{},ana5:{}
-  });
+    next_review:today(),review_count:0,image_path:addForm.image_path||'',answer_image_path:addForm.answer_image_path||'',flow:{},ana5};
+  if(addForm.ana5_ai&&ANA5_DIMS.some(dm=>(ana5[dm.k]||'').length))q.ana5_ai=true;   // 打 AI 待核对标记
+  d.questions.push(q);
   saveData(d);
   setLastGrade(addForm.grade);
-  addForm={subject_id:addForm.subject_id,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:addForm.grade||lastGrade(),image_path:'',answer_image_path:''};
+  addForm={subject_id:addForm.subject_id,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:addForm.grade||lastGrade(),image_path:'',answer_image_path:'',ana5:{}};
   toast('✅ 错题已保存','success');
   navigate('detail',{qid});
 }
@@ -1081,6 +1262,15 @@ function renderDetail(data){
   if(data&&data.edit){          // 编辑态由页面参数决定（原 detailEditMode 全局开关不复位 → 打开错题直接进编辑）
     const ef={...q};
     return`<div class="card"><div class="card-title"><i class="fas fa-edit"></i> 编辑错题</div>
+      <div style="background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #ddd6fe;border-radius:10px;padding:.7rem .9rem;margin-bottom:1rem">
+        <div style="font-size:.85rem;color:#4c1d95;margin-bottom:.5rem">🤖 用大模型按错题模板补全/重写：正确答案 · 错因 · 考点 · 难度 · 五维分析</div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+          <button type="button" class="btn btn-primary btn-sm" id="ai_btn" onclick="aiGenerate('ed')"><i class="fas fa-wand-magic-sparkles"></i> AI 一键生成</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="navigate('aiconf')"><i class="fas fa-cog"></i> AI 设置</button>
+          <span style="font-size:.75rem;color:#6b7280">需联网 · 生成后可改</span>
+        </div>
+        <div id="ai_status" style="margin-top:.45rem;font-size:.82rem;color:var(--text-light)"></div>
+      </div>
       <form onsubmit="event.preventDefault();saveEdit(${q.id})">
         <div class="form-section"><h6>基本信息</h6>
           <div class="row">
@@ -1147,6 +1337,7 @@ function saveEdit(qid){
   q.error_reason=document.getElementById('ed_reason').value;
   q.tags=document.getElementById('ed_tags').value;
   q.ana5={};ANA5_DIMS.forEach(dm=>{const el=document.getElementById('ed_ana5_'+dm.k);if(el)q.ana5[dm.k]=el.value.trim();});
+  if(window._aiFilledEdit&&ANA5_DIMS.some(dm=>(q.ana5[dm.k]||'').length))q.ana5_ai=true;   // AI 生成 → 待核对标记
   q.source=document.getElementById('ed_source').value;
   q.difficulty=parseInt(document.getElementById('ed_diff').value);
   q.grade=parseInt(document.getElementById('ed_grade').value)||null;setLastGrade(q.grade);

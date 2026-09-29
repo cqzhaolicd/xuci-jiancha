@@ -156,6 +156,7 @@ def main():
         ("localStorage.setItem('wrong_bank_review_filter'", "localStorage.setItem('wrong_bank_review_filter_test'", '隔离: 筛选记忆(存)'),
         ("localStorage.getItem('wrong_bank_review_filter')", "localStorage.getItem('wrong_bank_review_filter_test')", '隔离: 筛选记忆(读)'),
         ("const REVIEW_SHOW_ANA5=true;", "const REVIEW_SHOW_ANA5=true;", '复习页显示五维分析（正式版+测试版均已开）'),
+        ("const AI_LS='wb_ai_cfg';", "const AI_LS='wb_ai_cfg_test';", '隔离: AI 设置(Key/模型)'),
     ]:
         s = sub_once(s, a, b, lab)
 
