@@ -11,6 +11,7 @@
 import os
 import re
 import sys
+import json
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(ROOT, 'wrong_bank.html')
@@ -282,6 +283,24 @@ def sub_once(text, old, new, label):
     return text.replace(old, new, 1)
 
 
+def tunnel_url():
+    """账号服务的外网 https 隧道地址（cloudflared quick tunnel）。
+    优先读状态文件，其次读隧道日志；取不到就返回 ''（门禁自动只走内网 + App）。"""
+    try:
+        st = json.load(open(os.path.expanduser('~/.hermes/state/tunnel_urls.json'), encoding='utf-8'))
+        u = (st.get('aiwrongbook') or '').strip()
+        if u.startswith('https://'):
+            return u.rstrip('/')
+    except Exception:
+        pass
+    try:
+        txt = open('/tmp/cf_aiwrongbook.log', encoding='utf-8', errors='ignore').read()
+        m = re.findall(r'https://[a-z0-9-]+\.trycloudflare\.com', txt)
+        return m[-1].rstrip('/') if m else ''
+    except Exception:
+        return ''
+
+
 def main():
     h = open(SRC, encoding='utf-8').read()
     print(f'源: {SRC}  {len(h)} 字符')
@@ -341,7 +360,11 @@ def main():
     # 账号服务跑在家里的私有云 iStoreOS(192.168.3.3:8090)，只作用于本测试版页面
     s = sub_once(s, '<base href="/xuci-jiancha/">',
                  '<base href="/xuci-jiancha/">' + AUTH_CSS, '登录门禁: 样式')
-    s = sub_once(s, '</body>', AUTH_OVERLAY + AUTH_JS + '\n</body>', '登录门禁: 登录页 + 脚本')
+    tun = tunnel_url()
+    auth_js = AUTH_JS if not tun else AUTH_JS.replace(
+        'var REMOTE_APIS=[];', 'var REMOTE_APIS=[' + json.dumps(tun) + '];')
+    print(f'  · 外网登录通道: {tun or "（无隧道，仅内网 + App 可用）"}')
+    s = sub_once(s, '</body>', AUTH_OVERLAY + auth_js + '\n</body>', '登录门禁: 登录页 + 脚本')
 
     os.makedirs(STANDALONE_DIR, exist_ok=True)
     open(STANDALONE, 'w', encoding='utf-8').write(s)
@@ -352,6 +375,7 @@ def main():
          'AUTH_GATE_V1' in s and 'var ABG=' in s and 'wb_auth_token_test' in s
          and s.count('id="abGate"') == 1),
         ('独立版: 无「返回学习中心」链接', '返回学习中心' not in s),
+        ('独立版: 外网登录通道已写入', bool(tun) and (tun in s)),
         ('独立版: 无 index.html 外链', 'href="index.html"' not in s),
         ('独立版: base 已设', s.count('<base href="/xuci-jiancha/">') == 1),
         ('独立版: 带 复习要点/筛选', 'function renderPoints' in s and 'function rvfPanel' in s),
