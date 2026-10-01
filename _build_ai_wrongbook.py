@@ -378,9 +378,18 @@ var ABG=(function(){
   }
   function placeChip(){
     var c=$('abUserChip');if(!c)return;
-    // 搬进顶部紫色导航栏第一行（品牌 + 三个页签那行）的右侧 → 右上角、随导航栏吸顶
-    var host=document.querySelector('.navbar .container > div')||document.querySelector('.navbar .container');
-    if(host && c.parentNode!==host) host.appendChild(c);
+    var mn=$('mainNav'); if(!mn||!mn.parentNode) return;
+    // 第二行包一层 flex 行：左边是 #mainNav（首页/录入/复习/打印/分析），右边是账号胶囊
+    var row=mn.parentNode.querySelector('.ab-navrow');
+    if(!row){
+      row=document.createElement('div'); row.className='ab-navrow';
+      row.style.cssText='display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;'
+                       +'border-top:1px solid rgba(255,255,255,.18);padding-top:.35rem';
+      mn.parentNode.insertBefore(row,mn);
+      row.appendChild(mn);
+      mn.style.borderTop='none'; mn.style.paddingTop='0';
+    }
+    if(c.parentNode!==row) row.appendChild(c);
   }
   function chip(u){
     var c=$('abUserChip');if(!c)return;
