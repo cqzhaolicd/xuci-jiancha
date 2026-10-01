@@ -100,6 +100,173 @@ navigate = function(page, data){
 // ===================== INIT ====================="""
 
 
+AUTH_CSS = """<style>
+/* ===== AI错题本-测试版 · 登录门禁 ===== */
+.ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
+  display:flex;align-items:center;justify-content:center;padding:18px}
+.ab-gate.ab-hide{display:none}
+.ab-card{background:#fff;border-radius:18px;padding:22px 20px;width:100%;max-width:360px;
+  box-shadow:0 18px 50px rgba(0,0,0,.25)}
+.ab-logo{font-size:1.12rem;font-weight:700;color:#1a202c;text-align:center}
+.ab-sub{font-size:.82rem;color:#718096;text-align:center;margin:.25rem 0 1rem}
+.ab-tabs{display:flex;gap:.4rem;margin-bottom:.9rem}
+.ab-tab{flex:1;background:#f0f2f5;color:#4a5568;border:none;padding:.5rem;border-radius:10px;
+  font-weight:600;font-size:.9rem;cursor:pointer;font-family:inherit}
+.ab-tab.active{background:#667eea;color:#fff}
+.ab-card input{width:100%;padding:.62rem .8rem;border:1.5px solid #e2e8f0;border-radius:10px;
+  font-size:.92rem;margin-bottom:.55rem;font-family:inherit;outline:none}
+.ab-card input:focus{border-color:#667eea}
+.ab-btn{width:100%;background:#667eea;color:#fff;border:none;padding:.68rem;border-radius:10px;
+  font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:.2rem}
+.ab-btn:disabled{opacity:.6;cursor:not-allowed}
+.ab-msg{font-size:.82rem;min-height:1.15rem;margin-top:.6rem;text-align:center}
+.ab-msg.err{color:#e53e3e}.ab-msg.ok{color:#38a169}
+.ab-foot{font-size:.72rem;color:#a0aec0;text-align:center;margin-top:.8rem;line-height:1.5}
+.ab-chip{position:fixed;right:10px;bottom:10px;z-index:9998;background:rgba(26,32,44,.82);color:#fff;
+  font-size:.75rem;padding:.3rem .6rem;border-radius:999px;display:flex;gap:.5rem;align-items:center}
+.ab-chip a{color:#90cdf4;cursor:pointer;text-decoration:underline}
+.ab-off{background:#ecc94b;color:#1a202c;border-radius:999px;padding:.05rem .45rem;font-size:.7rem}
+</style>"""
+
+AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
+<div id="abGate" class="ab-gate">
+  <div class="ab-card">
+    <div class="ab-logo">🤖 AI错题本-测试版</div>
+    <div class="ab-sub">请先登录后再使用</div>
+    <div class="ab-tabs">
+      <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
+      <button id="abTabReg" class="ab-tab" onclick="ABG.tab('reg')">注册</button>
+    </div>
+    <div id="abPaneLogin">
+      <input id="abLoginUser" placeholder="用户名 / 手机号" autocomplete="username">
+      <input id="abLoginPass" type="password" placeholder="密码" autocomplete="current-password">
+      <button class="ab-btn" id="abLoginBtn" onclick="ABG.login()">登 录</button>
+    </div>
+    <div id="abPaneReg" style="display:none">
+      <input id="abRegUser" placeholder="用户名（3-32位字母数字）或手机号">
+      <input id="abRegPass" type="password" placeholder="密码（至少 6 位）">
+      <input id="abRegPass2" type="password" placeholder="确认密码">
+      <input id="abRegInvite" placeholder="邀请码（无则留空）">
+      <button class="ab-btn" id="abRegBtn" onclick="ABG.register()">注册并登录</button>
+    </div>
+    <div id="abMsg" class="ab-msg"></div>
+    <div class="ab-foot">账号服务：家里的私有云 iStoreOS · 数据独立存储</div>
+  </div>
+</div>
+<div id="abUserChip" class="ab-chip" style="display:none">
+  <span id="abUserName"></span><span id="abOffTag" class="ab-off" style="display:none">离线</span>
+  <a onclick="ABG.logout()">退出</a>
+</div>"""
+
+AUTH_JS = """<script>
+/* ===== AI错题本-测试版 · 登录门禁（独立于页面逻辑，前缀 ABG / ab*） ===== */
+var ABG=(function(){
+  var TOKEN_KEY='wb_auth_token_test', USER_KEY='wb_auth_user_test';
+  // 内网私有云（iStoreOS）认证服务；如需外网访问，把 https 隧道地址填到 REMOTE_APIS
+  var LAN_APIS=['http://192.168.3.3:8090'];
+  var REMOTE_APIS=[];
+  var api=null, offline=false;
+
+  function $(id){return document.getElementById(id)}
+  function msg(t,ok){var e=$('abMsg');e.textContent=t;e.className='ab-msg '+(ok?'ok':'err')}
+  function expireOf(t){try{var p=JSON.parse(atob(t.split('.')[0].replace(/-/g,'+').replace(/_/g,'/')));return (p.exp||0)*1000}catch(e){return 0}}
+
+  function candidates(){
+    var https=location.protocol==='https:';
+    // https 页面会被浏览器拦截 http 请求（混合内容），故 https 下只走 https 隧道
+    return https ? REMOTE_APIS.slice() : LAN_APIS.concat(REMOTE_APIS);
+  }
+  function request(path,body,token){
+    var list=candidates();
+    if(!list.length)return Promise.reject(new Error('no-endpoint'));
+    var base=(api&&list.indexOf(api)>=0)?api:list[0];
+    var h={};if(body)h['Content-Type']='application/json';if(token)h['Authorization']='Bearer '+token;
+    return fetch(base+path,{method:body?'POST':'GET',headers:h,body:body?JSON.stringify(body):undefined})
+      .then(function(r){
+        if(r.status===401||r.status===403){api=base}
+        else if(r.ok){api=base}
+        return r.json().then(function(j){return {status:r.status,json:j}});
+      });
+  }
+  function show(){var g=$('abGate');if(g)g.classList.remove('ab-hide');document.documentElement.style.overflow='hidden'}
+  function hide(){var g=$('abGate');if(g)g.classList.add('ab-hide');document.documentElement.style.overflow=''}
+  function chip(u){
+    var c=$('abUserChip');if(!c)return;
+    if(!u){c.style.display='none';return}
+    $('abUserName').textContent='👤 '+(u.display||u.username);
+    $('abOffTag').style.display=offline?'':'none';
+    c.style.display='flex';
+  }
+  function save(token,user){
+    try{localStorage.setItem(TOKEN_KEY,token);localStorage.setItem(USER_KEY,JSON.stringify(user))}catch(e){}
+  }
+  function clear(){try{localStorage.removeItem(TOKEN_KEY);localStorage.removeItem(USER_KEY)}catch(e){}}
+
+  function login(){
+    var u=$('abLoginUser').value.trim(),p=$('abLoginPass').value;
+    if(!u||!p)return msg('请填写账号和密码');
+    $('abLoginBtn').disabled=true;msg('登录中…',true);
+    request('/api/login',{username:u,password:p}).then(function(r){
+      $('abLoginBtn').disabled=false;
+      if(r.json&&r.json.ok){save(r.json.token,r.json.user);afterAuth(r.json.user);msg('登录成功',true)}
+      else msg((r.json&&r.json.error)||'登录失败');
+    }).catch(function(){ $('abLoginBtn').disabled=false; msg('连不上家里的服务器：请确认手机连着家里 WiFi（或稍后再试）') });
+  }
+  function register(){
+    var u=$('abRegUser').value.trim(),p=$('abRegPass').value,p2=$('abRegPass2').value,iv=$('abRegInvite').value.trim();
+    if(!u)return msg('请填写用户名或手机号');
+    if(p.length<6)return msg('密码至少 6 位');
+    if(p!==p2)return msg('两次输入的密码不一致');
+    $('abRegBtn').disabled=true;msg('注册中…',true);
+    request('/api/register',{username:u,password:p,invite:iv}).then(function(r){
+      $('abRegBtn').disabled=false;
+      if(r.json&&r.json.ok){save(r.json.token,r.json.user);afterAuth(r.json.user);msg('注册成功',true)}
+      else msg((r.json&&r.json.error)||'注册失败');
+    }).catch(function(){ $('abRegBtn').disabled=false; msg('连不上家里的服务器：注册请连接家里 WiFi') });
+  }
+  function afterAuth(user){
+    offline=false;chip(user);hide();
+    window.setTimeout(function(){
+      request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
+        if(r.status===401){clear();chip(null);show();msg('登录已失效，请重新登录')}
+        else{offline=false;chip(user)}
+      }).catch(function(){offline=true;chip(user)});
+    },1500);
+  }
+  function logout(){
+    if(!confirm('确定退出登录？'))return;
+    clear();chip(null);api=null;
+    var g=$('abGate');if(g)g.classList.remove('ab-hide');
+    $('abLoginUser').value='';$('abLoginPass').value='';show();
+  }
+  function tab(which){
+    var isLogin=which==='login';
+    $('abTabLogin').className='ab-tab'+(isLogin?' active':'');
+    $('abTabReg').className='ab-tab'+(isLogin?'':' active');
+    $('abPaneLogin').style.display=isLogin?'':'none';
+    $('abPaneReg').style.display=isLogin?'none':'';
+    msg('',true);
+  }
+  function init(){
+    var tok=null,user=null;
+    try{tok=localStorage.getItem(TOKEN_KEY);user=JSON.parse(localStorage.getItem(USER_KEY)||'null')}catch(e){}
+    if(tok&&expireOf(tok)>Date.now()){
+      // 有未过期凭证 ⇒ 先进去（离线可用），再后台向服务器核实
+      afterAuth(user||{username:'已登录'});
+    }else{
+      show();
+      if(location.protocol==='https:'&&!REMOTE_APIS.length)
+        msg('当前是 https 网页访问，浏览器会拦截内网请求；请用 App 或家里的内网地址登录');
+    }
+    $('abLoginPass').addEventListener('keydown',function(e){if(e.key==='Enter')login()});
+    $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+  return {login:login,register:register,logout:logout,tab:tab,init:init};
+})();
+</script>"""
+
+
 def sub_once(text, old, new, label):
     if old not in text:
         print(f'  ✗ 锚点未找到: {label}', file=sys.stderr)
@@ -166,11 +333,20 @@ def main():
     n_builtin = s[s.index('const BUILTIN_QUESTIONS='):s.index('function applyBuiltinQuestions')].count('key:')
     print(f'  · 测试版: 保留内置错题快照 {n_builtin} 条（以后新增的错题不会进入测试版）')
 
+    # ---------- 登录门禁（老板 2026-10-01）：测试版必须先注册/登录才能使用 ----------
+    # 账号服务跑在家里的私有云 iStoreOS(192.168.3.3:8090)，只作用于本测试版页面
+    s = sub_once(s, '<base href="/xuci-jiancha/">',
+                 '<base href="/xuci-jiancha/">' + AUTH_CSS, '登录门禁: 样式')
+    s = sub_once(s, '</body>', AUTH_OVERLAY + AUTH_JS + '\n</body>', '登录门禁: 登录页 + 脚本')
+
     os.makedirs(STANDALONE_DIR, exist_ok=True)
     open(STANDALONE, 'w', encoding='utf-8').write(s)
     ok = True
     chips = [
         ('独立版: 名称=AI错题本-测试版', s.count('AI错题本-测试版') >= 3),
+        ('独立版: 登录门禁已注入（需注册/登录后才能用）',
+         'AUTH_GATE_V1' in s and 'var ABG=' in s and 'wb_auth_token_test' in s
+         and s.count('id="abGate"') == 1),
         ('独立版: 无「返回学习中心」链接', '返回学习中心' not in s),
         ('独立版: 无 index.html 外链', 'href="index.html"' not in s),
         ('独立版: base 已设', s.count('<base href="/xuci-jiancha/">') == 1),
