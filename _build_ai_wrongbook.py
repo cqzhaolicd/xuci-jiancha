@@ -101,6 +101,13 @@ navigate = function(page, data){
 // ===================== INIT ====================="""
 
 
+def _count_builtin(txt):
+    """数内置快照里有几道题（兼容 JS 的 key:'x' 与 JSON 的 "key":"x" 两种写法）。"""
+    a = txt.index('const BUILTIN_QUESTIONS=')
+    b = txt.index('function applyBuiltinQuestions', a)
+    return len(re.findall(r'[{\s]"?key"?\s*:', txt[a:b]))
+
+
 AUTH_CSS = """<style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -144,6 +151,13 @@ AUTH_CSS = """<style>
 .ab-bk{display:flex;gap:.5rem}
 .ab-bk .ab-btn2{margin-top:.2rem;font-size:.85rem;padding:.55rem .4rem}
 .ab-trial.lock{background:#fed7d7;color:#c53030;cursor:pointer}
+/* 账号胶囊与「错题本/三层训练/复习要点」同一行、靠最右：窄屏收紧尺寸，保证同排仍放得下 */
+.top-tabs{flex:0 0 auto}
+@media (max-width:520px){
+  .top-tab{padding:.16rem .32rem !important;font-size:.66rem !important;gap:.15rem !important}
+  .ab-chip{font-size:.6rem !important;padding:.1rem .34rem !important;gap:.2rem !important;margin-left:auto !important}
+  .ab-chip .ab-trial,.ab-chip .ab-off{font-size:.58rem;padding:.01rem .26rem;border-radius:999px}
+}
 </style>"""
 
 AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
@@ -393,8 +407,16 @@ var ABG=(function(){
   }
   function placeChip(){
     var c=$('abUserChip');if(!c)return;
+    // 【老板 2026-10-01】账号要跟「错题本/三层训练/复习要点」这排标签同一行、靠最右。
+    var tabs=$('topTabs');
+    if(tabs&&tabs.parentNode){
+      var host=tabs.parentNode;
+      host.style.flexWrap='wrap';                 // 极窄屏才换行；换行后依然靠右
+      if(c.parentNode!==host) host.appendChild(c);
+      return;
+    }
     var mn=$('mainNav'); if(!mn||!mn.parentNode) return;
-    // 第二行包一层 flex 行：左边是 #mainNav（首页/录入/复习/打印/分析），右边是账号胶囊
+    // 兜底（找不到标签行时）：原来的做法——第二行包一层 flex 行，右边放账号胶囊
     var row=mn.parentNode.querySelector('.ab-navrow');
     if(!row){
       row=document.createElement('div'); row.className='ab-navrow';
@@ -674,11 +696,88 @@ def main():
     ]:
         s = sub_once(s, a, b, lab)
 
+    # ---------- 测试版：新账号/新设备从「空白 + 例题示范」开始（老板 2026-10-01）----------
+    # ⚠️ 只替换【测试版 / App】的内置快照；学习中心正式页 ai_wrongbook.html（若琳在用）一律不动。
+    # ⚠️ 这里刻意不写若琳的真实题目、不带任何 uploads 图片；每道题都填好五维分析与三层训练，
+    #    当「怎么用这个 App」的样板。用户可长按/编辑自行删除。
+    DEMO_QUESTIONS = [
+        {"key": "demo_math_eq_1", "subject": "数学", "chapter": "一元一次方程（解方程）",
+         "content": "解方程：3(x − 2) + 1 = 2x − 5，则 x = ______。\n\n（示例题：可自行编辑或删除）",
+         "correct_answer": "x = 0\n\n【解析】去括号：3x − 6 + 1 = 2x − 5\n左边合并：3x − 5 = 2x − 5\n移项：3x − 2x = −5 + 5\n所以 x = 0。\n（检验：左边 3(0−2)+1 = −5，右边 0−5 = −5，两边相等 ✓）",
+         "my_answer": "x = 10（去括号时把 −6 写成了 +6）",
+         "error_reason": "计算失误", "tags": "示例,数学,一元一次方程,去括号", "source": "练习", "difficulty": 1,
+         "flow": {"known": "方程 3(x − 2) + 1 = 2x − 5", "target": "求 x 的值",
+                  "plan": "去括号 → 合并同类项 → 移项 → 系数化为 1",
+                  "check": "把 x = 0 代回原方程两边验算，左边 = 右边 ✓"},
+         "ana5": {"known": "一个含 x 的一元一次方程；括号外有系数 3",
+                  "ask": "求 x 的值",
+                  "method": "先去括号（注意括号内每一项都要乘 3、符号要跟着变），再把含 x 的项移到一边、常数移到另一边，最后系数化为 1",
+                  "pitfall": "去括号时 +1 没变号、−6 写成 +6；移项忘记变号",
+                  "points": "一元一次方程的解法步骤：去括号 → 移项 → 合并同类项 → 系数化为 1；等式两边同加同减仍然相等"}},
+        {"key": "demo_math_square_1", "subject": "数学", "chapter": "整式乘法（完全平方公式）",
+         "content": "计算：(2a − 3b)² = ______。\n\n（示例题：可自行编辑或删除）",
+         "correct_answer": "4a² − 12ab + 9b²\n\n【解析】完全平方公式 (x − y)² = x² − 2xy + y²\n取 x = 2a、y = 3b：\n(2a)² − 2·(2a)·(3b) + (3b)² = 4a² − 12ab + 9b²。\n（口诀：首平方、尾平方，首尾两倍中间放，中间符号看两个数的符号）",
+         "my_answer": "4a² − 9b²（漏掉了中间项 −12ab）",
+         "error_reason": "公式记错", "tags": "示例,数学,完全平方公式,整式乘法", "source": "练习", "difficulty": 2,
+         "flow": {"known": "(2a − 3b)²，两个数相减后平方", "target": "展开成多项式",
+                  "plan": "套完全平方公式 (x − y)² = x² − 2xy + y²，分别代入 x = 2a、y = 3b",
+                  "check": "取 a = b = 1 验算：(2 − 3)² = 1，而 4 − 12 + 9 = 1 ✓"},
+         "ana5": {"known": "(2a − 3b)²，即 (2a − 3b)(2a − 3b)",
+                  "ask": "把这个式子展开",
+                  "method": "用完全平方公式 (x − y)² = x² − 2xy + y² 直接展开，比逐项相乘快且不易错",
+                  "pitfall": "最常见的是漏掉中间项 2xy，把 (a−b)² 错写成 a² − b²；另外别忘 (2a)² = 4a²",
+                  "points": "完全平方公式；平方差公式 (x+y)(x−y) = x² − y² 的区别——前者三项、后者两项"}},
+        {"key": "demo_phys_speed_1", "subject": "物理", "chapter": "机械运动（速度计算）",
+         "content": "小明骑自行车 3 min 行驶了 900 m，他的平均速度是 ______ m/s，合 ______ km/h。\n\n（示例题：可自行编辑或删除）",
+         "correct_answer": "5 m/s；18 km/h\n\n【解析】先统一单位：3 min = 3 × 60 s = 180 s。\nv = s / t = 900 m ÷ 180 s = 5 m/s。\n单位换算：1 m/s = 3.6 km/h ⇒ 5 × 3.6 = 18 km/h。",
+         "my_answer": "300 m/s（时间直接用了 3，没有换算成秒）",
+         "error_reason": "审题不清", "tags": "示例,物理,机械运动,速度计算,单位换算", "source": "练习", "difficulty": 2,
+         "flow": {"known": "路程 s = 900 m，时间 t = 3 min", "target": "求平均速度（m/s，并换算成 km/h）",
+                  "plan": "先把时间换算成秒 → 用 v = s/t 求 m/s → 再乘 3.6 换成 km/h",
+                  "check": "5 m/s × 180 s = 900 m ✓ 与题目路程一致"},
+         "ana5": {"known": "路程 900 m；时间 3 min（单位不是秒）",
+                  "ask": "平均速度，且要两种单位",
+                  "method": "速度公式 v = s / t；代入前必须统一单位，时间换成秒",
+                  "pitfall": "直接用分钟代入算出 300 m/s；换算时乘除弄反（应乘 3.6 把 m/s 换成 km/h）",
+                  "points": "速度的定义式 v = s/t；1 m/s = 3.6 km/h；平均速度不是各段速度的平均值"}},
+        {"key": "demo_eng_verb_1", "subject": "英语", "chapter": "一般现在时（主谓一致）",
+         "content": "用括号中所给词的适当形式填空：\nMy sister often ______ (go) to the library on Sundays.\n\n（示例题：可自行编辑或删除）",
+         "correct_answer": "goes\n\n【解析】主语 My sister 是第三人称单数，句子为一般现在时，动词要用第三人称单数形式：go → goes。\n（标志词 often / usually / every day / on Sundays 都提示一般现在时；主语为 he/she/it 或单个的人时，动词加 -s/-es。）",
+         "my_answer": "go（主语是三单，动词忘了加 -es）",
+         "error_reason": "概念不清", "tags": "示例,英语,一般现在时,主谓一致,三单", "source": "练习", "difficulty": 1,
+         "flow": {"known": "主语 My sister；时间状语 often / on Sundays；动词 go", "target": "把 go 变成正确形式",
+                  "plan": "先判断时态（often/on Sundays → 一般现在时）→ 再看主语人称（My sister → 三单）→ 动词加 -es",
+                  "check": "句子读一遍：My sister often goes to the library. 主谓一致 ✓"},
+         "ana5": {"known": "主语 My sister（第三人称单数）；频度副词 often；时间状语 on Sundays",
+                  "ask": "用 go 的适当形式填空",
+                  "method": "先定时态（一般现在时），再定形式（主语三单 → 动词加 -s/-es）",
+                  "pitfall": "只看动词不看主语，直接写 go；以 o/s/x/ch/sh 结尾要加 -es（go → goes）",
+                  "points": "一般现在时的用法与标志词；第三人称单数动词变化规则"}},
+        {"key": "demo_chin_idiom_1", "subject": "语文", "chapter": "字音字形（成语辨析）",
+         "content": "下列词语中，没有错别字的一项是（　　）\nA. 骸人听闻　B. 人声鼎沸　C. 锋芒必露　D. 翻来复去\n\n（示例题：可自行编辑或删除）",
+         "correct_answer": "B（人声鼎沸）\n\n【解析】逐项改正：\nA. 「骸人听闻」应为「骇人听闻」（骇：惊吓、震惊）；\nC. 「锋芒必露」应为「锋芒毕露」（毕：完全）；\nD. 「翻来复去」应为「翻来覆去」（覆：翻过来）。\n只有 B「人声鼎沸」书写正确——鼎沸：像锅里的水沸腾一样，形容人声嘈杂。",
+         "my_answer": "C（形近字分不清，「必」与「毕」混用）",
+         "error_reason": "概念不清", "tags": "示例,语文,字形,成语,形近字", "source": "练习", "difficulty": 2,
+         "flow": {"known": "四个成语，其中三项含错别字", "target": "找出没有错别字的一项",
+                  "plan": "逐项回忆成语本义，用字义反推正确写法，排除错项",
+                  "check": "把改正后的四个成语写一遍，确认字形无误"},
+         "ana5": {"known": "四个成语选项，只有一项完全正确",
+                  "ask": "选出书写没有错误的一项",
+                  "method": "逐字理解成语含义：字义对了，字形就错不了（骇=震惊、毕=完全、覆=翻转）",
+                  "pitfall": "只凭印象读通就下判断；形近字（骸/骇、必/毕、复/覆）容易混",
+                  "points": "常见成语的正确写法；形近字辨析；成语的意思与感情色彩"}},
+    ]
+    _demo_js = json.dumps(DEMO_QUESTIONS, ensure_ascii=False, indent=0)
+    _a = s.index('const BUILTIN_QUESTIONS=[')
+    _b = s.index('\n];', _a) + len('\n];')
+    s = s[: _a] + 'const BUILTIN_QUESTIONS=' + _demo_js + ';' + s[_b:]
+    print(f'  · 测试版: 内置快照已替换为 {len(DEMO_QUESTIONS)} 道通用例题（新账号从空白+例题开始；正式页不受影响）')
+
     # ---------- 测试版：错题保持原样，只是「以后新增的不进来」（老板 2026-09-27）----------
     # 「新增不进测试版」由「键隔离 + 后端隔离」天然保证：生产页面录入只写生产库，测试版后端是独立文件，拉不到新题。
     # BUILTIN_QUESTIONS 是**静态快照**（不随生产库变化）⇒ 保留，不要清空（老板：「测试版内的错题就不动了」）。
-    n_builtin = s[s.index('const BUILTIN_QUESTIONS='):s.index('function applyBuiltinQuestions')].count('key:')
-    print(f'  · 测试版: 保留内置错题快照 {n_builtin} 条（以后新增的错题不会进入测试版）')
+    n_builtin = _count_builtin(s)
+    print(f'  · 测试版: 内置快照（通用例题）{n_builtin} 条（新账号从空白+例题开始；正式页不受影响）')
 
     # ---------- 登录门禁（老板 2026-10-01）：测试版必须先注册/登录才能使用 ----------
     # 账号服务跑在家里的私有云 iStoreOS(192.168.3.3:8090)，只作用于本测试版页面
@@ -731,7 +830,7 @@ def main():
         print(('  ✓ ' if cond else '  ✗ ') + name)
         ok = ok and cond
     n_q = len(re.findall(r'\{q:', h)) + h.count('content:')
-    print(f'  参考：BUILTIN 题数 = {h[h.index("const BUILTIN_QUESTIONS=["):h.index("];", h.index("const BUILTIN_QUESTIONS=["))].count("key:")}')
+    print(f'  参考：BUILTIN 题数 = {_count_builtin(h)}')
     return 0 if ok else 2
 
 
