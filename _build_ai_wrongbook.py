@@ -231,12 +231,17 @@ var ABG=(function(){
   }
   function afterAuth(user){
     offline=false;chip(user);hide();
-    window.setTimeout(function(){
-      request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
-        if(r.status===401){clear();chip(null);show();msg('登录已失效，请重新登录')}
-        else{offline=false;chip(user)}
-      }).catch(function(){offline=true;chip(user)});
-    },1500);
+    window.setTimeout(function(){verify(user,0)},1500);
+  }
+  // 后台核实凭证；偶发一次失败先重试，别在刚登录成功时就闪「离线」
+  function verify(user,retry){
+    request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
+      if(r.status===401){clear();chip(null);show();msg('登录已失效，请重新登录')}
+      else{offline=false;chip(user)}
+    }).catch(function(){
+      if(retry<1){window.setTimeout(function(){verify(user,retry+1)},3000);return}
+      offline=true;chip(user);
+    });
   }
   function logout(){
     if(!confirm('确定退出登录？'))return;
