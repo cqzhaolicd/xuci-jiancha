@@ -141,6 +141,8 @@ AUTH_CSS = """<style>
 .ab-rad label{display:flex;align-items:center;gap:.35rem;cursor:pointer}
 .ab-btn2{width:100%;background:#edf2f7;color:#2d3748;border:none;padding:.6rem;border-radius:10px;
   font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:.5rem}
+.ab-bk{display:flex;gap:.5rem}
+.ab-bk .ab-btn2{margin-top:.2rem;font-size:.85rem;padding:.55rem .4rem}
 .ab-trial.lock{background:#fed7d7;color:#c53030;cursor:pointer}
 </style>"""
 
@@ -191,6 +193,12 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
       <label><input type="radio" name="abPfGender" value="男"> 男</label>
       <label><input type="radio" name="abPfGender" value="女"> 女</label>
     </div>
+    <label class="ab-lb">数据备份（换手机 / 重装前建议先导出）</label>
+    <div class="ab-bk">
+      <button class="ab-btn2" onclick="ABG.exportData()">⬇ 导出备份</button>
+      <button class="ab-btn2" onclick="ABG.importData()">⬆ 导入恢复</button>
+    </div>
+    <div id="abBkMsg" class="ab-msg" style="min-height:1.15rem;font-size:.78rem;color:#4a5568;text-align:left"></div>
     <div id="abPfMsg" class="ab-msg" style="min-height:1.2em"></div>
     <button class="ab-btn" onclick="ABG.saveProfile()">保存</button>
     <button class="ab-btn2" onclick="ABG.closeProfile()">以后再说</button>
@@ -226,6 +234,13 @@ AUTH_JS = """<script>
 /* ===== AI错题本-测试版 · 登录门禁（独立于页面逻辑，前缀 ABG / ab*） ===== */
 var ABG=(function(){
   var TOKEN_KEY='wb_auth_token_test', USER_KEY='wb_auth_user_test';
+  // 【账号隔离】把当前登录账号交给页面云同步层 → 服务器按账号分文件存，互不相通
+  window.__wbSyncUser=function(){
+    try{var u=JSON.parse(localStorage.getItem(USER_KEY)||'null');return (u&&u.username)||''}catch(e){return ''}
+  };
+  // 记录「本机数据属于哪个账号」：换账号登录时提示，避免把上一个账号的数据推到新账号云端
+  var NL=String.fromCharCode(10);
+  OWNER_KEY='wb_test_owner_user';
   // 内网私有云（iStoreOS）认证服务；如需外网访问，把 https 隧道地址填到 REMOTE_APIS
   var LAN_APIS=['http://192.168.3.3:8090'];
   var REMOTE_APIS=[];
@@ -429,6 +444,49 @@ var ABG=(function(){
   function afterAuth(user,a){
     offline=false;chip(user);hide();if(a)applyAccess(a);
     window.setTimeout(function(){verify(user,0)},1500);
+    afterAuthSync(user);
+  }
+  // 【账号隔离】登录后：① 首次登录记住「本机数据归属账号」；② 换账号则先问（防止把上一个
+  //   账号的数据推到新账号云端）；③ 同账号则静默再同步一次，确保拿到本账号的云端数据。
+  function afterAuthSync(user){
+    var uname=(user&&user.username)||'';
+    if(!uname)return;
+    var owner='';
+    try{owner=localStorage.getItem(OWNER_KEY)||''}catch(e){}
+    if(!owner){
+      try{localStorage.setItem(OWNER_KEY,uname)}catch(e){}
+    }else if(owner!==uname){
+      var go=confirm('⚠️ 本机数据属于账号 '+owner+NL+'当前登录：'+uname+NL+NL+'【确定】清空本机数据，改用当前账号的云端数据'+NL+'（建议先用「数据备份 → 导出备份」留底）'+NL+NL+'【取消】暂不切换：本机保持现状，也不会把这份数据传到当前账号云端');
+      if(go){
+        try{
+          localStorage.removeItem('wrong_bank_data_test');            // 测试版主数据键（仅本页）
+          localStorage.removeItem('wrong_bank_builtin_applied_test');  // 让内置快照按新账号重新判定
+          localStorage.setItem(OWNER_KEY,uname);
+        }catch(e){}
+        location.reload();
+        return;
+      }
+      return;   // 不切换 → 不做自动同步，两边数据都不被覆盖
+    }
+    window.setTimeout(function(){          // 同账号：静默再拉一次（登录前可能被 403 挡回）
+      try{ if(typeof window.cloudInit==='function') window.cloudInit(false,true); }catch(e){}
+    },900);
+  }
+  // ── 数据备份：导出 / 导入恢复（具体实现在页面里，这里只做入口与提示）──
+  function bkMsg(t,cls){var e=$('abBkMsg');if(e){e.textContent=t||'';e.className='ab-msg '+(cls||'');e.style.textAlign='left'}}
+  function exportData(){
+    if(typeof window.exportBackup!=='function'){bkMsg('当前页面版本不支持导出，请更新到最新版','err');return}
+    try{
+      var r=window.exportBackup();
+      if(r.where==='native') bkMsg('✅ 已保存到手机：'+r.path+'（共 '+r.counts.questions+' 道错题）'+NL+'可在「文件管理 → 下载 → AI错题本备份」里找到，可发微信或存网盘','ok');
+      else if(r.where==='browser') bkMsg('✅ 已下载 '+r.name+'（共 '+r.counts.questions+' 道错题），请到浏览器下载目录查看','ok');
+      else bkMsg('❌ 导出失败：'+(r.msg||'未知原因'),'err');
+    }catch(e){bkMsg('❌ 导出失败：'+(e.message||e),'err')}
+  }
+  function importData(){
+    if(typeof window.pickBackupFile!=='function'){bkMsg('当前页面版本不支持导入，请更新到最新版','err');return}
+    bkMsg('请选择之前导出的 .json 备份文件（导入只增不减，不会覆盖现有错题）');
+    try{window.pickBackupFile()}catch(e){bkMsg('❌ 打开文件选择器失败：'+(e.message||e),'err')}
   }
   // 后台核实凭证；偶发一次失败先重试，别在刚登录成功时就闪「离线」
   function verify(user,retry){
@@ -472,7 +530,7 @@ var ABG=(function(){
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip};
+  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip,exportData:exportData,importData:importData};
 })();
 </script>"""
 

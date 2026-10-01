@@ -288,9 +288,24 @@ async function fetchTO(url, opts, ms){
 
 function _syncOn(){ return !!SYNC_API; }
 
+// 【账号隔离】云同步按登录账号分文件存放。
+//   页面通过 window.__wbSyncUser() 提供当前登录账号（测试版注入，见构建脚本）；
+//   未注入时（如学习中心正式页）只带共用令牌，行为与以前完全一致。
+function syncUser(){
+  try{ return (typeof window.__wbSyncUser === 'function' && window.__wbSyncUser()) || ''; }catch(e){ return ''; }
+}
+function syncHeaders(extra){
+  const h = Object.assign({'X-Sync-Token':SYNC_TOKEN}, extra || {});
+  const u = syncUser();
+  if(u) h['X-Sync-User'] = u;                     // 有账号 → 服务器按账号分文件存
+  return h;
+}
+
 async function cloudPull(){
-  const r = await fetchTO(`${SYNC_API}?action=load`, {headers:{'X-Sync-Token':SYNC_TOKEN}, cache:'no-store'}, SYNC_TIMEOUT_MS);
-  if(!r.ok) throw new Error('HTTP '+r.status);
+  const r = await fetchTO(`${SYNC_API}?action=load`, {headers:syncHeaders(), cache:'no-store'}, SYNC_TIMEOUT_MS);
+  if(!r.ok) throw new Error(r.status === 403
+    ? '未登录：云端同步需先登录账号（数据仍安全存在本机）'
+    : 'HTTP '+r.status);
   const j = await r.json();
   if(!j.ok) throw new Error(j.error||'load 失败');
   return j;   // {data, updated_at}  data 可能为 null
@@ -301,10 +316,12 @@ async function cloudPushNow(d){
   if(body === _lastPushed) return;               // 无变化不重复上传
   const r = await fetchTO(`${SYNC_API}?action=save`, {
     method:'POST',
-    headers:{'Content-Type':'application/json','X-Sync-Token':SYNC_TOKEN},
+    headers:syncHeaders({'Content-Type':'application/json'}),
     body
   }, SYNC_TIMEOUT_MS*2);
-  const j = await r.json();
+  let j = null;
+  try{ j = await r.json(); }
+  catch(e){ throw new Error(r.status === 403 ? '未登录，改动只存本机' : '服务端返回异常(HTTP '+r.status+')'); }
   if(!j.ok) throw new Error(j.error||'save 失败');
   _lastPushed = body;
   return j;
@@ -391,6 +408,132 @@ function saveData(d){
   if(d&&Array.isArray(d.questions))d.nextQId=Math.max((+d.nextQId)||1,_maxId(d.questions,'id')+1);
   if(d&&Array.isArray(d.chapters))d.nextChapId=Math.max((+d.nextChapId)||1,_maxId(d.chapters,'id')+1);
   localStorage.setItem(LS_KEY,JSON.stringify(d));cloudPush(d);
+}
+
+// ===================== 数据备份：导出 / 导入恢复 =====================
+// 用途：换手机、重装、升级前留底。导出 = 整份错题库（含章节 + 三层训练答案 + 五维分析）；
+//       导入 = 与当前数据【合并】（按题干判重、重新编号），只增不减，绝不覆盖已有题目。
+function _bkStamp(){
+  const d = new Date(), p = n => String(n).padStart(2,'0');
+  return `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`;
+}
+function backupFileName(){ return `AI错题本备份_${_bkStamp()}.json`; }
+function buildBackupPack(){
+  const d = loadData();
+  return {
+    app: 'AI错题本',
+    app_version: (typeof window.__APP_VERSION__ !== 'undefined' ? String(window.__APP_VERSION__) : 'web'),
+    data_version: 2,
+    exported_at: new Date().toISOString(),
+    counts: {questions:(d.questions||[]).length, chapters:(d.chapters||[]).length, subjects:(d.subjects||[]).length},
+    data: d
+  };
+}
+// 导出：App 内走原生桥存到「手机存储/Download/AI错题本备份/」；浏览器里直接下载
+function exportBackup(){
+  const pack = buildBackupPack();
+  const txt  = JSON.stringify(pack, null, 2);
+  const name = backupFileName();
+  try{
+    if(window.AndroidBridge && typeof AndroidBridge.saveBackup === 'function'){
+      const r = String(AndroidBridge.saveBackup(name, txt) || '');
+      if(r.indexOf('OK:') === 0)  return {where:'native', path:r.slice(3), name, counts:pack.counts};
+      if(r.indexOf('ERR:') === 0) return {where:'error', msg:r.slice(4), name, counts:pack.counts};
+    }
+  }catch(e){}
+  try{
+    const blob = new Blob([txt], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click();
+    setTimeout(()=>{ try{URL.revokeObjectURL(a.href); a.remove();}catch(e){} }, 2000);
+    return {where:'browser', name, counts:pack.counts};
+  }catch(e){
+    return {where:'error', msg:'当前环境无法保存文件：'+(e.message||e), name, counts:pack.counts};
+  }
+}
+// 导入：文本 → 合并进当前数据（返回新增/跳过统计）
+function importBackupText(txt){
+  let o = null;
+  try{ o = JSON.parse(txt); }catch(e){ throw new Error('不是有效的备份文件（JSON 解析失败）'); }
+  const src = (o && o.data && Array.isArray(o.data.questions)) ? o.data
+            : (o && Array.isArray(o.questions)) ? o : null;
+  if(!src) throw new Error('备份里没有找到错题数据');
+  const cur = loadData();
+  const norm = s => String(s==null?'':s).replace(/\s+/g,'').trim().slice(0,150);
+  const item = (arr,k) => (arr||[]).filter(x=>x&&x[k]!=null).map(x=>x[k]);
+
+  // 1) 科目：按名字对齐，缺的补上
+  const curSubj = cur.subjects || (cur.subjects=[]);
+  const subjName = id => { const s = (src.subjects||[]).find(x=>+x.id===+id); return s ? String(s.name||'').trim() : ''; };
+  const subjOf = nm => {
+    if(!nm) return null;
+    let s = curSubj.find(x=>String(x.name||'').trim()===nm);
+    if(!s){
+      s = {id: Math.max(0,...item(curSubj,'id'))+1, name: nm, sort_order: curSubj.length};
+      curSubj.push(s);
+    }
+    return s;
+  };
+  // 2) 章节：按「科目+章节名」对齐，记录新旧 id 映射
+  const curChap = cur.chapters || (cur.chapters=[]);
+  const chapMap = {};
+  (src.chapters||[]).forEach(c=>{
+    const nm = String(c.name||'').trim(); if(!nm) return;
+    const s  = subjOf(subjName(c.subject_id)); if(!s) return;
+    let c2 = curChap.find(x=>String(x.name||'').trim()===nm && +x.subject_id===+s.id);
+    if(!c2){
+      c2 = {id: Math.max(0,...item(curChap,'id'))+1, subject_id: s.id, name: nm, sort_order: curChap.length};
+      curChap.push(c2);
+    }
+    chapMap[c.id] = c2.id;
+  });
+  // 3) 错题：按题干判重，导入的重新编号（避免与现有 id 撞车）
+  let nextId = Math.max((+cur.nextQId)||1, ...([0].concat(item(cur.questions,'id').map(Number)))) + 1;
+  nextId = Math.max(nextId, Math.max(0,...item(cur.questions,'id'))+1);
+  const seen = new Set((cur.questions||[]).map(q=>norm(q.content)));
+  let added=0, skipped=0;
+  (src.questions||[]).forEach(q=>{
+    const k = norm(q.content);
+    if(!k || seen.has(k)){ skipped++; return; }
+    const nq = JSON.parse(JSON.stringify(q));
+    const s  = subjOf(subjName(q.subject_id));
+    nq.id = nextId++;
+    if(s) nq.subject_id = s.id;
+    if(q.chapter_id!=null && chapMap[q.chapter_id]!=null) nq.chapter_id = chapMap[q.chapter_id];
+    seen.add(k);
+    cur.questions.push(nq);
+    added++;
+  });
+  cur.nextQId = Math.max(nextId, Math.max(0,...item(cur.questions,'id'))+1);
+  cur.nextChapId = Math.max((+cur.nextChapId)||1, Math.max(0,...item(cur.chapters,'id'))+1);
+  saveData(cur);
+  return {added, skipped, srcTotal:(src.questions||[]).length, total:(cur.questions||[]).length,
+          chapters:(cur.chapters||[]).length};
+}
+// 弹系统文件选择框 → 读文件 → 合并
+function pickBackupFile(){
+  const inp = document.createElement('input');
+  inp.type = 'file';
+  inp.accept = '.json,application/json';
+  inp.style.display = 'none';
+  inp.onchange = function(){
+    const f = inp.files && inp.files[0];
+    if(!f){ inp.remove(); return; }
+    const rd = new FileReader();
+    rd.onload = function(){
+      try{
+        const r = importBackupText(String(rd.result||''));
+        toast(`✅ 导入完成：新增 ${r.added} 题，跳过重复 ${r.skipped} 题（现有共 ${r.total} 题）`,'success');
+      }catch(e){ toast('❌ 导入失败：'+(e.message||e),'error'); }
+      inp.remove();
+    };
+    rd.onerror = function(){ toast('❌ 文件读取失败','error'); inp.remove(); };
+    rd.readAsText(f, 'utf-8');
+  };
+  document.body.appendChild(inp);
+  inp.click();
 }
 
 function genId(){const d=loadData();const id=Math.max((+d.nextQId)||1,_maxId(d.questions,'id')+1);d.nextQId=id+1;saveData(d);return id;}
