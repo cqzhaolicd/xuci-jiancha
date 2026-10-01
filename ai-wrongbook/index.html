@@ -27,6 +27,10 @@
   font-size:.75rem;padding:.3rem .6rem;border-radius:999px;display:flex;gap:.5rem;align-items:center}
 .ab-chip a{color:#90cdf4;cursor:pointer;text-decoration:underline}
 .ab-off{background:#ecc94b;color:#1a202c;border-radius:999px;padding:.05rem .45rem;font-size:.7rem}
+.ab-trial{background:#fefcbf;color:#744210;border-radius:999px;padding:.05rem .45rem;font-size:.7rem;font-weight:700}
+#abPayQrBox img{width:230px;max-width:82%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:6px}
+#abPayQrBox .ab-qrhint{font-size:.8rem;color:#718096;line-height:1.6}
+#abPayNote.ok{color:#2f855a}#abPayNote.err{color:#c53030}
 </style>
 <link href="assets/fonts/fonts.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
@@ -2272,8 +2276,19 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
   </div>
 </div>
 <div id="abUserChip" class="ab-chip" style="display:none">
-  <span id="abUserName"></span><span id="abOffTag" class="ab-off" style="display:none">离线</span>
+  <span id="abUserName"></span><span id="abTrialTag" class="ab-trial" style="display:none"></span><span id="abOffTag" class="ab-off" style="display:none">离线</span>
   <a onclick="ABG.logout()">退出</a>
+</div>
+<div id="abPay" class="ab-gate ab-hide">
+  <div class="ab-card" style="max-width:400px;text-align:center">
+    <div class="ab-logo">⏰ 免费试用已结束</div>
+    <div class="ab-sub" id="abPaySub">扫码付款后由管理员开通，即可继续使用</div>
+    <div id="abPayAmt" style="font-size:1.7rem;font-weight:800;color:#e53e3e;margin:8px 0">￥--</div>
+    <div id="abPayQrBox" style="margin:10px 0;min-height:60px"></div>
+    <div id="abPayNote" class="ab-msg" style="min-height:1.2em"></div>
+    <button class="ab-btn" onclick="ABG.refreshPay()">我已付款，刷新状态</button>
+    <a onclick="ABG.logout()" style="display:block;margin-top:12px;font-size:.85rem;color:#718096;cursor:pointer">退出登录</a>
+  </div>
 </div><script>
 /* ===== AI错题本-测试版 · 登录门禁（独立于页面逻辑，前缀 ABG / ab*） ===== */
 var ABG=(function(){
@@ -2310,9 +2325,61 @@ var ABG=(function(){
   }
   function show(){var g=$('abGate');if(g)g.classList.remove('ab-hide');document.documentElement.style.overflow='hidden'}
   function hide(){var g=$('abGate');if(g)g.classList.add('ab-hide');document.documentElement.style.overflow=''}
+  function showPay(){var g=$('abPay');if(g)g.classList.remove('ab-hide');document.documentElement.style.overflow='hidden'}
+  function hidePay(){var g=$('abPay');if(g)g.classList.add('ab-hide');document.documentElement.style.overflow=''}
+  // ── 试用 / 到期收款（老板 2026-10-01：注册免费 7 天，到期弹收款码；有邀请码 299，无 399）──
+  var ACCESS=null;
+  function applyAccess(a){
+    if(!a)return;
+    ACCESS=a;
+    var tag=$('abTrialTag');
+    if(tag){
+      if(a.paid){tag.textContent='VIP·已开通';tag.style.display=''}
+      else if(a.expired){tag.textContent='试用已到期';tag.style.display=''}
+      else{tag.textContent='试用剩 '+a.days_left+' 天';tag.style.display=''}
+    }
+    if(a.locked)paywall();else hidePay();
+  }
+  function paywall(){
+    if(!ACCESS)return;
+    showPay();
+    var sub=$('abPaySub'),box=$('abPayQrBox'),note=$('abPayNote');
+    $('abPayAmt').textContent='￥'+ACCESS.price;
+    sub.textContent=ACCESS.invite_code?('你注册时填了邀请码，按优惠价 '+ACCESS.price+' 元开通'):('按标准价 '+ACCESS.price+' 元开通');
+    note.textContent='正在读取收款码…';note.className='ab-msg';
+    request('/api/payinfo',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
+      var j=r.json||{};
+      if(j.amount)$('abPayAmt').textContent='￥'+j.amount;
+      if(j.reason)sub.textContent=j.reason;
+      if(j.qr_ready&&j.qr_data){box.innerHTML='<img src="'+j.qr_data+'" alt="收款码">'}
+      else{box.innerHTML='<div class="ab-qrhint">收款码还没上传：请管理员在后台「试用期与收款码」里上传图片<br>（当前应付 ￥'+((j.amount)||ACCESS.price)+'）</div>'}
+      note.textContent=j.note||'付款后请联系管理员开通';
+      note.className='ab-msg ok';
+    }).catch(function(){
+      box.innerHTML='<div class="ab-qrhint">连不上服务器，收款码读不出来。<br>请确认设备连着家里 WiFi，或稍后重试。</div>';
+      note.textContent=netErr();note.className='ab-msg err';
+    });
+  }
+  function refreshPay(){
+    var note=$('abPayNote');note.textContent='正在核对…';note.className='ab-msg';
+    request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
+      var a=(r.json||{}).access;
+      if(r.status===401){clear();hidePay();chip(null);show();msg('登录已失效，请重新登录');return}
+      if(!a)return;
+      if(!a.locked){
+        ACCESS=a;hidePay();chip(JSON.parse(localStorage.getItem(USER_KEY)||'{}')||{username:'已登录'});
+        note.textContent='';alert('✅ 已开通，欢迎继续使用！');
+        try{location.reload()}catch(e){}
+        return;
+      }
+      applyAccess(a);
+      note.textContent='还没查到开通记录。付款后请联系管理员在后台点「标记缴费」，再点本按钮刷新。';
+      note.className='ab-msg err';
+    }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
+  }
   function chip(u){
     var c=$('abUserChip');if(!c)return;
-    if(!u){c.style.display='none';return}
+    if(!u){c.style.display='none';var t0=$('abTrialTag');if(t0)t0.style.display='none';return}
     $('abUserName').textContent='👤 '+(u.display||u.username);
     $('abOffTag').style.display=offline?'':'none';
     c.style.display='flex';
@@ -2328,7 +2395,7 @@ var ABG=(function(){
     $('abLoginBtn').disabled=true;msg('登录中…',true);
     request('/api/login',{username:u,password:p}).then(function(r){
       $('abLoginBtn').disabled=false;
-      if(r.json&&r.json.ok){save(r.json.token,r.json.user);afterAuth(r.json.user);msg('登录成功',true)}
+      if(r.json&&r.json.ok){save(r.json.token,r.json.user);afterAuth(r.json.user,r.json.access);msg('登录成功',true)}
       else msg((r.json&&r.json.error)||'登录失败');
     }).catch(function(){ $('abLoginBtn').disabled=false; msg(netErr()) });
   }
@@ -2340,19 +2407,20 @@ var ABG=(function(){
     $('abRegBtn').disabled=true;msg('注册中…',true);
     request('/api/register',{username:u,password:p,invite:iv}).then(function(r){
       $('abRegBtn').disabled=false;
-      if(r.json&&r.json.ok){save(r.json.token,r.json.user);afterAuth(r.json.user);msg('注册成功',true)}
+      if(r.json&&r.json.ok){save(r.json.token,r.json.user);afterAuth(r.json.user,r.json.access);msg('注册成功，免费试用开始',true)}
       else msg((r.json&&r.json.error)||'注册失败');
     }).catch(function(){ $('abRegBtn').disabled=false; msg(netErr()) });
   }
-  function afterAuth(user){
-    offline=false;chip(user);hide();
+  function afterAuth(user,a){
+    offline=false;chip(user);hide();if(a)applyAccess(a);
     window.setTimeout(function(){verify(user,0)},1500);
   }
   // 后台核实凭证；偶发一次失败先重试，别在刚登录成功时就闪「离线」
   function verify(user,retry){
     request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
       if(r.status===401){clear();chip(null);show();msg('登录已失效，请重新登录')}
-      else{offline=false;chip(user)}
+      else if(r.status===403){clear();chip(null);show();msg((r.json&&r.json.error)||'账号已停用，请联系管理员')}
+      else{offline=false;chip(user);applyAccess((r.json||{}).access)}
     }).catch(function(){
       if(retry<1){window.setTimeout(function(){verify(user,retry+1)},3000);return}
       offline=true;chip(user);
@@ -2360,7 +2428,7 @@ var ABG=(function(){
   }
   function logout(){
     if(!confirm('确定退出登录？'))return;
-    clear();chip(null);api=null;
+    clear();chip(null);hidePay();api=null;
     var g=$('abGate');if(g)g.classList.remove('ab-hide');
     $('abLoginUser').value='';$('abLoginPass').value='';show();
   }
@@ -2387,7 +2455,7 @@ var ABG=(function(){
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {login:login,register:register,logout:logout,tab:tab,init:init};
+  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess};
 })();
 </script>
 </body></html>
