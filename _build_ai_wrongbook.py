@@ -131,6 +131,9 @@ AUTH_CSS = """<style>
 #abPayQrBox img{width:230px;max-width:82%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:6px}
 #abPayQrBox .ab-qrhint{font-size:.8rem;color:#718096;line-height:1.6}
 #abPayNote.ok{color:#2f855a}#abPayNote.err{color:#c53030}
+.ab-btn2{width:100%;background:#edf2f7;color:#2d3748;border:none;padding:.6rem;border-radius:10px;
+  font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:.5rem}
+.ab-trial.lock{background:#fed7d7;color:#c53030;cursor:pointer}
 </style>"""
 
 AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
@@ -151,7 +154,6 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
       <input id="abRegUser" placeholder="11 位手机号（如 13800001111）" inputmode="numeric" maxlength="11" autocomplete="tel">
       <input id="abRegPass" type="password" placeholder="密码（至少 6 位）">
       <input id="abRegPass2" type="password" placeholder="确认密码">
-      <input id="abRegInvite" placeholder="邀请码（有则享优惠价，没有留空）">
       <button class="ab-btn" id="abRegBtn" onclick="ABG.register()">注册并登录</button>
     </div>
     <div id="abMsg" class="ab-msg"></div>
@@ -164,13 +166,27 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 </div>
 <div id="abPay" class="ab-gate ab-hide">
   <div class="ab-card" style="max-width:400px;text-align:center">
-    <div class="ab-logo">⏰ 免费试用已结束</div>
-    <div class="ab-sub" id="abPaySub">扫码付款后由管理员开通，即可继续使用</div>
-    <div id="abPayAmt" style="font-size:1.7rem;font-weight:800;color:#e53e3e;margin:8px 0">￥--</div>
-    <div id="abPayQrBox" style="margin:10px 0;min-height:60px"></div>
+    <div class="ab-logo" id="abPayTitle">⏰ 免费试用已结束</div>
+    <div class="ab-sub" id="abPaySub"></div>
+    <div id="abPayWhy" class="ab-msg err" style="display:none;background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:.45rem .6rem;margin-top:.5rem"></div>
+    <div id="abPayStep1">
+      <div style="font-size:.88rem;color:#4a5568;line-height:1.75;margin:.5rem 0 .7rem;text-align:left">
+        有邀请码？填在下面，下一步按 <b style="color:#c53030">299 元</b> 开通；<br>
+        没有邀请码，点下面「直接开通」，按标准价 <b>399 元</b> 开通。
+      </div>
+      <input id="abPayInvite" placeholder="邀请码（没有可留空）" style="text-transform:uppercase">
+      <button class="ab-btn" onclick="ABG.claimInvite()">使用邀请码，按 299 元开通</button>
+      <button class="ab-btn2" onclick="ABG.payStep('qr')">没有邀请码，直接开通（399 元）</button>
+    </div>
+    <div id="abPayStep2" style="display:none">
+      <div id="abPayAmt" style="font-size:1.7rem;font-weight:800;color:#e53e3e;margin:8px 0">￥--</div>
+      <div id="abPayQrBox" style="margin:10px 0;min-height:60px"></div>
+      <button class="ab-btn" onclick="ABG.refreshPay()">我已付款，刷新状态</button>
+      <button class="ab-btn2" onclick="ABG.payStep('invite')">返回上一步（我有邀请码）</button>
+    </div>
     <div id="abPayNote" class="ab-msg" style="min-height:1.2em"></div>
-    <button class="ab-btn" onclick="ABG.refreshPay()">我已付款，刷新状态</button>
-    <a onclick="ABG.logout()" style="display:block;margin-top:12px;font-size:.85rem;color:#718096;cursor:pointer">退出登录</a>
+    <a onclick="ABG.closePay()" style="display:block;margin-top:12px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">先看看，稍后开通</a>
+    <a onclick="ABG.logout()" style="display:block;margin-top:6px;font-size:.8rem;color:#a0aec0;cursor:pointer">退出登录</a>
   </div>
 </div>"""
 
@@ -212,32 +228,65 @@ var ABG=(function(){
   function hide(){var g=$('abGate');if(g)g.classList.add('ab-hide');document.documentElement.style.overflow=''}
   function showPay(){var g=$('abPay');if(g)g.classList.remove('ab-hide');document.documentElement.style.overflow='hidden'}
   function hidePay(){var g=$('abPay');if(g)g.classList.add('ab-hide');document.documentElement.style.overflow=''}
-  // ── 试用 / 到期收款（老板 2026-10-01：注册免费 7 天，到期弹收款码；有邀请码 299，无 399）──
+  // ── 试用 / 到期收款（老板 2026-10-01：免费试用 7 天；到期弹付费页，两步走：填码→299，不填→399）──
   var ACCESS=null;
+  function setLock(v){try{if(window.__AB_SETLOCK)window.__AB_SETLOCK(v)}catch(e){}}
   function applyAccess(a){
     if(!a)return;
-    ACCESS=a;
+    ACCESS=a;setLock(!!a.locked);
+    var why=document.getElementById('abPayWhy');if(why){why.style.display='none'}
     var tag=$('abTrialTag');
     if(tag){
-      if(a.paid){tag.textContent='VIP·已开通';tag.style.display=''}
-      else if(a.expired){tag.textContent='试用已到期';tag.style.display=''}
-      else{tag.textContent='试用剩 '+a.days_left+' 天';tag.style.display=''}
+      if(a.paid){tag.textContent='VIP·已开通';tag.className='ab-trial';tag.onclick=null;tag.style.display=''}
+      else if(a.expired){tag.textContent='试用已结束 · 点此开通';tag.className='ab-trial lock';tag.onclick=function(){paywall()};tag.style.display=''}
+      else{tag.textContent='试用剩 '+a.days_left+' 天';tag.className='ab-trial';tag.onclick=null;tag.style.display=''}
     }
     if(a.locked)paywall();else hidePay();
   }
+  function payStep(step){
+    var s1=$('abPayStep1'),s2=$('abPayStep2');
+    if(!s1||!s2)return;
+    if(step==='invite'){
+      s1.style.display='';s2.style.display='none';
+      $('abPayTitle').textContent='⏰ 免费试用已结束';
+      $('abPaySub').textContent='有邀请码可享 299 元优惠价；没有也能按 399 元直接开通';
+      return;
+    }
+    s1.style.display='none';s2.style.display='';
+    payQr();
+  }
+  function claimInvite(){
+    var el=$('abPayInvite'),iv=(el&&el.value||'').trim(),note=$('abPayNote');
+    if(!iv){note.textContent='请填写邀请码；没有邀请码请点下面的「直接开通（399 元）」';note.className='ab-msg err';return}
+    note.textContent='正在核对邀请码…';note.className='ab-msg';
+    request('/api/invite-claim',{invite:iv},localStorage.getItem(TOKEN_KEY)).then(function(r){
+      var j=r.json||{};
+      if(j.ok){
+        if(ACCESS){ACCESS.invite_code=j.invite_code;ACCESS.price=j.price}
+        payStep('qr');
+        note.textContent='✅ 邀请码已生效，按 '+j.price+' 元开通'+(j.unit?('（'+j.unit+'）'):'');
+        note.className='ab-msg ok';
+      }else{note.textContent=j.error||'邀请码无效';note.className='ab-msg err'}
+    }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
+  }
+  function closePay(){hidePay()}
   function paywall(){
     if(!ACCESS)return;
     showPay();
-    var sub=$('abPaySub'),box=$('abPayQrBox'),note=$('abPayNote');
-    $('abPayAmt').textContent='￥'+ACCESS.price;
-    sub.textContent=ACCESS.invite_code?('你注册时填了邀请码，按优惠价 '+ACCESS.price+' 元开通'):('按标准价 '+ACCESS.price+' 元开通');
+    if(!ACCESS.invite_code){payStep('invite');return}
+    payStep('qr');
+  }
+  function payQr(){
+    var box=$('abPayQrBox'),note=$('abPayNote');
+    $('abPayAmt').textContent='￥'+(ACCESS?ACCESS.price:'--');
+    $('abPaySub').textContent=ACCESS&&ACCESS.invite_code?('已用邀请码 '+ACCESS.invite_code+'，按优惠价 '+ACCESS.price+' 元开通'):('按标准价 '+(ACCESS?ACCESS.price:399)+' 元开通');
     note.textContent='正在读取收款码…';note.className='ab-msg';
     request('/api/payinfo',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
       var j=r.json||{};
       if(j.amount)$('abPayAmt').textContent='￥'+j.amount;
-      if(j.reason)sub.textContent=j.reason;
+      if(j.reason)$('abPaySub').textContent=j.reason;
       if(j.qr_ready&&j.qr_data){box.innerHTML='<img src="'+j.qr_data+'" alt="收款码">'}
-      else{box.innerHTML='<div class="ab-qrhint">收款码还没上传：请管理员在后台「试用期与收款码」里上传图片<br>（当前应付 ￥'+((j.amount)||ACCESS.price)+'）</div>'}
+      else{box.innerHTML='<div class="ab-qrhint">收款码还没上传：请管理员在后台「试用期与收款码」里上传图片<br>（当前应付 ￥'+((j.amount)||(ACCESS&&ACCESS.price))+'）</div>'}
       note.textContent=j.note||'付款后请联系管理员开通';
       note.className='ab-msg ok';
     }).catch(function(){
@@ -252,13 +301,13 @@ var ABG=(function(){
       if(r.status===401){clear();hidePay();chip(null);show();msg('登录已失效，请重新登录');return}
       if(!a)return;
       if(!a.locked){
-        ACCESS=a;hidePay();chip(JSON.parse(localStorage.getItem(USER_KEY)||'{}')||{username:'已登录'});
+        ACCESS=a;setLock(false);hidePay();chip(JSON.parse(localStorage.getItem(USER_KEY)||'{}')||{username:'已登录'});
         note.textContent='';alert('✅ 已开通，欢迎继续使用！');
         try{location.reload()}catch(e){}
         return;
       }
       applyAccess(a);
-      note.textContent='还没查到开通记录。付款后请联系管理员在后台点「标记缴费」，再点本按钮刷新。';
+      note.textContent='还没查到开通记录。付款后请联系管理员在后台点「升级为VIP」，再点本按钮刷新。';
       note.className='ab-msg err';
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
@@ -285,12 +334,12 @@ var ABG=(function(){
     }).catch(function(){ $('abLoginBtn').disabled=false; msg(netErr()) });
   }
   function register(){
-    var u=$('abRegUser').value.replace(/[\\s()（）-]/g,''),p=$('abRegPass').value,p2=$('abRegPass2').value,iv=$('abRegInvite').value.trim();
+    var u=$('abRegUser').value.replace(/[\\s()（）-]/g,''),p=$('abRegPass').value,p2=$('abRegPass2').value;
     if(!/^1[3-9]\\d{9}$/.test(u))return msg('请填写 11 位手机号（如 13800001111）');
     if(p.length<6)return msg('密码至少 6 位');
     if(p!==p2)return msg('两次输入的密码不一致');
     $('abRegBtn').disabled=true;msg('注册中…',true);
-    request('/api/register',{username:u,password:p,invite:iv}).then(function(r){
+    request('/api/register',{username:u,password:p}).then(function(r){
       $('abRegBtn').disabled=false;
       if(r.json&&r.json.ok){save(r.json.token,r.json.user);afterAuth(r.json.user,r.json.access);msg('注册成功，免费试用开始',true)}
       else msg((r.json&&r.json.error)||'注册失败');
@@ -340,7 +389,55 @@ var ABG=(function(){
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess};
+  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay};
+})();
+</script>"""
+
+
+GUARD_JS = """<script>
+/* READONLY_GUARD_V1 · 到期未开通：能登录、能查看，不能新增错题（只加在测试版页面，学习中心不受影响） */
+(function(){
+  var LOCK=false;
+  window.__AB_SETLOCK=function(v){LOCK=!!v};
+  window.__AB_ISLOCK=function(){return LOCK};
+  function hit(msg){
+    if(!LOCK)return false;
+    try{
+      ABG.paywall();
+      var why=document.getElementById('abPayWhy');
+      if(why){why.textContent=msg||'免费试用已结束：可以查看已有错题，开通后才能新增。';why.style.display=''}
+    }catch(e){ try{alert(msg)}catch(e2){} }
+    return true;
+  }
+  var done=false;
+  function boot(){
+    if(done)return;done=true;
+    var _n=window.navigate;
+    if(typeof _n==='function'){
+      window.navigate=function(p){
+        if(p==='add'&&LOCK){hit('免费试用已结束：可以查看已有错题，开通后才能新增。');return}
+        return _n.apply(this,arguments);
+      };
+    }
+    var _s=window.submitAdd;
+    if(typeof _s==='function'){
+      window.submitAdd=function(){
+        if(LOCK){hit('免费试用已结束：开通后才能新增错题。');return}
+        return _s.apply(this,arguments);
+      };
+    }
+    var _a=window.aiGenerate;
+    if(typeof _a==='function'){
+      window.aiGenerate=function(which){
+        if(LOCK&&which!=='ed'){hit('免费试用已结束：开通后才能用 AI 新增错题。');return}
+        return _a.apply(this,arguments);
+      };
+    }
+  }
+  boot();
+  document.addEventListener('DOMContentLoaded',boot);
+  window.addEventListener('load',boot);
+  setTimeout(boot,800);
 })();
 </script>"""
 
@@ -437,7 +534,7 @@ def main():
     auth_js = AUTH_JS if not tun else AUTH_JS.replace(
         'var REMOTE_APIS=[];', 'var REMOTE_APIS=[' + json.dumps(tun) + '];')
     print(f'  · 外网登录通道: {tun or "（无隧道，仅内网 + App 可用）"}')
-    s = sub_once(s, '</body>', AUTH_OVERLAY + auth_js + '\n</body>', '登录门禁: 登录页 + 脚本')
+    s = sub_once(s, '</body>', AUTH_OVERLAY + auth_js + GUARD_JS + '\n</body>', '登录门禁: 登录页 + 脚本 + 只读守卫')
 
     os.makedirs(STANDALONE_DIR, exist_ok=True)
     open(STANDALONE, 'w', encoding='utf-8').write(s)
