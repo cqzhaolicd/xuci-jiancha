@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v2.8</title>
+<title>AI错题本 v2.9</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -75,7 +75,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .stat-card{border-radius:var(--radius);padding:1.2rem;color:#fff;position:relative;overflow:hidden;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
 .stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.2)}
 .stat-card:active{transform:translateY(0) scale(.985)}
-.stat-go{font-size:.6rem;opacity:.65;margin-left:.15rem}
+.stat-go{font-size:.95rem;font-weight:700;opacity:.8;margin-left:.18rem;line-height:1}
 .stat-card::before{content:'';position:absolute;top:-40%;right:-20%;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.1)}
 .stat-card .num{font-size:2rem;font-weight:900}
 .stat-card .label{font-size:.8rem;opacity:.85}
@@ -255,7 +255,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v2.8</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v2.9</span>
     <div class="top-tabs" id="topTabs">
       <button class="top-tab active" data-top="notebook" onclick="switchTop('notebook')"><i class="fas fa-book"></i> 错题本</button>
       <button class="top-tab" data-top="training" onclick="switchTop('training')"><i class="fas fa-layer-group"></i> 三层训练</button>
@@ -274,7 +274,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v2.8 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v2.9 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -1093,10 +1093,10 @@ function renderDashboard(){
   const recent=[...d.questions].sort((a,b)=>b.id-a.id).slice(0,5);
   return`
   <div class="stat-grid">
-    <div class="stat-card bg-g1" onclick="dashGo('all')" title="查看全部错题"><div class="num">${total}</div><div class="label">总错题 <i class="fas fa-chevron-right stat-go"></i></div><div class="icon"><i class="fas fa-database"></i></div></div>
-    <div class="stat-card bg-g2" onclick="dashGo('due')" title="去复习今天到期的题"><div class="num">${needReview}</div><div class="label">待复习 <i class="fas fa-chevron-right stat-go"></i></div><div class="icon"><i class="fas fa-redo"></i></div></div>
-    <div class="stat-card bg-g3" onclick="dashGo('mastered')" title="查看已掌握的题"><div class="num">${mastered}</div><div class="label">已掌握 <i class="fas fa-chevron-right stat-go"></i></div><div class="icon"><i class="fas fa-check-circle"></i></div></div>
-    <div class="stat-card bg-g4" onclick="dashGo('weak')" title="查看未掌握的题（薄弱点）"><div class="num">${weak}</div><div class="label">薄弱点 <i class="fas fa-chevron-right stat-go"></i></div><div class="icon"><i class="fas fa-exclamation-triangle"></i></div></div>
+    <div class="stat-card bg-g1" onclick="dashGo('all')" title="查看全部错题"><div class="num">${total}</div><div class="label">总错题 <span class="stat-go">›</span></div><div class="icon"><i class="fas fa-database"></i></div></div>
+    <div class="stat-card bg-g2" onclick="dashGo('due')" title="去复习今天到期的题"><div class="num">${needReview}</div><div class="label">待复习 <span class="stat-go">›</span></div><div class="icon"><i class="fas fa-redo"></i></div></div>
+    <div class="stat-card bg-g3" onclick="dashGo('mastered')" title="查看已掌握的题"><div class="num">${mastered}</div><div class="label">已掌握 <span class="stat-go">›</span></div><div class="icon"><i class="fas fa-check-circle"></i></div></div>
+    <div class="stat-card bg-g4" onclick="dashGo('weak')" title="查看未掌握的题（薄弱点）"><div class="num">${weak}</div><div class="label">薄弱点 <span class="stat-go">›</span></div><div class="icon"><i class="fas fa-exclamation-triangle"></i></div></div>
   </div>
   <div class="card"><div class="card-title"><i class="fas fa-book"></i> 科目概览</div>
     <div class="subject-grid">${d.subjects.map((s,i)=>{
@@ -2293,7 +2293,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v2.8</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v2.9</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
