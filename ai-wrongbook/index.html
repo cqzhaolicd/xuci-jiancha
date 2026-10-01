@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v2.1</title>
+<title>AI错题本 v2.2</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -23,7 +23,7 @@
 .ab-msg{font-size:.82rem;min-height:1.15rem;margin-top:.6rem;text-align:center}
 .ab-msg.err{color:#e53e3e}.ab-msg.ok{color:#38a169}
 .ab-foot{font-size:.72rem;color:#a0aec0;text-align:center;margin-top:.8rem;line-height:1.5}
-.ab-chip{position:fixed;right:10px;bottom:10px;z-index:9998;background:rgba(26,32,44,.82);color:#fff;
+.ab-chip{position:fixed;right:8px;top:62px;bottom:auto;z-index:9998;background:rgba(26,32,44,.82);color:#fff;
   font-size:.75rem;padding:.3rem .6rem;border-radius:999px;display:flex;gap:.5rem;align-items:center}
 .ab-chip a{color:#90cdf4;cursor:pointer;text-decoration:underline}
 .ab-off{background:#ecc94b;color:#1a202c;border-radius:999px;padding:.05rem .45rem;font-size:.7rem}
@@ -240,7 +240,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v2.1</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v2.2</span>
     <div class="top-tabs" id="topTabs">
       <button class="top-tab active" data-top="notebook" onclick="switchTop('notebook')"><i class="fas fa-book"></i> 错题本</button>
       <button class="top-tab" data-top="training" onclick="switchTop('training')"><i class="fas fa-layer-group"></i> 三层训练</button>
@@ -259,7 +259,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v2.1 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v2.2 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -2260,7 +2260,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v2.1</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v2.2</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
@@ -2487,10 +2487,17 @@ var ABG=(function(){
       note.className='ab-msg err';
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
+  function placeChip(){
+    var c=$('abUserChip');if(!c)return;
+    var nb=document.querySelector('.navbar');
+    var h=nb?Math.round(nb.getBoundingClientRect().height):56;
+    c.style.top=Math.max(8,h+8)+'px';c.style.bottom='auto';
+  }
   function chip(u){
     var c=$('abUserChip');if(!c)return;
     if(!u){c.style.display='none';var t0=$('abTrialTag');if(t0)t0.style.display='none';return}
     $('abUserName').textContent='👤 '+(u.display||u.username);
+    placeChip();
     $('abOffTag').style.display=offline?'':'none';
     c.style.display='flex';
   }
@@ -2551,6 +2558,8 @@ var ABG=(function(){
     msg('',true);
   }
   function init(){
+    window.addEventListener('resize',placeChip);
+    setTimeout(placeChip,300);
     var tok=null,user=null;
     try{tok=localStorage.getItem(TOKEN_KEY);user=JSON.parse(localStorage.getItem(USER_KEY)||'null')}catch(e){}
     if(tok&&expireOf(tok)>Date.now()){
@@ -2565,7 +2574,7 @@ var ABG=(function(){
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile};
+  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip};
 })();
 </script><script>
 /* READONLY_GUARD_V1 · 到期未开通：能登录、能查看，不能新增错题（只加在测试版页面，学习中心不受影响） */

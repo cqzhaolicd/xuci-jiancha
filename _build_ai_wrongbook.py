@@ -123,7 +123,7 @@ AUTH_CSS = """<style>
 .ab-msg{font-size:.82rem;min-height:1.15rem;margin-top:.6rem;text-align:center}
 .ab-msg.err{color:#e53e3e}.ab-msg.ok{color:#38a169}
 .ab-foot{font-size:.72rem;color:#a0aec0;text-align:center;margin-top:.8rem;line-height:1.5}
-.ab-chip{position:fixed;right:10px;bottom:10px;z-index:9998;background:rgba(26,32,44,.82);color:#fff;
+.ab-chip{position:fixed;right:8px;top:62px;bottom:auto;z-index:9998;background:rgba(26,32,44,.82);color:#fff;
   font-size:.75rem;padding:.3rem .6rem;border-radius:999px;display:flex;gap:.5rem;align-items:center}
 .ab-chip a{color:#90cdf4;cursor:pointer;text-decoration:underline}
 .ab-off{background:#ecc94b;color:#1a202c;border-radius:999px;padding:.05rem .45rem;font-size:.7rem}
@@ -373,10 +373,17 @@ var ABG=(function(){
       note.className='ab-msg err';
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
+  function placeChip(){
+    var c=$('abUserChip');if(!c)return;
+    var nb=document.querySelector('.navbar');
+    var h=nb?Math.round(nb.getBoundingClientRect().height):56;
+    c.style.top=Math.max(8,h+8)+'px';c.style.bottom='auto';
+  }
   function chip(u){
     var c=$('abUserChip');if(!c)return;
     if(!u){c.style.display='none';var t0=$('abTrialTag');if(t0)t0.style.display='none';return}
     $('abUserName').textContent='👤 '+(u.display||u.username);
+    placeChip();
     $('abOffTag').style.display=offline?'':'none';
     c.style.display='flex';
   }
@@ -437,6 +444,8 @@ var ABG=(function(){
     msg('',true);
   }
   function init(){
+    window.addEventListener('resize',placeChip);
+    setTimeout(placeChip,300);
     var tok=null,user=null;
     try{tok=localStorage.getItem(TOKEN_KEY);user=JSON.parse(localStorage.getItem(USER_KEY)||'null')}catch(e){}
     if(tok&&expireOf(tok)>Date.now()){
@@ -451,7 +460,7 @@ var ABG=(function(){
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile};
+  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip};
 })();
 </script>"""
 
