@@ -143,12 +143,12 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
       <button id="abTabReg" class="ab-tab" onclick="ABG.tab('reg')">注册</button>
     </div>
     <div id="abPaneLogin">
-      <input id="abLoginUser" placeholder="用户名 / 手机号" autocomplete="username">
+      <input id="abLoginUser" placeholder="手机号" inputmode="numeric" maxlength="11" autocomplete="username">
       <input id="abLoginPass" type="password" placeholder="密码" autocomplete="current-password">
       <button class="ab-btn" id="abLoginBtn" onclick="ABG.login()">登 录</button>
     </div>
     <div id="abPaneReg" style="display:none">
-      <input id="abRegUser" placeholder="用户名（3-32位字母数字）或手机号">
+      <input id="abRegUser" placeholder="11 位手机号（如 13800001111）" inputmode="numeric" maxlength="11" autocomplete="tel">
       <input id="abRegPass" type="password" placeholder="密码（至少 6 位）">
       <input id="abRegPass2" type="password" placeholder="确认密码">
       <input id="abRegInvite" placeholder="邀请码（无则留空）">
@@ -275,8 +275,8 @@ var ABG=(function(){
   function clear(){try{localStorage.removeItem(TOKEN_KEY);localStorage.removeItem(USER_KEY)}catch(e){}}
 
   function login(){
-    var u=$('abLoginUser').value.trim(),p=$('abLoginPass').value;
-    if(!u||!p)return msg('请填写账号和密码');
+    var u=$('abLoginUser').value.replace(/[\\s()（）-]/g,''),p=$('abLoginPass').value;
+    if(!u)return msg('请填写手机号');
     $('abLoginBtn').disabled=true;msg('登录中…',true);
     request('/api/login',{username:u,password:p}).then(function(r){
       $('abLoginBtn').disabled=false;
@@ -285,8 +285,8 @@ var ABG=(function(){
     }).catch(function(){ $('abLoginBtn').disabled=false; msg(netErr()) });
   }
   function register(){
-    var u=$('abRegUser').value.trim(),p=$('abRegPass').value,p2=$('abRegPass2').value,iv=$('abRegInvite').value.trim();
-    if(!u)return msg('请填写用户名或手机号');
+    var u=$('abRegUser').value.replace(/[\\s()（）-]/g,''),p=$('abRegPass').value,p2=$('abRegPass2').value,iv=$('abRegInvite').value.trim();
+    if(!/^1[3-9]\\d{9}$/.test(u))return msg('请填写 11 位手机号（如 13800001111）');
     if(p.length<6)return msg('密码至少 6 位');
     if(p!==p2)return msg('两次输入的密码不一致');
     $('abRegBtn').disabled=true;msg('注册中…',true);
