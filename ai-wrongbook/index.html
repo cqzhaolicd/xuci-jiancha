@@ -2285,6 +2285,10 @@ var ABG=(function(){
 
   function $(id){return document.getElementById(id)}
   function msg(t,ok){var e=$('abMsg');e.textContent=t;e.className='ab-msg '+(ok?'ok':'err')}
+  // 连不上服务器时给「对症」的提示：https 网页被浏览器拦住，跟手机没连 WiFi 是两回事
+  function netErr(){return location.protocol==='https:'
+    ? '公网网页版（https）无法直连家里的账号服务：请用 App，或在家里打开内网网址登录'
+    : '连不上家里的服务器：请确认设备连着家里 WiFi（或稍后再试）'}
   function expireOf(t){try{var p=JSON.parse(atob(t.split('.')[0].replace(/-/g,'+').replace(/_/g,'/')));return (p.exp||0)*1000}catch(e){return 0}}
 
   function candidates(){
@@ -2326,7 +2330,7 @@ var ABG=(function(){
       $('abLoginBtn').disabled=false;
       if(r.json&&r.json.ok){save(r.json.token,r.json.user);afterAuth(r.json.user);msg('登录成功',true)}
       else msg((r.json&&r.json.error)||'登录失败');
-    }).catch(function(){ $('abLoginBtn').disabled=false; msg('连不上家里的服务器：请确认手机连着家里 WiFi（或稍后再试）') });
+    }).catch(function(){ $('abLoginBtn').disabled=false; msg(netErr()) });
   }
   function register(){
     var u=$('abRegUser').value.trim(),p=$('abRegPass').value,p2=$('abRegPass2').value,iv=$('abRegInvite').value.trim();
@@ -2338,7 +2342,7 @@ var ABG=(function(){
       $('abRegBtn').disabled=false;
       if(r.json&&r.json.ok){save(r.json.token,r.json.user);afterAuth(r.json.user);msg('注册成功',true)}
       else msg((r.json&&r.json.error)||'注册失败');
-    }).catch(function(){ $('abRegBtn').disabled=false; msg('连不上家里的服务器：注册请连接家里 WiFi') });
+    }).catch(function(){ $('abRegBtn').disabled=false; msg(netErr()) });
   }
   function afterAuth(user){
     offline=false;chip(user);hide();
