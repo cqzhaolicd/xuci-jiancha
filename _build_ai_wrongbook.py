@@ -123,9 +123,12 @@ AUTH_CSS = """<style>
 .ab-msg{font-size:.82rem;min-height:1.15rem;margin-top:.6rem;text-align:center}
 .ab-msg.err{color:#e53e3e}.ab-msg.ok{color:#38a169}
 .ab-foot{font-size:.72rem;color:#a0aec0;text-align:center;margin-top:.8rem;line-height:1.5}
-.ab-chip{position:fixed;right:8px;top:62px;bottom:auto;z-index:9998;background:rgba(26,32,44,.82);color:#fff;
-  font-size:.75rem;padding:.3rem .6rem;border-radius:999px;display:flex;gap:.5rem;align-items:center}
-.ab-chip a{color:#90cdf4;cursor:pointer;text-decoration:underline}
+/* 账号信息：放进顶部紫色导航栏（右上角），跟着 sticky 导航栏一起吸顶 */
+.ab-chip{position:static;margin-left:auto;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.34);
+  color:#fff;font-size:.72rem;padding:.24rem .58rem;border-radius:999px;display:flex;gap:.45rem;align-items:center;
+  white-space:nowrap;line-height:1.5}
+.ab-chip a{color:#fff;cursor:pointer;text-decoration:underline}
+.ab-chip #abUserName{font-weight:600}
 .ab-off{background:#ecc94b;color:#1a202c;border-radius:999px;padding:.05rem .45rem;font-size:.7rem}
 .ab-trial{background:#fefcbf;color:#744210;border-radius:999px;padding:.05rem .45rem;font-size:.7rem;font-weight:700}
 #abPayQrBox img{width:230px;max-width:82%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:6px}
@@ -375,9 +378,9 @@ var ABG=(function(){
   }
   function placeChip(){
     var c=$('abUserChip');if(!c)return;
-    var nb=document.querySelector('.navbar');
-    var h=nb?Math.round(nb.getBoundingClientRect().height):56;
-    c.style.top=Math.max(8,h+8)+'px';c.style.bottom='auto';
+    // 搬进顶部紫色导航栏第一行（品牌 + 三个页签那行）的右侧 → 右上角、随导航栏吸顶
+    var host=document.querySelector('.navbar .container > div')||document.querySelector('.navbar .container');
+    if(host && c.parentNode!==host) host.appendChild(c);
   }
   function chip(u){
     var c=$('abUserChip');if(!c)return;
