@@ -262,10 +262,8 @@ var ABG=(function(){
 
   function $(id){return document.getElementById(id)}
   function msg(t,ok){var e=$('abMsg');e.textContent=t;e.className='ab-msg '+(ok?'ok':'err')}
-  // 连不上服务器时给「对症」的提示：https 网页被浏览器拦住，跟手机没连 WiFi 是两回事
-  function netErr(){return location.protocol==='https:'
-    ? '公网网页版（https）连不上账号服务：请稍后重试，或改用 App 登录'
-    : '内网和公网都没连上账号服务：请检查手机网络（WiFi 或流量）后重试；若在外面，会自动走公网通道'}
+  // 连不上服务器时的提示：不给用户看「内网/公网」这些内部概念（老板 2026-10-01）
+  function netErr(){return '网络连不上服务器，请检查手机网络后重试'}
   function expireOf(t){try{var p=JSON.parse(atob(t.split('.')[0].replace(/-/g,'+').replace(/_/g,'/')));return (p.exp||0)*1000}catch(e){return 0}}
 
   function candidates(){
@@ -285,7 +283,7 @@ var ABG=(function(){
     function tryNext(){
       if(i>=list.length)return Promise.reject(new Error('all-endpoints-failed'));
       var base=list[i++];
-      if(i>1&&base.indexOf('https:')===0){try{msg('内网连不上，正在切换公网…',true)}catch(e){}}
+      // 静默依次尝试，不给用户看「正在切换线路」这类过程提示
       var h={};if(body)h['Content-Type']='application/json';if(token)h['Authorization']='Bearer '+token;
       var opts={method:body?'POST':'GET',headers:h,body:body?JSON.stringify(body):undefined};
       var ctl=null,to=null;
@@ -405,7 +403,7 @@ var ABG=(function(){
       note.textContent=j.note||'付款后请联系管理员开通';
       note.className='ab-msg ok';
     }).catch(function(){
-      box.innerHTML='<div class="ab-qrhint">连不上服务器，收款码读不出来。<br>请确认设备连着家里 WiFi，或稍后重试。</div>';
+      box.innerHTML='<div class="ab-qrhint">连不上服务器，收款码读不出来。<br>请检查网络后稍后重试。</div>';
       note.textContent=netErr();note.className='ab-msg err';
     });
   }
@@ -567,7 +565,7 @@ var ABG=(function(){
     }else{
       show();
       if(location.protocol==='https:'&&!REMOTE_APIS.length)
-        msg('当前是 https 网页访问，浏览器会拦截内网请求；请用 App 或家里的内网地址登录');
+        msg('网络暂时连不上，请稍后重试');
     }
     $('abLoginPass').addEventListener('keydown',function(e){if(e.key==='Enter')login()});
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
