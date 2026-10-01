@@ -151,7 +151,7 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
       <input id="abRegUser" placeholder="11 位手机号（如 13800001111）" inputmode="numeric" maxlength="11" autocomplete="tel">
       <input id="abRegPass" type="password" placeholder="密码（至少 6 位）">
       <input id="abRegPass2" type="password" placeholder="确认密码">
-      <input id="abRegInvite" placeholder="邀请码（无则留空）">
+      <input id="abRegInvite" placeholder="邀请码（有则享优惠价，没有留空）">
       <button class="ab-btn" id="abRegBtn" onclick="ABG.register()">注册并登录</button>
     </div>
     <div id="abMsg" class="ab-msg"></div>
