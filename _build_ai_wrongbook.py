@@ -131,6 +131,11 @@ AUTH_CSS = """<style>
 #abPayQrBox img{width:230px;max-width:82%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:6px}
 #abPayQrBox .ab-qrhint{font-size:.8rem;color:#718096;line-height:1.6}
 #abPayNote.ok{color:#2f855a}#abPayNote.err{color:#c53030}
+.ab-lb{display:block;text-align:left;font-size:.8rem;color:#4a5568;font-weight:600;margin:.6rem 0 .25rem}
+.ab-card select{width:100%;padding:.55rem .7rem;border:1px solid #cbd5e0;border-radius:8px;font-size:.95rem;
+  font-family:inherit;background:#fff;color:#1a202c}
+.ab-rad{display:flex;gap:1.4rem;justify-content:flex-start;padding:.3rem 0 .2rem;font-size:.95rem;color:#2d3748}
+.ab-rad label{display:flex;align-items:center;gap:.35rem;cursor:pointer}
 .ab-btn2{width:100%;background:#edf2f7;color:#2d3748;border:none;padding:.6rem;border-radius:10px;
   font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:.5rem}
 .ab-trial.lock{background:#fed7d7;color:#c53030;cursor:pointer}
@@ -139,7 +144,7 @@ AUTH_CSS = """<style>
 AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本-测试版</div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">{APP_VER}</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
@@ -157,12 +162,36 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
       <button class="ab-btn" id="abRegBtn" onclick="ABG.register()">注册并登录</button>
     </div>
     <div id="abMsg" class="ab-msg"></div>
-    <div class="ab-foot">账号服务：家里的私有云 iStoreOS · 数据独立存储</div>
   </div>
 </div>
 <div id="abUserChip" class="ab-chip" style="display:none">
-  <span id="abUserName"></span><span id="abTrialTag" class="ab-trial" style="display:none"></span><span id="abOffTag" class="ab-off" style="display:none">离线</span>
+  <span id="abUserName" onclick="ABG.profileModal(true)" style="cursor:pointer" title="点这里填/改账号资料"></span><span id="abTrialTag" class="ab-trial" style="display:none"></span><span id="abOffTag" class="ab-off" style="display:none">离线</span>
   <a onclick="ABG.logout()">退出</a>
+</div>
+<div id="abProf" class="ab-gate ab-hide">
+  <div class="ab-card" style="max-width:400px">
+    <div class="ab-logo">📇 账号资料</div>
+    <div class="ab-sub">填一次就行，方便分班与联系；之后点右下角「👤」随时改</div>
+    <label class="ab-lb">城市</label>
+    <input id="abPfCity" placeholder="如：成都" maxlength="30">
+    <label class="ab-lb">学校名称</label>
+    <input id="abPfSchool" placeholder="如：树德实验中学" maxlength="60">
+    <label class="ab-lb">年级</label>
+    <select id="abPfGrade">
+      <option value="">请选择</option><option>六年级</option><option>七年级</option><option>八年级</option>
+      <option>九年级</option><option>高一</option><option>高二</option><option>高三</option><option>其他</option>
+    </select>
+    <label class="ab-lb">姓名</label>
+    <input id="abPfName" placeholder="孩子姓名或常用称呼" maxlength="20">
+    <label class="ab-lb">性别</label>
+    <div class="ab-rad">
+      <label><input type="radio" name="abPfGender" value="男"> 男</label>
+      <label><input type="radio" name="abPfGender" value="女"> 女</label>
+    </div>
+    <div id="abPfMsg" class="ab-msg" style="min-height:1.2em"></div>
+    <button class="ab-btn" onclick="ABG.saveProfile()">保存</button>
+    <button class="ab-btn2" onclick="ABG.closeProfile()">以后再说</button>
+  </div>
 </div>
 <div id="abPay" class="ab-gate ab-hide">
   <div class="ab-card" style="max-width:400px;text-align:center">
@@ -242,6 +271,13 @@ var ABG=(function(){
       else{tag.textContent='试用剩 '+a.days_left+' 天';tag.className='ab-trial';tag.onclick=null;tag.style.display=''}
     }
     if(a.locked)paywall();else hidePay();
+    // 资料为空 → 登录后提示填一次（每台设备只提示一次，可「以后再说」）
+    try{
+      if(!a.locked && profileEmpty(a.profile) && !localStorage.getItem('ab_prof_asked')){
+        localStorage.setItem('ab_prof_asked','1');
+        setTimeout(function(){profileModal(true)},900);
+      }
+    }catch(e){}
   }
   function payStep(step){
     var s1=$('abPayStep1'),s2=$('abPayStep2');
@@ -270,6 +306,32 @@ var ABG=(function(){
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
   function closePay(){hidePay()}
+  // ── 账号资料（城市/学校/年级/姓名/性别 → 后台可见）──
+  function profileEmpty(p){return !p||!(p.city||p.school||p.real_name)}
+  function profileModal(show){
+    var el=$('abProf');if(!el)return;
+    if(!show){el.classList.add('ab-hide');return}
+    var p=(ACCESS&&ACCESS.profile)||{};
+    $('abPfCity').value=p.city||'';$('abPfSchool').value=p.school||'';$('abPfGrade').value=p.grade||'';
+    $('abPfName').value=p.real_name||'';
+    var g=document.querySelector('input[name="abPfGender"][value="'+(p.gender||'')+'"]');if(g)g.checked=true;
+    $('abPfMsg').textContent='';$('abPfMsg').className='ab-msg';
+    el.classList.remove('ab-hide');
+  }
+  function closeProfile(){profileModal(false)}
+  function saveProfile(){
+    var g=document.querySelector('input[name="abPfGender"]:checked'),note=$('abPfMsg');
+    var body={city:$('abPfCity').value.trim(),school:$('abPfSchool').value.trim(),grade:$('abPfGrade').value,
+              real_name:$('abPfName').value.trim(),gender:g?g.value:''};
+    if(!body.city&&!body.school&&!body.real_name){note.textContent='至少填一项（城市/学校/姓名）再保存';note.className='ab-msg err';return}
+    note.textContent='保存中…';note.className='ab-msg';
+    request('/api/profile',body,localStorage.getItem(TOKEN_KEY)).then(function(r){
+      var j=r.json||{};
+      if(j.ok){if(ACCESS)ACCESS.profile=j.profile;note.textContent='✅ 已保存，谢谢！';note.className='ab-msg ok';
+        setTimeout(function(){profileModal(false)},700);}
+      else{note.textContent=j.error||'保存失败';note.className='ab-msg err'}
+    }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
+  }
   function paywall(){
     if(!ACCESS)return;
     showPay();
@@ -389,7 +451,7 @@ var ABG=(function(){
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay};
+  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile};
 })();
 </script>"""
 
@@ -442,6 +504,18 @@ GUARD_JS = """<script>
 </script>"""
 
 
+def app_version():
+    """App 版本号的单一来源：Android 工程里的 versionName（发新版改那一处即可）"""
+    try:
+        t = open('/home/administrator/android-build/make_aiwrongbook_project.py', encoding='utf-8').read()
+        m = re.search(r'android:versionName="([0-9.]+)"', t)
+        if m: return 'v' + m.group(1)
+    except Exception:
+        pass
+    return 'v1.0'
+APP_VER = app_version()
+
+
 def sub_once(text, old, new, label):
     if old not in text:
         print(f'  ✗ 锚点未找到: {label}', file=sys.stderr)
@@ -486,14 +560,14 @@ def main():
     # 命名：独立版 = 「AI错题本-测试版」（老板指定）
     s = h
     s = sub_once(s, '<title>AI错题本 · 赵若琳学习中心</title>',
-                 '<title>AI错题本-测试版</title>\n<base href="/xuci-jiancha/">', '独立版: 标题 + base')
+                 '<title>AI错题本 {APP_VER}</title>\n<base href="/xuci-jiancha/">', '独立版: 标题 + base')
     s = sub_once(s, '<a class="navbar-brand" href="index.html"><i class="fas fa-robot"></i> AI错题本</a>',
-                 '<span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本-测试版</span>', '独立版: 品牌链接去外链')
+                 '<span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 {APP_VER}</span>', '独立版: 品牌链接去外链')
     s = sub_once(s, 'AI错题本 · 收录「错题本」「三层训练」「复习要点」三项功能',
-                 'AI错题本-测试版 · 收录「错题本」「三层训练」「复习要点」三项功能', '独立版: 页脚命名')
+                 'AI错题本 {APP_VER} · 收录「错题本」「三层训练」「复习要点」三项功能', '独立版: 页脚命名')
     # 独立版数据已隔离 ⇒ 文案不能说"与错题库共用同一份"（老板会误解为错题会同步过来）
     s = sub_once(s, '数据与「错题库」共用同一份（本机存储 + 云端同步）',
-                 '数据独立存储（测试用，与错题库互不影响）', '独立版: 数据说明文案')
+                 '数据独立存储，与学校错题库互不影响', '独立版: 数据说明文案')
     s = sub_once(s, '// 数据层/渲染函数与原页完全同源；localStorage 键与云端后端也一致 ⇒ 两页数据互通：\n// 在原错题库录入或复习的题，这里立刻可见；反之亦然。',
                  '// ⚠️ 测试版：数据层与错题库「隔离」—— 独立 localStorage 键 + 独立后端\n'
                  '// （api_wrongbank_test.php / wrong_bank_data_test.json）。错题只进「错题库」与「AI错题本」，\n'
@@ -537,6 +611,10 @@ def main():
     s = sub_once(s, '</body>', AUTH_OVERLAY + auth_js + GUARD_JS + '\n</body>', '登录门禁: 登录页 + 脚本 + 只读守卫')
 
     os.makedirs(STANDALONE_DIR, exist_ok=True)
+    # 版本号占位符统一替换（来源 = Android versionName）
+    s = s.replace('{APP_VER}', APP_VER)
+    print('  版本号：' + APP_VER)
+
     open(STANDALONE, 'w', encoding='utf-8').write(s)
     ok = True
     chips = [
