@@ -172,6 +172,8 @@ AUTH_CSS = """<style>
 .ab-vbar>i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#7b8ff2,#4c5fd8);transition:width .35s ease}
 .ab-vbtn{width:100%;margin-top:.55rem;border:none;border-radius:12px;padding:.7rem;font-family:inherit;font-size:1rem;font-weight:800;color:#fff;cursor:pointer;letter-spacing:.5px;background:linear-gradient(135deg,#f7cf5b,#e0890a);box-shadow:0 6px 16px rgba(224,137,10,.3)}
 .ab-vbtn:active{transform:translateY(1px);box-shadow:0 3px 10px rgba(224,137,10,.3)}
+#abInvTip.warn{color:#b7791f}
+#abInvTip.ok{color:#2f855a}
 .ab-trial.lock{background:#fed7d7;color:#c53030;cursor:pointer}
 /* 账号胶囊放在子导航行最右（顶部三标签取消后走 .ab-navrow 兜底通道） */
 .ab-navrow .ab-chip{margin-left:auto}
@@ -231,6 +233,14 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
     <label class="ab-lb">会员状态</label>
     <div class="ab-vstate" id="abVipState"><div class="ab-vico">🎁</div><div class="ab-vtx"><div class="ab-vt">读取中</div><div class="ab-vs">正在获取会员状态…</div></div></div>
     <button class="ab-vbtn" id="abVipBtn" onclick="ABG.openPay()" style="display:none">👑 开通 VIP</button>
+    <button class="ab-btn2" id="abMyInvBtn" onclick="ABG.myInvite()" style="width:100%;margin-top:.5rem;font-weight:700">🎟️ 我的邀请码</button>
+    <div id="abInvBox" style="display:none;margin-top:.55rem;border:1px dashed #cbd5e0;border-radius:12px;padding:.65rem .7rem;background:#f7fafc;text-align:center">
+      <div id="abInvTip" style="font-size:.78rem;color:#718096;line-height:1.5">—</div>
+      <div id="abInvCodeBox" style="display:none;margin-top:.35rem">
+        <div id="abInvCode" style="font-size:1.35rem;font-weight:900;letter-spacing:3px;color:#2d3748;font-family:ui-monospace,Menlo,Consolas,monospace"></div>
+        <button class="ab-btn2" style="font-size:.78rem;padding:.28rem .8rem;margin-top:.35rem" onclick="ABG.copyInvite()">复制</button>
+      </div>
+    </div>
     <label class="ab-lb">数据备份（换手机 / 重装前建议先导出）</label>
     <div class="ab-bk">
       <button class="ab-btn2" onclick="ABG.exportData()">⬇ 导出备份</button>
@@ -455,6 +465,47 @@ var ABG=(function(){
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
   // ── 常驻入口：资料弹窗里的「👑 开通 VIP」──
+  // ── 我的邀请码（老板 2026-10-02：非 VIP 给提示；VIP 显示自己的专属码）──
+  var _invCode='';
+  function myInvite(){
+    var box=$('abInvBox'),tip=$('abInvTip'),cb=$('abInvCodeBox'),cd=$('abInvCode');
+    if(!box)return;
+    box.style.display='block';
+    cb.style.display='none';cd.textContent='';_invCode='';
+    tip.className='';
+    var a=ACCESS;
+    if(!a||!a.paid){
+      tip.className='warn';
+      tip.textContent='还不是 VIP —— 开通后自动获得你的专属邀请码';
+      return;
+    }
+    tip.textContent='正在获取…';
+    request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
+      if(r&&r.json&&r.json.access){ACCESS=r.json.access;a=r.json.access}
+      var c=(a&&a.vip_code)||'';
+      if(!c){tip.className='warn';tip.textContent='邀请码生成中，请稍后再点一次';return}
+      _invCode=c;
+      tip.className='ok';
+      tip.textContent='把这个码发给朋友，注册时填可享 299';
+      cd.textContent=c;cb.style.display='block';
+    },function(){
+      tip.className='warn';tip.textContent='网络连不上，请检查网络后重试';
+    });
+  }
+  function copyInvite(){
+    if(!_invCode)return;
+    var tip=$('abInvTip');
+    var ok=false;
+    try{
+      var ta=document.createElement('textarea');ta.value=_invCode;
+      ta.style.position='fixed';ta.style.top='-1000px';ta.setAttribute('readonly','readonly');
+      document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,_invCode.length);
+      ok=document.execCommand('copy');document.body.removeChild(ta);
+    }catch(e){}
+    if(!ok&&navigator.clipboard){try{navigator.clipboard.writeText(_invCode);ok=true}catch(e){}}
+    tip.className='ok';
+    tip.textContent=ok?'✅ 已复制，发给朋友即可':'长按上面的邀请码手动复制';
+  }
   function openPay(){
     try{profileModal(false)}catch(e){}
     try{paywall()}catch(e){}
@@ -470,6 +521,7 @@ var ABG=(function(){
     $('abPfName').value=p.real_name||'';
     var g=document.querySelector('input[name="abPfGender"][value="'+(p.gender||'')+'"]');if(g)g.checked=true;
     $('abPfMsg').textContent='';$('abPfMsg').className='ab-msg';
+    var _ib=$('abInvBox');if(_ib)_ib.style.display='none';
     el.classList.remove('ab-hide');
   }
   function closeProfile(){profileModal(false)}
@@ -700,7 +752,7 @@ var ABG=(function(){
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {login:login,register:register,openPay:openPay,submitPaid:submitPaid,redeemCard:redeemCard,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip,exportData:exportData,importData:importData};
+  return {login:login,register:register,openPay:openPay,submitPaid:submitPaid,redeemCard:redeemCard,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip,exportData:exportData,importData:importData,myInvite:myInvite,copyInvite:copyInvite};
 })();
 </script>"""
 
