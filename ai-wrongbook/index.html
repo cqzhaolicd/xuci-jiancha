@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.5</title>
+<title>AI错题本 v4.0.6</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -113,6 +113,13 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .recog-pick-btn{text-align:left;background:#fff;border:1.5px solid #ddd6fe;border-radius:10px;padding:.55rem .7rem;font-size:.85rem;cursor:pointer;font-family:inherit;color:var(--text);display:flex;flex-direction:column;gap:.2rem;transition:all .15s}
 .recog-pick-btn:hover{border-color:var(--primary);background:#fbfaff}
 .recog-pick-btn b{color:var(--primary)}
+.ai-only-tip{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #16a34a;border-radius:0 10px 10px 0;padding:.7rem .85rem;font-size:.85rem;line-height:1.7;color:#14532d;margin-bottom:.9rem}
+.manual-box{border:1px dashed #cbd5e1;border-radius:10px;background:#fcfcfd;padding:.5rem .7rem}
+.manual-box>summary{cursor:pointer;font-size:.82rem;font-weight:600;color:#64748b;outline:none;list-style:none}
+.manual-box>summary::-webkit-details-marker{display:none}
+.manual-box>summary:before{content:"▸ ";color:#94a3b8}
+.manual-box[open]>summary:before{content:"▾ "}
+.manual-inner{padding-top:.7rem}
 .rp-head{font-size:.82rem;font-weight:600;margin:.5rem 0 .45rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
 .rp-meta{font-weight:400;color:var(--text-light);font-size:.76rem}
 .rp-res{border:1.5px solid #e5e9f2;border-radius:12px;background:#fff;margin-bottom:.7rem;overflow:hidden;transition:.15s}
@@ -348,7 +355,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.5</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.6</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -362,7 +369,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.5 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.6 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -1117,7 +1124,7 @@ function renderRecPick(){
        <span class="q-badge badge-mastery">已选 ${n} 题</span>
        <button class="btn btn-outline btn-sm" onclick="recPickAll(${all?'false':'true'})">${all?'清空':'全选'}</button>
        <button class="btn btn-primary btn-sm" id="rp_go" onclick="aiAnalyzePicked()" ${n?'':'disabled style="opacity:.5"'}>
-         <i class="fas fa-wand-magic-sparkles"></i> ${n>1?`AI 一键分析这 ${n} 题`:'AI 识别并分析这题'}</button>
+         <i class="fas fa-wand-magic-sparkles"></i> ${n?`AI 一键分析这 ${n} 题`:'请先点选要录入的题'}</button>
      </div>
      <div style="font-size:.75rem;color:var(--text-light);margin-top:.15rem">第1题最准；其他题会再单独精读一遍。选多题时，全部分析完再让你勾选要保存的。</div>`;
 }
@@ -1129,9 +1136,6 @@ function afSubjectName(){
 async function aiAnalyzePicked(){
   const idx=[..._vlPick].sort((a,b)=>a-b);
   if(!idx.length){toast('先点选要录入的题目','error');return;}
-  if(idx.length===1){                    // 单选 → 走原流程（填进表单便于逐字核对后保存）
-    const i=idx[0];_vlPick.clear();renderRecPick();_vlBatch=[];return applyRecognized(i);
-  }
   const dataUrl=addForm.image_path;
   const btn=document.getElementById('rp_go');
   if(!vlCfg().key){setRecStatus('❌ 视觉模型没配 Key：「⚙️ AI 设置 → 视觉模型」',true);return;}
@@ -1329,9 +1333,12 @@ async function aiRecognizeImage(){
       setRecStatus('⚠️ 没认出题目文字'+(nt?'：'+esc(nt):'')+'　（换张更清楚的图，或手动填题干）',true);
       return;
     }
-    if(_vlQuestions.length===1&&_vlQuestions[0].content) applyRecognized(0);
-    else{
-      setRecStatus(`✅ 识别到 <b>${_vlQuestions.length}</b> 道题（${esc(o.source||'出处未识别')}）—— 点下面的题<b>选中</b>（可多选），再点「AI 一键分析」${nt?'（'+esc(nt)+'）':''}`);
+    if(_vlQuestions.length===1&&_vlQuestions[0].content){
+      _vlPick=new Set([0]);renderRecPick();            // 只有一题：自动选中并直接生成分析（不再填表）
+      setRecStatus(`✅ 识别到 <b>1</b> 道题（${esc(o.source||'出处未识别')}）—— 正在生成 答案/错因/考点/五维…`);
+      aiAnalyzePicked();
+    }else{
+      setRecStatus(`✅ 识别到 <b>${_vlQuestions.length}</b> 道题（${esc(o.source||'出处未识别')}）—— <b>点选要录入的题</b>（可多选，再点一次取消），然后点「AI 一键分析这 N 题」${nt?'（'+esc(nt)+'）':''}`);
       renderRecPick();
     }
   }catch(e){
@@ -1649,11 +1656,11 @@ function renderAdd(){
   return`<div class="card">
     <div class="card-title"><i class="fas fa-plus-circle" style="color:var(--primary)"></i> 录入新错题</div>
     <div class="img-first">
-      <div class="img-first-head"><i class="fas fa-camera"></i> 题目图片<span class="img-opt">选填 · 自动缩放</span></div>
+      <div class="img-first-head"><i class="fas fa-camera"></i> 拍题目图片<span class="img-opt">必填 · 自动缩放</span></div>
       <label class="img-drop" for="af_image">
         <i class="fas fa-cloud-upload-alt"></i>
         <div class="img-drop-main">点这里上传题目图片</div>
-        <div class="img-drop-sub">手机可直接拍照或从相册选图 · 自动压缩到 1600px（省流量、上传快）<br>不上传也行，下面手动输入文字</div>
+        <div class="img-drop-sub">手机可直接拍照或从相册选图 · 自动压缩到 1600px（省流量、上传快）<br>选好图点下面「AI 识别并分析」：认出题目和你的手写答案，再自动生成解析</div>
       </label>
       <input type="file" id="af_image" accept="image/*" class="img-file-hidden" onchange="handleFile(this,'image_path')">
       <div id="af_image_preview" class="img-preview" style="display:${addForm.image_path?'block':'none'}">
@@ -1667,6 +1674,10 @@ function renderAdd(){
         <span style="font-size:.74rem;color:var(--text-light)">选图后会自动识别；识别到多题可<b>多选</b>，一次分析完再勾选保存</span>
       </div>
     </div>
+    <div class="ai-only-tip">📸 <b>拍一张卷子就行</b>：AI 自动认出题干和「我的答案」，并生成 正确答案 · 错因 · 考点 · 难度 · 五维分析 → 勾选要保存的题 → 一键入库，<b>不用手填表</b>。</div>
+    <details class="manual-box">
+      <summary><i class="fas fa-pen"></i> 识别不了？点这里手动填（平时不用）</summary>
+      <div class="manual-inner">
     <div style="background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #ddd6fe;border-radius:10px;padding:.85rem 1rem;margin-bottom:1rem">
       <div style="font-weight:700;color:#5b21b6;margin-bottom:.35rem">🤖 AI 一键生成（大模型）</div>
       <div style="font-size:.83rem;color:#4c1d95;line-height:1.7">
@@ -1735,7 +1746,9 @@ function renderAdd(){
       <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
         <button class="btn btn-primary px-4"><i class="fas fa-save"></i> 保存错题</button>
         <button class="btn btn-outline px-4 ms-2" type="button" onclick="addForm={subject_id:1,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:lastGrade()};refreshAdd()">重置</button></div>
-    </form></div>`;
+    </form></div>      </form>
+    </details>
+  </div>`;
 }
 
 // ===================== FILE UPLOAD HELPERS =====================
@@ -3023,7 +3036,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.5</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.6</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
