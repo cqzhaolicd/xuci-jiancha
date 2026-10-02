@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.8</title>
+<title>AI错题本 v4.0.9</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -65,6 +65,13 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .navbar-nav{display:flex;gap:.2rem;flex-wrap:wrap}
 .navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .6rem;border-radius:8px;font-size:.82rem;transition:all .2s;display:flex;align-items:center;gap:.3rem;cursor:pointer}
 .navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+/* 返回上一页（老板 2026-10-02） */
+.navbar .container{gap:.35rem}
+.navbar-brand{margin-right:auto}
+.nav-back{display:none;align-items:center;gap:.3rem;color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.45);border-radius:20px;padding:.3rem .7rem;font-size:.82rem;font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .2s}
+.nav-back.on{display:inline-flex}
+.nav-back:hover{background:rgba(255,255,255,.32)}
+@media(max-width:768px){.nav-back span{display:none}.nav-back{padding:.32rem .55rem;font-size:.85rem}}
 .container{max-width:1100px;margin:0 auto;padding:1rem}
 .page{display:none}.page.active{display:block;animation:fadeInUp .35s ease}
 .card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
@@ -368,8 +375,9 @@ textarea.form-control{resize:vertical;min-height:70px}
             box-shadow:0 2px 8px rgba(0,0,0,.18);user-select:none;transition:.2s">☁️ 同步…</div>
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.8</span>
+  <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+    <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.9</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -383,7 +391,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.8 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.9 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -971,12 +979,38 @@ function applyBuiltinQuestions(){try{
 
 // ===================== ROUTER =====================
 let currentPage='dashboard';
-function navigate(page,data){
-  currentPage=page;
+// ── 返回上一页：返回栈 + 系统返回键联动（老板 2026-10-02）────
+let _navStack=[],_curData=null,_skipPop=0;
+function _paint(page,data){
+  currentPage=page;_curData=data===undefined?null:data;
   document.querySelectorAll('.navbar-nav a').forEach(a=>a.classList.toggle('active',a.dataset.page===page));
   render(page,data);
+  updateNavBack();
   window.scrollTo({top:0,behavior:'smooth'});
 }
+function navigate(page,data){
+  if(page==='dashboard')_navStack=[];
+  else{_navStack.push({page:currentPage,data:_curData});if(_navStack.length>30)_navStack.shift();}
+  try{history.pushState({nav:_navStack.length},'');}catch(e){}
+  _paint(page,data);
+}
+function goBack(){
+  if(!_navStack.length){if(currentPage!=='dashboard')navReset('dashboard');return;}
+  const p=_navStack.pop();
+  _skipPop++;try{history.back();}catch(e){_skipPop--;}
+  _paint(p.page,p.data);
+}
+function navReset(page,data,stack){   // 保存/删除后：重置返回栈，避免返回已经过期的页
+  _navStack=(stack||[{page:'dashboard',data:null}]).slice();
+  try{history.pushState({nav:_navStack.length},'');}catch(e){}
+  _paint(page,data);
+}
+function updateNavBack(){const b=document.getElementById('navBack');if(b)b.classList.toggle('on',_navStack.length>0);}
+window.addEventListener('popstate',function(){   // 安卓系统返回键
+  if(_skipPop>0){_skipPop--;return;}
+  if(!_navStack.length)return;
+  const p=_navStack.pop();_paint(p.page,p.data);
+});
 document.querySelectorAll('.navbar-nav a').forEach(a=>a.addEventListener('click',()=>navigate(a.dataset.page)));
 
 // ===================== TOAST =====================
@@ -1332,7 +1366,7 @@ function batchSave(){
   _vlBatch=[];_vlBatchPick=new Set();_vlPick=new Set();
   const box=document.getElementById('ai_recog_pick');if(box)box.innerHTML='';
   setRecStatus(`✅ 已保存 ${n} 道题（题目图片共用这一张）`);
-  navigate('list');
+  navReset('list',{},[{page:'dashboard',data:null}]);   // 返回 → 首页（不回录入页）
 }
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 // 模型有时把提示词模板当 note 回显，过滤掉这种无意义提示
@@ -1922,7 +1956,7 @@ function submitAdd(){
   setLastGrade(addForm.grade);
   addForm={subject_id:addForm.subject_id,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:addForm.grade||lastGrade(),image_path:'',answer_image_path:'',ana5:{}};
   toast('✅ 错题已保存','success');
-  navigate('detail',{qid});
+  navReset('detail',{qid},[{page:'dashboard',data:null},{page:'list',data:{}}]);   // 返回 → 列表
 }
 
 function addChapter(){
@@ -2098,7 +2132,7 @@ function saveEdit(qid){
   q.updated_at=now();
   saveData(d);
   toast('✅ 已保存','success');
-  navigate('detail',{qid});
+  navReset('detail',{qid},[{page:'dashboard',data:null},{page:'list',data:{}}]);   // 返回 → 列表
 }
 function deleteQ(qid){
   if(!confirm('确定删除这道错题？'))return;
@@ -2106,7 +2140,7 @@ function deleteQ(qid){
   d.questions=d.questions.filter(q=>q.id!==qid);
   saveData(d);
   toast('已删除','info');
-  navigate('list',{});
+  navReset('list',{},[{page:'dashboard',data:null}]);   // 返回 → 首页
 }
 
 // ===================== REVIEW =====================
@@ -3136,7 +3170,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.8</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.9</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>

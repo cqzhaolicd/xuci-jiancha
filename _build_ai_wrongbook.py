@@ -27,7 +27,8 @@ CSS = """/* ===== AI错题本 · 顶部导航（老板 2026-10-02：取消「错
 </style>"""
 
 NAV_OLD = """<nav class="navbar"><div class="container">
-  <a class="navbar-brand" href="#"><i class="fas fa-database"></i> 错题库</a>
+  <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
+  <a class="navbar-brand" href="#" onclick="navigate('dashboard');return false"><i class="fas fa-database"></i> 错题库</a>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
     <a data-page="add"><i class="fas fa-plus-circle"></i><span>录入</span></a>
@@ -40,7 +41,8 @@ NAV_OLD = """<nav class="navbar"><div class="container">
 </div></nav>"""
 
 NAV_NEW = """<nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+    <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
     <a class="navbar-brand" href="index.html"><i class="fas fa-robot"></i> AI错题本</a>
   </div>
   <div class="navbar-nav" id="mainNav">
