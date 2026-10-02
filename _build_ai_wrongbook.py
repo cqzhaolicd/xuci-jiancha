@@ -140,6 +140,7 @@ AUTH_CSS = """<style>
 .ab-trial{background:#fefcbf;color:#744210;border-radius:999px;padding:.05rem .45rem;font-size:.7rem;font-weight:700}
 #abPayQrBox img{width:230px;max-width:82%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:6px}
 #abPayQrBox .ab-qrhint{font-size:.8rem;color:#718096;line-height:1.6}
+  .ab-invite-note{display:inline-block;margin:0 0 6px;padding:4px 14px;border-radius:999px;background:#e8f7ee;color:#1a7f4b;border:1px solid #b7e4c9;font-size:13px;font-weight:700}
   .ab-paytip{margin-top:10px;font-size:15px;font-weight:700;color:#b45309;background:#fff7e6;border:1px dashed #f0b429;border-radius:10px;padding:8px 10px;line-height:1.5}
   .ab-paytip b{font-size:22px;color:#d97706}
 #abPayNote.ok{color:#2f855a}#abPayNote.err{color:#c53030}
@@ -230,6 +231,7 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
     <div class="ab-sub" id="abPaySub">一次付费 · 永久使用</div>
     <div id="abPayWhy" class="ab-msg err" style="display:none;background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:.45rem .6rem;margin-top:.5rem"></div>
     <div id="abPayStep1">
+      <div class="ab-invite-note" style="margin-bottom:8px">🎉 邀请码优惠 100 元（399 → 299）</div>
       <input id="abPayInvite" placeholder="邀请码（有则享 299 元，没有可留空）" style="text-transform:uppercase">
       <button class="ab-btn" onclick="ABG.claimInvite()">使用邀请码，按 299 元开通</button>
       <button class="ab-btn2" onclick="ABG.payStep('qr')">直接开通（399 元）</button>
@@ -237,6 +239,7 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
     </div>
     <div id="abPayStep2" style="display:none">
       <div id="abPayAmt" style="font-size:1.7rem;font-weight:800;color:#e53e3e;margin:8px 0">￥--</div>
+      <div id="abPayInviteNote" class="ab-invite-note" style="display:none">🎉 邀请码优惠 100 元</div>
       <div id="abPayQrBox" style="margin:10px 0;min-height:60px"></div>
       <input id="abPayUserNote" placeholder="选填：付款时留的备注 / 微信昵称（便于核对）" style="margin-bottom:6px">
       <button class="ab-btn" onclick="ABG.submitPaid()">✅ 我已付款，提交核对</button>
@@ -453,13 +456,14 @@ var ABG=(function(){
   function paywall(){
     if(!ACCESS)return;
     showPay();
-    if(!ACCESS.invite_code){payStep('invite');return}
+    // 两种情况都直达收款码页：填了邀请码=299；没填=399（同页还有「我有卡密」入口）
     payStep('qr');
   }
   function payQr(){
     var box=$('abPayQrBox'),note=$('abPayNote');
     $('abPayAmt').textContent='￥'+(ACCESS?ACCESS.price:'--');
     $('abPaySub').textContent='微信扫码付款';
+    var _in=$('abPayInviteNote');if(_in)_in.style.display=(ACCESS&&ACCESS.invite_code)?'':'none';
     note.textContent='正在读取收款码…';note.className='ab-msg';
     request('/api/payinfo',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
       var j=r.json||{};
