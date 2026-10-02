@@ -172,8 +172,19 @@ AUTH_CSS = """<style>
 .ab-vbar>i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#7b8ff2,#4c5fd8);transition:width .35s ease}
 .ab-vbtn{width:100%;margin-top:.55rem;border:none;border-radius:12px;padding:.7rem;font-family:inherit;font-size:1rem;font-weight:800;color:#fff;cursor:pointer;letter-spacing:.5px;background:linear-gradient(135deg,#f7cf5b,#e0890a);box-shadow:0 6px 16px rgba(224,137,10,.3)}
 .ab-vbtn:active{transform:translateY(1px);box-shadow:0 3px 10px rgba(224,137,10,.3)}
-#abInvTip.warn{color:#b7791f}
-#abInvTip.ok{color:#2f855a}
+.ab-invbtn{width:100%;margin-top:.55rem;border:none;border-radius:12px;padding:.82rem;font-family:inherit;font-size:1.03rem;font-weight:800;color:#fff;cursor:pointer;letter-spacing:.5px;background:linear-gradient(135deg,#48bb78,#2f855a);box-shadow:0 6px 16px rgba(47,133,90,.32)}
+.ab-invbtn:active{transform:translateY(1px);box-shadow:0 3px 10px rgba(47,133,90,.32)}
+.ab-invbox{display:none;margin-top:.6rem;border-radius:14px;padding:.85rem;text-align:center}
+.ab-invbox.warnbox{background:#fffaf0;border:1px solid #f6c46b}
+.ab-invbox.okbox{background:#f0fff4;border:1px solid #9ae6b4}
+.ab-invttl{font-size:1.02rem;font-weight:800;line-height:1.4}
+.ab-invbox.warnbox .ab-invttl{color:#b7791f}
+.ab-invbox.okbox .ab-invttl{color:#276749}
+.ab-invcode{margin:.55rem 0 .2rem;padding:.5rem .3rem;border-radius:12px;background:#fff;border:2px dashed #9ae6b4;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.72rem;font-weight:900;letter-spacing:5px;color:#22543d;word-break:break-all}
+.ab-invcopy{width:100%;margin-top:.6rem;border:none;border-radius:11px;padding:.78rem;font-family:inherit;font-size:1.05rem;font-weight:800;color:#fff;cursor:pointer;letter-spacing:.5px;background:linear-gradient(135deg,#48bb78,#2f855a);box-shadow:0 5px 14px rgba(47,133,90,.3)}
+.ab-invcopy:active{transform:translateY(1px)}
+.ab-invhint{font-size:.82rem;font-weight:600;color:#4a5568;margin-top:.5rem;line-height:1.5}
+.ab-invbox.okbox .ab-invhint{color:#2f855a}
 .ab-trial.lock{background:#fed7d7;color:#c53030;cursor:pointer}
 /* 账号胶囊放在子导航行最右（顶部三标签取消后走 .ab-navrow 兜底通道） */
 .ab-navrow .ab-chip{margin-left:auto}
@@ -233,14 +244,8 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
     <label class="ab-lb">会员状态</label>
     <div class="ab-vstate" id="abVipState"><div class="ab-vico">🎁</div><div class="ab-vtx"><div class="ab-vt">读取中</div><div class="ab-vs">正在获取会员状态…</div></div></div>
     <button class="ab-vbtn" id="abVipBtn" onclick="ABG.openPay()" style="display:none">👑 开通 VIP</button>
-    <button class="ab-btn2" id="abMyInvBtn" onclick="ABG.myInvite()" style="width:100%;margin-top:.5rem;font-weight:700">🎟️ 我的邀请码</button>
-    <div id="abInvBox" style="display:none;margin-top:.55rem;border:1px dashed #cbd5e0;border-radius:12px;padding:.65rem .7rem;background:#f7fafc;text-align:center">
-      <div id="abInvTip" style="font-size:.78rem;color:#718096;line-height:1.5">—</div>
-      <div id="abInvCodeBox" style="display:none;margin-top:.35rem">
-        <div id="abInvCode" style="font-size:1.35rem;font-weight:900;letter-spacing:3px;color:#2d3748;font-family:ui-monospace,Menlo,Consolas,monospace"></div>
-        <button class="ab-btn2" style="font-size:.78rem;padding:.28rem .8rem;margin-top:.35rem" onclick="ABG.copyInvite()">复制</button>
-      </div>
-    </div>
+    <button class="ab-invbtn" id="abMyInvBtn" onclick="ABG.myInvite()">🎟️ 我的邀请码</button>
+    <div id="abInvBox" class="ab-invbox"></div>
     <label class="ab-lb">数据备份（换手机 / 重装前建议先导出）</label>
     <div class="ab-bk">
       <button class="ab-btn2" onclick="ABG.exportData()">⬇ 导出备份</button>
@@ -465,36 +470,39 @@ var ABG=(function(){
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
   // ── 常驻入口：资料弹窗里的「👑 开通 VIP」──
-  // ── 我的邀请码（老板 2026-10-02：非 VIP 给提示；VIP 显示自己的专属码）──
+  // ── 我的邀请码（老板 2026-10-02：非 VIP 给提示；VIP 显示自己的专属码；按钮与结果都做显眼）──
   var _invCode='';
-  function myInvite(){
-    var box=$('abInvBox'),tip=$('abInvTip'),cb=$('abInvCodeBox'),cd=$('abInvCode');
-    if(!box)return;
+  function invBox(kind,title,html,hint){
+    var box=$('abInvBox');if(!box)return;
+    box.className='ab-invbox '+(kind==='ok'?'okbox':'warnbox');
     box.style.display='block';
-    cb.style.display='none';cd.textContent='';_invCode='';
-    tip.className='';
-    var a=ACCESS;
-    if(!a||!a.paid){
-      tip.className='warn';
-      tip.textContent='还不是 VIP —— 开通后自动获得你的专属邀请码';
-      return;
-    }
-    tip.textContent='正在获取…';
-    request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
-      if(r&&r.json&&r.json.access){ACCESS=r.json.access;a=r.json.access}
-      var c=(a&&a.vip_code)||'';
-      if(!c){tip.className='warn';tip.textContent='邀请码生成中，请稍后再点一次';return}
+    box.innerHTML='<div class="ab-invttl">'+title+'</div>'+(html||'')+(hint?'<div class="ab-invhint" id="abInvHint">'+hint+'</div>':'');
+  }
+  function myInvite(){
+    var box=$('abInvBox');if(!box)return;
+    function decide(){
+      var a=ACCESS;
+      if(!a||!a.paid){
+        invBox('warn','🎟️ 还没开通 VIP','','开通后自动获得你的专属邀请码<br>朋友用它注册，可享 299 元优惠');
+        return;
+      }
+      var c=a.vip_code||'';
+      if(!c){invBox('warn','🎟️ 邀请码生成中','','请稍后再点一次');return}
       _invCode=c;
-      tip.className='ok';
-      tip.textContent='把这个码发给朋友，注册时填可享 299';
-      cd.textContent=c;cb.style.display='block';
-    },function(){
-      tip.className='warn';tip.textContent='网络连不上，请检查网络后重试';
-    });
+      invBox('ok','🎟️ 你的专属邀请码','<div class="ab-invcode">'+c+'</div>'
+        +'<button class="ab-invcopy" onclick="ABG.copyInvite()">复制邀请码</button>',
+        '发给朋友，注册时填可享 299 元');
+    }
+    // 每次都实时拉一次最新状态：刚开通 VIP 但页面还是旧缓存时，不能误报「还没开通」
+    invBox('ok','🎟️ 正在获取邀请码…','','');
+    request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
+      if(r&&r.json&&r.json.access){ACCESS=r.json.access}
+      decide();
+    },function(){ decide(); });   // 断网：用缓存兜底，别把人挡在门外
   }
   function copyInvite(){
     if(!_invCode)return;
-    var tip=$('abInvTip');
+    var hint=$('abInvHint');
     var ok=false;
     try{
       var ta=document.createElement('textarea');ta.value=_invCode;
@@ -503,8 +511,7 @@ var ABG=(function(){
       ok=document.execCommand('copy');document.body.removeChild(ta);
     }catch(e){}
     if(!ok&&navigator.clipboard){try{navigator.clipboard.writeText(_invCode);ok=true}catch(e){}}
-    tip.className='ok';
-    tip.textContent=ok?'✅ 已复制，发给朋友即可':'长按上面的邀请码手动复制';
+    if(hint){hint.textContent=ok?'✅ 已复制，发给朋友即可':'长按上面的邀请码手动复制';hint.style.color=ok?'#2f855a':'#b7791f';}
   }
   function openPay(){
     try{profileModal(false)}catch(e){}
