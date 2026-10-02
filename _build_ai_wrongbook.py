@@ -468,7 +468,6 @@ var ABG=(function(){
     request('/api/payinfo',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
       var j=r.json||{};
       if(j.amount)$('abPayAmt').textContent='￥'+j.amount;
-      if(j.reason)$('abPaySub').textContent=j.reason;
       var _is299=(j.which==='299')||(!j.which&&ACCESS&&ACCESS.invite_code);
       var _fb=_is299?BUILTIN_QR_299:BUILTIN_QR_399;
       var _html='<img src="'+((j.qr_ready&&j.qr_data)?j.qr_data:_fb)+'" alt="收款码">';
