@@ -242,7 +242,7 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
       <div id="abPayInviteNote" class="ab-invite-note" style="display:none">🎉 您有邀请码，减免100元</div>
       <div id="abPayQrBox" style="margin:10px 0;min-height:60px"></div>
       <input id="abPayUserNote" placeholder="选填：付款时留的备注 / 微信昵称（便于核对）" style="margin-bottom:6px">
-      <button class="ab-btn" onclick="ABG.submitPaid()">✅ 我已付款，提交核对</button>
+      <button class="ab-btn" onclick="ABG.submitPaid()">✅ 我已付款，提交刷新</button>
       <button class="ab-btn2" onclick="ABG.refreshPay()">🔄 已开通？刷新状态</button>
       <div id="abPayCardEntry" style="display:none;margin-top:14px;padding-top:12px;border-top:1px dashed #cbd5e0">
         <button class="ab-btn2" onclick="ABG.payStep('card')" style="border-color:#f6ad55;color:#b7791f;background:#fffaf0">🎟️ 我有卡密，直接开通</button>
@@ -396,8 +396,18 @@ var ABG=(function(){
       var j=r.json||{};
       if(j.ok){
         if(j.already){note.textContent='该账号已是 VIP';note.className='ab-msg ok';refreshPay();return}
-        note.innerHTML='✅ 已提交核对（应付 ￥'+j.amount+'）<br>管理员核对到账后即开通；开通后点「🔄 已开通？刷新状态」即可，不用重新登录。';
+        note.innerHTML='✅ 已提交（应付 ￥'+j.amount+'）<br>管理员核对到账后自动开通；已自动刷新，开通后进来即可用，不用重新登录。';
         note.className='ab-msg ok';
+        // 提交后自动静默刷新一次：若已开通直接进入
+        request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r2){
+          var a2=(r2.json||{}).access;
+          if(a2&&!a2.locked){
+            ACCESS=a2;setLock(false);hidePay();
+            chip(JSON.parse(localStorage.getItem(USER_KEY)||'{}')||{username:'已登录'});
+            alert('✅ 已开通，欢迎继续使用！');
+            try{location.reload()}catch(e){}
+          }
+        }).catch(function(){});
       }else{note.textContent=j.error||'提交失败';note.className='ab-msg err'}
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
@@ -472,7 +482,7 @@ var ABG=(function(){
       var _fb=_is299?BUILTIN_QR_299:BUILTIN_QR_399;
       var _html='<img src="'+((j.qr_ready&&j.qr_data)?j.qr_data:_fb)+'" alt="收款码">';
       box.innerHTML=_html;
-      note.textContent=j.note||'付款后点「✅ 我已付款，提交核对」，我们核对到账后即开通；也可用卡密直接开通。';
+      note.textContent=j.note||'付款后点「✅ 我已付款，提交刷新」，我们核对到账后即开通；也可用卡密直接开通。';
       note.className='ab-msg ok';
     }).catch(function(){
       var _i2=!!(ACCESS&&ACCESS.invite_code);
@@ -494,7 +504,7 @@ var ABG=(function(){
         return;
       }
       applyAccess(a);
-      note.textContent='还没查到开通记录。已付款请点「✅ 我已付款，提交核对」，管理员核对到账后即开通；也可用卡密直接开通。';
+      note.textContent='还没查到开通记录。已付款请点「✅ 我已付款，提交刷新」，管理员核对到账后即开通；也可用卡密直接开通。';
       note.className='ab-msg err';
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
