@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.1</title>
+<title>AI错题本 v4.0.2</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -311,7 +311,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.1</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.2</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -325,7 +325,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.1 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.2 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -944,32 +944,47 @@ function aiKeySource(){return _aiStored().key?'本机自填 Key':'App 内置 Key
 // ===== 视觉模型（拍图录题）：与文本模型分开配置 =====
 // 老板 2026-10-02：选图 → AI 识别（基本信息/题干/我的错误答案）→ 自动生成（答案/错因/考点/五维）
 const VL_LS='wb_vl_cfg';
-const VL_EMBED_KEY='';   // ← 手机 App 打包脚本注入（硅基流动 Key）；仓库里始终为空
-const VL_DEFAULT={base:'https://api.siliconflow.cn/v1',model:'Qwen/Qwen3-VL-30B-A3B-Instruct',key:''};
+const VL_EMBED_KEY='';   // ← 手机 App 打包脚本注入；仓库里始终为空
+// 默认视觉模型 = DeepSeek deepseek-flash（与文本模型同供应商：一把 Key 通用、实测更快）
+// 备选：硅基流动 https://api.siliconflow.cn/v1 + Qwen/Qwen3-VL-30B-A3B-Instruct（或 …-8B-Instruct 更快）
+const VL_DEFAULT={base:'https://api.deepseek.com/v1',model:'deepseek-flash',key:''};
 function _vlStored(){try{return JSON.parse(localStorage.getItem(VL_LS)||'{}')||{};}catch(e){return {};}}
-// 视觉模型必须支持「图片输入」。DeepSeek 只有文本模型 —— 地址/模型名一旦被填成它，接口必 404。
-function _vlUsable(base,model){
-  const b=String(base||''),m=String(model||'');
-  if(!b) return false;
-  if(/deepseek/i.test(b)||/deepseek/i.test(m)) return false;
-  return true;
+// 视觉模型必须能「看图」。实测（2026-10-02）：
+//   ✅ DeepSeek `deepseek-flash` 能看图且快（整卷识别 ~6s，比硅基流动 Qwen3-VL 快 4 倍）
+//   ❌ DeepSeek `deepseek-v4-pro` 看不到图片（回「无法查看图片」）；`DeepSeek-V4.1-Flash` 这个名字不存在 → 400/404
+//   ✅ 硅基流动 Qwen/Qwen3-VL-30B-A3B-Instruct（备选，慢一些）
+const VL_DS_NAMES=['deepseek-flash','deepseek-v4-pro','deepseek-chat','deepseek-reasoner'];
+function _isDs(base){return /deepseek/i.test(String(base||''));}
+function _vlModelOk(base,model){          // 仅对 DeepSeek 做「模型名是否官方存在」的防呆
+  const m=String(model||'').trim().toLowerCase();
+  if(!_isDs(base)) return true;
+  return VL_DS_NAMES.indexOf(m)>=0;
 }
 var _vlAutoFixed=false;
 function vlCfg(){
-  const s=_vlStored()||{};
-  let c={...VL_DEFAULT,...s};
-  if(!_vlUsable(c.base,c.model)){          // 存过一份不可用的配置 → 自动忽略，用默认
-    c={...VL_DEFAULT,key:s.key||''};_vlAutoFixed=true;
+  const s=_vlStored()||{};let c={...VL_DEFAULT,...s};
+  if(!String(c.base||'').trim()||!String(c.model||'').trim()||!_vlModelOk(c.base,c.model)){
+    c={...VL_DEFAULT,key:s.key||''};_vlAutoFixed=true;      // 不可用 → 自动改回默认（保留 Key）
     try{const k=JSON.parse(localStorage.getItem(VL_LS)||'{}')||{};k.base='';k.model='';
         localStorage.setItem(VL_LS,JSON.stringify(k));}catch(e){}
   }
-  if(!c.key) c.key=VL_EMBED_KEY;
+  // 视觉与文本同一供应商（DeepSeek）时，直接复用文本模型那把 Key，无需再配
+  if(!c.key){
+    if(_isDs(c.base)){const a=aiCfg();c.key=a.key||AI_EMBED_KEY;}
+    if(!c.key)c.key=VL_EMBED_KEY;
+  }
   return c;
 }
-// 64×64 纯色 PNG（硅基流动 Qwen3-VL 要求边长 >28px；1×1 会被判 400）
+// 64×64 纯色 PNG（Qwen3-VL 要求边长 >28px；1×1 会被判 400）
 const VL_PROBE_PNG='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAAT0lEQVR42u3PQQkAAAgEsEty/aMYywi+hcEKLNO+FgEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQGBywLKp0DxvxLbjwAAAABJRU5ErkJggg==';
 function vlSaveCfg(o){localStorage.setItem(VL_LS,JSON.stringify(o));}
-function vlKeySource(){return _vlStored().key?'本机自填 Key':'App 内置 Key';}
+function vlKeySource(){
+  const s=_vlStored();
+  if(s.key) return '本机自填 Key';
+  const c=vlCfg();
+  if(_isDs(c.base)&&c.key&&c.key===(aiCfg().key||AI_EMBED_KEY)) return '与文本模型同一把 Key';
+  return c.key?'App 内置 Key':'未配置';
+}
 const VL_SYS=`你是初中试卷识别助手。用户会给你一张学生做过的练习题/试卷照片（学生答案多为手写、可能有红笔批改）。
 铁律：
 1) 只抄你真正看清的文字；看不清的地方写「【看不清】」，绝不猜测、绝不编造题号/选项/数字/单位/人名。
@@ -1283,12 +1298,12 @@ function renderAiConf(){
         <br>当前 Key 来源：<b>${vlKeySource()}</b>${VL_EMBED_KEY?'（App 已内置，可直接用）':''}
       </p>
       ${_vlAutoFixed?`<p style="font-size:.8rem;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:.5rem .6rem;line-height:1.7">
-        ⚠️ 之前保存的视觉配置指向 <b>DeepSeek</b>，但 DeepSeek 只有文本模型、<b>没有视觉模型</b>（会报 HTTP 404），已自动改回默认。</p>`:''}
+        ⚠️ 之前保存的视觉模型名 DeepSeek 没有（例如 <code>DeepSeek-V4.1-Flash</code>），已自动改回默认 <code>deepseek-flash</code>。</p>`:''}
       <label class="form-label">视觉 API 地址</label>
-      <input class="form-control" id="vl_base" value="${v.base}" placeholder="https://api.siliconflow.cn/v1">
+      <input class="form-control" id="vl_base" value="${v.base}" placeholder="https://api.deepseek.com/v1">
       <label class="form-label" style="margin-top:.5rem">视觉模型名</label>
-      <input class="form-control" id="vl_model" value="${v.model}" placeholder="Qwen/Qwen3-VL-30B-A3B-Instruct">
-      <label class="form-label" style="margin-top:.5rem">视觉 API Key（留空＝用 App 内置；只存本机，不上传）</label>
+      <input class="form-control" id="vl_model" value="${v.model}" placeholder="deepseek-flash">
+      <label class="form-label" style="margin-top:.5rem">视觉 API Key（留空＝用与文本模型同一把 Key / App 内置；只存本机，不上传）</label>
       <input class="form-control" id="vl_key" type="password" value="${vs.key||''}" placeholder="sk-…">
       <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap">
         <button class="btn btn-primary" onclick="vlConfSave()"><i class="fas fa-save"></i> 保存视觉设置</button>
@@ -1297,10 +1312,11 @@ function renderAiConf(){
       </div>
       <div id="vl_test_result" style="margin-top:.7rem;font-size:.85rem;color:var(--text-light)"></div>
       <p style="margin-top:.9rem;font-size:.78rem;color:var(--text-light)">
-        💡 <b>文本模型 ≠ 视觉模型</b>：这里必须填「能看图」的模型。国内可用：硅基流动（默认，下面两个）、智谱 <code>glm-4v-flash</code> 等；DeepSeek 只做文本，填这里必报 404。<br>
+        💡 默认就是 <b>DeepSeek <code>deepseek-flash</code></b>（和文本模型同一家、同一把 Key，最快；实测整卷识别约 6 秒）。<br>
+        💡 DeepSeek 官方模型名只有 <code>deepseek-flash</code>（能看图）、<code>deepseek-v4-pro</code>（<b>不能</b>看图）——填别的名字会报错。<br>
+        💡 也可改用硅基流动：<code>https://api.siliconflow.cn/v1</code> + <code>Qwen/Qwen3-VL-30B-A3B-Instruct</code>（准但慢些）或 <code>…-8B-Instruct</code>（快）。<br>
         💡 识别只抄「看得清的字」，看不清会标【看不清】，绝不瞎编；识别结果请核对题干再保存。<br>
-        💡 一张照片有多道题：会列出来让你挑一道录入。<br>
-        💡 硅基流动可用模型：<code>Qwen/Qwen3-VL-30B-A3B-Instruct</code>（默认，准）、<code>Qwen/Qwen3-VL-8B-Instruct</code>（快）。
+        💡 一张照片有多道题：会列出来让你挑一道录入。
       </p>
     </div></div>`;
 }
@@ -1323,25 +1339,33 @@ function vlConfReset(){
 async function vlConfTest(){
   const el=document.getElementById('vl_test_result');
   const g=id=>(document.getElementById(id)||{}).value||'';
-  const cfg={base:g('vl_base').trim(),model:g('vl_model').trim(),key:g('vl_key').trim()||VL_EMBED_KEY};
+  const cfg={base:g('vl_base').trim(),model:g('vl_model').trim(),key:g('vl_key').trim()};
+  if(!cfg.key){ const v=vlCfg(); cfg.key=v.key; cfg.base=cfg.base||v.base; cfg.model=cfg.model||v.model; }
   if(!cfg.key){el.textContent='⚠️ 还没有 Key';return;}
-  if(!_vlUsable(cfg.base,cfg.model)){
-    el.innerHTML='❌ 这个地址/模型不能看图：<b>DeepSeek 只有文本模型，没有视觉模型</b>（所以报 404）。<br>'+
-      '👉 换成 <b>硅基流动</b>：地址 <code>https://api.siliconflow.cn/v1</code>，模型 <code>Qwen/Qwen3-VL-30B-A3B-Instruct</code>。<br>'+
-      '（或点下面的「恢复默认」）';
+  if(!_vlModelOk(cfg.base,cfg.model)){
+    el.innerHTML='❌ DeepSeek 没有这个模型名：<code>'+cfg.model+'</code><br>'+
+      '👉 DeepSeek 官方模型只有 <code>deepseek-flash</code>（能看图，推荐）和 <code>deepseek-v4-pro</code>（不能看图）。<br>'+
+      '点「恢复默认」即可。';
     return;
   }
   el.textContent='⏳ 正在测试视觉接口（约 5-20 秒）…';
   try{
-    const j=await aiChatRaw([{role:'user',content:[{type:'image_url',image_url:{url:VL_PROBE_PNG}},{type:'text',text:'只回复JSON {"ok":true}'}]}],cfg,200,false);
-    el.textContent='✅ 视觉接口连通：'+cfg.model+'（'+(j.usage?j.usage.total_tokens+' tokens':'响应正常')+'）';
+    const j=await aiChatRaw([{role:'user',content:[{type:'image_url',image_url:{url:VL_PROBE_PNG}},{type:'text',text:'看这张图，只回复JSON {"ok":true}'}]}],cfg,800,false);
+    const c=((j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||'').trim();
+    if(!c || /无法查看图片|Unsupported Image|cannot see|看不到/i.test(c)){
+      el.innerHTML='⚠️ 接口通了，但<b>这个模型看不到图片</b>（回复：'+(c||'空')+'）。<br>'+
+        '👉 视觉请用 <code>deepseek-flash</code>，或硅基流动 <code>Qwen/Qwen3-VL-30B-A3B-Instruct</code>。';
+      return;
+    }
+    el.textContent='✅ 视觉接口可用：'+cfg.model+'（'+(j.usage?j.usage.total_tokens+' tokens':'响应正常')+'）';
   }catch(e){
     const m=String(e.message||'');
     let hint='';
-    if(/404/.test(m)) hint='。地址里没有这个模型名 → 换个模型名，或点「恢复默认」';
+    if(/400/.test(m)&&/model name/i.test(m)) hint='。模型名不存在 → 用 deepseek-flash，或点「恢复默认」';
+    else if(/404/.test(m)) hint='。地址或模型名不对 → 检查地址是否为 https://api.deepseek.com/v1，或点「恢复默认」';
     else if(/401|403/.test(m)) hint='。这个 Key 无效或没有权限';
-    else if(/400/.test(m)) hint='。接口拒收该请求，多为「模型不支持图片输入」';
-    else if(/fetch|Network|cross-origin|CORS/i.test(m)) hint='。网络不通或被跨域拦截（换用手机 App 版更稳）';
+    else if(/400/.test(m)) hint='。接口拒收该请求，多为模型名不对或模型不支持图片';
+    else if(/fetch|Network|cross-origin|CORS/i.test(m)) hint='。网络不通或被跨域拦截（手机 App 版不受此影响）';
     el.textContent='❌ 失败：'+m+hint;
   }
 }
@@ -2820,7 +2844,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.1</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.2</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
