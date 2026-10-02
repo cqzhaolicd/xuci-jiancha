@@ -27,7 +27,6 @@ CSS = """/* ===== AI错题本 · 顶部导航（老板 2026-10-02：取消「错
 </style>"""
 
 NAV_OLD = """<nav class="navbar"><div class="container">
-  <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
   <a class="navbar-brand" href="#" onclick="navigate('dashboard');return false"><i class="fas fa-database"></i> 错题库</a>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -38,11 +37,11 @@ NAV_OLD = """<nav class="navbar"><div class="container">
     <a data-page="print-page"><i class="fas fa-print"></i><span>打印</span></a>
     <a data-page="analysis"><i class="fas fa-chart-pie"></i><span>分析</span></a>
   </div>
+  <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
 </div></nav>"""
 
 NAV_NEW = """<nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-    <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
     <a class="navbar-brand" href="index.html"><i class="fas fa-robot"></i> AI错题本</a>
   </div>
   <div class="navbar-nav" id="mainNav">
@@ -52,6 +51,9 @@ NAV_NEW = """<nav class="navbar"><div class="container" style="flex-direction:co
     <a data-page="review"><i class="fas fa-redo"></i><span>复习</span></a>
     <a data-page="print-page"><i class="fas fa-print"></i><span>打印</span></a>
     <a data-page="analysis"><i class="fas fa-chart-pie"></i><span>分析</span></a>
+  </div>
+  <div style="display:flex;justify-content:flex-end">
+    <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
   </div>
 </div></nav>"""
 
@@ -305,9 +307,9 @@ var ABG=(function(){
     var why=document.getElementById('abPayWhy');if(why){why.style.display='none'}
     var tag=$('abTrialTag');
     if(tag){
-      if(a.paid){tag.textContent='VIP·已开通';tag.className='ab-trial';tag.onclick=null;tag.style.display=''}
-      else if(a.expired){tag.textContent='试用已结束 · 点此开通';tag.className='ab-trial lock';tag.onclick=function(){paywall()};tag.style.display=''}
-      else{tag.textContent='试用剩 '+a.days_left+' 天';tag.className='ab-trial';tag.onclick=null;tag.style.display=''}
+      if(a.paid){tag.textContent='V';tag.title='VIP · 已开通';tag.className='ab-trial';tag.onclick=null;tag.style.display=''}
+      else if(a.expired){tag.title='';tag.textContent='试用已结束 · 点此开通';tag.className='ab-trial lock';tag.onclick=function(){paywall()};tag.style.display=''}
+      else{tag.title='';tag.textContent='试用剩 '+a.days_left+' 天';tag.className='ab-trial';tag.onclick=null;tag.style.display=''}
     }
     if(a.locked)paywall();else hidePay();
     // 资料为空 → 登录后提示填一次（每台设备只提示一次，可「以后再说」）
@@ -412,6 +414,9 @@ var ABG=(function(){
       note.className='ab-msg err';
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
+  function placeBack(host){   // 【老板 2026-10-02】返回按钮固定在这一排最右
+    var nb=$('navBack');if(nb&&host&&nb.parentNode!==host)host.appendChild(nb);
+  }
   function placeChip(){
     var c=$('abUserChip');if(!c)return;
     // 【老板 2026-10-01】账号要跟「错题本/三层训练/复习要点」这排标签同一行、靠最右。
@@ -420,11 +425,12 @@ var ABG=(function(){
       var host=tabs.parentNode;
       host.style.flexWrap='wrap';                 // 极窄屏才换行；换行后依然靠右
       if(c.parentNode!==host) host.appendChild(c);
+      placeBack(host);
       return;
     }
     var mn=$('mainNav'); if(!mn||!mn.parentNode) return;
     // 兜底（找不到标签行时）：原来的做法——第二行包一层 flex 行，右边放账号胶囊
-    var row=mn.parentNode.querySelector('.ab-navrow');
+    var row=document.querySelector('.ab-navrow');   // 【2026-10-02】全局找，避免重复调用套娃出新行
     if(!row){
       row=document.createElement('div'); row.className='ab-navrow';
       row.style.cssText='display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;'
@@ -434,6 +440,7 @@ var ABG=(function(){
       mn.style.borderTop='none'; mn.style.paddingTop='0';
     }
     if(c.parentNode!==row) row.appendChild(c);
+    placeBack(row);
   }
   function chip(u){
     var c=$('abUserChip');if(!c)return;
