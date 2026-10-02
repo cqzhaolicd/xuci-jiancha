@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.7</title>
+<title>AI错题本 v4.0.8</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -133,6 +133,10 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .rp-head{font-size:.82rem;font-weight:600;margin:.5rem 0 .45rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
 .rp-meta{font-weight:400;color:var(--text-light);font-size:.76rem}
 .rp-res{border:1.5px solid #e5e9f2;border-radius:12px;background:#fff;margin-bottom:.7rem;overflow:hidden;transition:.15s}
+.rp-res.rp-fail{border-color:#fecaca;background:#fffbfb}
+.rp-fail-n{color:#b91c1c}
+.rp-fail-box{background:#fef2f2;border-left:4px solid #dc2626;border-radius:0 9px 9px 0;padding:.5rem .65rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.rp-fail-why{font-size:.82rem;color:#991b1b;font-weight:600}
 .rp-res.rp-on{border-color:#7c3aed;box-shadow:0 2px 10px rgba(124,58,237,.10)}
 .rp-res-h{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;padding:.55rem .7rem;background:linear-gradient(180deg,#fafbff,#f4f6fc);border-bottom:1px solid #eef1f7;cursor:pointer;font-size:.84rem}
 .rp-res-h input[type=checkbox]{transform:scale(1.15);margin-right:.1rem}
@@ -365,7 +369,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.7</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.8</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -379,7 +383,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.7 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.8 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -1143,6 +1147,23 @@ function afSubjectName(){
   return el&&el.selectedOptions&&el.selectedOptions[0]?el.selectedOptions[0].textContent.trim():'';
 }
 // 一键分析所有选中题：逐题「精读 → 生成 答案/错因/考点/五维」，全部完成后进入勾选保存
+async function analyzeOneQuestion(q,no,dataUrl){
+  if(!String(q.content||'').trim()){                 // 清单项：先单独精读，保证题干逐字
+    const one=await vlAskQuestion(dataUrl,no);
+    if(one.content){q.content=one.content;q.wrong=one.wrong||q.wrong;q.note=one.note||q.note;}
+  }
+  if(!String(q.content||'').trim()) throw new Error('题干没认出');
+  const rc={subject:afSubjectName(),grade:addForm.grade,chapter:'',source:addForm.source,
+            content:q.content,wrong:q.wrong||'',image:false};
+  const msgs=[{role:'system',content:AI_SYS},{role:'user',content:aiUserMsg(rc)}];
+  let last=null;
+  for(let attempt=0;attempt<2;attempt++){            // 失败自动重试一次（第二次换更硬的指令）
+    const use=attempt?msgs.concat([{role:'user',content:'上一次输出不是合法 JSON。请只输出一个 JSON 对象：第一个字符是 {，最后一个字符是 }，不要解释、不要代码块、不要省略。'}]):msgs;
+    const j=await aiChat(use,aiCfg(),8000);
+    try{return aiParse(j);}catch(e){last=e;}
+  }
+  throw last;
+}
 async function aiAnalyzePicked(){
   const idx=[..._vlPick].sort((a,b)=>a-b);
   if(!idx.length){toast('先点选要录入的题目','error');return;}
@@ -1151,29 +1172,65 @@ async function aiAnalyzePicked(){
   if(!vlCfg().key){setRecStatus('❌ 视觉模型没配 Key：「⚙️ AI 设置 → 视觉模型」',true);return;}
   if(!aiCfg().key){setRecStatus('❌ 文本模型没配 Key：「⚙️ AI 设置」',true);return;}
   if(btn){btn.disabled=true;btn.style.opacity=.6;}
-  _vlBatch=[];const fails=[];
+  _vlBatch=[];
   for(let k=0;k<idx.length;k++){
     const i=idx[k],q=_vlQuestions[i],no=q.n||i+1;
+    setRecStatus(`⏳ (${k+1}/${idx.length}) 第${no}题 正在生成 答案/错因/考点/五维…`);
     try{
-      if(!String(q.content||'').trim()){          // 清单项：先单独精读，保证题干逐字
-        setRecStatus(`⏳ (${k+1}/${idx.length}) 正在精读第${no}题…`);
-        const one=await vlAskQuestion(dataUrl,no);
-        if(one.content){q.content=one.content;q.wrong=one.wrong||q.wrong;q.note=one.note||q.note;}
-      }
-      if(!String(q.content||'').trim()){fails.push(`第${no}题：题干没认出`);continue;}
-      setRecStatus(`⏳ (${k+1}/${idx.length}) 第${no}题 正在生成 答案/错因/考点/五维…`);
-      const rc={subject:afSubjectName(),grade:addForm.grade,chapter:'',source:addForm.source,
-                content:q.content,wrong:q.wrong||'',image:false};
-      const j=await aiChat([{role:'system',content:AI_SYS},{role:'user',content:aiUserMsg(rc)}],aiCfg(),8000);
-      _vlBatch.push({q:q,n:no,o:aiParse(j)});
-    }catch(e){fails.push(`第${no}题：${String(e.message||e).slice(0,40)}`);}
+      const o=await analyzeOneQuestion(q,no,dataUrl);
+      _vlBatch.push({q:q,n:no,o:o});
+    }catch(e){                                       // 失败的题也留一张卡，带「再次分析」
+      _vlBatch.push({q:q,n:no,o:null,err:String(e.message||e).slice(0,80)});
+    }
   }
   if(btn){btn.disabled=false;btn.style.opacity=1;}
-  if(!_vlBatch.length){setRecStatus('❌ 都没成功：'+esc(fails.join('；')),true);toast('分析失败，看下方提示','error');return;}
-  _vlBatchPick=new Set(_vlBatch.map((_,i)=>i));
-  setRecStatus(`✅ 已分析 <b>${_vlBatch.length}</b> 题${fails.length?`（${fails.length} 题失败：${esc(fails.join('；'))}）`:''} —— 下面勾选要保存的`);
+  const okN=_vlBatch.filter(b=>b.o).length,failN=_vlBatch.length-okN;
+  _vlBatchPick=new Set(_vlBatch.map((b,i)=>b.o?i:-1).filter(i=>i>=0));
+  setRecStatus(okN
+    ? `✅ 已分析 <b>${okN}</b> 题${failN?` · <b>${failN}</b> 题失败（点卡片上的「🔄 再次分析」单独重试）`:''} —— 下面勾选要保存的`
+    : `❌ ${failN} 题都失败了：点卡片上的「🔄 再次分析」重试，或换个更清晰的图`,!okN);
+  toast(okN?`分析完成：成功 ${okN} 题${failN?'，失败 '+failN+' 题':''}`:`都失败了，可先只重试某一题`,okN?'success':'error');
   renderBatchReview();
 }
+async function retryBatchItem(i){
+  const b=_vlBatch[i];if(!b)return;
+  const btn=document.getElementById('rp_retry_'+i);
+  if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> 重试中…';}
+  try{
+    if(!vlCfg().key)throw new Error('视觉模型没配 Key');
+    if(!aiCfg().key)throw new Error('文本模型没配 Key');
+    const o=await analyzeOneQuestion(b.q,b.n,addForm.image_path);
+    b.o=o;delete b.err;_vlBatchPick.add(i);
+    toast(`✅ 第${b.n}题 分析成功`,'success');
+  }catch(e){
+    b.err=String(e.message||e).slice(0,80);
+    toast(`❌ 第${b.n}题 还是失败：${b.err}`,'error');
+  }
+  renderBatchReview();
+  const okN=_vlBatch.filter(x=>x.o).length;
+  setRecStatus(`已分析 <b>${okN}</b>/${_vlBatch.length} 题${okN<_vlBatch.length?' · 失败的题可点「🔄 再次分析」单独重试':''} —— 下面勾选要保存的`,okN?_vlBatch.length>okN:true);
+}
+async function batchRetryAll(){
+  const idx=_vlBatch.map((b,i)=>b.o?-1:i).filter(i=>i>=0);
+  if(!idx.length)return;
+  const btn=document.getElementById('rp_retry_all');
+  if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> 重试中…';}
+  for(const i of idx){
+    const b=_vlBatch[i];if(b.o)continue;
+    try{
+      if(!vlCfg().key)throw new Error('视觉模型没配 Key');
+      if(!aiCfg().key)throw new Error('文本模型没配 Key');
+      const o=await analyzeOneQuestion(b.q,b.n,addForm.image_path);
+      b.o=o;delete b.err;_vlBatchPick.add(i);
+    }catch(e){b.err=String(e.message||e).slice(0,80);}
+    renderBatchReview();
+  }
+  const okN=_vlBatch.filter(x=>x.o).length;
+  setRecStatus(`已分析 <b>${okN}</b>/${_vlBatch.length} 题${okN<_vlBatch.length?' · 仍有失败的题，可单独重试':''}`,
+               okN?_vlBatch.length>okN:true);
+  toast(`批量重试完成：成功 ${okN}/${_vlBatch.length} 题`,okN===_vlBatch.length?'success':'error');
+}
+function retryFailedInline(){const i=_vlBatch.findIndex(b=>!b.o);if(i>=0)retryBatchItem(i);}
 // 五维分析的“裸”渲染（无外框/标题，供批量结果卡复用；与详情页同一套彩色标签）
 function ana5WrapHtml(a){
   return `<div class="ana5-wrap">${ANA5_DIMS.map(dm=>{
@@ -1184,16 +1241,35 @@ function renderBatchReview(){
   const box=document.getElementById('ai_recog_pick');
   if(!box)return;
   const meta=[afSubjectName(),gradeText(addForm.grade?+addForm.grade:lastGrade()),addForm.source].filter(Boolean).join(' · ');
-  box.innerHTML=`<div class="rp-head">🤖 已分析 <b>${_vlBatch.length}</b> 题${meta?`<span class="rp-meta">${esc(meta)}</span>`:''}<span class="rp-meta">勾选要保存的，都会带上这张照片</span></div>`+
+  const okN=_vlBatch.filter(x=>x.o).length,failN=_vlBatch.length-okN;
+  box.innerHTML=`<div class="rp-head">🤖 已分析 <b>${okN}</b> 题${failN?` · <b class="rp-fail-n">${failN}</b> 题失败（可单独重试）`:''}${meta?`<span class="rp-meta">${esc(meta)}</span>`:''}<span class="rp-meta">勾选要保存的，都会带上这张照片</span></div>`+
     _vlBatch.map((b,i)=>{
       const on=_vlBatchPick.has(i),o=b.o||{};
       const raw=String(b.q.wrong||'').replace(/\s+/g,' ').trim();
       const my=raw.toUpperCase();
+      const hasMy=!!my&&!/^(未识别|没看到|无|N\/A)$/i.test(my);
+      if(!b.o){                                        // 分析失败：卡片保留 + 「再次分析」
+        return `<div class="rp-res rp-fail ${on?'rp-on':''}">
+          <label class="rp-res-h">
+            <input type="checkbox" ${on?'checked':''} onchange="batchToggle(${i})">
+            <span class="rp-no">第${b.n}题</span>
+            <span class="rp-chip rp-bad">❌ 分析失败</span>
+            ${hasMy?`<span class="rp-chip rp-mine">我的答案 ${esc(my)}</span>`:'<span class="rp-chip rp-diff">未看到手写答案</span>'}
+          </label>
+          <div class="rp-res-b">
+            <div class="rp-q">${esc(String(b.q.content||'').trim())||'<i style="color:#94a3b8">题干未识别</i>'}</div>
+            <div class="rp-fail-box">
+              <div class="rp-fail-why">失败原因：${esc(b.err||'模型没返回合法 JSON')}</div>
+              <button type="button" class="btn btn-primary btn-sm" id="rp_retry_${i}" onclick="retryBatchItem(${i})"><i class="fas fa-rotate-right"></i> 再次分析</button>
+              <span class="ai-setup-note">只重试这一题 · 约 10-20 秒；不想等就只勾成功的题保存</span>
+            </div>
+          </div>
+        </div>`;
+      }
       const corr=String(o.correct_answer||'').trim();
       // 只取答案串“开头”的选项字母（避免从解析文字里误抓 A/B 字样，如「C。把A、B混淆」→ C）
       const lead=s=>{const m=String(s).trim().match(/^([A-Da-d](?:\s*[、,，/]?\s*[A-Da-d])*)/);return m?m[1].replace(/[^A-Da-d]/g,'').toUpperCase():'';};
       const myL=lead(my),corrL=lead(corr);
-      const hasMy=!!my&&!/^(未识别|没看到|无|N\/A)$/i.test(my);
       const ok=!!(myL&&corrL&&myL===corrL);
       const tags=Array.isArray(o.tags)?o.tags.join('、'):String(o.tags||'');
       const diff=Math.max(0,Math.min(5,parseInt(o.difficulty)||0));
@@ -1220,9 +1296,10 @@ function renderBatchReview(){
         </div>
       </div>`;}).join('')+
     `<div class="rp-bar">
-       <span class="q-badge badge-mastery">已勾 ${_vlBatchPick.size} 题</span>
+       <span class="q-badge badge-mastery">已勾 ${_vlBatchPick.size} / ${_vlBatch.length} 题</span>
        <button class="btn btn-outline btn-sm" onclick="batchToggleAll(true)">全选</button>
        <button class="btn btn-outline btn-sm" onclick="batchToggleAll(false)">全不选</button>
+       ${failN?`<button class="btn btn-outline btn-sm" id="rp_retry_all" onclick="batchRetryAll()"><i class="fas fa-rotate-right"></i> 重试全部失败的 ${failN} 题</button>`:''}
        <button class="btn btn-primary btn-sm" onclick="batchSave()" ${_vlBatchPick.size?'':'disabled style="opacity:.5"'}><i class="fas fa-save"></i> 保存勾选的 ${_vlBatchPick.size} 题</button>
        <button class="btn btn-outline btn-sm" onclick="_vlBatch=[];_vlBatchPick=new Set();renderRecPick();">↩ 返回选题</button>
      </div>`;
@@ -3059,7 +3136,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.7</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.8</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
