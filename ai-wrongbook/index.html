@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.6</title>
+<title>AI错题本 v4.0.7</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -113,6 +113,16 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .recog-pick-btn{text-align:left;background:#fff;border:1.5px solid #ddd6fe;border-radius:10px;padding:.55rem .7rem;font-size:.85rem;cursor:pointer;font-family:inherit;color:var(--text);display:flex;flex-direction:column;gap:.2rem;transition:all .15s}
 .recog-pick-btn:hover{border-color:var(--primary);background:#fbfaff}
 .recog-pick-btn b{color:var(--primary)}
+.ai-setup-card{border:1px solid #ddd6fe;border-radius:12px;background:linear-gradient(135deg,#faf8ff,#f5f3ff);padding:.8rem .9rem;margin-bottom:.9rem}
+.ai-setup-head{font-weight:700;color:#5b21b6;font-size:.92rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.ai-setup-state{margin-left:auto;font-size:.72rem;font-weight:600;color:#475569;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:.1rem .45rem}
+.ai-setup-body{font-size:.83rem;color:#3f3d56;line-height:1.85;margin-top:.45rem}
+.ai-setup-body code{background:#ede9fe;color:#5b21b6;border-radius:5px;padding:.05rem .3rem;font-size:.8rem}
+.ai-setup-sub{font-weight:700;color:#5b21b6;margin-top:.5rem}
+.ai-setup-note{font-size:.76rem;color:#6b7280;line-height:1.6}
+.ai-setup-body .ai-setup-note{margin-top:.4rem}
+.ai-setup-btns{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-top:.6rem}
+.ai-mini{background:#f8f7ff;border:1px dashed #ddd6fe;border-radius:10px;padding:.6rem .7rem;font-size:.82rem;color:#4c1d95;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
 .ai-only-tip{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #16a34a;border-radius:0 10px 10px 0;padding:.7rem .85rem;font-size:.85rem;line-height:1.7;color:#14532d;margin-bottom:.9rem}
 .manual-box{border:1px dashed #cbd5e1;border-radius:10px;background:#fcfcfd;padding:.5rem .7rem}
 .manual-box>summary{cursor:pointer;font-size:.82rem;font-weight:600;color:#64748b;outline:none;list-style:none}
@@ -355,7 +365,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.6</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.7</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -369,7 +379,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.6 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.7 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -1675,21 +1685,34 @@ function renderAdd(){
       </div>
     </div>
     <div class="ai-only-tip">📸 <b>拍一张卷子就行</b>：AI 自动认出题干和「我的答案」，并生成 正确答案 · 错因 · 考点 · 难度 · 五维分析 → 勾选要保存的题 → 一键入库，<b>不用手填表</b>。</div>
+    <div class="ai-setup-card">
+      <div class="ai-setup-head"><i class="fas fa-cog"></i> AI 设置（第一次用，先花 1 分钟配好）
+        <span class="ai-setup-state">${aiCfg().key||AI_EMBED_KEY?'✅ 已配好':'⚠️ 还没配 Key'}</span></div>
+      <div class="ai-setup-body">
+        <b>要配两个模型（都在「AI 设置」页里）</b>：<br>
+        · <b>视觉模型</b> · 拍图识别用 → <code>deepseek-flash</code>（能看图）<br>
+        · <b>文本模型</b> · 生成解析用 → <code>deepseek-chat</code><br>
+        两家都填 DeepSeek 就行，<b>一把 Key 通用</b>；视觉模型的 Key 留空会自动复用文本那把。
+        <div class="ai-setup-sub"><i class="fas fa-key"></i> 怎么拿 DeepSeek API Key（3 步）</div>
+        ① 浏览器打开 <code>platform.deepseek.com</code>，手机号注册/登录<br>
+        ② 左边菜单「API Keys」→「创建 API Key」→ 复制 <code>sk-</code> 开头那一串（只显示一次，先存好）<br>
+        ③ 回本页点「⚙️ 打开 AI 设置」→ 粘进 Key 框 → 保存（<b>只存本机，不上传</b>）
+        <div class="ai-setup-note">💡 充值：按用量计费，充 10 元够识别+生成几百题；提示余额不足时充完立刻恢复。</div>
+      </div>
+      <div class="ai-setup-btns">
+        <button type="button" class="btn btn-primary btn-sm" onclick="navigate('aiconf')"><i class="fas fa-cog"></i> 打开 AI 设置</button>
+        <span class="ai-setup-note">需联网 · 识别约 6-15 秒 · 生成约 10-20 秒</span>
+      </div>
+    </div>
     <details class="manual-box">
       <summary><i class="fas fa-pen"></i> 识别不了？点这里手动填（平时不用）</summary>
       <div class="manual-inner">
-    <div style="background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #ddd6fe;border-radius:10px;padding:.85rem 1rem;margin-bottom:1rem">
-      <div style="font-weight:700;color:#5b21b6;margin-bottom:.35rem">🤖 AI 一键生成（大模型）</div>
-      <div style="font-size:.83rem;color:#4c1d95;line-height:1.7">
-        填好<b>题目内容</b>（可再填「我的错误答案」更好）→ 点下面按钮，AI 按错题模板生成：
-        <b>正确答案 · 错因 · 考点标签 · 难度 · 五维分析</b>，生成后<b>可逐项修改</b>再保存。
-      </div>
-      <div style="margin-top:.6rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
-        <button type="button" class="btn btn-primary btn-sm" id="ai_btn" onclick="aiGenerate('af')"><i class="fas fa-wand-magic-sparkles"></i> AI 一键生成</button>
-        <button type="button" class="btn btn-outline btn-sm" onclick="navigate('aiconf')"><i class="fas fa-cog"></i> AI 设置</button>
-        <span style="font-size:.75rem;color:#6b7280">需联网 · 约 10-20 秒</span>
-      </div>
-      <div id="ai_status" style="margin-top:.5rem;font-size:.82rem;color:var(--text-light)"></div>
+    <div class="ai-mini">
+      <span>🤖 手填题干时，可让大模型按错题模板生成解析（正确答案 · 错因 · 考点 · 难度 · 五维）：</span>
+      <button type="button" class="btn btn-primary btn-sm" id="ai_btn" onclick="aiGenerate('af')"><i class="fas fa-wand-magic-sparkles"></i> AI 一键生成</button>
+      <button type="button" class="btn btn-outline btn-sm" onclick="navigate('aiconf')"><i class="fas fa-cog"></i> AI 设置</button>
+      <span class="ai-setup-note">需联网 · 约 10-20 秒</span>
+      <div id="ai_status" style="margin-top:.4rem;font-size:.82rem;color:var(--text-light)"></div>
     </div>
     <form onsubmit="event.preventDefault();submitAdd()">
       <div class="form-section"><h6><i class="fas fa-info-circle"></i> 基本信息</h6>
@@ -3036,7 +3059,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.6</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.7</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
