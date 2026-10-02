@@ -476,14 +476,15 @@ var ABG=(function(){
     var box=$('abInvBox');if(!box)return;
     box.className='ab-invbox '+(kind==='ok'?'okbox':'warnbox');
     box.style.display='block';
-    box.innerHTML='<div class="ab-invttl">'+title+'</div>'+(html||'')+(hint?'<div class="ab-invhint" id="abInvHint">'+hint+'</div>':'');
+    var hintHtml=(hint===null||hint===undefined)?'':'<div class="ab-invhint" id="abInvHint">'+hint+'</div>';
+    box.innerHTML='<div class="ab-invttl">'+title+'</div>'+(html||'')+hintHtml;
   }
   function myInvite(){
     var box=$('abInvBox');if(!box)return;
     function decide(){
       var a=ACCESS;
       if(!a||!a.paid){
-        invBox('warn','🎟️ 还没开通 VIP','','开通后自动获得你的专属邀请码<br>朋友用它注册可享 100 元优惠');
+        invBox('warn','🎟️ 还没开通 VIP','','开通后自动获得你的专属邀请码');
         return;
       }
       var c=a.vip_code||'';
@@ -491,7 +492,7 @@ var ABG=(function(){
       _invCode=c;
       invBox('ok','🎟️ 你的专属邀请码','<div class="ab-invcode">'+c+'</div>'
         +'<button class="ab-invcopy" onclick="ABG.copyInvite()">复制邀请码</button>',
-        '朋友注册可享 100 元优惠');
+        '');
     }
     // 每次都实时拉一次最新状态：刚开通 VIP 但页面还是旧缓存时，不能误报「还没开通」
     invBox('ok','🎟️ 正在获取邀请码…','','');
