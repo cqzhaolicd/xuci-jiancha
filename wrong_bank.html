@@ -1788,12 +1788,66 @@ function saveLayerAns(){
   toast('✅ 作答已保存','success');
 }
 
+// ── 三层练变式：换数字（修复版，老板 2026-10-02）──
+// 旧实现用 v.replace(n,新数) 只替换「第一个匹配」，数字换错位置，
+// 把试卷来源标注里的年份/讲次也改了（2026秋 → 1799秋）。现在：
+//   ① 保护来源标注（含 秋/春/第N讲/小测/班/卷… 的括号内容）② 保护题号前缀 ③ 正文数字按出现顺序逐个换
+const LAYER_GEN_VER=2;
+function _isSrcLabel(m){
+  return /[秋春夏冬]|[0-9]+[讲次]|班|小测|测试|月考|期中|期末|卷|年级|学期|真题|模拟|作业|练习/.test(m);
+}
+function varyNumbers(content){
+  const raw=String(content==null?'':content);
+  for(let tryN=0;tryN<4;tryN++){
+    const r=_varyOnce(raw);
+    if(r!==raw)return r;
+  }
+  return raw;
+}
+function _varyOnce(s){
+  // 题号前缀原样保留（「1.」「第2题」）
+  const pre=s.match(/^ {0,4}第?[0-9]+ *[.、)）]/);
+  const head=pre?pre[0]:'';
+  const rest=head?s.slice(head.length):s;
+  const body=t=>t.replace(/[0-9]+([.][0-9]+)?/g,(m,dec,off,str)=>{
+    let v=newNum(m);
+    // 数字后面紧跟字母 = 系数，不能写成「1m」「0m」
+    if(/[a-zA-Z]/.test(str.charAt(off+m.length))&&(v==='1'||v==='0'))v='2';
+    return v;
+  });
+  let out='',last=0,m;
+  const P=/[（(][^）)]{3,60}[）)]/g;
+  while((m=P.exec(rest))){
+    out+=body(rest.slice(last,m.index));
+    out+=_isSrcLabel(m[0])?m[0]:body(m[0]);   // 来源标注整块跳过（年份/讲次不动）
+    last=m.index+m[0].length;
+  }
+  out+=body(rest.slice(last));
+  return head+out;
+}
+function newNum(n){
+  const f=parseFloat(n);
+  if(!isFinite(f)||f===0)return n;
+  if(n.indexOf('.')>=0){
+    const dec=n.split('.')[1].length;
+    const d=Math.max(1,Math.round(Math.abs(f)*0.25));
+    return (f+(Math.random()<0.5?-d:d)).toFixed(dec);
+  }
+  const i=Math.floor(f);
+  const d=Math.max(1,Math.round(i*0.35));
+  let v=i+(Math.random()<0.5?-d:d);
+  if(i>0&&v<1)v=1;                       // 正数不变成 0，避免出现分母为 0
+  if(i>0&&v===i)v=i+1;                   // 保证真的变了
+  return String(Math.abs(v));
+}
+
 function getOrGenLayers(q){
   const d=loadData();
   const fq=d.questions.find(x=>x.id===q.id);
-  if(fq&&fq._layers&&fq._layers.data)return fq._layers.data;
+  // 生成器版本变了 → 旧缓存作废重算（已保存的作答 _layers.answers 不动）
+  if(fq&&fq._layers&&fq._layers.data&&fq._layers.ver===LAYER_GEN_VER)return fq._layers.data;
   const layers=genLayers(q);
-  if(fq){if(!fq._layers)fq._layers={};fq._layers.data=layers;saveData(d);}
+  if(fq){if(!fq._layers)fq._layers={};fq._layers.data=layers;fq._layers.ver=LAYER_GEN_VER;saveData(d);}
   return layers;
 }
 
@@ -1831,11 +1885,9 @@ function genLayers(q){
     l2Ans=`换场景训练的关键：<br>1. 明确原题用的公式/规律<br>2. 换物体、换数值或换情境，重算一遍<br>3. 对比原题，看结论是否合理`;
     l2Place='换一个场景改编，写出新题和数据，再解一遍…';
   }else if(isMath&&!/[A-D]\)/.test(content)){
-    // 数学计算题 → 换数字
-    const nums=content.match(/\d+(\.\d+)?/g);
-    if(nums&&nums.length){
-      const newNums=nums.map(n=>String(Math.floor(parseFloat(n)*(0.5+Math.random()*0.8)+1)));
-      let v=content;nums.forEach((n,i)=>{v=v.replace(n,newNums[i%newNums.length]);});
+    // 数学计算题 → 换数字（修复：保护来源标注与题号，正文数字按序替换）
+    const v=varyNumbers(content);
+    if(v&&v!==content){
       l2Content=`<strong>变式题（换数）：</strong>${v}`;
       l2Ans=`题目变了数字，但解题方法相同。按照原题思路，代入新数据重新计算。`;
       l2Place='按照原题解题方法，代入新的数据计算…';
