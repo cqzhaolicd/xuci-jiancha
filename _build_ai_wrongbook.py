@@ -197,6 +197,11 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
       <label><input type="radio" name="abPfGender" value="男"> 男</label>
       <label><input type="radio" name="abPfGender" value="女"> 女</label>
     </div>
+    <label class="ab-lb">会员状态</label>
+    <div class="ab-bk" style="align-items:center">
+      <span id="abVipState" style="flex:1;text-align:left;font-size:.85rem;color:#4a5568;line-height:1.5">—</span>
+      <button class="ab-btn2" id="abVipBtn" onclick="ABG.openPay()" style="display:none;white-space:nowrap">👑 开通 VIP</button>
+    </div>
     <label class="ab-lb">数据备份（换手机 / 重装前建议先导出）</label>
     <div class="ab-bk">
       <button class="ab-btn2" onclick="ABG.exportData()">⬇ 导出备份</button>
@@ -323,7 +328,13 @@ var ABG=(function(){
     if(tag){
       if(a.paid){tag.textContent='V';tag.title='VIP · 已开通';tag.className='ab-trial';tag.onclick=null;tag.style.display=''}
       else if(a.expired){tag.title='';tag.textContent='试用已结束 · 点此开通';tag.className='ab-trial lock';tag.onclick=function(){paywall()};tag.style.display=''}
-      else{tag.title='';tag.textContent='试用剩 '+a.days_left+' 天';tag.className='ab-trial';tag.onclick=null;tag.style.display=''}
+      else{tag.title='点此开通 VIP（永久）';tag.textContent='试用剩 '+a.days_left+' 天';tag.className='ab-trial';tag.onclick=function(){paywall()};tag.style.display=''}
+    }
+    var vs=$('abVipState'),vb=$('abVipBtn');
+    if(vs){
+      if(a.paid){vs.innerHTML='✅ <b>VIP · 已开通</b>（永久有效）';if(vb)vb.style.display='none'}
+      else if(a.expired){vs.innerHTML='⚠️ 试用已结束（已锁定新增）';if(vb)vb.style.display=''}
+      else{vs.innerHTML='🎁 免费试用中，还剩 <b>'+a.days_left+'</b> 天';if(vb)vb.style.display=''}
     }
     if(a.locked)paywall();else hidePay();
     // 资料为空 → 登录后提示填一次（每台设备只提示一次，可「以后再说」）
@@ -402,6 +413,11 @@ var ABG=(function(){
         },400);
       }else{note.textContent=j.error||'卡密无效';note.className='ab-msg err'}
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
+  }
+  // ── 常驻入口：资料弹窗里的「👑 开通 VIP」──
+  function openPay(){
+    try{profileModal(false)}catch(e){}
+    try{paywall()}catch(e){}
   }
   function closePay(){hidePay()}
   // ── 账号资料（城市/学校/年级/姓名/性别 → 后台可见）──
@@ -623,7 +639,7 @@ var ABG=(function(){
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {login:login,register:register,submitPaid:submitPaid,redeemCard:redeemCard,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip,exportData:exportData,importData:importData};
+  return {login:login,register:register,openPay:openPay,submitPaid:submitPaid,redeemCard:redeemCard,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip,exportData:exportData,importData:importData};
 })();
 </script>"""
 
