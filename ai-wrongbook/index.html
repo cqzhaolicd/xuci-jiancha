@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.33</title>
+<title>AI错题本 v4.0.34</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -78,7 +78,6 @@
 .ab-invcopy{width:100%;margin-top:.6rem;border:none;border-radius:11px;padding:.78rem;font-family:inherit;font-size:1.05rem;font-weight:800;color:#fff;cursor:pointer;letter-spacing:.5px;background:linear-gradient(135deg,#48bb78,#2f855a);box-shadow:0 5px 14px rgba(47,133,90,.3)}
 .ab-invcopy:active{transform:translateY(1px)}
 .ab-invhint{font-size:.82rem;font-weight:600;color:#4a5568;margin-top:.5rem;line-height:1.5}
-.ab-invref{margin-top:.5rem;padding-top:.5rem;border-top:1px dashed #9ae6b4;font-size:.84rem;font-weight:700;color:#b7791f}
 .ab-invbox.okbox .ab-invhint{color:#2f855a}
 .ab-trial.lock{background:#fed7d7;color:#c53030;cursor:pointer}
 /* 账号胶囊放在子导航行最右（顶部三标签取消后走 .ab-navrow 兜底通道） */
@@ -415,7 +414,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.33</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.34</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -432,7 +431,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.33 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.34 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -3211,7 +3210,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.33</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.34</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
@@ -3496,7 +3495,7 @@ var ABG=(function(){
     function decide(){
       var a=ACCESS;
       if(!a||!a.paid){
-        invBox('warn','🎟️ 还没开通 VIP','','开通后自动获得你的专属邀请码<br>朋友用它注册可享 100 元优惠，你也能获得 50 元返利');
+        invBox('warn','🎟️ 还没开通 VIP','','开通后自动获得你的专属邀请码<br>朋友用它注册可享 100 元优惠');
         return;
       }
       var c=a.vip_code||'';
@@ -3504,10 +3503,7 @@ var ABG=(function(){
       _invCode=c;
       invBox('ok','🎟️ 你的专属邀请码','<div class="ab-invcode">'+c+'</div>'
         +'<button class="ab-invcopy" onclick="ABG.copyInvite()">复制邀请码</button>',
-        '朋友注册可享 100 元优惠，你也能获得 50 元返利'
-        +'<div class="ab-invref">'+(a.vip_ref_paid>0
-            ? '已邀请 <b>'+a.vip_ref_paid+'</b> 人付费 · 可返 <b>'+(a.vip_ref_amount||0)+'</b> 元'
-            : '还没有人用你的码注册付费')+'</div>');
+        '朋友注册可享 100 元优惠');
     }
     // 每次都实时拉一次最新状态：刚开通 VIP 但页面还是旧缓存时，不能误报「还没开通」
     invBox('ok','🎟️ 正在获取邀请码…','','');
