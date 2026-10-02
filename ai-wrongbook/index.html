@@ -47,6 +47,25 @@
   font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:.5rem}
 .ab-bk{display:flex;gap:.5rem}
 .ab-bk .ab-btn2{margin-top:.2rem;font-size:.85rem;padding:.55rem .4rem}
+/* 会员状态卡片（2026-10-02 美化） */
+.ab-vstate{display:flex;align-items:center;gap:.85rem;text-align:left;border-radius:15px;padding:.8rem .9rem;border:1px solid #e6e9f5;background:linear-gradient(135deg,#f7f9ff,#f5f2ff)}
+.ab-vstate .ab-vico{flex:0 0 auto;width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;background:#eef2ff;box-shadow:inset 0 0 0 1px rgba(102,126,234,.12)}
+.ab-vstate .ab-vtx{flex:1;min-width:0}
+.ab-vstate .ab-vt{font-size:.98rem;font-weight:800;color:#2d3748;line-height:1.32;letter-spacing:.2px}
+.ab-vstate .ab-vs{font-size:.76rem;color:#718096;margin-top:.24rem;line-height:1.45}
+.ab-vstate .ab-vnum{flex:0 0 auto;text-align:center;font-weight:900;color:#5568e0;font-size:1.65rem;line-height:1;font-variant-numeric:tabular-nums;padding-left:.2rem}
+.ab-vstate .ab-vnum span{display:block;font-size:.62rem;font-weight:700;color:#8a94a6;margin-top:.2rem;letter-spacing:1px}
+.ab-vstate.vip{border-color:#f3dfa5;background:linear-gradient(135deg,#fffaf0,#fff3d6)}
+.ab-vstate.vip .ab-vico{background:#ffeec2;box-shadow:inset 0 0 0 1px rgba(224,137,10,.18)}
+.ab-vstate.vip .ab-vt{color:#96660a}
+.ab-vstate.exp{border-color:#f3c4ca;background:linear-gradient(135deg,#fff6f6,#ffe9ec)}
+.ab-vstate.exp .ab-vico{background:#ffd9de;box-shadow:inset 0 0 0 1px rgba(185,28,28,.20)}
+.ab-vstate.exp .ab-vt{color:#b91c1c}
+.ab-vstate.exp .ab-vs{color:#a16207}
+.ab-vbar{height:7px;border-radius:999px;background:#e3e7f7;overflow:hidden;margin-top:.5rem;box-shadow:inset 0 1px 2px rgba(85,104,224,.10)}
+.ab-vbar>i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#7b8ff2,#4c5fd8);transition:width .35s ease}
+.ab-vbtn{width:100%;margin-top:.55rem;border:none;border-radius:12px;padding:.7rem;font-family:inherit;font-size:1rem;font-weight:800;color:#fff;cursor:pointer;letter-spacing:.5px;background:linear-gradient(135deg,#f7cf5b,#e0890a);box-shadow:0 6px 16px rgba(224,137,10,.3)}
+.ab-vbtn:active{transform:translateY(1px);box-shadow:0 3px 10px rgba(224,137,10,.3)}
 .ab-trial.lock{background:#fed7d7;color:#c53030;cursor:pointer}
 /* 账号胶囊放在子导航行最右（顶部三标签取消后走 .ab-navrow 兜底通道） */
 .ab-navrow .ab-chip{margin-left:auto}
@@ -3223,10 +3242,8 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
       <label><input type="radio" name="abPfGender" value="女"> 女</label>
     </div>
     <label class="ab-lb">会员状态</label>
-    <div class="ab-bk" style="align-items:center">
-      <span id="abVipState" style="flex:1;text-align:left;font-size:.85rem;color:#4a5568;line-height:1.5">—</span>
-      <button class="ab-btn2" id="abVipBtn" onclick="ABG.openPay()" style="display:none;white-space:nowrap">👑 开通 VIP</button>
-    </div>
+    <div class="ab-vstate" id="abVipState"><div class="ab-vico">🎁</div><div class="ab-vtx"><div class="ab-vt">读取中</div><div class="ab-vs">正在获取会员状态…</div></div></div>
+    <button class="ab-vbtn" id="abVipBtn" onclick="ABG.openPay()" style="display:none">👑 开通 VIP</button>
     <label class="ab-lb">数据备份（换手机 / 重装前建议先导出）</label>
     <div class="ab-bk">
       <button class="ab-btn2" onclick="ABG.exportData()">⬇ 导出备份</button>
@@ -3349,9 +3366,26 @@ var ABG=(function(){
     }
     var vs=$('abVipState'),vb=$('abVipBtn');
     if(vs){
-      if(a.paid){vs.innerHTML='✅ <b>VIP · 已开通</b>（永久有效）';if(vb)vb.style.display='none'}
-      else if(a.expired){vs.innerHTML='⚠️ 试用已结束（已锁定新增）';if(vb)vb.style.display=''}
-      else{vs.innerHTML='🎁 免费试用中，还剩 <b>'+a.days_left+'</b> 天';if(vb)vb.style.display=''}
+      var vh='',vcls='';
+      if(a.paid){
+        vcls='vip';
+        vh='<div class="ab-vico">👑</div><div class="ab-vtx"><div class="ab-vt">VIP · 已开通</div><div class="ab-vs">永久有效</div></div>';
+        if(vb)vb.style.display='none';
+      }else if(a.expired){
+        vcls='exp';
+        vh='<div class="ab-vico">⚠️</div><div class="ab-vtx"><div class="ab-vt">试用已结束</div><div class="ab-vs">已锁定新增</div></div>';
+        if(vb)vb.style.display='';
+      }else{
+        vcls='trial';
+        var vleft=(a.days_left===null||a.days_left===undefined)?null:Number(a.days_left);
+        var vtotal=Number(a.trial_days||0);
+        var vbar=(vleft!==null&&vtotal>0)?'<div class="ab-vbar"><i style="width:'+Math.max(4,Math.min(100,Math.round(vleft/vtotal*100)))+'%"></i></div>':'';
+        vh='<div class="ab-vico">🎁</div><div class="ab-vtx"><div class="ab-vt">免费试用中</div>'+vbar+'</div>'
+          +'<div class="ab-vnum">'+vleft+'<span>天</span></div>';
+        if(vb)vb.style.display='';
+      }
+      vs.className='ab-vstate '+vcls;
+      vs.innerHTML=vh;
     }
     if(a.locked)paywall();else hidePay();
     // 资料为空 → 登录后提示填一次（每台设备只提示一次，可「以后再说」）
