@@ -482,7 +482,7 @@ var ABG=(function(){
       var _fb=_is299?BUILTIN_QR_299:BUILTIN_QR_399;
       var _html='<img src="'+((j.qr_ready&&j.qr_data)?j.qr_data:_fb)+'" alt="收款码">';
       box.innerHTML=_html;
-      note.textContent=j.note||'付款后点「✅ 我已付款，提交刷新」，我们核对到账后即开通；也可用卡密直接开通。';
+      note.textContent='';
       note.className='ab-msg ok';
     }).catch(function(){
       var _i2=!!(ACCESS&&ACCESS.invite_code);
@@ -504,7 +504,7 @@ var ABG=(function(){
         return;
       }
       applyAccess(a);
-      note.textContent='还没查到开通记录。已付款请点「✅ 我已付款，提交刷新」，管理员核对到账后即开通；也可用卡密直接开通。';
+      note.textContent='还没查到开通记录。';
       note.className='ab-msg err';
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
