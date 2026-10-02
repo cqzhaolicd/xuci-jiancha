@@ -245,7 +245,6 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
       <button class="ab-btn" onclick="ABG.submitPaid()">✅ 我已付款，提交核对</button>
       <button class="ab-btn2" onclick="ABG.refreshPay()">🔄 已开通？刷新状态</button>
       <div id="abPayCardEntry" style="display:none;margin-top:14px;padding-top:12px;border-top:1px dashed #cbd5e0">
-        <div style="font-size:.8rem;color:#718096;margin-bottom:8px">另一种方式：有卡密可直接核销开通</div>
         <button class="ab-btn2" onclick="ABG.payStep('card')" style="border-color:#f6ad55;color:#b7791f;background:#fffaf0">🎟️ 我有卡密，直接开通</button>
       </div>
     </div>
