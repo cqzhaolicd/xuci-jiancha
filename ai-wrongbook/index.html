@@ -108,6 +108,13 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .img-preview{margin-top:.7rem;max-width:340px}
 .img-shot{width:100%;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.13)}
 .img-del{display:inline-block;margin-top:.35rem;font-size:.78rem;color:var(--danger);cursor:pointer;font-weight:600}
+.recog-status{margin-top:.6rem;padding:.6rem .8rem;border-radius:10px;background:#f8f5ff;border:1px solid #ddd6fe;font-size:.85rem;line-height:1.65;word-break:break-word}
+.recog-pick{display:flex;flex-direction:column;gap:.4rem}
+.recog-pick-btn{text-align:left;background:#fff;border:1.5px solid #ddd6fe;border-radius:10px;padding:.55rem .7rem;font-size:.85rem;cursor:pointer;font-family:inherit;color:var(--text);display:flex;flex-direction:column;gap:.2rem;transition:all .15s}
+.recog-pick-btn:hover{border-color:var(--primary);background:#fbfaff}
+.recog-pick-btn b{color:var(--primary)}
+.rp-wrong{font-size:.75rem;color:var(--text-light)}
+.rp-none{opacity:.65}
 .qb-review i{background:linear-gradient(135deg,#48bb78,#2f855a)}
 /* Subject grid */
 .subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem}
@@ -934,6 +941,189 @@ function _aiStored(){try{return JSON.parse(localStorage.getItem(AI_LS)||'{}')||{
 function aiCfg(){const c={...AI_DEFAULT,..._aiStored()};if(!c.key)c.key=AI_EMBED_KEY;return c;}
 function aiSaveCfg(o){localStorage.setItem(AI_LS,JSON.stringify(o));}
 function aiKeySource(){return _aiStored().key?'本机自填 Key':'App 内置 Key';}
+// ===== 视觉模型（拍图录题）：与文本模型分开配置 =====
+// 老板 2026-10-02：选图 → AI 识别（基本信息/题干/我的错误答案）→ 自动生成（答案/错因/考点/五维）
+const VL_LS='wb_vl_cfg';
+const VL_EMBED_KEY='';   // ← 手机 App 打包脚本注入（硅基流动 Key）；仓库里始终为空
+const VL_DEFAULT={base:'https://api.siliconflow.cn/v1',model:'Qwen/Qwen3-VL-30B-A3B-Instruct',key:''};
+function _vlStored(){try{return JSON.parse(localStorage.getItem(VL_LS)||'{}')||{};}catch(e){return {};}}
+function vlCfg(){const c={...VL_DEFAULT,..._vlStored()};if(!c.key)c.key=VL_EMBED_KEY;return c;}
+function vlSaveCfg(o){localStorage.setItem(VL_LS,JSON.stringify(o));}
+function vlKeySource(){return _vlStored().key?'本机自填 Key':'App 内置 Key';}
+const VL_SYS=`你是初中试卷识别助手。用户会给你一张学生做过的练习题/试卷照片（学生答案多为手写、可能有红笔批改）。
+铁律：
+1) 只抄你真正看清的文字；看不清的地方写「【看不清】」，绝不猜测、绝不编造题号/选项/数字/单位/人名。
+2) content 只抄印刷的题干，学生手写内容（含括号里填的字母、笔算过程）一律不要抄进去；括号保持空白「（  ）」；选项 A/B/C/D 换行保留；多小问用(1)(2)。
+3) wrong 抄学生在【同一题】上手写的答案或过程（含选项字母）；没有手写就空串。
+4) 只输出 JSON，不要 markdown 代码块、不要任何解释。
+5) 第1题（题号最小的那道）逐字完整抄；其余题只记题号、学生的答案和题干开头，不要展开抄——整卷长输出容易抄错。`;
+function vlUserMsg(){return `识别这张照片，只输出 JSON：
+{"subject":"数学|语文|英语|物理|化学","grade":"年级数字，如8","source":"卷子顶部的试卷名/出处（如 夏季初二物理第一次小测），没有写空串",
+ "first":{"n":1,"content":"第1题的完整印刷题干（逐字抄，选项分行）","wrong":"学生在第1题的手写答案"},
+ "others":[{"n":2,"wrong":"学生在第2题的手写答案","head":"第2题题干开头约15字"}],
+ "confidence":"高|中|低","note":"看不清或可疑的地方，一句话；没有写空串"}
+要求：
+- 题号以照片上印刷的题号为准，不要自己编。
+- first 里的 content 要逐字准确、完整（这是要入库的题干）；others 只做清单，不展开。
+- 若照片里只有一道题，others 返回 []。
+- 若一道题都看不清，first.content 返回空串，并在 note 里说明原因。`;}
+// 单独精读某一题（多题清单里被点选的那道）——单题输出短，抄得准
+function vlOneMsg(n){return `这次只处理【第${n}题】，忽略其他题。只输出 JSON：
+{"n":${n},"content":"第${n}题的完整印刷题干，逐字抄（括号留空、选项A/B/C/D分行）","wrong":"学生在第${n}题上手写的答案/过程","confidence":"高|中|低","note":"看不清的地方，一句话"}
+只抄第${n}题，看不清的写「【看不清】」，绝不编造。`;}
+async function aiChatRaw(messages,cfg,maxTokens,useJson){
+  const ctrl=new AbortController(),tm=setTimeout(()=>ctrl.abort(),200000);
+  try{
+    const payload={model:cfg.model,messages,temperature:0.1,max_tokens:maxTokens||4000};
+    if(useJson)payload.response_format={type:'json_object'};
+    const r=await fetch(String(cfg.base).replace(/\/+$/,'')+'/chat/completions',{
+      method:'POST',signal:ctrl.signal,
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.key},
+      body:JSON.stringify(payload)});
+    if(!r.ok){let msg='';try{msg=(await r.json()).error.message||'';}catch(e){}const er=new Error('HTTP '+r.status+(msg?'：'+msg:''));er.status=r.status;throw er;}
+    return await r.json();
+  } finally{clearTimeout(tm);}
+}
+async function aiVision(dataUrl){
+  const cfg=vlCfg();
+  if(!cfg.key) throw new Error('还没配视觉模型 Key：点「⚙️ AI 设置」填一个，或用带 Key 的手机 App 版');
+  const msgs=[{role:'system',content:VL_SYS},{role:'user',content:[
+    {type:'image_url',image_url:{url:dataUrl}},{type:'text',text:vlUserMsg()}]}];
+  let j;                                   // 先带 JSON 模式，个别模型不支持就退回普通模式
+  try{ j=await aiChatRaw(msgs,cfg,4000,true); }
+  catch(e){ if(e.status===400||e.status===422) j=await aiChatRaw(msgs,cfg,4000,false); else throw e; }
+  const o=aiParse(j);
+  o._tokens=(j.usage&&j.usage.total_tokens)||0;
+  return o;
+}
+async function vlAskQuestion(dataUrl,n){
+  const cfg=vlCfg();
+  if(!cfg.key) throw new Error('没配视觉模型 Key');
+  const msgs=[{role:'system',content:VL_SYS},{role:'user',content:[
+    {type:'image_url',image_url:{url:dataUrl}},{type:'text',text:vlOneMsg(n)}]}];
+  let j;
+  try{ j=await aiChatRaw(msgs,cfg,2500,true); }
+  catch(e){ if(e.status===400||e.status===422) j=await aiChatRaw(msgs,cfg,2500,false); else throw e; }
+  const o=aiParse(j);
+  return {n:n,content:String(o.content||'').trim(),wrong:String(o.wrong||'').trim(),confidence:o.confidence||'',note:vlCleanNote(o.note)};
+}
+let _vlQuestions=[];
+function setRecStatus(msg,err){
+  const el=document.getElementById('ai_recog_status');
+  if(!el)return;
+  el.style.display=msg?'block':'none';
+  el.style.color=err?'var(--danger)':'var(--text)';
+  el.innerHTML=msg;
+}
+function renderRecPick(){
+  const box=document.getElementById('ai_recog_pick');
+  if(!box)return;
+  if(_vlQuestions.length<2){box.innerHTML='';return;}
+  box.innerHTML=`<div style="font-size:.82rem;font-weight:600;margin:.5rem 0 .35rem">本页识别到 ${_vlQuestions.length} 道题，点一道录入并分析：</div>`+
+    _vlQuestions.map((q,i)=>{
+      const txt=String(q.content||q.head||'(题干未识别)').replace(/\s+/g,' ').slice(0,26);
+      const more=String(q.content||q.head||'').length>26?'…':'';
+      return `<button type="button" class="recog-pick-btn" onclick="applyRecognized(${i})">
+        <b>第${q.n||i+1}题</b> ${esc(txt)}${more}
+        ${q.wrong?`<span class="rp-wrong">我的答案：${esc(String(q.wrong).replace(/\s+/g,' ').slice(0,12))}</span>`:'<span class="rp-wrong rp-none">未看到手写答案</span>'}
+      </button>`;}).join('')+
+    `<div style="font-size:.75rem;color:var(--text-light);margin-top:.15rem">点第1题最准；其他题会再单独精读一遍</div>`;
+}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+// 模型有时把提示词模板当 note 回显，过滤掉这种无意义提示
+function vlCleanNote(n){
+  const s=String(n||'').trim();
+  if(s.length<4) return '';
+  if(/一句话|看不清的地方|没有写空串|如 夏季|如实|示例|模板/.test(s) && s.length<40) return '';
+  return s;
+}
+// 把识别结果写进表单（content/我错答案 走 DOM，其余同步 addForm —— 保存时读的就是它）
+function applyRecognized(i){
+  return _applyRecognized(i);
+}
+async function _applyRecognized(i){
+  const q=_vlQuestions[i];if(!q)return;
+  const dataUrl=addForm.image_path;
+  if(!q.content && dataUrl){        // 清单项：再单独精读这道题，保证题干逐字准确
+    setRecStatus(`🔎 正在单独精读第${q.n||i+1}题（约 10-20 秒）…`);
+    const btn=document.getElementById('ai_recog_btn');if(btn){btn.disabled=true;btn.style.opacity=.6;}
+    try{
+      const one=await vlAskQuestion(dataUrl,q.n||i+1);
+      if(one.content){q.content=one.content;q.wrong=one.wrong||q.wrong;q.note=one.note;}
+      else{ setRecStatus(`⚠️ 第${q.n||i+1}题没认出印刷文字（可能模糊/被遮挡），请手动补题干，再点「AI 一键生成」`,true); return; }
+    }catch(e){ setRecStatus(`❌ 第${q.n||i+1}题精读失败：`+esc(e.message),true); return; }
+    finally{if(btn){btn.disabled=false;btn.style.opacity=1;}}
+  }
+  const c=document.getElementById('af_content');
+  if(c){c.value=q.content||'';addForm.content=q.content||'';}
+  const w=document.getElementById('af_wrong');
+  if(w){w.value=q.wrong||'';addForm.my_answer=q.wrong||'';}
+  const hint=q.note?`（识别提示：${esc(q.note)}，请核对题干）`:'（AI 识别，请核对题干文字）';
+  if(_vlQuestions.length>1)setRecStatus(`✅ 已选第${q.n||i+1}题 ${hint} 正在生成 答案/错因/考点/五维 …`);
+  else setRecStatus(`✅ 识别完成 ${hint} 正在生成 答案/错因/考点/五维 …`);
+  renderRecPick();
+  aiGenerate('af');                     // 接着自动做文本分析
+}
+async function aiRecognizeImage(){
+  const dataUrl=addForm.image_path;
+  if(!dataUrl){setRecStatus('⚠️ 先选一张题目图片',true);return;}
+  const btn=document.getElementById('ai_recog_btn');
+  if(btn){btn.disabled=true;btn.style.opacity=.6;}
+  _vlQuestions=[];renderRecPick();
+  setRecStatus('🖼️ AI 正在识别图片（约 10-40 秒，请稍等）…');
+  try{
+    const o=await aiVision(dataUrl);
+    // ① 基本信息
+    const sub=String(o.subject||'').trim();
+    if(sub){
+      const sel=document.getElementById('af_subject');
+      const opt=sel?[...sel.options].find(x=>x.textContent.trim()===sub||x.textContent.includes(sub)):null;
+      if(opt){sel.selectedIndex=opt.index;addForm.subject_id=parseInt(opt.value);}
+    }
+    const gr=String(o.grade==null?'':o.grade).replace(/[^0-9]/g,'');
+    if(gr){const g=document.getElementById('af_grade');if(g){g.value=gr;addForm.grade=gr;}}
+    if(o.source){
+      const s=document.getElementById('af_source');
+      if(s){                            // 来源是下拉框：认出的试卷名当新选项塞进去并选中
+        const sv=String(o.source).trim();
+        let opt=[...s.options].find(x=>x.value===sv||x.textContent.trim()===sv);
+        if(!opt){opt=document.createElement('option');opt.value=sv;opt.textContent=sv;s.appendChild(opt);}
+        s.value=opt.value; addForm.source=opt.value;
+      }
+    }
+    // ② 题目：第1题逐字全文 + 其余题清单（整卷一次抄完容易抄飞，所以只对选中的那题精读）
+    let qs=[];
+    const f=o.first||o.question||null;
+    if(f&&String(f.content||'').trim())
+      qs.push({n:f.n||1,content:String(f.content).trim(),wrong:String(f.wrong||'').trim(),note:vlCleanNote(o.note)});
+    const others=Array.isArray(o.others)?o.others:(Array.isArray(o.rest)?o.rest:[]);
+    others.forEach((r,k)=>{
+      if(!r)return;
+      const n=r.n||r.num||(k+2);
+      if(qs.some(x=>String(x.n)===String(n)))return;
+      const head=String(r.head||'').trim(),rw=String(r.wrong||'').trim();
+      if(!head&&!rw)return;
+      qs.push({n:n,content:'',head:head,wrong:rw});
+    });
+    if(!qs.length&&Array.isArray(o.questions)){        // 兼容旧格式（整卷 questions）
+      qs=o.questions.filter(q=>q&&String(q.content||'').trim())
+        .map(q=>({n:q.n,content:String(q.content).trim(),wrong:String(q.wrong||'').trim(),note:vlCleanNote(o.note)}));
+    }
+    _vlQuestions=qs;
+    const nt=vlCleanNote(o.note);
+    if(!_vlQuestions.length){
+      setRecStatus('⚠️ 没认出题目文字'+(nt?'：'+esc(nt):'')+'　（换张更清楚的图，或手动填题干）',true);
+      return;
+    }
+    if(_vlQuestions.length===1&&_vlQuestions[0].content) applyRecognized(0);
+    else{
+      setRecStatus(`✅ 识别到 <b>${_vlQuestions.length}</b> 道题（${esc(o.source||'出处未识别')}）—— 点下面选一道录入并分析${nt?'（'+esc(nt)+'）':''}`);
+      renderRecPick();
+    }
+  }catch(e){
+    setRecStatus('❌ 识别失败：'+esc(e.message)+'　（检查网络 / 视觉 Key / 模型名）',true);
+  }finally{if(btn){btn.disabled=false;btn.style.opacity=1;}}
+}
 // 考点词表：从现有错题汇总高频标签，让 AI 选词与既有标签保持同一套
 function aiVocab(){
   const d=loadData(),c={};
@@ -1040,7 +1230,7 @@ async function aiGenerate(p){
 }
 // ---- AI 设置页 ----
 function renderAiConf(){
-  const c=aiCfg(),st=_aiStored();
+  const c=aiCfg(),st=_aiStored(),v=vlCfg(),vs=_vlStored();
   return `<div class="card" style="max-width:680px;margin:0 auto">
     <div class="card-title">⚙️ AI 设置（大模型接入）</div>
     <div class="form-section">
@@ -1064,7 +1254,50 @@ function renderAiConf(){
         💡 手机 App 版已内置 Key，装上就能用；网页版（NAS/隧道）需自己填一次 Key（存在浏览器本机）。<br>
         💡 生成需要联网；生成内容会带「AI 生成 · 待核对」标记，核对无误后可去掉。
       </p>
+    </div>
+    <div class="form-section" style="border-top:2px dashed #ddd6fe;margin-top:.3rem;padding-top:1rem">
+      <div style="font-weight:700;font-size:.98rem;margin-bottom:.4rem">🖼️ 视觉模型（拍图录题用）</div>
+      <p style="font-size:.82rem;color:var(--text-light);line-height:1.75">
+        在「录入错题」里选好题目图片后，先用它把图片读成文字（<b>基本信息 / 题干 / 我的错误答案</b>），
+        再自动接上上面的文本模型做分析（<b>正确答案 · 错因 · 考点标签 · 难度 · 五维分析</b>）。
+        <br>当前 Key 来源：<b>${vlKeySource()}</b>${VL_EMBED_KEY?'（App 已内置，可直接用）':''}
+      </p>
+      <label class="form-label">视觉 API 地址</label>
+      <input class="form-control" id="vl_base" value="${v.base}" placeholder="https://api.siliconflow.cn/v1">
+      <label class="form-label" style="margin-top:.5rem">视觉模型名</label>
+      <input class="form-control" id="vl_model" value="${v.model}" placeholder="Qwen/Qwen3-VL-30B-A3B-Instruct">
+      <label class="form-label" style="margin-top:.5rem">视觉 API Key（留空＝用 App 内置；只存本机，不上传）</label>
+      <input class="form-control" id="vl_key" type="password" value="${vs.key||''}" placeholder="sk-…">
+      <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="vlConfSave()"><i class="fas fa-save"></i> 保存视觉设置</button>
+        <button class="btn btn-outline" onclick="vlConfTest()"><i class="fas fa-plug"></i> 测试视觉接口</button>
+      </div>
+      <div id="vl_test_result" style="margin-top:.7rem;font-size:.85rem;color:var(--text-light)"></div>
+      <p style="margin-top:.9rem;font-size:.78rem;color:var(--text-light)">
+        💡 识别只抄「看得清的字」，看不清会标【看不清】，绝不瞎编；识别结果请核对题干再保存。<br>
+        💡 一张照片有多道题：会列出来让你挑一道录入。<br>
+        💡 硅基流动可用模型：<code>Qwen/Qwen3-VL-30B-A3B-Instruct</code>（默认，准）、<code>Qwen/Qwen3-VL-8B-Instruct</code>（快）。
+      </p>
     </div></div>`;
+}
+function vlConfSave(){
+  const g=id=>(document.getElementById(id)||{}).value||'';
+  vlSaveCfg({base:g('vl_base').trim(),model:g('vl_model').trim(),key:g('vl_key').trim()});
+  toast('✅ 视觉模型设置已保存','success');
+  const c=vlCfg();
+  document.getElementById('vl_test_result').textContent='已保存：'+c.model+' @ '+c.base+'（'+(c.key?'Key 已就绪':'⚠️ 没有 Key')+'）';
+}
+async function vlConfTest(){
+  const el=document.getElementById('vl_test_result');
+  const g=id=>(document.getElementById(id)||{}).value||'';
+  const cfg={base:g('vl_base').trim(),model:g('vl_model').trim(),key:g('vl_key').trim()||VL_EMBED_KEY};
+  if(!cfg.key){el.textContent='⚠️ 还没有 Key';return;}
+  el.textContent='⏳ 正在测试视觉接口（约 5-20 秒）…';
+  const px='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=';
+  try{
+    const j=await aiChatRaw([{role:'user',content:[{type:'image_url',image_url:{url:px}},{type:'text',text:'只回复JSON {"ok":true}'}]}],cfg,200,false);
+    el.textContent='✅ 视觉接口连通：'+cfg.model+'（'+(j.usage?j.usage.total_tokens+' tokens':'响应正常')+'）';
+  }catch(e){el.textContent='❌ 失败：'+e.message;}
 }
 function aiConfSave(){
   const g=id=>(document.getElementById(id)||{}).value||'';
@@ -1178,6 +1411,12 @@ function renderAdd(){
         ${addForm.image_path ? `<img src="${addForm.image_path}" class="img-shot">` : ''}
         ${addForm.image_path ? `<span class="img-del" onclick="clearFile('image_path','af_image','af_image_preview')">✕ 删除图片</span>` : ''}
       </div>
+      <div id="ai_recog_status" class="recog-status" style="display:none"></div>
+      <div id="ai_recog_pick" class="recog-pick"></div>
+      <div style="margin-top:.65rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+        <button type="button" class="btn btn-primary btn-sm" id="ai_recog_btn" onclick="aiRecognizeImage()"><i class="fas fa-wand-magic-sparkles"></i> AI 识别并分析</button>
+        <span style="font-size:.74rem;color:var(--text-light)">选图后会自动识别；识别到多题可挑一道</span>
+      </div>
     </div>
     <div style="background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #ddd6fe;border-radius:10px;padding:.85rem 1rem;margin-bottom:1rem">
       <div style="font-weight:700;color:#5b21b6;margin-bottom:.35rem">🤖 AI 一键生成（大模型）</div>
@@ -1267,6 +1506,8 @@ function handleFile(input, field) {
         preview.innerHTML = `<img src="${dataUrl}" class="img-shot">
           <span class="img-del" onclick="clearFile('${field}','${input.id}','${preview.id}')">✕ 删除图片</span>`;
       }
+      // 老板 2026-10-02：题目图片一选好就自动识别 + 分析（答案图片不自动跑；无识别入口时也不跑）
+      if (field === 'image_path' && document.getElementById('ai_recog_status')) aiRecognizeImage();
     });
   };
   reader.readAsDataURL(file);
