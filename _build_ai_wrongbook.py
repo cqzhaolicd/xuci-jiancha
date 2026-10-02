@@ -139,6 +139,8 @@ AUTH_CSS = """<style>
 .ab-trial{background:#fefcbf;color:#744210;border-radius:999px;padding:.05rem .45rem;font-size:.7rem;font-weight:700}
 #abPayQrBox img{width:230px;max-width:82%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:6px}
 #abPayQrBox .ab-qrhint{font-size:.8rem;color:#718096;line-height:1.6}
+  .ab-paytip{margin-top:10px;font-size:15px;font-weight:700;color:#b45309;background:#fff7e6;border:1px dashed #f0b429;border-radius:10px;padding:8px 10px;line-height:1.5}
+  .ab-paytip b{font-size:22px;color:#d97706}
 #abPayNote.ok{color:#2f855a}#abPayNote.err{color:#c53030}
 .ab-lb{display:block;text-align:left;font-size:.8rem;color:#4a5568;font-weight:600;margin:.6rem 0 .25rem}
 .ab-card select{width:100%;padding:.55rem .7rem;border:1px solid #cbd5e0;border-radius:8px;font-size:.95rem;
@@ -471,11 +473,16 @@ var ABG=(function(){
       if(j.reason)$('abPaySub').textContent=j.reason;
       var _is299=(j.which==='299')||(!j.which&&ACCESS&&ACCESS.invite_code);
       var _fb=_is299?BUILTIN_QR_299:BUILTIN_QR_399;
-      box.innerHTML='<img src="'+((j.qr_ready&&j.qr_data)?j.qr_data:_fb)+'" alt="收款码">';
+      var _html='<img src="'+((j.qr_ready&&j.qr_data)?j.qr_data:_fb)+'" alt="收款码">';
+      if(!_is299)_html+='<div class="ab-paytip">付款<b>'+((j.amount)||(ACCESS&&ACCESS.price)||399)+'</b></div>';
+      box.innerHTML=_html;
       note.textContent=j.note||'付款后点「✅ 我已付款，提交核对」，我们核对到账后即开通；也可用卡密直接开通。';
       note.className='ab-msg ok';
     }).catch(function(){
-      box.innerHTML='<img src="'+((ACCESS&&ACCESS.invite_code)?BUILTIN_QR_299:BUILTIN_QR_399)+'" alt="收款码">';
+      var _i2=!!(ACCESS&&ACCESS.invite_code);
+      var _h2='<img src="'+(_i2?BUILTIN_QR_299:BUILTIN_QR_399)+'" alt="收款码">';
+      if(!_i2)_h2+='<div class="ab-paytip">付款<b>'+((ACCESS&&ACCESS.price)||399)+'</b></div>';
+      box.innerHTML=_h2;
       note.textContent=netErr();note.className='ab-msg err';
     });
   }
