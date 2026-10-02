@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.23</title>
+<title>AI错题本 v4.0.24</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -382,7 +382,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.23</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.24</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -399,7 +399,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.23 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.24 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -3178,7 +3178,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.23</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.24</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
@@ -3257,11 +3257,15 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
       <input id="abPayUserNote" placeholder="选填：付款时留的备注 / 微信昵称（便于核对）" style="margin-bottom:6px">
       <button class="ab-btn" onclick="ABG.submitPaid()">✅ 我已付款，提交核对</button>
       <button class="ab-btn2" onclick="ABG.refreshPay()">🔄 已开通？刷新状态</button>
+      <div id="abPayCardEntry" style="display:none;margin-top:14px;padding-top:12px;border-top:1px dashed #cbd5e0">
+        <div style="font-size:.8rem;color:#718096;margin-bottom:8px">另一种方式：有卡密可直接核销开通</div>
+        <button class="ab-btn2" onclick="ABG.payStep('card')" style="border-color:#f6ad55;color:#b7791f;background:#fffaf0">🎟️ 我有卡密，直接开通</button>
+      </div>
     </div>
     <div id="abPayStep3" style="display:none">
       <input id="abPayCard" placeholder="卡密（如 AB-XXXX-XXXX）" style="text-transform:uppercase;letter-spacing:1px">
       <button class="ab-btn" onclick="ABG.redeemCard()">兑换并开通</button>
-      <a onclick="ABG.payStep('invite')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">返回上一步</a>
+      <a onclick="ABG.payStep('qr')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">返回上一步</a>
     </div>
     <div id="abPayNote" class="ab-msg" style="min-height:1.2em"></div>
     <a onclick="ABG.closePay()" style="display:block;margin-top:12px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">先看看，稍后开通</a>
@@ -3472,6 +3476,7 @@ var ABG=(function(){
     $('abPayAmt').textContent='￥'+(ACCESS?ACCESS.price:'--');
     $('abPaySub').textContent='微信扫码付款';
     var _in=$('abPayInviteNote');if(_in)_in.style.display=(ACCESS&&ACCESS.invite_code)?'':'none';
+    var _ce=$('abPayCardEntry');if(_ce)_ce.style.display=(ACCESS&&ACCESS.invite_code)?'none':'';
     note.textContent='正在读取收款码…';note.className='ab-msg';
     request('/api/payinfo',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
       var j=r.json||{};

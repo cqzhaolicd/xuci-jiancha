@@ -244,11 +244,15 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
       <input id="abPayUserNote" placeholder="选填：付款时留的备注 / 微信昵称（便于核对）" style="margin-bottom:6px">
       <button class="ab-btn" onclick="ABG.submitPaid()">✅ 我已付款，提交核对</button>
       <button class="ab-btn2" onclick="ABG.refreshPay()">🔄 已开通？刷新状态</button>
+      <div id="abPayCardEntry" style="display:none;margin-top:14px;padding-top:12px;border-top:1px dashed #cbd5e0">
+        <div style="font-size:.8rem;color:#718096;margin-bottom:8px">另一种方式：有卡密可直接核销开通</div>
+        <button class="ab-btn2" onclick="ABG.payStep('card')" style="border-color:#f6ad55;color:#b7791f;background:#fffaf0">🎟️ 我有卡密，直接开通</button>
+      </div>
     </div>
     <div id="abPayStep3" style="display:none">
       <input id="abPayCard" placeholder="卡密（如 AB-XXXX-XXXX）" style="text-transform:uppercase;letter-spacing:1px">
       <button class="ab-btn" onclick="ABG.redeemCard()">兑换并开通</button>
-      <a onclick="ABG.payStep('invite')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">返回上一步</a>
+      <a onclick="ABG.payStep('qr')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">返回上一步</a>
     </div>
     <div id="abPayNote" class="ab-msg" style="min-height:1.2em"></div>
     <a onclick="ABG.closePay()" style="display:block;margin-top:12px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">先看看，稍后开通</a>
@@ -460,6 +464,7 @@ var ABG=(function(){
     $('abPayAmt').textContent='￥'+(ACCESS?ACCESS.price:'--');
     $('abPaySub').textContent='微信扫码付款';
     var _in=$('abPayInviteNote');if(_in)_in.style.display=(ACCESS&&ACCESS.invite_code)?'':'none';
+    var _ce=$('abPayCardEntry');if(_ce)_ce.style.display=(ACCESS&&ACCESS.invite_code)?'none':'';
     note.textContent='正在读取收款码…';note.className='ab-msg';
     request('/api/payinfo',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
       var j=r.json||{};
