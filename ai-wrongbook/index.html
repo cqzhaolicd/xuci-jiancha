@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.18</title>
+<title>AI错题本 v4.0.19</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -9,6 +9,7 @@
 .ab-card{background:#fff;border-radius:18px;padding:22px 20px;width:100%;max-width:360px;
   box-shadow:0 18px 50px rgba(0,0,0,.25)}
 .ab-logo{font-size:1.12rem;font-weight:700;color:#1a202c;text-align:center}
+  .ab-vip{display:inline-block;padding:9px 22px;border-radius:999px;background:linear-gradient(135deg,#f7cf5b,#e0890a);color:#fff;font-size:1.35rem;font-weight:800;letter-spacing:1px;box-shadow:0 6px 16px rgba(224,137,10,.32);text-shadow:0 1px 2px rgba(0,0,0,.18);margin:2px 0}
 .ab-sub{font-size:.82rem;color:#718096;text-align:center;margin:.25rem 0 1rem}
 .ab-tabs{display:flex;gap:.4rem;margin-bottom:.9rem}
 .ab-tab{flex:1;background:#f0f2f5;color:#4a5568;border:none;padding:.5rem;border-radius:10px;
@@ -380,7 +381,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.18</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.19</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -397,7 +398,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.18 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.19 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -3176,7 +3177,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.18</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.19</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
@@ -3238,17 +3239,13 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 </div>
 <div id="abPay" class="ab-gate ab-hide">
   <div class="ab-card" style="max-width:400px;text-align:center">
-    <div class="ab-logo" id="abPayTitle">⏰ 免费试用已结束</div>
-    <div class="ab-sub" id="abPaySub"></div>
+    <div class="ab-vip" id="abPayTitle">👑 升级终身 VIP</div>
+    <div class="ab-sub" id="abPaySub">一次付费 · 永久使用</div>
     <div id="abPayWhy" class="ab-msg err" style="display:none;background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:.45rem .6rem;margin-top:.5rem"></div>
     <div id="abPayStep1">
-      <div style="font-size:.88rem;color:#4a5568;line-height:1.75;margin:.5rem 0 .7rem;text-align:left">
-        有邀请码？填在下面，下一步按 <b style="color:#c53030">299 元</b> 开通；<br>
-        没有邀请码，点下面「直接开通」，按标准价 <b>399 元</b> 开通。
-      </div>
-      <input id="abPayInvite" placeholder="邀请码（没有可留空）" style="text-transform:uppercase">
+      <input id="abPayInvite" placeholder="邀请码（有则享 299 元，没有可留空）" style="text-transform:uppercase">
       <button class="ab-btn" onclick="ABG.claimInvite()">使用邀请码，按 299 元开通</button>
-      <button class="ab-btn2" onclick="ABG.payStep('qr')">没有邀请码，直接开通（399 元）</button>
+      <button class="ab-btn2" onclick="ABG.payStep('qr')">直接开通（399 元）</button>
       <a onclick="ABG.payStep('card')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">🎟️ 我有卡密（一次性码），直接开通</a>
     </div>
     <div id="abPayStep2" style="display:none">
@@ -3263,9 +3260,6 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
       </div>
     </div>
     <div id="abPayStep3" style="display:none">
-      <div style="font-size:.88rem;color:#4a5568;line-height:1.75;margin:.5rem 0 .7rem;text-align:left">
-        把卡密填在下面，点「兑换并开通」<b style="color:#c53030">立即开通</b>，不用等管理员核对。
-      </div>
       <input id="abPayCard" placeholder="卡密（如 AB-XXXX-XXXX）" style="text-transform:uppercase;letter-spacing:1px">
       <button class="ab-btn" onclick="ABG.redeemCard()">兑换并开通</button>
       <a onclick="ABG.payStep('invite')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">返回上一步</a>
@@ -3373,15 +3367,15 @@ var ABG=(function(){
     if(s3)s3.style.display='none';
     if(step==='invite'){
       s1.style.display='';s2.style.display='none';
-      $('abPayTitle').textContent='⏰ 免费试用已结束';
-      $('abPaySub').textContent='有邀请码可享 299 元优惠价；没有也能按 399 元直接开通';
+      $('abPayTitle').textContent='👑 升级终身 VIP';
+      $('abPaySub').textContent='一次付费 · 永久使用';
       return;
     }
     if(step==='card'){
       s1.style.display='none';s2.style.display='none';
       if(s3)s3.style.display='';
-      $('abPayTitle').textContent='🎟️ 卡密开通';
-      $('abPaySub').textContent='填入卡密，立即开通（无需等待管理员核对）';
+      $('abPayTitle').textContent='👑 升级终身 VIP';
+      $('abPaySub').textContent='填卡密立即开通，无需等待核对';
       var el=$('abPayCard');if(el)setTimeout(function(){try{el.focus()}catch(e){}},80);
       var n0=$('abPayNote');if(n0){n0.textContent='';n0.className='ab-msg'}
       return;
@@ -3477,7 +3471,7 @@ var ABG=(function(){
   function payQr(){
     var box=$('abPayQrBox'),note=$('abPayNote');
     $('abPayAmt').textContent='￥'+(ACCESS?ACCESS.price:'--');
-    $('abPaySub').textContent=ACCESS&&ACCESS.invite_code?('已用邀请码 '+ACCESS.invite_code+'，按优惠价 '+ACCESS.price+' 元开通'):('按标准价 '+(ACCESS?ACCESS.price:399)+' 元开通');
+    $('abPaySub').textContent='微信扫码付款';
     note.textContent='正在读取收款码…';note.className='ab-msg';
     request('/api/payinfo',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
       var j=r.json||{};
