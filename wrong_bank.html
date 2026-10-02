@@ -101,6 +101,37 @@ textarea.form-control{resize:vertical;min-height:70px}
 .print-q{padding:1rem;border:1px dashed var(--border);border-radius:8px;min-height:120px;page-break-inside:avoid}
 .print-q .pq-num{font-weight:700;color:var(--primary);margin-bottom:.5rem}
 .print-q .pq-answer{border-top:1px dashed var(--border);margin-top:.5rem;padding-top:.5rem;font-size:.9rem}
+/* Print · 选择区与打印内容选项（老板 2026-10-01） */
+.print-pick{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:var(--radius-sm);margin-top:.5rem;background:var(--card-bg)}
+.print-pick .pp-row{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem .7rem;border-bottom:1px solid var(--border);cursor:pointer;margin:0}
+.print-pick .pp-row:last-child{border-bottom:none}
+.print-pick .pp-row:hover{background:var(--bg)}
+.print-pick .pp-row.on{background:#667eea14}
+.print-pick input[type=checkbox]{margin-top:.3rem;width:16px;height:16px;flex:none;cursor:pointer}
+.pp-main{flex:1;min-width:0}
+.pp-txt{font-size:.88rem;line-height:1.5;word-break:break-word}
+.pp-meta{font-size:.74rem;color:var(--text-light);margin-top:.2rem}
+.popt-bar{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem}
+.popt{display:flex;align-items:center;gap:.35rem;padding:.4rem .8rem;border:1px solid var(--border);border-radius:20px;font-size:.85rem;cursor:pointer;background:var(--card-bg);user-select:none;margin:0}
+.popt.on{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
+.popt input{display:none}
+.pq-label{font-weight:700;font-size:.85rem;color:var(--primary);margin-bottom:.15rem}
+.pq-block{margin-top:.5rem}
+.pick-bar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.6rem}
+.pick-box{margin-right:.45rem;width:16px;height:16px;vertical-align:middle;cursor:pointer}
+.question-item.picked{background:#667eea14;box-shadow:inset 3px 0 0 var(--primary)}
+@media print{
+  .navbar,.footer,#syncBadge,.no-print{display:none!important}
+  body{background:#fff!important}
+  .container{max-width:100%!important;padding:0!important;margin:0!important}
+  #app{padding:0!important;margin:0!important}
+  .card{box-shadow:none!important;border:none!important;padding:0!important;margin:0!important;border-radius:0!important}
+  .print-area .card-title{font-size:1rem;margin-bottom:.4rem;border:none}
+  .print-q{border:none;border-bottom:1px dashed #bbb;border-radius:0;padding:.5rem 0;min-height:0}
+  .print-q:last-child{border-bottom:none}
+  .pq-block,.pq-num{page-break-inside:avoid}
+  img{max-width:70%!important;max-height:180px!important}
+}
 /* Analysis */
 .chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
 .chart-box{background:var(--card-bg);border-radius:var(--radius);padding:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
@@ -1129,7 +1160,18 @@ function refreshList(){_drawView(renderList());}
 function refreshAdd(){_drawView(renderAdd());}
 function refreshDetail(qid){_drawView(renderDetail({qid:qid}));}
 function refreshReview(){_drawView(renderReview());}
+function refreshPrint(){_drawView(renderPrint());}
 function refreshTraining(){_drawView(renderTraining());}
+
+// 错题本列表「多选打印」模式（老板 2026-10-01）
+let listPickMode=false,listPageIds=[];
+function listPickToggle(){listPickMode=!listPickMode;refreshList();}
+function togglePick(id){if(printSel[id])delete printSel[id];else printSel[id]=true;refreshList();}
+function listPickPageAll(on){listPageIds.forEach(id=>{if(on)printSel[id]=true;else delete printSel[id];});refreshList();}
+function listPickAll(on){const f=listFiltered();if(on)printSel={};f.forEach(q=>printSel[q.id]=on);refreshList();}
+function listPickClear(){printSel={};refreshList();}
+function gotoPrintSelected(){if(!printSelCount()){toast('请先勾选要打印的错题','info');return;}navigate('print-page');}
+function pickOrOpen(id){if(listPickMode)togglePick(id);else navigate('detail',{qid:id});}
 
 // 首页统计卡片点击 → 跳到对应内容（老板 2026-10-01）
 function dashGo(kind){
@@ -1333,18 +1375,23 @@ function addChapter(){
 let listFilter={subject_id:'',error_reason:'',mastery:'',grade:'',search:'',page:1};
 const PER_PAGE=15;
 
-function renderList(){
-  const d=loadData();
-  let filtered=[...d.questions];
+function listFiltered(){
+  let filtered=[...loadData().questions];
   if(listFilter.subject_id) filtered=filtered.filter(q=>q.subject_id===parseInt(listFilter.subject_id));
   if(listFilter.error_reason) filtered=filtered.filter(q=>q.error_reason===listFilter.error_reason);
   if(listFilter.mastery!=='') filtered=filtered.filter(q=>q.mastery===parseInt(listFilter.mastery));
   if(listFilter.grade!=='') filtered=filtered.filter(q=>gradeMatch(q,listFilter.grade));
-  if(listFilter.search) {const s=listFilter.search.toLowerCase();filtered=filtered.filter(q=>q.content.toLowerCase().includes(s)||q.tags.toLowerCase().includes(s));}
+  if(listFilter.search) {const s=listFilter.search.toLowerCase();filtered=filtered.filter(q=>(q.content||'').toLowerCase().includes(s)||(q.tags||'').toLowerCase().includes(s));}
   filtered.sort((a,b)=>b.id-a.id);
+  return filtered;
+}
+function renderList(){
+  const d=loadData();
+  const filtered=listFiltered();
   const totalPages=Math.max(1,Math.ceil(filtered.length/PER_PAGE));
   const page=Math.min(listFilter.page,totalPages);
   const paged=filtered.slice((page-1)*PER_PAGE,page*PER_PAGE);
+  listPageIds=paged.map(q=>q.id);
   return`<div class="card">
     <div class="card-title"><i class="fas fa-filter"></i> 筛选</div>
     <div class="filter-bar">
@@ -1365,12 +1412,21 @@ function renderList(){
       </select>
       <input class="form-control" placeholder="🔍 搜索题目…" value="${listFilter.search}" onchange="listFilter.search=this.value;listFilter.page=1;refreshList()" style="min-width:150px">
       <button class="btn btn-outline btn-sm" onclick="listFilter={subject_id:'',error_reason:'',mastery:'',grade:'',search:'',page:1};refreshList()"><i class="fas fa-undo"></i> 重置</button>
+      <button class="btn ${listPickMode?'btn-primary':'btn-outline'} btn-sm" onclick="listPickToggle()"><i class="fas fa-check-square"></i> ${listPickMode?'退出多选':'多选打印'}</button>
     </div>
+    ${listPickMode?`<div class="pick-bar" style="background:#667eea12;border-radius:8px;padding:.5rem .7rem;margin-top:.5rem">
+      <span class="q-badge badge-mastery">已选 ${printSelCount()} 题</span>
+      <button class="btn btn-outline btn-sm" onclick="listPickPageAll(true)">全选本页（${paged.length}）</button>
+      <button class="btn btn-outline btn-sm" onclick="listPickAll(true)">全选筛选结果（${filtered.length}）</button>
+      <button class="btn btn-outline btn-sm" onclick="listPickClear()">清空</button>
+      <button class="btn btn-primary btn-sm" onclick="gotoPrintSelected()"><i class="fas fa-print"></i> 打印选中</button>
+    </div>`:''}
     <div>${paged.length?paged.map(q=>{
       const subj=d.subjects.find(s=>s.id===q.subject_id);
       const chap=d.chapters.find(c=>c.id===q.chapter_id);
-      return`<div class="question-item" onclick="navigate('detail',{qid:${q.id}})">
-        <div class="q-header"><span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
+      return`<div class="question-item ${listPickMode?(printSel[q.id]?'pick-on picked':'pick-on'):''}" onclick="pickOrOpen(${q.id})">
+        <div class="q-header">${listPickMode?`<input type="checkbox" class="pick-box" ${printSel[q.id]?'checked':''} onclick="event.stopPropagation();togglePick(${q.id})">`:''}
+        <span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
         <span class="q-badge badge-grade">${gradeText(q.grade)}</span>
         ${chap?`<span class="q-badge badge-chapter">${chap.name}</span>`:''}
         <span class="q-badge badge-reason">${q.error_reason}</span>
@@ -1451,6 +1507,7 @@ function renderDetail(data){
       <button class="btn btn-primary btn-sm" onclick="navigate('detail',{qid:${q.id},edit:true})"><i class="fas fa-edit"></i> 编辑</button>
       <button class="btn btn-success btn-sm" onclick="navigate('training',{qid:${q.id}})"><i class="fas fa-layer-group"></i> 三层练</button>
       <button class="btn btn-danger btn-sm" onclick="deleteQ(${q.id})"><i class="fas fa-trash"></i> 删除</button>
+      <button class="btn btn-info btn-sm" onclick="printOne(${q.id})"><i class="fas fa-print"></i> 打印</button>
       <button class="btn btn-outline btn-sm" onclick="navigate('list',{})"><i class="fas fa-arrow-left"></i> 返回列表</button>
     </div></div>`;
 }
@@ -1858,22 +1915,130 @@ function nextTrainingQ(){
 let qData=null;
 
 // ===================== PRINT =====================
+// 打印内容选项（老板 2026-10-01 指定 6 项）
+const PRINT_OPTS=[
+  {k:'stem',   t:'题干'},
+  {k:'wrong',  t:'我的错误答案'},
+  {k:'correct',t:'正确答案'},
+  {k:'reason', t:'错因分析'},
+  {k:'ana5',   t:'五维分析'},
+  {k:'train',  t:'三层练的题'}
+];
+// 默认：题干+错解+正解+错因（错因/五维/三层练按需勾）
+let printOpts={stem:true,wrong:true,correct:true,reason:true,ana5:false,train:false};
+let printSel={};                                                     // {qid:true} 勾选待打印
+let printFilter={subject_id:'',grade:'',error_reason:'',mastery:'',search:''};
+
+function printSelCount(){return Object.keys(printSel).filter(k=>printSel[k]).length;}
+function printFiltered(){
+  const d=loadData();
+  let f=[...d.questions];
+  if(printFilter.subject_id)f=f.filter(q=>q.subject_id===parseInt(printFilter.subject_id));
+  if(printFilter.grade!=='')f=f.filter(q=>gradeMatch(q,printFilter.grade));
+  if(printFilter.error_reason)f=f.filter(q=>q.error_reason===printFilter.error_reason);
+  if(printFilter.mastery!=='')f=f.filter(q=>q.mastery===parseInt(printFilter.mastery));
+  if(printFilter.search){const s=printFilter.search.toLowerCase();f=f.filter(q=>(q.content||'').toLowerCase().includes(s)||(q.tags||'').toLowerCase().includes(s));}
+  return f.sort((a,b)=>a.id-b.id);
+}
+function printSelected(){const d=loadData();return d.questions.filter(q=>printSel[q.id]).sort((a,b)=>a.id-b.id);}
+function printSelToggle(id){if(printSel[id])delete printSel[id];else printSel[id]=true;refreshPrint();}
+function printSelAll(on){const f=on?printFiltered():loadData().questions;if(on)printSel={};f.forEach(q=>printSel[q.id]=on);refreshPrint();}
+function printOptToggle(k){printOpts[k]=!printOpts[k];refreshPrint();}
+function printOne(id){printSel={};printSel[id]=true;navigate('print-page');}
+function printFromList(){navigate('print-page');}
+function stripHtml(h){return String(h==null?'':h).replace(/<br\s*\/?>/gi,'\n').replace(/<\/(div|p|li)>/gi,'\n').replace(/<[^>]*>/g,'').replace(/&nbsp;/g,' ').replace(/\n{3,}/g,'\n\n').trim();}
+
+// 单题打印内容（按勾选项渲染）
+function printCard(q,i){
+  const d=loadData();
+  const subj=d.subjects.find(s=>s.id===q.subject_id);
+  const a=ana5(q);
+  let h=`<div class="print-q"><div class="pq-num">${i+1}. ${subj?subj.name:'?'} · ${gradeText(q.grade)} · #${q.id}</div>`;
+  if(printOpts.stem){
+    h+=`<div class="pq-block"><div class="pq-label">题目</div><div class="prewrap">${esc5(q.content)}</div>`;
+    if(q.image_path)h+=`<div style="margin-top:.4rem"><img src="${q.image_path}" style="max-width:100%;max-height:220px;border-radius:4px"></div>`;
+    h+=`</div>`;
+  }
+  if(printOpts.wrong&&q.my_answer)h+=`<div class="pq-block"><div class="pq-label" style="color:var(--danger)">❌ 我的错误答案</div><div class="prewrap">${esc5(q.my_answer)}</div></div>`;
+  if(printOpts.correct&&q.correct_answer)h+=`<div class="pq-block"><div class="pq-label" style="color:var(--success)">✅ 正确答案</div><div class="prewrap">${esc5(q.correct_answer)}</div></div>`;
+  if(printOpts.reason)h+=`<div class="pq-block"><div class="pq-label">错因分析</div><div>${esc5(q.error_reason||'—')}${q.tags?' &nbsp;🏷️ '+esc5(q.tags):''}</div></div>`;
+  if(printOpts.ana5){
+    h+=`<div class="pq-block"><div class="pq-label">🧩 五维分析</div>`+ANA5_DIMS.map(dm=>{
+      const v=String(a[dm.k]||'').trim();
+      return `<div style="margin-top:.2rem;font-size:.92rem"><strong>${dm.tag}</strong>：<span class="prewrap">${v?esc5(v):'未填写'}</span></div>`;
+    }).join('')+`</div>`;
+  }
+  if(printOpts.train){
+    let layers=[];
+    try{layers=getOrGenLayers(q)||[];}catch(e){layers=[];}
+    if(layers.length){
+      h+=`<div class="pq-block"><div class="pq-label">📚 三层练的题</div>`+layers.map((L,li)=>{
+        // 第1层就是原题（不要它自带的答案），第2/3层取生成的变式题干
+        const t=li===0?String(q.content||''):stripHtml(L.content);
+        return `<div style="margin-top:.35rem"><strong>${esc5(stripHtml(L.title))}</strong><div class="prewrap" style="font-size:.92rem">${esc5(t)}</div></div>`;
+      }).join('')+`</div>`;
+    }else{
+      h+=`<div class="pq-block"><div class="pq-label">📚 三层练的题</div><div style="color:var(--text-light)">（该题暂无三层练）</div></div>`;
+    }
+  }
+  return h+`</div>`;
+}
+
 function renderPrint(){
   const d=loadData();
-  const qs=d.questions;
-  if(!qs.length)return'<div class="empty-state"><i class="fas fa-print"></i><h5>没有可打印的错题</h5></div>';
-  return`<div class="card"><div class="card-title"><i class="fas fa-print"></i> 打印预览</div>
-    <div class="print-layout">${qs.map((q,i)=>{
-      const subj=d.subjects.find(s=>s.id===q.subject_id);
-      return`<div class="print-q">
-        <div class="pq-num">${i+1}. [${subj?subj.name:'?'}]</div>
-        <div>${q.content}</div>
-        <div class="pq-answer prewrap" style="color:var(--success)"><strong>答案：</strong>${q.correct_answer||'（无）'}</div>
-      </div>`;
-    }).join('')}</div>
+  if(!d.questions.length)return'<div class="empty-state"><i class="fas fa-print"></i><h5>还没有错题</h5><p>先录入错题再来打印</p></div>';
+  const f=printFiltered();
+  const sel=printSelected();
+  const pickRow=q=>{
+    const subj=d.subjects.find(s=>s.id===q.subject_id);
+    return `<label class="pp-row ${printSel[q.id]?'on':''}" onclick="printSelToggle(${q.id});return false">
+      <input type="checkbox" ${printSel[q.id]?'checked':''} onclick="event.stopPropagation();printSelToggle(${q.id});return false">
+      <div class="pp-main"><div class="pp-txt">${esc5((q.content||'').substring(0,90))}${(q.content||'').length>90?'…':''}</div>
+      <div class="pp-meta">#${q.id} · ${subj?subj.name:'?'} · ${gradeText(q.grade)} · ${esc5(q.error_reason||'')} · ${q.created_at||''}</div></div></label>`;
+  };
+  return`<div class="card no-print">
+    <div class="card-title"><i class="fas fa-print"></i> 打印错题</div>
+    <div style="font-size:.85rem;color:var(--text-light);margin-bottom:.5rem">① 筛选后勾选要打印的题（可多选）② 勾选打印内容 ③ 点最下方「打印」</div>
+    <div class="filter-bar">
+      <select class="form-select" onchange="printFilter.subject_id=this.value;refreshPrint()">
+        <option value="">📚 全部科目</option>${d.subjects.map(s=>`<option value="${s.id}" ${printFilter.subject_id==String(s.id)?'selected':''}>${s.name}</option>`).join('')}
+      </select>
+      <select class="form-select" onchange="printFilter.grade=this.value;refreshPrint()">
+        <option value="">🎓 全部年级</option>
+        <option value="none" ${printFilter.grade==='none'?'selected':''}>未标注年级</option>
+        ${GRADES.map(g=>`<option value="${g}" ${printFilter.grade===String(g)?'selected':''}>${g}年级</option>`).join('')}
+      </select>
+      <select class="form-select" onchange="printFilter.error_reason=this.value;refreshPrint()">
+        <option value="">📌 全部原因</option>${ERROR_REASONS.map(r=>`<option value="${r}" ${printFilter.error_reason===r?'selected':''}>${r}</option>`).join('')}
+      </select>
+      <select class="form-select" onchange="printFilter.mastery=this.value;refreshPrint()">
+        <option value="">🎯 掌握度</option><option value="0" ${printFilter.mastery==='0'?'selected':''}>未掌握</option>
+        <option value="1" ${printFilter.mastery==='1'?'selected':''}>待复习</option><option value="5" ${printFilter.mastery==='5'?'selected':''}>已掌握</option>
+      </select>
+      <input class="form-control" placeholder="🔍 搜索题目…" value="${printFilter.search}" onchange="printFilter.search=this.value;refreshPrint()" style="min-width:140px">
+      <button class="btn btn-outline btn-sm" onclick="printFilter={subject_id:'',grade:'',error_reason:'',mastery:'',search:''};refreshPrint()"><i class="fas fa-undo"></i> 重置</button>
+    </div>
+    <div class="pick-bar">
+      <button class="btn btn-outline btn-sm" onclick="printSelAll(true)"><i class="fas fa-check-double"></i> 全选当前 ${f.length} 题</button>
+      <button class="btn btn-outline btn-sm" onclick="printSelAll(false)"><i class="fas fa-eraser"></i> 全不选</button>
+      <span class="q-badge badge-mastery">已选 ${sel.length} 题</span>
+    </div>
+    <div class="print-pick">${f.length?f.map(pickRow).join(''):'<div class="empty-state" style="padding:1.5rem"><i class="fas fa-inbox"></i><h5>没有匹配的错题</h5></div>'}</div>
+    <div class="card-title" style="margin-top:1rem"><i class="fas fa-list-check"></i> 打印内容（可多选）</div>
+    <div class="popt-bar">${PRINT_OPTS.map(o=>`<label class="popt ${printOpts[o.k]?'on':''}" onclick="printOptToggle('${o.k}');return false"><input type="checkbox" ${printOpts[o.k]?'checked':''}>${printOpts[o.k]?'☑':'☐'} ${o.t}</label>`).join('')}</div>
     <div style="text-align:center;margin-top:1rem">
-      <button class="btn btn-primary" onclick="window.print()"><i class="fas fa-print"></i> 打印</button>
-    </div></div>`;
+      <button class="btn btn-primary px-4" onclick="doPrint()"><i class="fas fa-print"></i> 打印（${sel.length} 题）</button>
+    </div>
+    ${sel.length?'':'<div style="text-align:center;color:var(--danger);font-size:.85rem;margin-top:.5rem">请先勾选要打印的错题</div>'}
+  </div>
+  <div class="card print-area" id="printArea">
+    <div class="card-title">共 ${sel.length} 题</div>
+    ${sel.length?sel.map((q,i)=>printCard(q,i)).join(''):'<div class="empty-state"><i class="fas fa-print"></i><h5>还没有选中的题</h5><p>在上方勾选要打印的错题</p></div>'}
+  </div>`;
+}
+function doPrint(){
+  if(!printSelected().length){toast('请先勾选要打印的错题','error');return;}
+  window.print();
 }
 
 // ===================== ANALYSIS =====================
