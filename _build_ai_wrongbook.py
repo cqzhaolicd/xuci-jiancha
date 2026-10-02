@@ -395,18 +395,9 @@ var ABG=(function(){
       var j=r.json||{};
       if(j.ok){
         if(j.already){note.textContent='该账号已是 VIP';note.className='ab-msg ok';refreshPay();return}
-        note.innerHTML='✅ 已提交（应付 ￥'+j.amount+'）<br>管理员核对到账后自动开通；已自动刷新，开通后进来即可用，不用重新登录。';
+        note.textContent='已提交，等待核对…';
         note.className='ab-msg ok';
-        // 提交后自动静默刷新一次：若已开通直接进入
-        request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r2){
-          var a2=(r2.json||{}).access;
-          if(a2&&!a2.locked){
-            ACCESS=a2;setLock(false);hidePay();
-            chip(JSON.parse(localStorage.getItem(USER_KEY)||'{}')||{username:'已登录'});
-            alert('✅ 已开通，欢迎继续使用！');
-            try{location.reload()}catch(e){}
-          }
-        }).catch(function(){});
+        pollPaid(0);   // 自动轮询：一旦核对到付款就自动进入
       }else{note.textContent=j.error||'提交失败';note.className='ab-msg err'}
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
@@ -490,6 +481,22 @@ var ABG=(function(){
       note.textContent=netErr();note.className='ab-msg err';
     });
   }
+  // ── 自动轮询开通状态：提交「我已付款」后自动查，核对到付款即自动进入（老板 2026-10-02）──
+  function pollPaid(n){
+    request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
+      var a=(r.json||{}).access;
+      if(r.status===401){clear();hidePay();chip(null);show();msg('登录已失效，请重新登录');return}
+      if(a&&!a.locked){
+        ACCESS=a;setLock(false);hidePay();
+        chip(JSON.parse(localStorage.getItem(USER_KEY)||'{}')||{username:'已登录'});
+        alert('✅ 已开通，欢迎继续使用！');
+        try{location.reload()}catch(e){}
+        return;
+      }
+      if(n<37)setTimeout(function(){pollPaid(n+1)},8000);
+    }).catch(function(){ if(n<37)setTimeout(function(){pollPaid(n+1)},8000); });
+  }
+
   function refreshPay(){
     var note=$('abPayNote');note.textContent='正在核对…';note.className='ab-msg';
     request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
