@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.2</title>
+<title>AI错题本 v4.0.3</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -115,6 +115,19 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .recog-pick-btn b{color:var(--primary)}
 .rp-wrong{font-size:.75rem;color:var(--text-light)}
 .rp-none{opacity:.65}
+/* 多选录入（2026-10-02）：选中高亮 + 批量分析 + 勾选保存 */
+.recog-pick-btn.rp-on{border-color:var(--primary);background:#f5f3ff;box-shadow:inset 0 0 0 1px var(--primary)}
+.rp-row{display:flex;align-items:flex-start;gap:.35rem;width:100%}
+.rp-box{flex:0 0 auto;display:inline-flex;width:16px;height:16px;border:1.5px solid #c4b5fd;border-radius:4px;align-items:center;justify-content:center;font-size:.68rem;line-height:1;color:#fff;margin-top:.1rem}
+.rp-on .rp-box{background:var(--primary);border-color:var(--primary)}
+.rp-head{font-size:.82rem;font-weight:600;margin:.5rem 0 .35rem;line-height:1.6}
+.rp-bar{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;margin-top:.5rem}
+.rp-res{border:1.5px solid #ddd6fe;border-radius:10px;padding:.5rem .65rem;margin-bottom:.45rem;background:#fff}
+.rp-res.rp-on{border-color:var(--primary);background:#faf9ff}
+.rp-res-h{display:flex;align-items:center;gap:.4rem;font-size:.86rem;cursor:pointer;font-weight:600}
+.rp-res-h input{width:16px;height:16px;accent-color:var(--primary)}
+.rp-res-b{font-size:.78rem;line-height:1.7;color:var(--text);margin-top:.35rem;white-space:pre-wrap}
+.rp-res-b b{color:var(--primary)}
 .qb-review i{background:linear-gradient(135deg,#48bb78,#2f855a)}
 /* Subject grid */
 .subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem}
@@ -311,7 +324,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.2</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.3</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -325,7 +338,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.2 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.3 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -1050,19 +1063,133 @@ function setRecStatus(msg,err){
   el.style.color=err?'var(--danger)':'var(--text)';
   el.innerHTML=msg;
 }
+// ===== 多选录入（2026-10-02 老板要求）：点一下选中/取消（高亮）→ 一键分析所有选中题 → 勾选要保存的 =====
+let _vlPick=new Set();          // 已选中的题（_vlQuestions 下标）
+let _vlBatch=[];                // 批量分析结果 [{q,n,o}]
+let _vlBatchPick=new Set();     // 分析结果里勾选要保存的
+function recPickToggle(i){
+  if(_vlPick.has(i))_vlPick.delete(i); else _vlPick.add(i);
+  renderRecPick();
+}
+function recPickAll(on){
+  if(on)_vlQuestions.forEach((q,i)=>_vlPick.add(i)); else _vlPick.clear();
+  renderRecPick();
+}
 function renderRecPick(){
   const box=document.getElementById('ai_recog_pick');
   if(!box)return;
   if(_vlQuestions.length<2){box.innerHTML='';return;}
-  box.innerHTML=`<div style="font-size:.82rem;font-weight:600;margin:.5rem 0 .35rem">本页识别到 ${_vlQuestions.length} 道题，点一道录入并分析：</div>`+
+  const n=_vlPick.size,all=n===_vlQuestions.length;
+  box.innerHTML=`<div class="rp-head">本页识别到 ${_vlQuestions.length} 道题 —— <b>点一下选中（可多选）</b>，再点下面按钮一键分析：</div>`+
     _vlQuestions.map((q,i)=>{
-      const txt=String(q.content||q.head||'(题干未识别)').replace(/\s+/g,' ').slice(0,26);
-      const more=String(q.content||q.head||'').length>26?'…':'';
-      return `<button type="button" class="recog-pick-btn" onclick="applyRecognized(${i})">
-        <b>第${q.n||i+1}题</b> ${esc(txt)}${more}
+      const on=_vlPick.has(i);
+      const raw=String(q.content||q.head||'(题干未识别)').replace(/\s+/g,' ');
+      const txt=raw.slice(0,40),more=raw.length>40?'…':'';
+      return `<button type="button" class="recog-pick-btn ${on?'rp-on':''}" onclick="recPickToggle(${i})">
+        <span class="rp-row"><span class="rp-box">${on?'✓':''}</span><span><b>第${q.n||i+1}题</b> ${esc(txt)}${more}</span></span>
         ${q.wrong?`<span class="rp-wrong">我的答案：${esc(String(q.wrong).replace(/\s+/g,' ').slice(0,12))}</span>`:'<span class="rp-wrong rp-none">未看到手写答案</span>'}
       </button>`;}).join('')+
-    `<div style="font-size:.75rem;color:var(--text-light);margin-top:.15rem">点第1题最准；其他题会再单独精读一遍</div>`;
+    `<div class="rp-bar">
+       <span class="q-badge badge-mastery">已选 ${n} 题</span>
+       <button class="btn btn-outline btn-sm" onclick="recPickAll(${all?'false':'true'})">${all?'清空':'全选'}</button>
+       <button class="btn btn-primary btn-sm" id="rp_go" onclick="aiAnalyzePicked()" ${n?'':'disabled style="opacity:.5"'}>
+         <i class="fas fa-wand-magic-sparkles"></i> ${n>1?`AI 一键分析这 ${n} 题`:'AI 识别并分析这题'}</button>
+     </div>
+     <div style="font-size:.75rem;color:var(--text-light);margin-top:.15rem">第1题最准；其他题会再单独精读一遍。选多题时，全部分析完再让你勾选要保存的。</div>`;
+}
+function afSubjectName(){
+  const el=document.getElementById('af_subject');
+  return el&&el.selectedOptions&&el.selectedOptions[0]?el.selectedOptions[0].textContent.trim():'';
+}
+// 一键分析所有选中题：逐题「精读 → 生成 答案/错因/考点/五维」，全部完成后进入勾选保存
+async function aiAnalyzePicked(){
+  const idx=[..._vlPick].sort((a,b)=>a-b);
+  if(!idx.length){toast('先点选要录入的题目','error');return;}
+  if(idx.length===1){                    // 单选 → 走原流程（填进表单便于逐字核对后保存）
+    const i=idx[0];_vlPick.clear();renderRecPick();_vlBatch=[];return applyRecognized(i);
+  }
+  const dataUrl=addForm.image_path;
+  const btn=document.getElementById('rp_go');
+  if(!vlCfg().key){setRecStatus('❌ 视觉模型没配 Key：「⚙️ AI 设置 → 视觉模型」',true);return;}
+  if(!aiCfg().key){setRecStatus('❌ 文本模型没配 Key：「⚙️ AI 设置」',true);return;}
+  if(btn){btn.disabled=true;btn.style.opacity=.6;}
+  _vlBatch=[];const fails=[];
+  for(let k=0;k<idx.length;k++){
+    const i=idx[k],q=_vlQuestions[i],no=q.n||i+1;
+    try{
+      if(!String(q.content||'').trim()){          // 清单项：先单独精读，保证题干逐字
+        setRecStatus(`⏳ (${k+1}/${idx.length}) 正在精读第${no}题…`);
+        const one=await vlAskQuestion(dataUrl,no);
+        if(one.content){q.content=one.content;q.wrong=one.wrong||q.wrong;q.note=one.note||q.note;}
+      }
+      if(!String(q.content||'').trim()){fails.push(`第${no}题：题干没认出`);continue;}
+      setRecStatus(`⏳ (${k+1}/${idx.length}) 第${no}题 正在生成 答案/错因/考点/五维…`);
+      const rc={subject:afSubjectName(),grade:addForm.grade,chapter:'',source:addForm.source,
+                content:q.content,wrong:q.wrong||'',image:false};
+      const j=await aiChat([{role:'system',content:AI_SYS},{role:'user',content:aiUserMsg(rc)}],aiCfg(),8000);
+      _vlBatch.push({q:q,n:no,o:aiParse(j)});
+    }catch(e){fails.push(`第${no}题：${String(e.message||e).slice(0,40)}`);}
+  }
+  if(btn){btn.disabled=false;btn.style.opacity=1;}
+  if(!_vlBatch.length){setRecStatus('❌ 都没成功：'+esc(fails.join('；')),true);toast('分析失败，看下方提示','error');return;}
+  _vlBatchPick=new Set(_vlBatch.map((_,i)=>i));
+  setRecStatus(`✅ 已分析 <b>${_vlBatch.length}</b> 题${fails.length?`（${fails.length} 题失败：${esc(fails.join('；'))}）`:''} —— 下面勾选要保存的`);
+  renderBatchReview();
+}
+function renderBatchReview(){
+  const box=document.getElementById('ai_recog_pick');
+  if(!box)return;
+  box.innerHTML=`<div class="rp-head">已分析 ${_vlBatch.length} 题 —— <b>勾选要保存的</b>（都会带上这张照片）：</div>`+
+    _vlBatch.map((b,i)=>{
+      const on=_vlBatchPick.has(i),o=b.o||{},a=o.ana5||{};
+      const c=String(b.q.content||'');
+      return `<div class="rp-res ${on?'rp-on':''}">
+        <label class="rp-res-h"><input type="checkbox" ${on?'checked':''} onchange="batchToggle(${i})">
+          第${b.n}题 <span class="rp-wrong" style="font-weight:400">我的答案：${esc(String(b.q.wrong||'未识别').replace(/\s+/g,' ').slice(0,10))}</span></label>
+        <div class="rp-res-b"><b>题干</b>：${esc(c.slice(0,140))}${c.length>140?'…':''}
+<b>正确答案</b>：${esc(o.correct_answer||'—')}
+<b>错因</b>：${esc(o.error_reason||'—')}　<b>考点</b>：${esc(Array.isArray(o.tags)?o.tags.join('、'):(o.tags||'—'))}　<b>难度</b>：${esc(String(o.difficulty||'—'))}
+<b>五维</b>：A ${esc((a.known||'—').slice(0,60))}　B ${esc((a.ask||'—').slice(0,40))}
+C ${esc((a.method||'—').slice(0,80))}
+D ${esc((a.pitfall||'—').slice(0,60))}　E ${esc((a.points||'—').slice(0,60))}</div>
+      </div>`;}).join('')+
+    `<div class="rp-bar">
+       <span class="q-badge badge-mastery">已勾 ${_vlBatchPick.size} 题</span>
+       <button class="btn btn-outline btn-sm" onclick="batchToggleAll(true)">全选</button>
+       <button class="btn btn-outline btn-sm" onclick="batchToggleAll(false)">全不选</button>
+       <button class="btn btn-primary btn-sm" onclick="batchSave()" ${_vlBatchPick.size?'':'disabled style="opacity:.5"'}><i class="fas fa-save"></i> 保存勾选的 ${_vlBatchPick.size} 题</button>
+       <button class="btn btn-outline btn-sm" onclick="_vlBatch=[];_vlBatchPick=new Set();renderRecPick();">↩ 返回选题</button>
+     </div>`;
+}
+function batchToggle(i){if(_vlBatchPick.has(i))_vlBatchPick.delete(i);else _vlBatchPick.add(i);renderBatchReview();}
+function batchToggleAll(on){_vlBatchPick=new Set(on?_vlBatch.map((_,i)=>i):[]);renderBatchReview();}
+// 用分析结果拼一条错题（字段与 submitAdd 保存的一致）
+function buildQuestion(q,o){
+  const oo=o||{},ana5={};
+  ANA5_DIMS.forEach(dm=>{const v=(oo.ana5||{})[dm.k];if(v)ana5[dm.k]=String(v).trim();});
+  const item={id:genId(),subject_id:addForm.subject_id,
+    chapter_id:addForm.chapter_id?parseInt(addForm.chapter_id):null,
+    content:q.content||'',correct_answer:String(oo.correct_answer||''),my_answer:q.wrong||'',
+    error_reason:String(oo.error_reason||'概念不清'),
+    tags:Array.isArray(oo.tags)?oo.tags.join(','):String(oo.tags||''),
+    source:addForm.source,difficulty:+oo.difficulty||3,grade:(addForm.grade?+addForm.grade:lastGrade()),
+    mastery:0,created_at:now(),updated_at:now(),next_review:today(),review_count:0,
+    image_path:addForm.image_path||'',answer_image_path:addForm.answer_image_path||'',flow:{},ana5};
+  if(q.note)item.recog_note=q.note;
+  if(ANA5_DIMS.some(dm=>(ana5[dm.k]||'').length))item.ana5_ai=true;   // AI 生成 · 待核对标记
+  return item;
+}
+function batchSave(){
+  const picks=[..._vlBatchPick].sort((a,b)=>a-b);
+  if(!picks.length){toast('先勾选要保存的题','error');return;}
+  const d=loadData();let n=0;
+  picks.forEach(i=>{const b=_vlBatch[i];if(!b)return;d.questions.push(buildQuestion(b.q,b.o));n++;});
+  saveData(d);setLastGrade(addForm.grade);
+  toast(`✅ 已保存 ${n} 道错题`,'success');
+  _vlBatch=[];_vlBatchPick=new Set();_vlPick=new Set();
+  const box=document.getElementById('ai_recog_pick');if(box)box.innerHTML='';
+  setRecStatus(`✅ 已保存 ${n} 道题（题目图片共用这一张）`);
+  navigate('list');
 }
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 // 模型有时把提示词模板当 note 回显，过滤掉这种无意义提示
@@ -1104,7 +1231,7 @@ async function aiRecognizeImage(){
   if(!dataUrl){setRecStatus('⚠️ 先选一张题目图片',true);return;}
   const btn=document.getElementById('ai_recog_btn');
   if(btn){btn.disabled=true;btn.style.opacity=.6;}
-  _vlQuestions=[];renderRecPick();
+  _vlQuestions=[];_vlPick=new Set();_vlBatch=[];_vlBatchPick=new Set();renderRecPick();
   setRecStatus('🖼️ AI 正在识别图片（约 10-40 秒，请稍等）…');
   try{
     const o=await aiVision(dataUrl);
@@ -1152,7 +1279,7 @@ async function aiRecognizeImage(){
     }
     if(_vlQuestions.length===1&&_vlQuestions[0].content) applyRecognized(0);
     else{
-      setRecStatus(`✅ 识别到 <b>${_vlQuestions.length}</b> 道题（${esc(o.source||'出处未识别')}）—— 点下面选一道录入并分析${nt?'（'+esc(nt)+'）':''}`);
+      setRecStatus(`✅ 识别到 <b>${_vlQuestions.length}</b> 道题（${esc(o.source||'出处未识别')}）—— 点下面的题<b>选中</b>（可多选），再点「AI 一键分析」${nt?'（'+esc(nt)+'）':''}`);
       renderRecPick();
     }
   }catch(e){
@@ -1485,7 +1612,7 @@ function renderAdd(){
       <div id="ai_recog_pick" class="recog-pick"></div>
       <div style="margin-top:.65rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
         <button type="button" class="btn btn-primary btn-sm" id="ai_recog_btn" onclick="aiRecognizeImage()"><i class="fas fa-wand-magic-sparkles"></i> AI 识别并分析</button>
-        <span style="font-size:.74rem;color:var(--text-light)">选图后会自动识别；识别到多题可挑一道</span>
+        <span style="font-size:.74rem;color:var(--text-light)">选图后会自动识别；识别到多题可<b>多选</b>，一次分析完再勾选保存</span>
       </div>
     </div>
     <div style="background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #ddd6fe;border-radius:10px;padding:.85rem 1rem;margin-bottom:1rem">
@@ -2844,7 +2971,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.2</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.3</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
