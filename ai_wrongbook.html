@@ -226,16 +226,9 @@ textarea.form-control{resize:vertical;min-height:70px}
 .rvf-chip.active i{color:#fff}
 .rvf-note{font-size:.76rem;color:var(--text-light);margin-top:.5rem;line-height:1.65}
 .rvf-clr{color:#e74c3c;text-decoration:none;font-weight:700;margin-right:.2rem}
-/* ===== AI错题本 · 顶部双功能区（错题本 / 三层训练） ===== */
-.top-tabs{display:flex;gap:.35rem;flex-wrap:wrap}
-.top-tab{background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.35);
-  padding:.35rem .95rem;border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer;
-  display:inline-flex;align-items:center;gap:.35rem;transition:all .2s;font-family:inherit}
-.top-tab:hover{background:rgba(255,255,255,.3)}
-.top-tab.active{background:#fff;color:var(--primary);border-color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+/* ===== AI错题本 · 顶部导航（老板 2026-10-02：取消「错题本/三层训练/复习要点」三标签） ===== */
 #mainNav{border-top:1px solid rgba(255,255,255,.18);padding-top:.35rem}
 .domain-tip{font-size:.76rem;color:var(--text-light);margin:-.4rem 0 .8rem}
-@media(max-width:768px){.top-tab{font-size:.78rem;padding:.3rem .7rem}}
 </style>
 </head><body>
 
@@ -247,11 +240,6 @@ textarea.form-control{resize:vertical;min-height:70px}
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
     <a class="navbar-brand" href="index.html"><i class="fas fa-robot"></i> AI错题本</a>
-    <div class="top-tabs" id="topTabs">
-      <button class="top-tab active" data-top="notebook" onclick="switchTop('notebook')"><i class="fas fa-book"></i> 错题本</button>
-      <button class="top-tab" data-top="training" onclick="switchTop('training')"><i class="fas fa-layer-group"></i> 三层训练</button>
-      <button class="top-tab" data-top="points" onclick="switchTop('points')"><i class="fas fa-clipboard-check"></i> 复习要点</button>
-    </div>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -2555,13 +2543,12 @@ function renderPoints(){
 // 数据层/渲染函数与原页完全同源；localStorage 键与云端后端也一致 ⇒ 两页数据互通：
 // 在原错题库录入或复习的题，这里立刻可见；反之亦然。
 let _aiLastNbPage = 'dashboard';
-function _aiTopTabOf(page){ return page === 'training' ? 'training' : (page === 'points' ? 'points' : 'notebook'); }
 function _aiApplyTopTab(page){
-  const t = _aiTopTabOf(page);
-  document.querySelectorAll('#topTabs .top-tab').forEach(b => b.classList.toggle('active', b.dataset.top === t));
+  // 【老板 2026-10-02】顶部「错题本/三层训练/复习要点」三标签已取消
+  // 子导航 #mainNav 改为常显（原来进 三层训练/复习要点 页会把它隐藏，现在没标签可回来了，必须常显）
   const mn = document.getElementById('mainNav');
-  if (mn) mn.style.display = (t === 'notebook') ? 'flex' : 'none';   // 三层训练/复习要点页隐藏错题本子导航
-  document.body.setAttribute('data-domain', t);
+  if (mn && mn.style.display !== 'flex') mn.style.display = 'flex';
+  document.body.setAttribute('data-domain', (page === 'training' || page === 'points') ? page : 'notebook');
 }
 function switchTop(tab){
   if (tab === 'training') { navigate('training', {}); return; }

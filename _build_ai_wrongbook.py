@@ -21,16 +21,9 @@ DST = os.path.join(ROOT, 'ai_wrongbook.html')
 STANDALONE_DIR = os.path.join(ROOT, 'ai-wrongbook')
 STANDALONE = os.path.join(STANDALONE_DIR, 'index.html')
 
-CSS = """/* ===== AI错题本 · 顶部双功能区（错题本 / 三层训练） ===== */
-.top-tabs{display:flex;gap:.35rem;flex-wrap:wrap}
-.top-tab{background:rgba(255,255,255,.16);color:#fff;border:1.5px solid rgba(255,255,255,.35);
-  padding:.35rem .95rem;border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer;
-  display:inline-flex;align-items:center;gap:.35rem;transition:all .2s;font-family:inherit}
-.top-tab:hover{background:rgba(255,255,255,.3)}
-.top-tab.active{background:#fff;color:var(--primary);border-color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+CSS = """/* ===== AI错题本 · 顶部导航（老板 2026-10-02：取消「错题本/三层训练/复习要点」三标签） ===== */
 #mainNav{border-top:1px solid rgba(255,255,255,.18);padding-top:.35rem}
 .domain-tip{font-size:.76rem;color:var(--text-light);margin:-.4rem 0 .8rem}
-@media(max-width:768px){.top-tab{font-size:.78rem;padding:.3rem .7rem}}
 </style>"""
 
 NAV_OLD = """<nav class="navbar"><div class="container">
@@ -49,11 +42,6 @@ NAV_OLD = """<nav class="navbar"><div class="container">
 NAV_NEW = """<nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
     <a class="navbar-brand" href="index.html"><i class="fas fa-robot"></i> AI错题本</a>
-    <div class="top-tabs" id="topTabs">
-      <button class="top-tab active" data-top="notebook" onclick="switchTop('notebook')"><i class="fas fa-book"></i> 错题本</button>
-      <button class="top-tab" data-top="training" onclick="switchTop('training')"><i class="fas fa-layer-group"></i> 三层训练</button>
-      <button class="top-tab" data-top="points" onclick="switchTop('points')"><i class="fas fa-clipboard-check"></i> 复习要点</button>
-    </div>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -78,13 +66,12 @@ JS_BLOCK = """// ===================== AI错题本 · 双功能区（错题本 /
 // 数据层/渲染函数与原页完全同源；localStorage 键与云端后端也一致 ⇒ 两页数据互通：
 // 在原错题库录入或复习的题，这里立刻可见；反之亦然。
 let _aiLastNbPage = 'dashboard';
-function _aiTopTabOf(page){ return page === 'training' ? 'training' : (page === 'points' ? 'points' : 'notebook'); }
 function _aiApplyTopTab(page){
-  const t = _aiTopTabOf(page);
-  document.querySelectorAll('#topTabs .top-tab').forEach(b => b.classList.toggle('active', b.dataset.top === t));
+  // 【老板 2026-10-02】顶部「错题本/三层训练/复习要点」三标签已取消
+  // 子导航 #mainNav 改为常显（原来进 三层训练/复习要点 页会把它隐藏，现在没标签可回来了，必须常显）
   const mn = document.getElementById('mainNav');
-  if (mn) mn.style.display = (t === 'notebook') ? 'flex' : 'none';   // 三层训练/复习要点页隐藏错题本子导航
-  document.body.setAttribute('data-domain', t);
+  if (mn && mn.style.display !== 'flex') mn.style.display = 'flex';
+  document.body.setAttribute('data-domain', (page === 'training' || page === 'points') ? page : 'notebook');
 }
 function switchTop(tab){
   if (tab === 'training') { navigate('training', {}); return; }
@@ -151,10 +138,9 @@ AUTH_CSS = """<style>
 .ab-bk{display:flex;gap:.5rem}
 .ab-bk .ab-btn2{margin-top:.2rem;font-size:.85rem;padding:.55rem .4rem}
 .ab-trial.lock{background:#fed7d7;color:#c53030;cursor:pointer}
-/* 账号胶囊与「错题本/三层训练/复习要点」同一行、靠最右：窄屏收紧尺寸，保证同排仍放得下 */
-.top-tabs{flex:0 0 auto}
+/* 账号胶囊放在子导航行最右（顶部三标签取消后走 .ab-navrow 兜底通道） */
+.ab-navrow .ab-chip{margin-left:auto}
 @media (max-width:520px){
-  .top-tab{padding:.16rem .32rem !important;font-size:.66rem !important;gap:.15rem !important}
   .ab-chip{font-size:.6rem !important;padding:.1rem .34rem !important;gap:.2rem !important;margin-left:auto !important}
   .ab-chip .ab-trial,.ab-chip .ab-off{font-size:.58rem;padding:.01rem .26rem;border-radius:999px}
 }
@@ -840,8 +826,9 @@ def main():
                              'renderReview', 'renderTraining', 'renderQTraining', 'renderPrint', 'renderAnalysis'))),
         ('数据键未改', "const LS_KEY = 'wrong_bank_data';" in h),
         ('云同步未改', 'api_wrongbank.php' in h),
-        ('双功能区到位', h.count("data-top=\"notebook\"") == 1 and h.count("data-top=\"training\"") == 1),
-        ('复习要点到位', h.count("data-top=\"points\"") == 1 and 'function renderPoints' in h),
+        ('顶部三标签已取消（老板 2026-10-02）',
+         h.count('data-top=') == 0 and 'id="topTabs"' not in h and 'class="top-tab' not in h),
+        ('复习要点页保留（renderPoints 富页面）', 'function renderPoints' in h and 'function rvfPanel' in h),
         ('顶层三数组未动', h.count('const BUILTIN_QUESTIONS=[') == 1),
     ]
     ok = True
