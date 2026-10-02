@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.4</title>
+<title>AI错题本 v4.0.5</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -113,6 +113,30 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .recog-pick-btn{text-align:left;background:#fff;border:1.5px solid #ddd6fe;border-radius:10px;padding:.55rem .7rem;font-size:.85rem;cursor:pointer;font-family:inherit;color:var(--text);display:flex;flex-direction:column;gap:.2rem;transition:all .15s}
 .recog-pick-btn:hover{border-color:var(--primary);background:#fbfaff}
 .recog-pick-btn b{color:var(--primary)}
+.rp-head{font-size:.82rem;font-weight:600;margin:.5rem 0 .45rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.rp-meta{font-weight:400;color:var(--text-light);font-size:.76rem}
+.rp-res{border:1.5px solid #e5e9f2;border-radius:12px;background:#fff;margin-bottom:.7rem;overflow:hidden;transition:.15s}
+.rp-res.rp-on{border-color:#7c3aed;box-shadow:0 2px 10px rgba(124,58,237,.10)}
+.rp-res-h{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;padding:.55rem .7rem;background:linear-gradient(180deg,#fafbff,#f4f6fc);border-bottom:1px solid #eef1f7;cursor:pointer;font-size:.84rem}
+.rp-res-h input[type=checkbox]{transform:scale(1.15);margin-right:.1rem}
+.rp-no{font-weight:800;color:#1e293b}
+.rp-res-b{padding:.65rem .7rem;display:grid;gap:.5rem}
+.rp-q{background:#f8fafc;border:1px solid #eef2f7;border-radius:9px;padding:.55rem .65rem;font-size:.86rem;line-height:1.8;white-space:pre-wrap;color:#1f2937}
+.rp-ans{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 9px 9px 0;padding:.5rem .65rem;font-size:.85rem;line-height:1.75;color:#14532d;font-weight:600}
+.rp-chips{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.rp-chip{padding:.15rem .5rem;border-radius:8px;font-size:.74rem;font-weight:600;white-space:nowrap;line-height:1.5}
+.rp-chip.rp-ok{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.rp-chip.rp-bad{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
+.rp-chip.rp-mine{background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe}
+.rp-chip.rp-corr{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.rp-chip.rp-reason{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.rp-chip.rp-tag{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.rp-chip.rp-diff{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;letter-spacing:.06em}
+details.rp-ana5{border:1px solid #ede9fe;background:#fbfaff;border-radius:10px;padding:.45rem .6rem}
+details.rp-ana5>summary{cursor:pointer;font-size:.79rem;font-weight:700;color:#5b21b6;outline:none}
+details.rp-ana5[open]>summary{margin-bottom:.45rem}
+details.rp-ana5 .ana5-wrap{gap:.5rem}
+details.rp-ana5 .ana5-item{font-size:.85rem;line-height:1.7}
 .rp-wrong{font-size:.75rem;color:var(--text-light)}
 .rp-none{opacity:.65}
 /* 多选录入（2026-10-02）：选中高亮 + 批量分析 + 勾选保存 */
@@ -324,7 +348,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.4</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.5</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -338,7 +362,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.4 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.5 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -1136,22 +1160,50 @@ async function aiAnalyzePicked(){
   setRecStatus(`✅ 已分析 <b>${_vlBatch.length}</b> 题${fails.length?`（${fails.length} 题失败：${esc(fails.join('；'))}）`:''} —— 下面勾选要保存的`);
   renderBatchReview();
 }
+// 五维分析的“裸”渲染（无外框/标题，供批量结果卡复用；与详情页同一套彩色标签）
+function ana5WrapHtml(a){
+  return `<div class="ana5-wrap">${ANA5_DIMS.map(dm=>{
+    const v=String((a||{})[dm.k]||'').trim();
+    return `<div class="ana5-item"><span class="ana5-tag" style="background:${dm.color}">${dm.tag}</span><div class="ana5-v">${v?ana5Lines(v):'<span style="color:#bdc3c7">未填写</span>'}</div></div>`;}).join('')}</div>`;
+}
 function renderBatchReview(){
   const box=document.getElementById('ai_recog_pick');
   if(!box)return;
-  box.innerHTML=`<div class="rp-head">已分析 ${_vlBatch.length} 题 —— <b>勾选要保存的</b>（都会带上这张照片）：</div>`+
+  const meta=[afSubjectName(),gradeText(addForm.grade?+addForm.grade:lastGrade()),addForm.source].filter(Boolean).join(' · ');
+  box.innerHTML=`<div class="rp-head">🤖 已分析 <b>${_vlBatch.length}</b> 题${meta?`<span class="rp-meta">${esc(meta)}</span>`:''}<span class="rp-meta">勾选要保存的，都会带上这张照片</span></div>`+
     _vlBatch.map((b,i)=>{
-      const on=_vlBatchPick.has(i),o=b.o||{},a=o.ana5||{};
-      const c=String(b.q.content||'');
+      const on=_vlBatchPick.has(i),o=b.o||{};
+      const raw=String(b.q.wrong||'').replace(/\s+/g,' ').trim();
+      const my=raw.toUpperCase();
+      const corr=String(o.correct_answer||'').trim();
+      // 只取答案串“开头”的选项字母（避免从解析文字里误抓 A/B 字样，如「C。把A、B混淆」→ C）
+      const lead=s=>{const m=String(s).trim().match(/^([A-Da-d](?:\s*[、,，/]?\s*[A-Da-d])*)/);return m?m[1].replace(/[^A-Da-d]/g,'').toUpperCase():'';};
+      const myL=lead(my),corrL=lead(corr);
+      const hasMy=!!my&&!/^(未识别|没看到|无|N\/A)$/i.test(my);
+      const ok=!!(myL&&corrL&&myL===corrL);
+      const tags=Array.isArray(o.tags)?o.tags.join('、'):String(o.tags||'');
+      const diff=Math.max(0,Math.min(5,parseInt(o.difficulty)||0));
       return `<div class="rp-res ${on?'rp-on':''}">
-        <label class="rp-res-h"><input type="checkbox" ${on?'checked':''} onchange="batchToggle(${i})">
-          第${b.n}题 <span class="rp-wrong" style="font-weight:400">我的答案：${esc(String(b.q.wrong||'未识别').replace(/\s+/g,' ').slice(0,10))}</span></label>
-        <div class="rp-res-b"><b>题干</b>：${esc(c.slice(0,140))}${c.length>140?'…':''}
-<b>正确答案</b>：${esc(o.correct_answer||'—')}
-<b>错因</b>：${esc(o.error_reason||'—')}　<b>考点</b>：${esc(Array.isArray(o.tags)?o.tags.join('、'):(o.tags||'—'))}　<b>难度</b>：${esc(String(o.difficulty||'—'))}
-<b>五维</b>：A ${esc((a.known||'—').slice(0,60))}　B ${esc((a.ask||'—').slice(0,40))}
-C ${esc((a.method||'—').slice(0,80))}
-D ${esc((a.pitfall||'—').slice(0,60))}　E ${esc((a.points||'—').slice(0,60))}</div>
+        <label class="rp-res-h">
+          <input type="checkbox" ${on?'checked':''} onchange="batchToggle(${i})">
+          <span class="rp-no">第${b.n}题</span>
+          ${hasMy?`<span class="rp-chip rp-mine">我的答案 ${esc(my)}</span>`:'<span class="rp-chip rp-diff">未看到手写答案</span>'}
+          ${corr?`<span class="rp-chip rp-corr">正确 ${esc(corrL||corr)}</span>`:''}
+          ${myL&&corrL?(ok?'<span class="rp-chip rp-ok">✓ 答对</span>':'<span class="rp-chip rp-bad">✗ 要订正</span>'):''}
+        </label>
+        <div class="rp-res-b">
+          <div class="rp-q">${esc(String(b.q.content||'').trim())||'<i style="color:#94a3b8">题干未识别</i>'}</div>
+          ${corr?`<div class="rp-ans">✅ 正确答案：${esc(corr)}</div>`:''}
+          <div class="rp-chips">
+            ${o.error_reason?`<span class="rp-chip rp-reason">错因：${esc(o.error_reason)}</span>`:''}
+            ${tags?`<span class="rp-chip rp-tag">考点：${esc(tags)}</span>`:''}
+            ${diff?`<span class="rp-chip rp-diff">难度 ${'★'.repeat(diff)}${'☆'.repeat(5-diff)}</span>`:''}
+          </div>
+          <details class="rp-ana5" open>
+            <summary>🧩 五维分析（A 已知 · B 求解 · C 思路 · D 易错 · E 知识点）${ANA5_AI_CHIP}</summary>
+            ${ana5WrapHtml(o.ana5||{})}
+          </details>
+        </div>
       </div>`;}).join('')+
     `<div class="rp-bar">
        <span class="q-badge badge-mastery">已勾 ${_vlBatchPick.size} 题</span>
@@ -2971,7 +3023,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.4</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.5</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
