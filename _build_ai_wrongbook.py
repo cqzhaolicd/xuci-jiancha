@@ -239,7 +239,7 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
     </div>
     <div id="abPayStep2" style="display:none">
       <div id="abPayAmt" style="font-size:1.7rem;font-weight:800;color:#e53e3e;margin:8px 0">￥--</div>
-      <div id="abPayInviteNote" class="ab-invite-note" style="display:none">🎉 邀请码优惠 100 元</div>
+      <div id="abPayInviteNote" class="ab-invite-note" style="display:none">🎉 您有邀请码，减免100元</div>
       <div id="abPayQrBox" style="margin:10px 0;min-height:60px"></div>
       <input id="abPayUserNote" placeholder="选填：付款时留的备注 / 微信昵称（便于核对）" style="margin-bottom:6px">
       <button class="ab-btn" onclick="ABG.submitPaid()">✅ 我已付款，提交核对</button>
