@@ -33,6 +33,18 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .bg-g2{background:linear-gradient(135deg,#e74c3c,#c0392b)}
 .bg-g3{background:linear-gradient(135deg,#2ecc71,#27ae60)}
 .bg-g4{background:linear-gradient(135deg,#f39c12,#e67e22)}
+/* 首页快捷入口（老板 2026-10-02：录入/打印/三层练/复习要点） */
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.5rem}
+.quick-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45rem;padding:1rem .6rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;box-shadow:0 1px 3px rgba(0,0,0,.05);font-family:inherit;color:var(--text);text-decoration:none}
+.quick-btn i{font-size:1.35rem;width:2.7rem;height:2.7rem;display:flex;align-items:center;justify-content:center;border-radius:50%;color:#fff}
+.quick-btn span{font-size:.9rem;font-weight:600;line-height:1.2}
+.quick-btn small{font-size:.7rem;color:var(--text-light)}
+.quick-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.1);border-color:transparent}
+.quick-btn:active{transform:translateY(0) scale(.98)}
+.qb-add i{background:linear-gradient(135deg,#667eea,#764ba2)}
+.qb-print i{background:linear-gradient(135deg,#4299e1,#2b6cb0)}
+.qb-train i{background:linear-gradient(135deg,#f39c12,#e67e22)}
+.qb-review i{background:linear-gradient(135deg,#48bb78,#2f855a)}
 /* Subject grid */
 .subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem}
 .subject-card{background:var(--card-bg);border-radius:var(--radius-sm);padding:.8rem;text-align:center;text-decoration:none;color:var(--text);border:2px solid var(--border);transition:all .2s;cursor:pointer}
@@ -155,7 +167,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 .footer{text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-@media(max-width:768px){.navbar-nav a span{display:none}.stat-grid{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(3,1fr)}.filter-bar .form-select,.filter-bar .form-control{min-width:100px}}
+@media(max-width:768px){.navbar-nav a span{display:none}.stat-grid{grid-template-columns:repeat(2,1fr)}.quick-grid{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(3,1fr)}.filter-bar .form-select,.filter-bar .form-control{min-width:100px}}
 /* ==== 年级维度（1-12年级）==== */
 .q-badge.badge-grade{background:#eef2ff;color:#3b5bdb;border:1px solid #dbe2ff}
 .grade-chips{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;margin-top:.6rem}
@@ -1195,14 +1207,18 @@ function renderDashboard(){
   // Grade counts（年级维度）
   const gradeCnt={};
   d.questions.forEach(q=>{const k=(q.grade===undefined||q.grade===null||q.grade==='')?'none':String(q.grade);gradeCnt[k]=(gradeCnt[k]||0)+1;});
-  // Recent questions
-  const recent=[...d.questions].sort((a,b)=>b.id-a.id).slice(0,5);
   return`
   <div class="stat-grid">
     <div class="stat-card bg-g1" onclick="dashGo('all')" title="查看全部错题"><div class="num">${total}</div><div class="label">总错题 <span class="stat-go">›</span></div><div class="icon"><i class="fas fa-database"></i></div></div>
     <div class="stat-card bg-g2" onclick="dashGo('due')" title="去复习今天到期的题"><div class="num">${needReview}</div><div class="label">待复习 <span class="stat-go">›</span></div><div class="icon"><i class="fas fa-redo"></i></div></div>
     <div class="stat-card bg-g3" onclick="dashGo('mastered')" title="查看已掌握的题"><div class="num">${mastered}</div><div class="label">已掌握 <span class="stat-go">›</span></div><div class="icon"><i class="fas fa-check-circle"></i></div></div>
     <div class="stat-card bg-g4" onclick="dashGo('weak')" title="查看未掌握的题（薄弱点）"><div class="num">${weak}</div><div class="label">薄弱点 <span class="stat-go">›</span></div><div class="icon"><i class="fas fa-exclamation-triangle"></i></div></div>
+  </div>
+  <div class="quick-grid">
+    <button class="quick-btn qb-add" onclick="navigate('add')" title="录入新错题"><i class="fas fa-plus-circle"></i><span>录入</span><small>录入新错题</small></button>
+    <button class="quick-btn qb-print" onclick="navigate('print-page')" title="打印错题"><i class="fas fa-print"></i><span>打印</span><small>选题+选内容</small></button>
+    <button class="quick-btn qb-train" onclick="navigate('training')" title="三层练"><i class="fas fa-layer-group"></i><span>三层练</span><small>分层训练</small></button>
+    <button class="quick-btn qb-review" onclick="navigate('review')" title="复习要点"><i class="fas fa-clipboard-check"></i><span>复习要点</span><small>考前速览</small></button>
   </div>
   <div class="card"><div class="card-title"><i class="fas fa-book"></i> 科目概览</div>
     <div class="subject-grid">${d.subjects.map((s,i)=>{
@@ -1211,23 +1227,6 @@ function renderDashboard(){
         <div class="s-icon" style="background:${SUBJECT_COLORS[i%SUBJECT_COLORS.length]}"><i class="fas ${SUBJECT_ICONS[i%SUBJECT_ICONS.length]}"></i></div>
         <div class="s-name">${s.name}</div><div class="s-count">${cnt}题</div></div>`;
     }).join('')}</div></div>
-  <div class="card"><div class="card-title"><i class="fas fa-graduation-cap" style="color:var(--primary)"></i> 年级概览</div>
-    <div class="grade-chips">
-      ${[...GRADES.map(String),'none'].filter(k=>gradeCnt[k]).map(k=>`<button class="grade-chip" onclick="listFilter.grade='${k}';listFilter.page=1;navigate('list')">${k==='none'?'未标注':k+'年级'} · ${gradeCnt[k]}题</button>`).join('')}
-      <button class="grade-chip" onclick="listFilter.grade='';listFilter.page=1;navigate('list')">全部年级 · ${d.questions.length}题</button>
-    </div></div>
-  ${recent.length?`<div class="card"><div class="card-title"><i class="fas fa-history"></i> 最近录入</div>
-    ${recent.map(q=>{
-      const subj=d.subjects.find(s=>s.id===q.subject_id);
-      return `<div class="question-item" onclick="navigate('detail',{qid:${q.id}})">
-        <div class="q-header"><span class="q-badge badge-subject">${subj?subj.name:'?'}</span>
-        <span class="q-badge badge-grade">${gradeText(q.grade)}</span>
-        ${q.chapter_id?`<span class="q-badge badge-chapter">${(d.chapters.find(c=>c.id===q.chapter_id)||{}).name||''}</span>`:''}
-        <span class="q-badge badge-reason">${q.error_reason}</span>
-        <span class="q-badge badge-mastery">掌握 ${q.mastery}/5</span></div>
-        <div class="q-content">${q.content.substring(0,100)}${q.content.length>100?'…':''}</div>
-        <div class="q-meta">${q.created_at}</div></div>`;
-    }).join('')}</div>`:''}
   ${!total?'<div class="empty-state"><i class="fas fa-inbox"></i><h5>还没有错题记录</h5><p class="text-muted">去录入第一道错题吧！</p><button class="btn btn-primary mt-2" onclick="navigate(\'add\')"><i class="fas fa-plus-circle"></i> 录入错题</button></div>':''}
   `;
 }
