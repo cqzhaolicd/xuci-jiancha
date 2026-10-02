@@ -43,6 +43,21 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .quick-btn:active{transform:translateY(0) scale(.98)}
 .qb-add i{background:linear-gradient(135deg,#667eea,#764ba2)}
 .qb-print i{background:linear-gradient(135deg,#4299e1,#2b6cb0)}
+/* 录入页 · 题目图片置顶突出（老板 2026-10-02） */
+.img-first{border:2px dashed var(--primary);background:linear-gradient(135deg,#faf8ff,#f2eeff);border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem}
+.img-first-head{font-size:1.02rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:.45rem;margin-bottom:.6rem}
+.img-first-head i{color:var(--primary)}
+.img-opt{font-size:.74rem;font-weight:500;color:var(--text-light);margin-left:.15rem}
+.img-drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;padding:1.3rem 1rem;background:#fff;border:2px dashed #c4b5fd;border-radius:12px;cursor:pointer;transition:all .2s;text-align:center;margin:0}
+.img-drop:hover{border-color:var(--primary);background:#fbfaff;transform:translateY(-1px)}
+.img-drop:active{transform:translateY(0) scale(.995)}
+.img-drop i{font-size:2rem;color:var(--primary)}
+.img-drop-main{font-size:1rem;font-weight:700;color:var(--text)}
+.img-drop-sub{font-size:.76rem;color:var(--text-light);line-height:1.55}
+.img-file-hidden{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.img-preview{margin-top:.7rem;max-width:340px}
+.img-shot{width:100%;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.13)}
+.img-del{display:inline-block;margin-top:.35rem;font-size:.78rem;color:var(--danger);cursor:pointer;font-weight:600}
 .qb-review i{background:linear-gradient(135deg,#48bb78,#2f855a)}
 /* Subject grid */
 .subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem}
@@ -1228,6 +1243,19 @@ function renderAdd(){
   const chapters=d.chapters.filter(c=>c.subject_id===addForm.subject_id);
   return`<div class="card">
     <div class="card-title"><i class="fas fa-plus-circle" style="color:var(--primary)"></i> 录入新错题</div>
+    <div class="img-first">
+      <div class="img-first-head"><i class="fas fa-camera"></i> 题目图片<span class="img-opt">选填 · 自动缩放</span></div>
+      <label class="img-drop" for="af_image">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <div class="img-drop-main">点这里上传题目图片</div>
+        <div class="img-drop-sub">手机可直接拍照或从相册选图 · 自动压缩到 1600px（省流量、上传快）<br>不上传也行，下面手动输入文字</div>
+      </label>
+      <input type="file" id="af_image" accept="image/*" class="img-file-hidden" onchange="handleFile(this,'image_path')">
+      <div id="af_image_preview" class="img-preview" style="display:${addForm.image_path?'block':'none'}">
+        ${addForm.image_path ? `<img src="${addForm.image_path}" class="img-shot">` : ''}
+        ${addForm.image_path ? `<span class="img-del" onclick="clearFile('image_path','af_image','af_image_preview')">✕ 删除图片</span>` : ''}
+      </div>
+    </div>
     <div style="background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #ddd6fe;border-radius:10px;padding:.85rem 1rem;margin-bottom:1rem">
       <div style="font-weight:700;color:#5b21b6;margin-bottom:.35rem">🤖 AI 一键生成（大模型）</div>
       <div style="font-size:.83rem;color:#4c1d95;line-height:1.7">
@@ -1268,12 +1296,7 @@ function renderAdd(){
       <div class="form-section"><h6><i class="fas fa-question-circle" style="color:var(--info)"></i> 题目</h6>
         <label class="form-label">题目内容 <span class="req">*</span></label>
         <textarea class="form-control" rows="3" id="af_content" placeholder="输入题目内容…" onchange="addForm.content=this.value">${addForm.content}</textarea>
-        <label class="form-label" style="margin-top:.5rem"><i class="fas fa-image"></i> 题目图片（选填，自动缩放）</label>
-        <input type="file" class="form-control" id="af_image" accept="image/*" onchange="handleFile(this, 'image_path')">
-        <div id="af_image_preview" style="margin-top:.3rem;max-width:200px;border-radius:8px;overflow:hidden;display:${addForm.image_path?'block':'none'}">
-          ${addForm.image_path ? `<img src="${addForm.image_path}" style="width:100%;border-radius:6px">` : ''}
-          <span style="font-size:.75rem;color:var(--text-light);cursor:pointer" onclick="clearFile('image_path','af_image','af_image_preview')">✕ 删除</span>
-        </div></div>
+      </div>
       <div class="form-section"><h6><i class="fas fa-check-circle" style="color:var(--success)"></i> 答案</h6>
         <div class="row">
           <div><label class="form-label" style="color:var(--success)">正确答案</label>
@@ -1308,18 +1331,44 @@ function renderAdd(){
 function handleFile(input, field) {
   const file = input.files[0];
   if (!file) return;
-  if (file.size > 2 * 1024 * 1024) { toast('图片不能超过2MB','error'); input.value = ''; return; }
+  if (!/^image\//.test(file.type||'')) { toast('请选择图片文件','error'); input.value=''; return; }
+  if (file.size > 12 * 1024 * 1024) { toast('图片太大（超过12MB），换一张试试','error'); input.value=''; return; }
   const reader = new FileReader();
   reader.onload = function(e) {
-    addForm[field] = e.target.result;
-    const preview = document.getElementById(field === 'image_path' ? 'af_image_preview' : 'af_answer_image_preview');
-    if (preview) {
-      preview.style.display = 'block';
-      preview.innerHTML = `<img src="${e.target.result}" style="width:100%;border-radius:6px">
-        <span style="font-size:.75rem;color:var(--text-light);cursor:pointer" onclick="clearFile('${field}','${input.id}','${preview.id}')">✕ 删除</span>`;
-    }
+    // 【老板 2026-10-02】真·自动缩放：最长边压到 1600px / JPEG 0.85，手机拍照原图也能进
+    shrinkImage(e.target.result, function(dataUrl){
+      addForm[field] = dataUrl;
+      const preview = document.getElementById(field === 'image_path' ? 'af_image_preview' : 'af_answer_image_preview');
+      if (preview) {
+        preview.style.display = 'block';
+        preview.innerHTML = `<img src="${dataUrl}" class="img-shot">
+          <span class="img-del" onclick="clearFile('${field}','${input.id}','${preview.id}')">✕ 删除图片</span>`;
+      }
+    });
   };
   reader.readAsDataURL(file);
+}
+function shrinkImage(src, cb){
+  const MAX=1600, Q=0.85;
+  try{
+    const img=new Image();
+    img.onload=function(){
+      try{
+        const w0=img.width,h0=img.height;
+        const scale=Math.min(1, MAX/Math.max(w0,h0));
+        if(scale>=1 && src.length<=700*1024){ cb(src); return; }   // 本来就小 → 不动
+        const w=Math.max(1,Math.round(w0*scale)), h=Math.max(1,Math.round(h0*scale));
+        const c=document.createElement('canvas'); c.width=w; c.height=h;
+        const ctx=c.getContext('2d');
+        ctx.fillStyle='#fff'; ctx.fillRect(0,0,w,h);              // 透明底铺白，转 JPEG 不发黑
+        ctx.drawImage(img,0,0,w,h);
+        const out=c.toDataURL('image/jpeg',Q);
+        cb(out && out.length<src.length ? out : src);
+      }catch(err){ cb(src); }
+    };
+    img.onerror=function(){ cb(src); };
+    img.src=src;
+  }catch(e){ cb(src); }
 }
 function clearFile(field, inputId, previewId) {
   addForm[field] = '';
