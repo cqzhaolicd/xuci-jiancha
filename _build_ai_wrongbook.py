@@ -447,7 +447,7 @@ var ABG=(function(){
       if(j.reason)$('abPaySub').textContent=j.reason;
       if(j.qr_ready&&j.qr_data){box.innerHTML='<img src="'+j.qr_data+'" alt="收款码">'}
       else{box.innerHTML='<div class="ab-qrhint">收款码还没上传：请管理员在后台「试用期与收款码」里上传图片<br>（当前应付 ￥'+((j.amount)||(ACCESS&&ACCESS.price))+'）</div>'}
-      note.textContent=j.note||'付款后请联系管理员开通';
+      note.textContent=j.note||'付款后点「✅ 我已付款，提交核对」，我们核对到账后即开通；也可用卡密直接开通。';
       note.className='ab-msg ok';
     }).catch(function(){
       box.innerHTML='<div class="ab-qrhint">连不上服务器，收款码读不出来。<br>请检查网络后稍后重试。</div>';
