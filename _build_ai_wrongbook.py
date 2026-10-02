@@ -244,10 +244,6 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
       <input id="abPayUserNote" placeholder="选填：付款时留的备注 / 微信昵称（便于核对）" style="margin-bottom:6px">
       <button class="ab-btn" onclick="ABG.submitPaid()">✅ 我已付款，提交核对</button>
       <button class="ab-btn2" onclick="ABG.refreshPay()">🔄 已开通？刷新状态</button>
-      <div style="display:flex;gap:12px;justify-content:center;margin-top:10px;flex-wrap:wrap">
-        <a onclick="ABG.payStep('invite')" style="font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">返回上一步（我有邀请码）</a>
-        <a onclick="ABG.payStep('card')" style="font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">🎟️ 我有卡密</a>
-      </div>
     </div>
     <div id="abPayStep3" style="display:none">
       <input id="abPayCard" placeholder="卡密（如 AB-XXXX-XXXX）" style="text-transform:uppercase;letter-spacing:1px">
@@ -471,14 +467,12 @@ var ABG=(function(){
       var _is299=(j.which==='299')||(!j.which&&ACCESS&&ACCESS.invite_code);
       var _fb=_is299?BUILTIN_QR_299:BUILTIN_QR_399;
       var _html='<img src="'+((j.qr_ready&&j.qr_data)?j.qr_data:_fb)+'" alt="收款码">';
-      _html+='<div class="ab-paytip">付款<b>'+((j.amount)||(ACCESS&&ACCESS.price)||399)+'</b></div>';
       box.innerHTML=_html;
       note.textContent=j.note||'付款后点「✅ 我已付款，提交核对」，我们核对到账后即开通；也可用卡密直接开通。';
       note.className='ab-msg ok';
     }).catch(function(){
       var _i2=!!(ACCESS&&ACCESS.invite_code);
       var _h2='<img src="'+(_i2?BUILTIN_QR_299:BUILTIN_QR_399)+'" alt="收款码">';
-      _h2+='<div class="ab-paytip">付款<b>'+((ACCESS&&ACCESS.price)||399)+'</b></div>';
       box.innerHTML=_h2;
       note.textContent=netErr();note.className='ab-msg err';
     });
