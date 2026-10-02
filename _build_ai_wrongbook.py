@@ -184,6 +184,7 @@ AUTH_CSS = """<style>
 .ab-invcopy{width:100%;margin-top:.6rem;border:none;border-radius:11px;padding:.78rem;font-family:inherit;font-size:1.05rem;font-weight:800;color:#fff;cursor:pointer;letter-spacing:.5px;background:linear-gradient(135deg,#48bb78,#2f855a);box-shadow:0 5px 14px rgba(47,133,90,.3)}
 .ab-invcopy:active{transform:translateY(1px)}
 .ab-invhint{font-size:.82rem;font-weight:600;color:#4a5568;margin-top:.5rem;line-height:1.5}
+.ab-invref{margin-top:.5rem;padding-top:.5rem;border-top:1px dashed #9ae6b4;font-size:.84rem;font-weight:700;color:#b7791f}
 .ab-invbox.okbox .ab-invhint{color:#2f855a}
 .ab-trial.lock{background:#fed7d7;color:#c53030;cursor:pointer}
 /* 账号胶囊放在子导航行最右（顶部三标签取消后走 .ab-navrow 兜底通道） */
@@ -483,7 +484,7 @@ var ABG=(function(){
     function decide(){
       var a=ACCESS;
       if(!a||!a.paid){
-        invBox('warn','🎟️ 还没开通 VIP','','开通后自动获得你的专属邀请码<br>朋友用它注册，可享 299 元优惠');
+        invBox('warn','🎟️ 还没开通 VIP','','开通后自动获得你的专属邀请码<br>朋友用它注册可享 100 元优惠，你也能获得 50 元返利');
         return;
       }
       var c=a.vip_code||'';
@@ -491,7 +492,10 @@ var ABG=(function(){
       _invCode=c;
       invBox('ok','🎟️ 你的专属邀请码','<div class="ab-invcode">'+c+'</div>'
         +'<button class="ab-invcopy" onclick="ABG.copyInvite()">复制邀请码</button>',
-        '发给朋友，注册时填可享 299 元');
+        '朋友注册可享 100 元优惠，你也能获得 50 元返利'
+        +'<div class="ab-invref">'+(a.vip_ref_paid>0
+            ? '已邀请 <b>'+a.vip_ref_paid+'</b> 人付费 · 可返 <b>'+(a.vip_ref_amount||0)+'</b> 元'
+            : '还没有人用你的码注册付费')+'</div>');
     }
     // 每次都实时拉一次最新状态：刚开通 VIP 但页面还是旧缓存时，不能误报「还没开通」
     invBox('ok','🎟️ 正在获取邀请码…','','');
