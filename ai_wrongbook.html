@@ -1032,7 +1032,27 @@ const VL_LS='wb_vl_cfg';
 const VL_EMBED_KEY='';   // ← 手机 App 打包脚本注入（硅基流动 Key）；仓库里始终为空
 const VL_DEFAULT={base:'https://api.siliconflow.cn/v1',model:'Qwen/Qwen3-VL-30B-A3B-Instruct',key:''};
 function _vlStored(){try{return JSON.parse(localStorage.getItem(VL_LS)||'{}')||{};}catch(e){return {};}}
-function vlCfg(){const c={...VL_DEFAULT,..._vlStored()};if(!c.key)c.key=VL_EMBED_KEY;return c;}
+// 视觉模型必须支持「图片输入」。DeepSeek 只有文本模型 —— 地址/模型名一旦被填成它，接口必 404。
+function _vlUsable(base,model){
+  const b=String(base||''),m=String(model||'');
+  if(!b) return false;
+  if(/deepseek/i.test(b)||/deepseek/i.test(m)) return false;
+  return true;
+}
+var _vlAutoFixed=false;
+function vlCfg(){
+  const s=_vlStored()||{};
+  let c={...VL_DEFAULT,...s};
+  if(!_vlUsable(c.base,c.model)){          // 存过一份不可用的配置 → 自动忽略，用默认
+    c={...VL_DEFAULT,key:s.key||''};_vlAutoFixed=true;
+    try{const k=JSON.parse(localStorage.getItem(VL_LS)||'{}')||{};k.base='';k.model='';
+        localStorage.setItem(VL_LS,JSON.stringify(k));}catch(e){}
+  }
+  if(!c.key) c.key=VL_EMBED_KEY;
+  return c;
+}
+// 64×64 纯色 PNG（硅基流动 Qwen3-VL 要求边长 >28px；1×1 会被判 400）
+const VL_PROBE_PNG='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAAT0lEQVR42u3PQQkAAAgEsEty/aMYywi+hcEKLNO+FgEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQGBywLKp0DxvxLbjwAAAABJRU5ErkJggg==';
 function vlSaveCfg(o){localStorage.setItem(VL_LS,JSON.stringify(o));}
 function vlKeySource(){return _vlStored().key?'本机自填 Key':'App 内置 Key';}
 const VL_SYS=`你是初中试卷识别助手。用户会给你一张学生做过的练习题/试卷照片（学生答案多为手写、可能有红笔批改）。
@@ -1347,6 +1367,8 @@ function renderAiConf(){
         再自动接上上面的文本模型做分析（<b>正确答案 · 错因 · 考点标签 · 难度 · 五维分析</b>）。
         <br>当前 Key 来源：<b>${vlKeySource()}</b>${VL_EMBED_KEY?'（App 已内置，可直接用）':''}
       </p>
+      ${_vlAutoFixed?`<p style="font-size:.8rem;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:.5rem .6rem;line-height:1.7">
+        ⚠️ 之前保存的视觉配置指向 <b>DeepSeek</b>，但 DeepSeek 只有文本模型、<b>没有视觉模型</b>（会报 HTTP 404），已自动改回默认。</p>`:''}
       <label class="form-label">视觉 API 地址</label>
       <input class="form-control" id="vl_base" value="${v.base}" placeholder="https://api.siliconflow.cn/v1">
       <label class="form-label" style="margin-top:.5rem">视觉模型名</label>
@@ -1356,9 +1378,11 @@ function renderAiConf(){
       <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap">
         <button class="btn btn-primary" onclick="vlConfSave()"><i class="fas fa-save"></i> 保存视觉设置</button>
         <button class="btn btn-outline" onclick="vlConfTest()"><i class="fas fa-plug"></i> 测试视觉接口</button>
+        <button class="btn btn-outline" onclick="vlConfReset()"><i class="fas fa-rotate-left"></i> 恢复默认</button>
       </div>
       <div id="vl_test_result" style="margin-top:.7rem;font-size:.85rem;color:var(--text-light)"></div>
       <p style="margin-top:.9rem;font-size:.78rem;color:var(--text-light)">
+        💡 <b>文本模型 ≠ 视觉模型</b>：这里必须填「能看图」的模型。国内可用：硅基流动（默认，下面两个）、智谱 <code>glm-4v-flash</code> 等；DeepSeek 只做文本，填这里必报 404。<br>
         💡 识别只抄「看得清的字」，看不清会标【看不清】，绝不瞎编；识别结果请核对题干再保存。<br>
         💡 一张照片有多道题：会列出来让你挑一道录入。<br>
         💡 硅基流动可用模型：<code>Qwen/Qwen3-VL-30B-A3B-Instruct</code>（默认，准）、<code>Qwen/Qwen3-VL-8B-Instruct</code>（快）。
@@ -1372,17 +1396,39 @@ function vlConfSave(){
   const c=vlCfg();
   document.getElementById('vl_test_result').textContent='已保存：'+c.model+' @ '+c.base+'（'+(c.key?'Key 已就绪':'⚠️ 没有 Key')+'）';
 }
+function vlConfReset(){
+  try{const k=JSON.parse(localStorage.getItem(VL_LS)||'{}')||{};
+      localStorage.setItem(VL_LS,JSON.stringify({key:k.key||''}));}catch(e){}
+  _vlAutoFixed=false;
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v;};
+  set('vl_base',VL_DEFAULT.base);set('vl_model',VL_DEFAULT.model);
+  document.getElementById('vl_test_result').innerHTML='已恢复默认：<code>'+VL_DEFAULT.model+'</code> @ '+VL_DEFAULT.base+'（Key 不变）';
+  toast('已恢复默认视觉模型','success');
+}
 async function vlConfTest(){
   const el=document.getElementById('vl_test_result');
   const g=id=>(document.getElementById(id)||{}).value||'';
   const cfg={base:g('vl_base').trim(),model:g('vl_model').trim(),key:g('vl_key').trim()||VL_EMBED_KEY};
   if(!cfg.key){el.textContent='⚠️ 还没有 Key';return;}
+  if(!_vlUsable(cfg.base,cfg.model)){
+    el.innerHTML='❌ 这个地址/模型不能看图：<b>DeepSeek 只有文本模型，没有视觉模型</b>（所以报 404）。<br>'+
+      '👉 换成 <b>硅基流动</b>：地址 <code>https://api.siliconflow.cn/v1</code>，模型 <code>Qwen/Qwen3-VL-30B-A3B-Instruct</code>。<br>'+
+      '（或点下面的「恢复默认」）';
+    return;
+  }
   el.textContent='⏳ 正在测试视觉接口（约 5-20 秒）…';
-  const px='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=';
   try{
-    const j=await aiChatRaw([{role:'user',content:[{type:'image_url',image_url:{url:px}},{type:'text',text:'只回复JSON {"ok":true}'}]}],cfg,200,false);
+    const j=await aiChatRaw([{role:'user',content:[{type:'image_url',image_url:{url:VL_PROBE_PNG}},{type:'text',text:'只回复JSON {"ok":true}'}]}],cfg,200,false);
     el.textContent='✅ 视觉接口连通：'+cfg.model+'（'+(j.usage?j.usage.total_tokens+' tokens':'响应正常')+'）';
-  }catch(e){el.textContent='❌ 失败：'+e.message;}
+  }catch(e){
+    const m=String(e.message||'');
+    let hint='';
+    if(/404/.test(m)) hint='。地址里没有这个模型名 → 换个模型名，或点「恢复默认」';
+    else if(/401|403/.test(m)) hint='。这个 Key 无效或没有权限';
+    else if(/400/.test(m)) hint='。接口拒收该请求，多为「模型不支持图片输入」';
+    else if(/fetch|Network|cross-origin|CORS/i.test(m)) hint='。网络不通或被跨域拦截（换用手机 App 版更稳）';
+    el.textContent='❌ 失败：'+m+hint;
+  }
 }
 function aiConfSave(){
   const g=id=>(document.getElementById(id)||{}).value||'';
