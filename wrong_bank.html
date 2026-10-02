@@ -1200,9 +1200,7 @@ function renderDashboard(){
   const mastered=d.questions.filter(q=>q.mastery>=5).length;
   const weak=d.questions.filter(q=>q.mastery===0&&q.next_review).length;
   // Subject counts
-  const subjCounts={};
-  d.subjects.forEach(s=>subjCounts[s.id]=0);
-  d.questions.forEach(q=>{if(subjCounts[q.subject_id]!==undefined)subjCounts[q.subject_id]++;});
+  // （科目概览已取消 · 老板 2026-10-02 —— 原 subjCounts 逐科统计一并删除）
   // Grade counts（年级维度）
   const gradeCnt={};
   d.questions.forEach(q=>{const k=(q.grade===undefined||q.grade===null||q.grade==='')?'none':String(q.grade);gradeCnt[k]=(gradeCnt[k]||0)+1;});
@@ -1218,13 +1216,6 @@ function renderDashboard(){
     <button class="quick-btn qb-print" onclick="navigate('print-page')" title="打印错题"><i class="fas fa-print"></i><span>打印</span><small>选题+选内容</small></button>
     <button class="quick-btn qb-review" onclick="navigate('points')" title="复习要点"><i class="fas fa-clipboard-check"></i><span>复习要点</span><small>考前速览</small></button>
   </div>
-  <div class="card"><div class="card-title"><i class="fas fa-book"></i> 科目概览</div>
-    <div class="subject-grid">${d.subjects.map((s,i)=>{
-      const cnt=subjCounts[s.id]||0;
-      return `<div class="subject-card" onclick="navigate('list',{subject_id:${s.id}})">
-        <div class="s-icon" style="background:${SUBJECT_COLORS[i%SUBJECT_COLORS.length]}"><i class="fas ${SUBJECT_ICONS[i%SUBJECT_ICONS.length]}"></i></div>
-        <div class="s-name">${s.name}</div><div class="s-count">${cnt}题</div></div>`;
-    }).join('')}</div></div>
   ${!total?'<div class="empty-state"><i class="fas fa-inbox"></i><h5>还没有错题记录</h5><p class="text-muted">去录入第一道错题吧！</p><button class="btn btn-primary mt-2" onclick="navigate(\'add\')"><i class="fas fa-plus-circle"></i> 录入错题</button></div>':''}
   `;
 }

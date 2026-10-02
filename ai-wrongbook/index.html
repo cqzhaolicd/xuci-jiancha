@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v3.7</title>
+<title>AI错题本 v3.8</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -289,7 +289,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v3.7</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v3.8</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -303,7 +303,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v3.7 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v3.8 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -1123,9 +1123,7 @@ function renderDashboard(){
   const mastered=d.questions.filter(q=>q.mastery>=5).length;
   const weak=d.questions.filter(q=>q.mastery===0&&q.next_review).length;
   // Subject counts
-  const subjCounts={};
-  d.subjects.forEach(s=>subjCounts[s.id]=0);
-  d.questions.forEach(q=>{if(subjCounts[q.subject_id]!==undefined)subjCounts[q.subject_id]++;});
+  // （科目概览已取消 · 老板 2026-10-02 —— 原 subjCounts 逐科统计一并删除）
   // Grade counts（年级维度）
   const gradeCnt={};
   d.questions.forEach(q=>{const k=(q.grade===undefined||q.grade===null||q.grade==='')?'none':String(q.grade);gradeCnt[k]=(gradeCnt[k]||0)+1;});
@@ -1141,13 +1139,6 @@ function renderDashboard(){
     <button class="quick-btn qb-print" onclick="navigate('print-page')" title="打印错题"><i class="fas fa-print"></i><span>打印</span><small>选题+选内容</small></button>
     <button class="quick-btn qb-review" onclick="navigate('points')" title="复习要点"><i class="fas fa-clipboard-check"></i><span>复习要点</span><small>考前速览</small></button>
   </div>
-  <div class="card"><div class="card-title"><i class="fas fa-book"></i> 科目概览</div>
-    <div class="subject-grid">${d.subjects.map((s,i)=>{
-      const cnt=subjCounts[s.id]||0;
-      return `<div class="subject-card" onclick="navigate('list',{subject_id:${s.id}})">
-        <div class="s-icon" style="background:${SUBJECT_COLORS[i%SUBJECT_COLORS.length]}"><i class="fas ${SUBJECT_ICONS[i%SUBJECT_ICONS.length]}"></i></div>
-        <div class="s-name">${s.name}</div><div class="s-count">${cnt}题</div></div>`;
-    }).join('')}</div></div>
   ${!total?'<div class="empty-state"><i class="fas fa-inbox"></i><h5>还没有错题记录</h5><p class="text-muted">去录入第一道错题吧！</p><button class="btn btn-primary mt-2" onclick="navigate(\'add\')"><i class="fas fa-plus-circle"></i> 录入错题</button></div>':''}
   `;
 }
@@ -2493,7 +2484,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v3.7</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v3.8</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
