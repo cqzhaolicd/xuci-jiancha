@@ -221,12 +221,26 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
       <input id="abPayInvite" placeholder="邀请码（没有可留空）" style="text-transform:uppercase">
       <button class="ab-btn" onclick="ABG.claimInvite()">使用邀请码，按 299 元开通</button>
       <button class="ab-btn2" onclick="ABG.payStep('qr')">没有邀请码，直接开通（399 元）</button>
+      <a onclick="ABG.payStep('card')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">🎟️ 我有卡密（一次性码），直接开通</a>
     </div>
     <div id="abPayStep2" style="display:none">
       <div id="abPayAmt" style="font-size:1.7rem;font-weight:800;color:#e53e3e;margin:8px 0">￥--</div>
       <div id="abPayQrBox" style="margin:10px 0;min-height:60px"></div>
-      <button class="ab-btn" onclick="ABG.refreshPay()">我已付款，刷新状态</button>
-      <button class="ab-btn2" onclick="ABG.payStep('invite')">返回上一步（我有邀请码）</button>
+      <input id="abPayUserNote" placeholder="选填：付款时留的备注 / 微信昵称（便于核对）" style="margin-bottom:6px">
+      <button class="ab-btn" onclick="ABG.submitPaid()">✅ 我已付款，提交核对</button>
+      <button class="ab-btn2" onclick="ABG.refreshPay()">🔄 已开通？刷新状态</button>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:10px;flex-wrap:wrap">
+        <a onclick="ABG.payStep('invite')" style="font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">返回上一步（我有邀请码）</a>
+        <a onclick="ABG.payStep('card')" style="font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">🎟️ 我有卡密</a>
+      </div>
+    </div>
+    <div id="abPayStep3" style="display:none">
+      <div style="font-size:.88rem;color:#4a5568;line-height:1.75;margin:.5rem 0 .7rem;text-align:left">
+        把卡密填在下面，点「兑换并开通」<b style="color:#c53030">立即开通</b>，不用等管理员核对。
+      </div>
+      <input id="abPayCard" placeholder="卡密（如 AB-XXXX-XXXX）" style="text-transform:uppercase;letter-spacing:1px">
+      <button class="ab-btn" onclick="ABG.redeemCard()">兑换并开通</button>
+      <a onclick="ABG.payStep('invite')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">返回上一步</a>
     </div>
     <div id="abPayNote" class="ab-msg" style="min-height:1.2em"></div>
     <a onclick="ABG.closePay()" style="display:block;margin-top:12px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">先看看，稍后开通</a>
@@ -321,12 +335,22 @@ var ABG=(function(){
     }catch(e){}
   }
   function payStep(step){
-    var s1=$('abPayStep1'),s2=$('abPayStep2');
+    var s1=$('abPayStep1'),s2=$('abPayStep2'),s3=$('abPayStep3');
     if(!s1||!s2)return;
+    if(s3)s3.style.display='none';
     if(step==='invite'){
       s1.style.display='';s2.style.display='none';
       $('abPayTitle').textContent='⏰ 免费试用已结束';
       $('abPaySub').textContent='有邀请码可享 299 元优惠价；没有也能按 399 元直接开通';
+      return;
+    }
+    if(step==='card'){
+      s1.style.display='none';s2.style.display='none';
+      if(s3)s3.style.display='';
+      $('abPayTitle').textContent='🎟️ 卡密开通';
+      $('abPaySub').textContent='填入卡密，立即开通（无需等待管理员核对）';
+      var el=$('abPayCard');if(el)setTimeout(function(){try{el.focus()}catch(e){}},80);
+      var n0=$('abPayNote');if(n0){n0.textContent='';n0.className='ab-msg'}
       return;
     }
     s1.style.display='none';s2.style.display='';
@@ -344,6 +368,39 @@ var ABG=(function(){
         note.textContent='✅ 邀请码已生效，按 '+j.price+' 元开通'+(j.unit?('（'+j.unit+'）'):'');
         note.className='ab-msg ok';
       }else{note.textContent=j.error||'邀请码无效';note.className='ab-msg err'}
+    }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
+  }
+  // ── 我已付款，提交核对（进后台待处理列表）（老板 2026-10-02）──
+  function submitPaid(){
+    var note=$('abPayNote'),el=$('abPayUserNote');
+    var body={note:(el&&el.value||'').trim()};
+    note.textContent='正在提交…';note.className='ab-msg';
+    request('/api/pay-claim',body,localStorage.getItem(TOKEN_KEY)).then(function(r){
+      var j=r.json||{};
+      if(j.ok){
+        if(j.already){note.textContent='该账号已是 VIP';note.className='ab-msg ok';refreshPay();return}
+        note.innerHTML='✅ 已提交核对（应付 ￥'+j.amount+'）<br>管理员核对到账后即开通；开通后点「🔄 已开通？刷新状态」即可，不用重新登录。';
+        note.className='ab-msg ok';
+      }else{note.textContent=j.error||'提交失败';note.className='ab-msg err'}
+    }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
+  }
+  // ── 卡密兑换：填码即开通（老板 2026-10-02）──
+  function redeemCard(){
+    var el=$('abPayCard'),code=(el&&el.value||'').trim(),note=$('abPayNote');
+    if(!code){note.textContent='请填写卡密';note.className='ab-msg err';return}
+    note.textContent='正在兑换…';note.className='ab-msg';
+    request('/api/redeem-card',{code:code},localStorage.getItem(TOKEN_KEY)).then(function(r){
+      var j=r.json||{};
+      if(j.ok){
+        note.textContent='✅ '+(j.message||'卡密兑换成功，VIP 已开通');
+        note.className='ab-msg ok';
+        if(j.access){ACCESS=j.access;setLock(false);applyAccess(j.access)}
+        setTimeout(function(){
+          try{alert('✅ 卡密兑换成功，VIP 已开通，欢迎继续使用！')}catch(e){}
+          hidePay();
+          try{location.reload()}catch(e){}
+        },400);
+      }else{note.textContent=j.error||'卡密无效';note.className='ab-msg err'}
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
   function closePay(){hidePay()}
@@ -410,7 +467,7 @@ var ABG=(function(){
         return;
       }
       applyAccess(a);
-      note.textContent='还没查到开通记录。付款后请联系管理员在后台点「升级为VIP」，再点本按钮刷新。';
+      note.textContent='还没查到开通记录。已付款请点「✅ 我已付款，提交核对」，管理员核对到账后即开通；也可用卡密直接开通。';
       note.className='ab-msg err';
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
@@ -566,7 +623,7 @@ var ABG=(function(){
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {login:login,register:register,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip,exportData:exportData,importData:importData};
+  return {login:login,register:register,submitPaid:submitPaid,redeemCard:redeemCard,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip,exportData:exportData,importData:importData};
 })();
 </script>"""
 
