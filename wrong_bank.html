@@ -33,8 +33,8 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .bg-g2{background:linear-gradient(135deg,#e74c3c,#c0392b)}
 .bg-g3{background:linear-gradient(135deg,#2ecc71,#27ae60)}
 .bg-g4{background:linear-gradient(135deg,#f39c12,#e67e22)}
-/* 首页快捷入口（老板 2026-10-02：录入/打印/三层练/复习要点） */
-.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.5rem}
+/* 首页快捷入口（老板 2026-10-02：录入/打印/复习要点） */
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.5rem}
 .quick-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45rem;padding:1rem .6rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;box-shadow:0 1px 3px rgba(0,0,0,.05);font-family:inherit;color:var(--text);text-decoration:none}
 .quick-btn i{font-size:1.35rem;width:2.7rem;height:2.7rem;display:flex;align-items:center;justify-content:center;border-radius:50%;color:#fff}
 .quick-btn span{font-size:.9rem;font-weight:600;line-height:1.2}
@@ -43,7 +43,6 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .quick-btn:active{transform:translateY(0) scale(.98)}
 .qb-add i{background:linear-gradient(135deg,#667eea,#764ba2)}
 .qb-print i{background:linear-gradient(135deg,#4299e1,#2b6cb0)}
-.qb-train i{background:linear-gradient(135deg,#f39c12,#e67e22)}
 .qb-review i{background:linear-gradient(135deg,#48bb78,#2f855a)}
 /* Subject grid */
 .subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem}
@@ -167,7 +166,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 .footer{text-align:center;padding:1.5rem;color:var(--text-light);font-size:.82rem}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-@media(max-width:768px){.navbar-nav a span{display:none}.stat-grid{grid-template-columns:repeat(2,1fr)}.quick-grid{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(3,1fr)}.filter-bar .form-select,.filter-bar .form-control{min-width:100px}}
+@media(max-width:768px){.navbar-nav a span{display:none}.stat-grid{grid-template-columns:repeat(2,1fr)}.quick-grid{grid-template-columns:repeat(3,1fr)}.quick-btn{padding:.8rem .4rem}.quick-btn i{width:2.3rem;height:2.3rem;font-size:1.15rem}.quick-btn span{font-size:.82rem}.quick-btn small{font-size:.65rem}.subject-grid{grid-template-columns:repeat(3,1fr)}.filter-bar .form-select,.filter-bar .form-control{min-width:100px}}
 /* ==== 年级维度（1-12年级）==== */
 .q-badge.badge-grade{background:#eef2ff;color:#3b5bdb;border:1px solid #dbe2ff}
 .grade-chips{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;margin-top:.6rem}
@@ -1217,7 +1216,6 @@ function renderDashboard(){
   <div class="quick-grid">
     <button class="quick-btn qb-add" onclick="navigate('add')" title="录入新错题"><i class="fas fa-plus-circle"></i><span>录入</span><small>录入新错题</small></button>
     <button class="quick-btn qb-print" onclick="navigate('print-page')" title="打印错题"><i class="fas fa-print"></i><span>打印</span><small>选题+选内容</small></button>
-    <button class="quick-btn qb-train" onclick="navigate('training')" title="三层练"><i class="fas fa-layer-group"></i><span>三层练</span><small>分层训练</small></button>
     <button class="quick-btn qb-review" onclick="navigate('review')" title="复习要点"><i class="fas fa-clipboard-check"></i><span>复习要点</span><small>考前速览</small></button>
   </div>
   <div class="card"><div class="card-title"><i class="fas fa-book"></i> 科目概览</div>
