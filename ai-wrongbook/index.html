@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.44</title>
+<title>AI错题本 v4.0.46</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 /* ⚠️ 手机端弹窗可滚动（2026-09-28 修）：资料弹窗内容很长（城市/学校/年级/姓名/性别/会员/邀请码/备份/保存），
@@ -232,6 +232,21 @@ details.rp-ana5 .ana5-item{font-size:.85rem;line-height:1.7}
 .rp-res-b{font-size:.78rem;line-height:1.7;color:var(--text);margin-top:.35rem;white-space:pre-wrap}
 .rp-res-b b{color:var(--primary)}
 .qb-review i{background:linear-gradient(135deg,#48bb78,#2f855a)}
+.qb-invite i{background:linear-gradient(135deg,#ed8936,#dd6b20)}
+/* 推荐先锋页（老板 2026-10-03） */
+.rf-hero{background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #f6c453;border-radius:14px;padding:16px 14px;text-align:center}
+.rf-hero .rf-ico{font-size:2.2rem;line-height:1}
+.rf-hero .rf-t{font-size:1.12rem;font-weight:800;color:#7c4a03;margin-top:6px}
+.rf-hero .rf-s{font-size:.9rem;color:#8a5a12;margin-top:6px;line-height:1.55}
+.rf-code{margin:12px auto 0;padding:12px 16px;border-radius:12px;background:#fff;border:2px dashed #dd6b20;display:inline-block}
+.rf-code .rf-cl{font-size:.72rem;color:#a06a1b;letter-spacing:1px}
+.rf-code .rf-cv{font-size:1.6rem;font-weight:900;color:#c05621;letter-spacing:2px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.rf-btn{display:block;width:100%;margin-top:12px;padding:.72rem;border:none;border-radius:10px;background:linear-gradient(135deg,#ed8936,#dd6b20);color:#fff;font-weight:700;font-size:.95rem;cursor:pointer}
+.rf-btn:disabled{background:#cbd5e0;color:#718096;cursor:default}
+.rf-stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.rf-stat .rf-sc{background:#fff;border:1px solid #f6c453;border-radius:10px;padding:8px 4px;text-align:center}
+.rf-stat .rf-sv{font-size:1.05rem;font-weight:800;color:#c05621}
+.rf-stat .rf-sl{font-size:.7rem;color:#8a5a12;margin-top:2px}
 /* Subject grid */
 .subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem}
 .subject-card{background:var(--card-bg);border-radius:var(--radius-sm);padding:.8rem;text-align:center;text-decoration:none;color:var(--text);border:2px solid var(--border);transition:all .2s;cursor:pointer}
@@ -315,70 +330,21 @@ textarea.form-control{resize:vertical;min-height:70px}
 .popt.on{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
 .popt input{display:none}
 .pq-label{font-weight:700;font-size:.85rem;color:var(--primary);margin-bottom:.15rem}
-/* 错解/正解区块（屏幕=红绿，打印=黑白，见 @media print） */
-/* 区块卡片体系（屏幕与打印同一套配色，打印见 @media print） */
-.pq-block{margin-top:.55rem;border-left:3px solid var(--border);background:#f8fafc;
-  padding:.45rem .7rem;border-radius:0 8px 8px 0}
-.pq-stem{border-left-color:#4f46e5;background:#f5f3ff}
-.pq-stem .pq-label{color:#4338ca}
-.pq-wrong{border-left-color:#e11d48;background:#fff1f2}
-.pq-wrong .pq-label{color:#be123c}
-.pq-correct{border-left-color:#059669;background:#ecfdf5}
-.pq-correct .pq-label{color:#047857}
-.pq-reason{border-left-color:#b45309;background:#fffbeb}
-.pq-reason .pq-label{color:#b45309}
-.pq-ana5{border-left-color:#7c3aed;background:#faf5ff}
-.pq-ana5 .pq-label{color:#6d28d9}
-.pq-train{border-left-color:#0f766e;background:#f0fdfa}
-.pq-train .pq-label{color:#0f766e}
+.pq-block{margin-top:.5rem}
 .pick-bar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.6rem}
 .pick-box{margin-right:.45rem;width:16px;height:16px;vertical-align:middle;cursor:pointer}
 .question-item.picked{background:#667eea14;box-shadow:inset 3px 0 0 var(--primary)}
-/* Print · 打印排版（2026-10-03 老板要求：先修功能，再做美观）
-   设计：彩色卡片体系（浅底 + 左色条 + 圆角）＋ 靛蓝胶囊题号 ＋ 品牌色页眉 ＋ 虚线分隔
-   ⚠️ print-color-adjust:exact 必须加 —— 否则 Chrome 打印会丢掉所有背景色/底纹 */
-@page{size:A4 portrait;margin:12mm 13mm}
 @media print{
-  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  .navbar,.footer,#syncBadge,.no-print,.filter-bar,.pick-bar,.popt-bar,.print-pick,.empty-state,.btn{display:none!important}
-  html{background:#fff!important}
-  body{background:#fff!important;color:#1f2937!important;font-size:11pt;line-height:1.72}
-  .container,#app{padding:0!important;margin:0!important;max-width:100%!important}
-  .card{box-shadow:none!important;border:none!important;padding:0!important;margin:0!important;
-    border-radius:0!important;background:#fff!important}
-  /* 页眉：品牌粗线 + 标题 + 副标题 */
-  .print-head{display:block!important;padding-bottom:8pt;margin-bottom:13pt;
-    border-bottom:2.5pt solid #4f46e5;page-break-inside:avoid;break-inside:avoid;page-break-after:avoid}
-  .print-head h1{font-size:16pt;font-weight:800;margin:0;color:#312e81!important;letter-spacing:.4pt}
-  .print-head .ph-meta{font-size:9pt;color:#64748b!important;margin-top:4pt}
-  /* 题与题：细虚线分隔（比黑实线柔和） */
-  .print-q{border:none;border-top:1pt dashed #cbd5e1;border-radius:0;padding:11pt 0 0;margin:0 0 15pt;min-height:0}
-  .print-q:first-of-type{border-top:none;padding-top:0}
-  /* 题号：靛蓝胶囊 */
-  .pq-num{font-size:10.5pt;font-weight:800;color:#fff!important;background:#4f46e5;
-    padding:2.5pt 10pt;border-radius:20pt;display:inline-block;margin-bottom:7pt;
-    page-break-after:avoid;break-after:avoid}
-  /* 区块：浅底卡片 + 左色条 + 圆角 */
-  .pq-block{margin-top:8pt;padding:6pt 10pt;border-radius:6pt;
-    border-left:3.5pt solid #cbd5e1;background:#f8fafc}
-  .pq-label{font-size:10.5pt;font-weight:800;color:#334155!important;margin:0 0 2.5pt;
-    page-break-after:avoid;break-after:avoid}
-  .pq-stem{border-left-color:#4f46e5;background:#f5f3ff}
-  .pq-stem .pq-label{color:#4338ca!important}
-  .pq-wrong{border-left-color:#e11d48;background:#fff1f2;page-break-inside:avoid;break-inside:avoid}
-  .pq-wrong .pq-label{color:#be123c!important}
-  .pq-correct{border-left-color:#059669;background:#ecfdf5}
-  .pq-correct .pq-label{color:#047857!important}
-  .pq-reason{border-left-color:#b45309;background:#fffbeb}
-  .pq-reason .pq-label{color:#b45309!important}
-  .pq-ana5{border-left-color:#7c3aed;background:#faf5ff}
-  .pq-ana5 .pq-label{color:#6d28d9!important}
-  .pq-train{border-left-color:#0f766e;background:#f0fdfa;page-break-inside:auto;break-inside:auto}
-  .pq-train .pq-label{color:#0f766e!important}
-  /* 题图：放大到可读 + 细边框圆角 */
-  .print-q img{max-width:100%!important;max-height:88mm!important;display:block;margin:7pt auto;
-    border:1pt solid #e2e8f0;border-radius:5pt;page-break-inside:avoid}
-  .prewrap{white-space:pre-wrap;word-break:break-word}
+  .navbar,.footer,#syncBadge,.no-print{display:none!important}
+  body{background:#fff!important}
+  .container{max-width:100%!important;padding:0!important;margin:0!important}
+  #app{padding:0!important;margin:0!important}
+  .card{box-shadow:none!important;border:none!important;padding:0!important;margin:0!important;border-radius:0!important}
+  .print-area .card-title{font-size:1rem;margin-bottom:.4rem;border:none}
+  .print-q{border:none;border-bottom:1px dashed #bbb;border-radius:0;padding:.5rem 0;min-height:0}
+  .print-q:last-child{border-bottom:none}
+  .pq-block,.pq-num{page-break-inside:avoid}
+  img{max-width:70%!important;max-height:180px!important}
 }
 /* Analysis */
 .chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
@@ -479,7 +445,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.44</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.46</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -496,7 +462,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.44 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.46 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -1312,10 +1278,12 @@ const BUILTIN_QUESTIONS=[
 }
 ];
 function applyBuiltinQuestions(){try{
-  // ★ 老板规则（2026-10-03）：内置示例题只在「全新安装」时注入一次；
-  //   已装用户升级时不再追加 —— 避免示例题混进用户真实错题库。
-  if(localStorage.getItem(BUILTIN_FLAG)!==null) return;
-  const applied=[];const d=loadData();let added=0;
+  // ★ 老板 2026-10-03：内置示例题「只在全新安装时注入一次」。
+  //   标记一旦写入就永不改写 —— 之后无论升到哪个版本，都不会再往用户错题库里加题，
+  //   用户自己录入的错题/资料全部留在本机，升级只换「版本内容」，不动数据。
+  if(localStorage.getItem(BUILTIN_FLAG))return;
+  const applied=JSON.parse(localStorage.getItem(BUILTIN_FLAG)||'[]');
+  const d=loadData();let added=0;
   for(const b of BUILTIN_QUESTIONS){
     if(applied.indexOf(b.key)>=0)continue;
     const subj=d.subjects.find(s=>s.name===b.subject);
@@ -1331,7 +1299,7 @@ function applyBuiltinQuestions(){try{
     applied.push(b.key);added++;
   }
   saveData(d);localStorage.setItem(BUILTIN_FLAG,JSON.stringify(applied));
-  if(added>0)toast('📥 已收录 '+added+' 道新错题','success');
+  if(added>0)toast('📥 已收录 '+added+' 道示例题（可自行编辑或删除）','success');
 }catch(e){console.error('builtin error',e);}}
 
 // ===================== ROUTER =====================
@@ -2053,6 +2021,69 @@ async function aiConfTest(){
 }
 
 // ===================== RENDER =====================
+function renderReferral(){
+  setTimeout(refLoad,0);   // 先出骨架，再异步拉「我的推荐码 / 战绩」
+  return `
+  <div style="max-width:560px;margin:0 auto">
+    <div class="rf-hero">
+      <div class="rf-ico">🏅</div>
+      <div class="rf-t">推荐先锋</div>
+      <div class="rf-s">推荐给其他用户注册成为 VIP 客户，<b>奖励 50 元</b><br>对方同时<b>减免 50 元</b>（399 → 349）</div>
+      <div id="refBody" style="margin-top:10px"><div class="text-muted" style="font-size:.85rem">正在读取…</div></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <h6 style="font-size:.9rem;font-weight:700;margin-bottom:8px">推荐码怎么用</h6>
+      <div style="font-size:.85rem;color:#4a5568;line-height:1.85">
+        1. 点上方按钮申请，系统自动给你生成一枚<b>专属推荐码</b>（永久有效，一人一码）<br>
+        2. 把推荐码发给朋友<br>
+        3. 朋友注册后开通 VIP 时填入推荐码 → 他<b>只付 349 元</b>（省 50）<br>
+        4. 他开通成功后，你获得 <b>50 元</b> 返利（后台记账，赵立核对后微信转你）
+      </div>
+    </div>
+    <button class="btn btn-outline" style="width:100%;margin-top:12px" onclick="navigate('dashboard')"><i class="fas fa-arrow-left"></i> 返回首页</button>
+  </div>`;
+}
+function refLoad(){
+  if(!window.ABG){_refPaint({error:'推荐先锋需在 App 里登录账号后使用（网页版暂未开放申请）'});return}
+  if(!ABG.token()){_refPaint({needLogin:true});return}
+  ABG.refMe();
+}
+function _refPaint(j){
+  const box=document.getElementById('refBody'); if(!box) return; j=j||{};
+  if(j.needLogin||!j.ok){
+    box.innerHTML='<div style="font-size:.85rem;color:#8a5a12;margin-bottom:8px">'+(j.needLogin?'请先在「我的」里登录账号，再来申请推荐码':(j.error||'读取失败，请稍后重试'))+'</div>';
+    return;
+  }
+  if(!j.is_pioneer){
+    box.innerHTML='<button class="rf-btn" id="refBtn" onclick="refApply()">我要成为推荐先锋</button>'
+      +'<div style="font-size:.78rem;color:#8a5a12;margin-top:8px">点一下即自动生成你的专属推荐码</div>';
+    return;
+  }
+  const money=v=>'￥'+(Number(v)||0);
+  box.innerHTML='<div class="rf-code"><div class="rf-cl">你的专属推荐码</div><div class="rf-cv" id="refCode">'+j.code+'</div></div>'
+    +'<button class="rf-btn" disabled>您已经是推荐先锋</button>'
+    +'<button class="btn btn-outline" style="width:100%;margin-top:8px" onclick="refCopy(\''+j.code+'\')"><i class="fas fa-copy"></i> 复制推荐码</button>'
+    +'<div class="rf-stat">'
+      +'<div class="rf-sc"><div class="rf-sv">'+(j.registered||0)+'</div><div class="rf-sl">已注册</div></div>'
+      +'<div class="rf-sc"><div class="rf-sv">'+(j.rewarded||0)+'</div><div class="rf-sl">已开通 VIP</div></div>'
+      +'<div class="rf-sc"><div class="rf-sv">'+money(j.total)+'</div><div class="rf-sl">累计返利</div></div>'
+    +'</div>'
+    +'<div style="font-size:.78rem;color:#8a5a12;margin-top:8px">待返现 '+money(j.pending)+' ｜ 已返现 '+money(j.settled)+'</div>'
+    +((j.list&&j.list.length)?('<div style="margin-top:12px;text-align:left"><div style="font-size:.8rem;font-weight:700;color:#7c4a03;margin-bottom:6px">推荐明细</div>'
+      +j.list.map(x=>'<div style="display:flex;justify-content:space-between;font-size:.8rem;color:#4a5568;padding:5px 0;border-bottom:1px dashed #f0e0b8"><span>'+x.member+'</span><span>'+(x.status==='done'?'✅ 已返现':'⏳ 待返现')+' '+money(x.amount)+'</span></div>').join('')
+      +'</div>'):'');
+}
+function refApply(){
+  if(!window.ABG){toast('推荐先锋需在 App 里登录后使用','info');return}
+  if(!ABG.token()){toast('请先登录后再申请推荐码','info');return}
+  const b=document.getElementById('refBtn'); if(b){b.disabled=true;b.textContent='正在生成…'}
+  ABG.refApply();
+}
+function refCopy(code){
+  try{navigator.clipboard.writeText(code);toast('✅ 推荐码已复制：'+code,'ok');}
+  catch(e){toast('推荐码：'+code+'（请长按手动复制）','info');}
+}
+
 function render(page,data){
   const app=document.getElementById('app');
   if(page==='dashboard') app.innerHTML=renderDashboard();
@@ -2065,6 +2096,7 @@ function render(page,data){
   else if(page==='analysis') app.innerHTML=renderAnalysis();
   else if(page==='points') app.innerHTML=renderPoints();
   else if(page==='aiconf') app.innerHTML=renderAiConf();
+  else if(page==='referral') app.innerHTML=renderReferral();
 }
 
 // ===================== 局部重绘辅助 =====================
@@ -2120,6 +2152,7 @@ function renderDashboard(){
     <button class="quick-btn qb-add" onclick="navigate('add')" title="录入新错题"><i class="fas fa-plus-circle"></i><span>录入</span><small>录入新错题</small></button>
     <button class="quick-btn qb-print" onclick="navigate('print-page')" title="打印错题"><i class="fas fa-print"></i><span>打印</span><small>选题+选内容</small></button>
     <button class="quick-btn qb-review" onclick="navigate('points')" title="复习要点"><i class="fas fa-clipboard-check"></i><span>复习要点</span><small>考前速览</small></button>
+    <button class="quick-btn qb-invite" onclick="navigate('referral')" title="推荐先锋"><i class="fas fa-medal"></i><span>推荐先锋</span><small>推荐得 50 元</small></button>
   </div>
   ${!total?'<div class="empty-state"><i class="fas fa-inbox"></i><h5>还没有错题记录</h5><p class="text-muted">去录入第一道错题吧！</p><button class="btn btn-primary mt-2" onclick="navigate(\'add\')"><i class="fas fa-plus-circle"></i> 录入错题</button></div>':''}
   `;
@@ -2455,7 +2488,7 @@ function renderDetail(data){
     ${q.answer_image_path?`<div class="detail-field"><div class="label">📷 答案图片</div><div style="max-width:400px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="${q.answer_image_path}" style="width:100%"></div></div>`:''}
     <div class="detail-field"><div class="label">错因分析</div><div class="value"><span class="q-badge badge-reason">${q.error_reason}</span> ${q.tags?'🏷️ '+q.tags:''}</div></div>
     ${renderAna5View(q)}
-    ${isFlowSubject(q)&&q.flow&&(q.flow.known||q.flow.target||q.flow.plan||q.flow.check)?`<div class="detail-field"><div class="label">📋 流程检查</div><div class="value" style="background:#fdf2f2;padding:.6rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger);font-size:.85rem;line-height:1.9">① 已知：${q.flow.known||'—'}<br>② 目标：${q.flow.target||'—'}<br>③ 路径：${q.flow.plan||'—'}<br>④ 检验：${q.flow.check||'—'}</div></div>`:''}
+    ${q.flow&&(q.flow.known||q.flow.target||q.flow.plan||q.flow.check)?`<div class="detail-field"><div class="label">📋 流程检查</div><div class="value" style="background:#fdf2f2;padding:.6rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger);font-size:.85rem;line-height:1.9">① 已知：${q.flow.known||'—'}<br>② 目标：${q.flow.target||'—'}<br>③ 路径：${q.flow.plan||'—'}<br>④ 检验：${q.flow.check||'—'}</div></div>`:''}
     <div class="detail-field"><div class="label">时间</div><div class="value" style="color:var(--text-light);font-size:.85rem">录入: ${q.created_at} | 复习: ${q.review_count}次 | 下次复习: ${q.next_review||'无需'}</div></div>
     <div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
       <button class="btn btn-primary btn-sm" onclick="navigate('detail',{qid:${q.id},edit:true})"><i class="fas fa-edit"></i> 编辑</button>
@@ -2502,15 +2535,6 @@ function deleteQ(qid){
 
 // ===================== REVIEW =====================
 let reviewList=[],reviewIdx=0,reviewAnswered=false,reviewFilter='all';
-// 五步法（流程检查）只针对理科：数学/物理/化学。其它科目不显示该区块、也不做必填拦截（2026-10-03 老板确认）
-const FLOW_SUBJECTS=['数学','物理','化学'];
-function isFlowSubject(q,d){
-  try{
-    const dd=d||(typeof loadData==='function'?loadData():null);
-    const s=((dd&&dd.subjects)||[]).find(x=>+x.id===+((q||{}).subject_id));
-    return !!s&&FLOW_SUBJECTS.includes(String(s.name||'').trim());
-  }catch(e){return false;}
-}
 
 function renderReview(){
   const d=loadData();
@@ -2551,7 +2575,6 @@ function reviewCard(){
   const q=reviewList[reviewIdx];
   const d=loadData();
   const subj=d.subjects.find(s=>s.id===q.subject_id);
-  const flowOK=isFlowSubject(q,d);   // 五步法只对理科显示
   const progress=Math.round(reviewIdx/reviewList.length*100);
   return`<div class="card"><div class="review-progress"><div class="progress-bar" style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
     <div style="height:100%;width:${progress}%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:3px;transition:width .3s"></div></div></div>
@@ -2572,14 +2595,14 @@ function reviewCard(){
       ${q.my_answer?`<div style="margin:.5rem 0;padding:.5rem .8rem;border-radius:var(--radius-sm);background:#f5656510;border-left:3px solid var(--danger);text-align:left;font-size:.85rem">
         <strong style="color:var(--danger)">❌ 你的答案：</strong>
         <div class="prewrap" style="margin-top:.2rem">${q.my_answer}</div></div>`:''}
-      ${flowOK?`<div class="flow-check">
+      <div class="flow-check">
         <div class="flow-check-title">📋 流程检查（五步法 · 必填，不填完不算订正完成）</div>
         <textarea id="fc_known" rows="1" placeholder="① 审题圈画：已知什么条件？">${q.flow&&q.flow.known?q.flow.known:''}</textarea>
         <textarea id="fc_target" rows="1" placeholder="② 写出目标：这题求什么？">${q.flow&&q.flow.target?q.flow.target:''}</textarea>
         <textarea id="fc_plan" rows="1" placeholder="③ 规划路径：用什么公式/方法？">${q.flow&&q.flow.plan?q.flow.plan:''}</textarea>
         <textarea id="fc_check" rows="1" placeholder="④ 回代检验：怎么验证答案对不对？">${q.flow&&q.flow.check?q.flow.check:''}</textarea>
         <div class="flow-check-warn" id="fc_warn">⚠️ 流程未完成：请先填完 已知/求/步骤/检验 四项，才算订正完成！</div>
-      </div>`:''}
+      </div>
       ${REVIEW_SHOW_ANA5?reviewAna5Block(q):''}
       <div class="review-btns" style="margin-top:1rem">
         <button class="btn btn-danger" onclick="reviewResult(0)"><i class="fas fa-times"></i> 还不会</button>
@@ -2595,17 +2618,15 @@ function reviewResult(r){
   const d=loadData();
   const qq=d.questions.find(x=>x.id===q.id);
   if(qq){
-    // 流程检查（五步法）：仅理科（数学/物理/化学）四项必填；其它科目不拦截、也不写入 flow
-    if(isFlowSubject(qq,d)){
-      const fcVals={};
-      ['fc_known','fc_target','fc_plan','fc_check'].forEach(id=>{const el=document.getElementById(id);fcVals[id]=el?(el.value||'').trim():'';});
-      if(!fcVals.fc_known||!fcVals.fc_target||!fcVals.fc_plan||!fcVals.fc_check){
-        const warn=document.getElementById('fc_warn');if(warn)warn.style.display='block';
-        toast('⚠️ 流程未完成：请填完 已知/求/步骤/检验 四项，才算订正完成！','error');
-        return;
-      }
-      qq.flow={known:fcVals.fc_known,target:fcVals.fc_target,plan:fcVals.fc_plan,check:fcVals.fc_check};
+    // 流程检查（五步法）：四项必填，不填完不算订正完成
+    const fcVals={};
+    ['fc_known','fc_target','fc_plan','fc_check'].forEach(id=>{const el=document.getElementById(id);fcVals[id]=el?(el.value||'').trim():'';});
+    if(!fcVals.fc_known||!fcVals.fc_target||!fcVals.fc_plan||!fcVals.fc_check){
+      const warn=document.getElementById('fc_warn');if(warn)warn.style.display='block';
+      toast('⚠️ 流程未完成：请填完 已知/求/步骤/检验 四项，才算订正完成！','error');
+      return;
     }
+    qq.flow={known:fcVals.fc_known,target:fcVals.fc_target,plan:fcVals.fc_plan,check:fcVals.fc_check};
     if(r===2)qq.mastery=Math.min(qq.mastery+1,REVIEW_INTERVALS.length);
     else if(r===0)qq.mastery=0;
     qq.next_review=calcNextReview(qq.mastery);
@@ -2964,8 +2985,6 @@ function printSelAll(on){const f=on?printFiltered():loadData().questions;if(on)p
 function printOptToggle(k){printOpts[k]=!printOpts[k];refreshPrint();}
 function printOne(id){printSel={};printSel[id]=true;navigate('print-page');}
 function printFromList(){navigate('print-page');}
-// 打印时清掉演示数据注解 ——「（示例题：可自行编辑或删除）」不该出现在正式卷子上
-function printClean(t){return String(t==null?'':t).replace(/[（(]示例题[：:]?\s*可自行编辑或删除[）)]/g,'').replace(/\n{3,}/g,'\n\n').trim();}
 function stripHtml(h){return String(h==null?'':h).replace(/<br\s*\/?>/gi,'\n').replace(/<\/(div|p|li)>/gi,'\n').replace(/<[^>]*>/g,'').replace(/&nbsp;/g,' ').replace(/\n{3,}/g,'\n\n').trim();}
 
 // 单题打印内容（按勾选项渲染）
@@ -2975,31 +2994,27 @@ function printCard(q,i){
   const a=ana5(q);
   let h=`<div class="print-q"><div class="pq-num">${i+1}. ${subj?subj.name:'?'} · ${gradeText(q.grade)} · #${q.id}</div>`;
   if(printOpts.stem){
-    h+=`<div class="pq-block pq-stem"><div class="pq-label">题目</div><div class="prewrap">${esc5(printClean(q.content))}</div>`;
+    h+=`<div class="pq-block"><div class="pq-label">题目</div><div class="prewrap">${esc5(q.content)}</div>`;
     if(q.image_path)h+=`<div style="margin-top:.4rem"><img src="${q.image_path}" style="max-width:100%;max-height:220px;border-radius:4px"></div>`;
     h+=`</div>`;
   }
-  if(printOpts.wrong&&q.my_answer)h+=`<div class="pq-block pq-wrong"><div class="pq-label">❌ 我的错误答案</div><div class="prewrap">${esc5(q.my_answer)}</div></div>`;
-  if(printOpts.correct&&q.correct_answer)h+=`<div class="pq-block pq-correct"><div class="pq-label">✅ 正确答案</div><div class="prewrap">${esc5(q.correct_answer)}</div></div>`;
-  if(printOpts.reason)h+=`<div class="pq-block pq-reason"><div class="pq-label">错因分析</div><div>${esc5(q.error_reason||'—')}${q.tags?' &nbsp;🏷️ '+esc5(q.tags):''}</div></div>`;
+  if(printOpts.wrong&&q.my_answer)h+=`<div class="pq-block"><div class="pq-label" style="color:var(--danger)">❌ 我的错误答案</div><div class="prewrap">${esc5(q.my_answer)}</div></div>`;
+  if(printOpts.correct&&q.correct_answer)h+=`<div class="pq-block"><div class="pq-label" style="color:var(--success)">✅ 正确答案</div><div class="prewrap">${esc5(q.correct_answer)}</div></div>`;
+  if(printOpts.reason)h+=`<div class="pq-block"><div class="pq-label">错因分析</div><div>${esc5(q.error_reason||'—')}${q.tags?' &nbsp;🏷️ '+esc5(q.tags):''}</div></div>`;
   if(printOpts.ana5){
-    const _a5any=ANA5_DIMS.some(dm=>String(a[dm.k]||'').trim());
-    h+=`<div class="pq-block pq-ana5"><div class="pq-label">🧩 五维分析</div>`+(_a5any
-      ? ANA5_DIMS.map(dm=>{
-          const v=String(a[dm.k]||'').trim();
-          return `<div style="margin-top:.28rem"><strong>${dm.tag}</strong>：<span class="prewrap">${v?esc5(v):'未填写'}</span></div>`;
-        }).join('')
-      : `<div style="font-size:.92rem;color:#888">（本题未填写五维分析）</div>`)+`</div>`;
+    h+=`<div class="pq-block"><div class="pq-label">🧩 五维分析</div>`+ANA5_DIMS.map(dm=>{
+      const v=String(a[dm.k]||'').trim();
+      return `<div style="margin-top:.2rem;font-size:.92rem"><strong>${dm.tag}</strong>：<span class="prewrap">${v?esc5(v):'未填写'}</span></div>`;
+    }).join('')+`</div>`;
   }
   if(printOpts.train){
     let layers=[];
     try{layers=getOrGenLayers(q)||[];}catch(e){layers=[];}
     if(layers.length){
-      h+=`<div class="pq-block pq-train"><div class="pq-label">📚 三层练的题</div>`+layers.map((L,li)=>{
+      h+=`<div class="pq-block"><div class="pq-label">📚 三层练的题</div>`+layers.map((L,li)=>{
         // 第1层就是原题（不要它自带的答案），第2/3层取生成的变式题干
-        // 第1层就是原题 —— 打印时不再重复整段题干（省半页纸），只留一行指向上面已打印的题目
-        const t=li===0?'（原题重做：题目见上面「题目」）':stripHtml(printClean(L.content));
-        return `<div style="margin-top:.45rem"><strong>${esc5(stripHtml(L.title))}</strong><div class="prewrap">${esc5(t)}</div></div>`;
+        const t=li===0?String(q.content||''):stripHtml(L.content);
+        return `<div style="margin-top:.35rem"><strong>${esc5(stripHtml(L.title))}</strong><div class="prewrap" style="font-size:.92rem">${esc5(t)}</div></div>`;
       }).join('')+`</div>`;
     }else{
       h+=`<div class="pq-block"><div class="pq-label">📚 三层练的题</div><div style="color:var(--text-light)">（该题暂无三层练）</div></div>`;
@@ -3056,11 +3071,7 @@ function renderPrint(){
     ${sel.length?'':'<div style="text-align:center;color:var(--danger);font-size:.85rem;margin-top:.5rem">请先勾选要打印的错题</div>'}
   </div>
   <div class="card print-area" id="printArea">
-    <div class="print-head" style="display:none">
-      <h1>AI错题本 · 错题复习卷</h1>
-      <div class="ph-meta">共 ${sel.length} 题 · 打印日期 ${new Date().toLocaleDateString('zh-CN')} · 姓名／班级：____________</div>
-    </div>
-    <div class="card-title no-print">共 ${sel.length} 题</div>
+    <div class="card-title">共 ${sel.length} 题</div>
     ${sel.length?sel.map((q,i)=>printCard(q,i)).join(''):'<div class="empty-state"><i class="fas fa-print"></i><h5>还没有选中的题</h5><p>在上方勾选要打印的错题</p></div>'}
   </div>`;
 }
@@ -3549,7 +3560,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.44</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.46</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
@@ -3597,7 +3608,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
     <label class="ab-lb">会员状态</label>
     <div class="ab-vstate" id="abVipState"><div class="ab-vico">🎁</div><div class="ab-vtx"><div class="ab-vt">读取中</div><div class="ab-vs">正在获取会员状态…</div></div></div>
     <button class="ab-vbtn" id="abVipBtn" onclick="ABG.openPay()" style="display:none">👑 开通 VIP</button>
-    <button class="ab-invbtn" id="abMyInvBtn" onclick="ABG.myInvite()">🎟️ 我的邀请码</button>
+    <button class="ab-invbtn" id="abMyInvBtn" onclick="ABG.closeProfile();navigate('referral')">🏅 推荐先锋（推荐得 50 元）</button>
     <div id="abInvBox" class="ab-invbox"></div>
     <label class="ab-lb">数据备份（换手机 / 重装前建议先导出）</label>
     <div class="ab-bk">
@@ -3618,15 +3629,16 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
     <div class="ab-sub" id="abPaySub">一次付费 · 永久使用</div>
     <div id="abPayWhy" class="ab-msg err" style="display:none;background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:.45rem .6rem;margin-top:.5rem"></div>
     <div id="abPayStep1">
-      <div class="ab-invite-note" style="margin-bottom:8px">🎉 邀请码优惠 100 元（399 → 299）</div>
-      <input id="abPayInvite" placeholder="邀请码（有则享 299 元，没有可留空）" style="text-transform:uppercase">
-      <button class="ab-btn" onclick="ABG.claimInvite()">使用邀请码，按 299 元开通</button>
+      <div class="ab-invite-note" style="margin-bottom:8px">🎉 推荐码优惠 50 元（399 → 349）</div>
+      <input id="abPayInvite" placeholder="推荐码（有则享 349 元，没有可留空）" style="text-transform:uppercase">
+      <button class="ab-btn" onclick="ABG.claimInvite()">使用推荐码开通</button>
       <button class="ab-btn2" onclick="ABG.payStep('qr')">直接开通（399 元）</button>
+      <a onclick="ABG.closePay();navigate('referral')" style="display:block;margin-top:10px;font-size:.85rem;color:#dd6b20;cursor:pointer;font-weight:700">🏅 还没有推荐码？点这里免费申请（省 50 元）</a>
       <a onclick="ABG.payStep('card')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">🎟️ 我有卡密（一次性码），直接开通</a>
     </div>
     <div id="abPayStep2" style="display:none">
       <div id="abPayAmt" style="font-size:1.7rem;font-weight:800;color:#e53e3e;margin:8px 0">￥--</div>
-      <div id="abPayInviteNote" class="ab-invite-note" style="display:none">🎉 您有邀请码，减免100元</div>
+      <div id="abPayInviteNote" class="ab-invite-note" style="display:none">🎉 您有推荐码，减免 50 元</div>
       <div id="abPayQrBox" style="margin:10px 0;min-height:60px"></div>
       <input id="abPayUserNote" placeholder="选填：付款时留的备注 / 微信昵称（便于核对）" style="margin-bottom:6px">
       <button class="ab-btn" onclick="ABG.submitPaid()">✅ 我已付款，提交刷新</button>
@@ -3775,6 +3787,19 @@ var ABG=(function(){
     }
     s1.style.display='none';s2.style.display='';
     payQr();
+  }
+  function token(){return localStorage.getItem(TOKEN_KEY)||''}
+  // ── 推荐先锋（老板 2026-10-03）：成为推荐先锋 / 查我的推荐码与返利 ──
+  function refMe(){
+    request('/api/referral-me',null,token()).then(function(j){
+      if(j&&j.ok)_refPaint(j); else _refPaint({error:(j&&j.error)||'读取失败'});
+    }).catch(function(){_refPaint({error:'网络异常，请稍后重试'})});
+  }
+  function refApply(){
+    request('/api/referral-apply',{},token()).then(function(j){
+      if(j&&j.ok){toast('🎉 恭喜！你的推荐码：'+j.code,'ok');refMe();}
+      else{toast((j&&j.error)||'生成失败，请稍后重试','err');refMe();}
+    }).catch(function(){toast('网络异常，请稍后重试','err');refMe();});
   }
   function claimInvite(){
     var el=$('abPayInvite'),iv=(el&&el.value||'').trim(),note=$('abPayNote');
@@ -4115,7 +4140,7 @@ var ABG=(function(){
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {login:login,register:register,openPay:openPay,submitPaid:submitPaid,redeemCard:redeemCard,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip,exportData:exportData,importData:importData,myInvite:myInvite,copyInvite:copyInvite};
+  return {login:login,register:register,openPay:openPay,submitPaid:submitPaid,redeemCard:redeemCard,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip,exportData:exportData,importData:importData,myInvite:myInvite,copyInvite:copyInvite,token:token,refMe:refMe,refApply:refApply};
 })();
 </script><script>
 /* READONLY_GUARD_V1 · 到期未开通：能登录、能查看，不能新增错题（只加在测试版页面，学习中心不受影响） */

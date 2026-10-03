@@ -258,7 +258,7 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
     <label class="ab-lb">会员状态</label>
     <div class="ab-vstate" id="abVipState"><div class="ab-vico">🎁</div><div class="ab-vtx"><div class="ab-vt">读取中</div><div class="ab-vs">正在获取会员状态…</div></div></div>
     <button class="ab-vbtn" id="abVipBtn" onclick="ABG.openPay()" style="display:none">👑 开通 VIP</button>
-    <button class="ab-invbtn" id="abMyInvBtn" onclick="ABG.myInvite()">🎟️ 我的邀请码</button>
+    <button class="ab-invbtn" id="abMyInvBtn" onclick="ABG.closeProfile();navigate('referral')">🏅 推荐先锋（推荐得 50 元）</button>
     <div id="abInvBox" class="ab-invbox"></div>
     <label class="ab-lb">数据备份（换手机 / 重装前建议先导出）</label>
     <div class="ab-bk">
@@ -279,15 +279,16 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
     <div class="ab-sub" id="abPaySub">一次付费 · 永久使用</div>
     <div id="abPayWhy" class="ab-msg err" style="display:none;background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:.45rem .6rem;margin-top:.5rem"></div>
     <div id="abPayStep1">
-      <div class="ab-invite-note" style="margin-bottom:8px">🎉 邀请码优惠 100 元（399 → 299）</div>
-      <input id="abPayInvite" placeholder="邀请码（有则享 299 元，没有可留空）" style="text-transform:uppercase">
-      <button class="ab-btn" onclick="ABG.claimInvite()">使用邀请码，按 299 元开通</button>
+      <div class="ab-invite-note" style="margin-bottom:8px">🎉 推荐码优惠 50 元（399 → 349）</div>
+      <input id="abPayInvite" placeholder="推荐码（有则享 349 元，没有可留空）" style="text-transform:uppercase">
+      <button class="ab-btn" onclick="ABG.claimInvite()">使用推荐码开通</button>
       <button class="ab-btn2" onclick="ABG.payStep('qr')">直接开通（399 元）</button>
+      <a onclick="ABG.closePay();navigate('referral')" style="display:block;margin-top:10px;font-size:.85rem;color:#dd6b20;cursor:pointer;font-weight:700">🏅 还没有推荐码？点这里免费申请（省 50 元）</a>
       <a onclick="ABG.payStep('card')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">🎟️ 我有卡密（一次性码），直接开通</a>
     </div>
     <div id="abPayStep2" style="display:none">
       <div id="abPayAmt" style="font-size:1.7rem;font-weight:800;color:#e53e3e;margin:8px 0">￥--</div>
-      <div id="abPayInviteNote" class="ab-invite-note" style="display:none">🎉 您有邀请码，减免100元</div>
+      <div id="abPayInviteNote" class="ab-invite-note" style="display:none">🎉 您有推荐码，减免 50 元</div>
       <div id="abPayQrBox" style="margin:10px 0;min-height:60px"></div>
       <input id="abPayUserNote" placeholder="选填：付款时留的备注 / 微信昵称（便于核对）" style="margin-bottom:6px">
       <button class="ab-btn" onclick="ABG.submitPaid()">✅ 我已付款，提交刷新</button>
@@ -437,6 +438,19 @@ var ABG=(function(){
     }
     s1.style.display='none';s2.style.display='';
     payQr();
+  }
+  function token(){return localStorage.getItem(TOKEN_KEY)||''}
+  // ── 推荐先锋（老板 2026-10-03）：成为推荐先锋 / 查我的推荐码与返利 ──
+  function refMe(){
+    request('/api/referral-me',null,token()).then(function(j){
+      if(j&&j.ok)_refPaint(j); else _refPaint({error:(j&&j.error)||'读取失败'});
+    }).catch(function(){_refPaint({error:'网络异常，请稍后重试'})});
+  }
+  function refApply(){
+    request('/api/referral-apply',{},token()).then(function(j){
+      if(j&&j.ok){toast('🎉 恭喜！你的推荐码：'+j.code,'ok');refMe();}
+      else{toast((j&&j.error)||'生成失败，请稍后重试','err');refMe();}
+    }).catch(function(){toast('网络异常，请稍后重试','err');refMe();});
   }
   function claimInvite(){
     var el=$('abPayInvite'),iv=(el&&el.value||'').trim(),note=$('abPayNote');
@@ -777,7 +791,7 @@ var ABG=(function(){
     $('abRegPass2').addEventListener('keydown',function(e){if(e.key==='Enter')register()});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  return {login:login,register:register,openPay:openPay,submitPaid:submitPaid,redeemCard:redeemCard,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip,exportData:exportData,importData:importData,myInvite:myInvite,copyInvite:copyInvite};
+  return {login:login,register:register,openPay:openPay,submitPaid:submitPaid,redeemCard:redeemCard,logout:logout,tab:tab,init:init,refreshPay:refreshPay,applyAccess:applyAccess,paywall:paywall,payStep:payStep,claimInvite:claimInvite,closePay:closePay,profileModal:profileModal,saveProfile:saveProfile,closeProfile:closeProfile,placeChip:placeChip,exportData:exportData,importData:importData,myInvite:myInvite,copyInvite:copyInvite,token:token,refMe:refMe,refApply:refApply};
 })();
 </script>"""
 
@@ -925,73 +939,303 @@ def main():
     # ⚠️ 只替换【测试版 / App】的内置快照；学习中心正式页 ai_wrongbook.html（若琳在用）一律不动。
     # ⚠️ 这里刻意不写若琳的真实题目、不带任何 uploads 图片；每道题都填好五维分析与三层训练，
     #    当「怎么用这个 App」的样板。用户可长按/编辑自行删除。
-    DEMO_QUESTIONS = [
-        {"key": "demo_math_eq_1", "subject": "数学", "chapter": "一元一次方程（解方程）",
-         "content": "解方程：3(x − 2) + 1 = 2x − 5，则 x = ______。\n\n（示例题：可自行编辑或删除）",
-         "correct_answer": "x = 0\n\n【解析】去括号：3x − 6 + 1 = 2x − 5\n左边合并：3x − 5 = 2x − 5\n移项：3x − 2x = −5 + 5\n所以 x = 0。\n（检验：左边 3(0−2)+1 = −5，右边 0−5 = −5，两边相等 ✓）",
-         "my_answer": "x = 10（去括号时把 −6 写成了 +6）",
-         "error_reason": "计算失误", "tags": "示例,数学,一元一次方程,去括号", "source": "练习", "difficulty": 1,
-         "flow": {"known": "方程 3(x − 2) + 1 = 2x − 5", "target": "求 x 的值",
-                  "plan": "去括号 → 合并同类项 → 移项 → 系数化为 1",
-                  "check": "把 x = 0 代回原方程两边验算，左边 = 右边 ✓"},
-         "ana5": {"known": "一个含 x 的一元一次方程；括号外有系数 3",
-                  "ask": "求 x 的值",
-                  "method": "先去括号（注意括号内每一项都要乘 3、符号要跟着变），再把含 x 的项移到一边、常数移到另一边，最后系数化为 1",
-                  "pitfall": "去括号时 +1 没变号、−6 写成 +6；移项忘记变号",
-                  "points": "一元一次方程的解法步骤：去括号 → 移项 → 合并同类项 → 系数化为 1；等式两边同加同减仍然相等"}},
-        {"key": "demo_math_square_1", "subject": "数学", "chapter": "整式乘法（完全平方公式）",
-         "content": "计算：(2a − 3b)² = ______。\n\n（示例题：可自行编辑或删除）",
-         "correct_answer": "4a² − 12ab + 9b²\n\n【解析】完全平方公式 (x − y)² = x² − 2xy + y²\n取 x = 2a、y = 3b：\n(2a)² − 2·(2a)·(3b) + (3b)² = 4a² − 12ab + 9b²。\n（口诀：首平方、尾平方，首尾两倍中间放，中间符号看两个数的符号）",
-         "my_answer": "4a² − 9b²（漏掉了中间项 −12ab）",
-         "error_reason": "公式记错", "tags": "示例,数学,完全平方公式,整式乘法", "source": "练习", "difficulty": 2,
-         "flow": {"known": "(2a − 3b)²，两个数相减后平方", "target": "展开成多项式",
-                  "plan": "套完全平方公式 (x − y)² = x² − 2xy + y²，分别代入 x = 2a、y = 3b",
-                  "check": "取 a = b = 1 验算：(2 − 3)² = 1，而 4 − 12 + 9 = 1 ✓"},
-         "ana5": {"known": "(2a − 3b)²，即 (2a − 3b)(2a − 3b)",
-                  "ask": "把这个式子展开",
-                  "method": "用完全平方公式 (x − y)² = x² − 2xy + y² 直接展开，比逐项相乘快且不易错",
-                  "pitfall": "最常见的是漏掉中间项 2xy，把 (a−b)² 错写成 a² − b²；另外别忘 (2a)² = 4a²",
-                  "points": "完全平方公式；平方差公式 (x+y)(x−y) = x² − y² 的区别——前者三项、后者两项"}},
-        {"key": "demo_phys_speed_1", "subject": "物理", "chapter": "机械运动（速度计算）",
-         "content": "小明骑自行车 3 min 行驶了 900 m，他的平均速度是 ______ m/s，合 ______ km/h。\n\n（示例题：可自行编辑或删除）",
-         "correct_answer": "5 m/s；18 km/h\n\n【解析】先统一单位：3 min = 3 × 60 s = 180 s。\nv = s / t = 900 m ÷ 180 s = 5 m/s。\n单位换算：1 m/s = 3.6 km/h ⇒ 5 × 3.6 = 18 km/h。",
-         "my_answer": "300 m/s（时间直接用了 3，没有换算成秒）",
-         "error_reason": "审题不清", "tags": "示例,物理,机械运动,速度计算,单位换算", "source": "练习", "difficulty": 2,
-         "flow": {"known": "路程 s = 900 m，时间 t = 3 min", "target": "求平均速度（m/s，并换算成 km/h）",
-                  "plan": "先把时间换算成秒 → 用 v = s/t 求 m/s → 再乘 3.6 换成 km/h",
-                  "check": "5 m/s × 180 s = 900 m ✓ 与题目路程一致"},
-         "ana5": {"known": "路程 900 m；时间 3 min（单位不是秒）",
-                  "ask": "平均速度，且要两种单位",
-                  "method": "速度公式 v = s / t；代入前必须统一单位，时间换成秒",
-                  "pitfall": "直接用分钟代入算出 300 m/s；换算时乘除弄反（应乘 3.6 把 m/s 换成 km/h）",
-                  "points": "速度的定义式 v = s/t；1 m/s = 3.6 km/h；平均速度不是各段速度的平均值"}},
-        {"key": "demo_eng_verb_1", "subject": "英语", "chapter": "一般现在时（主谓一致）",
-         "content": "用括号中所给词的适当形式填空：\nMy sister often ______ (go) to the library on Sundays.\n\n（示例题：可自行编辑或删除）",
-         "correct_answer": "goes\n\n【解析】主语 My sister 是第三人称单数，句子为一般现在时，动词要用第三人称单数形式：go → goes。\n（标志词 often / usually / every day / on Sundays 都提示一般现在时；主语为 he/she/it 或单个的人时，动词加 -s/-es。）",
-         "my_answer": "go（主语是三单，动词忘了加 -es）",
-         "error_reason": "概念不清", "tags": "示例,英语,一般现在时,主谓一致,三单", "source": "练习", "difficulty": 1,
-         "flow": {"known": "主语 My sister；时间状语 often / on Sundays；动词 go", "target": "把 go 变成正确形式",
-                  "plan": "先判断时态（often/on Sundays → 一般现在时）→ 再看主语人称（My sister → 三单）→ 动词加 -es",
-                  "check": "句子读一遍：My sister often goes to the library. 主谓一致 ✓"},
-         "ana5": {"known": "主语 My sister（第三人称单数）；频度副词 often；时间状语 on Sundays",
-                  "ask": "用 go 的适当形式填空",
-                  "method": "先定时态（一般现在时），再定形式（主语三单 → 动词加 -s/-es）",
-                  "pitfall": "只看动词不看主语，直接写 go；以 o/s/x/ch/sh 结尾要加 -es（go → goes）",
-                  "points": "一般现在时的用法与标志词；第三人称单数动词变化规则"}},
-        {"key": "demo_chin_idiom_1", "subject": "语文", "chapter": "字音字形（成语辨析）",
-         "content": "下列词语中，没有错别字的一项是（　　）\nA. 骸人听闻　B. 人声鼎沸　C. 锋芒必露　D. 翻来复去\n\n（示例题：可自行编辑或删除）",
-         "correct_answer": "B（人声鼎沸）\n\n【解析】逐项改正：\nA. 「骸人听闻」应为「骇人听闻」（骇：惊吓、震惊）；\nC. 「锋芒必露」应为「锋芒毕露」（毕：完全）；\nD. 「翻来复去」应为「翻来覆去」（覆：翻过来）。\n只有 B「人声鼎沸」书写正确——鼎沸：像锅里的水沸腾一样，形容人声嘈杂。",
-         "my_answer": "C（形近字分不清，「必」与「毕」混用）",
-         "error_reason": "概念不清", "tags": "示例,语文,字形,成语,形近字", "source": "练习", "difficulty": 2,
-         "flow": {"known": "四个成语，其中三项含错别字", "target": "找出没有错别字的一项",
-                  "plan": "逐项回忆成语本义，用字义反推正确写法，排除错项",
-                  "check": "把改正后的四个成语写一遍，确认字形无误"},
-         "ana5": {"known": "四个成语选项，只有一项完全正确",
-                  "ask": "选出书写没有错误的一项",
-                  "method": "逐字理解成语含义：字义对了，字形就错不了（骇=震惊、毕=完全、覆=翻转）",
-                  "pitfall": "只凭印象读通就下判断；形近字（骸/骇、必/毕、复/覆）容易混",
-                  "points": "常见成语的正确写法；形近字辨析；成语的意思与感情色彩"}},
-    ]
+    DEMO_QUESTIONS =     [{'key': 'demo_math_eq_1',
+      'subject': '数学',
+      'chapter': '一元一次方程（解方程）',
+      'content': '解方程：3(x − 2) + 1 = 2x − 5，则 x = ______。\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': 'x = 0\n\n【解析】去括号：3x − 6 + 1 = 2x − 5\n左边合并：3x − 5 = 2x − 5\n移项：3x − 2x = −5 + 5\n所以 x = 0。\n（检验：左边 3(0−2)+1 = −5，右边 0−5 = −5，两边相等 ✓）',
+      'my_answer': 'x = 10（去括号时把 −6 写成了 +6）',
+      'error_reason': '计算失误',
+      'tags': '示例,数学,一元一次方程,去括号',
+      'source': '练习',
+      'difficulty': 1,
+      'flow': {'known': '方程 3(x − 2) + 1 = 2x − 5', 'target': '求 x 的值', 'plan': '去括号 → 合并同类项 → 移项 → 系数化为 1', 'check': '把 x = 0 代回原方程两边验算，左边 = 右边 ✓'},
+      'ana5': {'known': '一个含 x 的一元一次方程；括号外有系数 3',
+               'ask': '求 x 的值',
+               'method': '先去括号（注意括号内每一项都要乘 3、符号要跟着变），再把含 x 的项移到一边、常数移到另一边，最后系数化为 1',
+               'pitfall': '去括号时 +1 没变号、−6 写成 +6；移项忘记变号',
+               'points': '一元一次方程的解法步骤：去括号 → 移项 → 合并同类项 → 系数化为 1；等式两边同加同减仍然相等'}},
+     {'key': 'demo_math_square_1',
+      'subject': '数学',
+      'chapter': '整式乘法（完全平方公式）',
+      'content': '计算：(2a − 3b)² = ______。\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': '4a² − 12ab + 9b²\n'
+                        '\n'
+                        '【解析】完全平方公式 (x − y)² = x² − 2xy + y²\n'
+                        '取 x = 2a、y = 3b：\n'
+                        '(2a)² − 2·(2a)·(3b) + (3b)² = 4a² − 12ab + 9b²。\n'
+                        '（口诀：首平方、尾平方，首尾两倍中间放，中间符号看两个数的符号）',
+      'my_answer': '4a² − 9b²（漏掉了中间项 −12ab）',
+      'error_reason': '公式记错',
+      'tags': '示例,数学,完全平方公式,整式乘法',
+      'source': '练习',
+      'difficulty': 2,
+      'flow': {'known': '(2a − 3b)²，两个数相减后平方',
+               'target': '展开成多项式',
+               'plan': '套完全平方公式 (x − y)² = x² − 2xy + y²，分别代入 x = 2a、y = 3b',
+               'check': '取 a = b = 1 验算：(2 − 3)² = 1，而 4 − 12 + 9 = 1 ✓'},
+      'ana5': {'known': '(2a − 3b)²，即 (2a − 3b)(2a − 3b)',
+               'ask': '把这个式子展开',
+               'method': '用完全平方公式 (x − y)² = x² − 2xy + y² 直接展开，比逐项相乘快且不易错',
+               'pitfall': '最常见的是漏掉中间项 2xy，把 (a−b)² 错写成 a² − b²；另外别忘 (2a)² = 4a²',
+               'points': '完全平方公式；平方差公式 (x+y)(x−y) = x² − y² 的区别——前者三项、后者两项'}},
+     {'key': 'demo_phys_speed_1',
+      'subject': '物理',
+      'chapter': '机械运动（速度计算）',
+      'content': '小明骑自行车 3 min 行驶了 900 m，他的平均速度是 ______ m/s，合 ______ km/h。\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': '5 m/s；18 km/h\n\n【解析】先统一单位：3 min = 3 × 60 s = 180 s。\nv = s / t = 900 m ÷ 180 s = 5 m/s。\n单位换算：1 m/s = 3.6 km/h ⇒ 5 × 3.6 = 18 km/h。',
+      'my_answer': '300 m/s（时间直接用了 3，没有换算成秒）',
+      'error_reason': '审题不清',
+      'tags': '示例,物理,机械运动,速度计算,单位换算',
+      'source': '练习',
+      'difficulty': 2,
+      'flow': {'known': '路程 s = 900 m，时间 t = 3 min',
+               'target': '求平均速度（m/s，并换算成 km/h）',
+               'plan': '先把时间换算成秒 → 用 v = s/t 求 m/s → 再乘 3.6 换成 km/h',
+               'check': '5 m/s × 180 s = 900 m ✓ 与题目路程一致'},
+      'ana5': {'known': '路程 900 m；时间 3 min（单位不是秒）',
+               'ask': '平均速度，且要两种单位',
+               'method': '速度公式 v = s / t；代入前必须统一单位，时间换成秒',
+               'pitfall': '直接用分钟代入算出 300 m/s；换算时乘除弄反（应乘 3.6 把 m/s 换成 km/h）',
+               'points': '速度的定义式 v = s/t；1 m/s = 3.6 km/h；平均速度不是各段速度的平均值'}},
+     {'key': 'demo_eng_verb_1',
+      'subject': '英语',
+      'chapter': '一般现在时（主谓一致）',
+      'content': '用括号中所给词的适当形式填空：\nMy sister often ______ (go) to the library on Sundays.\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': 'goes\n'
+                        '\n'
+                        '【解析】主语 My sister 是第三人称单数，句子为一般现在时，动词要用第三人称单数形式：go → goes。\n'
+                        '（标志词 often / usually / every day / on Sundays 都提示一般现在时；主语为 he/she/it 或单个的人时，动词加 -s/-es。）',
+      'my_answer': 'go（主语是三单，动词忘了加 -es）',
+      'error_reason': '概念不清',
+      'tags': '示例,英语,一般现在时,主谓一致,三单',
+      'source': '练习',
+      'difficulty': 1,
+      'flow': {'known': '主语 My sister；时间状语 often / on Sundays；动词 go',
+               'target': '把 go 变成正确形式',
+               'plan': '先判断时态（often/on Sundays → 一般现在时）→ 再看主语人称（My sister → 三单）→ 动词加 -es',
+               'check': '句子读一遍：My sister often goes to the library. 主谓一致 ✓'},
+      'ana5': {'known': '主语 My sister（第三人称单数）；频度副词 often；时间状语 on Sundays',
+               'ask': '用 go 的适当形式填空',
+               'method': '先定时态（一般现在时），再定形式（主语三单 → 动词加 -s/-es）',
+               'pitfall': '只看动词不看主语，直接写 go；以 o/s/x/ch/sh 结尾要加 -es（go → goes）',
+               'points': '一般现在时的用法与标志词；第三人称单数动词变化规则'}},
+     {'key': 'demo_chin_idiom_1',
+      'subject': '语文',
+      'chapter': '字音字形（成语辨析）',
+      'content': '下列词语中，没有错别字的一项是（\u3000\u3000）\nA. 骸人听闻\u3000B. 人声鼎沸\u3000C. 锋芒必露\u3000D. 翻来复去\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': 'B（人声鼎沸）\n\n【解析】逐项改正：\nA. 「骸人听闻」应为「骇人听闻」（骇：惊吓、震惊）；\nC. 「锋芒必露」应为「锋芒毕露」（毕：完全）；\nD. 「翻来复去」应为「翻来覆去」（覆：翻过来）。\n只有 B「人声鼎沸」书写正确——鼎沸：像锅里的水沸腾一样，形容人声嘈杂。',
+      'my_answer': 'C（形近字分不清，「必」与「毕」混用）',
+      'error_reason': '概念不清',
+      'tags': '示例,语文,字形,成语,形近字',
+      'source': '练习',
+      'difficulty': 2,
+      'flow': {'known': '四个成语，其中三项含错别字', 'target': '找出没有错别字的一项', 'plan': '逐项回忆成语本义，用字义反推正确写法，排除错项', 'check': '把改正后的四个成语写一遍，确认字形无误'},
+      'ana5': {'known': '四个成语选项，只有一项完全正确',
+               'ask': '选出书写没有错误的一项',
+               'method': '逐字理解成语含义：字义对了，字形就错不了（骇=震惊、毕=完全、覆=翻转）',
+               'pitfall': '只凭印象读通就下判断；形近字（骸/骇、必/毕、复/覆）容易混',
+               'points': '常见成语的正确写法；形近字辨析；成语的意思与感情色彩'}},
+     {'key': 'demo_math_sqrt_1',
+      'subject': '数学',
+      'chapter': '二次根式（化简求值）',
+      'content': '计算：√27 − √12 + √(1/3) = ______。\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': '4√3/3\n\n【解析】先把每个二次根式化成最简：\n√27 = 3√3，√12 = 2√3，√(1/3) = √3/3。\n原式 = 3√3 − 2√3 + √3/3 = √3 + √3/3 = 4√3/3。',
+      'my_answer': '√3（最后一项 √(1/3) 忘了化简，直接当成 0 丢掉）',
+      'error_reason': '计算失误',
+      'tags': '示例,数学,二次根式,化简,分母有理化',
+      'source': '练习',
+      'difficulty': 2,
+      'flow': {'known': '三个二次根式相加减：√27、−√12、+√(1/3)',
+               'target': '合并成最简结果',
+               'plan': '每个根式先化成最简二次根式（把根号里的平方因数提出来），再合并同类二次根式',
+               'check': '取近似值验算：√27≈5.196，√12≈3.464，√(1/3)≈0.577；5.196−3.464+0.577≈2.309，而 4√3/3≈2.309 ✓'},
+      'ana5': {'known': '含 √27、√12、√(1/3) 的加减混合运算',
+               'ask': '化简求值',
+               'method': '先化简后合并：√(ab)=√a·√b，√(a/b)=√a/√b；被开方数相同的才能合并（合并的是系数，不是被开方数）',
+               'pitfall': '① 忘记化简 √(1/3)（要写成 √3/3）② 把 √3+√3/3 错算成 √(3+1/3) ③ 合并时把被开方数也相加',
+               'points': '最简二次根式：被开方数不含分母、不含能开得尽方的因数；同类二次根式才能相加减'}},
+     {'key': 'demo_phys_ref_1',
+      'subject': '物理',
+      'chapter': '机械运动（参照物）',
+      'content': '坐在行驶列车中的乘客，若说他是静止的，所选参照物是（\u3000\u3000）；若说他是运动的，所选参照物是（\u3000\u3000）。\nA. 乘坐的列车\u3000B. 铁轨\u3000C. 路旁的树\u3000D. 车厢里的座椅\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': '静止 → A（或 D）；运动 → B（或 C）\n'
+                        '\n'
+                        '【解析】判断物体运动还是静止，看它相对于参照物的位置有没有变化。\n'
+                        '乘客相对于乘坐的列车（车厢座椅）位置不变 → 静止；\n'
+                        '乘客相对于铁轨、路旁的树位置不断改变 → 运动。\n'
+                        '同一物体选不同参照物，结论可以不同，所以描述运动必须先说清参照物。',
+      'my_answer': '两个空都填 A（以为"坐在车上"就是静止）',
+      'error_reason': '概念不清',
+      'tags': '示例,物理,机械运动,参照物,运动与静止',
+      'source': '练习',
+      'difficulty': 2,
+      'flow': {'known': '乘客坐在行驶的列车里，题目给出四个候选参照物', 'target': '分别找出让乘客"静止"和"运动"的参照物', 'plan': '逐个比对乘客与每个参照物的相对位置是否变化：不变 → 静止，改变 → 运动', 'check': '回到定义复核：位置变化 ⇔ 运动，位置不变 ⇔ 静止'},
+      'ana5': {'known': '一个乘客 + 四个不同参照物（列车、铁轨、树、座椅）',
+               'ask': '选不同参照物时乘客的运动状态',
+               'method': '抓住"相对位置是否变化"这一条：与列车/座椅同步前进 → 位置不变 → 静止；与地面上的铁轨、树比较 → 位置改变 → 运动',
+               'pitfall': '把"在运动"和"自己是静止的"混为一谈；忘记参照物是判断的前提',
+               'points': '运动和静止的相对性；参照物一旦选定就假定不动'}},
+     {'key': 'demo_phys_sound_1',
+      'subject': '物理',
+      'chapter': '声现象（音色）',
+      'content': '白居易《琵琶行》中"忽闻水上琵琶声，主人忘归客不发"，人们能辨别出这是琵琶声，主要是依据声音的（\u3000\u3000）\nA. 音调\u3000B. 响度\u3000C. 音色\u3000D. 频率\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': 'C（音色）\n\n【解析】不同发声体的材料和结构不同，发出声音的音色不同，所以能凭音色分辨出琵琶、二胡、钢琴等乐器。\n音调由振动频率决定（高低），响度由振幅和距离决定（强弱）。',
+      'my_answer': 'A（把"能听出是什么乐器"当成音调高低的区别）',
+      'error_reason': '概念不清',
+      'tags': '示例,物理,声现象,音色,声音的特性',
+      'source': '练习',
+      'difficulty': 1,
+      'flow': {'known': '诗句描述听声辨器（琵琶声）',
+               'target': '判断依据的是声音的哪个特性',
+               'plan': '把三个特性分清：音调=高低（频率）、响度=强弱（振幅）、音色=区分不同发声体',
+               'check': '反问验证：若两把琵琶弹同一个音高、同样响度，还能分辨是琵琶而不是二胡吗？能 → 靠的是音色'},
+      'ana5': {'known': '声音的三大特性：音调、响度、音色',
+               'ask': '辨别乐器种类依据什么',
+               'method': '记住口诀：音调听高低、响度听大小、音色辨是谁',
+               'pitfall': '把音调和音色混淆；"闻其声知其人"也是音色',
+               'points': '音色由发声体的材料和结构决定；音调由频率决定；响度由振幅决定'}},
+     {'key': 'demo_eng_past_1',
+      'subject': '英语',
+      'chapter': '一般过去时',
+      'content': '用括号中所给词的适当形式填空：\nLast weekend my family ______ (visit) the science museum in Chengdu.\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': 'visited\n'
+                        '\n'
+                        '【解析】时间状语 Last weekend（上周末）表示过去，谓语动词要用一般过去时。\n'
+                        'visit 是规则动词，过去式直接加 -ed → visited。\n'
+                        '整句：Last weekend my family visited the science museum in Chengdu.',
+      'my_answer': 'visit（只按原形填，没看时间状语）',
+      'error_reason': '时态错误',
+      'tags': '示例,英语,一般过去时,动词变形,时态',
+      'source': '练习',
+      'difficulty': 1,
+      'flow': {'known': '句子 + 时间状语 Last weekend，括号里给动词原形 visit',
+               'target': '把 visit 变成正确的形式填空',
+               'plan': '① 找时间状语判断时态 ② 规则动词过去式加 -ed ③ 检查拼写和主谓搭配',
+               'check': '把答案放回句子读一遍：时态与 Last weekend 一致、句子通顺'},
+      'ana5': {'known': '一般现在时与一般过去时的区别；规则动词过去式的构成',
+               'ask': '括号里动词的适当形式',
+               'method': '看到 yesterday / last… / ago / in 1990 等过去时间标志，就想到一般过去时；规则动词 -ed，不规则动词要背（go→went 等）',
+               'pitfall': '① 忽略时间状语用原形 ② 不规则动词误加 -ed（如 go→goed✗）③ 主语是第三人称时误加 -s',
+               'points': '一般过去时表示过去发生的动作或状态；常与明确的过去时间状语连用'}},
+     {'key': 'demo_eng_comp_1',
+      'subject': '英语',
+      'chapter': '形容词比较级',
+      'content': '用括号中所给词的适当形式填空：\nThis book is ______ (interesting) than that one.\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': 'more interesting\n\n【解析】句中有 than，说明是两者比较，要用比较级。\ninteresting 是多音节形容词（三个音节以上），比较级前面加 more，不加 -er。\n整句：This book is more interesting than that one.',
+      'my_answer': 'interestinger（多音节形容词误加 -er）',
+      'error_reason': '语法规则不清',
+      'tags': '示例,英语,形容词比较级,than',
+      'source': '练习',
+      'difficulty': 2,
+      'flow': {'known': '句子含 than，括号里给多音节形容词 interesting',
+               'target': '填出正确的比较级形式',
+               'plan': '① than 提示比较级 ② 数音节：多音节用 more + 原级；单音节用 -er ③ 写进句子检查',
+               'check': '读一遍：more interesting than … 搭配正确、无语序问题'},
+      'ana5': {'known': '形容词比较级的两种构成方式（-er / more）以及 than 的用法',
+               'ask': 'interesting 的比较级',
+               'method': '一个音节（tall→taller）、部分双音节（happy→happier）用 -er；三个音节及以上（interesting、beautiful）用 more',
+               'pitfall': '① 多音节加 -er（interestinger✗）② 双重比较（more taller✗）③ 有 than 却用原级',
+               'points': '比较级表示"两者之间更……"，常用结构 A + be + 比较级 + than + B'}},
+     {'key': 'demo_chin_poem_1',
+      'subject': '语文',
+      'chapter': '古诗文默写（望岳）',
+      'content': '默写填空：会当凌绝顶，______。（杜甫《望岳》）\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': '一览众山小\n\n【解析】出自杜甫《望岳》尾联：会当凌绝顶，一览众山小。\n表达诗人登临绝顶、俯视群山的豪情与远大抱负。注意"览"是看的意思，"小"指"显得渺小"。',
+      'my_answer': '一览众山晓（把"小"写成了同音的"晓"）',
+      'error_reason': '默写错字',
+      'tags': '示例,语文,古诗文默写,望岳,杜甫',
+      'source': '练习',
+      'difficulty': 1,
+      'flow': {'known': '《望岳》尾联上句"会当凌绝顶"', 'target': '补出下句', 'plan': '按作者 + 篇名定位原句，逐字核对字形，特别注意同音易错字', 'check': '默完通读一遍，确认意思与诗意（群山显得渺小）相符'},
+      'ana5': {'known': '杜甫《望岳》，"会当凌绝顶"的下一句',
+               'ask': '默写填空',
+               'method': '按"作者—篇名—整联"整体回忆，不要只记半句；易错字单独圈出来记（览/小）',
+               'pitfall': '同音字写错（小→晓）、漏字、把"览"写成"揽"',
+               'points': '《望岳》是五言律诗，尾联"会当凌绝顶，一览众山小"抒发登临雄心'}},
+     {'key': 'demo_chin_sick_1',
+      'subject': '语文',
+      'chapter': '病句辨析',
+      'content': '下列句子中没有语病的一项是（\u3000\u3000）\nA. 通过这次社会实践活动，使我明白了合作的重要性。\nB. 为了防止类似的事故不再发生，学校加强了安全教育。\nC. 阅读经典作品能够提高我们的语文素养。\nD. 他大约花了将近一个小时左右才完成作业。\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': 'C\n\n【解析】\nA 成分残缺（缺主语）："通过……使……"连用，句子没有主语。删"通过"或删"使"。\nB 否定不当："防止"本身已含否定，再用"不再发生"意思正好相反，应改为"防止类似的事故再次发生"。\nD 重复赘余："大约""将近""左右"语义重复，保留一个即可。',
+      'my_answer': 'A（觉得读起来顺，没发现缺主语）',
+      'error_reason': '成分残缺没识别出来',
+      'tags': '示例,语文,病句,成分残缺,否定不当',
+      'source': '练习',
+      'difficulty': 2,
+      'flow': {'known': '四个句子，要求选出没有语病的', 'target': '找出唯一正确的句子', 'plan': '逐句套常见病因：成分残缺、否定不当、重复赘余、搭配不当、语序不当', 'check': '把有语病的句子改通顺再读一遍，确认修改点合理'},
+      'ana5': {'known': '常见病句类型：成分残缺、搭配不当、语序不当、重复赘余、否定不当、不合逻辑',
+               'ask': '判断哪一句没有语病',
+               'method': '抓标志词：见到"通过……使……"查主语；见到"防止/切忌/避免"查是否多了一层否定；见到"大约/将近/左右"查是否重复',
+               'pitfall': '靠语感读一遍就选（顺口不代表没毛病）；"干净""大约"这类词蒙蔽判断',
+               'points': '病句常考六类；判断要落到语法点上，不能只凭语感'}},
+     {'key': 'demo_chem_symbol_1',
+      'subject': '化学',
+      'chapter': '化学式与元素符号（数字含义）',
+      'content': '指出 "2H₂O" 中两处数字"2"的含义：\n前面的"2"表示______；H 右下角的"2"表示______。\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': '前面的"2"表示 2 个水分子；右下角的"2"表示 1 个水分子中含有 2 个氢原子。\n\n【解析】化学式前面的数字（系数）表示分子个数；元素符号右下角的数字表示一个分子中该元素的原子个数。\n所以 2H₂O 表示 2 个水分子，每个水分子由 2 个氢原子和 1 个氧原子构成。',
+      'my_answer': '前面的"2"表示 2 个氢原子（把系数当成原子个数）',
+      'error_reason': '概念混淆',
+      'tags': '示例,化学,化学式,元素符号,数字含义',
+      'source': '练习',
+      'difficulty': 2,
+      'flow': {'known': '符号 2H₂O 及其两处数字 2',
+               'target': '分别说明两处数字表示的微观含义',
+               'plan': '区分两类数字：化学式前面的数字→分子个数；元素符号右下角→一个分子里的原子个数',
+               'check': '写全含义："2 个水分子，每个水分子含 2 个氢原子、1 个氧原子"——读一遍逻辑通顺'},
+      'ana5': {'known': '化学式前的系数与元素符号右下角数字的区别',
+               'ask': '两处"2"各表示什么',
+               'method': '位置决定含义：写在前=个数（分子），写在右下=构成（原子）',
+               'pitfall': '把系数与原子个数混为一谈；把 H₂O 说成"2 个氢原子和 1 个氧原子"（应说"1 个水分子由…构成"）',
+               'points': '化学式的宏观/微观意义；元素符号周围数字的位置与含义'}},
+     {'key': 'demo_chem_mix_1',
+      'subject': '化学',
+      'chapter': '物质的分类（纯净物与混合物）',
+      'content': '下列物质中属于纯净物的是（\u3000\u3000）\nA. 洁净的空气\u3000B. 蒸馏水\u3000C. 加碘食盐\u3000D. 不锈钢\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': 'B（蒸馏水）\n\n【解析】纯净物只由一种物质组成。\n蒸馏水只含 H₂O，是纯净物；\n空气（含 O₂、N₂、CO₂ 等）、加碘食盐（含 NaCl 和含碘物质）、不锈钢（含铁、碳、铬等）都含两种以上物质，属于混合物。\n注意："洁净""干净"只是程度词，不表示只含一种物质。',
+      'my_answer': 'A（把"洁净的空气"当成纯净物）',
+      'error_reason': '概念不清',
+      'tags': '示例,化学,物质分类,纯净物,混合物',
+      'source': '练习',
+      'difficulty': 1,
+      'flow': {'known': '四个候选物质：空气、蒸馏水、加碘食盐、不锈钢', 'target': '选出纯净物', 'plan': '看组成是否只有一种物质：只看名称成分，不看"洁净/干净"这类修饰词', 'check': '逐个列出成分验证：蒸馏水=H₂O（一种）；其余均≥2 种'},
+      'ana5': {'known': '纯净物与混合物的定义',
+               'ask': '判断哪一个是纯净物',
+               'method': '记住判断标准："由一种物质组成"才是纯净物；名称带"洁净/新鲜"不等于纯净',
+               'pitfall': '被"洁净的空气"误导；把加碘食盐当成纯 NaCl（里面还有含碘物质）',
+               'points': '纯净物有固定组成和性质；混合物由多种物质混合而成'}},
+     {'key': 'demo_chem_eq_1',
+      'subject': '化学',
+      'chapter': '化学方程式（配平）',
+      'content': '配平下列化学方程式（填最小整数比）：\n__Fe + __O₂ —点燃→ __Fe₃O₄\n\n（示例题：可自行编辑或删除）',
+      'correct_answer': '3Fe + 2O₂ —点燃→ Fe₃O₄（依次填 3、2、1）\n'
+                        '\n'
+                        '【解析】用最小公倍数法：\n'
+                        '先配氧：右边 Fe₃O₄ 有 4 个 O，左边 O₂ 前配 2（2×2=4）；\n'
+                        '再配铁：右边 3 个 Fe，左边 Fe 前配 3。\n'
+                        '最后检查：左边 3 个 Fe、4 个 O，右边 3 个 Fe、4 个 O，原子个数相等 ✓',
+      'my_answer': '2、2、1（只把氧配平了，铁没配）',
+      'error_reason': '配平不完整',
+      'tags': '示例,化学,化学方程式,配平,最小公倍数',
+      'source': '练习',
+      'difficulty': 2,
+      'flow': {'known': '待配平的方程式：__Fe + __O₂ —点燃→ __Fe₃O₄',
+               'target': '填出最小整数比使两边原子个数相等',
+               'plan': '① 先配出现次数少、原子个数变化大的元素（氧）② 再配另一种元素（铁）③ 通查所有原子',
+               'check': '逐一清点：左 Fe 3、O 4；右 Fe 3、O 4 —— 完全相等'},
+      'ana5': {'known': '化学方程式配平的原则：质量守恒（原子种类和个数不变）',
+               'ask': '各物质的化学计量数',
+               'method': '最小公倍数法：找两边原子个数的最小公倍数确定系数，先难后易，最后统一检查',
+               'pitfall': '只配一种元素就收工；改动了化学式的下标（下标不能改，只能改系数）',
+               'points': '配平只能改系数、不能改下标；依据是质量守恒定律'}}]
+    # ── 硬校验（老板 2026-10-03）：内置示例题每科最多 3 道，超了直接中止构建 ──
+    #    目的：防止以后误加示例题，把新用户的错题库塞满。
+    _sc = {}
+    for _q in DEMO_QUESTIONS:
+        _sc[_q['subject']] = _sc.get(_q['subject'], 0) + 1
+    _bad = {k: v for k, v in _sc.items() if v > 3}
+    if _bad:
+        raise SystemExit('❌ 内置示例题超过每科 3 道：%s（共 %d 道）—— 构建中止' % (_bad, len(DEMO_QUESTIONS)))
     _demo_js = json.dumps(DEMO_QUESTIONS, ensure_ascii=False, indent=0)
     _a = s.index('const BUILTIN_QUESTIONS=[')
     _b = s.index('\n];', _a) + len('\n];')

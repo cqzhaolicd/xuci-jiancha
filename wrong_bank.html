@@ -131,6 +131,21 @@ details.rp-ana5 .ana5-item{font-size:.85rem;line-height:1.7}
 .rp-res-b{font-size:.78rem;line-height:1.7;color:var(--text);margin-top:.35rem;white-space:pre-wrap}
 .rp-res-b b{color:var(--primary)}
 .qb-review i{background:linear-gradient(135deg,#48bb78,#2f855a)}
+.qb-invite i{background:linear-gradient(135deg,#ed8936,#dd6b20)}
+/* 推荐先锋页（老板 2026-10-03） */
+.rf-hero{background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #f6c453;border-radius:14px;padding:16px 14px;text-align:center}
+.rf-hero .rf-ico{font-size:2.2rem;line-height:1}
+.rf-hero .rf-t{font-size:1.12rem;font-weight:800;color:#7c4a03;margin-top:6px}
+.rf-hero .rf-s{font-size:.9rem;color:#8a5a12;margin-top:6px;line-height:1.55}
+.rf-code{margin:12px auto 0;padding:12px 16px;border-radius:12px;background:#fff;border:2px dashed #dd6b20;display:inline-block}
+.rf-code .rf-cl{font-size:.72rem;color:#a06a1b;letter-spacing:1px}
+.rf-code .rf-cv{font-size:1.6rem;font-weight:900;color:#c05621;letter-spacing:2px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.rf-btn{display:block;width:100%;margin-top:12px;padding:.72rem;border:none;border-radius:10px;background:linear-gradient(135deg,#ed8936,#dd6b20);color:#fff;font-weight:700;font-size:.95rem;cursor:pointer}
+.rf-btn:disabled{background:#cbd5e0;color:#718096;cursor:default}
+.rf-stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.rf-stat .rf-sc{background:#fff;border:1px solid #f6c453;border-radius:10px;padding:8px 4px;text-align:center}
+.rf-stat .rf-sv{font-size:1.05rem;font-weight:800;color:#c05621}
+.rf-stat .rf-sl{font-size:.7rem;color:#8a5a12;margin-top:2px}
 /* Subject grid */
 .subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem}
 .subject-card{background:var(--card-bg);border-radius:var(--radius-sm);padding:.8rem;text-align:center;text-decoration:none;color:var(--text);border:2px solid var(--border);transition:all .2s;cursor:pointer}
@@ -1037,6 +1052,10 @@ error_reason:"计算失误",tags:"数学,含 15°/30° 角的三角形 · 正弦
 image_path:"uploads/wrong_bank/math_gu4_20260925.jpg"}
 ];
 function applyBuiltinQuestions(){try{
+  // ★ 老板 2026-10-03：内置示例题「只在全新安装时注入一次」。
+  //   标记一旦写入就永不改写 —— 之后无论升到哪个版本，都不会再往用户错题库里加题，
+  //   用户自己录入的错题/资料全部留在本机，升级只换「版本内容」，不动数据。
+  if(localStorage.getItem(BUILTIN_FLAG))return;
   const applied=JSON.parse(localStorage.getItem(BUILTIN_FLAG)||'[]');
   const d=loadData();let added=0;
   for(const b of BUILTIN_QUESTIONS){
@@ -1054,7 +1073,7 @@ function applyBuiltinQuestions(){try{
     applied.push(b.key);added++;
   }
   saveData(d);localStorage.setItem(BUILTIN_FLAG,JSON.stringify(applied));
-  if(added>0)toast('📥 已收录 '+added+' 道新错题','success');
+  if(added>0)toast('📥 已收录 '+added+' 道示例题（可自行编辑或删除）','success');
 }catch(e){console.error('builtin error',e);}}
 
 // ===================== ROUTER =====================
@@ -1776,6 +1795,69 @@ async function aiConfTest(){
 }
 
 // ===================== RENDER =====================
+function renderReferral(){
+  setTimeout(refLoad,0);   // 先出骨架，再异步拉「我的推荐码 / 战绩」
+  return `
+  <div style="max-width:560px;margin:0 auto">
+    <div class="rf-hero">
+      <div class="rf-ico">🏅</div>
+      <div class="rf-t">推荐先锋</div>
+      <div class="rf-s">推荐给其他用户注册成为 VIP 客户，<b>奖励 50 元</b><br>对方同时<b>减免 50 元</b>（399 → 349）</div>
+      <div id="refBody" style="margin-top:10px"><div class="text-muted" style="font-size:.85rem">正在读取…</div></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <h6 style="font-size:.9rem;font-weight:700;margin-bottom:8px">推荐码怎么用</h6>
+      <div style="font-size:.85rem;color:#4a5568;line-height:1.85">
+        1. 点上方按钮申请，系统自动给你生成一枚<b>专属推荐码</b>（永久有效，一人一码）<br>
+        2. 把推荐码发给朋友<br>
+        3. 朋友注册后开通 VIP 时填入推荐码 → 他<b>只付 349 元</b>（省 50）<br>
+        4. 他开通成功后，你获得 <b>50 元</b> 返利（后台记账，赵立核对后微信转你）
+      </div>
+    </div>
+    <button class="btn btn-outline" style="width:100%;margin-top:12px" onclick="navigate('dashboard')"><i class="fas fa-arrow-left"></i> 返回首页</button>
+  </div>`;
+}
+function refLoad(){
+  if(!window.ABG){_refPaint({error:'推荐先锋需在 App 里登录账号后使用（网页版暂未开放申请）'});return}
+  if(!ABG.token()){_refPaint({needLogin:true});return}
+  ABG.refMe();
+}
+function _refPaint(j){
+  const box=document.getElementById('refBody'); if(!box) return; j=j||{};
+  if(j.needLogin||!j.ok){
+    box.innerHTML='<div style="font-size:.85rem;color:#8a5a12;margin-bottom:8px">'+(j.needLogin?'请先在「我的」里登录账号，再来申请推荐码':(j.error||'读取失败，请稍后重试'))+'</div>';
+    return;
+  }
+  if(!j.is_pioneer){
+    box.innerHTML='<button class="rf-btn" id="refBtn" onclick="refApply()">我要成为推荐先锋</button>'
+      +'<div style="font-size:.78rem;color:#8a5a12;margin-top:8px">点一下即自动生成你的专属推荐码</div>';
+    return;
+  }
+  const money=v=>'￥'+(Number(v)||0);
+  box.innerHTML='<div class="rf-code"><div class="rf-cl">你的专属推荐码</div><div class="rf-cv" id="refCode">'+j.code+'</div></div>'
+    +'<button class="rf-btn" disabled>您已经是推荐先锋</button>'
+    +'<button class="btn btn-outline" style="width:100%;margin-top:8px" onclick="refCopy(\''+j.code+'\')"><i class="fas fa-copy"></i> 复制推荐码</button>'
+    +'<div class="rf-stat">'
+      +'<div class="rf-sc"><div class="rf-sv">'+(j.registered||0)+'</div><div class="rf-sl">已注册</div></div>'
+      +'<div class="rf-sc"><div class="rf-sv">'+(j.rewarded||0)+'</div><div class="rf-sl">已开通 VIP</div></div>'
+      +'<div class="rf-sc"><div class="rf-sv">'+money(j.total)+'</div><div class="rf-sl">累计返利</div></div>'
+    +'</div>'
+    +'<div style="font-size:.78rem;color:#8a5a12;margin-top:8px">待返现 '+money(j.pending)+' ｜ 已返现 '+money(j.settled)+'</div>'
+    +((j.list&&j.list.length)?('<div style="margin-top:12px;text-align:left"><div style="font-size:.8rem;font-weight:700;color:#7c4a03;margin-bottom:6px">推荐明细</div>'
+      +j.list.map(x=>'<div style="display:flex;justify-content:space-between;font-size:.8rem;color:#4a5568;padding:5px 0;border-bottom:1px dashed #f0e0b8"><span>'+x.member+'</span><span>'+(x.status==='done'?'✅ 已返现':'⏳ 待返现')+' '+money(x.amount)+'</span></div>').join('')
+      +'</div>'):'');
+}
+function refApply(){
+  if(!window.ABG){toast('推荐先锋需在 App 里登录后使用','info');return}
+  if(!ABG.token()){toast('请先登录后再申请推荐码','info');return}
+  const b=document.getElementById('refBtn'); if(b){b.disabled=true;b.textContent='正在生成…'}
+  ABG.refApply();
+}
+function refCopy(code){
+  try{navigator.clipboard.writeText(code);toast('✅ 推荐码已复制：'+code,'ok');}
+  catch(e){toast('推荐码：'+code+'（请长按手动复制）','info');}
+}
+
 function render(page,data){
   const app=document.getElementById('app');
   if(page==='dashboard') app.innerHTML=renderDashboard();
@@ -1788,6 +1870,7 @@ function render(page,data){
   else if(page==='analysis') app.innerHTML=renderAnalysis();
   else if(page==='points') app.innerHTML=renderPoints();
   else if(page==='aiconf') app.innerHTML=renderAiConf();
+  else if(page==='referral') app.innerHTML=renderReferral();
 }
 
 // ===================== 局部重绘辅助 =====================
@@ -1843,6 +1926,7 @@ function renderDashboard(){
     <button class="quick-btn qb-add" onclick="navigate('add')" title="录入新错题"><i class="fas fa-plus-circle"></i><span>录入</span><small>录入新错题</small></button>
     <button class="quick-btn qb-print" onclick="navigate('print-page')" title="打印错题"><i class="fas fa-print"></i><span>打印</span><small>选题+选内容</small></button>
     <button class="quick-btn qb-review" onclick="navigate('points')" title="复习要点"><i class="fas fa-clipboard-check"></i><span>复习要点</span><small>考前速览</small></button>
+    <button class="quick-btn qb-invite" onclick="navigate('referral')" title="推荐先锋"><i class="fas fa-medal"></i><span>推荐先锋</span><small>推荐得 50 元</small></button>
   </div>
   ${!total?'<div class="empty-state"><i class="fas fa-inbox"></i><h5>还没有错题记录</h5><p class="text-muted">去录入第一道错题吧！</p><button class="btn btn-primary mt-2" onclick="navigate(\'add\')"><i class="fas fa-plus-circle"></i> 录入错题</button></div>':''}
   `;
