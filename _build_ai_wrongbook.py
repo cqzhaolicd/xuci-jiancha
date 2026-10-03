@@ -50,8 +50,9 @@ NAV_OLD = """<nav class="navbar"><div class="container">
 </div></nav>"""
 
 NAV_NEW = """<nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
-  <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:space-between">
     <a class="navbar-brand" href="index.html"><i class="fas fa-robot"></i> AI错题本</a>
+    <a class="nav-pioneer" id="navPioneer" onclick="navigate('referral')" title="推荐先锋"><i class="fas fa-medal"></i><span>推荐先锋</span></a>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -62,7 +63,6 @@ NAV_NEW = """<nav class="navbar"><div class="container" style="flex-direction:co
     <a data-page="analysis"><i class="fas fa-chart-pie"></i><span>分析</span></a>
   </div>
   <div style="display:flex;justify-content:flex-end;gap:.4rem;align-items:center">
-    <a class="nav-pioneer" id="navPioneer" onclick="navigate('referral')" title="推荐先锋"><i class="fas fa-medal"></i><span>推荐先锋</span></a>
     <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
   </div>
 </div></nav>"""
