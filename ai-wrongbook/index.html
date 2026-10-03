@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.43</title>
+<title>AI错题本 v4.0.44</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 /* ⚠️ 手机端弹窗可滚动（2026-09-28 修）：资料弹窗内容很长（城市/学校/年级/姓名/性别/会员/邀请码/备份/保存），
@@ -479,7 +479,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.43</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.44</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -496,7 +496,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.43 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.44 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -1059,11 +1059,263 @@ const BUILTIN_QUESTIONS=[
 "pitfall": "只凭印象读通就下判断；形近字（骸/骇、必/毕、复/覆）容易混",
 "points": "常见成语的正确写法；形近字辨析；成语的意思与感情色彩"
 }
+},
+{
+"key": "demo_math_sqrt_1",
+"subject": "数学",
+"chapter": "二次根式（化简求值）",
+"content": "计算：√27 − √12 + √(1/3) = ______。\n\n（示例题：可自行编辑或删除）",
+"correct_answer": "4√3/3\n\n【解析】先把每个二次根式化成最简：\n√27 = 3√3，√12 = 2√3，√(1/3) = √3/3。\n原式 = 3√3 − 2√3 + √3/3 = √3 + √3/3 = 4√3/3。",
+"my_answer": "√3（最后一项 √(1/3) 忘了化简，直接当成 0 丢掉）",
+"error_reason": "计算失误",
+"tags": "示例,数学,二次根式,化简,分母有理化",
+"source": "练习",
+"difficulty": 2,
+"flow": {
+"known": "三个二次根式相加减：√27、−√12、+√(1/3)",
+"target": "合并成最简结果",
+"plan": "每个根式先化成最简二次根式（把根号里的平方因数提出来），再合并同类二次根式",
+"check": "取近似值验算：√27≈5.196，√12≈3.464，√(1/3)≈0.577；5.196−3.464+0.577≈2.309，而 4√3/3≈2.309 ✓"
+},
+"ana5": {
+"known": "含 √27、√12、√(1/3) 的加减混合运算",
+"ask": "化简求值",
+"method": "先化简后合并：√(ab)=√a·√b，√(a/b)=√a/√b；被开方数相同的才能合并（合并的是系数，不是被开方数）",
+"pitfall": "① 忘记化简 √(1/3)（要写成 √3/3）② 把 √3+√3/3 错算成 √(3+1/3) ③ 合并时把被开方数也相加",
+"points": "最简二次根式：被开方数不含分母、不含能开得尽方的因数；同类二次根式才能相加减"
+}
+},
+{
+"key": "demo_phys_ref_1",
+"subject": "物理",
+"chapter": "机械运动（参照物）",
+"content": "坐在行驶列车中的乘客，若说他是静止的，所选参照物是（　　）；若说他是运动的，所选参照物是（　　）。\nA. 乘坐的列车　B. 铁轨　C. 路旁的树　D. 车厢里的座椅\n\n（示例题：可自行编辑或删除）",
+"correct_answer": "静止 → A（或 D）；运动 → B（或 C）\n\n【解析】判断物体运动还是静止，看它相对于参照物的位置有没有变化。\n乘客相对于乘坐的列车（车厢座椅）位置不变 → 静止；\n乘客相对于铁轨、路旁的树位置不断改变 → 运动。\n同一物体选不同参照物，结论可以不同，所以描述运动必须先说清参照物。",
+"my_answer": "两个空都填 A（以为\"坐在车上\"就是静止）",
+"error_reason": "概念不清",
+"tags": "示例,物理,机械运动,参照物,运动与静止",
+"source": "练习",
+"difficulty": 2,
+"flow": {
+"known": "乘客坐在行驶的列车里，题目给出四个候选参照物",
+"target": "分别找出让乘客\"静止\"和\"运动\"的参照物",
+"plan": "逐个比对乘客与每个参照物的相对位置是否变化：不变 → 静止，改变 → 运动",
+"check": "回到定义复核：位置变化 ⇔ 运动，位置不变 ⇔ 静止"
+},
+"ana5": {
+"known": "一个乘客 + 四个不同参照物（列车、铁轨、树、座椅）",
+"ask": "选不同参照物时乘客的运动状态",
+"method": "抓住\"相对位置是否变化\"这一条：与列车/座椅同步前进 → 位置不变 → 静止；与地面上的铁轨、树比较 → 位置改变 → 运动",
+"pitfall": "把\"在运动\"和\"自己是静止的\"混为一谈；忘记参照物是判断的前提",
+"points": "运动和静止的相对性；参照物一旦选定就假定不动"
+}
+},
+{
+"key": "demo_phys_sound_1",
+"subject": "物理",
+"chapter": "声现象（音色）",
+"content": "白居易《琵琶行》中\"忽闻水上琵琶声，主人忘归客不发\"，人们能辨别出这是琵琶声，主要是依据声音的（　　）\nA. 音调　B. 响度　C. 音色　D. 频率\n\n（示例题：可自行编辑或删除）",
+"correct_answer": "C（音色）\n\n【解析】不同发声体的材料和结构不同，发出声音的音色不同，所以能凭音色分辨出琵琶、二胡、钢琴等乐器。\n音调由振动频率决定（高低），响度由振幅和距离决定（强弱）。",
+"my_answer": "A（把\"能听出是什么乐器\"当成音调高低的区别）",
+"error_reason": "概念不清",
+"tags": "示例,物理,声现象,音色,声音的特性",
+"source": "练习",
+"difficulty": 1,
+"flow": {
+"known": "诗句描述听声辨器（琵琶声）",
+"target": "判断依据的是声音的哪个特性",
+"plan": "把三个特性分清：音调=高低（频率）、响度=强弱（振幅）、音色=区分不同发声体",
+"check": "反问验证：若两把琵琶弹同一个音高、同样响度，还能分辨是琵琶而不是二胡吗？能 → 靠的是音色"
+},
+"ana5": {
+"known": "声音的三大特性：音调、响度、音色",
+"ask": "辨别乐器种类依据什么",
+"method": "记住口诀：音调听高低、响度听大小、音色辨是谁",
+"pitfall": "把音调和音色混淆；\"闻其声知其人\"也是音色",
+"points": "音色由发声体的材料和结构决定；音调由频率决定；响度由振幅决定"
+}
+},
+{
+"key": "demo_eng_past_1",
+"subject": "英语",
+"chapter": "一般过去时",
+"content": "用括号中所给词的适当形式填空：\nLast weekend my family ______ (visit) the science museum in Chengdu.\n\n（示例题：可自行编辑或删除）",
+"correct_answer": "visited\n\n【解析】时间状语 Last weekend（上周末）表示过去，谓语动词要用一般过去时。\nvisit 是规则动词，过去式直接加 -ed → visited。\n整句：Last weekend my family visited the science museum in Chengdu.",
+"my_answer": "visit（只按原形填，没看时间状语）",
+"error_reason": "时态错误",
+"tags": "示例,英语,一般过去时,动词变形,时态",
+"source": "练习",
+"difficulty": 1,
+"flow": {
+"known": "句子 + 时间状语 Last weekend，括号里给动词原形 visit",
+"target": "把 visit 变成正确的形式填空",
+"plan": "① 找时间状语判断时态 ② 规则动词过去式加 -ed ③ 检查拼写和主谓搭配",
+"check": "把答案放回句子读一遍：时态与 Last weekend 一致、句子通顺"
+},
+"ana5": {
+"known": "一般现在时与一般过去时的区别；规则动词过去式的构成",
+"ask": "括号里动词的适当形式",
+"method": "看到 yesterday / last… / ago / in 1990 等过去时间标志，就想到一般过去时；规则动词 -ed，不规则动词要背（go→went 等）",
+"pitfall": "① 忽略时间状语用原形 ② 不规则动词误加 -ed（如 go→goed✗）③ 主语是第三人称时误加 -s",
+"points": "一般过去时表示过去发生的动作或状态；常与明确的过去时间状语连用"
+}
+},
+{
+"key": "demo_eng_comp_1",
+"subject": "英语",
+"chapter": "形容词比较级",
+"content": "用括号中所给词的适当形式填空：\nThis book is ______ (interesting) than that one.\n\n（示例题：可自行编辑或删除）",
+"correct_answer": "more interesting\n\n【解析】句中有 than，说明是两者比较，要用比较级。\ninteresting 是多音节形容词（三个音节以上），比较级前面加 more，不加 -er。\n整句：This book is more interesting than that one.",
+"my_answer": "interestinger（多音节形容词误加 -er）",
+"error_reason": "语法规则不清",
+"tags": "示例,英语,形容词比较级,than",
+"source": "练习",
+"difficulty": 2,
+"flow": {
+"known": "句子含 than，括号里给多音节形容词 interesting",
+"target": "填出正确的比较级形式",
+"plan": "① than 提示比较级 ② 数音节：多音节用 more + 原级；单音节用 -er ③ 写进句子检查",
+"check": "读一遍：more interesting than … 搭配正确、无语序问题"
+},
+"ana5": {
+"known": "形容词比较级的两种构成方式（-er / more）以及 than 的用法",
+"ask": "interesting 的比较级",
+"method": "一个音节（tall→taller）、部分双音节（happy→happier）用 -er；三个音节及以上（interesting、beautiful）用 more",
+"pitfall": "① 多音节加 -er（interestinger✗）② 双重比较（more taller✗）③ 有 than 却用原级",
+"points": "比较级表示\"两者之间更……\"，常用结构 A + be + 比较级 + than + B"
+}
+},
+{
+"key": "demo_chin_poem_1",
+"subject": "语文",
+"chapter": "古诗文默写（望岳）",
+"content": "默写填空：会当凌绝顶，______。（杜甫《望岳》）\n\n（示例题：可自行编辑或删除）",
+"correct_answer": "一览众山小\n\n【解析】出自杜甫《望岳》尾联：会当凌绝顶，一览众山小。\n表达诗人登临绝顶、俯视群山的豪情与远大抱负。注意\"览\"是看的意思，\"小\"指\"显得渺小\"。",
+"my_answer": "一览众山晓（把\"小\"写成了同音的\"晓\"）",
+"error_reason": "默写错字",
+"tags": "示例,语文,古诗文默写,望岳,杜甫",
+"source": "练习",
+"difficulty": 1,
+"flow": {
+"known": "《望岳》尾联上句\"会当凌绝顶\"",
+"target": "补出下句",
+"plan": "按作者 + 篇名定位原句，逐字核对字形，特别注意同音易错字",
+"check": "默完通读一遍，确认意思与诗意（群山显得渺小）相符"
+},
+"ana5": {
+"known": "杜甫《望岳》，\"会当凌绝顶\"的下一句",
+"ask": "默写填空",
+"method": "按\"作者—篇名—整联\"整体回忆，不要只记半句；易错字单独圈出来记（览/小）",
+"pitfall": "同音字写错（小→晓）、漏字、把\"览\"写成\"揽\"",
+"points": "《望岳》是五言律诗，尾联\"会当凌绝顶，一览众山小\"抒发登临雄心"
+}
+},
+{
+"key": "demo_chin_sick_1",
+"subject": "语文",
+"chapter": "病句辨析",
+"content": "下列句子中没有语病的一项是（　　）\nA. 通过这次社会实践活动，使我明白了合作的重要性。\nB. 为了防止类似的事故不再发生，学校加强了安全教育。\nC. 阅读经典作品能够提高我们的语文素养。\nD. 他大约花了将近一个小时左右才完成作业。\n\n（示例题：可自行编辑或删除）",
+"correct_answer": "C\n\n【解析】\nA 成分残缺（缺主语）：\"通过……使……\"连用，句子没有主语。删\"通过\"或删\"使\"。\nB 否定不当：\"防止\"本身已含否定，再用\"不再发生\"意思正好相反，应改为\"防止类似的事故再次发生\"。\nD 重复赘余：\"大约\"\"将近\"\"左右\"语义重复，保留一个即可。",
+"my_answer": "A（觉得读起来顺，没发现缺主语）",
+"error_reason": "成分残缺没识别出来",
+"tags": "示例,语文,病句,成分残缺,否定不当",
+"source": "练习",
+"difficulty": 2,
+"flow": {
+"known": "四个句子，要求选出没有语病的",
+"target": "找出唯一正确的句子",
+"plan": "逐句套常见病因：成分残缺、否定不当、重复赘余、搭配不当、语序不当",
+"check": "把有语病的句子改通顺再读一遍，确认修改点合理"
+},
+"ana5": {
+"known": "常见病句类型：成分残缺、搭配不当、语序不当、重复赘余、否定不当、不合逻辑",
+"ask": "判断哪一句没有语病",
+"method": "抓标志词：见到\"通过……使……\"查主语；见到\"防止/切忌/避免\"查是否多了一层否定；见到\"大约/将近/左右\"查是否重复",
+"pitfall": "靠语感读一遍就选（顺口不代表没毛病）；\"干净\"\"大约\"这类词蒙蔽判断",
+"points": "病句常考六类；判断要落到语法点上，不能只凭语感"
+}
+},
+{
+"key": "demo_chem_symbol_1",
+"subject": "化学",
+"chapter": "化学式与元素符号（数字含义）",
+"content": "指出 \"2H₂O\" 中两处数字\"2\"的含义：\n前面的\"2\"表示______；H 右下角的\"2\"表示______。\n\n（示例题：可自行编辑或删除）",
+"correct_answer": "前面的\"2\"表示 2 个水分子；右下角的\"2\"表示 1 个水分子中含有 2 个氢原子。\n\n【解析】化学式前面的数字（系数）表示分子个数；元素符号右下角的数字表示一个分子中该元素的原子个数。\n所以 2H₂O 表示 2 个水分子，每个水分子由 2 个氢原子和 1 个氧原子构成。",
+"my_answer": "前面的\"2\"表示 2 个氢原子（把系数当成原子个数）",
+"error_reason": "概念混淆",
+"tags": "示例,化学,化学式,元素符号,数字含义",
+"source": "练习",
+"difficulty": 2,
+"flow": {
+"known": "符号 2H₂O 及其两处数字 2",
+"target": "分别说明两处数字表示的微观含义",
+"plan": "区分两类数字：化学式前面的数字→分子个数；元素符号右下角→一个分子里的原子个数",
+"check": "写全含义：\"2 个水分子，每个水分子含 2 个氢原子、1 个氧原子\"——读一遍逻辑通顺"
+},
+"ana5": {
+"known": "化学式前的系数与元素符号右下角数字的区别",
+"ask": "两处\"2\"各表示什么",
+"method": "位置决定含义：写在前=个数（分子），写在右下=构成（原子）",
+"pitfall": "把系数与原子个数混为一谈；把 H₂O 说成\"2 个氢原子和 1 个氧原子\"（应说\"1 个水分子由…构成\"）",
+"points": "化学式的宏观/微观意义；元素符号周围数字的位置与含义"
+}
+},
+{
+"key": "demo_chem_mix_1",
+"subject": "化学",
+"chapter": "物质的分类（纯净物与混合物）",
+"content": "下列物质中属于纯净物的是（　　）\nA. 洁净的空气　B. 蒸馏水　C. 加碘食盐　D. 不锈钢\n\n（示例题：可自行编辑或删除）",
+"correct_answer": "B（蒸馏水）\n\n【解析】纯净物只由一种物质组成。\n蒸馏水只含 H₂O，是纯净物；\n空气（含 O₂、N₂、CO₂ 等）、加碘食盐（含 NaCl 和含碘物质）、不锈钢（含铁、碳、铬等）都含两种以上物质，属于混合物。\n注意：\"洁净\"\"干净\"只是程度词，不表示只含一种物质。",
+"my_answer": "A（把\"洁净的空气\"当成纯净物）",
+"error_reason": "概念不清",
+"tags": "示例,化学,物质分类,纯净物,混合物",
+"source": "练习",
+"difficulty": 1,
+"flow": {
+"known": "四个候选物质：空气、蒸馏水、加碘食盐、不锈钢",
+"target": "选出纯净物",
+"plan": "看组成是否只有一种物质：只看名称成分，不看\"洁净/干净\"这类修饰词",
+"check": "逐个列出成分验证：蒸馏水=H₂O（一种）；其余均≥2 种"
+},
+"ana5": {
+"known": "纯净物与混合物的定义",
+"ask": "判断哪一个是纯净物",
+"method": "记住判断标准：\"由一种物质组成\"才是纯净物；名称带\"洁净/新鲜\"不等于纯净",
+"pitfall": "被\"洁净的空气\"误导；把加碘食盐当成纯 NaCl（里面还有含碘物质）",
+"points": "纯净物有固定组成和性质；混合物由多种物质混合而成"
+}
+},
+{
+"key": "demo_chem_eq_1",
+"subject": "化学",
+"chapter": "化学方程式（配平）",
+"content": "配平下列化学方程式（填最小整数比）：\n__Fe + __O₂ —点燃→ __Fe₃O₄\n\n（示例题：可自行编辑或删除）",
+"correct_answer": "3Fe + 2O₂ —点燃→ Fe₃O₄（依次填 3、2、1）\n\n【解析】用最小公倍数法：\n先配氧：右边 Fe₃O₄ 有 4 个 O，左边 O₂ 前配 2（2×2=4）；\n再配铁：右边 3 个 Fe，左边 Fe 前配 3。\n最后检查：左边 3 个 Fe、4 个 O，右边 3 个 Fe、4 个 O，原子个数相等 ✓",
+"my_answer": "2、2、1（只把氧配平了，铁没配）",
+"error_reason": "配平不完整",
+"tags": "示例,化学,化学方程式,配平,最小公倍数",
+"source": "练习",
+"difficulty": 2,
+"flow": {
+"known": "待配平的方程式：__Fe + __O₂ —点燃→ __Fe₃O₄",
+"target": "填出最小整数比使两边原子个数相等",
+"plan": "① 先配出现次数少、原子个数变化大的元素（氧）② 再配另一种元素（铁）③ 通查所有原子",
+"check": "逐一清点：左 Fe 3、O 4；右 Fe 3、O 4 —— 完全相等"
+},
+"ana5": {
+"known": "化学方程式配平的原则：质量守恒（原子种类和个数不变）",
+"ask": "各物质的化学计量数",
+"method": "最小公倍数法：找两边原子个数的最小公倍数确定系数，先难后易，最后统一检查",
+"pitfall": "只配一种元素就收工；改动了化学式的下标（下标不能改，只能改系数）",
+"points": "配平只能改系数、不能改下标；依据是质量守恒定律"
+}
 }
 ];
 function applyBuiltinQuestions(){try{
-  const applied=JSON.parse(localStorage.getItem(BUILTIN_FLAG)||'[]');
-  const d=loadData();let added=0;
+  // ★ 老板规则（2026-10-03）：内置示例题只在「全新安装」时注入一次；
+  //   已装用户升级时不再追加 —— 避免示例题混进用户真实错题库。
+  if(localStorage.getItem(BUILTIN_FLAG)!==null) return;
+  const applied=[];const d=loadData();let added=0;
   for(const b of BUILTIN_QUESTIONS){
     if(applied.indexOf(b.key)>=0)continue;
     const subj=d.subjects.find(s=>s.name===b.subject);
@@ -3297,7 +3549,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.43</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.44</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
