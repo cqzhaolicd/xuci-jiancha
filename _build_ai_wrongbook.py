@@ -365,7 +365,7 @@ var ABG=(function(){
     if(tag){
       if(a.paid){tag.textContent='V';tag.title='VIP · 已开通';tag.className='ab-trial';tag.onclick=null;tag.style.display=''}
       else if(a.expired){tag.title='';tag.textContent='试用已结束 · 点此开通';tag.className='ab-trial lock';tag.onclick=function(){paywall()};tag.style.display=''}
-      else{tag.title='点此开通 VIP（永久）';tag.textContent='试用剩 '+a.days_left+' 天';tag.className='ab-trial';tag.onclick=function(){paywall()};tag.style.display=''}
+      else{tag.title='点此开通 VIP（永久）';tag.textContent=(Number(a.days_left)>0?('试用剩 '+a.days_left+' 天'):'今天到期');tag.className='ab-trial';tag.onclick=function(){paywall()};tag.style.display=''}
     }
     var vs=$('abVipState'),vb=$('abVipBtn');
     if(vs){
@@ -383,8 +383,9 @@ var ABG=(function(){
         var vleft=(a.days_left===null||a.days_left===undefined)?null:Number(a.days_left);
         var vtotal=Number(a.trial_days||0);
         var vbar=(vleft!==null&&vtotal>0)?'<div class="ab-vbar"><i style="width:'+Math.max(4,Math.min(100,Math.round(vleft/vtotal*100)))+'%"></i></div>':'';
-        vh='<div class="ab-vico">🎁</div><div class="ab-vtx"><div class="ab-vt">免费试用中</div>'+vbar+'</div>'
-          +'<div class="ab-vnum">'+vleft+'<span>天</span></div>';
+        var vnum=(vleft>0)?(vleft+'<span>天</span>'):'<span style="font-size:.82rem;letter-spacing:.02em">今天到期</span>';
+        vh='<div class="ab-vico">🎁</div><div class="ab-vtx"><div class="ab-vt">'+(vleft>0?'免费试用中':'试用今天到期')+'</div>'+vbar+'</div>'
+          +'<div class="ab-vnum">'+vnum+'</div>';
         if(vb)vb.style.display='';
       }
       vs.className='ab-vstate '+vcls;
