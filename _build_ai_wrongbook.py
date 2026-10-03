@@ -260,7 +260,7 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
     <label class="ab-lb">会员状态</label>
     <div class="ab-vstate" id="abVipState"><div class="ab-vico">🎁</div><div class="ab-vtx"><div class="ab-vt">读取中</div><div class="ab-vs">正在获取会员状态…</div></div></div>
     <button class="ab-vbtn" id="abVipBtn" onclick="ABG.openPay()" style="display:none">👑 开通 VIP</button>
-    <button class="ab-invbtn" id="abMyInvBtn" onclick="ABG.closeProfile();navigate('referral')">🏅 推荐先锋（推荐得 50 元）</button>
+    <button class="ab-invbtn" id="abMyInvBtn" onclick="ABG.closeProfile();navigate('referral')">🏅 推荐先锋</button>
     <div id="abInvBox" class="ab-invbox"></div>
     <label class="ab-lb">数据备份（换手机 / 重装前建议先导出）</label>
     <div class="ab-bk">
