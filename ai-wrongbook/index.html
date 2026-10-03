@@ -315,21 +315,55 @@ textarea.form-control{resize:vertical;min-height:70px}
 .popt.on{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
 .popt input{display:none}
 .pq-label{font-weight:700;font-size:.85rem;color:var(--primary);margin-bottom:.15rem}
+/* 错解/正解区块（屏幕=红绿，打印=黑白，见 @media print） */
+.pq-wrong{border-left:3px solid var(--danger);background:#f5656510;padding:.35rem .6rem;border-radius:0 6px 6px 0}
+.pq-wrong .pq-label{color:var(--danger)}
+.pq-correct{border-left:3px solid var(--success);background:#48bb7810;padding:.35rem .6rem;border-radius:0 6px 6px 0}
+.pq-correct .pq-label{color:var(--success)}
 .pq-block{margin-top:.5rem}
 .pick-bar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.6rem}
 .pick-box{margin-right:.45rem;width:16px;height:16px;vertical-align:middle;cursor:pointer}
 .question-item.picked{background:#667eea14;box-shadow:inset 3px 0 0 var(--primary)}
+/* Print · 打印排版（2026-10-03 老板要求优化）
+   原来：题目图被压成 max-width:70%/180px → 看不清；无 @page 边距；字号 13~14px 偏小；
+        全篇只靠一条细虚线分隔，层级弱；标签用主题紫，黑白打印变灰。
+   现在：A4 页边距 / 正文 11.5pt / 图放大到可读并居中 / 每题分块且尽量不跨页 /
+        标签黑白加粗 / 错解正解用左侧色条+底纹分层 / 打印页眉 */
+@page{size:A4 portrait;margin:12mm 13mm}
 @media print{
-  .navbar,.footer,#syncBadge,.no-print{display:none!important}
-  body{background:#fff!important}
-  .container{max-width:100%!important;padding:0!important;margin:0!important}
-  #app{padding:0!important;margin:0!important}
-  .card{box-shadow:none!important;border:none!important;padding:0!important;margin:0!important;border-radius:0!important}
-  .print-area .card-title{font-size:1rem;margin-bottom:.4rem;border:none}
-  .print-q{border:none;border-bottom:1px dashed #bbb;border-radius:0;padding:.5rem 0;min-height:0}
-  .print-q:last-child{border-bottom:none}
-  .pq-block,.pq-num{page-break-inside:avoid}
-  img{max-width:70%!important;max-height:180px!important}
+  .navbar,.footer,#syncBadge,.no-print,.filter-bar,.pick-bar,.popt-bar,.print-pick,.empty-state,.btn{display:none!important}
+  html,body{background:#fff!important;color:#000!important}
+  body{font-size:11pt;line-height:1.65}   /* 打印正文：可读优先（试过 10.5pt 偏密） */
+  .container,#app{padding:0!important;margin:0!important;max-width:100%!important}
+  .card{box-shadow:none!important;border:none!important;padding:0!important;margin:0!important;border-radius:0!important;background:#fff!important}
+  .print-head{display:block!important}
+  .print-head{border-bottom:1.2pt solid #000;padding-bottom:4pt;margin-bottom:11pt;
+    page-break-inside:avoid;break-inside:avoid;page-break-after:avoid}
+  .print-head h1{font-size:15pt;font-weight:800;margin:0;color:#000}
+  .print-head .ph-meta{font-size:9.5pt;color:#333;margin-top:3pt}
+  /* ⚠️ 整道题**不**设 page-break-inside:avoid —— 题一长就被整块推到下一页，
+     实测 5 道题会印成 11 页（页眉独占一页、三层练各占一页）。只保证小块不切。 */
+  .print-q{border:none;border-top:1.2pt solid #000;border-radius:0;padding:7pt 0 0;margin:0 0 9pt;min-height:0}
+  .print-q:first-of-type{border-top:none;padding-top:0}
+  .pq-num{font-size:12pt;font-weight:800;color:#000!important;background:#eee;padding:2pt 6pt;border-radius:3pt;
+    display:inline-block;margin-bottom:6pt;page-break-after:avoid;break-after:avoid}
+  .pq-block{margin-top:6pt;border-left:2pt solid #b8b8b8;padding-left:6pt}
+  .pq-block.pq-wrong,.pq-block.pq-correct{padding-left:7pt}
+  /* 只有短的带底纹块强制不跨页；长块（题干/解析/五维/三层练）允许自然跨页，
+     否则整块被推到下一页 → 实测会产生接近全空的废页 */
+  .pq-wrong{page-break-inside:avoid;break-inside:avoid}
+  /* ⚠️ .pq-correct 故意**不**设 avoid：它含「正确答案＋【解析】」，常常半页以上，
+     强制不跨页会把整块推到下一页 → 前页留白（实测第 2 页只填 60%）*/
+  .pq-train{page-break-inside:auto;break-inside:auto}
+  .pq-label{font-size:11pt;font-weight:800;color:#000!important;margin:0 0 3pt;
+    page-break-after:avoid;break-after:avoid}
+  .pq-wrong{border-left:3pt solid #000;background:#f6f6f6;padding:4pt 7pt;border-radius:0}
+  .pq-wrong .pq-label{color:#000!important}
+  .pq-correct{border-left:3pt solid #000;background:#e9e9e9;padding:4pt 7pt;border-radius:0}
+  .pq-correct .pq-label{color:#000!important}
+  .print-q img{max-width:100%!important;max-height:90mm!important;display:block;margin:6pt auto;
+    page-break-inside:avoid}
+  .prewrap{white-space:pre-wrap;word-break:break-word}
 }
 /* Analysis */
 .chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
@@ -2663,6 +2697,8 @@ function printSelAll(on){const f=on?printFiltered():loadData().questions;if(on)p
 function printOptToggle(k){printOpts[k]=!printOpts[k];refreshPrint();}
 function printOne(id){printSel={};printSel[id]=true;navigate('print-page');}
 function printFromList(){navigate('print-page');}
+// 打印时清掉演示数据注解 ——「（示例题：可自行编辑或删除）」不该出现在正式卷子上
+function printClean(t){return String(t==null?'':t).replace(/[（(]示例题[：:]?\s*可自行编辑或删除[）)]/g,'').replace(/\n{3,}/g,'\n\n').trim();}
 function stripHtml(h){return String(h==null?'':h).replace(/<br\s*\/?>/gi,'\n').replace(/<\/(div|p|li)>/gi,'\n').replace(/<[^>]*>/g,'').replace(/&nbsp;/g,' ').replace(/\n{3,}/g,'\n\n').trim();}
 
 // 单题打印内容（按勾选项渲染）
@@ -2672,26 +2708,30 @@ function printCard(q,i){
   const a=ana5(q);
   let h=`<div class="print-q"><div class="pq-num">${i+1}. ${subj?subj.name:'?'} · ${gradeText(q.grade)} · #${q.id}</div>`;
   if(printOpts.stem){
-    h+=`<div class="pq-block"><div class="pq-label">题目</div><div class="prewrap">${esc5(q.content)}</div>`;
+    h+=`<div class="pq-block"><div class="pq-label">题目</div><div class="prewrap">${esc5(printClean(q.content))}</div>`;
     if(q.image_path)h+=`<div style="margin-top:.4rem"><img src="${q.image_path}" style="max-width:100%;max-height:220px;border-radius:4px"></div>`;
     h+=`</div>`;
   }
-  if(printOpts.wrong&&q.my_answer)h+=`<div class="pq-block"><div class="pq-label" style="color:var(--danger)">❌ 我的错误答案</div><div class="prewrap">${esc5(q.my_answer)}</div></div>`;
-  if(printOpts.correct&&q.correct_answer)h+=`<div class="pq-block"><div class="pq-label" style="color:var(--success)">✅ 正确答案</div><div class="prewrap">${esc5(q.correct_answer)}</div></div>`;
+  if(printOpts.wrong&&q.my_answer)h+=`<div class="pq-block pq-wrong"><div class="pq-label">❌ 我的错误答案</div><div class="prewrap">${esc5(q.my_answer)}</div></div>`;
+  if(printOpts.correct&&q.correct_answer)h+=`<div class="pq-block pq-correct"><div class="pq-label">✅ 正确答案</div><div class="prewrap">${esc5(q.correct_answer)}</div></div>`;
   if(printOpts.reason)h+=`<div class="pq-block"><div class="pq-label">错因分析</div><div>${esc5(q.error_reason||'—')}${q.tags?' &nbsp;🏷️ '+esc5(q.tags):''}</div></div>`;
   if(printOpts.ana5){
-    h+=`<div class="pq-block"><div class="pq-label">🧩 五维分析</div>`+ANA5_DIMS.map(dm=>{
-      const v=String(a[dm.k]||'').trim();
-      return `<div style="margin-top:.2rem;font-size:.92rem"><strong>${dm.tag}</strong>：<span class="prewrap">${v?esc5(v):'未填写'}</span></div>`;
-    }).join('')+`</div>`;
+    const _a5any=ANA5_DIMS.some(dm=>String(a[dm.k]||'').trim());
+    h+=`<div class="pq-block"><div class="pq-label">🧩 五维分析</div>`+(_a5any
+      ? ANA5_DIMS.map(dm=>{
+          const v=String(a[dm.k]||'').trim();
+          return `<div style="margin-top:.2rem;font-size:.92rem"><strong>${dm.tag}</strong>：<span class="prewrap">${v?esc5(v):'未填写'}</span></div>`;
+        }).join('')
+      : `<div style="font-size:.92rem;color:#888">（本题未填写五维分析）</div>`)+`</div>`;
   }
   if(printOpts.train){
     let layers=[];
     try{layers=getOrGenLayers(q)||[];}catch(e){layers=[];}
     if(layers.length){
-      h+=`<div class="pq-block"><div class="pq-label">📚 三层练的题</div>`+layers.map((L,li)=>{
+      h+=`<div class="pq-block pq-train"><div class="pq-label">📚 三层练的题</div>`+layers.map((L,li)=>{
         // 第1层就是原题（不要它自带的答案），第2/3层取生成的变式题干
-        const t=li===0?String(q.content||''):stripHtml(L.content);
+        // 第1层就是原题 —— 打印时不再重复整段题干（省半页纸），只留一行指向上面已打印的题目
+        const t=li===0?'（原题重做：题目见上面「题目」）':stripHtml(printClean(L.content));
         return `<div style="margin-top:.35rem"><strong>${esc5(stripHtml(L.title))}</strong><div class="prewrap" style="font-size:.92rem">${esc5(t)}</div></div>`;
       }).join('')+`</div>`;
     }else{
@@ -2749,7 +2789,11 @@ function renderPrint(){
     ${sel.length?'':'<div style="text-align:center;color:var(--danger);font-size:.85rem;margin-top:.5rem">请先勾选要打印的错题</div>'}
   </div>
   <div class="card print-area" id="printArea">
-    <div class="card-title">共 ${sel.length} 题</div>
+    <div class="print-head" style="display:none">
+      <h1>AI错题本 · 错题复习卷</h1>
+      <div class="ph-meta">共 ${sel.length} 题 · 打印日期 ${new Date().toLocaleDateString('zh-CN')} · 姓名／班级：____________</div>
+    </div>
+    <div class="card-title no-print">共 ${sel.length} 题</div>
     ${sel.length?sel.map((q,i)=>printCard(q,i)).join(''):'<div class="empty-state"><i class="fas fa-print"></i><h5>还没有选中的题</h5><p>在上方勾选要打印的错题</p></div>'}
   </div>`;
 }
