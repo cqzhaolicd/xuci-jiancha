@@ -444,14 +444,16 @@ var ABG=(function(){
   function token(){return localStorage.getItem(TOKEN_KEY)||''}
   // ── 推荐先锋（老板 2026-10-03）：成为推荐先锋 / 查我的推荐码与返利 ──
   function refMe(){
-    request('/api/referral-me',null,token()).then(function(j){
-      if(j&&j.ok)_refPaint(j); else _refPaint({error:(j&&j.error)||'读取失败'});
+    request('/api/referral-me',null,token()).then(function(r){
+      var j=(r&&r.json)||{};            // request() 返回 {status,json,base}，必须取 .json
+      if(j.ok)_refPaint(j); else _refPaint({error:j.error||'读取失败'});
     }).catch(function(){_refPaint({error:'网络异常，请稍后重试'})});
   }
   function refApply(){
-    request('/api/referral-apply',{},token()).then(function(j){
-      if(j&&j.ok){toast('🎉 恭喜！你的推荐码：'+j.code,'ok');refMe();}
-      else{toast((j&&j.error)||'生成失败，请稍后重试','err');refMe();}
+    request('/api/referral-apply',{},token()).then(function(r){
+      var j=(r&&r.json)||{};
+      if(j.ok){toast('🎉 恭喜！你的推荐码：'+j.code,'ok');refMe();}
+      else{toast(j.error||'生成失败，请稍后重试','err');refMe();}
     }).catch(function(){toast('网络异常，请稍后重试','err');refMe();});
   }
   function claimInvite(){

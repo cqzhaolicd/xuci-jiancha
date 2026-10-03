@@ -1838,13 +1838,13 @@ function refLoad(){
 }
 function _refPaint(j){
   const box=document.getElementById('refBody'); if(!box) return; j=j||{};
-  if(j.needLogin||!j.ok){
-    box.innerHTML='<div style="font-size:.85rem;color:#8a5a12;margin-bottom:8px">'+(j.needLogin?'请先在「我的」里登录账号，再来申请推荐码':(j.error||'读取失败，请稍后重试'))+'</div>';
-    return;
-  }
-  if(!j.is_pioneer){
+  // 老板 2026-10-03：不管读没读到，按钮都要在——读不到只是多一行提示，不能把入口藏掉
+  var hint = j.needLogin ? '请先在「我的」里登录账号，再点下面的按钮申请'
+           : (j.ok ? '' : (j.error || '读取失败，请稍后重试'));
+  if(!j.ok || !j.is_pioneer){
     box.innerHTML='<button class="rf-btn" id="refBtn" onclick="refApply()">我要成为推荐先锋</button>'
-      +'<div style="font-size:.78rem;color:#8a5a12;margin-top:8px">点一下即自动生成你的专属推荐码</div>';
+      +'<div style="font-size:.78rem;color:#8a5a12;margin-top:8px">点一下即自动生成你的专属推荐码</div>'
+      +(hint?'<div style="font-size:.78rem;color:#c05621;margin-top:6px">'+hint+'</div>':'');
     return;
   }
   const money=v=>'￥'+(Number(v)||0);
