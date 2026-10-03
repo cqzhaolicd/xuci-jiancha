@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI错题本 v4.0.41</title>
+<title>AI错题本 v4.0.42</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
 /* ⚠️ 手机端弹窗可滚动（2026-09-28 修）：资料弹窗内容很长（城市/学校/年级/姓名/性别/会员/邀请码/备份/保存），
@@ -316,53 +316,68 @@ textarea.form-control{resize:vertical;min-height:70px}
 .popt input{display:none}
 .pq-label{font-weight:700;font-size:.85rem;color:var(--primary);margin-bottom:.15rem}
 /* 错解/正解区块（屏幕=红绿，打印=黑白，见 @media print） */
-.pq-wrong{border-left:3px solid var(--danger);background:#f5656510;padding:.35rem .6rem;border-radius:0 6px 6px 0}
-.pq-wrong .pq-label{color:var(--danger)}
-.pq-correct{border-left:3px solid var(--success);background:#48bb7810;padding:.35rem .6rem;border-radius:0 6px 6px 0}
-.pq-correct .pq-label{color:var(--success)}
-.pq-block{margin-top:.5rem}
+/* 区块卡片体系（屏幕与打印同一套配色，打印见 @media print） */
+.pq-block{margin-top:.55rem;border-left:3px solid var(--border);background:#f8fafc;
+  padding:.45rem .7rem;border-radius:0 8px 8px 0}
+.pq-stem{border-left-color:#4f46e5;background:#f5f3ff}
+.pq-stem .pq-label{color:#4338ca}
+.pq-wrong{border-left-color:#e11d48;background:#fff1f2}
+.pq-wrong .pq-label{color:#be123c}
+.pq-correct{border-left-color:#059669;background:#ecfdf5}
+.pq-correct .pq-label{color:#047857}
+.pq-reason{border-left-color:#b45309;background:#fffbeb}
+.pq-reason .pq-label{color:#b45309}
+.pq-ana5{border-left-color:#7c3aed;background:#faf5ff}
+.pq-ana5 .pq-label{color:#6d28d9}
+.pq-train{border-left-color:#0f766e;background:#f0fdfa}
+.pq-train .pq-label{color:#0f766e}
 .pick-bar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.6rem}
 .pick-box{margin-right:.45rem;width:16px;height:16px;vertical-align:middle;cursor:pointer}
 .question-item.picked{background:#667eea14;box-shadow:inset 3px 0 0 var(--primary)}
-/* Print · 打印排版（2026-10-03 老板要求优化）
-   原来：题目图被压成 max-width:70%/180px → 看不清；无 @page 边距；字号 13~14px 偏小；
-        全篇只靠一条细虚线分隔，层级弱；标签用主题紫，黑白打印变灰。
-   现在：A4 页边距 / 正文 11.5pt / 图放大到可读并居中 / 每题分块且尽量不跨页 /
-        标签黑白加粗 / 错解正解用左侧色条+底纹分层 / 打印页眉 */
+/* Print · 打印排版（2026-10-03 老板要求：先修功能，再做美观）
+   设计：彩色卡片体系（浅底 + 左色条 + 圆角）＋ 靛蓝胶囊题号 ＋ 品牌色页眉 ＋ 虚线分隔
+   ⚠️ print-color-adjust:exact 必须加 —— 否则 Chrome 打印会丢掉所有背景色/底纹 */
 @page{size:A4 portrait;margin:12mm 13mm}
 @media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   .navbar,.footer,#syncBadge,.no-print,.filter-bar,.pick-bar,.popt-bar,.print-pick,.empty-state,.btn{display:none!important}
-  html,body{background:#fff!important;color:#000!important}
-  body{font-size:11pt;line-height:1.65}   /* 打印正文：可读优先（试过 10.5pt 偏密） */
+  html{background:#fff!important}
+  body{background:#fff!important;color:#1f2937!important;font-size:11pt;line-height:1.72}
   .container,#app{padding:0!important;margin:0!important;max-width:100%!important}
-  .card{box-shadow:none!important;border:none!important;padding:0!important;margin:0!important;border-radius:0!important;background:#fff!important}
-  .print-head{display:block!important}
-  .print-head{border-bottom:1.2pt solid #000;padding-bottom:4pt;margin-bottom:11pt;
-    page-break-inside:avoid;break-inside:avoid;page-break-after:avoid}
-  .print-head h1{font-size:15pt;font-weight:800;margin:0;color:#000}
-  .print-head .ph-meta{font-size:9.5pt;color:#333;margin-top:3pt}
-  /* ⚠️ 整道题**不**设 page-break-inside:avoid —— 题一长就被整块推到下一页，
-     实测 5 道题会印成 11 页（页眉独占一页、三层练各占一页）。只保证小块不切。 */
-  .print-q{border:none;border-top:1.2pt solid #000;border-radius:0;padding:7pt 0 0;margin:0 0 9pt;min-height:0}
+  .card{box-shadow:none!important;border:none!important;padding:0!important;margin:0!important;
+    border-radius:0!important;background:#fff!important}
+  /* 页眉：品牌粗线 + 标题 + 副标题 */
+  .print-head{display:block!important;padding-bottom:8pt;margin-bottom:13pt;
+    border-bottom:2.5pt solid #4f46e5;page-break-inside:avoid;break-inside:avoid;page-break-after:avoid}
+  .print-head h1{font-size:16pt;font-weight:800;margin:0;color:#312e81!important;letter-spacing:.4pt}
+  .print-head .ph-meta{font-size:9pt;color:#64748b!important;margin-top:4pt}
+  /* 题与题：细虚线分隔（比黑实线柔和） */
+  .print-q{border:none;border-top:1pt dashed #cbd5e1;border-radius:0;padding:11pt 0 0;margin:0 0 15pt;min-height:0}
   .print-q:first-of-type{border-top:none;padding-top:0}
-  .pq-num{font-size:12pt;font-weight:800;color:#000!important;background:#eee;padding:2pt 6pt;border-radius:3pt;
-    display:inline-block;margin-bottom:6pt;page-break-after:avoid;break-after:avoid}
-  .pq-block{margin-top:6pt;border-left:2pt solid #b8b8b8;padding-left:6pt}
-  .pq-block.pq-wrong,.pq-block.pq-correct{padding-left:7pt}
-  /* 只有短的带底纹块强制不跨页；长块（题干/解析/五维/三层练）允许自然跨页，
-     否则整块被推到下一页 → 实测会产生接近全空的废页 */
-  .pq-wrong{page-break-inside:avoid;break-inside:avoid}
-  /* ⚠️ .pq-correct 故意**不**设 avoid：它含「正确答案＋【解析】」，常常半页以上，
-     强制不跨页会把整块推到下一页 → 前页留白（实测第 2 页只填 60%）*/
-  .pq-train{page-break-inside:auto;break-inside:auto}
-  .pq-label{font-size:11pt;font-weight:800;color:#000!important;margin:0 0 3pt;
+  /* 题号：靛蓝胶囊 */
+  .pq-num{font-size:10.5pt;font-weight:800;color:#fff!important;background:#4f46e5;
+    padding:2.5pt 10pt;border-radius:20pt;display:inline-block;margin-bottom:7pt;
     page-break-after:avoid;break-after:avoid}
-  .pq-wrong{border-left:3pt solid #000;background:#f6f6f6;padding:4pt 7pt;border-radius:0}
-  .pq-wrong .pq-label{color:#000!important}
-  .pq-correct{border-left:3pt solid #000;background:#e9e9e9;padding:4pt 7pt;border-radius:0}
-  .pq-correct .pq-label{color:#000!important}
-  .print-q img{max-width:100%!important;max-height:90mm!important;display:block;margin:6pt auto;
-    page-break-inside:avoid}
+  /* 区块：浅底卡片 + 左色条 + 圆角 */
+  .pq-block{margin-top:8pt;padding:6pt 10pt;border-radius:6pt;
+    border-left:3.5pt solid #cbd5e1;background:#f8fafc}
+  .pq-label{font-size:10.5pt;font-weight:800;color:#334155!important;margin:0 0 2.5pt;
+    page-break-after:avoid;break-after:avoid}
+  .pq-stem{border-left-color:#4f46e5;background:#f5f3ff}
+  .pq-stem .pq-label{color:#4338ca!important}
+  .pq-wrong{border-left-color:#e11d48;background:#fff1f2;page-break-inside:avoid;break-inside:avoid}
+  .pq-wrong .pq-label{color:#be123c!important}
+  .pq-correct{border-left-color:#059669;background:#ecfdf5}
+  .pq-correct .pq-label{color:#047857!important}
+  .pq-reason{border-left-color:#b45309;background:#fffbeb}
+  .pq-reason .pq-label{color:#b45309!important}
+  .pq-ana5{border-left-color:#7c3aed;background:#faf5ff}
+  .pq-ana5 .pq-label{color:#6d28d9!important}
+  .pq-train{border-left-color:#0f766e;background:#f0fdfa;page-break-inside:auto;break-inside:auto}
+  .pq-train .pq-label{color:#0f766e!important}
+  /* 题图：放大到可读 + 细边框圆角 */
+  .print-q img{max-width:100%!important;max-height:88mm!important;display:block;margin:7pt auto;
+    border:1pt solid #e2e8f0;border-radius:5pt;page-break-inside:avoid}
   .prewrap{white-space:pre-wrap;word-break:break-word}
 }
 /* Analysis */
@@ -464,7 +479,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
   <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
-    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.41</span>
+    <span class="navbar-brand"><i class="fas fa-robot"></i> AI错题本 v4.0.42</span>
   </div>
   <div class="navbar-nav" id="mainNav">
     <a class="active" data-page="dashboard"><i class="fas fa-home"></i><span>首页</span></a>
@@ -481,7 +496,7 @@ textarea.form-control{resize:vertical;min-height:70px}
 
 <div class="container" id="app"></div>
 <div class="footer">
-  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.41 · 收录「错题本」「三层训练」「复习要点」三项功能
+  <i class="fas fa-heart" style="color:var(--danger)"></i> AI错题本 v4.0.42 · 收录「错题本」「三层训练」「复习要点」三项功能
 </div>
 
 <script>
@@ -2708,19 +2723,19 @@ function printCard(q,i){
   const a=ana5(q);
   let h=`<div class="print-q"><div class="pq-num">${i+1}. ${subj?subj.name:'?'} · ${gradeText(q.grade)} · #${q.id}</div>`;
   if(printOpts.stem){
-    h+=`<div class="pq-block"><div class="pq-label">题目</div><div class="prewrap">${esc5(printClean(q.content))}</div>`;
+    h+=`<div class="pq-block pq-stem"><div class="pq-label">题目</div><div class="prewrap">${esc5(printClean(q.content))}</div>`;
     if(q.image_path)h+=`<div style="margin-top:.4rem"><img src="${q.image_path}" style="max-width:100%;max-height:220px;border-radius:4px"></div>`;
     h+=`</div>`;
   }
   if(printOpts.wrong&&q.my_answer)h+=`<div class="pq-block pq-wrong"><div class="pq-label">❌ 我的错误答案</div><div class="prewrap">${esc5(q.my_answer)}</div></div>`;
   if(printOpts.correct&&q.correct_answer)h+=`<div class="pq-block pq-correct"><div class="pq-label">✅ 正确答案</div><div class="prewrap">${esc5(q.correct_answer)}</div></div>`;
-  if(printOpts.reason)h+=`<div class="pq-block"><div class="pq-label">错因分析</div><div>${esc5(q.error_reason||'—')}${q.tags?' &nbsp;🏷️ '+esc5(q.tags):''}</div></div>`;
+  if(printOpts.reason)h+=`<div class="pq-block pq-reason"><div class="pq-label">错因分析</div><div>${esc5(q.error_reason||'—')}${q.tags?' &nbsp;🏷️ '+esc5(q.tags):''}</div></div>`;
   if(printOpts.ana5){
     const _a5any=ANA5_DIMS.some(dm=>String(a[dm.k]||'').trim());
-    h+=`<div class="pq-block"><div class="pq-label">🧩 五维分析</div>`+(_a5any
+    h+=`<div class="pq-block pq-ana5"><div class="pq-label">🧩 五维分析</div>`+(_a5any
       ? ANA5_DIMS.map(dm=>{
           const v=String(a[dm.k]||'').trim();
-          return `<div style="margin-top:.2rem;font-size:.92rem"><strong>${dm.tag}</strong>：<span class="prewrap">${v?esc5(v):'未填写'}</span></div>`;
+          return `<div style="margin-top:.28rem"><strong>${dm.tag}</strong>：<span class="prewrap">${v?esc5(v):'未填写'}</span></div>`;
         }).join('')
       : `<div style="font-size:.92rem;color:#888">（本题未填写五维分析）</div>`)+`</div>`;
   }
@@ -2732,7 +2747,7 @@ function printCard(q,i){
         // 第1层就是原题（不要它自带的答案），第2/3层取生成的变式题干
         // 第1层就是原题 —— 打印时不再重复整段题干（省半页纸），只留一行指向上面已打印的题目
         const t=li===0?'（原题重做：题目见上面「题目」）':stripHtml(printClean(L.content));
-        return `<div style="margin-top:.35rem"><strong>${esc5(stripHtml(L.title))}</strong><div class="prewrap" style="font-size:.92rem">${esc5(t)}</div></div>`;
+        return `<div style="margin-top:.45rem"><strong>${esc5(stripHtml(L.title))}</strong><div class="prewrap">${esc5(t)}</div></div>`;
       }).join('')+`</div>`;
     }else{
       h+=`<div class="pq-block"><div class="pq-label">📚 三层练的题</div><div style="color:var(--text-light)">（该题暂无三层练）</div></div>`;
@@ -3282,7 +3297,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.41</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.42</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
