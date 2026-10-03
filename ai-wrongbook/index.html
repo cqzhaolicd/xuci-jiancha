@@ -3,7 +3,7 @@
 <title>AI错题本 v4.0.50</title>
 <base href="/xuci-jiancha/"><style>
 /* ===== AI错题本-测试版 · 登录门禁 ===== */
-/* ⚠️ 手机端弹窗可滚动（2026-09-28 修）：资料弹窗内容很长（城市/学校/年级/姓名/性别/会员/邀请码/备份/保存），
+/* ⚠️ 手机端弹窗可滚动（2026-09-28 修）：资料弹窗内容很长（城市/学校/年级/姓名/性别/会员/推荐码/备份/保存），
    老写法 align-items:center 且【无 overflow】→ 超出屏幕的部分被直接裁掉、不能滑动，底部「保存」按钮根本点不到。
    修法：容器自身可滚动 + align-items:flex-start；卡片 margin:auto 0 → 内容矮时垂直居中、内容高时能从顶部滚到底。 */
 .ab-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea,#764ba2);
@@ -3578,6 +3578,11 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
       <input id="abRegUser" placeholder="11 位手机号（如 13800001111）" inputmode="numeric" maxlength="11" autocomplete="tel">
       <input id="abRegPass" type="password" placeholder="密码（至少 6 位）">
       <input id="abRegPass2" type="password" placeholder="确认密码">
+      <input id="abRegCode" placeholder="推荐码 / 邀请码 / 卡密（选填）" style="text-transform:uppercase" autocomplete="off">
+      <div style="font-size:.72rem;color:#718096;text-align:left;margin:-4px 0 8px;line-height:1.55">
+        🏅 推荐码：注册享 349 元（省 50）<br>
+        🎫 邀请码 / 🎟️ 卡密：注册即成为 VIP，不用付费
+      </div>
       <button class="ab-btn" id="abRegBtn" onclick="ABG.register()">注册并登录</button>
     </div>
     <div id="abMsg" class="ab-msg"></div>
@@ -3632,12 +3637,12 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
     <div class="ab-sub" id="abPaySub">一次付费 · 永久使用</div>
     <div id="abPayWhy" class="ab-msg err" style="display:none;background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:.45rem .6rem;margin-top:.5rem"></div>
     <div id="abPayStep1">
-      <div class="ab-invite-note" style="margin-bottom:8px">🎉 推荐码优惠 50 元（399 → 349）</div>
-      <input id="abPayInvite" placeholder="推荐码（有则享 349 元，没有可留空）" style="text-transform:uppercase">
-      <button class="ab-btn" onclick="ABG.claimInvite()">使用推荐码开通</button>
-      <button class="ab-btn2" onclick="ABG.payStep('qr')">直接开通（399 元）</button>
+      <div class="ab-invite-note" style="margin-bottom:8px">🏅 推荐码：省 50 元（399 → 349）｜🎫 邀请码 / 🎟️ 卡密：填码直接开通 VIP</div>
+      <input id="abPayInvite" placeholder="推荐码 / 邀请码 / 卡密" style="text-transform:uppercase" autocomplete="off">
+      <button class="ab-btn" onclick="ABG.claimInvite()">提交</button>
+      <button class="ab-btn2" onclick="ABG.payStep('qr')">直接付款开通（399 元）</button>
       <a onclick="ABG.closePay();navigate('referral')" style="display:block;margin-top:10px;font-size:.85rem;color:#dd6b20;cursor:pointer;font-weight:700">🏅 还没有推荐码？点这里免费申请（省 50 元）</a>
-      <a onclick="ABG.payStep('card')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">🎟️ 我有卡密（一次性码），直接开通</a>
+      <a onclick="ABG.payStep('card')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">🎟️ 只有卡密？点这里单独填</a>
     </div>
     <div id="abPayStep2" style="display:none">
       <div id="abPayAmt" style="font-size:1.7rem;font-weight:800;color:#e53e3e;margin:8px 0">￥--</div>
@@ -3650,7 +3655,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
       </div>
     </div>
     <div id="abPayStep3" style="display:none">
-      <input id="abPayCard" placeholder="卡密（如 AB-XXXX-XXXX）" style="text-transform:uppercase;letter-spacing:1px">
+      <input id="abPayCard" placeholder="邀请码 / 卡密（如 AB-XXXX-XXXX）" style="text-transform:uppercase;letter-spacing:1px">
       <button class="ab-btn" onclick="ABG.redeemCard()">兑换并开通</button>
       <a onclick="ABG.payStep('qr')" style="display:block;margin-top:10px;font-size:.85rem;color:#3182ce;cursor:pointer;font-weight:600">返回上一步</a>
     </div>
@@ -3808,16 +3813,26 @@ var ABG=(function(){
   }
   function claimInvite(){
     var el=$('abPayInvite'),iv=(el&&el.value||'').trim(),note=$('abPayNote');
-    if(!iv){note.textContent='请填写邀请码；没有邀请码请点下面的「直接开通（399 元）」';note.className='ab-msg err';return}
-    note.textContent='正在核对邀请码…';note.className='ab-msg';
+    if(!iv){note.textContent='请填写推荐码 / 邀请码 / 卡密；都没有可点下面「直接付款开通」';note.className='ab-msg err';return}
+    note.textContent='正在核对…';note.className='ab-msg';
     request('/api/invite-claim',{invite:iv},localStorage.getItem(TOKEN_KEY)).then(function(r){
       var j=r.json||{};
       if(j.ok){
+        if(j.paid){    // 邀请码 / 卡密 → 已直接开通 VIP（老板 2026-10-03）
+          note.textContent='✅ '+(j.message||'VIP 已开通');
+          note.className='ab-msg ok';
+          if(j.access){ACCESS=j.access;try{setLock(false);applyAccess(j.access)}catch(e){}}
+          setTimeout(function(){
+            try{alert('✅ '+(j.type==='card'?'卡密兑换成功':'邀请码生效')+'，VIP 已开通，欢迎继续使用！')}catch(e){}
+            hidePay();try{location.reload()}catch(e){}
+          },400);
+          return;
+        }
         if(ACCESS){ACCESS.invite_code=j.invite_code;ACCESS.price=j.price}
         payStep('qr');
-        note.textContent='✅ 邀请码已生效，按 '+j.price+' 元开通'+(j.unit?('（'+j.unit+'）'):'');
+        note.textContent='✅ 推荐码已生效，按 '+j.price+' 元开通'+(j.unit?('（'+j.unit+'）'):'');
         note.className='ab-msg ok';
-      }else{note.textContent=j.error||'邀请码无效';note.className='ab-msg err'}
+      }else{note.textContent=j.error||'码无效';note.className='ab-msg err'}
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
   // ── 我已付款，提交核对（进后台待处理列表）（老板 2026-10-02）──
@@ -3838,8 +3853,8 @@ var ABG=(function(){
   // ── 卡密兑换：填码即开通（老板 2026-10-02）──
   function redeemCard(){
     var el=$('abPayCard'),code=(el&&el.value||'').trim(),note=$('abPayNote');
-    if(!code){note.textContent='请填写卡密';note.className='ab-msg err';return}
-    note.textContent='正在兑换…';note.className='ab-msg';
+    if(!code){note.textContent='请填写邀请码或卡密';note.className='ab-msg err';return}
+    note.textContent='正在核对…';note.className='ab-msg';
     request('/api/redeem-card',{code:code},localStorage.getItem(TOKEN_KEY)).then(function(r){
       var j=r.json||{};
       if(j.ok){
@@ -3855,7 +3870,8 @@ var ABG=(function(){
     }).catch(function(){note.textContent=netErr();note.className='ab-msg err'});
   }
   // ── 常驻入口：资料弹窗里的「👑 开通 VIP」──
-  // ── 我的邀请码（老板 2026-10-02：非 VIP 给提示；VIP 显示自己的专属码；按钮与结果都做显眼）──
+  // ── 我的推荐码（老板 2026-10-03 定稿：邀请码只由后台手动发放，用户自己的是「推荐码」；
+  //    前端不再生成邀请码 —— 这里统一展示推荐码 + 一键申请）──
   var _invCode='';
   function invBox(kind,title,html,hint){
     var box=$('abInvBox');if(!box)return;
@@ -3866,25 +3882,25 @@ var ABG=(function(){
   }
   function myInvite(){
     var box=$('abInvBox');if(!box)return;
-    function decide(){
-      var a=ACCESS;
-      if(!a||!a.paid){
-        invBox('warn','🎟️ 还没开通 VIP','','开通后自动获得你的专属邀请码');
-        return;
+    invBox('ok','🏅 正在获取我的推荐码…','','');
+    // 直接问后端要推荐码（不依赖缓存，刚申请完再点也能立刻看到）
+    request('/api/referral-me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
+      var j=(r&&r.json)||{};
+      if(j.ok&&j.code){
+        _invCode=j.code;
+        var amt=(j.amount==null?50:j.amount);
+        invBox('ok','🏅 我的推荐码',
+          '<div class="ab-invcode">'+j.code+'</div>'
+          +'<button class="ab-invcopy" onclick="ABG.copyInvite()">复制推荐码</button>',
+          '朋友注册时填这个码：享 349 元（省 50）｜你每成一单得 '+amt+' 元返利');
+      }else if(j.ok){
+        invBox('warn','🏅 还没有推荐码',
+          '<button class="ab-invcopy" onclick="ABG.refApply();setTimeout(function(){try{ABG.myInvite()}catch(e){}},1500)">免费申请推荐码</button>',
+          '免费申请，申请后立即可用；朋友注册享 349 元，你得 50 元返利');
+      }else{
+        invBox('warn','🏅 连不上服务器','','请稍后再点一次');
       }
-      var c=a.vip_code||'';
-      if(!c){invBox('warn','🎟️ 邀请码生成中','','请稍后再点一次');return}
-      _invCode=c;
-      invBox('ok','🎟️ 你的专属邀请码','<div class="ab-invcode">'+c+'</div>'
-        +'<button class="ab-invcopy" onclick="ABG.copyInvite()">复制邀请码</button>',
-        '');
-    }
-    // 每次都实时拉一次最新状态：刚开通 VIP 但页面还是旧缓存时，不能误报「还没开通」
-    invBox('ok','🎟️ 正在获取邀请码…','','');
-    request('/api/me',null,localStorage.getItem(TOKEN_KEY)).then(function(r){
-      if(r&&r.json&&r.json.access){ACCESS=r.json.access}
-      decide();
-    },function(){ decide(); });   // 断网：用缓存兜底，别把人挡在门外
+    },function(){ invBox('warn','🏅 连不上服务器','','请稍后再试'); });
   }
   function copyInvite(){
     if(!_invCode)return;
@@ -3897,7 +3913,7 @@ var ABG=(function(){
       ok=document.execCommand('copy');document.body.removeChild(ta);
     }catch(e){}
     if(!ok&&navigator.clipboard){try{navigator.clipboard.writeText(_invCode);ok=true}catch(e){}}
-    if(hint){hint.textContent=ok?'✅ 已复制，发给朋友即可':'长按上面的邀请码手动复制';hint.style.color=ok?'#2f855a':'#b7791f';}
+    if(hint){hint.textContent=ok?'✅ 已复制，发给朋友即可':'长按上面的码手动复制';hint.style.color=ok?'#2f855a':'#b7791f';}
   }
   function openPay(){
     try{profileModal(false)}catch(e){}
@@ -3934,7 +3950,7 @@ var ABG=(function(){
   function paywall(){
     if(!ACCESS)return;
     showPay();
-    // 两种情况都直达收款码页：填了邀请码=299；没填=399（同页还有「我有卡密」入口）
+    // 两种情况都直达收款码页：填了推荐码=349；没填=399（邀请码/卡密走填码直接开通，不进这里）
     payStep('qr');
   }
   function payQr(){
@@ -4050,9 +4066,14 @@ var ABG=(function(){
     if(p.length<6)return msg('密码至少 6 位');
     if(p!==p2)return msg('两次输入的密码不一致');
     $('abRegBtn').disabled=true;msg('注册中…',true);
-    request('/api/register',{username:u,password:p}).then(function(r){
+    var code=($('abRegCode')&&$('abRegCode').value||'').trim().toUpperCase();
+    request('/api/register',{username:u,password:p,invite:code}).then(function(r){
       $('abRegBtn').disabled=false;
-      if(r.json&&r.json.ok){save(r.json.token,r.json.user);afterAuth(r.json.user,r.json.access);msg('注册成功，免费试用开始',true)}
+      if(r.json&&r.json.ok){
+        save(r.json.token,r.json.user);afterAuth(r.json.user,r.json.access);
+        var vip=r.json.access&&r.json.access.paid;
+        msg(vip?'🎉 注册成功，VIP 已开通！':'注册成功，免费试用开始',true);
+      }
       else msg((r.json&&r.json.error)||'注册失败');
     }).catch(function(){ $('abRegBtn').disabled=false; msg(netErr()) });
   }
