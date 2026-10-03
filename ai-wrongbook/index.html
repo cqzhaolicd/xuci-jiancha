@@ -2154,7 +2154,7 @@ function renderDetail(data){
     ${q.answer_image_path?`<div class="detail-field"><div class="label">📷 答案图片</div><div style="max-width:400px;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="${q.answer_image_path}" style="width:100%"></div></div>`:''}
     <div class="detail-field"><div class="label">错因分析</div><div class="value"><span class="q-badge badge-reason">${q.error_reason}</span> ${q.tags?'🏷️ '+q.tags:''}</div></div>
     ${renderAna5View(q)}
-    ${q.flow&&(q.flow.known||q.flow.target||q.flow.plan||q.flow.check)?`<div class="detail-field"><div class="label">📋 流程检查</div><div class="value" style="background:#fdf2f2;padding:.6rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger);font-size:.85rem;line-height:1.9">① 已知：${q.flow.known||'—'}<br>② 目标：${q.flow.target||'—'}<br>③ 路径：${q.flow.plan||'—'}<br>④ 检验：${q.flow.check||'—'}</div></div>`:''}
+    ${isFlowSubject(q)&&q.flow&&(q.flow.known||q.flow.target||q.flow.plan||q.flow.check)?`<div class="detail-field"><div class="label">📋 流程检查</div><div class="value" style="background:#fdf2f2;padding:.6rem .8rem;border-radius:var(--radius-sm);border-left:3px solid var(--danger);font-size:.85rem;line-height:1.9">① 已知：${q.flow.known||'—'}<br>② 目标：${q.flow.target||'—'}<br>③ 路径：${q.flow.plan||'—'}<br>④ 检验：${q.flow.check||'—'}</div></div>`:''}
     <div class="detail-field"><div class="label">时间</div><div class="value" style="color:var(--text-light);font-size:.85rem">录入: ${q.created_at} | 复习: ${q.review_count}次 | 下次复习: ${q.next_review||'无需'}</div></div>
     <div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
       <button class="btn btn-primary btn-sm" onclick="navigate('detail',{qid:${q.id},edit:true})"><i class="fas fa-edit"></i> 编辑</button>
@@ -2201,6 +2201,15 @@ function deleteQ(qid){
 
 // ===================== REVIEW =====================
 let reviewList=[],reviewIdx=0,reviewAnswered=false,reviewFilter='all';
+// 五步法（流程检查）只针对理科：数学/物理/化学。其它科目不显示该区块、也不做必填拦截（2026-10-03 老板确认）
+const FLOW_SUBJECTS=['数学','物理','化学'];
+function isFlowSubject(q,d){
+  try{
+    const dd=d||(typeof loadData==='function'?loadData():null);
+    const s=((dd&&dd.subjects)||[]).find(x=>+x.id===+((q||{}).subject_id));
+    return !!s&&FLOW_SUBJECTS.includes(String(s.name||'').trim());
+  }catch(e){return false;}
+}
 
 function renderReview(){
   const d=loadData();
@@ -2241,6 +2250,7 @@ function reviewCard(){
   const q=reviewList[reviewIdx];
   const d=loadData();
   const subj=d.subjects.find(s=>s.id===q.subject_id);
+  const flowOK=isFlowSubject(q,d);   // 五步法只对理科显示
   const progress=Math.round(reviewIdx/reviewList.length*100);
   return`<div class="card"><div class="review-progress"><div class="progress-bar" style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
     <div style="height:100%;width:${progress}%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:3px;transition:width .3s"></div></div></div>
@@ -2261,14 +2271,14 @@ function reviewCard(){
       ${q.my_answer?`<div style="margin:.5rem 0;padding:.5rem .8rem;border-radius:var(--radius-sm);background:#f5656510;border-left:3px solid var(--danger);text-align:left;font-size:.85rem">
         <strong style="color:var(--danger)">❌ 你的答案：</strong>
         <div class="prewrap" style="margin-top:.2rem">${q.my_answer}</div></div>`:''}
-      <div class="flow-check">
+      ${flowOK?`<div class="flow-check">
         <div class="flow-check-title">📋 流程检查（五步法 · 必填，不填完不算订正完成）</div>
         <textarea id="fc_known" rows="1" placeholder="① 审题圈画：已知什么条件？">${q.flow&&q.flow.known?q.flow.known:''}</textarea>
         <textarea id="fc_target" rows="1" placeholder="② 写出目标：这题求什么？">${q.flow&&q.flow.target?q.flow.target:''}</textarea>
         <textarea id="fc_plan" rows="1" placeholder="③ 规划路径：用什么公式/方法？">${q.flow&&q.flow.plan?q.flow.plan:''}</textarea>
         <textarea id="fc_check" rows="1" placeholder="④ 回代检验：怎么验证答案对不对？">${q.flow&&q.flow.check?q.flow.check:''}</textarea>
         <div class="flow-check-warn" id="fc_warn">⚠️ 流程未完成：请先填完 已知/求/步骤/检验 四项，才算订正完成！</div>
-      </div>
+      </div>`:''}
       ${REVIEW_SHOW_ANA5?reviewAna5Block(q):''}
       <div class="review-btns" style="margin-top:1rem">
         <button class="btn btn-danger" onclick="reviewResult(0)"><i class="fas fa-times"></i> 还不会</button>
@@ -2284,15 +2294,17 @@ function reviewResult(r){
   const d=loadData();
   const qq=d.questions.find(x=>x.id===q.id);
   if(qq){
-    // 流程检查（五步法）：四项必填，不填完不算订正完成
-    const fcVals={};
-    ['fc_known','fc_target','fc_plan','fc_check'].forEach(id=>{const el=document.getElementById(id);fcVals[id]=el?(el.value||'').trim():'';});
-    if(!fcVals.fc_known||!fcVals.fc_target||!fcVals.fc_plan||!fcVals.fc_check){
-      const warn=document.getElementById('fc_warn');if(warn)warn.style.display='block';
-      toast('⚠️ 流程未完成：请填完 已知/求/步骤/检验 四项，才算订正完成！','error');
-      return;
+    // 流程检查（五步法）：仅理科（数学/物理/化学）四项必填；其它科目不拦截、也不写入 flow
+    if(isFlowSubject(qq,d)){
+      const fcVals={};
+      ['fc_known','fc_target','fc_plan','fc_check'].forEach(id=>{const el=document.getElementById(id);fcVals[id]=el?(el.value||'').trim():'';});
+      if(!fcVals.fc_known||!fcVals.fc_target||!fcVals.fc_plan||!fcVals.fc_check){
+        const warn=document.getElementById('fc_warn');if(warn)warn.style.display='block';
+        toast('⚠️ 流程未完成：请填完 已知/求/步骤/检验 四项，才算订正完成！','error');
+        return;
+      }
+      qq.flow={known:fcVals.fc_known,target:fcVals.fc_target,plan:fcVals.fc_plan,check:fcVals.fc_check};
     }
-    qq.flow={known:fcVals.fc_known,target:fcVals.fc_target,plan:fcVals.fc_plan,check:fcVals.fc_check};
     if(r===2)qq.mastery=Math.min(qq.mastery+1,REVIEW_INTERVALS.length);
     else if(r===0)qq.mastery=0;
     qq.next_review=calcNextReview(qq.mastery);
@@ -3226,7 +3238,7 @@ cloudInit();          // 异步从服务器拉取最新错题本（失败则静�
 <!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 <div id="abGate" class="ab-gate">
   <div class="ab-card">
-    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">v4.0.39</span></div>
+    <div class="ab-logo">🤖 AI错题本 <span style="color:#90cdf4;font-size:.86em">4.0.39</span></div>
     <div class="ab-sub">请先登录后再使用</div>
     <div class="ab-tabs">
       <button id="abTabLogin" class="ab-tab active" onclick="ABG.tab('login')">登录</button>
