@@ -15,6 +15,13 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .navbar-nav{display:flex;gap:.2rem;flex-wrap:wrap}
 .navbar-nav a{color:rgba(255,255,255,.85);text-decoration:none;padding:.35rem .6rem;border-radius:8px;font-size:.82rem;transition:all .2s;display:flex;align-items:center;gap:.3rem;cursor:pointer}
 .navbar-nav a:hover,.navbar-nav a.active{background:rgba(255,255,255,.2);color:#fff}
+/* 返回上一页（老板 2026-10-02） */
+.navbar .container{gap:.35rem}
+.navbar-brand{margin-right:auto}
+.nav-back{display:none;align-items:center;gap:.3rem;color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.45);border-radius:20px;padding:.3rem .7rem;font-size:.82rem;font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .2s}
+.nav-back.on{display:inline-flex}
+.nav-back:hover{background:rgba(255,255,255,.32)}
+@media(max-width:768px){.nav-back span{display:none}.nav-back{padding:.32rem .55rem;font-size:.85rem}}
 .container{max-width:1100px;margin:0 auto;padding:1rem}
 .page{display:none}.page.active{display:block;animation:fadeInUp .35s ease}
 .card{background:var(--card-bg);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
@@ -63,8 +70,66 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
 .recog-pick-btn{text-align:left;background:#fff;border:1.5px solid #ddd6fe;border-radius:10px;padding:.55rem .7rem;font-size:.85rem;cursor:pointer;font-family:inherit;color:var(--text);display:flex;flex-direction:column;gap:.2rem;transition:all .15s}
 .recog-pick-btn:hover{border-color:var(--primary);background:#fbfaff}
 .recog-pick-btn b{color:var(--primary)}
+.ai-setup-card{border:1px solid #ddd6fe;border-radius:12px;background:linear-gradient(135deg,#faf8ff,#f5f3ff);padding:.8rem .9rem;margin-bottom:.9rem}
+.ai-setup-head{font-weight:700;color:#5b21b6;font-size:.92rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.ai-setup-state{margin-left:auto;font-size:.72rem;font-weight:600;color:#475569;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:.1rem .45rem}
+.ai-setup-body{font-size:.83rem;color:#3f3d56;line-height:1.85;margin-top:.45rem}
+.ai-setup-body code{background:#ede9fe;color:#5b21b6;border-radius:5px;padding:.05rem .3rem;font-size:.8rem}
+.ai-setup-sub{font-weight:700;color:#5b21b6;margin-top:.5rem}
+.ai-setup-note{font-size:.76rem;color:#6b7280;line-height:1.6}
+.ai-setup-body .ai-setup-note{margin-top:.4rem}
+.ai-setup-btns{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-top:.6rem}
+.ai-mini{background:#f8f7ff;border:1px dashed #ddd6fe;border-radius:10px;padding:.6rem .7rem;font-size:.82rem;color:#4c1d95;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.ai-only-tip{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #16a34a;border-radius:0 10px 10px 0;padding:.7rem .85rem;font-size:.85rem;line-height:1.7;color:#14532d;margin-bottom:.9rem}
+.manual-box{border:1px dashed #cbd5e1;border-radius:10px;background:#fcfcfd;padding:.5rem .7rem}
+.manual-box>summary{cursor:pointer;font-size:.82rem;font-weight:600;color:#64748b;outline:none;list-style:none}
+.manual-box>summary::-webkit-details-marker{display:none}
+.manual-box>summary:before{content:"▸ ";color:#94a3b8}
+.manual-box[open]>summary:before{content:"▾ "}
+.manual-inner{padding-top:.7rem}
+.rp-head{font-size:.82rem;font-weight:600;margin:.5rem 0 .45rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.rp-meta{font-weight:400;color:var(--text-light);font-size:.76rem}
+.rp-res{border:1.5px solid #e5e9f2;border-radius:12px;background:#fff;margin-bottom:.7rem;overflow:hidden;transition:.15s}
+.rp-res.rp-fail{border-color:#fecaca;background:#fffbfb}
+.rp-fail-n{color:#b91c1c}
+.rp-fail-box{background:#fef2f2;border-left:4px solid #dc2626;border-radius:0 9px 9px 0;padding:.5rem .65rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.rp-fail-why{font-size:.82rem;color:#991b1b;font-weight:600}
+.rp-res.rp-on{border-color:#7c3aed;box-shadow:0 2px 10px rgba(124,58,237,.10)}
+.rp-res-h{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;padding:.55rem .7rem;background:linear-gradient(180deg,#fafbff,#f4f6fc);border-bottom:1px solid #eef1f7;cursor:pointer;font-size:.84rem}
+.rp-res-h input[type=checkbox]{transform:scale(1.15);margin-right:.1rem}
+.rp-no{font-weight:800;color:#1e293b}
+.rp-res-b{padding:.65rem .7rem;display:grid;gap:.5rem}
+.rp-q{background:#f8fafc;border:1px solid #eef2f7;border-radius:9px;padding:.55rem .65rem;font-size:.86rem;line-height:1.8;white-space:pre-wrap;color:#1f2937}
+.rp-ans{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 9px 9px 0;padding:.5rem .65rem;font-size:.85rem;line-height:1.75;color:#14532d;font-weight:600}
+.rp-chips{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.rp-chip{padding:.15rem .5rem;border-radius:8px;font-size:.74rem;font-weight:600;white-space:nowrap;line-height:1.5}
+.rp-chip.rp-ok{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.rp-chip.rp-bad{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
+.rp-chip.rp-mine{background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe}
+.rp-chip.rp-corr{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.rp-chip.rp-reason{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.rp-chip.rp-tag{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+.rp-chip.rp-diff{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;letter-spacing:.06em}
+details.rp-ana5{border:1px solid #ede9fe;background:#fbfaff;border-radius:10px;padding:.45rem .6rem}
+details.rp-ana5>summary{cursor:pointer;font-size:.79rem;font-weight:700;color:#5b21b6;outline:none}
+details.rp-ana5[open]>summary{margin-bottom:.45rem}
+details.rp-ana5 .ana5-wrap{gap:.5rem}
+details.rp-ana5 .ana5-item{font-size:.85rem;line-height:1.7}
 .rp-wrong{font-size:.75rem;color:var(--text-light)}
 .rp-none{opacity:.65}
+/* 多选录入（2026-10-02）：选中高亮 + 批量分析 + 勾选保存 */
+.recog-pick-btn.rp-on{border-color:var(--primary);background:#f5f3ff;box-shadow:inset 0 0 0 1px var(--primary)}
+.rp-row{display:flex;align-items:flex-start;gap:.35rem;width:100%}
+.rp-box{flex:0 0 auto;display:inline-flex;width:16px;height:16px;border:1.5px solid #c4b5fd;border-radius:4px;align-items:center;justify-content:center;font-size:.68rem;line-height:1;color:#fff;margin-top:.1rem}
+.rp-on .rp-box{background:var(--primary);border-color:var(--primary)}
+.rp-head{font-size:.82rem;font-weight:600;margin:.5rem 0 .35rem;line-height:1.6}
+.rp-bar{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;margin-top:.5rem}
+.rp-res{border:1.5px solid #ddd6fe;border-radius:10px;padding:.5rem .65rem;margin-bottom:.45rem;background:#fff}
+.rp-res.rp-on{border-color:var(--primary);background:#faf9ff}
+.rp-res-h{display:flex;align-items:center;gap:.4rem;font-size:.86rem;cursor:pointer;font-weight:600}
+.rp-res-h input{width:16px;height:16px;accent-color:var(--primary)}
+.rp-res-b{font-size:.78rem;line-height:1.7;color:var(--text);margin-top:.35rem;white-space:pre-wrap}
+.rp-res-b b{color:var(--primary)}
 .qb-review i{background:linear-gradient(135deg,#48bb78,#2f855a)}
 /* Subject grid */
 .subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:.6rem}
@@ -226,6 +291,9 @@ textarea.form-control{resize:vertical;min-height:70px}
 .pts-card.c3{border-left-color:#38a169}.pts-card.c4{border-left-color:#e74c3c}
 .pts-item{font-size:.9rem;line-height:1.85;padding-left:1.15rem;text-indent:-1.15rem;margin-bottom:.45rem}
 .pts-item:last-child{margin-bottom:0}
+/* 悬挂缩进只作用于本行首行：禁止被 inline-block 子元素继承（否则「来源：#n」会被推成 0 宽、多个题号叠在一起） */
+.pts-item>*,.ana5-line>*{text-indent:0}
+.pts-q{text-indent:0}
 .pts-badge{display:inline-block;background:#667eea14;color:#4a5fd0;border-radius:6px;padding:0 .4rem;font-size:.76rem;
   margin-left:.3rem;white-space:nowrap}
 .pts-q{display:inline-block;color:var(--primary);font-size:.78rem;cursor:pointer;margin-right:.25rem;
@@ -260,7 +328,7 @@ textarea.form-control{resize:vertical;min-height:70px}
             box-shadow:0 2px 8px rgba(0,0,0,.18);user-select:none;transition:.2s">☁️ 同步…</div>
 
 <nav class="navbar"><div class="container" style="flex-direction:column;align-items:stretch;gap:.45rem">
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
     <a class="navbar-brand" href="index.html"><i class="fas fa-robot"></i> AI错题本</a>
   </div>
   <div class="navbar-nav" id="mainNav">
@@ -270,6 +338,9 @@ textarea.form-control{resize:vertical;min-height:70px}
     <a data-page="review"><i class="fas fa-redo"></i><span>复习</span></a>
     <a data-page="print-page"><i class="fas fa-print"></i><span>打印</span></a>
     <a data-page="analysis"><i class="fas fa-chart-pie"></i><span>分析</span></a>
+  </div>
+  <div style="display:flex;justify-content:flex-end">
+    <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
   </div>
 </div></nav>
 
@@ -998,12 +1069,38 @@ function applyBuiltinQuestions(){try{
 
 // ===================== ROUTER =====================
 let currentPage='dashboard';
-function navigate(page,data){
-  currentPage=page;
+// ── 返回上一页：返回栈 + 系统返回键联动（老板 2026-10-02）────
+let _navStack=[],_curData=null,_skipPop=0;
+function _paint(page,data){
+  currentPage=page;_curData=data===undefined?null:data;
   document.querySelectorAll('.navbar-nav a').forEach(a=>a.classList.toggle('active',a.dataset.page===page));
   render(page,data);
+  updateNavBack();
   window.scrollTo({top:0,behavior:'smooth'});
 }
+function navigate(page,data){
+  if(page==='dashboard')_navStack=[];
+  else{_navStack.push({page:currentPage,data:_curData});if(_navStack.length>30)_navStack.shift();}
+  try{history.pushState({nav:_navStack.length},'');}catch(e){}
+  _paint(page,data);
+}
+function goBack(){
+  if(!_navStack.length){if(currentPage!=='dashboard')navReset('dashboard');return;}
+  const p=_navStack.pop();
+  _skipPop++;try{history.back();}catch(e){_skipPop--;}
+  _paint(p.page,p.data);
+}
+function navReset(page,data,stack){   // 保存/删除后：重置返回栈，避免返回已经过期的页
+  _navStack=(stack||[{page:'dashboard',data:null}]).slice();
+  try{history.pushState({nav:_navStack.length},'');}catch(e){}
+  _paint(page,data);
+}
+function updateNavBack(){const b=document.getElementById('navBack');if(b)b.classList.toggle('on',_navStack.length>0);}
+window.addEventListener('popstate',function(){   // 安卓系统返回键
+  if(_skipPop>0){_skipPop--;return;}
+  if(!_navStack.length)return;
+  const p=_navStack.pop();_paint(p.page,p.data);
+});
 document.querySelectorAll('.navbar-nav a').forEach(a=>a.addEventListener('click',()=>navigate(a.dataset.page)));
 
 // ===================== TOAST =====================
@@ -1135,19 +1232,231 @@ function setRecStatus(msg,err){
   el.style.color=err?'var(--danger)':'var(--text)';
   el.innerHTML=msg;
 }
+// ===== 多选录入（2026-10-02 老板要求）：点一下选中/取消（高亮）→ 一键分析所有选中题 → 勾选要保存的 =====
+let _vlPick=new Set();          // 已选中的题（_vlQuestions 下标）
+let _vlBatch=[];                // 批量分析结果 [{q,n,o}]
+let _vlBatchPick=new Set();     // 分析结果里勾选要保存的
+function recPickToggle(i){
+  if(_vlPick.has(i))_vlPick.delete(i); else _vlPick.add(i);
+  renderRecPick();
+}
+function recPickAll(on){
+  if(on)_vlQuestions.forEach((q,i)=>_vlPick.add(i)); else _vlPick.clear();
+  renderRecPick();
+}
 function renderRecPick(){
   const box=document.getElementById('ai_recog_pick');
   if(!box)return;
   if(_vlQuestions.length<2){box.innerHTML='';return;}
-  box.innerHTML=`<div style="font-size:.82rem;font-weight:600;margin:.5rem 0 .35rem">本页识别到 ${_vlQuestions.length} 道题，点一道录入并分析：</div>`+
+  const n=_vlPick.size,all=n===_vlQuestions.length;
+  box.innerHTML=`<div class="rp-head">本页识别到 ${_vlQuestions.length} 道题 —— <b>点一下选中（可多选）</b>，再点下面按钮一键分析：</div>`+
     _vlQuestions.map((q,i)=>{
-      const txt=String(q.content||q.head||'(题干未识别)').replace(/\s+/g,' ').slice(0,26);
-      const more=String(q.content||q.head||'').length>26?'…':'';
-      return `<button type="button" class="recog-pick-btn" onclick="applyRecognized(${i})">
-        <b>第${q.n||i+1}题</b> ${esc(txt)}${more}
+      const on=_vlPick.has(i);
+      const raw=String(q.content||q.head||'(题干未识别)').replace(/\s+/g,' ');
+      const txt=raw.slice(0,40),more=raw.length>40?'…':'';
+      return `<button type="button" class="recog-pick-btn ${on?'rp-on':''}" onclick="recPickToggle(${i})">
+        <span class="rp-row"><span class="rp-box">${on?'✓':''}</span><span><b>第${q.n||i+1}题</b> ${esc(txt)}${more}</span></span>
         ${q.wrong?`<span class="rp-wrong">我的答案：${esc(String(q.wrong).replace(/\s+/g,' ').slice(0,12))}</span>`:'<span class="rp-wrong rp-none">未看到手写答案</span>'}
       </button>`;}).join('')+
-    `<div style="font-size:.75rem;color:var(--text-light);margin-top:.15rem">点第1题最准；其他题会再单独精读一遍</div>`;
+    `<div class="rp-bar">
+       <span class="q-badge badge-mastery">已选 ${n} 题</span>
+       <button class="btn btn-outline btn-sm" onclick="recPickAll(${all?'false':'true'})">${all?'清空':'全选'}</button>
+       <button class="btn btn-primary btn-sm" id="rp_go" onclick="aiAnalyzePicked()" ${n?'':'disabled style="opacity:.5"'}>
+         <i class="fas fa-wand-magic-sparkles"></i> ${n?`AI 一键分析这 ${n} 题`:'请先点选要录入的题'}</button>
+     </div>
+     <div style="font-size:.75rem;color:var(--text-light);margin-top:.15rem">第1题最准；其他题会再单独精读一遍。选多题时，全部分析完再让你勾选要保存的。</div>`;
+}
+function afSubjectName(){
+  const el=document.getElementById('af_subject');
+  return el&&el.selectedOptions&&el.selectedOptions[0]?el.selectedOptions[0].textContent.trim():'';
+}
+// 一键分析所有选中题：逐题「精读 → 生成 答案/错因/考点/五维」，全部完成后进入勾选保存
+async function analyzeOneQuestion(q,no,dataUrl){
+  if(!String(q.content||'').trim()){                 // 清单项：先单独精读，保证题干逐字
+    const one=await vlAskQuestion(dataUrl,no);
+    if(one.content){q.content=one.content;q.wrong=one.wrong||q.wrong;q.note=one.note||q.note;}
+  }
+  if(!String(q.content||'').trim()) throw new Error('题干没认出');
+  const rc={subject:afSubjectName(),grade:addForm.grade,chapter:'',source:addForm.source,
+            content:q.content,wrong:q.wrong||'',image:false};
+  const msgs=[{role:'system',content:AI_SYS},{role:'user',content:aiUserMsg(rc)}];
+  let last=null;
+  for(let attempt=0;attempt<2;attempt++){            // 失败自动重试一次（第二次换更硬的指令）
+    const use=attempt?msgs.concat([{role:'user',content:'上一次输出不是合法 JSON。请只输出一个 JSON 对象：第一个字符是 {，最后一个字符是 }，不要解释、不要代码块、不要省略。'}]):msgs;
+    const j=await aiChat(use,aiCfg(),8000);
+    try{return aiParse(j);}catch(e){last=e;}
+  }
+  throw last;
+}
+async function aiAnalyzePicked(){
+  const idx=[..._vlPick].sort((a,b)=>a-b);
+  if(!idx.length){toast('先点选要录入的题目','error');return;}
+  const dataUrl=addForm.image_path;
+  const btn=document.getElementById('rp_go');
+  if(!vlCfg().key){setRecStatus('❌ 视觉模型没配 Key：「⚙️ AI 设置 → 视觉模型」',true);return;}
+  if(!aiCfg().key){setRecStatus('❌ 文本模型没配 Key：「⚙️ AI 设置」',true);return;}
+  if(btn){btn.disabled=true;btn.style.opacity=.6;}
+  _vlBatch=[];
+  for(let k=0;k<idx.length;k++){
+    const i=idx[k],q=_vlQuestions[i],no=q.n||i+1;
+    setRecStatus(`⏳ (${k+1}/${idx.length}) 第${no}题 正在生成 答案/错因/考点/五维…`);
+    try{
+      const o=await analyzeOneQuestion(q,no,dataUrl);
+      _vlBatch.push({q:q,n:no,o:o});
+    }catch(e){                                       // 失败的题也留一张卡，带「再次分析」
+      _vlBatch.push({q:q,n:no,o:null,err:String(e.message||e).slice(0,80)});
+    }
+  }
+  if(btn){btn.disabled=false;btn.style.opacity=1;}
+  const okN=_vlBatch.filter(b=>b.o).length,failN=_vlBatch.length-okN;
+  _vlBatchPick=new Set(_vlBatch.map((b,i)=>b.o?i:-1).filter(i=>i>=0));
+  setRecStatus(okN
+    ? `✅ 已分析 <b>${okN}</b> 题${failN?` · <b>${failN}</b> 题失败（点卡片上的「🔄 再次分析」单独重试）`:''} —— 下面勾选要保存的`
+    : `❌ ${failN} 题都失败了：点卡片上的「🔄 再次分析」重试，或换个更清晰的图`,!okN);
+  toast(okN?`分析完成：成功 ${okN} 题${failN?'，失败 '+failN+' 题':''}`:`都失败了，可先只重试某一题`,okN?'success':'error');
+  renderBatchReview();
+}
+async function retryBatchItem(i){
+  const b=_vlBatch[i];if(!b)return;
+  const btn=document.getElementById('rp_retry_'+i);
+  if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> 重试中…';}
+  try{
+    if(!vlCfg().key)throw new Error('视觉模型没配 Key');
+    if(!aiCfg().key)throw new Error('文本模型没配 Key');
+    const o=await analyzeOneQuestion(b.q,b.n,addForm.image_path);
+    b.o=o;delete b.err;_vlBatchPick.add(i);
+    toast(`✅ 第${b.n}题 分析成功`,'success');
+  }catch(e){
+    b.err=String(e.message||e).slice(0,80);
+    toast(`❌ 第${b.n}题 还是失败：${b.err}`,'error');
+  }
+  renderBatchReview();
+  const okN=_vlBatch.filter(x=>x.o).length;
+  setRecStatus(`已分析 <b>${okN}</b>/${_vlBatch.length} 题${okN<_vlBatch.length?' · 失败的题可点「🔄 再次分析」单独重试':''} —— 下面勾选要保存的`,okN?_vlBatch.length>okN:true);
+}
+async function batchRetryAll(){
+  const idx=_vlBatch.map((b,i)=>b.o?-1:i).filter(i=>i>=0);
+  if(!idx.length)return;
+  const btn=document.getElementById('rp_retry_all');
+  if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> 重试中…';}
+  for(const i of idx){
+    const b=_vlBatch[i];if(b.o)continue;
+    try{
+      if(!vlCfg().key)throw new Error('视觉模型没配 Key');
+      if(!aiCfg().key)throw new Error('文本模型没配 Key');
+      const o=await analyzeOneQuestion(b.q,b.n,addForm.image_path);
+      b.o=o;delete b.err;_vlBatchPick.add(i);
+    }catch(e){b.err=String(e.message||e).slice(0,80);}
+    renderBatchReview();
+  }
+  const okN=_vlBatch.filter(x=>x.o).length;
+  setRecStatus(`已分析 <b>${okN}</b>/${_vlBatch.length} 题${okN<_vlBatch.length?' · 仍有失败的题，可单独重试':''}`,
+               okN?_vlBatch.length>okN:true);
+  toast(`批量重试完成：成功 ${okN}/${_vlBatch.length} 题`,okN===_vlBatch.length?'success':'error');
+}
+function retryFailedInline(){const i=_vlBatch.findIndex(b=>!b.o);if(i>=0)retryBatchItem(i);}
+// 五维分析的“裸”渲染（无外框/标题，供批量结果卡复用；与详情页同一套彩色标签）
+function ana5WrapHtml(a){
+  return `<div class="ana5-wrap">${ANA5_DIMS.map(dm=>{
+    const v=String((a||{})[dm.k]||'').trim();
+    return `<div class="ana5-item"><span class="ana5-tag" style="background:${dm.color}">${dm.tag}</span><div class="ana5-v">${v?ana5Lines(v):'<span style="color:#bdc3c7">未填写</span>'}</div></div>`;}).join('')}</div>`;
+}
+function renderBatchReview(){
+  const box=document.getElementById('ai_recog_pick');
+  if(!box)return;
+  const meta=[afSubjectName(),gradeText(addForm.grade?+addForm.grade:lastGrade()),addForm.source].filter(Boolean).join(' · ');
+  const okN=_vlBatch.filter(x=>x.o).length,failN=_vlBatch.length-okN;
+  box.innerHTML=`<div class="rp-head">🤖 已分析 <b>${okN}</b> 题${failN?` · <b class="rp-fail-n">${failN}</b> 题失败（可单独重试）`:''}${meta?`<span class="rp-meta">${esc(meta)}</span>`:''}<span class="rp-meta">勾选要保存的，都会带上这张照片</span></div>`+
+    _vlBatch.map((b,i)=>{
+      const on=_vlBatchPick.has(i),o=b.o||{};
+      const raw=String(b.q.wrong||'').replace(/\s+/g,' ').trim();
+      const my=raw.toUpperCase();
+      const hasMy=!!my&&!/^(未识别|没看到|无|N\/A)$/i.test(my);
+      if(!b.o){                                        // 分析失败：卡片保留 + 「再次分析」
+        return `<div class="rp-res rp-fail ${on?'rp-on':''}">
+          <label class="rp-res-h">
+            <input type="checkbox" ${on?'checked':''} onchange="batchToggle(${i})">
+            <span class="rp-no">第${b.n}题</span>
+            <span class="rp-chip rp-bad">❌ 分析失败</span>
+            ${hasMy?`<span class="rp-chip rp-mine">我的答案 ${esc(my)}</span>`:'<span class="rp-chip rp-diff">未看到手写答案</span>'}
+          </label>
+          <div class="rp-res-b">
+            <div class="rp-q">${esc(String(b.q.content||'').trim())||'<i style="color:#94a3b8">题干未识别</i>'}</div>
+            <div class="rp-fail-box">
+              <div class="rp-fail-why">失败原因：${esc(b.err||'模型没返回合法 JSON')}</div>
+              <button type="button" class="btn btn-primary btn-sm" id="rp_retry_${i}" onclick="retryBatchItem(${i})"><i class="fas fa-rotate-right"></i> 再次分析</button>
+              <span class="ai-setup-note">只重试这一题 · 约 10-20 秒；不想等就只勾成功的题保存</span>
+            </div>
+          </div>
+        </div>`;
+      }
+      const corr=String(o.correct_answer||'').trim();
+      // 只取答案串“开头”的选项字母（避免从解析文字里误抓 A/B 字样，如「C。把A、B混淆」→ C）
+      const lead=s=>{const m=String(s).trim().match(/^([A-Da-d](?:\s*[、,，/]?\s*[A-Da-d])*)/);return m?m[1].replace(/[^A-Da-d]/g,'').toUpperCase():'';};
+      const myL=lead(my),corrL=lead(corr);
+      const ok=!!(myL&&corrL&&myL===corrL);
+      const tags=Array.isArray(o.tags)?o.tags.join('、'):String(o.tags||'');
+      const diff=Math.max(0,Math.min(5,parseInt(o.difficulty)||0));
+      return `<div class="rp-res ${on?'rp-on':''}">
+        <label class="rp-res-h">
+          <input type="checkbox" ${on?'checked':''} onchange="batchToggle(${i})">
+          <span class="rp-no">第${b.n}题</span>
+          ${hasMy?`<span class="rp-chip rp-mine">我的答案 ${esc(my)}</span>`:'<span class="rp-chip rp-diff">未看到手写答案</span>'}
+          ${corr?`<span class="rp-chip rp-corr">正确 ${esc(corrL||corr)}</span>`:''}
+          ${myL&&corrL?(ok?'<span class="rp-chip rp-ok">✓ 答对</span>':'<span class="rp-chip rp-bad">✗ 要订正</span>'):''}
+        </label>
+        <div class="rp-res-b">
+          <div class="rp-q">${esc(String(b.q.content||'').trim())||'<i style="color:#94a3b8">题干未识别</i>'}</div>
+          ${corr?`<div class="rp-ans">✅ 正确答案：${esc(corr)}</div>`:''}
+          <div class="rp-chips">
+            ${o.error_reason?`<span class="rp-chip rp-reason">错因：${esc(o.error_reason)}</span>`:''}
+            ${tags?`<span class="rp-chip rp-tag">考点：${esc(tags)}</span>`:''}
+            ${diff?`<span class="rp-chip rp-diff">难度 ${'★'.repeat(diff)}${'☆'.repeat(5-diff)}</span>`:''}
+          </div>
+          <details class="rp-ana5" open>
+            <summary>🧩 五维分析（A 已知 · B 求解 · C 思路 · D 易错 · E 知识点）${ANA5_AI_CHIP}</summary>
+            ${ana5WrapHtml(o.ana5||{})}
+          </details>
+        </div>
+      </div>`;}).join('')+
+    `<div class="rp-bar">
+       <span class="q-badge badge-mastery">已勾 ${_vlBatchPick.size} / ${_vlBatch.length} 题</span>
+       <button class="btn btn-outline btn-sm" onclick="batchToggleAll(true)">全选</button>
+       <button class="btn btn-outline btn-sm" onclick="batchToggleAll(false)">全不选</button>
+       ${failN?`<button class="btn btn-outline btn-sm" id="rp_retry_all" onclick="batchRetryAll()"><i class="fas fa-rotate-right"></i> 重试全部失败的 ${failN} 题</button>`:''}
+       <button class="btn btn-primary btn-sm" onclick="batchSave()" ${_vlBatchPick.size?'':'disabled style="opacity:.5"'}><i class="fas fa-save"></i> 保存勾选的 ${_vlBatchPick.size} 题</button>
+       <button class="btn btn-outline btn-sm" onclick="_vlBatch=[];_vlBatchPick=new Set();renderRecPick();">↩ 返回选题</button>
+     </div>`;
+}
+function batchToggle(i){if(_vlBatchPick.has(i))_vlBatchPick.delete(i);else _vlBatchPick.add(i);renderBatchReview();}
+function batchToggleAll(on){_vlBatchPick=new Set(on?_vlBatch.map((_,i)=>i):[]);renderBatchReview();}
+// 用分析结果拼一条错题（字段与 submitAdd 保存的一致）
+function buildQuestion(q,o){
+  const oo=o||{},ana5={};
+  ANA5_DIMS.forEach(dm=>{const v=(oo.ana5||{})[dm.k];if(v)ana5[dm.k]=String(v).trim();});
+  const item={id:genId(),subject_id:addForm.subject_id,
+    chapter_id:addForm.chapter_id?parseInt(addForm.chapter_id):null,
+    content:q.content||'',correct_answer:String(oo.correct_answer||''),my_answer:q.wrong||'',
+    error_reason:String(oo.error_reason||'概念不清'),
+    tags:Array.isArray(oo.tags)?oo.tags.join(','):String(oo.tags||''),
+    source:addForm.source,difficulty:+oo.difficulty||3,grade:(addForm.grade?+addForm.grade:lastGrade()),
+    mastery:0,created_at:now(),updated_at:now(),next_review:today(),review_count:0,
+    image_path:addForm.image_path||'',answer_image_path:addForm.answer_image_path||'',flow:{},ana5};
+  if(q.note)item.recog_note=q.note;
+  if(ANA5_DIMS.some(dm=>(ana5[dm.k]||'').length))item.ana5_ai=true;   // AI 生成 · 待核对标记
+  return item;
+}
+function batchSave(){
+  const picks=[..._vlBatchPick].sort((a,b)=>a-b);
+  if(!picks.length){toast('先勾选要保存的题','error');return;}
+  const d=loadData();let n=0;
+  picks.forEach(i=>{const b=_vlBatch[i];if(!b)return;d.questions.push(buildQuestion(b.q,b.o));n++;});
+  saveData(d);setLastGrade(addForm.grade);
+  toast(`✅ 已保存 ${n} 道错题`,'success');
+  _vlBatch=[];_vlBatchPick=new Set();_vlPick=new Set();
+  const box=document.getElementById('ai_recog_pick');if(box)box.innerHTML='';
+  setRecStatus(`✅ 已保存 ${n} 道题（题目图片共用这一张）`);
+  navReset('list',{},[{page:'dashboard',data:null}]);   // 返回 → 首页（不回录入页）
 }
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 // 模型有时把提示词模板当 note 回显，过滤掉这种无意义提示
@@ -1189,7 +1498,7 @@ async function aiRecognizeImage(){
   if(!dataUrl){setRecStatus('⚠️ 先选一张题目图片',true);return;}
   const btn=document.getElementById('ai_recog_btn');
   if(btn){btn.disabled=true;btn.style.opacity=.6;}
-  _vlQuestions=[];renderRecPick();
+  _vlQuestions=[];_vlPick=new Set();_vlBatch=[];_vlBatchPick=new Set();renderRecPick();
   setRecStatus('🖼️ AI 正在识别图片（约 10-40 秒，请稍等）…');
   try{
     const o=await aiVision(dataUrl);
@@ -1235,9 +1544,12 @@ async function aiRecognizeImage(){
       setRecStatus('⚠️ 没认出题目文字'+(nt?'：'+esc(nt):'')+'　（换张更清楚的图，或手动填题干）',true);
       return;
     }
-    if(_vlQuestions.length===1&&_vlQuestions[0].content) applyRecognized(0);
-    else{
-      setRecStatus(`✅ 识别到 <b>${_vlQuestions.length}</b> 道题（${esc(o.source||'出处未识别')}）—— 点下面选一道录入并分析${nt?'（'+esc(nt)+'）':''}`);
+    if(_vlQuestions.length===1&&_vlQuestions[0].content){
+      _vlPick=new Set([0]);renderRecPick();            // 只有一题：自动选中并直接生成分析（不再填表）
+      setRecStatus(`✅ 识别到 <b>1</b> 道题（${esc(o.source||'出处未识别')}）—— 正在生成 答案/错因/考点/五维…`);
+      aiAnalyzePicked();
+    }else{
+      setRecStatus(`✅ 识别到 <b>${_vlQuestions.length}</b> 道题（${esc(o.source||'出处未识别')}）—— <b>点选要录入的题</b>（可多选，再点一次取消），然后点「AI 一键分析这 N 题」${nt?'（'+esc(nt)+'）':''}`);
       renderRecPick();
     }
   }catch(e){
@@ -1555,11 +1867,11 @@ function renderAdd(){
   return`<div class="card">
     <div class="card-title"><i class="fas fa-plus-circle" style="color:var(--primary)"></i> 录入新错题</div>
     <div class="img-first">
-      <div class="img-first-head"><i class="fas fa-camera"></i> 题目图片<span class="img-opt">选填 · 自动缩放</span></div>
+      <div class="img-first-head"><i class="fas fa-camera"></i> 拍题目图片<span class="img-opt">必填 · 自动缩放</span></div>
       <label class="img-drop" for="af_image">
         <i class="fas fa-cloud-upload-alt"></i>
         <div class="img-drop-main">点这里上传题目图片</div>
-        <div class="img-drop-sub">手机可直接拍照或从相册选图 · 自动压缩到 1600px（省流量、上传快）<br>不上传也行，下面手动输入文字</div>
+        <div class="img-drop-sub">手机可直接拍照或从相册选图 · 自动压缩到 1600px（省流量、上传快）<br>选好图点下面「AI 识别并分析」：认出题目和你的手写答案，再自动生成解析</div>
       </label>
       <input type="file" id="af_image" accept="image/*" class="img-file-hidden" onchange="handleFile(this,'image_path')">
       <div id="af_image_preview" class="img-preview" style="display:${addForm.image_path?'block':'none'}">
@@ -1570,21 +1882,38 @@ function renderAdd(){
       <div id="ai_recog_pick" class="recog-pick"></div>
       <div style="margin-top:.65rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
         <button type="button" class="btn btn-primary btn-sm" id="ai_recog_btn" onclick="aiRecognizeImage()"><i class="fas fa-wand-magic-sparkles"></i> AI 识别并分析</button>
-        <span style="font-size:.74rem;color:var(--text-light)">选图后会自动识别；识别到多题可挑一道</span>
+        <span style="font-size:.74rem;color:var(--text-light)">选图后会自动识别；识别到多题可<b>多选</b>，一次分析完再勾选保存</span>
       </div>
     </div>
-    <div style="background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #ddd6fe;border-radius:10px;padding:.85rem 1rem;margin-bottom:1rem">
-      <div style="font-weight:700;color:#5b21b6;margin-bottom:.35rem">🤖 AI 一键生成（大模型）</div>
-      <div style="font-size:.83rem;color:#4c1d95;line-height:1.7">
-        填好<b>题目内容</b>（可再填「我的错误答案」更好）→ 点下面按钮，AI 按错题模板生成：
-        <b>正确答案 · 错因 · 考点标签 · 难度 · 五维分析</b>，生成后<b>可逐项修改</b>再保存。
+    <div class="ai-only-tip">📸 <b>拍一张卷子就行</b>：AI 自动认出题干和「我的答案」，并生成 正确答案 · 错因 · 考点 · 难度 · 五维分析 → 勾选要保存的题 → 一键入库，<b>不用手填表</b>。</div>
+    <div class="ai-setup-card">
+      <div class="ai-setup-head"><i class="fas fa-cog"></i> AI 设置（第一次用，先花 1 分钟配好）
+        <span class="ai-setup-state">${aiCfg().key||AI_EMBED_KEY?'✅ 已配好':'⚠️ 还没配 Key'}</span></div>
+      <div class="ai-setup-body">
+        <b>要配两个模型（都在「AI 设置」页里）</b>：<br>
+        · <b>视觉模型</b> · 拍图识别用 → <code>deepseek-flash</code>（能看图）<br>
+        · <b>文本模型</b> · 生成解析用 → <code>deepseek-chat</code><br>
+        两家都填 DeepSeek 就行，<b>一把 Key 通用</b>；视觉模型的 Key 留空会自动复用文本那把。
+        <div class="ai-setup-sub"><i class="fas fa-key"></i> 怎么拿 DeepSeek API Key（3 步）</div>
+        ① 浏览器打开 <code>platform.deepseek.com</code>，手机号注册/登录<br>
+        ② 左边菜单「API Keys」→「创建 API Key」→ 复制 <code>sk-</code> 开头那一串（只显示一次，先存好）<br>
+        ③ 回本页点「⚙️ 打开 AI 设置」→ 粘进 Key 框 → 保存（<b>只存本机，不上传</b>）
+        <div class="ai-setup-note">💡 充值：按用量计费，充 10 元够识别+生成几百题；提示余额不足时充完立刻恢复。</div>
       </div>
-      <div style="margin-top:.6rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
-        <button type="button" class="btn btn-primary btn-sm" id="ai_btn" onclick="aiGenerate('af')"><i class="fas fa-wand-magic-sparkles"></i> AI 一键生成</button>
-        <button type="button" class="btn btn-outline btn-sm" onclick="navigate('aiconf')"><i class="fas fa-cog"></i> AI 设置</button>
-        <span style="font-size:.75rem;color:#6b7280">需联网 · 约 10-20 秒</span>
+      <div class="ai-setup-btns">
+        <button type="button" class="btn btn-primary btn-sm" onclick="navigate('aiconf')"><i class="fas fa-cog"></i> 打开 AI 设置</button>
+        <span class="ai-setup-note">需联网 · 识别约 6-15 秒 · 生成约 10-20 秒</span>
       </div>
-      <div id="ai_status" style="margin-top:.5rem;font-size:.82rem;color:var(--text-light)"></div>
+    </div>
+    <details class="manual-box">
+      <summary><i class="fas fa-pen"></i> 识别不了？点这里手动填（平时不用）</summary>
+      <div class="manual-inner">
+    <div class="ai-mini">
+      <span>🤖 手填题干时，可让大模型按错题模板生成解析（正确答案 · 错因 · 考点 · 难度 · 五维）：</span>
+      <button type="button" class="btn btn-primary btn-sm" id="ai_btn" onclick="aiGenerate('af')"><i class="fas fa-wand-magic-sparkles"></i> AI 一键生成</button>
+      <button type="button" class="btn btn-outline btn-sm" onclick="navigate('aiconf')"><i class="fas fa-cog"></i> AI 设置</button>
+      <span class="ai-setup-note">需联网 · 约 10-20 秒</span>
+      <div id="ai_status" style="margin-top:.4rem;font-size:.82rem;color:var(--text-light)"></div>
     </div>
     <form onsubmit="event.preventDefault();submitAdd()">
       <div class="form-section"><h6><i class="fas fa-info-circle"></i> 基本信息</h6>
@@ -1641,7 +1970,9 @@ function renderAdd(){
       <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
         <button class="btn btn-primary px-4"><i class="fas fa-save"></i> 保存错题</button>
         <button class="btn btn-outline px-4 ms-2" type="button" onclick="addForm={subject_id:1,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:lastGrade()};refreshAdd()">重置</button></div>
-    </form></div>`;
+    </form></div>      </form>
+    </details>
+  </div>`;
 }
 
 // ===================== FILE UPLOAD HELPERS =====================
@@ -1715,7 +2046,7 @@ function submitAdd(){
   setLastGrade(addForm.grade);
   addForm={subject_id:addForm.subject_id,chapter_id:'',content:'',correct_answer:'',my_answer:'',error_reason:'概念不清',tags:'',source:'练习',difficulty:3,grade:addForm.grade||lastGrade(),image_path:'',answer_image_path:'',ana5:{}};
   toast('✅ 错题已保存','success');
-  navigate('detail',{qid});
+  navReset('detail',{qid},[{page:'dashboard',data:null},{page:'list',data:{}}]);   // 返回 → 列表
 }
 
 function addChapter(){
@@ -1891,7 +2222,7 @@ function saveEdit(qid){
   q.updated_at=now();
   saveData(d);
   toast('✅ 已保存','success');
-  navigate('detail',{qid});
+  navReset('detail',{qid},[{page:'dashboard',data:null},{page:'list',data:{}}]);   // 返回 → 列表
 }
 function deleteQ(qid){
   if(!confirm('确定删除这道错题？'))return;
@@ -1899,7 +2230,7 @@ function deleteQ(qid){
   d.questions=d.questions.filter(q=>q.id!==qid);
   saveData(d);
   toast('已删除','info');
-  navigate('list',{});
+  navReset('list',{},[{page:'dashboard',data:null}]);   // 返回 → 首页
 }
 
 // ===================== REVIEW =====================
