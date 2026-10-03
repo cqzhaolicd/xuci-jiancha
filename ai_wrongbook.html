@@ -131,7 +131,10 @@ details.rp-ana5 .ana5-item{font-size:.85rem;line-height:1.7}
 .rp-res-b{font-size:.78rem;line-height:1.7;color:var(--text);margin-top:.35rem;white-space:pre-wrap}
 .rp-res-b b{color:var(--primary)}
 .qb-review i{background:linear-gradient(135deg,#48bb78,#2f855a)}
-.qb-invite i{background:linear-gradient(135deg,#ed8936,#dd6b20)}
+/* 推荐先锋入口（老板 2026-10-03：挪到顶部导航右侧，去掉「推荐得 50 元」字样） */
+.nav-pioneer{display:inline-flex;align-items:center;gap:.3rem;color:#fff;background:linear-gradient(135deg,#ed8936,#dd6b20);border:none;border-radius:20px;padding:.3rem .7rem;font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap;transition:filter .2s;box-shadow:0 2px 8px rgba(237,137,54,.4)}
+.nav-pioneer:hover{filter:brightness(1.1)}
+@media(max-width:768px){.nav-pioneer span{display:none}.nav-pioneer{padding:.32rem .55rem}}
 /* 推荐先锋页（老板 2026-10-03） */
 .rf-hero{background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #f6c453;border-radius:14px;padding:16px 14px;text-align:center}
 .rf-hero .rf-ico{font-size:2.2rem;line-height:1}
@@ -354,7 +357,8 @@ textarea.form-control{resize:vertical;min-height:70px}
     <a data-page="print-page"><i class="fas fa-print"></i><span>打印</span></a>
     <a data-page="analysis"><i class="fas fa-chart-pie"></i><span>分析</span></a>
   </div>
-  <div style="display:flex;justify-content:flex-end">
+  <div style="display:flex;justify-content:flex-end;gap:.4rem;align-items:center">
+    <a class="nav-pioneer" id="navPioneer" onclick="navigate('referral')" title="推荐先锋"><i class="fas fa-medal"></i><span>推荐先锋</span></a>
     <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
   </div>
 </div></nav>
@@ -1936,7 +1940,6 @@ function renderDashboard(){
     <button class="quick-btn qb-add" onclick="navigate('add')" title="录入新错题"><i class="fas fa-plus-circle"></i><span>录入</span><small>录入新错题</small></button>
     <button class="quick-btn qb-print" onclick="navigate('print-page')" title="打印错题"><i class="fas fa-print"></i><span>打印</span><small>选题+选内容</small></button>
     <button class="quick-btn qb-review" onclick="navigate('points')" title="复习要点"><i class="fas fa-clipboard-check"></i><span>复习要点</span><small>考前速览</small></button>
-    <button class="quick-btn qb-invite" onclick="navigate('referral')" title="推荐先锋"><i class="fas fa-medal"></i><span>推荐先锋</span><small>推荐得 50 元</small></button>
   </div>
   ${!total?'<div class="empty-state"><i class="fas fa-inbox"></i><h5>还没有错题记录</h5><p class="text-muted">去录入第一道错题吧！</p><button class="btn btn-primary mt-2" onclick="navigate(\'add\')"><i class="fas fa-plus-circle"></i> 录入错题</button></div>':''}
   `;

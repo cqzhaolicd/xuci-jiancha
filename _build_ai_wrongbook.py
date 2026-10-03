@@ -45,6 +45,7 @@ NAV_OLD = """<nav class="navbar"><div class="container">
     <a data-page="print-page"><i class="fas fa-print"></i><span>打印</span></a>
     <a data-page="analysis"><i class="fas fa-chart-pie"></i><span>分析</span></a>
   </div>
+  <a class="nav-pioneer" id="navPioneer" onclick="navigate('referral')" title="推荐先锋"><i class="fas fa-medal"></i><span>推荐先锋</span></a>
   <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
 </div></nav>"""
 
@@ -60,7 +61,8 @@ NAV_NEW = """<nav class="navbar"><div class="container" style="flex-direction:co
     <a data-page="print-page"><i class="fas fa-print"></i><span>打印</span></a>
     <a data-page="analysis"><i class="fas fa-chart-pie"></i><span>分析</span></a>
   </div>
-  <div style="display:flex;justify-content:flex-end">
+  <div style="display:flex;justify-content:flex-end;gap:.4rem;align-items:center">
+    <a class="nav-pioneer" id="navPioneer" onclick="navigate('referral')" title="推荐先锋"><i class="fas fa-medal"></i><span>推荐先锋</span></a>
     <a class="nav-back" id="navBack" onclick="goBack()" title="返回上一页"><i class="fas fa-arrow-left"></i><span>返回</span></a>
   </div>
 </div></nav>"""
