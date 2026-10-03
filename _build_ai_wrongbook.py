@@ -118,7 +118,15 @@ AUTH_CSS = """<style>
   padding-bottom:calc(18px + env(safe-area-inset-bottom))}
 .ab-gate.ab-hide{display:none}
 .ab-card{background:#fff;border-radius:18px;padding:22px 20px;width:100%;max-width:360px;
-  box-shadow:0 18px 50px rgba(0,0,0,.25);margin:auto 0}
+  box-shadow:0 18px 50px rgba(0,0,0,.25);margin:auto 0;position:relative}
+/* 资料弹窗专用（老板 2026-09-28）：① 左上角返回，随时可退出；② 底部吸底操作条，保存按钮不滑到底也看得见、点得到 */
+.ab-back{position:absolute;left:12px;top:13px;z-index:3;display:inline-flex;align-items:center;gap:.2rem;
+  border:1px solid #e2e8f0;background:#f8fafc;color:#475569;font-family:inherit;font-size:.8rem;font-weight:700;
+  padding:.34rem .62rem;border-radius:999px;cursor:pointer;line-height:1.1}
+.ab-back:active{background:#eef2f7}
+.ab-actions{position:sticky;bottom:0;z-index:2;margin:1rem -20px -22px;
+  padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:#fff;
+  border-radius:0 0 18px 18px;box-shadow:0 -8px 18px rgba(15,23,42,.07)}
 .ab-logo{font-size:1.12rem;font-weight:700;color:#1a202c;text-align:center}
   .ab-vip{display:inline-block;padding:9px 22px;border-radius:999px;background:linear-gradient(135deg,#f7cf5b,#e0890a);color:#fff;font-size:1.35rem;font-weight:800;letter-spacing:1px;box-shadow:0 6px 16px rgba(224,137,10,.32);text-shadow:0 1px 2px rgba(0,0,0,.18);margin:2px 0}
 .ab-sub{font-size:.82rem;color:#718096;text-align:center;margin:.25rem 0 1rem}
@@ -228,6 +236,7 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
 </div>
 <div id="abProf" class="ab-gate ab-hide">
   <div class="ab-card" style="max-width:400px">
+    <button class="ab-back" type="button" onclick="ABG.closeProfile()" aria-label="返回">← 返回</button>
     <div class="ab-logo">📇 账号资料</div>
     <div class="ab-sub">填一次就行，方便分班与联系；之后点右下角「👤」随时改</div>
     <label class="ab-lb">城市</label>
@@ -258,8 +267,10 @@ AUTH_OVERLAY = """<!-- AUTH_GATE_V1 · AI错题本-测试版 登录门禁 -->
     </div>
     <div id="abBkMsg" class="ab-msg" style="min-height:1.15rem;font-size:.78rem;color:#4a5568;text-align:left"></div>
     <div id="abPfMsg" class="ab-msg" style="min-height:1.2em"></div>
-    <button class="ab-btn" onclick="ABG.saveProfile()">保存</button>
-    <button class="ab-btn2" onclick="ABG.closeProfile()">以后再说</button>
+    <div class="ab-actions">
+      <button class="ab-btn" onclick="ABG.saveProfile()">保存</button>
+      <button class="ab-btn2" onclick="ABG.closeProfile()">以后再说</button>
+    </div>
   </div>
 </div>
 <div id="abPay" class="ab-gate ab-hide">
