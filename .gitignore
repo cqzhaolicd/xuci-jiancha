@@ -1,3 +1,16 @@
 __pycache__/
 _build_ai_wrongbook.py.bak-*
 _apktest/
+
+# AI错题本专线（页面内置大模型 Key，禁止进公网仓库）
+ai-teacher/
+ai-wrongbook/
+ai_wrongbook.html
+wrong_bank.html
+wrong_bank.html.bak_*
+choose/
+api_wrongbank*.php
+_build_ai_teacher.py
+_build_ai_wrongbook.py*
+_add_*_wrong.py
+uploads/wrong_bank/
