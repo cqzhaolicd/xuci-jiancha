@@ -799,6 +799,32 @@ function toggleSection(key, el) {
 
 render();
 
+// ===== 入口自检：目标页不存在（例如公网仓库未发布错题本/复习页）就自动隐藏入口 =====
+// 内网 NAS 上这些页都在，入口照常显示；这样同一份 index.html 三地通用
+(function hideMissingTargets(){
+  var seen = Object.create(null);
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href') || '';
+    if (/^(https?:)?\/\//.test(href) || href.charAt(0) === '#' || href.indexOf('mailto:') === 0) return;
+    var path = href.split('#')[0];
+    if (!path || !/\.html$/i.test(path) || seen[path]) return;
+    seen[path] = 1;
+    fetch(path, { method: 'HEAD' }).then(function(r){
+      if (r.ok) return;
+      document.querySelectorAll('a[href]').forEach(function(el){
+        if ((el.getAttribute('href') || '').split('#')[0] !== path) return;
+        var card = el.closest('.tool-card, .lecture-card');
+        (card || el).style.display = 'none';
+      });
+      document.querySelectorAll('.section').forEach(function(sec){
+        var cards = sec.querySelectorAll('.tool-card, .lecture-card');
+        var alive = Array.prototype.some.call(cards, function(c){ return c.style.display !== 'none'; });
+        if (cards.length && !alive) sec.style.display = 'none';
+      });
+    }).catch(function(){});
+  });
+})();
+
 // ===== 已学习标记 =====
 const LEARNED_KEY = 'learned_pages';
 function getLearned() { try { return JSON.parse(localStorage.getItem(LEARNED_KEY) || '[]'); } catch(e) { return []; } }

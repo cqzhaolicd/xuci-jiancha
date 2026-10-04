@@ -14,3 +14,11 @@ _build_ai_teacher.py
 _build_ai_wrongbook.py*
 _add_*_wrong.py
 uploads/wrong_bank/
+
+# 错题复习模块 + 群晖首页源：只在内网 NAS / 本机保留，不进公网仓库（2026-10-04）
+review/
+review_interactive.html
+ai_ana5_12questions.json
+import_math_q2.html
+import_q5.html
+index_synology_home.html

@@ -32,7 +32,12 @@ function doImport(){
   document.getElementById('status').innerHTML='<i class="fas fa-check-circle"></i> 已准备 '+items.length+' 道错题！';
   document.getElementById('importBtn').disabled=true;
   document.getElementById('importBtn').textContent='✅ 已导入，正在跳转…';
-  setTimeout(()=>window.location.href='wrong_bank.html',800);
+  // 错题本页不存在时（公网仓库未发布）回首页，避免跳到 404
+  setTimeout(function(){
+    fetch('wrong_bank.html',{method:'HEAD'}).then(function(r){
+      window.location.href = r.ok ? 'wrong_bank.html' : 'index.html';
+    }).catch(function(){ window.location.href = 'index.html'; });
+  },800);
 }
 </script>
 <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
