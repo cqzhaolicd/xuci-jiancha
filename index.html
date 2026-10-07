@@ -128,7 +128,7 @@ body {
 .tile .t-name{font-size:1rem;font-weight:800;line-height:1.35;word-break:break-word;text-wrap:balance}
 .tile .t-meta{font-size:.74rem;color:var(--dim);line-height:1.35}
 .tile .t-count{position:absolute;top:9px;right:9px;font-size:.7rem;font-weight:800;padding:2px 9px;border-radius:99px;background:rgba(212,175,55,.14);color:var(--gold2);border:1px solid rgba(212,175,55,.32)}
-.tile .t-chev{position:absolute;top:12px;left:12px;font-size:.72rem;color:var(--gold);opacity:.6;transition:transform .3s}
+.tile .t-chev{position:absolute;top:50%;right:10px;left:auto;transform:translateY(-50%);font-size:.78rem;color:var(--gold);opacity:.75;transition:transform .2s,opacity .2s}
 .tile-block.open>.tile{border-color:var(--gold)}
 .tile-block.open>.tile .t-chev{transform:rotate(180deg);opacity:1}
 .tile-content{display:none}
@@ -138,7 +138,8 @@ body {
 .tile-content .tile .t-icon,.tile-content .tool-card .t-icon{width:44px;height:44px;border-radius:12px;font-size:1.15rem}
 .tile-content .tile .t-name,.tile-content .tool-card .t-name{font-size:.92rem}
 .tile-content .tile .t-count{top:7px;right:7px}
-.tile-content .tile .t-chev{top:9px;left:9px}
+.tile .t-chev i{font-size:.78rem}
+.tile.group-tile:hover .t-chev{opacity:1;transform:translateY(-50%) translateX(2px)}
 .tile-content .tile-content .tile,.tile-content .tile-content .tool-card{min-height:104px}
 .tile.learned{border-color:#2ecc71;background:linear-gradient(135deg,rgba(46,204,113,.16),rgba(46,204,113,.05))}
 .tile-empty{cursor:default;color:var(--text-light);font-size:.75rem;border-style:dashed;box-shadow:none;min-height:70px}
@@ -341,6 +342,22 @@ body {
 #sq-pop .sq-sw span{color:var(--dim)!important}
 #sq-bar{background:#1f2023!important;border:1px solid var(--line)!important}
 html[data-sq-bg] body,html[data-sq-dark="1"] body{background:linear-gradient(180deg,#060e18,var(--bg) 260px) fixed!important;filter:none!important}
+
+/* ===== 单页路由：面包屑 + 卡片（进入型） ===== */
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:0 0 1rem;font-size:.85rem;color:var(--dim)}
+.crumbs:empty{display:none}
+.crumbs a{color:var(--gold2);text-decoration:none;padding:.2rem .55rem;border-radius:9px;background:rgba(212,175,55,.10);border:1px solid rgba(212,175,55,.25);transition:background .15s}
+.crumbs a:hover{background:rgba(212,175,55,.22)}
+.crumbs .sep{opacity:.55}
+.crumbs .cur{color:var(--text);font-weight:800;padding:.2rem .35rem}
+.tile .t-desc{font-size:.74rem;color:var(--dim);line-height:1.4;max-width:100%;padding:0 .2rem}
+.tile .learn-btn{font-size:.66rem;padding:.14rem .45rem;margin-top:.2rem;background:rgba(212,175,55,.12);color:var(--gold2);border:1px solid rgba(212,175,55,.35);border-radius:8px;cursor:pointer}
+.tile .learn-btn:hover{border-color:var(--gold)}
+.tile .learn-btn.done{background:rgba(46,204,113,.16);border-color:#2ecc71;color:#3ddc84}
+.tile .learn-badge{position:absolute;top:8px;left:8px;display:inline-flex;align-items:center;gap:.2rem;font-size:.58rem;font-weight:700;padding:1px 7px;border-radius:99px;background:linear-gradient(135deg,#2ecc71,#27ae60);color:#04160c;z-index:2}
+.tile.leaf-tile .badge-new{position:absolute;top:6px;right:6px;font-size:.56rem;font-weight:800;padding:1px 6px;border-radius:99px;background:linear-gradient(135deg,#f39c12,#e67e22);color:#1a1205}
+a.tile{text-decoration:none;color:var(--text)}
+.tile.leaf-tile.learned{border-color:rgba(46,204,113,.45)}
 </style>
 </head>
 <body>
@@ -628,250 +645,141 @@ const numColors = ['#e74c3c','#6ab0ff','#2ecc71','#f39c12','#9b59b6','#1abc9c'];
 const schoolIcons = ['fa-calculator','fa-flask','fa-language','fa-flask','fa-leaf','fa-history','fa-globe','fa-gavel'];
 const schoolColors = ['#e74c3c','#667eea','#2ecc71','#9b59b6','#27ae60','#f39c12','#1abc9c','#34495e'];
 
-function render() {
-  let html = '<div class="tile-grid sec-grid">';
-
-  // === 错题库工具（顶部那排小快捷按钮已取消：与下方卡片内容重复）===
-  html += renderSection('错题库工具', 'fa-database', '#e74c3c', 'badge-tools', `
-    <div class="tool-grid">
-      ${tools.map(t => `<a href="${BANK_BASE}${t.url}" class="tool-card ${t.cls}">
-        <div class="t-icon"><i class="fas ${t.icon}"></i></div>
-        <div class="t-name">${t.name}</div>
-        <div class="t-desc">${t.desc}</div>
-      </a>`).join('')}
-    </div>`);
-
-  // === 复习模块（作业题精析·分学科）===
-  html += renderSection('复习模块 · 作业题精析', 'fa-book-open', '#6ab0ff', 'badge-tools', `
-    <div class="tool-grid">
-      <a href="review_interactive.html" class="tool-card t-list ${isLearned('review_interactive.html') ? 'learned' : ''}">
-        <span class="learn-badge" style="display:${isLearned('review_interactive.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
-        <div class="t-icon"><i class="fas fa-book-open"></i></div>
-        <div class="t-name">题目精析（分学科）</div>
-        <div class="t-desc">A已知条件 B求解 C思路 D易错点 E知识点</div>
-        ${learnedBtn('review_interactive.html')}
-      </a>
-    </div>`);
-
-  // === 预习闯关 ===
-  html += renderSection('预习闯关 · 八上', 'fa-gamepad', '#f39c12', 'badge-tools', `
-    <div class="tool-grid">
-      <a href="preview_challenge_math8.html" class="tool-card t-training ${isLearned('preview_challenge_math8.html') ? 'learned' : ''}">
-        <span class="learn-badge" style="display:${isLearned('preview_challenge_math8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
-        <div class="t-icon"><i class="fas fa-calculator"></i></div>
-        <div class="t-name">数学闯关</div>
-        <div class="t-desc">北师大八上 · 勾股定理→一次函数</div>
-        ${learnedBtn('preview_challenge_math8.html')}
-      </a>
-      <a href="preview_challenge_physics8.html" class="tool-card t-flow ${isLearned('preview_challenge_physics8.html') ? 'learned' : ''}">
-        <span class="learn-badge" style="display:${isLearned('preview_challenge_physics8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
-        <div class="t-icon"><i class="fas fa-flask"></i></div>
-        <div class="t-name">物理闯关</div>
-        <div class="t-desc">人教八上 · 机械运动→质量密度</div>
-        ${learnedBtn('preview_challenge_physics8.html')}
-      </a>
-      <a href="preview_challenge_chinese8.html" class="tool-card t-print ${isLearned('preview_challenge_chinese8.html') ? 'learned' : ''}">
-        <span class="learn-badge" style="display:${isLearned('preview_challenge_chinese8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
-        <div class="t-icon"><i class="fas fa-book"></i></div>
-        <div class="t-name">语文闯关</div>
-        <div class="t-desc">统编八上 · 新闻→文言文</div>
-        ${learnedBtn('preview_challenge_chinese8.html')}
-      </a>
-      <a href="preview_challenge_english8.html" class="tool-card t-add ${isLearned('preview_challenge_english8.html') ? 'learned' : ''}">
-        <span class="learn-badge" style="display:${isLearned('preview_challenge_english8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
-        <div class="t-icon"><i class="fas fa-language"></i></div>
-        <div class="t-name">英语闯关</div>
-        <div class="t-desc">人教八上 · 假期→条件句</div>
-        ${learnedBtn('preview_challenge_english8.html')}
-      </a>
-    </div>`);
-
-  // === 知识清单 ===
-  html += renderSection('知识清单', 'fa-school', '#2ecc71', 'badge-study',
-    '<div class="tile-grid">' + schoolSubjectsData.map((grade, gi) => {
-      const cnt = grade.subjects.reduce((a, s) => a + s.lectures.length, 0);
-      return renderGrade(grade, gi, cnt);
-    }).join('') + '</div>', schoolSubjectsData.length);
-
-  // === 课外培训 ===
-  html += renderSection('课外培训 · 互动学习', 'fa-graduation-cap', '#f39c12', 'badge-training',
-    '<div class="tile-grid">' + trainingTerms.map((term, ti) => {
-      const cnt = term.subjects.reduce((a, s) => a + s.lectures.length, 0);
-      return renderTrainingTerm(term, ti, cnt);
-    }).join('') + '</div>', trainingTerms.length);
-
-  html += '</div>';
-  document.getElementById('app').innerHTML = html;
-}
-
-function renderSection(title, icon, color, badgeClass, content, entryCount) {
-  const key = 'sec2_' + title;                       // 换 key：默认收起（老板要「点开才看到下层」）
-  const isOpen = localStorage.getItem(key) === 'open';
-  const cnt = entryCount !== undefined ? entryCount
-    : (content.match(/class="tool-card/g) || []).length;
-  return `<div class="section tile-block ${isOpen ? 'open' : ''}">
-    <div class="tile" onclick="toggleSection('${key}', this)">
-      <span class="t-count ${badgeClass}">${cnt} 项</span>
-      <div class="t-icon" style="background:${color}"><i class="fas ${icon}"></i></div>
-      <div class="t-name">${title}</div>
-      <div class="t-chev"><i class="fas fa-chevron-down"></i></div>
-    </div>
-    <div class="tile-content">${content}</div>
-  </div>`;
-}
-
+// ===================================================================================
+// 单页路由：区块 → 年级/期 → 学科 → 讲次。点卡片"翻页"（不再在首页内联展开）
+// 页面地址形如 #/知识清单/8年级上/数学 ；浏览器返回键可用；三地同一份文件
+// ===================================================================================
 const tileGradeColors = {'7年级':'#e74c3c','8年级上':'#667eea','8年级下':'#2ecc71','9年级':'#6ab0ff','综合':'#f39c12'};
 const tileSubjectColors = {'数学':'#e74c3c','语文':'#2ecc71','英语':'#6ab0ff','物理':'#667eea','化学':'#9b59b6','生物':'#27ae60','历史':'#f39c12','地理':'#1abc9c','道法':'#34495e'};
 
-function lectureTile(lec, li) {
-  const learned = isLearned(lec.url);
-  return `<a href="${lec.url}" class="tile lecture-tile ${learned ? 'learned' : ''}">
-    ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
-    <span class="learn-badge" style="display:${learned ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
-    <div class="t-icon" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
-    <div class="t-name">${lec.title}</div>
-    <div class="t-meta">${lec.date}${lec.tags && lec.tags.length ? ' · ' + lec.tags.join(' · ') : ''}</div>
-    ${learnedBtn(lec.url)}
-  </a>`;
+function esc(t){ return String(t == null ? '' : t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function pathOf(){
+  try { return decodeURIComponent((location.hash || '').replace(/^#\/?/, '')).split('/').filter(Boolean); }
+  catch(e){ return []; }
 }
+function hashFor(arr){ return '#/' + arr.map(encodeURIComponent).join('/'); }
 
-function expandableTile(name, icon, color, countText, contentHtml, delay) {
-  const zeroCls = /^0\s*项/.test(String(countText)) ? ' zero' : '';
-  const tile = `<div class="tile${zeroCls}" onclick="toggleTile(this)">
-    <span class="t-count">${countText}</span>
-    <div class="t-icon" style="background:${color}"><i class="fas ${icon}"></i></div>
-    <div class="t-name">${name}</div>
-    <div class="t-chev"><i class="fas fa-chevron-down"></i></div>
-  </div>`;
-  return `<div class="tile-block${delay === undefined ? '' : ' fade-in-up'}"${delay === undefined ? '' : ` style="animation-delay:${delay}s"`}>${tile}<div class="tile-content">${contentHtml}</div></div>`;
-}
-
-function subjectTiles(subjects) {
-  if (!subjects.length) return `<div class="tile tile-empty" style="grid-column:1/-1">暂无内容 · 后续增加</div>`;
-  return subjects.map(subj => expandableTile(
-      subj.name, subj.icon, tileSubjectColors[subj.name] || '#667eea', subj.lectures.length + '项',
-      `<div class="tile-grid">${subj.lectures.length
-        ? subj.lectures.map((lec, li) => lectureTile(lec, li)).join('')
-        : '<div class="tile tile-empty">暂无内容 · 后续增加</div>'}</div>`
-    )).join('');
-}
-
-function renderGrade(grade, gi, cnt) {
-  return expandableTile(grade.name, grade.icon, tileGradeColors[grade.name] || '#667eea', cnt + '项',
-    `<div class="tile-grid">${subjectTiles(grade.subjects)}</div>`, 0.1 + gi * 0.06);
-}
-
-function renderTrainingTerm(term, ti, cnt) {
-  return expandableTile(term.name, term.icon, numColors[ti % numColors.length], cnt > 0 ? cnt + '讲' : term.subjects.length + '科',
-    `<div class="tile-grid">${subjectTiles(term.subjects)}</div>`, 0.1 + ti * 0.06);
-}
-
-function renderSubject(subj, si, cnt) {
-  return `
-    <div class="subject-section fade-in-up" style="animation-delay:${0.1 + si * 0.06}s">
-      <div class="subject-header ${subj.cls}" onclick="toggleSubject(this)">
-        <div class="icon"><i class="fas ${subj.icon}"></i></div>
-        <h3>${subj.name}</h3>
-        <span class="count">${cnt} 讲</span>
-        <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-      </div>
-      <div class="lecture-grid">
-        ${subj.lectures.map((lec, li) => `
-        <a href="${lec.url}" class="lecture-card ${isLearned(lec.url) ? 'learned' : ''}">
-          ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
-          <span class="learn-badge" style="display:${isLearned(lec.url) ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
-          <div class="lnum" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
-          <div class="info">
-            <h4>${lec.title}</h4>
-            <div class="meta"><span>${lec.date}</span>${lec.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-          </div>
-          <div class="arrow"><i class="fas fa-chevron-right"></i></div>
-          ${learnedBtn(lec.url)}
-        </a>`).join('')}
-        <div class="lecture-card empty">
-          <div class="lnum" style="background:var(--border);color:var(--text-light)">+</div>
-          <div class="info"><h4>暂无内容</h4><div class="meta"><span>后续增加</span></div></div>
-        </div>
-      </div>
-    </div>`;
-}
-
-function toggleSubject(header) {
-  const grid = header.nextElementSibling;
-  const icon = header.querySelector('.toggle-icon');
-  if (!grid) return;
-  
-  // Close only peer grids at the same level (not ancestors)
-  const parent = grid.parentElement;
-  if (parent) {
-    parent.querySelectorAll(':scope > .lecture-grid.open, :scope > .grade-grid.open').forEach(el => {
-      if (el !== grid) {
-        el.classList.remove('open');
-        const h = el.previousElementSibling;
-        if (h) {
-          const ic = h.querySelector('.toggle-icon');
-          if (ic) ic.classList.remove('open');
-        }
-      }
-    });
-  }
-  
-  grid.classList.toggle('open');
-  if (icon) icon.classList.toggle('open');
-}
-
-function toggleSection(key, el) {
-  const block = el.closest('.tile-block');
-  if (!block) return;
-  const open = block.classList.toggle('open');
-  localStorage.setItem(key, open ? 'open' : 'closed');
-}
-
-// 矩形卡片：点开才显示下层目录（年级/学期/学科通吃）
-function toggleTile(el) {
-  const block = el.closest('.tile-block');
-  if (block) block.classList.toggle('open');
-}
-
-render();
-
-// ===== 入口自检：目标页不存在（例如公网仓库未发布复习页）就自动隐藏入口 =====
-// 内网 NAS 上这些页都在，入口照常显示；这样同一份 index.html 三地通用
-// ★ 先隐藏 #app 再检测，避免「先看到 5 个图标，随后掉成 4 个」的跳动
-(function hideMissingTargets(){
-  var app = document.getElementById('app');
-  var paths = Object.create(null), any = false;
-  document.querySelectorAll('#app a[href]').forEach(function(a){
-    var href = a.getAttribute('href') || '';
-    if (/^(https?:)?\/\//.test(href) || href.charAt(0) === '#' || href.indexOf('mailto:') === 0) return;
-    var path = href.split('#')[0];
-    if (!path || !/\.html$/i.test(path) || paths[path]) return;
-    paths[path] = 1; any = true;
+function subjectNodes(subjects){
+  return subjects.map(function(subj){
+    var lecs = subj.lectures || [];
+    return {
+      name: subj.name, icon: subj.icon, color: tileSubjectColors[subj.name] || '#667eea',
+      countText: lecs.length + ' 讲',
+      kids: lecs.map(function(lec, li){
+        return { link: lec.url, num: lec.num, name: lec.title, color: numColors[li % numColors.length],
+                 meta: lec.date + (lec.tags && lec.tags.length ? ' · ' + lec.tags.join(' · ') : ''), isNew: lec.new };
+      })
+    };
   });
-  function reveal(){ if (app) app.style.visibility = 'visible'; }
-  if (!any || !app) { reveal(); return; }
-  app.style.visibility = 'hidden';                 // 检测期间先不画，用户看不到"少一张"的过程
-  var guard = setTimeout(reveal, 2500);            // 网络异常也不至于一直白屏
-  function sweep(){
-    Array.prototype.slice.call(document.querySelectorAll('#app .tile-block')).reverse().forEach(function(b){
-      var cs = b.querySelectorAll('a.tool-card, a.tile, a.lecture-card, a.lecture-tile');
-      if (!cs.length) return;
-      var alive = Array.prototype.some.call(cs, function(c){ return c.style.display !== 'none'; });
-      if (!alive) b.style.display = 'none';
-    });
+}
+
+function buildTree(){
+  const toolKids = (typeof tools !== 'undefined' ? tools : []).map(function(t){
+    return { link: BANK_BASE + t.url, name: t.name, icon: t.icon, desc: t.desc };
+  });
+  const reviewKids = [{ link: 'review_interactive.html', name: '题目精析（分学科）', icon: 'fa-book-open',
+                        desc: 'A已知条件 B求解 C思路 D易错点 E知识点' }];
+  const previewKids = [
+    { link: 'preview_challenge_math8.html',    name: '数学闯关', icon: 'fa-calculator', desc: '北师大八上 · 勾股定理→一次函数' },
+    { link: 'preview_challenge_physics8.html', name: '物理闯关', icon: 'fa-flask',      desc: '人教八上 · 机械运动→质量密度' },
+    { link: 'preview_challenge_chinese8.html', name: '语文闯关', icon: 'fa-book',       desc: '统编八上 · 新闻→文言文' },
+    { link: 'preview_challenge_english8.html', name: '英语闯关', icon: 'fa-language',   desc: '人教八上 · 假期→条件句' }
+  ];
+  const schoolKids = schoolSubjectsData.map(function(g){
+    return { name: g.name, icon: g.icon, color: tileGradeColors[g.name] || '#667eea', kids: subjectNodes(g.subjects) };
+  });
+  const trainingKids = trainingTerms.map(function(term, ti){
+    return { name: term.name, icon: term.icon, color: numColors[ti % numColors.length], kids: subjectNodes(term.subjects) };
+  });
+  return [
+    { name: '错题库工具',           icon: 'fa-database',       color: '#e74c3c', badge: 'badge-tools',    kids: toolKids },
+    { name: '复习模块 · 作业题精析', icon: 'fa-book-open',      color: '#6ab0ff', badge: 'badge-tools',    kids: reviewKids },
+    { name: '预习闯关 · 八上',       icon: 'fa-gamepad',        color: '#f39c12', badge: 'badge-tools',    kids: previewKids },
+    { name: '知识清单',             icon: 'fa-school',         color: '#2ecc71', badge: 'badge-study',    kids: schoolKids },
+    { name: '课外培训 · 互动学习',   icon: 'fa-graduation-cap', color: '#f39c12', badge: 'badge-training', kids: trainingKids }
+  ];
+}
+const TREE = buildTree();
+
+function groupCard(k, path){
+  const n = (k.kids || []).length;
+  const cnt = k.countText !== undefined ? k.countText : n + ' 项';
+  return '<a class="tile group-tile' + (n ? '' : ' zero') + ' fade-in-up" href="' + hashFor(path.concat([k.name])) + '">'
+    + '<span class="t-count ' + (k.badge || '') + '">' + cnt + '</span>'
+    + '<div class="t-icon" style="background:' + k.color + '"><i class="fas ' + k.icon + '"></i></div>'
+    + '<div class="t-name">' + esc(k.name) + '</div>'
+    + '<div class="t-chev"><i class="fas fa-chevron-right"></i></div>'
+    + '</a>';
+}
+function leafCard(k, i){
+  const learned = isLearned(k.link);
+  return '<a class="tile leaf-tile fade-in-up' + (learned ? ' learned' : '') + '" href="' + k.link + '">'
+    + (k.isNew ? '<span class="badge-new">NEW</span>' : '')
+    + '<span class="learn-badge" style="display:' + (learned ? 'inline-flex' : 'none') + '"><i class="fas fa-check"></i> 已学习</span>'
+    + '<div class="t-icon" style="background:' + (k.color || numColors[i % numColors.length]) + '">'
+    +   (k.num !== undefined ? esc(k.num) : '<i class="fas ' + (k.icon || 'fa-file-lines') + '"></i>') + '</div>'
+    + '<div class="t-name">' + esc(k.name) + '</div>'
+    + (k.desc ? '<div class="t-desc">' + esc(k.desc) + '</div>' : '')
+    + (k.meta ? '<div class="t-meta">' + esc(k.meta) + '</div>' : '')
+    + learnedBtn(k.link)
+    + '</a>';
+}
+
+function render(){
+  const path = pathOf();
+  let kids = TREE, crumb = [], ok = true;
+  for (let i = 0; i < path.length; i++){
+    const hit = (kids || []).find(function(k){ return k.name === path[i]; });
+    if (!hit || !hit.kids){ ok = false; break; }
+    crumb.push(hit); kids = hit.kids;
   }
-  var tasks = Object.keys(paths).map(function(path){
-    return fetch(path, { method: 'HEAD' }).then(function(r){
+  if (!ok) kids = [];
+  let bc = crumb.length ? '<a href="#/"><i class="fas fa-house"></i> 首页</a>' : '';
+  crumb.forEach(function(c, i){
+    const sub = crumb.slice(0, i + 1).map(function(x){ return x.name; });
+    bc += '<span class="sep">›</span>';
+    bc += (i === crumb.length - 1) ? '<span class="cur">' + esc(c.name) + '</span>'
+                                    : '<a href="' + hashFor(sub) + '">' + esc(c.name) + '</a>';
+  });
+  const cards = (kids || []).map(function(k, i){ return k.link ? leafCard(k, i) : groupCard(k, path); }).join('');
+  document.getElementById('app').innerHTML =
+    '<nav class="crumbs">' + bc + '</nav>'
+    + '<div class="tile-grid page-grid">' + (cards || '<div class="tile tile-empty">暂无内容 · 后续增加</div>') + '</div>';
+  document.title = (crumb.length ? crumb[crumb.length - 1].name + ' · ' : '') + '赵若琳学习中心';
+}
+
+// 入口自检：目标页不存在就自动隐藏入口；先隐藏 #app 再检测，避免看到"先有后没"的跳动
+function checkEntries(){
+  const app = document.getElementById('app');
+  const paths = Object.create(null);
+  document.querySelectorAll('#app a[href]').forEach(function(a){
+    const href = a.getAttribute('href') || '';
+    if (!href || href.charAt(0) === '#') return;
+    if (/^(https?:)?\/\//.test(href) || href.indexOf('mailto:') === 0) return;
+    const p = href.split('#')[0];
+    if (!/\.html$/i.test(p)) return;
+    paths[p] = 1;
+  });
+  const keys = Object.keys(paths);
+  const reveal = function(){ if (app) app.style.visibility = ''; };
+  if (!keys.length || !app){ reveal(); return; }
+  app.style.visibility = 'hidden';
+  const guard = setTimeout(reveal, 2500);
+  Promise.all(keys.map(function(p){
+    return fetch(p, { method: 'HEAD' }).then(function(r){
       if (r.ok) return;
       document.querySelectorAll('#app a[href]').forEach(function(el){
-        if ((el.getAttribute('href') || '').split('#')[0] !== path) return;
-        var card = el.closest('.tool-card, .lecture-card, .lecture-tile, .tile');
+        if ((el.getAttribute('href') || '').split('#')[0] !== p) return;
+        const card = el.closest('.tile, .tool-card, .lecture-card, .lecture-tile');
         (card || el).style.display = 'none';
       });
     }).catch(function(){});
-  });
-  Promise.all(tasks).then(function(){ sweep(); clearTimeout(guard); reveal(); });
-})();
+  })).then(function(){ clearTimeout(guard); reveal(); });
+}
+
+function goPage(){ render(); window.scrollTo(0, 0); checkEntries(); }
+if (typeof window !== 'undefined' && 'onhashchange' in window) window.addEventListener('hashchange', goPage);
+goPage();
 
 // ===== 已学习标记 =====
 const LEARNED_KEY = 'learned_pages';
