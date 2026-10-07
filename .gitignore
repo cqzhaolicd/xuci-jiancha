@@ -22,3 +22,5 @@ ai_ana5_12questions.json
 import_math_q2.html
 import_q5.html
 index_synology_home.html
+
+*.bak-*
