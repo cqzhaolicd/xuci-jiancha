@@ -5,8 +5,8 @@ import os, sys, time, hashlib, ftplib, subprocess
 
 REPO = '/home/administrator/xuci-jiancha'
 FILES = ['index.html', 'english26q_read1_interactive.html']
-QNAP_HOST, QNAP_USER, QNAP_PASS = '192.168.3.88', 'hermes', 'Zl150601'
-SYN_HOST, SYN_USER, SYN_PASS = '192.168.3.190', 'hermes', 'Zl150601'
+QNAP_HOST, QNAP_USER, QNAP_PASS = '192.168.3.88', 'hermes', open(__import__('os').path.expanduser('~/.ssh/.qnap_pw')).read().strip()
+SYN_HOST, SYN_USER, SYN_PASS = '192.168.3.190', 'hermes', open(__import__('os').path.expanduser('~/.ssh/.qnap_pw')).read().strip()
 QNAP_DIR = '/Web/xuci-jiancha'
 SYN_DIR = '/var/services/web/xuci-jiancha'
 
