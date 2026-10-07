@@ -81,9 +81,10 @@
   --border:#1f3a5f!important;--line:#1f3a5f!important;--success:#2ecc71!important;--danger:#e74c3c!important;--warn:#f39c12!important;--warning:#f39c12!important;--info:#6ab0ff!important;--red:#e74c3c!important;--green:#2ecc71!important;--blue:#6ab0ff!important;
   color-scheme:dark;
 }
-html,body{background:#060e18!important;color:#e6edf7!important;
+html{background:#060e18!important}
+body{background:transparent!important;color:#e6edf7!important;
+  background-image:linear-gradient(180deg,#060e18,#081324 260px)!important;background-repeat:no-repeat!important;
   font-family:'Noto Sans SC',-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",monospace!important}
-body{background-image:linear-gradient(180deg,#060e18,#081324 340px)!important;background-repeat:no-repeat!important;background-attachment:fixed!important}
 h1,h2,h3,h4,h5,strong{color:#f0d477!important}
 a{color:#f0d477}
 .card,.container,.panel,.box,.item,.k-item,.tab-content,.q-card,.question,.tip,.note,.stat,.stem,
@@ -142,6 +143,18 @@ hr{border-color:#1f3a5f!important}
       }
       if(gold)el.style.setProperty('color','#1a1205','important');
     }
+  /* 内部链接自动加版本号，避免手机缓存旧页面 */
+  try{
+    var V='v=20261007c';
+    var as=document.querySelectorAll('a[href]');
+    for(var i2=0;i2<as.length;i2++){
+      var a=as[i2],h=a.getAttribute('href')||'';
+      if(/^https?:/i.test(h)||/^#/.test(h)||/^mailto:|^tel:/i.test(h))continue;
+      if(/\.html($|[?#])/.test(h)&&h.indexOf('v=20261007c')<0){
+        a.setAttribute('href',h+(h.indexOf('?')>=0?'&':'?')+V);
+      }
+    }
+  }catch(e){}
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fix);else fix();
   setTimeout(fix,900);setTimeout(fix,2400);
