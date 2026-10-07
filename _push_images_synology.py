@@ -3,7 +3,7 @@
 """补传新图片到群晖（scp -O）"""
 import pexpect, os, sys
 
-PASS = 'Zl150601'
+PASS = open(__import__('os').path.expanduser('~/.ssh/.qnap_pw')).read().strip()
 HOST = 'hermes@192.168.3.190'
 REPO = '/home/administrator/xuci-jiancha'
 FILES = ['uploads/wrong_bank/physics_20260919_p2.jpg', 'uploads/wrong_bank/physics_20260919_p3.jpg']

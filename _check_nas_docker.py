@@ -3,7 +3,7 @@
 """检测 NAS 的 Docker 与资源情况（用于 OpenMAIC 长期部署评估）"""
 import pexpect, sys
 
-PASS = 'Zl150601'
+PASS = open(__import__('os').path.expanduser('~/.ssh/.qnap_pw')).read().strip()
 hosts = {'群晖 192.168.3.190': 'hermes@192.168.3.190', '威联通 192.168.3.88': 'hermes@192.168.3.88'}
 
 for name, target in hosts.items():
