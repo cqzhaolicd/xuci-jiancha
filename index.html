@@ -283,7 +283,7 @@ const tools = [
   { name: 'AI互动课堂', icon: 'fa-chalkboard-user', desc: '多智能体互动课堂（OpenMAIC）', cls: 't-ai', url: 'https://casa-stories-sip-furthermore.trycloudflare.com', target: '_blank' },
 ];
 
-// 🔵 学校学习 — 按年级和科目分层存放
+// 🔵 知识清单 — 按年级和科目分层存放
 const schoolGrades = ['7年级', '8年级上', '8年级下', '9年级', '综合'];
 const schoolSubjects = ['数学', '语文', '英语', '物理', '化学', '生物', '历史', '地理', '道法'];
 const schoolIconsMap = {
@@ -601,7 +601,7 @@ function render() {
       </a>
     </div>`);
 
-  // === 学校学习 ===
+  // === 知识清单 ===
   html += renderSection('知识清单', 'fa-school', '#2ecc71', 'badge-study',
     schoolSubjectsData.map((grade, gi) => {
       const cnt = grade.subjects.reduce((a, s) => a + s.lectures.length, 0);
