@@ -106,6 +106,31 @@ body {
 .tool-card.t-brush .t-icon { background: #16a085; }
 .tool-card.t-ai .t-icon { background: linear-gradient(135deg, #667eea, #764ba2); }
 
+/* ===== 矩形卡片（老板 2026-10-07：不要长条形卡片，全部矩形卡片；下层目录点开才显示）===== */
+.tile-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:.55rem}
+@media(max-width:560px){.tile-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}}
+.sec-grid{align-items:start}
+.tile-block{min-width:0;display:flex;flex-direction:column}
+.tile-block.open{grid-column:1/-1}
+.tile-block.open>.tile{width:calc(50% - .28rem);max-width:190px}
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;min-height:96px;padding:.85rem .5rem .7rem;background:var(--card-bg);border:2px solid var(--border);border-radius:var(--radius);cursor:pointer;text-decoration:none;color:var(--text);text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.05);transition:transform .15s,border-color .2s,box-shadow .2s}
+.tile:hover{border-color:var(--primary);box-shadow:0 4px 12px rgba(0,0,0,.1);transform:translateY(-2px)}
+.tile:active{transform:scale(.97)}
+.tile .t-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;font-weight:800;flex-shrink:0}
+.tile .t-name{font-size:.82rem;font-weight:700;line-height:1.25;word-break:break-word}
+.tile .t-meta{font-size:.66rem;color:var(--text-light);line-height:1.3}
+.tile .t-count{position:absolute;top:5px;right:5px;font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:99px;background:var(--bg);color:var(--text-light);border:1px solid var(--border)}
+.tile .t-chev{position:absolute;top:6px;left:7px;font-size:.62rem;color:var(--text-light);opacity:.55;transition:transform .3s}
+.tile-block.open>.tile{border-color:var(--primary)}
+.tile-block.open>.tile .t-chev{transform:rotate(180deg);opacity:1;color:var(--primary)}
+.tile-content{display:none}
+.tile-block.open>.tile-content{display:block;margin-top:.55rem}
+.tile.learned{border-color:#2ecc71;background:linear-gradient(135deg,#f2fdf5,#fff)}
+.tile-empty{cursor:default;color:var(--text-light);font-size:.75rem;border-style:dashed;box-shadow:none;min-height:70px}
+.tile-empty:hover{transform:none;border-color:var(--border);box-shadow:none}
+.lecture-tile{padding-top:1rem}
+.lecture-tile .learn-btn{font-size:.6rem;padding:.1rem .3rem;margin-top:.1rem}
+
 /* Subject section */
 .subject-section { margin-bottom: 1.5rem; }
 .subject-header {
@@ -544,7 +569,7 @@ const schoolIcons = ['fa-calculator','fa-flask','fa-language','fa-flask','fa-lea
 const schoolColors = ['#e74c3c','#667eea','#2ecc71','#9b59b6','#27ae60','#f39c12','#1abc9c','#34495e'];
 
 function render() {
-  let html = '';
+  let html = '<div class="tile-grid sec-grid">';
 
   // === 错题库工具（顶部那排小快捷按钮已取消：与下方卡片内容重复）===
   html += renderSection('错题库工具', 'fa-database', '#e74c3c', 'badge-tools', `
@@ -603,117 +628,81 @@ function render() {
 
   // === 知识清单 ===
   html += renderSection('知识清单', 'fa-school', '#2ecc71', 'badge-study',
-    schoolSubjectsData.map((grade, gi) => {
+    '<div class="tile-grid">' + schoolSubjectsData.map((grade, gi) => {
       const cnt = grade.subjects.reduce((a, s) => a + s.lectures.length, 0);
       return renderGrade(grade, gi, cnt);
-    }).join(''));
+    }).join('') + '</div>', schoolSubjectsData.length);
 
   // === 课外培训 ===
   html += renderSection('课外培训 · 互动学习', 'fa-graduation-cap', '#e67e22', 'badge-training',
-    trainingTerms.map((term, ti) => {
+    '<div class="tile-grid">' + trainingTerms.map((term, ti) => {
       const cnt = term.subjects.reduce((a, s) => a + s.lectures.length, 0);
       return renderTrainingTerm(term, ti, cnt);
-    }).join(''));
+    }).join('') + '</div>', trainingTerms.length);
 
+  html += '</div>';
   document.getElementById('app').innerHTML = html;
 }
 
-function renderSection(title, icon, color, badgeClass, content) {
-  const key = 'sec_' + title;
-  const isOpen = localStorage.getItem(key) !== 'closed';
-  return `<div class="section fade-in-up">
-    <div class="section-title" onclick="toggleSection('${key}', this)">
-      <i class="fas ${icon}" style="color:${color}"></i> ${title}
-      <span class="s-badge ${badgeClass}">${content.split('subject-section').length - 1 || tools.length} 项</span>
-      <span class="s-toggle ${isOpen ? 'open' : ''}"><i class="fas fa-chevron-down"></i></span>
+function renderSection(title, icon, color, badgeClass, content, entryCount) {
+  const key = 'sec2_' + title;                       // 换 key：默认收起（老板要「点开才看到下层」）
+  const isOpen = localStorage.getItem(key) === 'open';
+  const cnt = entryCount !== undefined ? entryCount
+    : (content.match(/class="tool-card/g) || []).length;
+  return `<div class="section tile-block ${isOpen ? 'open' : ''}">
+    <div class="tile" onclick="toggleSection('${key}', this)">
+      <span class="t-count ${badgeClass}">${cnt} 项</span>
+      <div class="t-icon" style="background:${color}"><i class="fas ${icon}"></i></div>
+      <div class="t-name">${title}</div>
+      <div class="t-chev"><i class="fas fa-chevron-down"></i></div>
     </div>
-    <div class="section-content ${isOpen ? 'open' : ''}">${content}</div>
+    <div class="tile-content">${content}</div>
   </div>`;
 }
 
+const tileGradeColors = {'7年级':'#e74c3c','8年级上':'#667eea','8年级下':'#2ecc71','9年级':'#3498db','综合':'#e67e22'};
+const tileSubjectColors = {'数学':'#e74c3c','语文':'#2ecc71','英语':'#3498db','物理':'#667eea','化学':'#9b59b6','生物':'#27ae60','历史':'#f39c12','地理':'#1abc9c','道法':'#34495e'};
+
+function lectureTile(lec, li) {
+  const learned = isLearned(lec.url);
+  return `<a href="${lec.url}" class="tile lecture-tile ${learned ? 'learned' : ''}">
+    ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
+    <span class="learn-badge" style="display:${learned ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
+    <div class="t-icon" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
+    <div class="t-name">${lec.title}</div>
+    <div class="t-meta">${lec.date}${lec.tags && lec.tags.length ? ' · ' + lec.tags.join(' · ') : ''}</div>
+    ${learnedBtn(lec.url)}
+  </a>`;
+}
+
+function expandableTile(name, icon, color, countText, contentHtml, delay) {
+  const tile = `<div class="tile" onclick="toggleTile(this)">
+    <span class="t-count">${countText}</span>
+    <div class="t-icon" style="background:${color}"><i class="fas ${icon}"></i></div>
+    <div class="t-name">${name}</div>
+    <div class="t-chev"><i class="fas fa-chevron-down"></i></div>
+  </div>`;
+  return `<div class="tile-block${delay === undefined ? '' : ' fade-in-up'}"${delay === undefined ? '' : ` style="animation-delay:${delay}s"`}>${tile}<div class="tile-content">${contentHtml}</div></div>`;
+}
+
+function subjectTiles(subjects) {
+  if (!subjects.length) return `<div class="tile tile-empty" style="grid-column:1/-1">暂无内容 · 后续增加</div>`;
+  return subjects.map(subj => expandableTile(
+      subj.name, subj.icon, tileSubjectColors[subj.name] || '#667eea', subj.lectures.length + '项',
+      `<div class="tile-grid">${subj.lectures.length
+        ? subj.lectures.map((lec, li) => lectureTile(lec, li)).join('')
+        : '<div class="tile tile-empty">暂无内容 · 后续增加</div>'}</div>`
+    )).join('');
+}
+
 function renderGrade(grade, gi, cnt) {
-  const isSubdirGrade = (grade.name === '8年级上');
-  return `
-    <div class="subject-section fade-in-up" style="animation-delay:${0.1 + gi * 0.06}s">
-      <div class="subject-header ${grade.cls}" onclick="toggleSubject(this)">
-        <div class="icon"><i class="fas ${grade.icon}"></i></div>
-        <h3>${grade.name}</h3>
-        <span class="count">${cnt} 项</span>
-        <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-      </div>
-      <div class="grade-grid">
-        ${grade.subjects.length > 0 ? grade.subjects.map((subj, si) => {
-          if (isSubdirGrade) {
-            // 8年级上：学科=可展开子目录，互动页作为目录内条目
-            return `<div class="subject-section" style="margin-bottom:0">
-              <div class="subject-header ${subj.cls}" onclick="toggleSubject(this)" style="cursor:pointer">
-                <div class="icon" style="font-size:1rem;color:var(--primary)"><i class="fas ${subj.icon}"></i></div>
-                <h3 style="font-size:0.88rem;font-weight:600;flex:1;margin:0;color:var(--text)">${subj.name}</h3>
-                <span style="font-size:0.7rem;color:var(--text-light)">${subj.lectures.length}项</span>
-                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-              </div>
-              <div class="lecture-grid">
-                ${subj.lectures.map((lec, li) => `
-                <a href="${lec.url}" class="lecture-card ${isLearned(lec.url) ? 'learned' : ''}">
-                  ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
-                  <span class="learn-badge" style="display:${isLearned(lec.url) ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
-                  <div class="lnum" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
-                  <div class="info">
-                    <h4>${lec.title}</h4>
-                    <div class="meta"><span>${lec.date}</span>${lec.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-                  </div>
-                  <div class="arrow"><i class="fas fa-chevron-right"></i></div>
-                  ${learnedBtn(lec.url)}
-                </a>`).join('')}
-              </div>
-            </div>`;
-          }
-          const firstUrl = subj.lectures.length > 0 ? subj.lectures[0].url : '#';
-          return `<a href="${firstUrl}" class="subject-header ${subj.cls}" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.7rem;border-radius:var(--radius-sm);background:var(--card-bg);border:2px solid var(--border);cursor:pointer;transition:all 0.2s">
-            <div class="icon" style="font-size:1rem;color:var(--primary)"><i class="fas ${subj.icon}"></i></div>
-            <h3 style="font-size:0.88rem;font-weight:600;flex:1;margin:0;color:var(--text)">${subj.name}</h3>
-            <span style="font-size:0.7rem;color:var(--text-light)">${subj.lectures.length}项</span>
-          </a>`;
-        }).join('') : `<div style="grid-column:1/-1;padding:1rem;text-align:center;color:var(--text-light);font-size:0.85rem">暂无内容 · 后续增加</div>`}
-      </div>
-    </div>`;
+  return expandableTile(grade.name, grade.icon, tileGradeColors[grade.name] || '#667eea', cnt + '项',
+    `<div class="tile-grid">${subjectTiles(grade.subjects)}</div>`, 0.1 + gi * 0.06);
 }
 
 function renderTrainingTerm(term, ti, cnt) {
-  return `
-    <div class="subject-section fade-in-up" style="animation-delay:${0.1 + ti * 0.06}s">
-      <div class="subject-header ${term.cls}" onclick="toggleSubject(this)">
-        <div class="icon"><i class="fas ${term.icon}"></i></div>
-        <h3>${term.name}</h3>
-        <span class="count">${cnt > 0 ? cnt + ' 讲' : (term.subjects.length > 0 ? term.subjects.length + ' 科' : '0 讲')}</span>
-        <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-      </div>
-      <div class="grade-grid">
-        ${term.subjects.length > 0 ? term.subjects.map((subj, si) => `
-          <div class="subject-section" style="margin-bottom:0">
-            <div class="subject-header ${subj.cls}" onclick="toggleSubject(this)" style="cursor:pointer">
-              <div class="icon" style="font-size:1rem;color:var(--primary)"><i class="fas ${subj.icon}"></i></div>
-              <h3 style="font-size:0.88rem;font-weight:600;flex:1;margin:0;color:var(--text)">${subj.name}</h3>
-              <span style="font-size:0.7rem;color:var(--text-light)">${subj.lectures.length}项</span>
-              <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-            </div>
-            <div class="lecture-grid">
-              ${subj.lectures.length > 0 ? subj.lectures.map((lec, li) => `
-              <a href="${lec.url}" class="lecture-card ${isLearned(lec.url) ? 'learned' : ''}">
-                ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
-                <span class="learn-badge" style="display:${isLearned(lec.url) ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
-                <div class="lnum" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
-                <div class="info">
-                  <h4>${lec.title}</h4>
-                  <div class="meta"><span>${lec.date}</span>${lec.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-                </div>
-                <div class="arrow"><i class="fas fa-chevron-right"></i></div>
-                ${learnedBtn(lec.url)}
-              </a>`).join('') : `<div style="grid-column:1/-1;padding:1rem;text-align:center;color:var(--text-light);font-size:0.85rem">暂无内容 · 后续增加</div>`}
-            </div>
-          </div>`).join('') : `<div style="grid-column:1/-1;padding:1rem;text-align:center;color:var(--text-light);font-size:0.85rem">暂无内容 · 后续增加</div>`}
-      </div>
-    </div>`;
+  return expandableTile(term.name, term.icon, numColors[ti % numColors.length], cnt > 0 ? cnt + '讲' : term.subjects.length + '科',
+    `<div class="tile-grid">${subjectTiles(term.subjects)}</div>`, 0.1 + ti * 0.06);
 }
 
 function renderSubject(subj, si, cnt) {
@@ -771,19 +760,16 @@ function toggleSubject(header) {
 }
 
 function toggleSection(key, el) {
-  const content = el.nextElementSibling;
-  const icon = el.querySelector('.s-toggle');
-  if (!content) return;
-  const isOpen = content.classList.contains('open');
-  if (isOpen) {
-    content.classList.remove('open');
-    if (icon) icon.classList.remove('open');
-    localStorage.setItem(key, 'closed');
-  } else {
-    content.classList.add('open');
-    if (icon) icon.classList.add('open');
-    localStorage.setItem(key, 'open');
-  }
+  const block = el.closest('.tile-block');
+  if (!block) return;
+  const open = block.classList.toggle('open');
+  localStorage.setItem(key, open ? 'open' : 'closed');
+}
+
+// 矩形卡片：点开才显示下层目录（年级/学期/学科通吃）
+function toggleTile(el) {
+  const block = el.closest('.tile-block');
+  if (block) block.classList.toggle('open');
 }
 
 render();
@@ -802,16 +788,24 @@ render();
       if (r.ok) return;
       document.querySelectorAll('a[href]').forEach(function(el){
         if ((el.getAttribute('href') || '').split('#')[0] !== path) return;
-        var card = el.closest('.tool-card, .lecture-card');
+        var card = el.closest('.tool-card, .lecture-card, .lecture-tile, .tile');
         (card || el).style.display = 'none';
       });
       document.querySelectorAll('.section').forEach(function(sec){
-        var cards = sec.querySelectorAll('.tool-card, .lecture-card');
+        var cards = sec.querySelectorAll('.tool-card, .lecture-card, .lecture-tile, .tile');
         var alive = Array.prototype.some.call(cards, function(c){ return c.style.display !== 'none'; });
         if (cards.length && !alive) sec.style.display = 'none';
       });
     }).catch(function(){});
   });
+  setTimeout(function(){
+    document.querySelectorAll('.tile-block').forEach(function(b){
+      var cs = b.querySelectorAll('.tool-card, .lecture-card, .lecture-tile');
+      if (!cs.length) return;
+      var alive = Array.prototype.some.call(cs, function(c){ return c.style.display !== 'none'; });
+      if (!alive) b.style.display = 'none';
+    });
+  }, 1500);
 })();
 
 // ===== 已学习标记 =====
