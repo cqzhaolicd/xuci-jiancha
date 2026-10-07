@@ -4,7 +4,7 @@
  "versionName": "1.0",
  "notes": "首个版本：只允许访问学习中心 / AI互动课堂；隧道地址自动跟随；家长退出=首页页脚连点7次",
  "size": 62912,
- "sha256": "247589300b131b730b93077fd251597a7dc6d60cdd3836dfb41b475b4a20bc89",
+ "sha256": "3c06e21b7174e1e6a16fbee60ceb73d272775d030eacaadd4d95b926de022f7e",
  "apkUrl": "http://192.168.3.190/xuci-jiancha/download/ruolin-kiosk-latest.apk",
  "apkUrlAlt": "http://192.168.3.88/xuci-jiancha/download/ruolin-kiosk-latest.apk"
 }
