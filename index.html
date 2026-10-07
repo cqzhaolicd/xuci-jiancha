@@ -551,12 +551,7 @@ const schoolColors = ['#e74c3c','#667eea','#2ecc71','#9b59b6','#27ae60','#f39c12
 function render() {
   let html = '';
 
-  // === 快捷工具栏 ===
-  html += `<div class="toolbar fade-in-up">
-    ${tools.map(t => `<a href="${/^https?:/.test(t.url) ? t.url : BANK_BASE + t.url}"${t.target ? ` target="${t.target}" rel="noopener"` : ''}><i class="fas ${t.icon}"></i> ${t.name}</a>`).join('')}
-  </div>`;
-
-  // === 错题库工具 ===
+  // === 错题库工具（顶部那排小快捷按钮已取消：与下方卡片内容重复）===
   html += renderSection('错题库工具', 'fa-database', '#e74c3c', 'badge-tools', `
     <div class="tool-grid">
       ${tools.map(t => `<a href="${BANK_BASE}${t.url}" class="tool-card ${t.cls}">
