@@ -835,38 +835,42 @@ function toggleTile(el) {
 
 render();
 
-// ===== 入口自检：目标页不存在（例如公网仓库未发布错题本/复习页）就自动隐藏入口 =====
+// ===== 入口自检：目标页不存在（例如公网仓库未发布复习页）就自动隐藏入口 =====
 // 内网 NAS 上这些页都在，入口照常显示；这样同一份 index.html 三地通用
+// ★ 先隐藏 #app 再检测，避免「先看到 5 个图标，随后掉成 4 个」的跳动
 (function hideMissingTargets(){
-  var seen = Object.create(null);
-  document.querySelectorAll('a[href]').forEach(function(a){
+  var app = document.getElementById('app');
+  var paths = Object.create(null), any = false;
+  document.querySelectorAll('#app a[href]').forEach(function(a){
     var href = a.getAttribute('href') || '';
     if (/^(https?:)?\/\//.test(href) || href.charAt(0) === '#' || href.indexOf('mailto:') === 0) return;
     var path = href.split('#')[0];
-    if (!path || !/\.html$/i.test(path) || seen[path]) return;
-    seen[path] = 1;
-    fetch(path, { method: 'HEAD' }).then(function(r){
-      if (r.ok) return;
-      document.querySelectorAll('a[href]').forEach(function(el){
-        if ((el.getAttribute('href') || '').split('#')[0] !== path) return;
-        var card = el.closest('.tool-card, .lecture-card, .lecture-tile, .tile');
-        (card || el).style.display = 'none';
-      });
-      document.querySelectorAll('.section').forEach(function(sec){
-        var cards = sec.querySelectorAll('.tool-card, .lecture-card, .lecture-tile, .tile');
-        var alive = Array.prototype.some.call(cards, function(c){ return c.style.display !== 'none'; });
-        if (cards.length && !alive) sec.style.display = 'none';
-      });
-    }).catch(function(){});
+    if (!path || !/\.html$/i.test(path) || paths[path]) return;
+    paths[path] = 1; any = true;
   });
-  setTimeout(function(){
-    document.querySelectorAll('.tile-block').forEach(function(b){
-      var cs = b.querySelectorAll('.tool-card, .lecture-card, .lecture-tile');
+  function reveal(){ if (app) app.style.visibility = 'visible'; }
+  if (!any || !app) { reveal(); return; }
+  app.style.visibility = 'hidden';                 // 检测期间先不画，用户看不到"少一张"的过程
+  var guard = setTimeout(reveal, 2500);            // 网络异常也不至于一直白屏
+  function sweep(){
+    Array.prototype.slice.call(document.querySelectorAll('#app .tile-block')).reverse().forEach(function(b){
+      var cs = b.querySelectorAll('a.tool-card, a.tile, a.lecture-card, a.lecture-tile');
       if (!cs.length) return;
       var alive = Array.prototype.some.call(cs, function(c){ return c.style.display !== 'none'; });
       if (!alive) b.style.display = 'none';
     });
-  }, 1500);
+  }
+  var tasks = Object.keys(paths).map(function(path){
+    return fetch(path, { method: 'HEAD' }).then(function(r){
+      if (r.ok) return;
+      document.querySelectorAll('#app a[href]').forEach(function(el){
+        if ((el.getAttribute('href') || '').split('#')[0] !== path) return;
+        var card = el.closest('.tool-card, .lecture-card, .lecture-tile, .tile');
+        (card || el).style.display = 'none';
+      });
+    }).catch(function(){});
+  });
+  Promise.all(tasks).then(function(){ sweep(); clearTimeout(guard); reveal(); });
 })();
 
 // ===== 已学习标记 =====
