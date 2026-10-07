@@ -2,7 +2,7 @@ __pycache__/
 _build_ai_wrongbook.py.bak-*
 _apktest/
 
-# AI错题本专线（页面内置大模型 Key，禁止进公网仓库）
+# AI错题本专线（页面内置大模型 Key，禁止进公网仓库 —— 永远不要解除）
 ai-teacher/
 ai-wrongbook/
 ai_wrongbook.html
@@ -13,11 +13,9 @@ api_wrongbank*.php
 _build_ai_teacher.py
 _build_ai_wrongbook.py*
 _add_*_wrong.py
-uploads/wrong_bank/
 
-# 错题复习模块 + 群晖首页源：只在内网 NAS / 本机保留，不进公网仓库（2026-10-04）
-review/
-review_interactive.html
+# 错题复习模块：2026-10-07 起随首页一起发布（老板要求三地都是 5 张卡；依赖的作业题图片见 uploads/wrong_bank/）
+# 群晖首页源：只在内网保留，不进公网仓库
 ai_ana5_12questions.json
 import_math_q2.html
 import_q5.html

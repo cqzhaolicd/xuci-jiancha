@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 若琳 · 学习中心</title>
+<link href="assets/fonts/fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+<style>
+:root {
+  --primary: #667eea;
+  --secondary: #764ba2;
+  --success: #48bb78;
+  --warning: #ecc94b;
+  --danger: #f56565;
+  --info: #4299e1;
+  --bg: #f0f2f5;
+  --card-bg: #ffffff;
+  --text: #1a202c;
+  --text-light: #718096;
+  --border: #e2e8f0;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+.header {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  padding: 2rem 1rem 1.5rem;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 2px 20px rgba(102,126,234,0.3);
+}
+.header h1 { font-size: 1.6rem; font-weight: 900; }
+.header p { opacity: 0.85; margin-top: 0.3rem; font-size: 0.9rem; }
+.container { max-width: 920px; margin: 0 auto; padding: 1.2rem 1rem; }
+
+/* Toolbar */
+.toolbar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; justify-content: center; }
+.toolbar a {
+  text-decoration: none; color: var(--text); padding: 0.5rem 1rem; border-radius: var(--radius-sm);
+  font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 0.4rem;
+  transition: all 0.2s; background: var(--card-bg); border: 2px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.toolbar a:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: var(--primary); color: var(--primary); }
+.toolbar a i { color: var(--primary); }
+
+/* Section */
+.section { margin-bottom: 2rem; }
+.section-title {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 1rem; font-weight: 700; margin-bottom: 0;
+  padding: 0.6rem 0.8rem; border-radius: var(--radius-sm);
+  cursor: pointer; user-select: none; transition: all 0.2s;
+  background: var(--bg); color: var(--text);
+  border: 2px solid var(--border);
+}
+.section-title:hover { border-color: var(--primary); }
+.section-title .s-toggle { font-size: 0.75rem; opacity: 0.5; transition: transform 0.3s ease; }
+.section-title .s-toggle.open { transform: rotate(180deg); }
+.section-title .s-badge {
+  font-size: 0.7rem; font-weight: 600; padding: 0.1rem 0.6rem;
+  border-radius: 10px; color: #fff; margin-left: auto;
+}
+.section-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
+  opacity: 0;
+  margin-top: 0;
+}
+.section-content.open {
+  max-height: 10000px;
+  opacity: 1;
+  margin-top: 0.8rem;
+}
+.badge-study { background: var(--success); }
+.badge-training { background: #e67e22; }
+.badge-tools { background: var(--danger); }
+
+/* Tool cards */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; }
+.tool-card {
+  background: var(--card-bg); border-radius: var(--radius-sm);
+  padding: 0.8rem; text-decoration: none; color: var(--text);
+  text-align: center; border: 2px solid var(--border);
+  transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+}
+.tool-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.tool-card .t-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; }
+.tool-card .t-name { font-size: 0.85rem; font-weight: 600; }
+.tool-card .t-desc { font-size: 0.7rem; color: var(--text-light); }
+.tool-card.t-add .t-icon { background: #e74c3c; }
+.tool-card.t-list .t-icon { background: #3498db; }
+.tool-card.t-review .t-icon { background: #2ecc71; }
+.tool-card.t-training .t-icon { background: #e67e22; }
+.tool-card.t-print .t-icon { background: #9b59b6; }
+.tool-card.t-analysis .t-icon { background: #1abc9c; }
+.tool-card.t-flow .t-icon { background: #8e44ad; }
+.tool-card.t-brush .t-icon { background: #16a085; }
+.tool-card.t-ai .t-icon { background: linear-gradient(135deg, #667eea, #764ba2); }
+
+/* ===== 矩形卡片（老板 2026-10-07：不要长条形卡片，全部矩形卡片；下层目录点开才显示）===== */
+.tile-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:.55rem}
+@media(max-width:560px){.tile-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}}
+.sec-grid{align-items:start}
+.tile-block{min-width:0;display:flex;flex-direction:column}
+.tile-block.open{grid-column:1/-1}
+.tile-block.open>.tile{width:calc(50% - .28rem);max-width:190px}
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;min-height:96px;padding:.85rem .5rem .7rem;background:var(--card-bg);border:2px solid var(--border);border-radius:var(--radius);cursor:pointer;text-decoration:none;color:var(--text);text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.05);transition:transform .15s,border-color .2s,box-shadow .2s}
+.tile:hover{border-color:var(--primary);box-shadow:0 4px 12px rgba(0,0,0,.1);transform:translateY(-2px)}
+.tile:active{transform:scale(.97)}
+.tile .t-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;font-weight:800;flex-shrink:0}
+.tile .t-name{font-size:.82rem;font-weight:700;line-height:1.25;word-break:break-word}
+.tile .t-meta{font-size:.66rem;color:var(--text-light);line-height:1.3}
+.tile .t-count{position:absolute;top:5px;right:5px;font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:99px;background:var(--bg);color:var(--text-light);border:1px solid var(--border)}
+.tile .t-chev{position:absolute;top:6px;left:7px;font-size:.62rem;color:var(--text-light);opacity:.55;transition:transform .3s}
+.tile-block.open>.tile{border-color:var(--primary)}
+.tile-block.open>.tile .t-chev{transform:rotate(180deg);opacity:1;color:var(--primary)}
+.tile-content{display:none}
+.tile-block.open>.tile-content{display:block;margin-top:.55rem}
+.tile.learned{border-color:#2ecc71;background:linear-gradient(135deg,#f2fdf5,#fff)}
+.tile-empty{cursor:default;color:var(--text-light);font-size:.75rem;border-style:dashed;box-shadow:none;min-height:70px}
+.tile-empty:hover{transform:none;border-color:var(--border);box-shadow:none}
+.lecture-tile{padding-top:1rem}
+.lecture-tile .learn-btn{font-size:.6rem;padding:.1rem .3rem;margin-top:.1rem}
+
+/* Subject section */
+.subject-section { margin-bottom: 1.5rem; }
+.subject-header {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.7rem 1rem; border-radius: var(--radius);
+  color: var(--text); margin-bottom: 0;
+  background: var(--card-bg); border: 2px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  cursor: pointer; user-select: none; transition: all 0.2s;
+}
+.subject-header:hover { border-color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.subject-header .icon { font-size: 1.4rem; }
+.subject-header .icon i { color: var(--primary); }
+.grade-grid .subject-header .icon { font-size: 1rem; }
+.grade-grid .subject-header { padding: 0.5rem 0.7rem; border-radius: var(--radius-sm); }
+.grade-grid .subject-header h3 { font-size: 0.88rem; }
+.grade-grid .subject-section { margin-bottom: 0; }
+.subject-header h3 { font-size: 1rem; font-weight: 700; flex: 1; }
+.subject-header .count { font-size: 0.75rem; color: var(--text-light); background: var(--bg); padding: 0.15rem 0.6rem; border-radius: 10px; }
+.subject-header .toggle-icon { font-size: 0.8rem; opacity: 0.5; color: var(--text-light); transition: transform 0.3s ease; }
+.subject-header .toggle-icon.open { transform: rotate(180deg); }
+
+/* Subject header color accents */
+.subject-math { border-left: 4px solid #e74c3c; }
+.subject-math .icon i { color: #e74c3c; }
+.subject-physics { border-left: 4px solid #667eea; }
+.subject-physics .icon i { color: #667eea; }
+.subject-chinese { border-left: 4px solid #2ecc71; }
+.subject-chinese .icon i { color: #2ecc71; }
+
+.lecture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.6rem;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
+  opacity: 0;
+  margin-top: 0;
+}
+.lecture-grid.open {
+  max-height: 2000px;
+  opacity: 1;
+  margin-top: 0.6rem;
+}
+.grade-grid {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
+  opacity: 0;
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+.grade-grid.open {
+  max-height: 5000px;
+  opacity: 1;
+  margin-top: 0.6rem;
+}
+.subject-chinese { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+
+.lecture-card {
+  background: var(--card-bg); border-radius: var(--radius-sm);
+  padding: 0.8rem 1rem; text-decoration: none; color: var(--text);
+  display: flex; align-items: center; gap: 0.8rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 2px solid var(--border);
+  transition: all 0.2s; position: relative;
+}
+.lecture-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.lecture-card .lnum {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.lecture-card .info { flex: 1; }
+.lecture-card .info h4 { font-size: 0.88rem; font-weight: 600; }
+.lecture-card .info .meta { font-size: 0.72rem; color: var(--text-light); margin-top: 0.15rem; display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+.lecture-card .info .meta .tag { background: var(--bg); padding: 0.05rem 0.35rem; border-radius: 4px; font-size: 0.65rem; }
+.lecture-card .arrow { color: var(--text-light); font-size: 0.8rem; opacity: 0.5; transition: all 0.2s; }
+.lecture-card:hover .arrow { opacity: 1; transform: translateX(3px); }
+.lecture-card .badge-new {
+  position: absolute; top: -5px; right: -5px;
+  background: var(--danger); color: #fff;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 0.1rem 0.4rem; border-radius: 7px;
+}
+.lecture-card.empty {
+  opacity: 0.5; cursor: default; border-style: dashed;
+  justify-content: center; pointer-events: none;
+}
+.lecture-card.empty:hover { transform: none; box-shadow: none; }
+.lecture-card.empty .lnum { background: var(--border) !important; color: var(--text-light); }
+.lecture-card.empty .info h4 { color: var(--text-light); }
+
+/* 已学习标记 */
+.lecture-card .learn-btn {
+  position: absolute; bottom: 6px; right: 8px;
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--text-light); font-size: 0.62rem; font-weight: 600;
+  padding: 0.18rem 0.5rem; border-radius: 20px;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 3px;
+  transition: all 0.2s; z-index: 2;
+}
+.lecture-card .learn-btn:hover { border-color: var(--success, #2ecc71); color: var(--success, #2ecc71); transform: scale(1.05); }
+.lecture-card .learn-btn.done { background: rgba(46,204,113,0.12); border-color: #2ecc71; color: #27ae60; }
+.lecture-card .learn-badge {
+  position: absolute; top: -5px; left: -5px;
+  background: #2ecc71; color: #fff;
+  font-size: 0.58rem; font-weight: 700;
+  padding: 0.12rem 0.42rem; border-radius: 7px;
+  display: inline-flex; align-items: center; gap: 3px;
+  z-index: 2;
+}
+.lecture-card.learned {
+  border-color: rgba(46,204,113,0.6);
+  background: linear-gradient(135deg, rgba(46,204,113,0.06), var(--card-bg));
+}
+.lecture-card.learned .info h4 { color: #27ae60; }
+.lecture-card.learned .lnum { opacity: 0.7; }
+
+/* tool-card 已学习样式 */
+.tool-card { position: relative; }
+.tool-card .learn-btn {
+  position: absolute; bottom: 6px; right: 8px;
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--text-light); font-size: 0.6rem; font-weight: 600;
+  padding: 0.15rem 0.45rem; border-radius: 20px;
+  cursor: pointer; display: inline-flex; align-items: center; gap: 3px;
+  transition: all 0.2s; z-index: 2;
+}
+.tool-card .learn-btn:hover { border-color: #2ecc71; color: #27ae60; }
+.tool-card .learn-btn.done { background: rgba(46,204,113,0.12); border-color: #2ecc71; color: #27ae60; }
+.tool-card.learned { border-color: rgba(46,204,113,0.6); background: linear-gradient(135deg, rgba(46,204,113,0.06), var(--card-bg)); }
+.tool-card.learned .t-name { color: #27ae60; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: var(--text-light); font-size: 0.82rem; }
+
+/* Animations */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in-up { animation: fadeInUp 0.35s ease; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.2rem; }
+  .tool-grid { grid-template-columns: repeat(3, 1fr); }
+  .lecture-grid { grid-template-columns: 1fr; }
+  .toolbar a { font-size: 0.78rem; padding: 0.4rem 0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><i class="fas fa-graduation-cap"></i> 若琳 · 学习中心</h1>
+  <p>互动学习 &amp; 错题库</p>
+</div>
+
+<div class="container" id="app">
+  <!-- Rendered by JS -->
+</div>
+
+<div class="footer">
+  <i class="fas fa-heart" style="color:var(--danger)"></i> 为若琳定制的学习工具 &nbsp;|&nbsp; 持续更新中
+</div>
+
+<script>
+// ===================== CONFIG =====================
+const BANK_BASE = ''; // 同域名，直接使用相对路径
+const tools = [
+  { name: '错题本', icon: 'fa-list', desc: '浏览筛选错题', cls: 't-list', url: 'wrong_bank.html#list' },
+  { name: '五步法模板', icon: 'fa-clipboard-check', desc: '数学解题流程卡(打印)', cls: 't-flow', url: 'wubufa_card.html' },
+  { name: 'AI学习工坊', icon: 'fa-robot', desc: 'AI问答·3D课件·智能体', cls: 't-ai', url: 'ai_workshop.html' },
+  { name: 'AI互动课堂', icon: 'fa-chalkboard-user', desc: '多智能体互动课堂（OpenMAIC）', cls: 't-ai', url: 'https://casa-stories-sip-furthermore.trycloudflare.com', target: '_blank' },
+];
+
+// 🔵 知识清单 — 按年级和科目分层存放
+const schoolGrades = ['7年级', '8年级上', '8年级下', '9年级', '综合'];
+const schoolSubjects = ['数学', '语文', '英语', '物理', '化学', '生物', '历史', '地理', '道法'];
+const schoolIconsMap = {
+  '数学':'fa-calculator','语文':'fa-book','英语':'fa-language','物理':'fa-flask',
+  '化学':'fa-flask','生物':'fa-leaf','历史':'fa-history','地理':'fa-globe','道法':'fa-gavel'
+};
+const schoolColorsMap = {
+  '数学':'subject-math','语文':'subject-chinese','英语':'subject-math','物理':'subject-physics',
+  '化学':'subject-physics','生物':'subject-physics','历史':'subject-math','地理':'subject-physics','道法':'subject-math'
+};
+const gradeIcons = {'7年级':'fa-child','8年级上':'fa-child','8年级下':'fa-child','9年级':'fa-child','综合':'fa-layer-group'};
+
+function buildSchoolData() {
+  const extraLectures = {
+    '7年级': {
+      '数学': [
+        { num: '01', title: '课堂笔记', url: '数学_7grade_interactive.html', date: '2026-07-28', tags: ['数学'], new: true }
+      ],
+      '英语': [
+        { num: '01', title: '课堂笔记', url: '英语_7grade_interactive.html', date: '2026-07-28', tags: ['英语'], new: true }
+      ],
+      '语文': [
+        { num: '01', title: '课堂笔记', url: '语文_7grade_interactive.html', date: '2026-07-28', tags: ['语文'], new: true }
+      ],
+      '地理': [
+        { num: '01', title: '课堂笔记', url: '地理_7grade_interactive.html', date: '2026-07-28', tags: ['地理'], new: true }
+      ],
+      '物理': [
+        { num: '01', title: '课堂笔记', url: '物理_7grade_interactive.html', date: '2026-07-28', tags: ['物理'], new: true }
+      ],
+      '生物': [
+        { num: '01', title: '课堂笔记', url: '生物_7grade_interactive.html', date: '2026-07-28', tags: ['生物'], new: true }
+      ],
+    },
+    '8年级上': {
+      '数学': [
+        { num: '01', title: '第1章 勾股定理', url: 'math8_ch1_interactive.html', date: '2026-07-31', tags: ['数学'], new: true },
+        { num: '02', title: '第2章 实数', url: 'math8_ch2_interactive.html', date: '2026-07-31', tags: ['数学'], new: true },
+        { num: '03', title: '第3章 位置与坐标', url: 'math8_ch3_interactive.html', date: '2026-07-31', tags: ['数学'], new: true },
+        { num: '04', title: '第4章 一次函数', url: 'math8_ch4_interactive.html', date: '2026-07-31', tags: ['数学'], new: true },
+        { num: '05', title: '第5章 二元一次方程组', url: 'math8_ch5_interactive.html', date: '2026-07-31', tags: ['数学'], new: true },
+        { num: '06', title: '第6章 数据的分析', url: 'math8_ch6_interactive.html', date: '2026-07-31', tags: ['数学'], new: true },
+        { num: '07', title: '第7章 平行线的证明', url: 'math8_ch7_interactive.html', date: '2026-07-31', tags: ['数学'], new: true }
+      ],
+      '语文': [
+        { num: '01', title: '第一单元 新闻阅读', url: 'chinese8_u1_interactive.html', date: '2026-08-24', tags: ['语文'], new: true },
+        { num: '02', title: '第二单元 回忆性散文与传记', url: 'chinese8_u2_interactive.html', date: '2026-08-24', tags: ['语文'], new: true },
+        { num: '03', title: '第三单元 古诗文山水', url: 'chinese8_u3_interactive.html', date: '2026-08-24', tags: ['语文'], new: true },
+        { num: '04', title: '第四单元 散文', url: 'chinese8_u4_interactive.html', date: '2026-08-24', tags: ['语文'], new: true },
+        { num: '05', title: '第五单元 说明文', url: 'chinese8_u5_interactive.html', date: '2026-08-24', tags: ['语文'], new: true },
+        { num: '06', title: '第六单元 文言文', url: 'chinese8_u6_interactive.html', date: '2026-08-24', tags: ['语文'], new: true }
+      ],
+      '英语': [
+        { num: '01', title: 'Unit 1 Where did you go on vacation?', url: 'english8_u1_interactive.html', date: '2026-08-24', tags: ['英语'], new: true },
+        { num: '02', title: 'Unit 2 How often do you exercise?', url: 'english8_u2_interactive.html', date: '2026-08-24', tags: ['英语'], new: true },
+        { num: '03', title: 'Unit 3 I\'m more outgoing than my sister.', url: 'english8_u3_interactive.html', date: '2026-08-24', tags: ['英语'], new: true },
+        { num: '04', title: 'Unit 4 What\'s the best movie theater?', url: 'english8_u4_interactive.html', date: '2026-08-24', tags: ['英语'], new: true },
+        { num: '05', title: 'Unit 5 Do you want to watch a game show?', url: 'english8_u5_interactive.html', date: '2026-08-24', tags: ['英语'], new: true },
+        { num: '06', title: 'Unit 6 I\'m going to study computer science.', url: 'english8_u6_interactive.html', date: '2026-08-24', tags: ['英语'], new: true },
+        { num: '07', title: 'Unit 7 Will people have robots?', url: 'english8_u7_interactive.html', date: '2026-08-24', tags: ['英语'], new: true },
+        { num: '08', title: 'Unit 8 How do you make a banana milk shake?', url: 'english8_u8_interactive.html', date: '2026-08-24', tags: ['英语'], new: true },
+        { num: '09', title: 'Unit 9 Can you come to my party?', url: 'english8_u9_interactive.html', date: '2026-08-24', tags: ['英语'], new: true },
+        { num: '10', title: 'Unit 10 If you go to the party...', url: 'english8_u10_interactive.html', date: '2026-08-24', tags: ['英语'], new: true }
+      ],
+      '物理': [
+        { num: '01', title: '第1章 机械运动', url: 'physics8_ch1_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
+        { num: '02', title: '第2章 声现象', url: 'physics8_ch2_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
+        { num: '03', title: '第3章 物态变化', url: 'physics8_ch3_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
+        { num: '04', title: '第4章 光现象', url: 'physics8_ch4_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
+        { num: '05', title: '第5章 透镜及其应用', url: 'physics8_ch5_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
+        { num: '06', title: '第6章 质量与密度', url: 'physics8_ch6_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
+        { num: '07', title: '八上物理·早背晚默（全册综合）', url: 'physics8_interactive.html', date: '2026-07-28', tags: ['物理'], new: false }
+      ],
+      '生物': [
+        { num: '01', title: '第五单元 第1章 动物的主要类群', url: 'bio8_ch1_interactive.html', date: '2026-08-24', tags: ['生物'], new: true },
+        { num: '02', title: '第五单元 第2章 动物的运动和行为', url: 'bio8_ch2_interactive.html', date: '2026-08-24', tags: ['生物'], new: true },
+        { num: '03', title: '第五单元 第3章 动物在生物圈中的作用', url: 'bio8_ch3_interactive.html', date: '2026-08-24', tags: ['生物'], new: true },
+        { num: '04', title: '第六单元 生物的多样性及其保护', url: 'bio8_ch6_interactive.html', date: '2026-08-24', tags: ['生物'], new: true }
+      ],
+      '历史': [
+        { num: '01', title: '第一、二单元 侵略与探索', url: 'hist8_u1_interactive.html', date: '2026-08-24', tags: ['历史'], new: true },
+        { num: '02', title: '第三、四单元 革命与启蒙', url: 'hist8_u2_interactive.html', date: '2026-08-24', tags: ['历史'], new: true },
+        { num: '03', title: '第五、六单元 合作与抗战', url: 'hist8_u3_interactive.html', date: '2026-08-24', tags: ['历史'], new: true },
+        { num: '04', title: '第七、八单元 解放与建设', url: 'hist8_u4_interactive.html', date: '2026-08-24', tags: ['历史'], new: true }
+      ],
+      '地理': [
+        { num: '01', title: '第一章 从世界看中国', url: 'geo8_ch1_interactive.html', date: '2026-08-24', tags: ['地理'], new: true },
+        { num: '02', title: '第二章 中国的自然环境', url: 'geo8_ch2_interactive.html', date: '2026-08-24', tags: ['地理'], new: true },
+        { num: '03', title: '第三章 中国的自然资源', url: 'geo8_ch3_interactive.html', date: '2026-08-24', tags: ['地理'], new: true },
+        { num: '04', title: '第四章 中国的经济发展', url: 'geo8_ch4_interactive.html', date: '2026-08-24', tags: ['地理'], new: true }
+      ],
+      '道法': [
+        { num: '01', title: '第一单元 走进社会生活', url: 'dao8_u1_interactive.html', date: '2026-08-24', tags: ['道法'], new: true },
+        { num: '02', title: '第二单元 遵守社会规则', url: 'dao8_u2_interactive.html', date: '2026-08-24', tags: ['道法'], new: true },
+        { num: '03', title: '第三单元 勇担社会责任', url: 'dao8_u3_interactive.html', date: '2026-08-24', tags: ['道法'], new: true },
+        { num: '04', title: '第四单元 维护国家利益', url: 'dao8_u4_interactive.html', date: '2026-08-24', tags: ['道法'], new: true }
+      ]
+    },
+    '综合': {
+      '语文': [
+        { num: 'S1', title: '虚实词逐义检查（138词）', url: '虚实词逐义检查卷.html', date: '2026-07-27', tags: ['语文'], new: true }
+      ]
+    }
+  };
+  const result = [];
+  schoolGrades.forEach((grade, gi) => {
+    const subjects = [];
+    // 7/8年级: 9个基础学科; 9年级: 空; 综合: 特殊内容
+    // 8年级上: 8个学科（无化学）
+    let gradeSubjects = (grade === '7年级' || grade === '8年级上' || grade === '8年级下') ? schoolSubjects.slice() : [];
+    if (grade === '8年级上') gradeSubjects = gradeSubjects.filter(s => s !== '化学');
+    gradeSubjects.forEach((subj, si) => {
+      const extras = (extraLectures[grade] && extraLectures[grade][subj]) || [];
+      const lectures = [];
+      extras.forEach(e => lectures.push(e));
+      // 8年级上已有独立互动页，不添加默认占位链接
+      if (grade !== '8年级上') {
+        lectures.push({
+          num: String(si + 1).padStart(2, '0'),
+          title: subj,
+          url: `school_interactive.html?level=${encodeURIComponent(grade)}&subject=${encodeURIComponent(subj)}`,
+          date: '',
+          tags: [subj],
+          new: false
+        });
+      }
+      subjects.push({
+        id: grade + '-' + subj,
+        name: subj,
+        icon: schoolIconsMap[subj] || 'fa-book',
+        cls: schoolColorsMap[subj] || 'subject-math',
+        lectures: lectures
+      });
+    });
+    // 综合: 从extraLectures取
+    if (grade === '综合') {
+      const extraGrade = extraLectures['综合'] || {};
+      Object.keys(extraGrade).forEach(subj => {
+        const lectures = extraGrade[subj] || [];
+        subjects.push({
+          id: 'zonghe-' + subj,
+          name: subj,
+          icon: schoolIconsMap[subj] || 'fa-book',
+          cls: schoolColorsMap[subj] || 'subject-math',
+          lectures: lectures
+        });
+      });
+    }
+    result.push({
+      id: 'grade' + (gi + 1),
+      name: grade,
+      icon: gradeIcons[grade] || 'fa-school',
+      cls: ['subject-math','subject-physics','subject-chinese','subject-other'][gi % 4],
+      subjects: subjects
+    });
+  });
+  return result;
+}
+const schoolSubjectsData = buildSchoolData();
+
+// 🔵 课外培训 — 互动学习（按学期分目录）
+const trainingTerms = [
+  {
+    id: 'tyjy-2026summer', name: '2026年暑期', icon: 'fa-sun', cls: 'subject-math',
+    subjects: [
+      {
+        id: 'tyjy-math', name: '数学', icon: 'fa-calculator', cls: 'subject-math',
+        lectures: [
+          { num: '01', title: '二次根式（一）', url: 'math_surd_interactive.html', date: '2026-07-25', tags: ['数学'], new: false },
+          { num: '02', title: '二次根式（二）', url: 'math_surd2_interactive.html', date: '2026-07-26', tags: ['数学'], new: false },
+          { num: '03', title: '二次根式（三）', url: 'math_lesson3_interactive.html', date: '2026-07-27', tags: ['数学'], new: false },
+          { num: '04', title: '二次根式（四）', url: 'math_surd4_interactive.html', date: '2026-07-28', tags: ['数学'], new: true },
+          { num: '05', title: '勾股定理', url: 'math_lesson5_interactive.html', date: '2026-07-29', tags: ['数学'], new: false },
+          { num: '06', title: '勾股定理应用', url: 'math_lesson6_interactive.html', date: '2026-07-31', tags: ['数学'], new: false },
+          { num: '07', title: '勾股定理解三角形', url: 'math_lesson7_interactive.html', date: '2026-08-01', tags: ['数学'], new: true },
+          { num: '08', title: '勾股定理构造与翻折', url: 'math_lesson8_interactive.html', date: '2026-08-02', tags: ['数学'], new: true },
+          { num: '09', title: '二元一次方程组', url: 'math_lesson9_interactive.html', date: '2026-08-03', tags: ['数学'], new: true },
+          { num: '10', title: '含参问题', url: 'math_lesson10_interactive.html', date: '2026-08-04', tags: ['数学'], new: false },
+          { num: '11', title: '平面直角坐标系', url: 'math_lesson11_interactive.html', date: '2026-08-06', tags: ['数学'], new: false },
+          { num: '12', title: '正比例函数与一次函数', url: 'math_lesson12_interactive.html', date: '2026-08-07', tags: ['数学'], new: false },
+          { num: '13', title: '函数解析式与交点坐标', url: 'math_lesson13_interactive.html', date: '2026-08-08', tags: ['数学'], new: false },
+          { num: '14', title: '一次函数数形结合与图象变换', url: 'math_lesson14_interactive.html', date: '2026-08-09', tags: ['数学'], new: true },
+        ]
+      },
+      {
+        id: 'tyjy-physics', name: '物理', icon: 'fa-flask', cls: 'subject-physics',
+        lectures: [
+          { num: '01', title: '声现象（一）', url: 'physics_sound_interactive.html', date: '2026-07-25', tags: ['物理'], new: false },
+          { num: '02', title: '声现象（二）', url: 'physics_sound2_interactive.html', date: '2026-07-26', tags: ['物理'], new: false },
+          { num: '03', title: '测量（三）', url: 'physics_lesson3_interactive.html', date: '2026-07-27', tags: ['物理'], new: true },
+          { num: '04', title: '机械运动', url: 'physics_mechanical_interactive.html', date: '2026-07-28', tags: ['物理'], new: true },
+          { num: '05', title: '运动学图像与计算', url: 'physics_lesson5_interactive.html', date: '2026-07-29', tags: ['物理'], new: false },
+          { num: '06', title: '温度与物态', url: 'physics_lesson6_interactive.html', date: '2026-07-31', tags: ['物理'], new: false },
+          { num: '07', title: '物态变化', url: 'physics_lesson7_interactive.html', date: '2026-08-01', tags: ['物理'], new: true },
+          { num: '08', title: '光的传播与反射', url: 'physics_lesson8_interactive.html', date: '2026-08-03', tags: ['物理'], new: true },
+          { num: '09', title: '平面镜成像', url: 'physics_lesson9_interactive.html', date: '2026-08-04', tags: ['物理'], new: false },
+          { num: '10', title: '光的折射', url: 'physics_lesson10_interactive.html', date: '2026-08-06', tags: ['物理'], new: false },
+          { num: '11', title: '透镜专题', url: 'physics_lens_interactive.html', date: '2026-08-06', tags: ['物理'], new: false },
+          { num: '12', title: '透镜应用', url: 'physics_lesson12_interactive.html', date: '2026-08-08', tags: ['物理'], new: true },
+          { num: '13', title: '质量和体积', url: 'physics_lesson13_interactive.html', date: '2026-08-08', tags: ['物理'], new: false },
+          { num: '14', title: '密度', url: 'physics_lesson14_interactive.html', date: '2026-08-09', tags: ['物理'], new: false },
+          { num: '15', title: '密度图象与计算', url: 'physics_lesson15_interactive.html', date: '2026-08-10', tags: ['物理'], new: true },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'tyjy-2026fall', name: '2026年秋季', icon: 'fa-leaf', cls: 'subject-physics',
+    subjects: [
+      {
+        id: 'tyjy-chinese-fall', name: '语文', icon: 'fa-book', cls: 'subject-chinese',
+        lectures: [
+          { num: '01', title: '新闻类文本阅读', url: 'chinese26q_lesson1_interactive.html', date: '2026-09-06', tags: ['语文'], new: true },
+          { num: '02', title: '山水游记专题 · 《浣花溪记》精讲', url: 'chinese26q_lesson2_interactive.html', date: '2026-09-13', tags: ['语文'], new: true },
+          { num: '03', title: '第2课作业解析 · 《游大林寺序》（含实词与四题详解）', url: 'chinese26q_lesson2_hw_interactive.html', date: '2026-09-13', tags: ['语文'], new: true },
+        ]
+      },
+      {
+        id: 'tyjy-english-fall', name: '英语', icon: 'fa-language', cls: 'subject-math',
+        lectures: [
+          { num: '01', title: 'Nauru & Holidays · 双语阅读与不定代词', url: 'english_lesson1_interactive.html', date: '2026-09-12', tags: ['英语'], new: true },
+          { num: '02', title: 'Words & Comparatives · 词汇与比较级', url: 'english_lesson2_interactive.html', date: '2026-09-12', tags: ['英语'], new: true },
+          { num: '03', title: 'Smart Devices 阅读与语法 · 课堂补充', url: 'english_lesson3_interactive.html', date: '2026-09-13', tags: ['英语'], new: true },
+          { num: '04', title: '第四课时 Section B 词汇与句式 · 默写自测（中英对照）', url: 'english_lesson4_interactive.html', date: '2026-09-17', tags: ['英语'], new: false },
+          { num: '05', title: '8C Lesson 3 Same or Different · 词汇 + 最高级 + MBTI 阅读（30题闯关）', url: 'english_lesson5_interactive.html', date: '2026-09-26', tags: ['英语', '最高级', 'MBTI'], new: true },
+        ]
+      },
+      {
+        id: 'tyjy-english-reading-fall', name: '英语阅读', icon: 'fa-newspaper', cls: 'subject-other',
+        lectures: [
+          { num: '01', title: '21世纪报 · AI 陪伴机器人新规（全文+段落总结+思维导图）', url: 'english26q_read1_interactive.html', date: '2026-09-11', tags: ['英语阅读', '21世纪报', '阅读思维'], new: true },
+          { num: '02', title: 'The Catcher in the Rye 麦田里的守望者 · 时文阅读讲解（名著导读+词汇+自测）', url: 'english26q_read2_interactive.html', date: '2026-09-19', tags: ['英语阅读', '名著', '时文阅读'], new: true },
+        ]
+      },
+      {
+        id: 'tyjy-math-fall', name: '数学', icon: 'fa-calculator', cls: 'subject-math',
+        lectures: [
+          { num: '01', title: '二次根式综合复习', url: 'math26q_lesson1_interactive.html', date: '2026-09-06', tags: ['数学'], new: true },
+          { num: '02', title: '勾股定理复习进阶 · 最短路径/面积/设元/解三角形', url: 'math26q_lesson2_interactive.html', date: '2026-09-13', tags: ['数学'], new: true },
+        ]
+      },
+      {
+        id: 'tyjy-physics-fall', name: '物理', icon: 'fa-flask', cls: 'subject-physics',
+        lectures: [
+          { num: '01', title: '运动学计算（一）', url: 'physics26q_lesson1_interactive.html', date: '2026-09-06', tags: ['物理'], new: false },
+          { num: '02', title: '相对速度与过街安全 · B卷压轴（过程分析+临界状态）', url: 'physics26q_lesson2_interactive.html', date: '2026-09-13', tags: ['物理'], new: false },
+          { num: '03', title: '运动学轻课 第1、2讲 · 14 道难题精练（含验算解析）', url: 'physics26q_light12_interactive.html', date: '2026-09-13', tags: ['物理','轻课'], new: false },
+          { num: '04', title: '运动学计算（二）· 博学第2讲详解 · 火车过桥 + 过街安全（30题闯关）', url: 'physics26q_boxue2_interactive.html', date: '2026-09-27', tags: ['物理','火车过桥','过街安全'], new: false },
+          { num: '05', title: '声与运动 · 回声测距 + 超声测速（B卷压轴 · 30题闯关）', url: 'physics26q_soundmotion_interactive.html', date: '2026-09-27', tags: ['物理','声与运动','超声测速'], new: true },
+        ]
+      },
+    ]
+  },
+];
+
+const numColors = ['#e74c3c','#3498db','#2ecc71','#e67e22','#9b59b6','#1abc9c'];
+const schoolIcons = ['fa-calculator','fa-flask','fa-language','fa-flask','fa-leaf','fa-history','fa-globe','fa-gavel'];
+const schoolColors = ['#e74c3c','#667eea','#2ecc71','#9b59b6','#27ae60','#f39c12','#1abc9c','#34495e'];
+
+function render() {
+  let html = '<div class="tile-grid sec-grid">';
+
+  // === 错题库工具（顶部那排小快捷按钮已取消：与下方卡片内容重复）===
+  html += renderSection('错题库工具', 'fa-database', '#e74c3c', 'badge-tools', `
+    <div class="tool-grid">
+      ${tools.map(t => `<a href="${BANK_BASE}${t.url}" class="tool-card ${t.cls}">
+        <div class="t-icon"><i class="fas ${t.icon}"></i></div>
+        <div class="t-name">${t.name}</div>
+        <div class="t-desc">${t.desc}</div>
+      </a>`).join('')}
+    </div>`);
+
+  // === 复习模块（作业题精析·分学科）===
+  html += renderSection('复习模块 · 作业题精析', 'fa-book-open', '#2f6fed', 'badge-tools', `
+    <div class="tool-grid">
+      <a href="review_interactive.html" class="tool-card t-list ${isLearned('review_interactive.html') ? 'learned' : ''}">
+        <span class="learn-badge" style="display:${isLearned('review_interactive.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
+        <div class="t-icon"><i class="fas fa-book-open"></i></div>
+        <div class="t-name">题目精析（分学科）</div>
+        <div class="t-desc">A已知条件 B求解 C思路 D易错点 E知识点</div>
+        ${learnedBtn('review_interactive.html')}
+      </a>
+    </div>`);
+
+  // === 预习闯关 ===
+  html += renderSection('预习闯关 · 八上', 'fa-gamepad', '#f39c12', 'badge-tools', `
+    <div class="tool-grid">
+      <a href="preview_challenge_math8.html" class="tool-card t-training ${isLearned('preview_challenge_math8.html') ? 'learned' : ''}">
+        <span class="learn-badge" style="display:${isLearned('preview_challenge_math8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
+        <div class="t-icon"><i class="fas fa-calculator"></i></div>
+        <div class="t-name">数学闯关</div>
+        <div class="t-desc">北师大八上 · 勾股定理→一次函数</div>
+        ${learnedBtn('preview_challenge_math8.html')}
+      </a>
+      <a href="preview_challenge_physics8.html" class="tool-card t-flow ${isLearned('preview_challenge_physics8.html') ? 'learned' : ''}">
+        <span class="learn-badge" style="display:${isLearned('preview_challenge_physics8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
+        <div class="t-icon"><i class="fas fa-flask"></i></div>
+        <div class="t-name">物理闯关</div>
+        <div class="t-desc">人教八上 · 机械运动→质量密度</div>
+        ${learnedBtn('preview_challenge_physics8.html')}
+      </a>
+      <a href="preview_challenge_chinese8.html" class="tool-card t-print ${isLearned('preview_challenge_chinese8.html') ? 'learned' : ''}">
+        <span class="learn-badge" style="display:${isLearned('preview_challenge_chinese8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
+        <div class="t-icon"><i class="fas fa-book"></i></div>
+        <div class="t-name">语文闯关</div>
+        <div class="t-desc">统编八上 · 新闻→文言文</div>
+        ${learnedBtn('preview_challenge_chinese8.html')}
+      </a>
+      <a href="preview_challenge_english8.html" class="tool-card t-add ${isLearned('preview_challenge_english8.html') ? 'learned' : ''}">
+        <span class="learn-badge" style="display:${isLearned('preview_challenge_english8.html') ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
+        <div class="t-icon"><i class="fas fa-language"></i></div>
+        <div class="t-name">英语闯关</div>
+        <div class="t-desc">人教八上 · 假期→条件句</div>
+        ${learnedBtn('preview_challenge_english8.html')}
+      </a>
+    </div>`);
+
+  // === 知识清单 ===
+  html += renderSection('知识清单', 'fa-school', '#2ecc71', 'badge-study',
+    '<div class="tile-grid">' + schoolSubjectsData.map((grade, gi) => {
+      const cnt = grade.subjects.reduce((a, s) => a + s.lectures.length, 0);
+      return renderGrade(grade, gi, cnt);
+    }).join('') + '</div>', schoolSubjectsData.length);
+
+  // === 课外培训 ===
+  html += renderSection('课外培训 · 互动学习', 'fa-graduation-cap', '#e67e22', 'badge-training',
+    '<div class="tile-grid">' + trainingTerms.map((term, ti) => {
+      const cnt = term.subjects.reduce((a, s) => a + s.lectures.length, 0);
+      return renderTrainingTerm(term, ti, cnt);
+    }).join('') + '</div>', trainingTerms.length);
+
+  html += '</div>';
+  document.getElementById('app').innerHTML = html;
+}
+
+function renderSection(title, icon, color, badgeClass, content, entryCount) {
+  const key = 'sec2_' + title;                       // 换 key：默认收起（老板要「点开才看到下层」）
+  const isOpen = localStorage.getItem(key) === 'open';
+  const cnt = entryCount !== undefined ? entryCount
+    : (content.match(/class="tool-card/g) || []).length;
+  return `<div class="section tile-block ${isOpen ? 'open' : ''}">
+    <div class="tile" onclick="toggleSection('${key}', this)">
+      <span class="t-count ${badgeClass}">${cnt} 项</span>
+      <div class="t-icon" style="background:${color}"><i class="fas ${icon}"></i></div>
+      <div class="t-name">${title}</div>
+      <div class="t-chev"><i class="fas fa-chevron-down"></i></div>
+    </div>
+    <div class="tile-content">${content}</div>
+  </div>`;
+}
+
+const tileGradeColors = {'7年级':'#e74c3c','8年级上':'#667eea','8年级下':'#2ecc71','9年级':'#3498db','综合':'#e67e22'};
+const tileSubjectColors = {'数学':'#e74c3c','语文':'#2ecc71','英语':'#3498db','物理':'#667eea','化学':'#9b59b6','生物':'#27ae60','历史':'#f39c12','地理':'#1abc9c','道法':'#34495e'};
+
+function lectureTile(lec, li) {
+  const learned = isLearned(lec.url);
+  return `<a href="${lec.url}" class="tile lecture-tile ${learned ? 'learned' : ''}">
+    ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
+    <span class="learn-badge" style="display:${learned ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
+    <div class="t-icon" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
+    <div class="t-name">${lec.title}</div>
+    <div class="t-meta">${lec.date}${lec.tags && lec.tags.length ? ' · ' + lec.tags.join(' · ') : ''}</div>
+    ${learnedBtn(lec.url)}
+  </a>`;
+}
+
+function expandableTile(name, icon, color, countText, contentHtml, delay) {
+  const tile = `<div class="tile" onclick="toggleTile(this)">
+    <span class="t-count">${countText}</span>
+    <div class="t-icon" style="background:${color}"><i class="fas ${icon}"></i></div>
+    <div class="t-name">${name}</div>
+    <div class="t-chev"><i class="fas fa-chevron-down"></i></div>
+  </div>`;
+  return `<div class="tile-block${delay === undefined ? '' : ' fade-in-up'}"${delay === undefined ? '' : ` style="animation-delay:${delay}s"`}>${tile}<div class="tile-content">${contentHtml}</div></div>`;
+}
+
+function subjectTiles(subjects) {
+  if (!subjects.length) return `<div class="tile tile-empty" style="grid-column:1/-1">暂无内容 · 后续增加</div>`;
+  return subjects.map(subj => expandableTile(
+      subj.name, subj.icon, tileSubjectColors[subj.name] || '#667eea', subj.lectures.length + '项',
+      `<div class="tile-grid">${subj.lectures.length
+        ? subj.lectures.map((lec, li) => lectureTile(lec, li)).join('')
+        : '<div class="tile tile-empty">暂无内容 · 后续增加</div>'}</div>`
+    )).join('');
+}
+
+function renderGrade(grade, gi, cnt) {
+  return expandableTile(grade.name, grade.icon, tileGradeColors[grade.name] || '#667eea', cnt + '项',
+    `<div class="tile-grid">${subjectTiles(grade.subjects)}</div>`, 0.1 + gi * 0.06);
+}
+
+function renderTrainingTerm(term, ti, cnt) {
+  return expandableTile(term.name, term.icon, numColors[ti % numColors.length], cnt > 0 ? cnt + '讲' : term.subjects.length + '科',
+    `<div class="tile-grid">${subjectTiles(term.subjects)}</div>`, 0.1 + ti * 0.06);
+}
+
+function renderSubject(subj, si, cnt) {
+  return `
+    <div class="subject-section fade-in-up" style="animation-delay:${0.1 + si * 0.06}s">
+      <div class="subject-header ${subj.cls}" onclick="toggleSubject(this)">
+        <div class="icon"><i class="fas ${subj.icon}"></i></div>
+        <h3>${subj.name}</h3>
+        <span class="count">${cnt} 讲</span>
+        <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="lecture-grid">
+        ${subj.lectures.map((lec, li) => `
+        <a href="${lec.url}" class="lecture-card ${isLearned(lec.url) ? 'learned' : ''}">
+          ${lec.new ? '<span class="badge-new">NEW</span>' : ''}
+          <span class="learn-badge" style="display:${isLearned(lec.url) ? 'inline-flex' : 'none'}"><i class="fas fa-check"></i> 已学习</span>
+          <div class="lnum" style="background:${numColors[li % numColors.length]}">${lec.num}</div>
+          <div class="info">
+            <h4>${lec.title}</h4>
+            <div class="meta"><span>${lec.date}</span>${lec.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+          </div>
+          <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+          ${learnedBtn(lec.url)}
+        </a>`).join('')}
+        <div class="lecture-card empty">
+          <div class="lnum" style="background:var(--border);color:var(--text-light)">+</div>
+          <div class="info"><h4>暂无内容</h4><div class="meta"><span>后续增加</span></div></div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function toggleSubject(header) {
+  const grid = header.nextElementSibling;
+  const icon = header.querySelector('.toggle-icon');
+  if (!grid) return;
+  
+  // Close only peer grids at the same level (not ancestors)
+  const parent = grid.parentElement;
+  if (parent) {
+    parent.querySelectorAll(':scope > .lecture-grid.open, :scope > .grade-grid.open').forEach(el => {
+      if (el !== grid) {
+        el.classList.remove('open');
+        const h = el.previousElementSibling;
+        if (h) {
+          const ic = h.querySelector('.toggle-icon');
+          if (ic) ic.classList.remove('open');
+        }
+      }
+    });
+  }
+  
+  grid.classList.toggle('open');
+  if (icon) icon.classList.toggle('open');
+}
+
+function toggleSection(key, el) {
+  const block = el.closest('.tile-block');
+  if (!block) return;
+  const open = block.classList.toggle('open');
+  localStorage.setItem(key, open ? 'open' : 'closed');
+}
+
+// 矩形卡片：点开才显示下层目录（年级/学期/学科通吃）
+function toggleTile(el) {
+  const block = el.closest('.tile-block');
+  if (block) block.classList.toggle('open');
+}
+
+render();
+
+// ===== 入口自检：目标页不存在（例如公网仓库未发布错题本/复习页）就自动隐藏入口 =====
+// 内网 NAS 上这些页都在，入口照常显示；这样同一份 index.html 三地通用
+(function hideMissingTargets(){
+  var seen = Object.create(null);
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var href = a.getAttribute('href') || '';
+    if (/^(https?:)?\/\//.test(href) || href.charAt(0) === '#' || href.indexOf('mailto:') === 0) return;
+    var path = href.split('#')[0];
+    if (!path || !/\.html$/i.test(path) || seen[path]) return;
+    seen[path] = 1;
+    fetch(path, { method: 'HEAD' }).then(function(r){
+      if (r.ok) return;
+      document.querySelectorAll('a[href]').forEach(function(el){
+        if ((el.getAttribute('href') || '').split('#')[0] !== path) return;
+        var card = el.closest('.tool-card, .lecture-card, .lecture-tile, .tile');
+        (card || el).style.display = 'none';
+      });
+      document.querySelectorAll('.section').forEach(function(sec){
+        var cards = sec.querySelectorAll('.tool-card, .lecture-card, .lecture-tile, .tile');
+        var alive = Array.prototype.some.call(cards, function(c){ return c.style.display !== 'none'; });
+        if (cards.length && !alive) sec.style.display = 'none';
+      });
+    }).catch(function(){});
+  });
+  setTimeout(function(){
+    document.querySelectorAll('.tile-block').forEach(function(b){
+      var cs = b.querySelectorAll('.tool-card, .lecture-card, .lecture-tile');
+      if (!cs.length) return;
+      var alive = Array.prototype.some.call(cs, function(c){ return c.style.display !== 'none'; });
+      if (!alive) b.style.display = 'none';
+    });
+  }, 1500);
+})();
+
+// ===== 已学习标记 =====
+const LEARNED_KEY = 'learned_pages';
+function getLearned() { try { return JSON.parse(localStorage.getItem(LEARNED_KEY) || '[]'); } catch(e) { return []; } }
+function isLearned(url) { return getLearned().includes(url); }
+function toggleLearned(url, ev) {
+  if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+  let arr = getLearned();
+  const i = arr.indexOf(url);
+  if (i >= 0) { arr.splice(i, 1); } else { arr.push(url); }
+  localStorage.setItem(LEARNED_KEY, JSON.stringify(arr));
+  // 更新当前卡片 UI
+  const card = ev && ev.currentTarget ? ev.currentTarget.closest('.lecture-card, .tool-card') : null;
+  if (card) {
+    const learned = arr.includes(url);
+    card.classList.toggle('learned', learned);
+    const btn = card.querySelector('.learn-btn');
+    if (btn) {
+      btn.innerHTML = learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="fas fa-circle"></i> 已学习';
+      btn.classList.toggle('done', learned);
+    }
+    const badge = card.querySelector('.learn-badge');
+    if (badge) badge.style.display = learned ? 'inline-flex' : 'none';
+  }
+  // 音效
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.frequency.value = learned ? 880 : 440; o.type = 'sine';
+    g.gain.setValueAtTime(0.08, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12);
+    o.start(ac.currentTime); o.stop(ac.currentTime + 0.12);
+  } catch(e) {}
+}
+function learnedBtn(url) {
+  const learned = isLearned(url);
+  return `<button class="learn-btn ${learned ? 'done' : ''}" onclick="toggleLearned('${url}', event)" title="标记已学习">${learned ? '<i class="fas fa-check-circle"></i> 已学习' : '<i class="fas fa-circle"></i> 已学习'}</button>`;
+}
+</script>
+<script>
+// 点击音效
+(function(){try{var ac;document.addEventListener('click',function(e){var t=e.target.closest('button, a, .option, .tab-btn, .subject-header, .section-title, .check-item, .navbar-nav a, .btn, .flashcard, .layer-tab, .q-header');if(t){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=700;o.type='sine';g.gain.setValueAtTime(0.06,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.06);o.start(ac.currentTime);o.stop(ac.currentTime+0.06)}catch(e2){}}})}catch(e){}})();
+</script>
+
+
+<script src="sq-settings.js"></script>
+</body>
+</html>

@@ -68,7 +68,82 @@ body{font-family:"Noto Sans SC",sans-serif;background:var(--bg);color:var(--text
 </style><style>.toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;padding:.6rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);opacity:1;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
 .toast-success{background:#48bb78}
 .toast-warning{background:#ed8936}
-.toast-info{background:#667eea}</style></head><body>
+.toast-info{background:#667eea}</style><!-- SQ-THEME v3 统一为学习中心首页风格（深蓝+金） -->
+<style id="sq-theme">
+:root{
+  --bg:#081324!important;--bg2:#0d1b2e!important;--card-bg:#122540!important;--card:#122540!important;--card2:#16304f!important;
+  --panel:#0b1a30!important;--text:#e6edf7!important;--text-light:#8fa8c8!important;--dim:#8fa8c8!important;--muted:#8fa8c8!important;
+  --primary:#d4af37!important;--secondary:#b8912a!important;--accent:#d4af37!important;--gold:#d4af37!important;--gold2:#f0d477!important;
+  --border:#1f3a5f!important;--line:#1f3a5f!important;--success:#2ecc71!important;--danger:#e74c3c!important;--warn:#f39c12!important;--warning:#f39c12!important;--info:#6ab0ff!important;--red:#e74c3c!important;--green:#2ecc71!important;--blue:#6ab0ff!important;
+  color-scheme:dark;
+}
+html,body{background:#060e18!important;color:#e6edf7!important;
+  font-family:'Noto Sans SC',-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",monospace!important}
+body{background-image:linear-gradient(180deg,#060e18,#081324 340px)!important;background-repeat:no-repeat!important;background-attachment:fixed!important}
+h1,h2,h3,h4,h5,strong{color:#f0d477!important}
+a{color:#f0d477}
+.card,.container,.panel,.box,.item,.k-item,.tab-content,.q-card,.question,.tip,.note,.stat,.stem,
+article,section,.card-body,.list-item,.kw,.knowledge,.point,.answer,.analysis,.hero{
+  background:#122540!important;border-color:#1f3a5f!important;color:#e6edf7!important}
+.hero{background:linear-gradient(90deg,#0b1a30,#122540)!important}
+.navbar,.header,.topbar,nav,header{background:linear-gradient(90deg,#0b1a30,#122540)!important;border-color:#1f3a5f!important;color:#e6edf7!important}
+.btn,.tab-btn,.qm-btn,button,input[type=button],input[type=submit]{background:rgba(212,175,55,.12)!important;color:#f0d477!important;border:1px solid rgba(212,175,55,.40)!important;text-shadow:none!important;box-shadow:none!important}
+.btn.active,.tab-btn.active,.qm-btn.active,.btn-primary,.tab-btn.on{background:linear-gradient(135deg,#f0d477,#c9a227)!important;color:#1a1205!important;border-color:#b8912a!important;font-weight:800!important}
+.btn-gray,.btn-secondary{background:rgba(255,255,255,.07)!important;color:#e6edf7!important;border-color:#1f3a5f!important}
+.tab{background:#0b1a30!important;color:#8fa8c8!important;border-color:#1f3a5f!important}
+.subj{background:rgba(212,175,55,.14)!important;color:#f0d477!important;border-color:rgba(212,175,55,.32)!important}
+.dim{color:#e6edf7!important}
+.mode-chip{background:#0b1a30!important;color:#8fa8c8!important;border-color:#1f3a5f!important}
+.mode-chip.active{background:linear-gradient(135deg,#f0d477,#c9a227)!important;color:#1a1205!important;font-weight:800!important}
+.chat-box,.preview-area,.preview-toolbar{background:#0b1a30!important;color:#e6edf7!important;border-color:#1f3a5f!important}
+.msg,.bubble{background:#122540!important;color:#e6edf7!important;border-color:#1f3a5f!important}
+.nav a,.pager a,.q-nav a,.back,.prev,.next,.crumb a{background:rgba(212,175,55,.12)!important;color:#f0d477!important;border:1px solid rgba(212,175,55,.40)!important;text-decoration:none!important;padding:.35rem .7rem;border-radius:10px}
+.nav a:hover,.back:hover{border-color:#f0d477!important}
+table,th,td{border-color:#1f3a5f!important;color:#e6edf7!important}
+th{background:#0b1a30!important;color:#f0d477!important}
+input,textarea,select{background:#0b1a30!important;color:#e6edf7!important;border-color:#1f3a5f!important}
+code,pre,kbd{background:#0b1a30!important;color:#f0d477!important;border-color:#1f3a5f!important}
+hr{border-color:#1f3a5f!important}
+::selection{background:rgba(212,175,55,.3)}
+@media print{
+  html,body{background:#fff!important;color:#000!important}
+  .print-area,.print-area *{color:#000!important;background:#fff!important;box-shadow:none!important}
+}
+</style>
+<script>
+/* SQ-THEME 兜底：页面里残留的浅底/深字统一成深蓝+金（图片、画布不动） */
+(function(){
+  function L(r,g,b){return 0.299*r+0.587*g+0.114*b;}
+  function P(c){var m=(c||'').match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);return m?{r:+m[1],g:+m[2],b:+m[3],a:m[4]===undefined?1:+m[4]}:null;}
+  function fix(){
+    var els=document.querySelectorAll('body *');
+    for(var i=0;i<els.length;i++){
+      var el=els[i],tag=el.tagName;
+      if(tag==='IMG'||tag==='VIDEO'||tag==='CANVAS'||tag==='SVG'||tag==='IFRAME'||tag==='PATH')continue;
+      var cs=getComputedStyle(el),bg=P(cs.backgroundColor),fg=P(cs.color),gold=false;
+      if(bg&&bg.a>0.05&&L(bg.r,bg.g,bg.b)>188){
+        var sat=Math.max(bg.r,bg.g,bg.b)-Math.min(bg.r,bg.g,bg.b);
+        if(sat<26)el.style.setProperty('background-color','#122540','important');
+        else el.style.setProperty('background-color','rgba('+Math.round(bg.r*.14)+','+Math.round(bg.g*.16)+','+Math.round(bg.b*.22)+',.6)','important');
+      } else if(bg&&bg.a>0.5&&L(bg.r,bg.g,bg.b)>140){ gold=true; }
+      var bi=cs.backgroundImage||'';
+      if(bi.indexOf('gradient')>=0){
+        var cols=bi.match(/rgba?\([^)]+\)/g)||[],ss=0,c=0;
+        for(var k=0;k<cols.length;k++){var q=P(cols[k]);if(q){ss+=L(q.r,q.g,q.b);c++;}}
+        if(c&&ss/c>140)gold=true;
+      }
+      if(fg&&fg.a>0.3&&L(fg.r,fg.g,fg.b)<120){
+        var b2=P(getComputedStyle(el).backgroundColor);
+        if(!gold&&(!b2||b2.a<0.05||L(b2.r,b2.g,b2.b)<120))el.style.setProperty('color','#e6edf7','important');
+      }
+      if(gold)el.style.setProperty('color','#1a1205','important');
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fix);else fix();
+  setTimeout(fix,900);setTimeout(fix,2400);
+})();
+</script>
+</head><body>
 <nav class="navbar"><div class="container">
   <a class="navbar-brand" href="index.html"><i class="fas fa-arrow-left"></i> 学习中心</a>
   <div class="navbar-nav">
