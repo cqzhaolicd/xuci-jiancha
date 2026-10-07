@@ -602,7 +602,7 @@ function render() {
     </div>`);
 
   // === 学校学习 ===
-  html += renderSection('学校学习', 'fa-school', '#2ecc71', 'badge-study',
+  html += renderSection('知识清单', 'fa-school', '#2ecc71', 'badge-study',
     schoolSubjectsData.map((grade, gi) => {
       const cnt = grade.subjects.reduce((a, s) => a + s.lectures.length, 0);
       return renderGrade(grade, gi, cnt);

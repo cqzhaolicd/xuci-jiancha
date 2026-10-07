@@ -190,8 +190,8 @@ s = s.replace(seg, '')
 log.append('  render 删除课外培训段')
 
 # 学校学习 section 标题带年级提示
-rep("html += renderSection('学校学习', 'fa-school', '#2ecc71', 'badge-study',", "html += renderSection('学校学习', 'fa-school', '#2ecc71', 'badge-study',", '学校学习标题保留')
-s = s.replace("renderSection('学校学习', 'fa-school', '#2ecc71', 'badge-study',", "renderSection('学校学习 · 人教版教材(以课本为准)', 'fa-school', '#2ecc71', 'badge-study',", 1)
+rep("html += renderSection('知识清单', 'fa-school', '#2ecc71', 'badge-study',", "html += renderSection('知识清单', 'fa-school', '#2ecc71', 'badge-study',", '学校学习标题保留')
+s = s.replace("renderSection('知识清单', 'fa-school', '#2ecc71', 'badge-study',", "renderSection('学校学习 · 人教版教材(以课本为准)', 'fa-school', '#2ecc71', 'badge-study',", 1)
 
 # ---------- 7. LEARNED_KEY ----------
 rep("const LEARNED_KEY = 'learned_pages';", "const LEARNED_KEY = 'lql_learned_pages';", 'LEARNED_KEY独立')
