@@ -382,17 +382,17 @@ body{-webkit-tap-highlight-color:transparent}
 @media (min-width:600px){
   .tile-grid,.tool-grid{display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;gap:1rem}
   /* 上限 = 第一行每列的宽度 ⇒ 末行剩下的卡不会被拉宽（尺寸始终一致），且整组居中 */
-  .tile-grid>*,.tool-grid>*{flex:1 1 170px;max-width:calc(33.333% - .7rem)}
+  .tile-grid>*,.tool-grid>*{flex:1 1 calc(100% / var(--cols,3) - .7rem);max-width:calc(100% / var(--cols,3) - .7rem)}
 }
 @media (min-width:1024px){
   .tile-grid,.tool-grid{gap:1.1rem}
-  .tile-grid>*,.tool-grid>*{flex:1 1 300px;max-width:calc(33.333% - .75rem)}
+  .tile-grid>*,.tool-grid>*{flex:1 1 calc(100% / var(--cols,3) - .75rem);max-width:min(calc(100% / var(--cols,3) - .75rem),420px)}
 }
 @media (min-width:600px) and (max-width:759px){
-  .tile-grid>*,.tool-grid>*{flex:1 1 210px;max-width:calc(50% - .55rem)}
+  .tile-grid>*,.tool-grid>*{flex:1 1 calc(50% - .55rem);max-width:calc(50% - .55rem)}
 }
 @media (min-width:760px) and (max-width:1023px){
-  .tile-grid>*,.tool-grid>*{flex:1 1 190px;max-width:calc(33.333% - .7rem)}
+  .tile-grid>*,.tool-grid>*{flex:1 1 calc(100% / var(--cols,3) - .7rem);max-width:calc(100% / var(--cols,3) - .7rem)}
 }
 @media (min-width:600px) and (max-width:1023px){
   .container{max-width:100%;padding:1.5rem 1.15rem 1.3rem}
@@ -712,7 +712,7 @@ const schoolColors = ['#e74c3c','#667eea','#2ecc71','#9b59b6','#27ae60','#f39c12
 
 // ===================================================================================
 // 单页路由：区块 → 年级/期 → 学科 → 讲次。点卡片"翻页"（不再在首页内联展开）
-// 页面地址形如 #/知识清单/8年级上/数学 ；浏览器返回键可用；三地同一份文件
+// 页面地址形如 #/学习/8年级上/数学 ；浏览器返回键可用；三地同一份文件
 // ===================================================================================
 const tileGradeColors = {'7年级':'#e74c3c','8年级上':'#667eea','8年级下':'#2ecc71','9年级':'#6ab0ff','综合':'#f39c12'};
 const tileSubjectColors = {'数学':'#e74c3c','语文':'#2ecc71','英语':'#6ab0ff','物理':'#667eea','化学':'#9b59b6','生物':'#27ae60','历史':'#f39c12','地理':'#1abc9c','道法':'#34495e'};
@@ -757,11 +757,14 @@ function buildTree(){
     return { name: term.name, icon: term.icon, color: numColors[ti % numColors.length], kids: subjectNodes(term.subjects) };
   });
   return [
-    { name: '错题库工具',           icon: 'fa-database',       color: '#e74c3c', badge: 'badge-tools',    kids: toolKids },
-    { name: '复习模块 · 作业题精析', icon: 'fa-book-open',      color: '#6ab0ff', badge: 'badge-tools',    kids: reviewKids },
-    { name: '预习闯关 · 八上',       icon: 'fa-gamepad',        color: '#f39c12', badge: 'badge-tools',    kids: previewKids },
-    { name: '知识清单',             icon: 'fa-school',         color: '#2ecc71', badge: 'badge-study',    kids: schoolKids },
-    { name: '课外培训 · 互动学习',   icon: 'fa-graduation-cap', color: '#f39c12', badge: 'badge-training', kids: trainingKids }
+    { name: '预习', icon: 'fa-book-open-reader', color: '#f39c12', badge: 'badge-tools',    kids: previewKids },
+    { name: '学习', icon: 'fa-school',           color: '#2ecc71', badge: 'badge-study',    kids: schoolKids },
+    { name: '复习', icon: 'fa-rotate-left',      color: '#e74c3c', badge: 'badge-tools',    kids: [
+        { name: '错题库工具', icon: 'fa-database',  color: '#e74c3c', badge: 'badge-tools', kids: toolKids },
+        { link: 'review_interactive.html?v=20261007c', name: '作业题精析', icon: 'fa-book-open', color: '#6ab0ff',
+          desc: 'A已知条件 B求解 C思路 D易错点 E知识点' }
+    ] },
+    { name: '课外培训 · 互动学习', icon: 'fa-graduation-cap', color: '#d4af37', badge: 'badge-training', kids: trainingKids }
   ];
 }
 const TREE = buildTree();
@@ -810,6 +813,14 @@ function render(){
   document.getElementById('app').innerHTML =
     '<nav class="crumbs">' + bc + '</nav>'
     + '<div class="tile-grid page-grid">' + (cards || '<div class="tile tile-empty">暂无内容 · 后续增加</div>') + '</div>';
+  // 卡片数量 → 列数：1 或 3 张=3 列、2 张=2 列、4 张=2 列、5 张以上=3 列（每行均衡，末行不落单）
+  (function(){
+    const g = document.querySelector('#app .tile-grid');
+    if (!g) return;
+    const n = (kids || []).length;
+    const cols = (n === 2 || n === 4) ? 2 : 3;
+    g.style.setProperty('--cols', cols);
+  })();
   document.title = (crumb.length ? crumb[crumb.length - 1].name + ' · ' : '') + '赵若琳学习中心';
 }
 
