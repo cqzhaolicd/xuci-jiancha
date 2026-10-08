@@ -358,6 +358,71 @@ html[data-sq-bg] body,html[data-sq-dark="1"] body{background:linear-gradient(180
 .tile.leaf-tile .badge-new{position:absolute;top:6px;right:6px;font-size:.56rem;font-weight:800;padding:1px 6px;border-radius:99px;background:linear-gradient(135deg,#f39c12,#e67e22);color:#1a1205}
 a.tile{text-decoration:none;color:var(--text)}
 .tile.leaf-tile.learned{border-color:rgba(46,204,113,.45)}
+/* ===== 响应式 UI v2（2026-10-08）：PC / 平板 / 手机 三态适配 ===== */
+html{scroll-behavior:smooth}
+body{-webkit-tap-highlight-color:transparent}
+/* 基础：卡片不再被 25% 上限切行（5 张不会 4+1 落单） */
+.tile-grid,.tool-grid{gap:1rem}
+.tile-grid>*{min-width:0}
+/* 手机（≤599px）：2 列；单数末张占满一行，不留孤卡 */
+@media (max-width:599px){
+  .header{padding:1.15rem .9rem 1rem}
+  .header h1{font-size:1.3rem}
+  .header p{font-size:.78rem}
+  .container{padding:1.05rem .85rem 1.1rem}
+  .tile-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem}
+  .tile-grid>*{flex:1 1 44%;max-width:calc(50% - .35rem)}
+  .tile-grid>*:last-child:nth-child(odd){flex:1 1 44%;max-width:calc(50% - .35rem);margin:0 auto}
+  .tile,.tool-card{min-height:124px;padding:1.05rem .5rem .95rem;border-radius:14px;gap:.45rem}
+  .tile .t-icon,.tool-card .t-icon{width:46px;height:46px;border-radius:12px;font-size:1.2rem}
+  .tile .t-name,.tool-card .t-name{font-size:.92rem}
+  .tile.group-tile{padding-right:1.5rem}
+}
+/* 平板（600–1023px）：3 列自适应，卡片等高等宽 */
+@media (min-width:600px){
+  .tile-grid,.tool-grid{display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;gap:1rem}
+  /* 上限 = 第一行每列的宽度 ⇒ 末行剩下的卡不会被拉宽（尺寸始终一致），且整组居中 */
+  .tile-grid>*,.tool-grid>*{flex:1 1 170px;max-width:calc(33.333% - .7rem)}
+}
+@media (min-width:1024px){
+  .tile-grid,.tool-grid{gap:1.1rem}
+  .tile-grid>*,.tool-grid>*{flex:1 1 300px;max-width:calc(33.333% - .75rem)}
+}
+@media (min-width:600px) and (max-width:759px){
+  .tile-grid>*,.tool-grid>*{flex:1 1 210px;max-width:calc(50% - .55rem)}
+}
+@media (min-width:760px) and (max-width:1023px){
+  .tile-grid>*,.tool-grid>*{flex:1 1 190px;max-width:calc(33.333% - .7rem)}
+}
+@media (min-width:600px) and (max-width:1023px){
+  .container{max-width:100%;padding:1.5rem 1.15rem 1.3rem}
+  .header{padding:1.5rem 1rem 1.3rem}
+  .header h1{font-size:1.55rem}
+  .tile,.tool-card{min-height:150px}
+  .tile .t-icon,.tool-card .t-icon{width:56px;height:56px;border-radius:15px;font-size:1.4rem}
+  .tile .t-name,.tool-card .t-name{font-size:1.02rem}
+}
+/* PC（≥1024px）：容器放宽到 1200，卡片加大，一行放得下 5 张 */
+@media (min-width:1024px){
+  .container{max-width:1200px;padding:2rem 1.6rem 1.6rem}
+  .header{padding:2rem 1rem 1.65rem;background:linear-gradient(90deg,#0b1a30,#16304f 55%,#122540)}
+  .header h1{font-size:1.9rem}
+  .header p{font-size:.95rem}
+  .tile-grid,.tool-grid{gap:1.1rem}
+  .tile,.tool-card{min-height:190px;padding:1.8rem .9rem 1.5rem;border-radius:18px}
+  .tile .t-icon,.tool-card .t-icon{width:62px;height:62px;border-radius:17px;font-size:1.6rem}
+  .tile .t-name,.tool-card .t-name{font-size:1.1rem}
+  .tile .t-desc,.tool-card .t-desc{font-size:.8rem}
+}
+/* 超宽屏：容器居中收边，卡片不再被无限拉长 */
+@media (min-width:1500px){ .container{max-width:1320px} }
+/* 触屏不保留悬停位移（手机上“粘住”感） */
+@media (hover:none){ .tile:hover,.tool-card:hover{transform:none} }
+/* 系统「减少动态效果」时全部静止 */
+@media (prefers-reduced-motion:reduce){ .tile,.tool-card{transition:none!important;animation:none!important} }
+/* 手机安全区（刘海屏 / 手势条） */
+@supports (padding:max(0px)){ .container{padding-bottom:max(1.2rem,env(safe-area-inset-bottom))} }
+
 </style>
 </head>
 <body>
