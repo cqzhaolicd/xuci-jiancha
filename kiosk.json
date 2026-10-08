@@ -1,8 +1,8 @@
 {
  "pages": "https://cqzhaolicd.github.io/xuci-jiancha/",
  "home": "https://cqzhaolicd.github.io/xuci-jiancha/index.html",
- "xuexi": "https://wives-solomon-accessible-newly.trycloudflare.com",
- "openmaic": "https://claims-sales-lawyer-five.trycloudflare.com",
- "updated": "2026-10-08 10:25",
- "_note": "若琳学习机 App 读取的地址清单。【home】=学习中心首页指向（当前=公网版 Pages）；【xuexi】=隧道版备用；【openmaic】=AI互动课堂隧道。只含地址，不含口令。"
+ "xuexi": "https://xuexi.zhaoli.me",
+ "openmaic": "https://class.zhaoli.me",
+ "updated": "2026-10-08 23:45",
+ "_note": "若琳学习机 App 读取的地址清单。【home】=学习中心首页指向（当前=公网版 Pages）；【xuexi】=学习中心外网（zhaoli.me 口令门）；【openmaic】=AI互动课堂外网（class.zhaoli.me）。只含地址，不含口令（口令烤在 APK 内层配置里）。"
 }
